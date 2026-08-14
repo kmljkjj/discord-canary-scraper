@@ -1,38 +1,98 @@
 [
   {
     "hash": 944104242,
-    "id": null,
+    "id": "2022-07_voice_in_threads",
+    "definitionId": "2022-07_voice_in_threads",
+    "label": "Voice in Threads",
     "revision": 0,
-    "aaMode": false
+    "aaMode": false,
+    "rolloutSummary": [
+      {
+        "bucket": "1",
+        "label": "Treatment 1",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   },
   {
     "hash": 2462216785,
-    "id": null,
+    "id": "2022-11_default_disable_mass_mention",
+    "definitionId": "2022-11_default_disable_mass_mention",
+    "label": "Disable mass mentions for communities by default",
     "revision": 0,
-    "aaMode": false
+    "aaMode": false,
+    "rolloutSummary": [
+      {
+        "bucket": "-1",
+        "label": "None",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   },
   {
     "hash": 1318029053,
-    "id": null,
+    "id": "2022-12_mention_raid_limit",
+    "definitionId": "2022-12_mention_raid_limit",
+    "label": "Automod Mention Raid Limit",
     "revision": 3,
-    "aaMode": false
+    "aaMode": false,
+    "rolloutSummary": [
+      {
+        "bucket": "1",
+        "label": "Treatment 1",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   },
   {
     "hash": 1727857487,
-    "id": null,
+    "id": "2023-02_guest_voice_invites",
+    "definitionId": "2023-02_guest_voice_invites",
+    "label": "Guest Voice Invites",
     "revision": 1,
-    "aaMode": false
+    "aaMode": false,
+    "rolloutSummary": [
+      {
+        "bucket": "-1",
+        "label": "None",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   },
   {
     "hash": 2453702596,
     "id": null,
+    "definitionId": null,
+    "label": null,
     "revision": 1,
-    "aaMode": true
+    "aaMode": true,
+    "rolloutSummary": [
+      {
+        "bucket": "-1",
+        "label": "None",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   },
   {
     "hash": 3633668656,
     "id": null,
+    "definitionId": null,
+    "label": null,
     "revision": 2,
-    "aaMode": true
+    "aaMode": true,
+    "rolloutSummary": [
+      {
+        "bucket": "1",
+        "label": "Treatment 1",
+        "percent": 100,
+        "ranges": "0–10000"
+      }
+    ]
   }
 ]
