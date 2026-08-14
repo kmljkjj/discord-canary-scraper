@@ -1,7 +1,26 @@
 /**
  * Build data/experiments.json — un seul fichier avec tous les experiments,
- * leurs variations/treatments, et le statut added | treatments_changed | unchanged.
+ * leurs variations/treatments (nombre exact), et status added | treatments_changed | unchanged.
+ *
+ * Discord appelle ça "treatments" côté API/définitions ;
+ * côté UI datamine on dit souvent "variations". On garde les deux champs de count.
  */
+
+function normalizeVariants(rawList, { preferLabel } = {}) {
+  const list = Array.isArray(rawList) ? rawList : [];
+  return list.map((t, index) => {
+    const id = t.id != null ? t.id : t.bucket != null ? t.bucket : index;
+    const label =
+      t.label ||
+      (preferLabel === 'treatment'
+        ? `Treatment ${id}`
+        : `Variation ${id}`);
+    const entry = { id, label };
+    if (t.percent != null) entry.percent = t.percent;
+    if (t.ranges != null) entry.ranges = t.ranges;
+    return entry;
+  });
+}
 
 function buildExperimentsCatalog({
   clientEnriched,
@@ -19,28 +38,26 @@ function buildExperimentsCatalog({
 
   for (const e of clientEnriched || []) {
     const id = e.id;
-    const treatments = (e.treatments || []).map((t) => ({
-      id: t.id,
-      label: t.label || `Variation ${t.id}`,
-    }));
-    if (treatments.length === 0) {
-      treatments.push({ id: 0, label: 'Variation 0 (control)' });
-      treatments.push({ id: 1, label: 'Variation 1' });
-    }
+    // Exact list from definitions — no invented Variation 0/1
+    const variants = normalizeVariants(e.treatments || [], {
+      preferLabel: 'variation',
+    });
+    const count = variants.length;
 
-    const treatmentKey = JSON.stringify(treatments.map((t) => [t.id, t.label]));
+    const treatmentKey = JSON.stringify(variants.map((t) => [t.id, t.label]));
     const prev = prevById.get(String(id).toLowerCase());
     let status = 'unchanged';
     let previousTreatments = null;
+    let previousCount = null;
     if (!prev) {
       status = 'added';
     } else {
-      const prevKey = JSON.stringify(
-        (prev.treatments || []).map((t) => [t.id, t.label]),
-      );
+      const prevVariants = prev.variants || prev.treatments || [];
+      const prevKey = JSON.stringify(prevVariants.map((t) => [t.id, t.label]));
       if (prevKey !== treatmentKey) {
         status = 'treatments_changed';
-        previousTreatments = prev.treatments || [];
+        previousTreatments = prevVariants;
+        previousCount = prev.count != null ? prev.count : prevVariants.length;
       }
     }
 
@@ -50,8 +67,15 @@ function buildExperimentsCatalog({
       label: e.label || null,
       isApex: !!e.isApex,
       source: 'client',
-      treatments,
+      // Discord defs = treatments ; datamine UI = variations — même liste
+      variantType: 'variation',
+      count,
+      variationCount: count,
+      treatmentCount: count,
+      variants,
+      treatments: variants,
       status,
+      previousCount,
       previousTreatments,
       buildNumber,
     });
@@ -59,28 +83,29 @@ function buildExperimentsCatalog({
 
   for (const g of guildEnriched || []) {
     const id = g.id || g.definitionId || `hash:${g.hash}`;
-    const treatments = (g.rolloutSummary || []).map((b) => ({
-      id: b.bucket,
-      label: b.label,
-      percent: b.percent,
-      ranges: b.ranges || null,
-    }));
+    const variants = normalizeVariants(g.rolloutSummary || [], {
+      preferLabel: 'treatment',
+    });
+    const count = variants.length;
 
     const treatmentKey = JSON.stringify(
-      treatments.map((t) => [t.id, t.label, t.percent]),
+      variants.map((t) => [t.id, t.label, t.percent]),
     );
     const prev = prevById.get(String(id).toLowerCase());
     let status = 'unchanged';
     let previousTreatments = null;
+    let previousCount = null;
     if (!prev) {
       status = 'added';
     } else {
+      const prevVariants = prev.variants || prev.treatments || [];
       const prevKey = JSON.stringify(
-        (prev.treatments || []).map((t) => [t.id, t.label, t.percent]),
+        prevVariants.map((t) => [t.id, t.label, t.percent]),
       );
       if (prevKey !== treatmentKey) {
         status = 'treatments_changed';
-        previousTreatments = prev.treatments || [];
+        previousTreatments = prevVariants;
+        previousCount = prev.count != null ? prev.count : prevVariants.length;
       }
     }
 
@@ -91,8 +116,14 @@ function buildExperimentsCatalog({
       hash: g.hash,
       isApex: !!g.aaMode,
       source: 'api',
-      treatments,
+      variantType: 'treatment',
+      count,
+      variationCount: count,
+      treatmentCount: count,
+      variants,
+      treatments: variants,
       status,
+      previousCount,
       previousTreatments,
       buildNumber,
     });
