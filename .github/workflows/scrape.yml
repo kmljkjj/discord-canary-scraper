@@ -2,9 +2,9 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Every hour
-    - cron: '0 * * * *'
-  workflow_dispatch: # Manual trigger
+    # Toutes les 15 minutes → notifs plus rapides
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Manuel
 
 permissions:
   contents: write
@@ -37,6 +37,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🔄 New Discord Canary build detected"
+            git commit -m "🔄 New Discord Canary build / findings"
             git push
           fi
