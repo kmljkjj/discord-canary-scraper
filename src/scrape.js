@@ -102,108 +102,105 @@ async function downloadAssets(assets) {
 }
 
 // ─────────────────────────────────────────────
-// Deep analysis of JS assets
+// Experiment / Route / String analysis
+// Real Discord experiment IDs look like:
+//   2026-08-profile-embed-share-button
+//   2025-05_push_to_talk_latching
+//   2026-04-mltargetingv6
 // ─────────────────────────────────────────────
 
+function isValidExperimentId(id) {
+  if (!id || id.length < 10 || id.length > 90) return false;
+  // Must start with year-month
+  if (!/^20[2-3][0-9]-[0-1][0-9][_-]/.test(id)) return false;
+  // Avoid pure noise
+  if (/^20[0-9]{2}-[0-9]{2}$/.test(id)) return false;
+  return true;
+}
+
 function analyzeJSContent(content) {
-  const findings = {
-    experiments: new Set(),
-    apexExperiments: new Set(),
-    routes: new Set(),
-    strings: new Set(),
-  };
+  const experiments = new Map(); // id -> { id, type, isApex }
+  const routes = new Set();
+  const strings = new Set();
 
-  // ── Experiments (classic)
-  // Patterns like: experimentId: "2024-xx_..." or id: "..._experiment"
-  const expPatterns = [
-    /["']([a-z0-9_\-]{8,80}_experiment)["']/gi,
-    /["'](experiment_[a-z0-9_\-]{4,60})["']/gi,
-    /["']([0-9]{4}-[0-9]{2}_[a-z0-9_\-]{5,50})["']/gi,
-    /experimentId["']?\s*[:=]\s*["']([a-z0-9_\-]{6,80})["']/gi,
-    /["']id["']\s*:\s*["']([a-z0-9_\-]{10,80})["'][^}]{0,200}kind["']?\s*:\s*["'](user|guild)/gi,
-  ];
+  // ── Primary experiment ID pattern (YYYY-MM_xxx or YYYY-MM-xxx)
+  const idRegex = /["'](20[2-3][0-9]-[0-1][0-9][_-][a-z0-9_\-]{4,70})["']/gi;
+  let m;
+  while ((m = idRegex.exec(content)) !== null) {
+    const id = m[1].toLowerCase();
+    if (!isValidExperimentId(id)) continue;
 
-  for (const re of expPatterns) {
-    let m;
-    while ((m = re.exec(content)) !== null) {
-      const id = (m[1] || m[0]).toLowerCase();
-      if (id.length > 6 && id.length < 90) findings.experiments.add(id);
+    const isApex =
+      id.includes('apex') ||
+      id.includes('-aa-') ||
+      /_aa_/.test(id);
+
+    if (!experiments.has(id)) {
+      experiments.set(id, { id, type: 'user', isApex });
     }
   }
 
-  // ── Apex Experiments (newer system)
-  // Often contain "apex" or specific apex experiment patterns
-  const apexPatterns = [
-    /["']([a-z0-9_\-]*apex[a-z0-9_\-]*)["']/gi,
-    /["'](apex_[a-z0-9_\-]{4,60})["']/gi,
-    /apexExperiment["']?\s*[:=]\s*["']([a-z0-9_\-]{4,80})["']/gi,
-    /["']([0-9]{4}-[0-9]{2}_[a-z0-9_\-]*apex[a-z0-9_\-]*)["']/gi,
-  ];
+  // ── Try to associate type (user / guild) near the ID
+  // Look for nearby kind/type/unit_type
+  for (const [id, exp] of experiments) {
+    const idx = content.toLowerCase().indexOf(id);
+    if (idx === -1) continue;
+    const window = content.slice(Math.max(0, idx - 300), idx + id.length + 400);
 
-  for (const re of apexPatterns) {
-    let m;
-    while ((m = re.exec(content)) !== null) {
-      const id = (m[1] || '').toLowerCase();
-      if (id.length > 4 && id.length < 90) {
-        findings.apexExperiments.add(id);
-        findings.experiments.delete(id); // avoid duplicate in both
-      }
+    if (/["'](?:kind|type|unit_type)["']\s*[:=]\s*["']guild["']/i.test(window) ||
+        /guild[_-]?experiment/i.test(window)) {
+      exp.type = 'guild';
+    } else if (/["'](?:kind|type|unit_type)["']\s*[:=]\s*["']user["']/i.test(window)) {
+      exp.type = 'user';
+    } else if (/apex_user|unit_type.{0,5}1/i.test(window)) {
+      exp.type = 'user';
+      exp.isApex = true;
+    } else if (/apex_guild|unit_type.{0,5}3/i.test(window)) {
+      exp.type = 'guild';
+      exp.isApex = true;
     }
   }
 
-  // ── Routes (API + client)
+  // ── Routes
   const routePatterns = [
-    /["'](\/api\/v[0-9]+\/[a-z0-9_\-\/{}:]+)["']/gi,
-    /["'](\/channels\/[a-z0-9_\-\/{}:]+)["']/gi,
-    /["'](\/guilds\/[a-z0-9_\-\/{}:]+)["']/gi,
-    /["'](\/users\/[a-z0-9_\-\/{}:]+)["']/gi,
-    /path:\s*["'](\/[a-z0-9_\-\/{}:]+)["']/gi,
-    /route:\s*["']([a-z0-9_\-\/{}:]+)["']/gi,
+    /["'](\/api\/v\d+\/[a-z0-9_\-\/{}.:]+)["']/gi,
+    /["'](\/channels\/[a-z0-9_\-\/{}.:]+)["']/gi,
+    /["'](\/guilds\/[a-z0-9_\-\/{}.:]+)["']/gi,
+    /["'](\/users\/@me\/[a-z0-9_\-\/{}.:]+)["']/gi,
+    /path:\s*["'](\/[a-z0-9_\-\/{}.:]+)["']/gi,
   ];
 
   for (const re of routePatterns) {
-    let m;
     while ((m = re.exec(content)) !== null) {
       const r = m[1];
-      if (r.length > 3 && r.length < 120 && !r.includes('http')) {
-        findings.routes.add(r);
-      }
+      if (r.length > 5 && r.length < 120) routes.add(r);
     }
   }
 
-  // ── Interesting strings (UI / feature related)
-  // Look for longer quoted strings that look like feature names or labels
-  const stringPatterns = [
-    /["']([A-Z][a-zA-Z0-9 ]{8,60})["']/g, // Title Case phrases
-    /["']([a-z]+_[a-z0-9_]{6,40})["']/g,   // snake_case identifiers
-  ];
-
-  const interestingKeywords = [
+  // ── Interesting strings
+  const keywords = [
     'nitro', 'boost', 'quest', 'gift', 'premium', 'hypesquad',
     'voice', 'video', 'stream', 'stage', 'forum', 'thread',
-    'role', 'permission', 'moderation', 'automod', 'timeout',
-    'server', 'guild', 'channel', 'category', 'emoji', 'sticker',
-    'profile', 'banner', 'avatar', 'status', 'activity',
-    'payment', 'billing', 'subscription', 'trial',
-    'experiment', 'feature', 'flag', 'rollout',
+    'profile', 'banner', 'avatar', 'activity', 'status',
+    'payment', 'billing', 'subscription', 'trial', 'shop',
+    'moderation', 'automod', 'timeout', 'role', 'permission',
   ];
 
-  for (const re of stringPatterns) {
-    let m;
-    while ((m = re.exec(content)) !== null) {
-      const s = m[1];
-      const lower = s.toLowerCase();
-      if (interestingKeywords.some(k => lower.includes(k)) && s.length > 6 && s.length < 70) {
-        findings.strings.add(s);
-      }
+  const strRegex = /["']([A-Za-z][A-Za-z0-9 _\-]{6,55})["']/g;
+  while ((m = strRegex.exec(content)) !== null) {
+    const s = m[1].trim();
+    const lower = s.toLowerCase();
+    if (keywords.some(k => lower.includes(k)) && !/^20[0-9]{2}/.test(s)) {
+      strings.add(s);
     }
   }
 
+  const allExps = [...experiments.values()];
   return {
-    experiments: [...findings.experiments].sort(),
-    apexExperiments: [...findings.apexExperiments].sort(),
-    routes: [...findings.routes].sort(),
-    strings: [...findings.strings].sort().slice(0, 80), // limit noise
+    apexExperiments: allExps.filter(e => e.isApex),
+    experiments: allExps.filter(e => !e.isApex),
+    routes: [...routes].sort(),
+    strings: [...strings].sort().slice(0, 80),
   };
 }
 
@@ -211,46 +208,43 @@ async function analyzeAssets() {
   const files = await fs.readdir(ASSETS_DIR);
   const jsFiles = files.filter(f => f.endsWith('.js'));
 
-  const all = {
-    experiments: new Set(),
-    apexExperiments: new Set(),
-    routes: new Set(),
-    strings: new Set(),
-  };
+  const apexMap = new Map();
+  const expMap = new Map();
+  const routes = new Set();
+  const strings = new Set();
 
   for (const file of jsFiles) {
     try {
       const content = await fs.readFile(path.join(ASSETS_DIR, file), 'utf8');
-      // Skip huge minified noise by sampling if too big
-      const sample = content.length > 2_000_000 ? content.slice(0, 1_500_000) : content;
+      const sample = content.length > 2_500_000 ? content.slice(0, 2_000_000) : content;
       const found = analyzeJSContent(sample);
 
-      found.experiments.forEach(e => all.experiments.add(e));
-      found.apexExperiments.forEach(e => all.apexExperiments.add(e));
-      found.routes.forEach(r => all.routes.add(r));
-      found.strings.forEach(s => all.strings.add(s));
+      for (const e of found.apexExperiments) apexMap.set(e.id, e);
+      for (const e of found.experiments) {
+        if (!apexMap.has(e.id)) expMap.set(e.id, e);
+      }
+      found.routes.forEach(r => routes.add(r));
+      found.strings.forEach(s => strings.add(s));
     } catch (err) {
       console.warn(`Could not analyze ${file}:`, err.message);
     }
   }
 
   return {
-    experiments: [...all.experiments].sort(),
-    apexExperiments: [...all.apexExperiments].sort(),
-    routes: [...all.routes].sort(),
-    strings: [...all.strings].sort().slice(0, 100),
+    apexExperiments: [...apexMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
+    experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
+    routes: [...routes].sort(),
+    strings: [...strings].sort().slice(0, 100),
   };
 }
 
 // ─────────────────────────────────────────────
-// Diff against previous findings
+// Diff
 // ─────────────────────────────────────────────
 
 async function loadPreviousFindings() {
   try {
-    if (await fs.pathExists(FINDINGS_FILE)) {
-      return await fs.readJson(FINDINGS_FILE);
-    }
+    if (await fs.pathExists(FINDINGS_FILE)) return await fs.readJson(FINDINGS_FILE);
   } catch (e) {}
   return null;
 }
@@ -258,40 +252,55 @@ async function loadPreviousFindings() {
 function diffFindings(current, previous) {
   if (!previous) {
     return {
-      newExperiments: current.experiments,
       newApexExperiments: current.apexExperiments,
+      newExperiments: current.experiments,
       newRoutes: current.routes,
-      newStrings: current.strings.slice(0, 20),
+      newStrings: current.strings.slice(0, 15),
       isFirstRun: true,
     };
   }
 
-  const prevExp = new Set(previous.experiments || []);
-  const prevApex = new Set(previous.apexExperiments || []);
+  const prevApex = new Set((previous.apexExperiments || []).map(e => (typeof e === 'string' ? e : e.id)));
+  const prevExp = new Set((previous.experiments || []).map(e => (typeof e === 'string' ? e : e.id)));
   const prevRoutes = new Set(previous.routes || []);
   const prevStrings = new Set(previous.strings || []);
 
   return {
-    newExperiments: current.experiments.filter(e => !prevExp.has(e)),
-    newApexExperiments: current.apexExperiments.filter(e => !prevApex.has(e)),
+    newApexExperiments: current.apexExperiments.filter(e => !prevApex.has(e.id)),
+    newExperiments: current.experiments.filter(e => !prevExp.has(e.id)),
     newRoutes: current.routes.filter(r => !prevRoutes.has(r)),
-    newStrings: current.strings.filter(s => !prevStrings.has(s)).slice(0, 25),
+    newStrings: current.strings.filter(s => !prevStrings.has(s)).slice(0, 20),
     isFirstRun: false,
   };
 }
 
 function hasImportantChanges(diff) {
   return (
-    diff.newApexExperiments.length > 0 ||
-    diff.newExperiments.length > 0 ||
-    diff.newRoutes.length > 0 ||
-    diff.newStrings.length > 3
+    (diff.newApexExperiments && diff.newApexExperiments.length > 0) ||
+    (diff.newExperiments && diff.newExperiments.length > 0) ||
+    (diff.newRoutes && diff.newRoutes.length > 0)
   );
 }
 
 // ─────────────────────────────────────────────
-// Discord notifications
+// Discord embeds – clean format
 // ─────────────────────────────────────────────
+
+function formatExperimentEmbed(exp, buildNumber, isApex) {
+  const title = isApex ? 'New Apex Experiment' : 'New Experiment';
+  const color = isApex ? 0xFEE75C : 0xEB459E;
+
+  return {
+    title,
+    color,
+    fields: [
+      { name: 'Name', value: `\`${exp.id}\``, inline: false },
+      { name: 'Type', value: exp.type || 'user', inline: true },
+      { name: 'Build', value: String(buildNumber), inline: true },
+    ],
+    timestamp: new Date().toISOString(),
+  };
+}
 
 function truncateList(arr, max = 12) {
   if (!arr || arr.length === 0) return '—';
@@ -307,70 +316,76 @@ async function sendWebhook({ buildInfo, diff, isNewBuild }) {
   }
 
   const important = hasImportantChanges(diff);
-  const color = important ? 0xED4245 : isNewBuild ? 0x57F287 : 0x5865F2;
-
-  let title;
-  if (important) title = '🚨 Important Canary Changes Detected';
-  else if (isNewBuild) title = '🚀 New Discord Canary Build';
-  else title = 'ℹ️ Discord Canary Check';
-
   const embeds = [];
 
-  // Main embed
+  // Summary embed
+  const mainColor = important ? 0xED4245 : isNewBuild ? 0x57F287 : 0x5865F2;
+  let mainTitle = 'ℹ️ Discord Canary Check';
+  if (important) mainTitle = '🚨 Important Canary Changes';
+  else if (isNewBuild) mainTitle = '🚀 New Discord Canary Build';
+
   const main = {
-    title,
-    color,
+    title: mainTitle,
+    color: mainColor,
     fields: [
       { name: 'Build', value: String(buildInfo.buildNumber), inline: true },
       { name: 'Channel', value: 'Canary', inline: true },
       { name: 'Assets', value: String(buildInfo.assetCount || 0), inline: true },
     ],
-    footer: { text: 'Discord Canary Scraper • Inspired by Wumpus Central' },
+    footer: { text: 'Canary Scraper' },
     timestamp: new Date().toISOString(),
   };
 
   if (diff.isFirstRun) {
-    main.description = 'First run – baseline findings saved. Future runs will report only **new** items.';
+    main.description = 'First run — baseline saved. Next runs will only report **new** items.';
   }
 
   embeds.push(main);
 
-  // Detailed embeds only when there is something new & important
-  if (important || diff.isFirstRun) {
-    if (diff.newApexExperiments?.length) {
+  // One embed per new Apex experiment (clean format)
+  if (diff.newApexExperiments?.length) {
+    for (const exp of diff.newApexExperiments.slice(0, 6)) {
+      embeds.push(formatExperimentEmbed(exp, buildInfo.buildNumber, true));
+    }
+    if (diff.newApexExperiments.length > 6) {
       embeds.push({
-        title: '🧪 New Apex Experiments',
+        title: 'New Apex Experiments (more)',
         color: 0xFEE75C,
-        description: truncateList(diff.newApexExperiments, 15),
-      });
-    }
-
-    if (diff.newExperiments?.length) {
-      embeds.push({
-        title: '🔬 New Experiments',
-        color: 0xEB459E,
-        description: truncateList(diff.newExperiments, 15),
-      });
-    }
-
-    if (diff.newRoutes?.length) {
-      embeds.push({
-        title: '🛣️ New Routes',
-        color: 0x5865F2,
-        description: truncateList(diff.newRoutes, 15),
-      });
-    }
-
-    if (diff.newStrings?.length) {
-      embeds.push({
-        title: '📝 New / Interesting Strings',
-        color: 0x57F287,
-        description: truncateList(diff.newStrings, 12),
+        description: truncateList(diff.newApexExperiments.slice(6).map(e => e.id), 10),
       });
     }
   }
 
-  // Discord allows max 10 embeds
+  // One embed per new classic experiment
+  if (diff.newExperiments?.length) {
+    for (const exp of diff.newExperiments.slice(0, 6)) {
+      embeds.push(formatExperimentEmbed(exp, buildInfo.buildNumber, false));
+    }
+    if (diff.newExperiments.length > 6) {
+      embeds.push({
+        title: 'New Experiments (more)',
+        color: 0xEB459E,
+        description: truncateList(diff.newExperiments.slice(6).map(e => e.id), 10),
+      });
+    }
+  }
+
+  if (diff.newRoutes?.length) {
+    embeds.push({
+      title: 'New Routes',
+      color: 0x5865F2,
+      description: truncateList(diff.newRoutes, 15),
+    });
+  }
+
+  if (diff.newStrings?.length && (important || diff.isFirstRun)) {
+    embeds.push({
+      title: 'Interesting Strings',
+      color: 0x57F287,
+      description: truncateList(diff.newStrings, 12),
+    });
+  }
+
   const body = {
     username: 'Canary Scraper',
     avatar_url: 'https://cdn.discordapp.com/emojis/1044610189761052752.webp',
@@ -424,34 +439,32 @@ async function main() {
   const previousBuild = await loadPreviousBuild();
   const isNewBuild = !previousBuild || previousBuild.buildNumber !== assets.buildNumber;
 
-  // Always download when new build, or if assets folder is empty
   const assetsExist = await fs.pathExists(ASSETS_DIR) && (await fs.readdir(ASSETS_DIR)).length > 0;
   let downloaded = previousBuild?.files || [];
 
   if (isNewBuild || !assetsExist) {
-    console.log(isNewBuild ? '✨ New build detected! Downloading assets...\n' : '📦 Assets missing – downloading...\n');
+    console.log(isNewBuild ? '✨ New build – downloading assets...\n' : '📦 Assets missing – downloading...\n');
     downloaded = await downloadAssets(assets);
   } else {
-    console.log('No new build number – using existing assets for analysis.\n');
+    console.log('Same build – analyzing existing assets.\n');
   }
 
-  // Analyze
-  console.log('🧠 Analyzing JS assets for experiments, routes & strings...\n');
+  console.log('🧠 Analyzing for experiments, routes & strings...\n');
   const currentFindings = await analyzeAssets();
 
-  console.log(`  Experiments     : ${currentFindings.experiments.length}`);
-  console.log(`  Apex Experiments: ${currentFindings.apexExperiments.length}`);
-  console.log(`  Routes          : ${currentFindings.routes.length}`);
-  console.log(`  Strings         : ${currentFindings.strings.length}\n`);
+  console.log(`  Apex Experiments : ${currentFindings.apexExperiments.length}`);
+  console.log(`  Experiments      : ${currentFindings.experiments.length}`);
+  console.log(`  Routes           : ${currentFindings.routes.length}`);
+  console.log(`  Strings          : ${currentFindings.strings.length}\n`);
 
   const previousFindings = await loadPreviousFindings();
   const diff = diffFindings(currentFindings, previousFindings);
 
-  console.log('📊 Diff vs previous:');
-  console.log(`  New Apex Exp    : ${diff.newApexExperiments.length}`);
-  console.log(`  New Experiments : ${diff.newExperiments.length}`);
-  console.log(`  New Routes      : ${diff.newRoutes.length}`);
-  console.log(`  New Strings     : ${diff.newStrings.length}\n`);
+  console.log('📊 New items:');
+  console.log(`  Apex Exp : ${diff.newApexExperiments.length}`);
+  console.log(`  Exp      : ${diff.newExperiments.length}`);
+  console.log(`  Routes   : ${diff.newRoutes.length}`);
+  console.log(`  Strings  : ${diff.newStrings.length}\n`);
 
   const buildInfo = {
     buildNumber: assets.buildNumber,
@@ -465,16 +478,14 @@ async function main() {
 
   await saveBuild(buildInfo);
   await saveFindings(currentFindings);
-
-  const important = hasImportantChanges(diff);
   await sendWebhook({ buildInfo, diff, isNewBuild });
 
-  if (important) {
-    console.log('🚨 Important changes detected and notified!');
+  if (hasImportantChanges(diff)) {
+    console.log('🚨 Important changes notified.');
   } else if (isNewBuild) {
-    console.log('✅ New build archived (no major experiment/route changes).');
+    console.log('✅ New build archived.');
   } else {
-    console.log('✅ Everything up to date.');
+    console.log('✅ Up to date.');
   }
 
   process.exit(0);
