@@ -1,87 +1,125 @@
 {
-  "apexExperiments": [],
   "experiments": [
     {
       "id": "2025-11-mana-context-menu",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-01-bug-reporter",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-04-http-request-sample",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-04-safety-flows",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-05-global-soundboard-wheel-popout",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-06-minimal-detectable",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-06-ml-offer-creation-ui-upgrade",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-06-web-translate-dom-guard",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-06-web-vitals-monitoring",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-07-aws-gateway",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-07-reject-with-error-kill-switch",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-07-typing-users-css-dots",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-07-unobtrusive-device-suggestions",
       "type": "user",
-      "isApex": false
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     }
   ],
   "routes": [
+    "/channels",
     "/channels/preload-messages",
-    "/giphy",
+    "/guilds",
     "/guilds/automations/email-domain-lookup",
     "/guilds/automations/email-domain-lookup/verify",
     "/guilds/automations/email-domain-lookup/verify-code",
     "/guilds/create",
     "/guilds/gravity-join",
-    "/klipy",
     "/quests/appstore-metadata",
     "/quests/decision",
     "/quests/get-decisions",
     "/quests/preview",
     "/quests/reset-recent-quest-completions",
-    "/tenor",
+    "/users/@me",
     "/users/@me/activities/statistics/applications",
     "/users/@me/activities/subscribe",
     "/users/@me/affinities/channels",
@@ -223,1451 +261,51 @@
     "/users/@me/widgets/suggested-games",
     "/users/@me/wishlist/items"
   ],
-  "strings": [
-    "ACTIVITIES_BOOSTING_UPSELL",
-    "ACTIVITIES_NITRO_UPSELL",
-    "ACTIVITY",
-    "ACTIVITY_CONFIGURATION_DOES_NOT_SUPPORT_PLATFORM",
-    "ACTIVITY_FEED_DISABLED_BY_USER",
-    "ACTIVITY_FEED_ENABLED_BY_USER",
-    "ACTIVITY_INVITE_MODAL_OPEN",
-    "ACTIVITY_INVITE_MODAL_QUERY",
-    "ACTIVITY_INVITE_MODAL_SEND",
-    "ACTIVITY_JOIN",
-    "ACTIVITY_JOIN_FAILED",
-    "ACTIVITY_JOIN_LOADING",
-    "ACTIVITY_LAYOUT_MODE_UPDATE",
-    "ACTIVITY_METADATA_UPDATE",
-    "ACTIVITY_NITRO_HOST_LEFT_UPSELL",
-    "ACTIVITY_PLAY",
-    "ACTIVITY_POPOUT_WINDOW_OPEN",
-    "ACTIVITY_SCREEN_ORIENTATION_UPDATE",
-    "ACTIVITY_SHELF",
-    "ACTIVITY_SYNC",
-    "ACTIVITY_UPDATE_FAIL",
-    "ACTIVITY_UPDATE_START",
-    "ACTIVITY_UPDATE_SUCCESS",
-    "ALLOW_VOICE_RECORDING",
-    "ANIMATED_BANNER",
-    "ANIMATE_CHAT_AVATAR",
-    "APPLICATION_SUBSCRIPTION",
-    "APPLICATION_SUBSCRIPTION_EXPIRATION",
-    "AUDIO_SET_ACTIVE_INPUT_PROFILE",
-    "AUDIO_SET_LOCAL_VIDEO_DISABLED",
-    "AUTOMOD_INVALID_RUST_SERVICE_RESPONSE",
-    "AUTOMOD_MENTION_SPAM",
-    "AUTOMOD_MESSAGE_BLOCKED",
-    "AUTOMOD_QUARANTINED_USER_PROFILE",
-    "AUTOMOD_TITLE_BLOCKED",
-    "AUTOMOD_TRIGGER_USER_PROFILE",
-    "AUTO_MODERATION",
-    "AUTO_MODERATION_MENTION_RAID_DETECTION",
-    "AUTO_MODERATION_RULE",
-    "AVATAR_DECORATION",
-    "Ack - Decline Request to Join",
-    "Ack - Decline Request to Stream",
-    "Ack - Forum Active Threads",
-    "Ack - Forum Channel No Unread Posts",
-    "Ack - Inbox Forum No Posts",
-    "Ack - Resort Threads",
-    "Ack - Voice Channel Select",
-    "Activity",
-    "Activity Entry Point Tile",
-    "Activity Invite",
-    "Activity Panel",
-    "Activity Panel Game Community Upsell",
-    "Activity Privacy",
-    "Activity RPC",
-    "Activity Shelf",
-    "Activity Upsell Action Sheet",
-    "Activity Upsell Modal",
-    "Activity was null somehow",
-    "ActivitySounds",
-    "ActivityTrackingStore",
-    "Aggregate Premium Upsell Modal",
-    "Animated Avatar",
-    "Animated Guild Banner Upsell",
-    "App Directory Profile",
-    "Appeal Ingestion Request Sent",
-    "Appeal Ingestion Request a Review",
-    "Application Store Premium Carousel",
-    "ApplicationStreamPreviewUploadManager",
-    "AudioBassBoostDown",
-    "AudioBassBoostToggle",
-    "AudioBassBoostUp",
-    "Authorize Payment",
-    "Authorized App - Permissions",
-    "AvatarImg",
-    "BATTLENET_LINKED_ROLE_DEPRECATION",
-    "BILLING_ALREADY_PAUSED",
-    "BILLING_APPLE_SERVER_API_ERROR",
-    "BILLING_APPLE_STORE_COUNTRY_MISMATCH",
-    "BILLING_BUNDLE_ALREADY_PURCHASED",
-    "BILLING_BUNDLE_PARTIALLY_OWNED",
-    "BILLING_CANNOT_CHARGE_ZERO_AMOUNT",
-    "BILLING_CLAIM_IN_GAME_BEFORE_REPURCHASE",
-    "BILLING_CURRENCY_NOT_ALLOWED_FOR_COUNTRY",
-    "BILLING_INSUFFICIENT_FUNDS",
-    "BILLING_NON_REFUNDABLE_PAYMENT_SOURCE",
-    "BILLING_ORDER_NOT_SIGNABLE",
-    "BILLING_OUTDATED_REQUEST_PARAMETERS",
-    "BILLING_PAUSE_DISABLED",
-    "BILLING_PAUSE_INVALID_INTERVAL",
-    "BILLING_PAUSE_INVALID_UPDATE",
-    "BILLING_PAUSE_NOT_ELIGIBLE",
-    "BILLING_PAUSE_PENDING_ALREADY_SET",
-    "BILLING_PURCHASE_REQUEST_INVALID",
-    "BILLING_PURCHASE_TOKEN_AUTH_CLEAR_STATE",
-    "BILLING_RETRY",
-    "BILLING_SPENDING_LIMIT_REACHED",
-    "BILLING_SPENDING_LIMIT_WILL_EXCEED",
-    "BILLING_STANDALONE_INITIALIZED",
-    "BILLING_TRIAL_REDEMPTION_DISABLED",
-    "BILLING_USER_OFFER_FETCH_SUCCESS",
-    "BODY_PARSE_TIMEOUT",
-    "BOOST_PERKS",
-    "BOOST_PERKS_VANITY_URL",
-    "BYPASS_SLOWMODE_PERMISSION_MIGRATION_COMPLETE",
-    "Bad request for provider",
-    "Bad video packet or something",
-    "Billing",
-    "Cannot seek a non-seekable stream",
-    "GUILD_SUBSCRIPTIONS",
-    "GUILD_SUBSCRIPTIONS_BULK",
-    "HIERARCHY_REQUEST_ERR",
-    "ICC profile",
-    "IDBRequest",
-    "Main UI thread blocked",
-    "NextUserProfile",
-    "OGVDecoderVideoAV1MTW",
-    "OGVDecoderVideoAV1SIMDMTW",
-    "OGVDecoderVideoAV1SIMDW",
-    "OGVDecoderVideoAV1W",
-    "OGVDecoderVideoTheoraW"
-  ],
   "ui": [
     {
-      "name": "ActiveChannelsStore",
-      "kind": "component",
-      "where": "component: ActiveChannelsStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Activity",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ActivitySounds",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ActivityTrackingStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "AddFriendInput",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
       "name": "AdoptedStyleSheet",
-      "kind": "panel",
-      "where": "client (unknown area)",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "ApplicationStreamPreviewUploadManager",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ApplicationSwitchingManager",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "AppSwitch",
-      "kind": "control",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "AudioBassBoostDown",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "AudioBassBoostToggle",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "AudioBassBoostUp",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "AutoUpdateStore",
-      "kind": "component",
-      "where": "component: AutoUpdateStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Avatar",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "AvatarImg",
-      "kind": "component",
-      "where": "component: AvatarImg",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "AVRInput",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Badge",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "BroadcastChannel",
-      "kind": "component",
-      "where": "area: ChannelMergerNode",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "CacheStore",
-      "kind": "component",
-      "where": "area: quest-preview-tool",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "CacheStoreChannelsLazy",
-      "kind": "component",
-      "where": "area: quest-preview-tool",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "CacheStoreLazy",
-      "kind": "component",
-      "where": "area: quest-preview-tool",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Camera",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "CameraFocus",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Channel",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelDown",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "ChannelMemberCountStore",
-      "kind": "component",
-      "where": "component: ChannelMemberCountStore · area: ChannelMemberCountStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelMergerNode",
-      "kind": "component",
-      "where": "area: ChannelMergerNode",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "ChannelRenderer",
-      "kind": "component",
-      "where": "area: ChannelRenderer",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelsAndRolesPage",
-      "kind": "component",
-      "where": "area: ChannelsAndRolesPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelSettings",
-      "kind": "component",
-      "where": "area: ChannelSettings",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelSKUStore",
-      "kind": "component",
-      "where": "component: ChannelSKUStore · area: ChannelSKUStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelStoreListing",
-      "kind": "component",
-      "where": "area: ChannelStoreListing",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ChannelUp",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "ClosedCaptionToggle",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "CodeInput",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
+      "kind": "panel"
     },
     {
       "name": "CollectiblesAnnouncementModal",
-      "kind": "modal",
-      "where": "area: shop_include_unpublished",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "CollectiblesShop",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "modal"
     },
     {
       "name": "ConfirmModal",
-      "kind": "modal",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ContextMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "DateTimeFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "DeepLinkLaunchActivityInDM",
-      "kind": "component",
-      "where": "area: ChannelStoreListing",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "modal"
     },
     {
       "name": "DeviceDetectedPanel",
-      "kind": "panel",
-      "where": "exp: 2026-07-unobtrusive-device-suggestions",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "DomainMigrationStore",
-      "kind": "component",
-      "where": "component: DomainMigrationStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "EmojiStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "EmptyNotificationsPage",
-      "kind": "component",
-      "where": "area: ChannelStoreListing",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "EndCall",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "ExpressionSuggestionsPersistedStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "FavoriteStore0",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "FavoriteStore1",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "FavoriteStore2",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "FavoriteStore3",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
+      "kind": "panel"
     },
     {
       "name": "FeedbackModal",
-      "kind": "modal",
-      "where": "client (unknown area)",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "Footer",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Format",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "FormatBuilder",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "FramePanelFocusedView",
-      "kind": "panel",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "FriendsActivityFeed",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GameStoreIconManager",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GIFFavoritesStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildBasicChannels",
-      "kind": "component",
-      "where": "area: GuildBasicChannels",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildChannelUserContextMenu",
-      "kind": "overlay",
-      "where": "area: GuildChannelUserContextMenu",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildHomePage",
-      "kind": "component",
-      "where": "area: GuildHomePage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildMemberVerificationPreviewDisabled",
-      "kind": "component",
-      "where": "area: GuildOnboardingBlockedPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildOfficialMessagesPage",
-      "kind": "component",
-      "where": "area: GuildSpacePage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildOnboardingBlockedPage",
-      "kind": "component",
-      "where": "area: GuildOnboardingBlockedPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildOnboardingPage",
-      "kind": "component",
-      "where": "area: GuildOnboardingPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildPowerupsPage",
-      "kind": "component",
-      "where": "area: GuildPowerupsPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildProgressStore",
-      "kind": "component",
-      "where": "component: GuildProgressStore · area: GuildProgressStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildRoleSubscriptionsOverviewPageWithContext",
-      "kind": "component",
-      "where": "area: ChannelRenderer",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Guilds",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildSettings",
-      "kind": "component",
-      "where": "area: GuildSettings",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildShopPage",
-      "kind": "component",
-      "where": "area: GuildShopPage",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "modal"
     },
     {
       "name": "GuildSidebar",
-      "kind": "panel",
-      "where": "area: GuildSidebar",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "GuildSpacePage",
-      "kind": "component",
-      "where": "area: GuildHomePage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "HabitualDNDStore",
-      "kind": "component",
-      "where": "component: HabitualDNDStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Header",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "HeaderBar",
-      "kind": "component",
-      "where": "area: VoiceDareTitleBarButton",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Inbox",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Input",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "InternalIntlMessage",
-      "kind": "component",
-      "where": "area: MessageLoader",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "IntlMessagesProxy",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "ManageStreamsMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MediaTopMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "MemberSafetyPage",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuCheckboxItem",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuItem",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuLabel",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuRadioItem",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuSeparator",
-      "kind": "overlay",
-      "where": "exp: 2025-11-mana-context-menu",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MenuSubmenuItem",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MessageActionCreators",
-      "kind": "component",
-      "where": "area: MessageActionCreators",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MessageLoader",
-      "kind": "component",
-      "where": "area: MessageLoader",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "MessagePort",
-      "kind": "component",
-      "where": "area: ChannelMergerNode",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "MessageQueue",
-      "kind": "component",
-      "where": "area: MessageActionCreators",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MessageRequestPage",
-      "kind": "component",
-      "where": "area: MessageRequestPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MessageRoundtripTrackerStore",
-      "kind": "component",
-      "where": "area: MessageRoundtripTrackerStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MicrophoneToggle",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "MicrophoneVolumeDown",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "MicrophoneVolumeMute",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "MicrophoneVolumeUp",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Microsoft",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "MobileWebSidebarStore",
-      "kind": "panel",
-      "where": "component: MobileWebSidebarStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ModalWindow",
-      "kind": "modal",
-      "where": "area: ChannelMergerNode",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "NextFavoriteChannel",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "NextUserProfile",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "NitroTabButton",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Notification",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Notifications",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "panel"
     },
     {
       "name": "NotificationsInboxSidebar",
-      "kind": "panel",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "NotificationsInboxTitleBarButton",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "NowPlayingHeader",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "NumberFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoAV1MTW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoAV1SIMDMTW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoAV1SIMDW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoAV1W",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoTheoraW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP8MTW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP8W",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP9MTW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP9SIMDMTW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP9SIMDW",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "OGVDecoderVideoVP9W",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Overlay",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "OverlayActionCreators",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PermissionSpeakStore",
-      "kind": "component",
-      "where": "component: PermissionSpeakStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PermissionVADStore",
-      "kind": "component",
-      "where": "component: PermissionVADStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PinPToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "PopoutWindowActivity",
-      "kind": "overlay",
-      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PopoutWindowCallTile",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PopoutWindowChannelCall",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PopoutWindowDiscordStats",
-      "kind": "overlay",
-      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PopoutWindowRTCDebug",
-      "kind": "overlay",
-      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PopoutWindowStageChannelCall",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PremiumOrbRewardsIntroductionPopover",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PremiumOrbRewardsOrbDropPopover",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PremiumOrbRewardsUpsellPopover",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "panel"
     },
     {
       "name": "PremiumServerDriveAnnouncementModal",
-      "kind": "modal",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PrivateChannel",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "modal"
     },
     {
       "name": "PrivateChannelRecipientsInvitePopout",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "PrivateChannels",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Profiler",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "PromotionsPersistedStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "QuestActivityPanelItem",
-      "kind": "panel",
-      "where": "area: QuestActivityPanelItem",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "QuestBar",
-      "kind": "component",
-      "where": "area: QuestBar",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "QuestHomePage",
-      "kind": "component",
-      "where": "area: QuestHomePage",
-      "file": "web.abb08107cf79f4e4.js"
+      "kind": "overlay"
     },
     {
       "name": "QuestMembersListPopout",
-      "kind": "overlay",
-      "where": "area: QuestMembersListPopout",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "QuestPreviewLandingPage",
-      "kind": "component",
-      "where": "area: QuestsLandingPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Quests",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "QuestsLandingPage",
-      "kind": "component",
-      "where": "area: QuestsLandingPage",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "RandomToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
+      "kind": "overlay"
     },
     {
       "name": "RPCCommandsOverlay",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "RTCConnectionMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "RTCRegionStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "ScanChannelsToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Settings",
-      "kind": "component",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "Sidebar",
-      "kind": "panel",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "SocialLayerStorefront",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "SocialLayerStorefrontApplicationWrapper",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "SoundboardContextMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "SoundboardFavoriteStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "SpeechInputToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "SplitScreenToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "STBInput",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "StickersPersistedStore",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Store",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Stream",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "StreamDirector",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "StyleSheetRule",
-      "kind": "panel",
-      "where": "client (unknown area)",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "Tooltip",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "TVContentsMenu",
-      "kind": "overlay",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInput",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputComponent1",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputComponent2",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputComposite1",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputComposite2",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputHDMI1",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputHDMI2",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputHDMI3",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputHDMI4",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVInputVGA1",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "TVSatelliteToggle",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "UnauthenticatedDeepLinkActivity",
-      "kind": "component",
-      "where": "area: USER_SETTINGS_OPEN",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "UserGenericContextMenu",
-      "kind": "overlay",
-      "where": "area: UserGenericContextMenu",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "UserProfileModalActionCreators",
-      "kind": "modal",
-      "where": "area: UserProfileModalActionCreators",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "UserSettingsAccountStore",
-      "kind": "component",
-      "where": "component: UserSettingsAccountStore · area: UserSettingsAccountStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "UserSettingsProto",
-      "kind": "component",
-      "where": "area: user_guild_settings_version",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "UserSettingsStore",
-      "kind": "component",
-      "where": "area: UserSettingsStore",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "VibegrationsChannel",
-      "kind": "component",
-      "where": "area: ChannelStoreListing",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "Video",
-      "kind": "component",
-      "where": "client (unknown area)",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "VideoDeviceMenu",
-      "kind": "overlay",
-      "where": "area: VideoDeviceMenu",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "VideoModeNext",
-      "kind": "component",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "VideoPopover",
-      "kind": "overlay",
-      "where": "area: VideoPopover",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "VoiceDareTitleBarButton",
-      "kind": "control",
-      "where": "area: VoiceDareTitleBarButton",
-      "file": "web.abb08107cf79f4e4.js"
-    },
-    {
-      "name": "VoiceDial",
-      "kind": "component",
-      "where": "area: VoiceDial",
-      "file": "25868.bd058c114912c1de.js"
-    },
-    {
-      "name": "WebGLShaderPrecisionFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "56707.439411ea39eb4c15.js"
-    },
-    {
-      "name": "ZodBigIntFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ZodCustomStringFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ZodInput",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ZodNumberFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ZodStringFormat",
-      "kind": "control",
-      "where": "client (unknown area)",
-      "file": "86439.e47be0ccb0df1328.js"
-    },
-    {
-      "name": "ZoomToggle",
-      "kind": "control",
-      "where": "area: VideoModeNext",
-      "file": "25868.bd058c114912c1de.js"
+      "kind": "overlay"
     }
   ],
-  "endpoints": [
-    "https://cdn.discordapp.com/assets/content/10f99755a4744f5618c8273577d56fbcc1276d1fb7c55e67cb739da0bf9ec4ab.svg",
-    "https://cdn.discordapp.com/assets/content/2d79c39b63ff64b05e6439fb94317c8686baac6b09b80e229bdc1fc29d0de45f.webp",
-    "https://cdn.discordapp.com/assets/content/45869d85b2ac77cfcabef81ca11fcb4f62aab8bbeaf1adc07397e8e0fd0737a2.svg",
-    "https://cdn.discordapp.com/assets/content/48d0d3c091090d6f30688db34d0d165d6a8ade119464e94cda6d458bd8f3ae21.svg",
-    "https://cdn.discordapp.com/assets/content/7b1be3836f40d812d78670cd3421cc245cae219ac7d93f5e50c4a80399bd9ef0.svg",
-    "https://cdn.discordapp.com/assets/content/951fb14c4f181e23caa1730b070ffd1b04bf13850e686221fc596c3d7fd7b234.mov",
-    "https://cdn.discordapp.com/assets/content/9704f78db46554d26701d9fdb7e758c796cea63014fb2633f39bec487a3322b6.svg",
-    "https://cdn.discordapp.com/assets/content/cedc17f03dee621e55eb1b301c68372f08ac64f32ce656ac5b9cbc0fc0d149f0.webm",
-    "https://cdn.discordapp.com/bad-domains/hashes.json",
-    "https://cdn.discordapp.com/bad-domains/updated_hashes.json",
-    "https://creator-support.discord.com/hc/en-us/articles/12653663868823",
-    "https://datadog.discord.tools/apm/",
-    "https://discord.com/blog/welcome-to-the-new-era-of-discord-apps",
-    "https://discordapp.com/mweb-handoff",
-    "https://support.discord.com/hc/en-us/articles/10394859532823",
-    "https://support.discord.com/hc/en-us/articles/208866998-Invites-101"
-  ],
-  "flags": [
-    "disableDefaultStyles",
-    "disablePictureInPicture",
-    "disableRemotePlayback",
-    "disableTLSCerts",
-    "enableBackground",
-    "enableTracing",
-    "hasAudio",
-    "hasDiversity",
-    "hasDiversityParent",
-    "hasFlash",
-    "hasMultiDiversity",
-    "hasMultiDiversityParent",
-    "hasOwnProperty",
-    "hasTypedArrays",
-    "hasWebAssembly",
-    "hasWebAudio",
-    "hideConnectPlayStation",
-    "hideConnectSpotify",
-    "hidePremiumPromo",
-    "hidePremiumReactivateNotice",
-    "hidePremiumTier2TrialEnding",
-    "hideSuppressWarning",
-    "isActive",
-    "isAfter",
-    "isAudio",
-    "isBefore",
-    "isBlacklisted",
-    "isCalendarOpen",
-    "isConnected",
-    "isContextLost",
-    "isDisabled",
-    "isDragging",
-    "isDraggingNativeItem",
-    "isDraggingSource",
-    "isEnabled",
-    "isExcluded",
-    "isExternal",
-    "isFinite",
-    "isHideDevBanner",
-    "isImage",
-    "isInRange",
-    "isInSelectingRange",
-    "isIntersecting",
-    "isKeyboardSelected",
-    "isModuleNamespaceObject",
-    "isNodeInDocument",
-    "isOutsideMonth",
-    "isOverTarget",
-    "isPaused",
-    "isPlaying",
-    "isPrototypeOf",
-    "isProxy",
-    "isRangeEnd",
-    "isRangeEndMonth",
-    "isRangeEndQuarter",
-    "isRangeStart",
-    "isRangeStartMonth",
-    "isRangeStartQuarter",
-    "isSameDay",
-    "isSelectingRangeEnd",
-    "isSelectingRangeStart",
-    "isSetUp",
-    "isSourceId",
-    "isSourcePublic",
-    "isStopped",
-    "isTargetId",
-    "isTooSlow",
-    "isTouchScrollEnabled",
-    "isWeekInMonth",
-    "isWeekend",
-    "showAllSpans",
-    "useActionData",
-    "useBlocker",
-    "useFetcher",
-    "useFetchers",
-    "useGrouping",
-    "useLoaderData",
-    "useMatches",
-    "useNavigate",
-    "useNavigation",
-    "useOffscreenRenderer",
-    "useRevalidator",
-    "useRouteError",
-    "useRouteId",
-    "useRouteLoaderData",
-    "useScrollRestoration",
-    "useSound",
-    "useSubmit",
-    "useSubmitFetcher",
-    "useToken",
-    "useViewTransitionState"
-  ]
+  "scrapedAt": "2026-08-14T21:18:35.770Z"
 }
