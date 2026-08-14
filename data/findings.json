@@ -1,7 +1,441 @@
 {
   "experiments": [
     {
+      "id": "2021-02_staff_qc_debugging",
+      "type": "user",
+      "isApex": false,
+      "label": "Display QS scores in results. Not a real experiment",
+      "kind": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Show scores in QS results"
+        }
+      ]
+    },
+    {
+      "id": "2022-03_block_russian_purchases",
+      "type": "user",
+      "isApex": false,
+      "label": "Block purchases based on country",
+      "kind": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Payments Blocked"
+        }
+      ]
+    },
+    {
+      "id": "2022-07_voice_in_threads",
+      "type": "user",
+      "isApex": false,
+      "label": "Voice in Threads",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "On"
+        }
+      ]
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "type": "user",
+      "isApex": false,
+      "label": "Automod Mention Raid Limit",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Automod Mention Raid Limit"
+        }
+      ]
+    },
+    {
+      "id": "2024-06_rtc_pacer__simulcast",
+      "type": "user",
+      "isApex": false,
+      "label": "RTC Pacer & Golive Simulcast",
+      "kind": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Golive Simulcast without prober 720p@500k"
+        },
+        {
+          "id": 2,
+          "label": "Golive Simulcast 720p@500k"
+        },
+        {
+          "id": 3,
+          "label": "Golive with pacing"
+        },
+        {
+          "id": 4,
+          "label": "Golive with pacing and probing"
+        },
+        {
+          "id": 5,
+          "label": "Golive Simulcast 720p@750k"
+        },
+        {
+          "id": 6,
+          "label": "Golive Simulcast 720p@1000k"
+        }
+      ]
+    },
+    {
+      "id": "2024-12_guild_voice_channel_ringing",
+      "type": "guild",
+      "isApex": false,
+      "label": "Guild Voice Ringing",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Allow users to ring each other in Guild Voice Channels"
+        }
+      ]
+    },
+    {
+      "id": "2025-04-desktop-refresh-fast-follows",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-05-search-results-feedback",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-06_native_intents",
+      "type": "user",
+      "isApex": false,
+      "label": "Native Intents",
+      "kind": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "All enabled"
+        },
+        {
+          "id": 2,
+          "label": "Clear Only"
+        },
+        {
+          "id": 3,
+          "label": "Activities Only"
+        },
+        {
+          "id": 4,
+          "label": "Activities and Clear"
+        }
+      ]
+    },
+    {
+      "id": "2025-08_portkey_enabled",
+      "type": "user",
+      "isApex": false,
+      "label": "GameServer Enabled",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable GameServer"
+        }
+      ]
+    },
+    {
+      "id": "2025-08-browser-hevc",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-08-voice-user-affinity",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09_hotwheels_nvidia_boost",
+      "type": "user",
+      "isApex": false,
+      "label": "Next iteration of the activity feed ranking model.",
+      "kind": "user",
+      "treatments": [
+        {
+          "id": 16,
+          "label": "ML model V3 - Nvidia small boost"
+        },
+        {
+          "id": 17,
+          "label": "ML model V3 - Nvidia big boost"
+        }
+      ]
+    },
+    {
+      "id": "2025-09-agc2-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-image-attachment-mezzanine-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-libdiscore-telemetry",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-overlay-state-tracking",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-sensitive-content-self-harm",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-server-nsfw-level",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-threads-also-send-to-channel",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-09-video-qoe-metrics-tracking",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-10-desktop-communication-notifications-emoji",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-10-force-sdr-emojis-stickers",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-10-friend-request-alerts-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-10-go-live-auto-quality",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-10-low-latency-rate-control",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-age-verification-expressive-everywhere",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-defer-load-late-lazy-cache",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-global-frame-pool-lock",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2025-11-mana-context-menu",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-overlay-chat",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-rtc-panel-entry-point-new-copy",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-11-video-end-card-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12_voice_channel_hoisting",
+      "type": "user",
+      "isApex": false,
+      "label": "Voice Channel Hoisting",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Both waveform and highlight"
+        },
+        {
+          "id": 2,
+          "label": "Waveform icon only"
+        }
+      ]
+    },
+    {
+      "id": "2025-12-09-ptt-education",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-hdr-accessibility-setting",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-katsudon",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-nitro-s-rewards",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-proportional-vad-indicator",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-windows-audio-effects",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2025-12-wmf-gpu-encode",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-android-rmle",
       "type": "user",
       "isApex": false,
       "label": null,
@@ -17,7 +451,947 @@
       "kind": "user"
     },
     {
+      "id": "2026-01-cms-layouts",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-family-center-v3",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-favorites-server",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-ios-push-notif-json-fix",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-less-personalized-ads",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-libdiscore-batch-store-refactor",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-voice-dares-v0",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-01-wmf-gpu-encode-intel",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02_hangout_window",
+      "type": "user",
+      "isApex": false,
+      "label": "Hangout Window",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable Hangout Window"
+        }
+      ]
+    },
+    {
+      "id": "2026-02_past_vc_activity_messages",
+      "type": "user",
+      "isApex": false,
+      "label": "Past VC Activity Messages",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Show past VC activity messages in system channel"
+        }
+      ]
+    },
+    {
+      "id": "2026-02-android-chat-mosaic-shared-pool",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-android-fresco-cache",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-content-classification-presence-filter",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-friends-list",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-game-server-tab-always-on",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-gifting-modal-redesign",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-go-live-hdr",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-go-live-video-preset-resolution",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-gsh-game-detection-upsell",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-join-game-community-cta",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-lazy-load-all-images",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-longer-group-dm-invites",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-mana-playground-access",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-mobile-visual-refresh",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-mobile-volume-output-slider-removal",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-non-dm-gifting-modal-redesign",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-premium-offer-reminder-xp",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-private-channel-hiding",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-private-profiles",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-process-boost-on-voice",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-pubsub-bulk-ban-users",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-referral-reminder-dc",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-silence-warning-aggression",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-sticker-padding",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-voice-channel-link-click",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions-all",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03_file_upload_250_mb_powerup",
+      "type": "user",
+      "isApex": false,
+      "label": "File Upload 250MB Powerup",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable File Upload 250MB Powerup"
+        },
+        {
+          "id": 2,
+          "label": "Rollback UI for File Upload 250MB Powerup"
+        }
+      ]
+    },
+    {
+      "id": "2026-03_game_server_pricing",
+      "type": "user",
+      "isApex": false,
+      "label": "Game Server Pricing",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable Game Server Pricing"
+        }
+      ]
+    },
+    {
+      "id": "2026-03_guild_official_messages",
+      "type": "guild",
+      "isApex": false,
+      "label": "Guild Official Messages",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable official messages"
+        }
+      ]
+    },
+    {
+      "id": "2026-03_voice_badge",
+      "type": "user",
+      "isApex": false,
+      "label": "Display Voice Channel Badge",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 0,
+          "label": "Control"
+        },
+        {
+          "id": 1,
+          "label": "Show voice badges"
+        }
+      ]
+    },
+    {
+      "id": "2026-03-age-verification-google-wallet",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-arborium-highlight",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-audio-effects-probe",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-block-purchases",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-bogo-promotion-gate-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-bogo-promotion-marketing-materials-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-boost-to-unlock-mobile-coachmark",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-browser-inverted-wants",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-churro",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-clips-experiment",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-collectibles-profile-frames",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-content-inventory-memberlist-and-ranker",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-conversation-highlighting-utility",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-crepe",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-croissant",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-debug-experiment",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-denormalized-perks-access-read",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-file-upload-powerup-holdout",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-friend-request-message",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-icymi-desktop",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-icymi-staff-debugging-utility",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-image-load-metrics",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-ios-audio-interrupt-handling",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-krisp-stats-collection",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-media-play-metrics",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-message-bookmarks",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-mobile-hermes-occupancy-target",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-mobile-quest-home-red-dot-notification",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-muted-video-quest-new-defaults",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-overlay-default-keybind",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-private-profiles-strict",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-private-profiles-strict-gb",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-quest-home-bounties",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-quest-reload-video-on-obscured",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-requiremodule-caching-redux",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-soundmoji-rendering",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-soundmoji-sending",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-stage-voice-panel",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-surface-direct-renderer",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-video-capture-device-no-reuse",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-video-quest-player-refactor",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-wishlisting-nitro",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-03-wysiwyg-user-profile-editing",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04_server_theme",
+      "type": "user",
+      "isApex": false,
+      "label": "Server Theme",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 0,
+          "label": "Control"
+        },
+        {
+          "id": 1,
+          "label": "Enable Server Theme"
+        }
+      ]
+    },
+    {
+      "id": "2026-04_voice_call_trigger_point",
+      "type": "user",
+      "isApex": false,
+      "label": "Voice Call Trigger Point Experiment",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Treatment"
+        }
+      ]
+    },
+    {
+      "id": "2026-04-badge-discovery",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-browser-transceiver-padding-removal",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-clips-v3-runtime",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-collectibles-profile-frames-purchase",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-composed-quest-player",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-consistent-profiles",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-desktop-notification-center",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-desktop-tti-dnstcp-warmup",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-desktop-tti-early-update-check",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-desktop-tti-update-backoff",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-desktop-tti-v8-cache",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-disable-hook-frame-pacer",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-ensure-received-messages-added-in-order",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-gift-promotion-reminder",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-gifting-badge",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2026-04-http-request-sample",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-icymi-staff-only",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-inappropriate-conversations-prescan",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-kestrel",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-krisp-v9-ios",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-overlay-fps-limit",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-overlay-streamer-mode",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-premium-group-primary-reminder-nagbar",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-profile-frame-gifting",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-profile-frames-ea-marketing",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-quests-premium-orb-multiplier-marketing",
       "type": "user",
       "isApex": false,
       "label": null,
@@ -33,7 +1407,408 @@
       "kind": "user"
     },
     {
+      "id": "2026-04-server-boost-copy-1440p",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-topical-navigation-staff-control",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-user-profile-performance-analytics",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-video-hook-dx12",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-voice-gateway-protocol-version",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-04-wetf-parser",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-age-restricted-application-commands",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-app-store-overlay-feature-gate",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-av1-bitrate-tuning",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-badge-discovery-milestone-2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-block-user-feedback",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-bounties-stage-1",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-bounty-stale-refresh-quest-home",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-clips-media-comments",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-clips-scrub-preview-frontend",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-collectibles-collection-page",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-device-form-factor-indicators",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-dice-roll-slash-command",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-disable-camera-simulcast",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-distributed-clips",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-electron-multilang-spellcheck",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2026-05-global-soundboard-wheel-popout",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-ignore-user-feedback",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-ios-video-stabilization",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-mana-type-consolidation",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-quest-home-tile-redesign",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-server-theme-user",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-spatial-audio-for-voice",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-05-use-ad-analytics-interface",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06_guild_rooms",
+      "type": "guild",
+      "isApex": false,
+      "label": "Guild Rooms",
+      "kind": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable Guild Rooms in this guild"
+        },
+        {
+          "id": 2,
+          "label": "Enable Guild Rooms in this guild"
+        }
+      ]
+    },
+    {
+      "id": "2026-06_guild_spaces",
+      "type": "guild",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
+    },
+    {
+      "id": "2026-06-age-verification-incode",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-android-two-week-trials",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-av1-encode-linux",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-battlenet-social-sdk-migration",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-chat-bar-customization",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-clickstream-analytics",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-clips-league-events",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-clips-secondary-entrypoints",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-content-classification-embedded-activity-filter",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-desktop-tti-http-cdt",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-desktop-tti-splash-asset",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-dont-badge-muted-vcs",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-family-center-connection-prereq",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-game-server-hosting-in-shop",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-gifting-badge-desktop",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-gummy-bears",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-gummy-viewers",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-ios-ota-streaming",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-magic-scoring",
       "type": "user",
       "isApex": false,
       "label": null,
@@ -57,6 +1832,94 @@
       "kind": "user"
     },
     {
+      "id": "2026-06-mobile-server-tag",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-monthly-to-yearly-upsells",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-quest-fetch-reconnect-jitter",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-quest-home-layout-visual-tweaks",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-server-ladder",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-server-theme-apex-shadow",
+      "type": "user",
+      "isApex": true,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-soundboard-frequently-used",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-topical-navigation-guild",
+      "type": "guild",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
+    },
+    {
+      "id": "2026-06-upscale-small-captured-frames",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-06-use-new-badge-image-source",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2026-06-web-translate-dom-guard",
       "type": "user",
       "isApex": false,
@@ -73,6 +1936,46 @@
       "kind": "user"
     },
     {
+      "id": "2026-06-wmf-cpu-encode-intel",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-ad-recheck-interval-experiment",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-attachment-image-ladder",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-autoclipping-default-override",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-autoclipping-marketing",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2026-07-aws-gateway",
       "type": "user",
       "isApex": false,
@@ -81,7 +1984,223 @@
       "kind": "user"
     },
     {
+      "id": "2026-07-bounties-vertical-scroll",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-call-of-duty-3pp-expired",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-call-of-duty-3pp-marketing",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-clips-game-events-on-player",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-cod-3pp",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-create-gdm-title",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-custom-app-store-overlay",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-desktop-tti-update-backoff-algo",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-expressive-modal-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-game-mentions-v2-mobile",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-gsimagic",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-hotwheels-clickable-game-icon",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-krisp-cpu-disablement",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-message-bookmarks-v2",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-mkl-zen-cpu-dispatch-override",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-nvenc-reconstructed-frames",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-parental-consent-warning-fetch",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-past-due-checkout",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-personal-widget",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-premium-group-announcement-modal",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-premium-group-expansion-announcement",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-quest-bar-secondary-cta",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-quest-home-default-banner-removal",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
       "id": "2026-07-reject-with-error-kill-switch",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-renewable-end-date-sort",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-rtc-panel-game-card",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-07-tr-offer-1-campaign",
       "type": "user",
       "isApex": false,
       "label": null,
@@ -103,10 +2222,123 @@
       "label": null,
       "treatments": [],
       "kind": "user"
+    },
+    {
+      "id": "2026-07-vibegrations-guild",
+      "type": "guild",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
+    },
+    {
+      "id": "2026-08-android-rn-reparenting-flag",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-audio-fidelity",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-bounties-mobile-quest-bar",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-dont-close-chat",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-favorites-server",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-gsh-subs-activity-bar",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-kestrel-ga",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-profile-embed-rendering",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-rich-presence-invite-banner",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-scheduled-messages",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-user-bio-max-length",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-video-guard",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
+    },
+    {
+      "id": "2026-08-vq-remaining-time-truncation",
+      "type": "user",
+      "isApex": false,
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     }
   ],
   "routes": [
     "/channels",
+    "/channels/",
     "/channels/preload-messages",
     "/guilds",
     "/guilds/automations/email-domain-lookup",
@@ -114,8 +2346,10 @@
     "/guilds/automations/email-domain-lookup/verify-code",
     "/guilds/create",
     "/guilds/gravity-join",
+    "/quests",
     "/quests/appstore-metadata",
     "/quests/decision",
+    "/quests/earned-decision",
     "/quests/get-decisions",
     "/quests/preview",
     "/quests/reset-recent-quest-completions",
@@ -223,6 +2457,7 @@
     "/users/@me/notification-settings/muted-games",
     "/users/@me/notification-settings/snapshots",
     "/users/@me/outbound-promotions/codes",
+    "/users/@me/parental-consent/warning",
     "/users/@me/perks-demos",
     "/users/@me/phone",
     "/users/@me/phone/reverify",
@@ -267,12 +2502,28 @@
       "kind": "panel"
     },
     {
+      "name": "AppOverlay",
+      "kind": "overlay"
+    },
+    {
+      "name": "ClipsPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "CloudSyncResolutionModal",
+      "kind": "modal"
+    },
+    {
       "name": "CollectiblesAnnouncementModal",
       "kind": "modal"
     },
     {
       "name": "ConfirmModal",
       "kind": "modal"
+    },
+    {
+      "name": "ContentPopout",
+      "kind": "overlay"
     },
     {
       "name": "DeviceDetectedPanel",
@@ -287,8 +2538,20 @@
       "kind": "panel"
     },
     {
+      "name": "InteractionModal",
+      "kind": "modal"
+    },
+    {
+      "name": "KeyboardShortcutsModal",
+      "kind": "modal"
+    },
+    {
       "name": "NotificationsInboxSidebar",
       "kind": "panel"
+    },
+    {
+      "name": "ParentalConsentWarningModal",
+      "kind": "modal"
     },
     {
       "name": "PremiumServerDriveAnnouncementModal",
@@ -303,9 +2566,45 @@
       "kind": "overlay"
     },
     {
+      "name": "QuestSurveyModal",
+      "kind": "modal"
+    },
+    {
+      "name": "RecentsPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "ReverseTrialUpsellModal",
+      "kind": "modal"
+    },
+    {
       "name": "RPCCommandsOverlay",
       "kind": "overlay"
+    },
+    {
+      "name": "SharingPrivacyPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "ShowQRCodeModal",
+      "kind": "modal"
+    },
+    {
+      "name": "UserProfileAccountPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "UserProfileReactPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "UserProfileReplyPopout",
+      "kind": "overlay"
+    },
+    {
+      "name": "VoiceChannelStatusModal",
+      "kind": "modal"
     }
   ],
-  "scrapedAt": "2026-08-14T22:06:19.077Z"
+  "scrapedAt": "2026-08-14T22:18:25.101Z"
 }
