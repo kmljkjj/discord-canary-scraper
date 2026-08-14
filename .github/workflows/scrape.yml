@@ -2,9 +2,11 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Toutes les 5 minutes (UTC). GitHub peut retarder un peu, mais ça tourne sans intervention.
+    # Toutes les 5 minutes (UTC). GitHub peut retarder un peu.
     - cron: '*/5 * * * *'
-  workflow_dispatch: # Manuel si besoin
+  workflow_dispatch: # Manuel (bouton Run workflow)
+  repository_dispatch: # Trigger externe (comme Wumpus Central)
+    types: [trigger-scraping]
 
 permissions:
   contents: write
