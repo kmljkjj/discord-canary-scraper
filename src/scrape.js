@@ -12,6 +12,19 @@ const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
+// UI keywords → often signal Discord is shipping a real feature surface
+const UI_KEYWORDS = [
+  'Modal', 'Panel', 'Sidebar', 'Drawer', 'Sheet', 'Overlay', 'Popout',
+  'Tooltip', 'Popover', 'Dropdown', 'Menu', 'Banner', 'Toast', 'Snackbar',
+  'Dialog', 'Card', 'TabBar', 'Toolbar', 'Header', 'Footer', 'Layout',
+  'Button', 'Input', 'Form', 'Toggle', 'Switch', 'Slider', 'Badge',
+  'Avatar', 'Profile', 'Settings', 'Channel', 'Guild', 'Member',
+  'Quest', 'Shop', 'Store', 'Nitro', 'Gift', 'Boost', 'Premium',
+  'Voice', 'Video', 'Stream', 'Stage', 'Forum', 'Thread', 'Message',
+  'Inbox', 'Notification', 'Activity', 'Status', 'Presence',
+  'Call', 'ScreenShare', 'GoLive', 'Camera', 'Mic',
+];
+
 // ─────────────────────────────────────────────
 // Fetch & extract assets
 // ─────────────────────────────────────────────
@@ -102,28 +115,57 @@ async function downloadAssets(assets) {
 }
 
 // ─────────────────────────────────────────────
-// Experiment / Route / String analysis
-// Real Discord experiment IDs look like:
-//   2026-08-profile-embed-share-button
-//   2025-05_push_to_talk_latching
-//   2026-04-mltargetingv6
+// Experiment / Route / String / UI analysis
 // ─────────────────────────────────────────────
 
 function isValidExperimentId(id) {
   if (!id || id.length < 10 || id.length > 90) return false;
-  // Must start with year-month
   if (!/^20[2-3][0-9]-[0-1][0-9][_-]/.test(id)) return false;
-  // Avoid pure noise
   if (/^20[0-9]{2}-[0-9]{2}$/.test(id)) return false;
   return true;
 }
 
-function analyzeJSContent(content) {
-  const experiments = new Map(); // id -> { id, type, isApex }
+function looksLikeUIComponent(name) {
+  if (!name || name.length < 5 || name.length > 60) return false;
+  // PascalCase component-like
+  if (!/^[A-Z][A-Za-z0-9]+$/.test(name)) return false;
+  // Must contain a UI keyword fragment
+  return UI_KEYWORDS.some(k => name.includes(k));
+}
+
+function extractContext(content, index, id) {
+  const start = Math.max(0, index - 400);
+  const end = Math.min(content.length, index + id.length + 500);
+  const window = content.slice(start, end);
+
+  const hints = [];
+
+  // Nearby experiment id
+  const expNear = window.match(/["'](20[2-3][0-9]-[0-1][0-9][_-][a-z0-9_\-]{4,50})["']/i);
+  if (expNear) hints.push(`exp: ${expNear[1]}`);
+
+  // Nearby route
+  const routeNear = window.match(/["'](\/(?:channels|guilds|users|quests|settings|activities)[a-z0-9_\-\/{}.:]*)["']/i);
+  if (routeNear) hints.push(`route: ${routeNear[1]}`);
+
+  // Nearby displayName / component name
+  const dn = window.match(/displayName\s*[:=]\s*["']([A-Za-z0-9_]+)["']/);
+  if (dn) hints.push(`component: ${dn[1]}`);
+
+  // Layer / section labels
+  const layer = window.match(/["']((?:user|guild|channel|message|voice|video|settings|profile|shop|quest)[_-]?[a-z0-9_-]{2,30})["']/i);
+  if (layer) hints.push(`area: ${layer[1]}`);
+
+  return hints.slice(0, 3).join(' · ') || null;
+}
+
+function analyzeJSContent(content, sourceFile) {
+  const experiments = new Map();
   const routes = new Set();
   const strings = new Set();
+  const uiItems = new Map(); // key -> { name, kind, where, file }
 
-  // ── Primary experiment ID pattern (YYYY-MM_xxx or YYYY-MM-xxx)
+  // ── Experiment IDs
   const idRegex = /["'](20[2-3][0-9]-[0-1][0-9][_-][a-z0-9_\-]{4,70})["']/gi;
   let m;
   while ((m = idRegex.exec(content)) !== null) {
@@ -140,8 +182,6 @@ function analyzeJSContent(content) {
     }
   }
 
-  // ── Try to associate type (user / guild) near the ID
-  // Look for nearby kind/type/unit_type
   for (const [id, exp] of experiments) {
     const idx = content.toLowerCase().indexOf(id);
     if (idx === -1) continue;
@@ -195,12 +235,80 @@ function analyzeJSContent(content) {
     }
   }
 
+  // ── UI components / surfaces (important signal)
+  // 1) PascalCase names with UI keywords
+  const pascalRe = /["']([A-Z][A-Za-z0-9]{4,55})["']/g;
+  while ((m = pascalRe.exec(content)) !== null) {
+    const name = m[1];
+    if (!looksLikeUIComponent(name)) continue;
+    if (uiItems.has(name)) continue;
+
+    let kind = 'component';
+    if (/Modal|Dialog/i.test(name)) kind = 'modal';
+    else if (/Panel|Sidebar|Drawer|Sheet/i.test(name)) kind = 'panel';
+    else if (/Popout|Popover|Tooltip|Dropdown|Menu/i.test(name)) kind = 'overlay';
+    else if (/Banner|Toast|Snackbar/i.test(name)) kind = 'banner';
+    else if (/Button|Toggle|Switch|Input|Form/i.test(name)) kind = 'control';
+
+    const where = extractContext(content, m.index, name);
+    uiItems.set(name, {
+      name,
+      kind,
+      where: where || 'client (unknown area)',
+      file: sourceFile || null,
+    });
+  }
+
+  // 2) displayName = "SomethingModal"
+  const displayRe = /displayName\s*[:=]\s*["']([A-Za-z0-9_]{5,55})["']/g;
+  while ((m = displayRe.exec(content)) !== null) {
+    const name = m[1];
+    if (!looksLikeUIComponent(name) && !/Modal|Panel|Popout|Sheet|Drawer/i.test(name)) continue;
+    if (uiItems.has(name)) continue;
+
+    let kind = 'component';
+    if (/Modal|Dialog/i.test(name)) kind = 'modal';
+    else if (/Panel|Sidebar|Drawer|Sheet/i.test(name)) kind = 'panel';
+    else if (/Popout|Popover|Tooltip|Menu/i.test(name)) kind = 'overlay';
+
+    const where = extractContext(content, m.index, name);
+    uiItems.set(name, {
+      name,
+      kind,
+      where: where || 'client (unknown area)',
+      file: sourceFile || null,
+    });
+  }
+
+  // 3) CSS-ish class tokens that scream new UI surface
+  const cssUiRe = /["']((?:[a-z]+[A-Z][A-Za-z0-9]*)?(?:Modal|Panel|Sidebar|Drawer|Sheet|Popout|Overlay|Banner)[A-Za-z0-9]*)["']/g;
+  while ((m = cssUiRe.exec(content)) !== null) {
+    const name = m[1];
+    if (name.length < 6 || name.length > 50) continue;
+    if (uiItems.has(name)) continue;
+
+    let kind = 'ui-class';
+    if (/Modal/i.test(name)) kind = 'modal';
+    else if (/Panel|Sidebar|Drawer|Sheet/i.test(name)) kind = 'panel';
+    else if (/Popout|Overlay/i.test(name)) kind = 'overlay';
+    else if (/Banner/i.test(name)) kind = 'banner';
+
+    const where = extractContext(content, m.index, name);
+    uiItems.set(name, {
+      name,
+      kind,
+      where: where || 'client (unknown area)',
+      file: sourceFile || null,
+    });
+  }
+
   const allExps = [...experiments.values()];
   return {
     apexExperiments: allExps.filter(e => e.isApex),
     experiments: allExps.filter(e => !e.isApex),
     routes: [...routes].sort(),
     strings: [...strings].sort().slice(0, 80),
+    ui: [...uiItems.values()],
   };
 }
 
@@ -212,12 +320,13 @@ async function analyzeAssets() {
   const expMap = new Map();
   const routes = new Set();
   const strings = new Set();
+  const uiMap = new Map();
 
   for (const file of jsFiles) {
     try {
       const content = await fs.readFile(path.join(ASSETS_DIR, file), 'utf8');
       const sample = content.length > 2_500_000 ? content.slice(0, 2_000_000) : content;
-      const found = analyzeJSContent(sample);
+      const found = analyzeJSContent(sample, file);
 
       for (const e of found.apexExperiments) apexMap.set(e.id, e);
       for (const e of found.experiments) {
@@ -225,6 +334,9 @@ async function analyzeAssets() {
       }
       found.routes.forEach(r => routes.add(r));
       found.strings.forEach(s => strings.add(s));
+      for (const u of found.ui) {
+        if (!uiMap.has(u.name)) uiMap.set(u.name, u);
+      }
     } catch (err) {
       console.warn(`Could not analyze ${file}:`, err.message);
     }
@@ -235,6 +347,7 @@ async function analyzeAssets() {
     experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
     routes: [...routes].sort(),
     strings: [...strings].sort().slice(0, 100),
+    ui: [...uiMap.values()].sort((a, b) => a.name.localeCompare(b.name)),
   };
 }
 
@@ -256,6 +369,7 @@ function diffFindings(current, previous) {
       newExperiments: current.experiments,
       newRoutes: current.routes,
       newStrings: current.strings.slice(0, 15),
+      newUI: (current.ui || []).slice(0, 25),
       isFirstRun: true,
     };
   }
@@ -264,12 +378,14 @@ function diffFindings(current, previous) {
   const prevExp = new Set((previous.experiments || []).map(e => (typeof e === 'string' ? e : e.id)));
   const prevRoutes = new Set(previous.routes || []);
   const prevStrings = new Set(previous.strings || []);
+  const prevUI = new Set((previous.ui || []).map(u => (typeof u === 'string' ? u : u.name)));
 
   return {
     newApexExperiments: current.apexExperiments.filter(e => !prevApex.has(e.id)),
     newExperiments: current.experiments.filter(e => !prevExp.has(e.id)),
     newRoutes: current.routes.filter(r => !prevRoutes.has(r)),
     newStrings: current.strings.filter(s => !prevStrings.has(s)).slice(0, 20),
+    newUI: (current.ui || []).filter(u => !prevUI.has(u.name)).slice(0, 30),
     isFirstRun: false,
   };
 }
@@ -278,12 +394,13 @@ function hasImportantChanges(diff) {
   return (
     (diff.newApexExperiments && diff.newApexExperiments.length > 0) ||
     (diff.newExperiments && diff.newExperiments.length > 0) ||
-    (diff.newRoutes && diff.newRoutes.length > 0)
+    (diff.newRoutes && diff.newRoutes.length > 0) ||
+    (diff.newUI && diff.newUI.length > 0)
   );
 }
 
 // ─────────────────────────────────────────────
-// Discord embeds – clean format
+// Discord embeds
 // ─────────────────────────────────────────────
 
 function formatExperimentEmbed(exp, buildNumber, isApex) {
@@ -298,6 +415,32 @@ function formatExperimentEmbed(exp, buildNumber, isApex) {
       { name: 'Type', value: exp.type || 'user', inline: true },
       { name: 'Build', value: String(buildNumber), inline: true },
     ],
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function formatUIEmbed(uiList, buildNumber) {
+  const lines = uiList.slice(0, 12).map(u => {
+    const kind = u.kind ? `**${u.kind}**` : 'ui';
+    const where = u.where ? ` → _${u.where}_` : '';
+    return `• \`${u.name}\` (${kind})${where}`;
+  });
+
+  if (uiList.length > 12) {
+    lines.push(`… +${uiList.length - 12} more`);
+  }
+
+  return {
+    title: '🧩 New UI detected',
+    description:
+      'Discord a ajouté de la **UI** dans ce build — souvent signe d’une vraie feature en cours.',
+    color: 0xF47B67,
+    fields: [
+      { name: 'Build', value: String(buildNumber), inline: true },
+      { name: 'Count', value: String(uiList.length), inline: true },
+      { name: 'Items', value: lines.join('\n').slice(0, 1000) || '—', inline: false },
+    ],
+    footer: { text: 'UI = modal / panel / overlay / control…' },
     timestamp: new Date().toISOString(),
   };
 }
@@ -318,7 +461,6 @@ async function sendWebhook({ buildInfo, diff, isNewBuild }) {
   const important = hasImportantChanges(diff);
   const embeds = [];
 
-  // Summary embed
   const mainColor = important ? 0xED4245 : isNewBuild ? 0x57F287 : 0x5865F2;
   let mainTitle = 'ℹ️ Discord Canary Check';
   if (important) mainTitle = '🚨 Important Canary Changes';
@@ -340,32 +482,41 @@ async function sendWebhook({ buildInfo, diff, isNewBuild }) {
     main.description = 'First run — baseline saved. Next runs will only report **new** items.';
   }
 
+  // Highlight UI in the summary when present
+  if (diff.newUI?.length) {
+    main.description = (main.description ? main.description + '\n\n' : '') +
+      `🧩 **${diff.newUI.length} new UI item(s)** detected in this build.`;
+  }
+
   embeds.push(main);
 
-  // One embed per new Apex experiment (clean format)
+  // UI first when present (high signal)
+  if (diff.newUI?.length) {
+    embeds.push(formatUIEmbed(diff.newUI, buildInfo.buildNumber));
+  }
+
   if (diff.newApexExperiments?.length) {
-    for (const exp of diff.newApexExperiments.slice(0, 6)) {
+    for (const exp of diff.newApexExperiments.slice(0, 5)) {
       embeds.push(formatExperimentEmbed(exp, buildInfo.buildNumber, true));
     }
-    if (diff.newApexExperiments.length > 6) {
+    if (diff.newApexExperiments.length > 5) {
       embeds.push({
         title: 'New Apex Experiments (more)',
         color: 0xFEE75C,
-        description: truncateList(diff.newApexExperiments.slice(6).map(e => e.id), 10),
+        description: truncateList(diff.newApexExperiments.slice(5).map(e => e.id), 10),
       });
     }
   }
 
-  // One embed per new classic experiment
   if (diff.newExperiments?.length) {
-    for (const exp of diff.newExperiments.slice(0, 6)) {
+    for (const exp of diff.newExperiments.slice(0, 5)) {
       embeds.push(formatExperimentEmbed(exp, buildInfo.buildNumber, false));
     }
-    if (diff.newExperiments.length > 6) {
+    if (diff.newExperiments.length > 5) {
       embeds.push({
         title: 'New Experiments (more)',
         color: 0xEB459E,
-        description: truncateList(diff.newExperiments.slice(6).map(e => e.id), 10),
+        description: truncateList(diff.newExperiments.slice(5).map(e => e.id), 10),
       });
     }
   }
@@ -449,13 +600,14 @@ async function main() {
     console.log('Same build – analyzing existing assets.\n');
   }
 
-  console.log('🧠 Analyzing for experiments, routes & strings...\n');
+  console.log('🧠 Analyzing for experiments, routes, strings & UI...\n');
   const currentFindings = await analyzeAssets();
 
   console.log(`  Apex Experiments : ${currentFindings.apexExperiments.length}`);
   console.log(`  Experiments      : ${currentFindings.experiments.length}`);
   console.log(`  Routes           : ${currentFindings.routes.length}`);
-  console.log(`  Strings          : ${currentFindings.strings.length}\n`);
+  console.log(`  Strings          : ${currentFindings.strings.length}`);
+  console.log(`  UI items         : ${(currentFindings.ui || []).length}\n`);
 
   const previousFindings = await loadPreviousFindings();
   const diff = diffFindings(currentFindings, previousFindings);
@@ -464,7 +616,8 @@ async function main() {
   console.log(`  Apex Exp : ${diff.newApexExperiments.length}`);
   console.log(`  Exp      : ${diff.newExperiments.length}`);
   console.log(`  Routes   : ${diff.newRoutes.length}`);
-  console.log(`  Strings  : ${diff.newStrings.length}\n`);
+  console.log(`  Strings  : ${diff.newStrings.length}`);
+  console.log(`  UI       : ${diff.newUI.length}\n`);
 
   const buildInfo = {
     buildNumber: assets.buildNumber,
