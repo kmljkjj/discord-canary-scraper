@@ -319,5 +319,1231 @@
     "OGVDecoderVideoAV1SIMDW",
     "OGVDecoderVideoAV1W",
     "OGVDecoderVideoTheoraW"
+  ],
+  "ui": [
+    {
+      "name": "ActiveChannelsStore",
+      "kind": "component",
+      "where": "component: ActiveChannelsStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Activity",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ActivitySounds",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ActivityTrackingStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "AddFriendInput",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "AdoptedStyleSheet",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "adoptedStyleSheets",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "ApplicationStreamPreviewUploadManager",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ApplicationSwitchingManager",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "AppSwitch",
+      "kind": "control",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "AudioBassBoostDown",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "AudioBassBoostToggle",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "AudioBassBoostUp",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "AutoUpdateStore",
+      "kind": "component",
+      "where": "component: AutoUpdateStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Avatar",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "AvatarImg",
+      "kind": "component",
+      "where": "component: AvatarImg",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "AVRInput",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Badge",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "BroadcastChannel",
+      "kind": "component",
+      "where": "area: ChannelMergerNode",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "CacheStore",
+      "kind": "component",
+      "where": "area: quest-preview-tool",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "CacheStoreChannelsLazy",
+      "kind": "component",
+      "where": "area: quest-preview-tool",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "CacheStoreLazy",
+      "kind": "component",
+      "where": "area: quest-preview-tool",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Camera",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "CameraFocus",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Channel",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelDown",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "ChannelMemberCountStore",
+      "kind": "component",
+      "where": "component: ChannelMemberCountStore · area: ChannelMemberCountStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelMergerNode",
+      "kind": "component",
+      "where": "area: ChannelMergerNode",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "ChannelRenderer",
+      "kind": "component",
+      "where": "area: ChannelRenderer",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelsAndRolesPage",
+      "kind": "component",
+      "where": "area: ChannelsAndRolesPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelSettings",
+      "kind": "component",
+      "where": "area: ChannelSettings",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelSKUStore",
+      "kind": "component",
+      "where": "component: ChannelSKUStore · area: ChannelSKUStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelStoreListing",
+      "kind": "component",
+      "where": "area: ChannelStoreListing",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ChannelUp",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "ClosedCaptionToggle",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "CodeInput",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "CollectiblesAnnouncementModal",
+      "kind": "modal",
+      "where": "area: shop_include_unpublished",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "CollectiblesShop",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ConfirmModal",
+      "kind": "modal",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ContextMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "DateTimeFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "DeepLinkLaunchActivityInDM",
+      "kind": "component",
+      "where": "area: ChannelStoreListing",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "DeviceDetectedPanel",
+      "kind": "panel",
+      "where": "exp: 2026-07-unobtrusive-device-suggestions",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "DomainMigrationStore",
+      "kind": "component",
+      "where": "component: DomainMigrationStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "EmojiStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "EmptyNotificationsPage",
+      "kind": "component",
+      "where": "area: ChannelStoreListing",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "EndCall",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "ExpressionSuggestionsPersistedStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "FavoriteStore0",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FavoriteStore1",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FavoriteStore2",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FavoriteStore3",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FeedbackModal",
+      "kind": "modal",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "Footer",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Format",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FormatBuilder",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "FramePanelFocusedView",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "FriendsActivityFeed",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GameStoreIconManager",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GIFFavoritesStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildBasicChannels",
+      "kind": "component",
+      "where": "area: GuildBasicChannels",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildChannelUserContextMenu",
+      "kind": "overlay",
+      "where": "area: GuildChannelUserContextMenu",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildHomePage",
+      "kind": "component",
+      "where": "area: GuildHomePage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildMemberVerificationPreviewDisabled",
+      "kind": "component",
+      "where": "area: GuildOnboardingBlockedPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildOfficialMessagesPage",
+      "kind": "component",
+      "where": "area: GuildSpacePage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildOnboardingBlockedPage",
+      "kind": "component",
+      "where": "area: GuildOnboardingBlockedPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildOnboardingPage",
+      "kind": "component",
+      "where": "area: GuildOnboardingPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildPowerupsPage",
+      "kind": "component",
+      "where": "area: GuildPowerupsPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildProgressStore",
+      "kind": "component",
+      "where": "component: GuildProgressStore · area: GuildProgressStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildRoleSubscriptionsOverviewPageWithContext",
+      "kind": "component",
+      "where": "area: ChannelRenderer",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Guilds",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildSettings",
+      "kind": "component",
+      "where": "area: GuildSettings",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildShopPage",
+      "kind": "component",
+      "where": "area: GuildShopPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildSidebar",
+      "kind": "panel",
+      "where": "area: GuildSidebar",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "GuildSpacePage",
+      "kind": "component",
+      "where": "area: GuildHomePage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "HabitualDNDStore",
+      "kind": "component",
+      "where": "component: HabitualDNDStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Header",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "HeaderBar",
+      "kind": "component",
+      "where": "area: VoiceDareTitleBarButton",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Inbox",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Input",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "InternalIntlMessage",
+      "kind": "component",
+      "where": "area: MessageLoader",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "IntlMessagesProxy",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "isHideDevBanner",
+      "kind": "banner",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ManageStreamsMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MediaTopMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "MemberSafetyPage",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuCheckboxItem",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuItem",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuLabel",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuRadioItem",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuSeparator",
+      "kind": "overlay",
+      "where": "exp: 2025-11-mana-context-menu",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MenuSubmenuItem",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MessageActionCreators",
+      "kind": "component",
+      "where": "area: MessageActionCreators",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MessageLoader",
+      "kind": "component",
+      "where": "area: MessageLoader",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "MessagePort",
+      "kind": "component",
+      "where": "area: ChannelMergerNode",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "MessageQueue",
+      "kind": "component",
+      "where": "area: MessageActionCreators",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MessageRequestPage",
+      "kind": "component",
+      "where": "area: MessageRequestPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MessageRoundtripTrackerStore",
+      "kind": "component",
+      "where": "area: MessageRoundtripTrackerStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MicrophoneToggle",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "MicrophoneVolumeDown",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "MicrophoneVolumeMute",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "MicrophoneVolumeUp",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Microsoft",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "MobileWebSidebarStore",
+      "kind": "panel",
+      "where": "component: MobileWebSidebarStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ModalWindow",
+      "kind": "modal",
+      "where": "area: ChannelMergerNode",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "NextFavoriteChannel",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "NextUserProfile",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "NitroTabButton",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Notification",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Notifications",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "NotificationsInboxSidebar",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "NotificationsInboxTitleBarButton",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "NowPlayingHeader",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "NumberFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoAV1MTW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoAV1SIMDMTW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoAV1SIMDW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoAV1W",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoTheoraW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP8MTW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP8W",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP9MTW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP9SIMDMTW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP9SIMDW",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "OGVDecoderVideoVP9W",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Overlay",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "OverlayActionCreators",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PermissionSpeakStore",
+      "kind": "component",
+      "where": "component: PermissionSpeakStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PermissionVADStore",
+      "kind": "component",
+      "where": "component: PermissionVADStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PinPToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "PopoutWindowActivity",
+      "kind": "overlay",
+      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PopoutWindowCallTile",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PopoutWindowChannelCall",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PopoutWindowDiscordStats",
+      "kind": "overlay",
+      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PopoutWindowRTCDebug",
+      "kind": "overlay",
+      "where": "area: CHANNEL_CALL_POPOUT_WINDOW_OPEN",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PopoutWindowStageChannelCall",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PremiumOrbRewardsIntroductionPopover",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PremiumOrbRewardsOrbDropPopover",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PremiumOrbRewardsUpsellPopover",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PremiumServerDriveAnnouncementModal",
+      "kind": "modal",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PrivateChannel",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PrivateChannelRecipientsInvitePopout",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "PrivateChannels",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Profiler",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "PromotionsPersistedStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestActivityPanelItem",
+      "kind": "panel",
+      "where": "area: QuestActivityPanelItem",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestBar",
+      "kind": "component",
+      "where": "area: QuestBar",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestHomePage",
+      "kind": "component",
+      "where": "area: QuestHomePage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestMembersListPopout",
+      "kind": "overlay",
+      "where": "area: QuestMembersListPopout",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestPreviewLandingPage",
+      "kind": "component",
+      "where": "area: QuestsLandingPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Quests",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "QuestsLandingPage",
+      "kind": "component",
+      "where": "area: QuestsLandingPage",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "RandomToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "RPCCommandsOverlay",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "RTCConnectionMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "RTCRegionStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "ScanChannelsToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Settings",
+      "kind": "component",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "Sidebar",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "SocialLayerStorefront",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "SocialLayerStorefrontApplicationWrapper",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "SoundboardContextMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "SoundboardFavoriteStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "SpeechInputToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "SplitScreenToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "STBInput",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "StickersPersistedStore",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Store",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Stream",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "StreamDirector",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "StyleSheetRule",
+      "kind": "panel",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "Tooltip",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "TVContentsMenu",
+      "kind": "overlay",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInput",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputComponent1",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputComponent2",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputComposite1",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputComposite2",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputHDMI1",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputHDMI2",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputHDMI3",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputHDMI4",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVInputVGA1",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "TVSatelliteToggle",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "UnauthenticatedDeepLinkActivity",
+      "kind": "component",
+      "where": "area: USER_SETTINGS_OPEN",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "UserGenericContextMenu",
+      "kind": "overlay",
+      "where": "area: UserGenericContextMenu",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "UserProfileModalActionCreators",
+      "kind": "modal",
+      "where": "area: UserProfileModalActionCreators",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "UserSettingsAccountStore",
+      "kind": "component",
+      "where": "component: UserSettingsAccountStore · area: UserSettingsAccountStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "UserSettingsProto",
+      "kind": "component",
+      "where": "area: user_guild_settings_version",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "UserSettingsStore",
+      "kind": "component",
+      "where": "area: UserSettingsStore",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "VibegrationsChannel",
+      "kind": "component",
+      "where": "area: ChannelStoreListing",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "Video",
+      "kind": "component",
+      "where": "client (unknown area)",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "VideoDeviceMenu",
+      "kind": "overlay",
+      "where": "area: VideoDeviceMenu",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "VideoModeNext",
+      "kind": "component",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "VideoPopover",
+      "kind": "overlay",
+      "where": "area: VideoPopover",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "VoiceDareTitleBarButton",
+      "kind": "control",
+      "where": "area: VoiceDareTitleBarButton",
+      "file": "web.68e677a6e7bcf6a7.js"
+    },
+    {
+      "name": "VoiceDial",
+      "kind": "component",
+      "where": "area: VoiceDial",
+      "file": "25868.bd058c114912c1de.js"
+    },
+    {
+      "name": "WebGLShaderPrecisionFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "56707.439411ea39eb4c15.js"
+    },
+    {
+      "name": "ZodBigIntFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ZodCustomStringFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ZodInput",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ZodNumberFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ZodStringFormat",
+      "kind": "control",
+      "where": "client (unknown area)",
+      "file": "86439.e47be0ccb0df1328.js"
+    },
+    {
+      "name": "ZoomToggle",
+      "kind": "control",
+      "where": "area: VideoModeNext",
+      "file": "25868.bd058c114912c1de.js"
+    }
   ]
 }
