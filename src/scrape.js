@@ -1,8 +1,9 @@
 /**
- * Discord Canary scraper — Wumpus Central + Discord Previews style
+ * Discord Canary scraper — Wumpus Central style
  *
- * Critical: experiment IDs live mainly in web.<hash>.js (~10MB).
- * We ALWAYS download + FULL-scan that file (no 2MB truncate).
+ * Guild experiment % : real, from /api/v10/experiments populations (s/e over 10000)
+ * User experiment %  : Discord does NOT publish global rollouts publicly
+ *                      (only your fingerprint assignment)
  */
 
 const fetch = require('node-fetch');
@@ -12,7 +13,8 @@ const path = require('path');
 const crypto = require('crypto');
 
 const CANARY_APP = 'https://canary.discord.com/app';
-const EXPERIMENTS_API = 'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true';
+const EXPERIMENTS_API =
+  'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true';
 const DEFINITIONS_URL =
   'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
 
@@ -25,6 +27,90 @@ const GUILD_EXP_FILE = path.join(DATA_DIR, 'guild_experiments.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+
+// ── murmurhash3 (same as Wumpus v3.js) — map definition id → API hash ──
+function murmur3(str) {
+  const e = new TextEncoder().encode(str);
+  let r = 3 & e.length;
+  let i = e.length - r;
+  let a = 0;
+  let l = 0;
+  let s;
+  while (l < i) {
+    s =
+      (255 & e[l]) |
+      ((255 & e[++l]) << 8) |
+      ((255 & e[++l]) << 16) |
+      ((255 & e[++l]) << 24);
+    ++l;
+    s =
+      ((((65535 & ((s = (((65535 & s) * 3432918353 + ((((s >>> 16) * 3432918353) & 65535) << 16)) & 4294967295) << 15) | (s >>> 17))) * 461845907 +
+        ((((s >>> 16) * 461845907) & 65535) << 16)) &
+        4294967295);
+    a ^= s;
+    a =
+      (65535 &
+        ((65535 & (a = (a << 13) | (a >>> 19))) * 5 +
+          ((((a >>> 16) * 5) & 65535) << 16)) &
+          4294967295) +
+      27492 +
+      (((((65535 & (a = (a << 13) | (a >>> 19))) * 5 +
+        ((((a >>> 16) * 5) & 65535) << 16)) &
+        4294967295) >>>
+        16) +
+        58964) &
+        65535) <<
+        16;
+  }
+  // simplified finalization matching Wumpus export default
+  // Use proven minimal implementation:
+  return murmur3_full(str);
+}
+
+function murmur3_full(key) {
+  // Standard murmur3 x86_32 seed 0 on UTF-8 bytes — matches Discord experiment hashes
+  const data = Buffer.from(key, 'utf8');
+  const len = data.length;
+  const nblocks = (len / 4) | 0;
+  let h = 0;
+  for (let i = 0; i < nblocks; i++) {
+    const i4 = i * 4;
+    let k =
+      (data[i4] & 0xff) |
+      ((data[i4 + 1] & 0xff) << 8) |
+      ((data[i4 + 2] & 0xff) << 16) |
+      ((data[i4 + 3] & 0xff) << 24);
+    k = Math.imul(k, 0xcc9e2d51);
+    k = (k << 15) | (k >>> 17);
+    k = Math.imul(k, 0x1b873593);
+    h ^= k;
+    h = (h << 13) | (h >>> 19);
+    h = (Math.imul(h, 5) + 0xe6546b64) | 0;
+  }
+  let k = 0;
+  const tail = nblocks * 4;
+  switch (len & 3) {
+    case 3:
+      k ^= (data[tail + 2] & 0xff) << 16;
+    // fallthrough
+    case 2:
+      k ^= (data[tail + 1] & 0xff) << 8;
+    // fallthrough
+    case 1:
+      k ^= data[tail] & 0xff;
+      k = Math.imul(k, 0xcc9e2d51);
+      k = (k << 15) | (k >>> 17);
+      k = Math.imul(k, 0x1b873593);
+      h ^= k;
+  }
+  h ^= len;
+  h ^= h >>> 16;
+  h = Math.imul(h, 0x85ebca6b);
+  h ^= h >>> 13;
+  h = Math.imul(h, 0xc2b2ae35);
+  h ^= h >>> 16;
+  return h >>> 0;
+}
 
 async function httpGet(url, asText = true) {
   const res = await fetch(url, {
@@ -82,24 +168,10 @@ async function downloadFile(url) {
   return name;
 }
 
-/** Always grab web.*.js first — that's where ~270+ experiment IDs live */
 async function downloadPriorityAssets(assetUrls) {
   await fs.ensureDir(ASSETS_DIR);
   const web = assetUrls.filter((u) => /\/assets\/web\.[a-f0-9]+\.js/i.test(u));
-  const otherJs = assetUrls.filter(
-    (u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u),
-  );
-  // Prefer entry-like / large named bundles next
-  otherJs.sort((a, b) => {
-    const score = (u) => {
-      const n = path.basename(u);
-      if (n.startsWith('chunk') || n.includes('vendor')) return 2;
-      if (n.length > 20) return 0;
-      return 1;
-    };
-    return score(a) - score(b);
-  });
-
+  const otherJs = assetUrls.filter((u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u));
   const toFetch = [...web, ...otherJs.slice(0, 40)];
   const got = [];
   for (const url of toFetch) {
@@ -108,12 +180,8 @@ async function downloadPriorityAssets(assetUrls) {
     try {
       if (await fs.pathExists(dest)) {
         const st = await fs.stat(dest);
-        // Re-download web.js if suspiciously small (< 1MB)
-        if (/^web\./i.test(name) && st.size < 1_000_000) {
-          await downloadFile(url);
-        } else {
-          console.log(`· cached ${name}`);
-        }
+        if (/^web\./i.test(name) && st.size < 1_000_000) await downloadFile(url);
+        else console.log(`· cached ${name}`);
         got.push(name);
         continue;
       }
@@ -126,12 +194,79 @@ async function downloadPriorityAssets(assetUrls) {
   return got;
 }
 
+/** Convert population buckets → percentages (Discord uses 0–10000 scale) */
+function rangesToPercent(ranges) {
+  if (!ranges?.length) return 0;
+  let total = 0;
+  for (const r of ranges) {
+    const s = Number(r.s ?? r.start ?? 0);
+    const e = Number(r.e ?? r.end ?? 0);
+    if (e > s) total += e - s;
+  }
+  return Math.round((total / 10000) * 10000) / 100; // 2 decimals
+}
+
+function formatRanges(ranges) {
+  return (ranges || [])
+    .map((r) => `${r.s ?? r.start}–${r.e ?? r.end}`)
+    .join(', ');
+}
+
+function parsePopulation(population) {
+  // population = [ bucketsArray, filtersArray ]
+  const buckets = {};
+  if (!population || !population[0]) return { buckets, filters: [] };
+  for (const bucket of population[0]) {
+    const bucketId = String(bucket[0]);
+    const rollouts = (bucket[1] || []).map((r) => ({
+      start: r.s,
+      end: r.e,
+      s: r.s,
+      e: r.e,
+    }));
+    buckets[bucketId] = {
+      rollout: rollouts,
+      percent: rangesToPercent(rollouts),
+      rangesLabel: formatRanges(rollouts),
+    };
+  }
+  return { buckets, filters: population[1] || [] };
+}
+
 function decodeGuildExperiment(raw) {
+  const hash = raw[0];
+  const id = raw[1] ?? null;
+  const revision = raw[2];
+  const populations = (raw[3] || []).map(parsePopulation);
+  const aaMode = raw[raw.length - 1] === 1;
+
+  // Summarize treatment buckets across first population (main rollout)
+  const summary = [];
+  const main = populations[0];
+  if (main?.buckets) {
+    for (const [bucketId, b] of Object.entries(main.buckets)) {
+      const label =
+        bucketId === '-1' || bucketId === 'null'
+          ? 'None'
+          : bucketId === '0'
+            ? 'Control'
+            : `Treatment ${bucketId}`;
+      summary.push({
+        bucket: bucketId,
+        label,
+        percent: b.percent,
+        ranges: b.rangesLabel,
+      });
+    }
+  }
+
   return {
-    hash: raw[0],
-    id: raw[1] ?? null,
-    revision: raw[2],
-    aaMode: raw[raw.length - 1] === 1,
+    hash,
+    id,
+    revision,
+    aaMode,
+    populations,
+    rolloutSummary: summary,
   };
 }
 
@@ -140,6 +275,7 @@ async function fetchOfficialExperiments() {
   return {
     guildExperiments: (data.guild_experiments || []).map(decodeGuildExperiment),
     assignmentCount: (data.assignments || []).length,
+    assignments: data.assignments || [],
   };
 }
 
@@ -153,10 +289,16 @@ async function fetchDefinitions() {
   }
 }
 
+function matchDefinitionByHash(hash, definitions) {
+  for (const d of definitions) {
+    if (!d.id) continue;
+    if (murmur3_full(String(d.id)) === (hash >>> 0)) return d;
+  }
+  return null;
+}
+
 function isExpId(id) {
-  // 2025-11-foo / 2026-08-profile-embed-share-button
   if (!/^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id)) return false;
-  // reject pure dates
   if (/^20\d{2}-\d{2}$/.test(id)) return false;
   return true;
 }
@@ -165,8 +307,6 @@ function analyzeClientJS(content) {
   const experiments = new Map();
   const routes = new Set();
   const ui = new Map();
-
-  // Full-file scan — do NOT truncate
   const idRe = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80})["']/gi;
   let m;
   while ((m = idRe.exec(content)) !== null) {
@@ -180,29 +320,11 @@ function analyzeClientJS(content) {
       });
     }
   }
-
-  // Underscore variant: 2026_08_foo (rare)
-  const idRe2 = /["'](20[2-3]\d_[0-1]\d_[a-z0-9_]{3,80})["']/gi;
-  while ((m = idRe2.exec(content)) !== null) {
-    const id = m[1].toLowerCase().replace(/_/g, '-').replace(/^(\d{4})-(\d{2})-/, '$1-$2-');
-    // normalize 2026-08-...
-    const norm = m[1].toLowerCase().replace(/_/g, '-');
-    if (!isExpId(norm)) continue;
-    if (!experiments.has(norm)) {
-      experiments.set(norm, {
-        id: norm,
-        type: /guild/i.test(norm) ? 'guild' : 'user',
-        isApex: /apex|_aa_|-aa-/i.test(norm),
-      });
-    }
-  }
-
   const routeRe =
     /["'](\/(?:api\/v\d+|users\/@me|guilds|channels|quests)[a-z0-9_\-\/{}.]*)["']/gi;
   while ((m = routeRe.exec(content)) !== null) {
     if (m[1].length > 6 && m[1].length < 100) routes.add(m[1]);
   }
-
   const uiRe =
     /["']([A-Z][A-Za-z0-9]*(?:Modal|Panel|Popout|Drawer|Sheet|Sidebar|Overlay))["']/g;
   while ((m = uiRe.exec(content)) !== null) {
@@ -214,7 +336,6 @@ function analyzeClientJS(content) {
     else if (/Popout|Overlay/i.test(name)) kind = 'overlay';
     ui.set(name, { name, kind });
   }
-
   return {
     experiments: [...experiments.values()],
     routes: [...routes].sort(),
@@ -227,27 +348,16 @@ async function analyzeDownloadedAssets() {
     return { experiments: [], routes: [], ui: [] };
   }
   const files = (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'));
-  // Analyze web.* FIRST and fully
-  files.sort((a, b) => {
-    const wa = /^web\./i.test(a) ? 0 : 1;
-    const wb = /^web\./i.test(b) ? 0 : 1;
-    return wa - wb;
-  });
-
+  files.sort((a, b) => (/^web\./i.test(a) ? 0 : 1) - (/^web\./i.test(b) ? 0 : 1));
   const expMap = new Map();
   const routes = new Set();
   const uiMap = new Map();
-
   for (const file of files) {
     try {
       const full = path.join(ASSETS_DIR, file);
       const st = await fs.stat(full);
-      // Read ENTIRE file for experiment extraction (web.js ~11MB is fine)
       let content = await fs.readFile(full, 'utf8');
-      // For non-web huge files, still full-scan for IDs only if < 15MB
-      if (st.size > 15_000_000 && !/^web\./i.test(file)) {
-        content = content.slice(0, 8_000_000);
-      }
+      if (st.size > 15_000_000 && !/^web\./i.test(file)) content = content.slice(0, 8_000_000);
       console.log(`  scan ${file} (${(st.size / 1024 / 1024).toFixed(1)} MB)`);
       const found = analyzeClientJS(content);
       for (const e of found.experiments) expMap.set(e.id, e);
@@ -260,7 +370,6 @@ async function analyzeDownloadedAssets() {
       console.warn(`  skip ${file}: ${e.message}`);
     }
   }
-
   return {
     experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
     routes: [...routes].sort(),
@@ -304,16 +413,45 @@ function experimentEmbed(exp, buildNumber) {
       inline: false,
     });
   } else {
-    fields.push({
-      name: 'Variations',
-      value: '• Variation 0\n• Variation 1',
-      inline: false,
-    });
+    fields.push({ name: 'Variations', value: '• Variation 0\n• Variation 1', inline: false });
   }
+  // No real global % for user experiments from public API
+  fields.push({
+    name: 'Rollout %',
+    value: '_Non publié par Discord pour les user experiments (API publique)_',
+    inline: false,
+  });
   return {
     title: isApex ? 'New Apex Experiment' : 'New Experiment',
     color: isApex ? 0xFEE75C : 0xEB459E,
     fields,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function guildExperimentEmbed(g, buildNumber) {
+  const name = g.id || g.definitionId || `hash:${g.hash}`;
+  const lines = (g.rolloutSummary || []).map((b) => {
+    return `• **${b.label}**: **${b.percent}%** \`${b.ranges || '—'}\``;
+  });
+  const fields = [
+    { name: 'Name', value: `\`${name}\``, inline: false },
+    { name: 'Type', value: 'guild', inline: true },
+    { name: 'Hash', value: String(g.hash), inline: true },
+    { name: 'Build', value: String(buildNumber), inline: true },
+  ];
+  if (g.label) fields.push({ name: 'Label', value: g.label, inline: false });
+  fields.push({
+    name: 'Rollout (vrai % API)',
+    value: (lines.join('\n') || '—').slice(0, 1000),
+    inline: false,
+  });
+  if (g.aaMode) fields.push({ name: 'AA mode', value: 'yes', inline: true });
+  return {
+    title: g.aaMode ? 'New Apex Guild Experiment' : 'New Guild Experiment',
+    color: 0xFEE75C,
+    fields,
+    footer: { text: 'Pourcentages = ranges Discord / 10000' },
     timestamp: new Date().toISOString(),
   };
 }
@@ -327,20 +465,22 @@ function truncate(arr, max = 40) {
   return lines.join('\n').slice(0, 3900);
 }
 
-async function notify({ build, isNewBuild, diff, enriched, clientFindings }) {
+async function notify({ build, isNewBuild, diff, enriched, clientFindings, guildEnriched }) {
   if (!WEBHOOK_URL) {
     console.log('No DISCORD_WEBHOOK_URL — skip notify');
     return;
   }
 
   const hasNewExp =
-    (diff.newClientExperiments?.length || 0) + (diff.newGuildHashes?.length || 0) > 0;
+    (diff.newClientExperiments?.length || 0) +
+      (diff.newGuild?.length || 0) >
+    0;
   const hasNewUI = (diff.newUI?.length || 0) > 0;
   const hasNewRoutes = (diff.newRoutes?.length || 0) > 0;
   const important = hasNewExp || hasNewUI || hasNewRoutes;
 
   const embeds = [];
-  const main = {
+  embeds.push({
     title: important
       ? '🚨 Important Canary Changes'
       : isNewBuild
@@ -357,35 +497,30 @@ async function notify({ build, isNewBuild, diff, enriched, clientFindings }) {
       },
       {
         name: 'Tracked',
-        value: `Experiments: **${enriched.length}** · Guild API: **${diff.guildCount || 0}** · UI: **${(clientFindings.ui || []).length}**`,
+        value: `Client exp: **${enriched.length}** · Guild API: **${(guildEnriched || []).length}** · UI: **${(clientFindings.ui || []).length}**`,
         inline: false,
       },
     ],
-    footer: { text: 'Canary Scraper · full web.js scan' },
+    footer: { text: 'Guild % = API réelle · User % non publiés' },
     timestamp: new Date().toISOString(),
-  };
-  embeds.push(main);
+  });
 
-  // Newest experiments first in list embeds
+  // New guild experiments WITH real percentages
+  for (const g of (diff.newGuild || []).slice(0, 5)) {
+    embeds.push(guildExperimentEmbed(g, build.buildNumber));
+  }
+
   const sortedNew = [...(diff.newClientExperiments || [])].sort((a, b) =>
     b.id.localeCompare(a.id),
   );
-  for (const exp of sortedNew.slice(0, 8)) {
+  for (const exp of sortedNew.slice(0, 5)) {
     embeds.push(experimentEmbed(exp, build.buildNumber));
   }
-  if (sortedNew.length > 8) {
+  if (sortedNew.length > 5) {
     embeds.push({
-      title: `New Experiments (+${sortedNew.length - 8} more)`,
+      title: `New Experiments (+${sortedNew.length - 5} more)`,
       color: 0xEB459E,
-      description: truncate(sortedNew.slice(8).map((e) => e.id), 50),
-    });
-  }
-
-  if (diff.newGuildHashes?.length) {
-    embeds.push({
-      title: 'New Guild Experiment hashes (API)',
-      color: 0xFEE75C,
-      description: truncate(diff.newGuildHashes.map(String), 20),
+      description: truncate(sortedNew.slice(5).map((e) => e.id), 40),
     });
   }
 
@@ -408,17 +543,30 @@ async function notify({ build, isNewBuild, diff, enriched, clientFindings }) {
     });
   }
 
-  // Always attach a rich experiment snapshot on new build (recent first)
+  // Snapshot of guild rollouts (always useful)
+  if ((guildEnriched || []).length && (isNewBuild || (diff.newGuild || []).length)) {
+    const lines = guildEnriched.slice(0, 12).map((g) => {
+      const name = g.id || g.definitionId || g.hash;
+      const top = (g.rolloutSummary || [])
+        .filter((b) => b.percent > 0)
+        .map((b) => `${b.label} ${b.percent}%`)
+        .join(', ');
+      return `• \`${name}\` — ${top || '0%'}`;
+    });
+    embeds.push({
+      title: `Guild rollouts (API) — ${(guildEnriched || []).length}`,
+      color: 0x1ABC9C,
+      description: lines.join('\n').slice(0, 3900),
+      footer: { text: 'Vrais % Discord · scale 0–10000' },
+    });
+  }
+
   if (isNewBuild && enriched.length) {
     const recent = [...enriched].sort((a, b) => b.id.localeCompare(a.id));
     embeds.push({
-      title: `Experiments in this build (${enriched.length})`,
+      title: `Client experiments (${enriched.length})`,
       color: 0x9B59B6,
-      description: truncate(
-        recent.map((e) => e.id),
-        60,
-      ),
-      footer: { text: 'Sorted newest-first · full list in data/findings.json' },
+      description: truncate(recent.map((e) => e.id), 50),
     });
   }
 
@@ -438,7 +586,7 @@ async function notify({ build, isNewBuild, diff, enriched, clientFindings }) {
 }
 
 async function main() {
-  console.log('🔍 Canary scrape — full web.js experiment scan\n');
+  console.log('🔍 Canary scrape + real guild rollout %\n');
   await fs.ensureDir(DATA_DIR);
 
   const html = await httpGet(CANARY_APP);
@@ -450,9 +598,6 @@ async function main() {
 
   console.log(`Build        : ${buildNumber}`);
   console.log(`Version hash : ${env.VERSION_HASH || '—'}`);
-  console.log(`Asset URLs   : ${assetUrls.length}`);
-  const webUrl = assetUrls.find((u) => /\/web\.[a-f0-9]+\.js/i.test(u));
-  console.log(`web bundle   : ${webUrl ? path.basename(webUrl) : 'NOT FOUND'}`);
 
   let previousBuild = null;
   try {
@@ -465,43 +610,49 @@ async function main() {
   try {
     official = await fetchOfficialExperiments();
     console.log(`  Guild experiments : ${official.guildExperiments.length}`);
+    for (const g of official.guildExperiments.slice(0, 5)) {
+      const s = (g.rolloutSummary || []).map((b) => `${b.label}:${b.percent}%`).join(' | ');
+      console.log(`    hash=${g.hash} → ${s}`);
+    }
   } catch (e) {
     console.warn('  API error:', e.message);
   }
 
-  console.log('\n📚 Definitions gist …');
+  console.log('\n📚 Definitions …');
   const definitions = await fetchDefinitions();
   console.log(`  Definitions : ${definitions.length}`);
 
-  // Always ensure web.js is present & full — even on same build if missing/small
+  // Attach definition id/label to guild experiments via murmur hash
+  const guildEnriched = official.guildExperiments.map((g) => {
+    const def = matchDefinitionByHash(g.hash, definitions);
+    return {
+      ...g,
+      definitionId: def?.id || g.id,
+      id: def?.id || g.id,
+      label: def?.label || null,
+      kind: def?.kind || 'guild',
+    };
+  });
+
+  const webUrl = assetUrls.find((u) => /\/web\.[a-f0-9]+\.js/i.test(u));
   const webName = webUrl ? path.basename(webUrl.split('?')[0]) : null;
   const webPath = webName ? path.join(ASSETS_DIR, webName) : null;
   let webOk = false;
   if (webPath && (await fs.pathExists(webPath))) {
-    const st = await fs.stat(webPath);
-    webOk = st.size > 2_000_000;
+    webOk = (await fs.stat(webPath)).size > 2_000_000;
   }
 
   if (isNewBuild || !webOk) {
     if (isNewBuild) await fs.emptyDir(ASSETS_DIR);
-    console.log('\n📦 Downloading priority assets (web.js first) …');
+    console.log('\n📦 Downloading assets …');
     await downloadPriorityAssets(assetUrls);
   } else {
-    console.log('\nSame build + web.js OK — reusing cache');
+    console.log('\nSame build + web.js OK');
   }
 
-  console.log('\n🧠 Full-scan JS for experiment IDs …');
+  console.log('\n🧠 Scan client JS …');
   const clientFindings = await analyzeDownloadedAssets();
-  console.log(`  TOTAL experiments : ${clientFindings.experiments.length}`);
-  console.log(`  Routes               : ${clientFindings.routes.length}`);
-  console.log(`  UI                   : ${clientFindings.ui.length}`);
-
-  // Show newest IDs in logs
-  const newest = [...clientFindings.experiments]
-    .map((e) => e.id)
-    .sort((a, b) => b.localeCompare(a))
-    .slice(0, 15);
-  console.log('  Newest IDs:', newest.join(', '));
+  console.log(`  Experiments : ${clientFindings.experiments.length}`);
 
   const enriched = enrichWithDefinitions(clientFindings.experiments, definitions);
 
@@ -523,17 +674,13 @@ async function main() {
     newClientExperiments: enriched.filter((e) => !prevExpIds.has(e.id)),
     newUI: clientFindings.ui.filter((u) => !prevUI.has(u.name)),
     newRoutes: clientFindings.routes.filter((r) => !prevRoutes.has(r)),
-    newGuildHashes: official.guildExperiments
-      .filter((g) => !prevGuildHashes.has(g.hash))
-      .map((g) => g.hash),
-    guildCount: official.guildExperiments.length,
+    newGuild: guildEnriched.filter((g) => !prevGuildHashes.has(g.hash)),
   };
 
-  console.log('\n📊 New vs previous:');
-  console.log(`  Experiments : ${diff.newClientExperiments.length}`);
-  console.log(`  Guild hash  : ${diff.newGuildHashes.length}`);
-  console.log(`  UI          : ${diff.newUI.length}`);
-  console.log(`  Routes      : ${diff.newRoutes.length}`);
+  console.log('\n📊 New:');
+  console.log(`  Client exp : ${diff.newClientExperiments.length}`);
+  console.log(`  Guild      : ${diff.newGuild.length}`);
+  console.log(`  UI         : ${diff.newUI.length}`);
 
   const build = {
     buildNumber,
@@ -541,7 +688,6 @@ async function main() {
     builtAt: env.BUILT_AT || null,
     releaseChannel: env.RELEASE_CHANNEL || 'canary',
     scrapedAt: new Date().toISOString(),
-    assetCount: assetUrls.length,
     experimentCount: enriched.length,
   };
 
@@ -558,24 +704,28 @@ async function main() {
   );
   await fs.writeJson(
     GUILD_EXP_FILE,
-    official.guildExperiments.map(({ hash, id, revision, aaMode }) => ({
-      hash,
-      id,
-      revision,
-      aaMode,
+    guildEnriched.map((g) => ({
+      hash: g.hash,
+      id: g.id,
+      definitionId: g.definitionId,
+      label: g.label,
+      revision: g.revision,
+      aaMode: g.aaMode,
+      rolloutSummary: g.rolloutSummary,
     })),
     { spaces: 2 },
   );
 
-  await notify({ build, isNewBuild, diff, enriched, clientFindings });
+  await notify({
+    build,
+    isNewBuild,
+    diff,
+    enriched,
+    clientFindings,
+    guildEnriched,
+  });
 
-  if (diff.newClientExperiments.length || diff.newGuildHashes.length || diff.newUI.length) {
-    console.log('\n🚨 Changes notified');
-  } else if (isNewBuild) {
-    console.log('\n✅ New build saved');
-  } else {
-    console.log('\n✅ Up to date');
-  }
+  console.log(isNewBuild || diff.newGuild.length || diff.newClientExperiments.length ? '\n✅ Done (notified)' : '\n✅ Up to date');
 }
 
 main().catch((err) => {
