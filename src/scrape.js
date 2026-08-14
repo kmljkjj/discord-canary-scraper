@@ -127,9 +127,7 @@ function isValidExperimentId(id) {
 
 function looksLikeUIComponent(name) {
   if (!name || name.length < 5 || name.length > 60) return false;
-  // PascalCase component-like
   if (!/^[A-Z][A-Za-z0-9]+$/.test(name)) return false;
-  // Must contain a UI keyword fragment
   return UI_KEYWORDS.some(k => name.includes(k));
 }
 
@@ -140,19 +138,15 @@ function extractContext(content, index, id) {
 
   const hints = [];
 
-  // Nearby experiment id
   const expNear = window.match(/["'](20[2-3][0-9]-[0-1][0-9][_-][a-z0-9_\-]{4,50})["']/i);
   if (expNear) hints.push(`exp: ${expNear[1]}`);
 
-  // Nearby route
   const routeNear = window.match(/["'](\/(?:channels|guilds|users|quests|settings|activities)[a-z0-9_\-\/{}.:]*)["']/i);
   if (routeNear) hints.push(`route: ${routeNear[1]}`);
 
-  // Nearby displayName / component name
   const dn = window.match(/displayName\s*[:=]\s*["']([A-Za-z0-9_]+)["']/);
   if (dn) hints.push(`component: ${dn[1]}`);
 
-  // Layer / section labels
   const layer = window.match(/["']((?:user|guild|channel|message|voice|video|settings|profile|shop|quest)[_-]?[a-z0-9_-]{2,30})["']/i);
   if (layer) hints.push(`area: ${layer[1]}`);
 
@@ -163,9 +157,8 @@ function analyzeJSContent(content, sourceFile) {
   const experiments = new Map();
   const routes = new Set();
   const strings = new Set();
-  const uiItems = new Map(); // key -> { name, kind, where, file }
+  const uiItems = new Map();
 
-  // ── Experiment IDs
   const idRegex = /["'](20[2-3][0-9]-[0-1][0-9][_-][a-z0-9_\-]{4,70})["']/gi;
   let m;
   while ((m = idRegex.exec(content)) !== null) {
@@ -201,7 +194,6 @@ function analyzeJSContent(content, sourceFile) {
     }
   }
 
-  // ── Routes
   const routePatterns = [
     /["'](\/api\/v\d+\/[a-z0-9_\-\/{}.:]+)["']/gi,
     /["'](\/channels\/[a-z0-9_\-\/{}.:]+)["']/gi,
@@ -217,7 +209,6 @@ function analyzeJSContent(content, sourceFile) {
     }
   }
 
-  // ── Interesting strings
   const keywords = [
     'nitro', 'boost', 'quest', 'gift', 'premium', 'hypesquad',
     'voice', 'video', 'stream', 'stage', 'forum', 'thread',
@@ -235,8 +226,6 @@ function analyzeJSContent(content, sourceFile) {
     }
   }
 
-  // ── UI components / surfaces (important signal)
-  // 1) PascalCase names with UI keywords
   const pascalRe = /["']([A-Z][A-Za-z0-9]{4,55})["']/g;
   while ((m = pascalRe.exec(content)) !== null) {
     const name = m[1];
@@ -259,7 +248,6 @@ function analyzeJSContent(content, sourceFile) {
     });
   }
 
-  // 2) displayName = "SomethingModal"
   const displayRe = /displayName\s*[:=]\s*["']([A-Za-z0-9_]{5,55})["']/g;
   while ((m = displayRe.exec(content)) !== null) {
     const name = m[1];
@@ -280,7 +268,6 @@ function analyzeJSContent(content, sourceFile) {
     });
   }
 
-  // 3) CSS-ish class tokens that scream new UI surface
   const cssUiRe = /["']((?:[a-z]+[A-Z][A-Za-z0-9]*)?(?:Modal|Panel|Sidebar|Drawer|Sheet|Popout|Overlay|Banner)[A-Za-z0-9]*)["']/g;
   while ((m = cssUiRe.exec(content)) !== null) {
     const name = m[1];
@@ -419,7 +406,7 @@ function formatExperimentEmbed(exp, buildNumber, isApex) {
   };
 }
 
-function formatUIEmbed(uiList, buildNumber) {
+function formatUIEmbed(uiList, buildNumber, title = '🧩 New UI detected') {
   const lines = uiList.slice(0, 12).map(u => {
     const kind = u.kind ? `**${u.kind}**` : 'ui';
     const where = u.where ? ` → _${u.where}_` : '';
@@ -431,9 +418,11 @@ function formatUIEmbed(uiList, buildNumber) {
   }
 
   return {
-    title: '🧩 New UI detected',
+    title,
     description:
-      'Discord a ajouté de la **UI** dans ce build — souvent signe d’une vraie feature en cours.',
+      title.includes('New')
+        ? 'Discord a ajouté de la **UI** dans ce build — souvent signe d’une vraie feature en cours.'
+        : 'UI détectée dans ce build (aperçu).',
     color: 0xF47B67,
     fields: [
       { name: 'Build', value: String(buildNumber), inline: true },
@@ -447,12 +436,12 @@ function formatUIEmbed(uiList, buildNumber) {
 
 function truncateList(arr, max = 12) {
   if (!arr || arr.length === 0) return '—';
-  const shown = arr.slice(0, max).map(x => `• \`${x}\``);
+  const shown = arr.slice(0, max).map(x => `• \`${typeof x === 'string' ? x : x.id || x.name || x}\``);
   if (arr.length > max) shown.push(`… +${arr.length - max} more`);
   return shown.join('\n');
 }
 
-async function sendWebhook({ buildInfo, diff, isNewBuild }) {
+async function sendWebhook({ buildInfo, diff, isNewBuild, currentFindings }) {
   if (!WEBHOOK_URL) {
     console.log('No DISCORD_WEBHOOK_URL set – skipping notification');
     return;
@@ -479,20 +468,32 @@ async function sendWebhook({ buildInfo, diff, isNewBuild }) {
   };
 
   if (diff.isFirstRun) {
-    main.description = 'First run — baseline saved. Next runs will only report **new** items.';
+    main.description = 'First run — baseline saved.';
   }
 
-  // Highlight UI in the summary when present
   if (diff.newUI?.length) {
     main.description = (main.description ? main.description + '\n\n' : '') +
       `🧩 **${diff.newUI.length} new UI item(s)** detected in this build.`;
   }
 
+  // Summary counts always useful on new builds
+  if (isNewBuild && currentFindings) {
+    const nApex = (currentFindings.apexExperiments || []).length;
+    const nExp = (currentFindings.experiments || []).length;
+    const nUi = (currentFindings.ui || []).length;
+    const nRoutes = (currentFindings.routes || []).length;
+    main.fields.push({
+      name: 'In this build',
+      value: `Experiments: **${nApex + nExp}** · UI: **${nUi}** · Routes: **${nRoutes}**`,
+      inline: false,
+    });
+  }
+
   embeds.push(main);
 
-  // UI first when present (high signal)
+  // Truly NEW items first (high signal)
   if (diff.newUI?.length) {
-    embeds.push(formatUIEmbed(diff.newUI, buildInfo.buildNumber));
+    embeds.push(formatUIEmbed(diff.newUI, buildInfo.buildNumber, '🧩 New UI detected'));
   }
 
   if (diff.newApexExperiments?.length) {
@@ -535,6 +536,43 @@ async function sendWebhook({ buildInfo, diff, isNewBuild }) {
       color: 0x57F287,
       description: truncateList(diff.newStrings, 12),
     });
+  }
+
+  // On NEW BUILD: always also show snapshot of what's in the build
+  // (even if already known — so you see experiments / UI / routes every time)
+  if (isNewBuild && currentFindings && embeds.length < 9) {
+    const allExp = [
+      ...(currentFindings.apexExperiments || []),
+      ...(currentFindings.experiments || []),
+    ];
+    if (allExp.length && !diff.newApexExperiments?.length && !diff.newExperiments?.length) {
+      embeds.push({
+        title: 'Experiments in this build',
+        color: 0xEB459E,
+        description: truncateList(allExp.map(e => e.id), 15),
+        footer: { text: 'Snapshot — already known, listed because new build' },
+      });
+    } else if (allExp.length && embeds.length < 9) {
+      embeds.push({
+        title: 'All experiments in this build',
+        color: 0x9B59B6,
+        description: truncateList(allExp.map(e => e.id), 12),
+      });
+    }
+
+    const uiList = currentFindings.ui || [];
+    if (uiList.length && !diff.newUI?.length && embeds.length < 9) {
+      embeds.push(formatUIEmbed(uiList.slice(0, 15), buildInfo.buildNumber, '🧩 UI in this build'));
+    }
+
+    const routes = currentFindings.routes || [];
+    if (routes.length && !diff.newRoutes?.length && embeds.length < 9) {
+      embeds.push({
+        title: 'Routes sample (this build)',
+        color: 0x5865F2,
+        description: truncateList(routes, 12),
+      });
+    }
   }
 
   const body = {
@@ -631,12 +669,12 @@ async function main() {
 
   await saveBuild(buildInfo);
   await saveFindings(currentFindings);
-  await sendWebhook({ buildInfo, diff, isNewBuild });
+  await sendWebhook({ buildInfo, diff, isNewBuild, currentFindings });
 
   if (hasImportantChanges(diff)) {
     console.log('🚨 Important changes notified.');
   } else if (isNewBuild) {
-    console.log('✅ New build archived.');
+    console.log('✅ New build archived + snapshot sent.');
   } else {
     console.log('✅ Up to date.');
   }
