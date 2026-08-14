@@ -47,10 +47,9 @@ function extractAssets(html) {
     }
   });
 
-  // Try to find build number in inline scripts or GLOBAL_ENV style
+  // Try to find build number in inline scripts
   const scriptsText = $('script:not([src])').map((_, el) => $(el).html()).get().join('\n');
   
-  // Common patterns for Discord build number
   const buildMatch = scriptsText.match(/BUILD_NUMBER["']?\s*[:=]\s*["']?(\d+)/i) ||
                      scriptsText.match(/buildNumber["']?\s*[:=]\s*["']?(\d+)/i) ||
                      scriptsText.match(/"build_number"\s*:\s*"?(\d+)/i);
@@ -130,7 +129,7 @@ async function sendWebhook(buildInfo, isNew) {
     fields: [
       { name: 'Build', value: String(buildInfo.buildNumber), inline: true },
       { name: 'Channel', value: 'Canary', inline: true },
-      { name: 'Assets downloaded', value: String(buildInfo.assetCount), inline: true },
+      { name: 'Assets downloaded', value: String(buildInfo.assetCount || 0), inline: true },
       { name: 'Timestamp', value: `<t:${Math.floor(Date.now() / 1000)}:F>`, inline: false },
     ],
     footer: { text: 'Discord Canary Scraper • Inspired by Wumpus Central' },
@@ -138,9 +137,13 @@ async function sendWebhook(buildInfo, isNew) {
   };
 
   if (buildInfo.scripts && buildInfo.scripts.length > 0) {
+    const list = buildInfo.scripts
+      .slice(0, 5)
+      .map(s => '`' + path.basename(s) + '`')
+      .join('\n');
     embed.fields.push({
       name: 'Main scripts',
-      value: buildInfo.scripts.slice(0, 5).map(s => ``${path.basename(s)}``).join('\n') || '—',
+      value: list || '—',
     });
   }
 
@@ -194,7 +197,6 @@ async function main() {
     await sendWebhook(buildInfo, true);
 
     console.log(`\n✅ Done! ${downloaded.length} files archived.`);
-    // Exit with code 0 so GitHub Action can commit if files changed
     process.exit(0);
   } else {
     console.log('No new build. Everything is up to date.');
