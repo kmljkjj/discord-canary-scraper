@@ -1,17 +1,17 @@
 {
-  "scrapedAt": "2026-08-15T21:53:02.022Z",
+  "scrapedAt": "2026-08-15T22:06:15.661Z",
   "buildNumber": "594042",
   "totals": {
-    "all": 280,
-    "added": 2,
-    "treatments_changed": 2,
-    "unchanged": 276
+    "all": 278,
+    "added": 0,
+    "treatments_changed": 4,
+    "unchanged": 274
   },
   "experiments": [
     {
-      "id": "2025-11_tida_webform",
-      "kind": "user",
-      "label": "Tida Webform",
+      "id": "2026-06_guild_spaces",
+      "kind": "guild",
+      "label": "Guild Space",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -21,33 +21,30 @@
       "variants": [
         {
           "id": 1,
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "124–9740"
+          "label": "Enable Guild Space"
         }
       ],
       "treatments": [
         {
           "id": 1,
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "124–9740",
-          "samples": 60
+          "label": "Enable Guild Space"
         }
       ],
-      "status": "added",
-      "previousCount": null,
-      "previousTreatments": null,
+      "status": "treatments_changed",
+      "previousCount": 0,
+      "previousTreatments": [],
       "buildNumber": "594042",
-      "percentSource": "sampled_user_assignments",
-      "percentReliable": false,
-      "reliability": "low",
-      "sampleNote": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling."
+      "purpose": "Guild Space — → Enable Guild Space — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
     },
     {
-      "id": "2023-09_iar_user_reporting",
-      "kind": "user",
-      "label": "Safety Experience IAR User Reporting",
+      "id": "2024-12_guild_voice_channel_ringing",
+      "kind": "guild",
+      "label": "Guild Voice Ringing",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -57,28 +54,30 @@
       "variants": [
         {
           "id": 1,
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "166–9746"
+          "label": "Show past VC activity messages in system channel"
         }
       ],
       "treatments": [
         {
           "id": 1,
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "166–9746",
-          "samples": 60
+          "label": "Show past VC activity messages in system channel"
         }
       ],
-      "status": "added",
-      "previousCount": null,
-      "previousTreatments": null,
+      "status": "treatments_changed",
+      "previousCount": 1,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Allow users to ring each other in Guild Voice Channels"
+        }
+      ],
       "buildNumber": "594042",
-      "percentSource": "sampled_user_assignments",
-      "percentReliable": false,
-      "reliability": "low",
-      "sampleNote": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling."
+      "purpose": "Guild Voice Ringing — → Show past VC activity messages in system channel",
+      "defaultConfig": {
+        "_raw": "{enabled:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Allow users to ring each other in Guild Voice Channels\",config:{enabled:!0}"
+      },
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
     },
     {
       "id": "2022-12_mention_raid_limit",
@@ -113,6 +112,10 @@
         }
       ],
       "buildNumber": "594042",
+      "purpose": "Automod Mention Raid Limit — → Automod Mention Raid Limit — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -149,6 +152,8 @@
         }
       ],
       "buildNumber": "594042",
+      "purpose": "Voice in Threads — → On",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -183,6 +188,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "hash:3633668656 — → Treatment 1",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -217,13 +224,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "hash:2453702596 — → None",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2026-08-vq-remaining-time-truncation",
       "kind": "user",
-      "label": null,
+      "label": "vq remaining time truncation",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -236,14 +245,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "vq remaining time truncation — Config keys: truncateMoreThanSeconds",
+      "defaultConfig": {
+        "truncateMoreThanSeconds": null
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-video-guard",
       "kind": "user",
-      "label": null,
+      "label": "video guard",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -256,14 +268,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video guard — Config keys: videoEnabled",
+      "defaultConfig": {
+        "videoEnabled": true
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-user-bio-max-length",
       "kind": "user",
-      "label": null,
+      "label": "user bio max length",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -276,9 +291,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "user bio max length",
+      "defaultConfig": {
+        "_raw": "{maxLength:r.NA2}"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-scheduled-messages",
@@ -296,9 +314,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "scheduled messages",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-rich-presence-invite-banner",
@@ -316,14 +335,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "rich presence invite banner",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-profile-embed-rendering",
       "kind": "user",
-      "label": null,
+      "label": "profile embed rendering",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -336,14 +356,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "profile embed rendering — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-premium-gifting-gogo-promotion",
       "kind": "user",
-      "label": null,
+      "label": "premium gifting gogo promotion",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -356,14 +379,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "premium gifting gogo promotion — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-kestrel-ga",
       "kind": "user",
-      "label": null,
+      "label": "kestrel ga",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -376,14 +402,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "kestrel ga — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-gsh-subs-activity-bar",
       "kind": "user",
-      "label": null,
+      "label": "gsh subs activity bar",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -396,14 +425,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gsh subs activity bar — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-favorites-server",
       "kind": "user",
-      "label": null,
+      "label": "favorites server",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -416,9 +448,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "favorites server — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-dont-close-chat",
@@ -436,14 +471,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "dont close chat",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-bounties-mobile-quest-bar",
       "kind": "user",
-      "label": null,
+      "label": "bounties mobile quest bar",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -456,9 +492,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bounties mobile quest bar — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-audio-fidelity",
@@ -476,9 +515,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "audio fidelity",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -496,14 +536,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "android rn reparenting flag",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-vibegrations-guild",
       "kind": "guild",
-      "label": null,
+      "label": "vibegrations guild",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -516,9 +557,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "vibegrations guild — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-unobtrusive-device-suggestions",
@@ -536,14 +580,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "unobtrusive device suggestions",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-typing-users-css-dots",
       "kind": "user",
-      "label": null,
+      "label": "typing users css dots",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -556,9 +601,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "typing users css dots — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-tr-offer-1-campaign",
@@ -576,9 +624,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "tr offer 1 campaign",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-rtc-panel-game-card",
@@ -596,14 +645,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "rtc panel game card",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-renewable-end-date-sort",
       "kind": "user",
-      "label": null,
+      "label": "renewable end date sort",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -616,14 +666,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "renewable end date sort — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-reject-with-error-kill-switch",
       "kind": "user",
-      "label": null,
+      "label": "reject with error kill switch",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -636,9 +689,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "reject with error kill switch — Config keys: migrationKilled",
+      "defaultConfig": {
+        "migrationKilled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-quest-home-default-banner-removal",
@@ -656,14 +712,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest home default banner removal",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-quest-bar-secondary-cta",
       "kind": "user",
-      "label": null,
+      "label": "quest bar secondary cta",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -676,9 +733,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest bar secondary cta — Config keys: enabled, showPlayInstantlyLabel",
+      "defaultConfig": {
+        "enabled": false,
+        "showPlayInstantlyLabel": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-premium-group-expansion-announcement",
@@ -696,9 +757,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "premium group expansion announcement",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-premium-group-announcement-modal",
@@ -716,14 +778,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "premium group announcement modal",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-personal-widget",
       "kind": "user",
-      "label": null,
+      "label": "personal widget",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -736,9 +799,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "personal widget — Config keys: enabled, showCreateEntrypoint",
+      "defaultConfig": {
+        "enabled": false,
+        "showCreateEntrypoint": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-past-due-checkout",
@@ -756,9 +823,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "past due checkout",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-parental-consent-warning-fetch",
@@ -776,9 +844,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "parental consent warning fetch",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-nvenc-reconstructed-frames",
@@ -796,9 +865,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "nvenc reconstructed frames",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-message-bookmarks-v2",
@@ -816,9 +886,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "message bookmarks v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-krisp-cpu-disablement",
@@ -836,14 +907,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "krisp cpu disablement",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-hotwheels-clickable-game-icon",
       "kind": "user",
-      "label": null,
+      "label": "hotwheels clickable game icon",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -856,9 +928,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "hotwheels clickable game icon — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-gsimagic",
@@ -876,14 +951,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gsimagic",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-game-mentions-v2-mobile",
       "kind": "user",
-      "label": null,
+      "label": "game mentions v2 mobile",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -896,9 +972,14 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "game mentions v2 mobile — Config keys: enabled, showNewTag, combineMentionAutocomplete",
+      "defaultConfig": {
+        "enabled": false,
+        "showNewTag": false,
+        "combineMentionAutocomplete": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-expressive-modal-v2",
@@ -916,14 +997,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "expressive modal v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-desktop-tti-update-backoff-algo",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti update backoff algo",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -936,14 +1018,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti update backoff algo — Config keys: algo",
+      "defaultConfig": {
+        "algo": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-custom-app-store-overlay",
       "kind": "user",
-      "label": null,
+      "label": "custom app store overlay",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -956,9 +1041,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "custom app store overlay — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-create-gdm-title",
@@ -976,9 +1064,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "create gdm title",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-cod-3pp",
@@ -996,9 +1085,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "cod 3pp",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-clips-game-events-on-player",
@@ -1016,9 +1106,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips game events on player",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
@@ -1036,9 +1127,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "call of duty 3pp non sub marketing",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-call-of-duty-3pp-marketing",
@@ -1056,9 +1148,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "call of duty 3pp marketing",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-call-of-duty-3pp-expired",
@@ -1076,14 +1169,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "call of duty 3pp expired",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-bounties-vertical-scroll",
       "kind": "user",
-      "label": null,
+      "label": "bounties vertical scroll",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1096,14 +1190,23 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bounties vertical scroll",
+      "defaultConfig": {
+        "enabled": false,
+        "verticalScrollEnabled": false,
+        "scrollAffordanceVariant": "none",
+        "autoScrollLeadMs": 3000,
+        "autoScrollEndCardMs": 3000,
+        "peekFraction": 0,
+        "ctaTimerMilliSeconds": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-aws-gateway",
       "kind": "user",
-      "label": null,
+      "label": "aws gateway",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1116,9 +1219,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "aws gateway — Config keys: enableAltGateway",
+      "defaultConfig": {
+        "enableAltGateway": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-autoclipping-marketing",
@@ -1136,9 +1242,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "autoclipping marketing",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-autoclipping-default-override",
@@ -1156,9 +1263,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "autoclipping default override",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-attachment-image-ladder",
@@ -1176,14 +1284,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "attachment image ladder",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-07-ad-recheck-interval-experiment",
       "kind": "user",
-      "label": null,
+      "label": "ad recheck interval experiment",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1196,14 +1305,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ad recheck interval experiment — Config keys: enableFastAdRecheck",
+      "defaultConfig": {
+        "enableFastAdRecheck": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-wmf-cpu-encode-intel",
       "kind": "user",
-      "label": null,
+      "label": "wmf cpu encode intel",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1216,9 +1328,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wmf cpu encode intel — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-web-vitals-monitoring",
@@ -1236,9 +1351,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "web vitals monitoring",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-web-translate-dom-guard",
@@ -1256,14 +1372,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "web translate dom guard",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-use-new-badge-image-source",
       "kind": "user",
-      "label": null,
+      "label": "use new badge image source",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1276,14 +1393,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "use new badge image source — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-upscale-small-captured-frames",
       "kind": "user",
-      "label": null,
+      "label": "upscale small captured frames",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1296,9 +1416,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "upscale small captured frames — Config keys: minCaptureWidth, minCaptureHeight",
+      "defaultConfig": {
+        "minCaptureWidth": 0,
+        "minCaptureHeight": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-topical-navigation-guild",
@@ -1316,9 +1440,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "topical navigation guild",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
@@ -1336,9 +1461,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "systemwide echo cancellation for people who refuse to wear headphones",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-soundboard-frequently-used",
@@ -1356,9 +1482,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "soundboard frequently used",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-server-theme-apex-shadow",
@@ -1376,14 +1503,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "server theme apex shadow",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-server-ladder",
       "kind": "user",
-      "label": null,
+      "label": "server ladder",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1396,14 +1524,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "server ladder — Config keys: bitrate, enabled",
+      "defaultConfig": {
+        "bitrate": 9000000,
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-quest-home-layout-visual-tweaks",
       "kind": "user",
-      "label": null,
+      "label": "quest home layout visual tweaks",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1416,9 +1548,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest home layout visual tweaks — Config keys: enabled, variant",
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-quest-fetch-reconnect-jitter",
@@ -1436,9 +1572,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest fetch reconnect jitter",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-monthly-to-yearly-upsells",
@@ -1456,14 +1593,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "monthly to yearly upsells",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-mobile-server-tag",
       "kind": "user",
-      "label": null,
+      "label": "mobile server tag",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1476,14 +1614,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mobile server tag — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-ml-offer-creation-ui-upgrade",
       "kind": "user",
-      "label": null,
+      "label": "ml offer creation ui upgrade",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1496,14 +1637,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ml offer creation ui upgrade",
+      "defaultConfig": {
+        "_raw": "{badgeStyle:m1.v.GRADIENT,surface:m1.F.NONE}"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-minimal-detectable",
       "kind": "user",
-      "label": null,
+      "label": "minimal detectable",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1516,9 +1660,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "minimal detectable — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-magic-scoring",
@@ -1536,9 +1683,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "magic scoring",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-ios-ota-streaming",
@@ -1556,9 +1704,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ios ota streaming",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-gummy-viewers",
@@ -1576,9 +1725,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gummy viewers",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-gummy-bears",
@@ -1596,14 +1746,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gummy bears",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-gifting-badge-desktop",
       "kind": "user",
-      "label": null,
+      "label": "gifting badge desktop",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1616,14 +1767,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gifting badge desktop — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-game-server-hosting-in-shop",
       "kind": "user",
-      "label": null,
+      "label": "game server hosting in shop",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1636,14 +1790,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "game server hosting in shop — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-family-center-connection-prereq",
       "kind": "user",
-      "label": null,
+      "label": "family center connection prereq",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1656,9 +1813,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "family center connection prereq — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-dont-badge-muted-vcs",
@@ -1676,14 +1836,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "dont badge muted vcs",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-desktop-tti-splash-asset",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti splash asset",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1696,14 +1857,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti splash asset — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-desktop-tti-http-cdt",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti http cdt",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1716,9 +1880,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti http cdt — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-content-classification-embedded-activity-filter",
@@ -1736,9 +1903,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "content classification embedded activity filter",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-clips-secondary-entrypoints",
@@ -1756,9 +1924,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips secondary entrypoints",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-clips-league-events",
@@ -1776,14 +1945,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips league events",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-clickstream-analytics",
       "kind": "user",
-      "label": null,
+      "label": "clickstream analytics",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1796,14 +1966,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clickstream analytics — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-chat-bar-customization",
       "kind": "user",
-      "label": null,
+      "label": "chat bar customization",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1816,14 +1989,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "chat bar customization — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-battlenet-social-sdk-migration",
       "kind": "user",
-      "label": null,
+      "label": "battlenet social sdk migration",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1836,14 +2012,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "battlenet social sdk migration — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-av1-encode-linux",
       "kind": "user",
-      "label": null,
+      "label": "av1 encode linux",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1856,14 +2035,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "av1 encode linux — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-android-two-week-trials",
       "kind": "user",
-      "label": null,
+      "label": "android two week trials",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1876,9 +2058,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "android two week trials — Config keys: enabled, trialCTAEnabled",
+      "defaultConfig": {
+        "enabled": false,
+        "trialCTAEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06-age-verification-incode",
@@ -1896,29 +2082,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "age verification incode",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
-    },
-    {
-      "id": "2026-06_guild_spaces",
-      "kind": "guild",
-      "label": null,
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 0,
-      "variationCount": 0,
-      "treatmentCount": 0,
-      "variants": [],
-      "treatments": [],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594042",
-      "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-06_guild_rooms",
@@ -1954,13 +2121,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Guild Rooms — Variants: T1: Enable Guild Rooms in this guild · T2: Enable Guild Rooms in this guild",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2026-05-use-ad-analytics-interface",
       "kind": "user",
-      "label": null,
+      "label": "use ad analytics interface",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1973,14 +2142,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "use ad analytics interface — Config keys: enabled, maxStep",
+      "defaultConfig": {
+        "enabled": false,
+        "maxStep": -1
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-spatial-audio-for-voice",
       "kind": "user",
-      "label": null,
+      "label": "spatial audio for voice",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -1993,9 +2166,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "spatial audio for voice — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-server-theme-user",
@@ -2013,14 +2189,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "server theme user",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-quest-home-tile-redesign",
       "kind": "user",
-      "label": null,
+      "label": "quest home tile redesign",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2033,14 +2210,21 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest home tile redesign — Config keys: useNewLayoutWithSearch, useNewTile, useLargeFeaturedTiles, ctaOnHover, clickableTile",
+      "defaultConfig": {
+        "useNewLayoutWithSearch": false,
+        "useNewTile": false,
+        "useLargeFeaturedTiles": false,
+        "ctaOnHover": false,
+        "clickableTile": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-mana-type-consolidation",
       "kind": "user",
-      "label": null,
+      "label": "mana type consolidation",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2053,9 +2237,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mana type consolidation — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-ios-video-stabilization",
@@ -2073,14 +2260,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ios video stabilization",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-ignore-user-feedback",
       "kind": "user",
-      "label": null,
+      "label": "ignore user feedback",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2093,14 +2281,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ignore user feedback — Config keys: enabled, shouldGetShorterIgnoreDuration",
+      "defaultConfig": {
+        "enabled": false,
+        "shouldGetShorterIgnoreDuration": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-global-soundboard-wheel-popout",
       "kind": "user",
-      "label": null,
+      "label": "global soundboard wheel popout",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2113,9 +2305,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "global soundboard wheel popout — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-electron-multilang-spellcheck",
@@ -2133,9 +2328,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "electron multilang spellcheck",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-distributed-clips",
@@ -2153,14 +2349,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "distributed clips",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-disable-camera-simulcast",
       "kind": "user",
-      "label": null,
+      "label": "disable camera simulcast",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2173,9 +2370,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "disable camera simulcast — Config keys: enableSimulcast",
+      "defaultConfig": {
+        "enableSimulcast": true
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-dice-roll-slash-command",
@@ -2193,14 +2393,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "dice roll slash command",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-device-form-factor-indicators",
       "kind": "user",
-      "label": null,
+      "label": "device form factor indicators",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2213,14 +2414,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "device form factor indicators — Config keys: showDeviceFormFactorIndicators",
+      "defaultConfig": {
+        "showDeviceFormFactorIndicators": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-collectibles-collection-page",
       "kind": "user",
-      "label": null,
+      "label": "collectibles collection page",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2233,9 +2437,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "collectibles collection page — Config keys: useIndexPage",
+      "defaultConfig": {
+        "useIndexPage": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-clips-scrub-preview-frontend",
@@ -2253,9 +2460,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips scrub preview frontend",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-clips-media-comments",
@@ -2273,14 +2481,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips media comments",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-bounty-stale-refresh-quest-home",
       "kind": "user",
-      "label": null,
+      "label": "bounty stale refresh quest home",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2293,14 +2502,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bounty stale refresh quest home — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-bounties-stage-1",
       "kind": "user",
-      "label": null,
+      "label": "bounties stage 1",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2313,14 +2525,22 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bounties stage 1 — Config keys: enabled, verticalScrollEnabled, loopingEnabled, ctaTimerMilliSeconds, rewardTimerSeconds, orbAmount",
+      "defaultConfig": {
+        "enabled": false,
+        "verticalScrollEnabled": false,
+        "loopingEnabled": false,
+        "ctaTimerMilliSeconds": 3000,
+        "rewardTimerSeconds": 15,
+        "orbAmount": 50
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-block-user-feedback",
       "kind": "user",
-      "label": null,
+      "label": "block user feedback",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2333,14 +2553,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "block user feedback — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-badge-discovery-milestone-2",
       "kind": "user",
-      "label": null,
+      "label": "badge discovery milestone 2",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2353,14 +2576,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "badge discovery milestone 2 — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-av1-bitrate-tuning",
       "kind": "user",
-      "label": null,
+      "label": "av1 bitrate tuning",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2373,14 +2599,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "av1 bitrate tuning — Config keys: bitrate",
+      "defaultConfig": {
+        "bitrate": 3500000
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-app-store-overlay-feature-gate",
       "kind": "user",
-      "label": null,
+      "label": "app store overlay feature gate",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2393,9 +2622,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "app store overlay feature gate — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-05-age-restricted-application-commands",
@@ -2413,14 +2645,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "age restricted application commands",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-wetf-parser",
       "kind": "user",
-      "label": null,
+      "label": "wetf parser",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2433,14 +2666,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wetf parser — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-voice-gateway-protocol-version",
       "kind": "user",
-      "label": null,
+      "label": "voice gateway protocol version",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2453,14 +2689,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "voice gateway protocol version — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-video-hook-dx12",
       "kind": "user",
-      "label": null,
+      "label": "video hook dx12",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2473,9 +2712,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video hook dx12 — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-user-profile-performance-analytics",
@@ -2493,9 +2735,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "user profile performance analytics",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-topical-navigation-staff-control",
@@ -2513,14 +2756,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "topical navigation staff control",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-server-boost-copy-1440p",
       "kind": "user",
-      "label": null,
+      "label": "server boost copy 1440p",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2533,14 +2777,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "server boost copy 1440p",
+      "defaultConfig": {
+        "_raw": "{streamQualityMarketingResolution:r}"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-safety-flows",
       "kind": "user",
-      "label": null,
+      "label": "safety flows",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2553,14 +2800,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "safety flows — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-quests-premium-orb-multiplier-marketing",
       "kind": "user",
-      "label": null,
+      "label": "quests premium orb multiplier marketing",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2573,14 +2823,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quests premium orb multiplier marketing — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-profile-frames-ea-marketing",
       "kind": "user",
-      "label": null,
+      "label": "profile frames ea marketing",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2593,9 +2846,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "profile frames ea marketing — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-premium-group-primary-reminder-nagbar",
@@ -2613,14 +2869,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "premium group primary reminder nagbar",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-overlay-streamer-mode",
       "kind": "user",
-      "label": null,
+      "label": "overlay streamer mode",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2633,14 +2890,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "overlay streamer mode — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-overlay-fps-limit",
       "kind": "user",
-      "label": null,
+      "label": "overlay fps limit",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2653,9 +2913,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "overlay fps limit — Config keys: overlayFPSLimit, mainWindowFPSLimit",
+      "defaultConfig": {
+        "overlayFPSLimit": null,
+        "mainWindowFPSLimit": null
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-krisp-v9-ios",
@@ -2673,14 +2937,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "krisp v9 ios",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-kestrel",
       "kind": "user",
-      "label": null,
+      "label": "kestrel",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2693,14 +2958,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "kestrel — Config keys: enabled, threshold",
+      "defaultConfig": {
+        "enabled": false,
+        "threshold": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-inappropriate-conversations-prescan",
       "kind": "user",
-      "label": null,
+      "label": "inappropriate conversations prescan",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2713,14 +2982,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "inappropriate conversations prescan — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-icymi-staff-only",
       "kind": "user",
-      "label": null,
+      "label": "icymi staff only",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2733,9 +3005,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "icymi staff only — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-http-request-sample",
@@ -2753,14 +3028,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "http request sample",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-gifting-badge",
       "kind": "user",
-      "label": null,
+      "label": "gifting badge",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2773,14 +3049,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gifting badge — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-gift-promotion-reminder",
       "kind": "user",
-      "label": null,
+      "label": "gift promotion reminder",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2793,14 +3072,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gift promotion reminder — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-ensure-received-messages-added-in-order",
       "kind": "user",
-      "label": null,
+      "label": "ensure received messages added in order",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2813,14 +3095,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ensure received messages added in order — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-disable-hook-frame-pacer",
       "kind": "user",
-      "label": null,
+      "label": "disable hook frame pacer",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2833,14 +3118,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "disable hook frame pacer — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-desktop-tti-v8-cache",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti v8 cache",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2853,14 +3141,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti v8 cache — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-desktop-tti-update-backoff",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti update backoff",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2873,14 +3164,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti update backoff — Config keys: maxBackoffMs",
+      "defaultConfig": {
+        "maxBackoffMs": 30000
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-desktop-tti-early-update-check",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti early update check",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2893,14 +3187,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti early update check — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-desktop-tti-dnstcp-warmup",
       "kind": "user",
-      "label": null,
+      "label": "desktop tti dnstcp warmup",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2913,14 +3210,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop tti dnstcp warmup — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-desktop-notification-center",
       "kind": "user",
-      "label": null,
+      "label": "desktop notification center",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2933,14 +3233,19 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop notification center — Config keys: notificationCenterVariant, entrypoint, filterStyle",
+      "defaultConfig": {
+        "notificationCenterVariant": null,
+        "entrypoint": null,
+        "filterStyle": null
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-consistent-profiles",
       "kind": "user",
-      "label": null,
+      "label": "consistent profiles",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2953,14 +3258,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "consistent profiles — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-composed-quest-player",
       "kind": "user",
-      "label": null,
+      "label": "composed quest player",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2973,14 +3281,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "composed quest player — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-collectibles-profile-frames-purchase",
       "kind": "user",
-      "label": null,
+      "label": "collectibles profile frames purchase",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -2993,9 +3304,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "collectibles profile frames purchase — Config keys: bucket",
+      "defaultConfig": {
+        "bucket": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-clips-v3-runtime",
@@ -3013,14 +3327,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips v3 runtime",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-browser-transceiver-padding-removal",
       "kind": "user",
-      "label": null,
+      "label": "browser transceiver padding removal",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3033,14 +3348,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "browser transceiver padding removal — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04-badge-discovery",
       "kind": "user",
-      "label": null,
+      "label": "badge discovery",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3053,9 +3371,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "badge discovery — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-04_voice_call_trigger_point",
@@ -3083,6 +3404,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Voice Call Trigger Point Experiment — → Treatment",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -3120,13 +3443,19 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Server Theme — → Enable Server Theme — Config keys: enabled, inExperiment, gatesApex",
+      "defaultConfig": {
+        "enabled": false,
+        "inExperiment": false,
+        "gatesApex": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2026-03-wysiwyg-user-profile-editing",
       "kind": "user",
-      "label": null,
+      "label": "wysiwyg user profile editing",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3139,14 +3468,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wysiwyg user profile editing — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-wishlisting-nitro",
       "kind": "user",
-      "label": null,
+      "label": "wishlisting nitro",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3159,14 +3491,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wishlisting nitro — Config keys: isEnabled, isRoadblocksEnabled",
+      "defaultConfig": {
+        "isEnabled": false,
+        "isRoadblocksEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-video-quest-player-refactor",
       "kind": "user",
-      "label": null,
+      "label": "video quest player refactor",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3179,14 +3515,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video quest player refactor — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-video-capture-device-no-reuse",
       "kind": "user",
-      "label": null,
+      "label": "video capture device no reuse",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3199,9 +3538,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video capture device no reuse — Config keys: overrideDeviceReuse",
+      "defaultConfig": {
+        "overrideDeviceReuse": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-surface-direct-renderer",
@@ -3219,9 +3561,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "surface direct renderer",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-stage-voice-panel",
@@ -3239,14 +3582,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "stage voice panel",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-soundmoji-sending",
       "kind": "user",
-      "label": null,
+      "label": "soundmoji sending",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3259,14 +3603,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "soundmoji sending — Config keys: enabled, showSoundmojiInEmojiPicker",
+      "defaultConfig": {
+        "enabled": false,
+        "showSoundmojiInEmojiPicker": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-soundmoji-rendering",
       "kind": "user",
-      "label": null,
+      "label": "soundmoji rendering",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3279,14 +3627,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "soundmoji rendering — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-requiremodule-caching-redux",
       "kind": "user",
-      "label": null,
+      "label": "requiremodule caching redux",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3299,14 +3650,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "requiremodule caching redux — Config keys: moduleCacheEnabled",
+      "defaultConfig": {
+        "moduleCacheEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-quest-reload-video-on-obscured",
       "kind": "user",
-      "label": null,
+      "label": "quest reload video on obscured",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3319,14 +3673,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest reload video on obscured — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-quest-home-bounties",
       "kind": "user",
-      "label": null,
+      "label": "quest home bounties",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3339,14 +3696,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "quest home bounties — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-private-profiles-strict-gb",
       "kind": "user",
-      "label": null,
+      "label": "private profiles strict gb",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3359,14 +3719,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "private profiles strict gb — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-private-profiles-strict",
       "kind": "user",
-      "label": null,
+      "label": "private profiles strict",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3379,14 +3742,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "private profiles strict — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-overlay-default-keybind",
       "kind": "user",
-      "label": null,
+      "label": "overlay default keybind",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3399,14 +3765,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "overlay default keybind — Config keys: keybindOverride",
+      "defaultConfig": {
+        "keybindOverride": null
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
       "kind": "user",
-      "label": null,
+      "label": "muted video quest new defaults",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3419,14 +3788,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "muted video quest new defaults — Config keys: enabled, variant",
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
       "kind": "user",
-      "label": null,
+      "label": "mobile quest home red dot notification",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3439,9 +3812,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mobile quest home red dot notification — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-mobile-hermes-occupancy-target",
@@ -3459,14 +3835,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mobile hermes occupancy target",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-message-bookmarks",
       "kind": "user",
-      "label": null,
+      "label": "message bookmarks",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3479,14 +3856,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "message bookmarks — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-media-play-metrics",
       "kind": "user",
-      "label": null,
+      "label": "media play metrics",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3499,9 +3879,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "media play metrics — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-krisp-stats-collection",
@@ -3519,14 +3902,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "krisp stats collection",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-ios-audio-interrupt-handling",
       "kind": "user",
-      "label": null,
+      "label": "ios audio interrupt handling",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3539,14 +3923,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ios audio interrupt handling — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-image-load-metrics",
       "kind": "user",
-      "label": null,
+      "label": "image load metrics",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3559,14 +3946,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "image load metrics — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-icymi-staff-debugging-utility",
       "kind": "user",
-      "label": null,
+      "label": "icymi staff debugging utility",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3579,14 +3969,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "icymi staff debugging utility — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-icymi-desktop",
       "kind": "user",
-      "label": null,
+      "label": "icymi desktop",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3599,9 +3992,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "icymi desktop — Config keys: icymiDesktopEnabled",
+      "defaultConfig": {
+        "icymiDesktopEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-friend-request-message",
@@ -3619,9 +4015,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "friend request message",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-file-upload-powerup-holdout",
@@ -3639,9 +4036,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "file upload powerup holdout",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-denormalized-perks-access-read",
@@ -3659,14 +4057,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "denormalized perks access read",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-debug-experiment",
       "kind": "user",
-      "label": null,
+      "label": "debug experiment",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3679,14 +4078,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "debug experiment",
+      "defaultConfig": {},
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-croissant",
       "kind": "user",
-      "label": null,
+      "label": "croissant",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3699,14 +4099,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "croissant — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-crepe",
       "kind": "user",
-      "label": null,
+      "label": "crepe",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3719,9 +4122,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "crepe — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-conversation-highlighting-utility",
@@ -3739,9 +4145,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "conversation highlighting utility",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-content-inventory-memberlist-and-ranker",
@@ -3759,14 +4166,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "content inventory memberlist and ranker",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-collectibles-profile-frames",
       "kind": "user",
-      "label": null,
+      "label": "collectibles profile frames",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3779,9 +4187,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "collectibles profile frames — Config keys: enableProfileFrames",
+      "defaultConfig": {
+        "enableProfileFrames": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-clips-experiment",
@@ -3799,9 +4210,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "clips experiment",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-churro",
@@ -3819,9 +4231,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "churro",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-browser-inverted-wants",
@@ -3839,14 +4252,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "browser inverted wants",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-boost-to-unlock-mobile-coachmark",
       "kind": "user",
-      "label": null,
+      "label": "boost to unlock mobile coachmark",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3859,9 +4273,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "boost to unlock mobile coachmark — Config keys: showCoachmark",
+      "defaultConfig": {
+        "showCoachmark": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-bogo-promotion-marketing-materials-v2",
@@ -3879,9 +4296,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bogo promotion marketing materials v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-bogo-promotion-gate-v2",
@@ -3899,14 +4317,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bogo promotion gate v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-block-purchases",
       "kind": "user",
-      "label": null,
+      "label": "block purchases",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3919,9 +4338,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "block purchases — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-audio-effects-probe",
@@ -3939,14 +4361,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "audio effects probe",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-arborium-highlight",
       "kind": "user",
-      "label": null,
+      "label": "arborium highlight",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -3959,9 +4382,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "arborium highlight — Config keys: enabled, preferNative",
+      "defaultConfig": {
+        "enabled": false,
+        "preferNative": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03-age-verification-google-wallet",
@@ -3979,9 +4406,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "age verification google wallet",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-03_voice_badge",
@@ -4017,6 +4445,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Display Voice Channel Badge — → Show voice badges",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -4046,6 +4476,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Guild Official Messages — → Enable official messages — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -4075,6 +4509,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Game Server Pricing — → Enable Game Server Pricing — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -4112,13 +4550,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "File Upload 250MB Powerup — Variants: T1: Enable File Upload 250MB Powerup · T2: Rollback UI for File Upload 250MB Powerup — Config keys: enabled, rollbackEnabled",
+      "defaultConfig": {
+        "enabled": false,
+        "rollbackEnabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2026-02-wgc-dirty-regions-all",
       "kind": "user",
-      "label": null,
+      "label": "wgc dirty regions all",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4131,14 +4574,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wgc dirty regions all — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-wgc-dirty-regions",
       "kind": "user",
-      "label": null,
+      "label": "wgc dirty regions",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4151,14 +4597,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wgc dirty regions — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-voice-channel-link-click",
       "kind": "user",
-      "label": null,
+      "label": "voice channel link click",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4171,14 +4620,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "voice channel link click — Config keys: navigateOnly",
+      "defaultConfig": {
+        "navigateOnly": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-sticker-padding",
       "kind": "user",
-      "label": null,
+      "label": "sticker padding",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4191,9 +4643,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "sticker padding — Config keys: padding",
+      "defaultConfig": {
+        "padding": 2
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-silence-warning-aggression",
@@ -4211,14 +4666,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "silence warning aggression",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-referral-reminder-dc",
       "kind": "user",
-      "label": null,
+      "label": "referral reminder dc",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4231,14 +4687,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "referral reminder dc — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-pubsub-bulk-ban-users",
       "kind": "user",
-      "label": null,
+      "label": "pubsub bulk ban users",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4251,14 +4710,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "pubsub bulk ban users — Config keys: usePubSub",
+      "defaultConfig": {
+        "usePubSub": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-process-boost-on-voice",
       "kind": "user",
-      "label": null,
+      "label": "process boost on voice",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4271,14 +4733,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "process boost on voice",
+      "defaultConfig": {
+        "_raw": "{processPriority:B.E6.HIGH,threadPriorityConfiguration:0}"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-private-profiles",
       "kind": "user",
-      "label": null,
+      "label": "private profiles",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4291,14 +4756,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "private profiles — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-private-channel-hiding",
       "kind": "user",
-      "label": null,
+      "label": "private channel hiding",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4311,14 +4779,18 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "private channel hiding — Config keys: enableObfuscation, enableIntegrityCheck",
+      "defaultConfig": {
+        "enableObfuscation": false,
+        "enableIntegrityCheck": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-premium-offer-reminder-xp",
       "kind": "user",
-      "label": null,
+      "label": "premium offer reminder xp",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4331,14 +4803,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "premium offer reminder xp — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-non-dm-gifting-modal-redesign",
       "kind": "user",
-      "label": null,
+      "label": "non dm gifting modal redesign",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4351,14 +4826,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "non dm gifting modal redesign — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-mobile-volume-output-slider-removal",
       "kind": "user",
-      "label": null,
+      "label": "mobile volume output slider removal",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4371,9 +4849,14 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mobile volume output slider removal — Config keys: audioOutputPresent, nonContextualStreamOutputPresent, showTileVolumeIndicator",
+      "defaultConfig": {
+        "audioOutputPresent": true,
+        "nonContextualStreamOutputPresent": true,
+        "showTileVolumeIndicator": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-mobile-visual-refresh",
@@ -4391,14 +4874,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mobile visual refresh",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-mana-playground-access",
       "kind": "user",
-      "label": null,
+      "label": "mana playground access",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4411,9 +4895,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mana playground access — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-longer-group-dm-invites",
@@ -4431,14 +4918,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "longer group dm invites",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-lazy-load-all-images",
       "kind": "user",
-      "label": null,
+      "label": "lazy load all images",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4451,14 +4939,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "lazy load all images — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-join-game-community-cta",
       "kind": "user",
-      "label": null,
+      "label": "join game community cta",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4471,14 +4962,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "join game community cta — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-gsh-game-detection-upsell",
       "kind": "user",
-      "label": null,
+      "label": "gsh game detection upsell",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4491,9 +4985,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gsh game detection upsell — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-go-live-video-preset-resolution",
@@ -4511,14 +5008,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "go live video preset resolution",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-go-live-hdr",
       "kind": "user",
-      "label": null,
+      "label": "go live hdr",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4531,14 +5029,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "go live hdr — Config keys: hdrCaptureMode",
+      "defaultConfig": {
+        "hdrCaptureMode": "never"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-gifting-modal-redesign",
       "kind": "user",
-      "label": null,
+      "label": "gifting modal redesign",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4551,14 +5052,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "gifting modal redesign — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-game-server-tab-always-on",
       "kind": "user",
-      "label": null,
+      "label": "game server tab always on",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4571,14 +5075,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "game server tab always on — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-friends-list",
       "kind": "user",
-      "label": null,
+      "label": "friends list",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4591,9 +5098,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "friends list — Config keys: hasFriendList",
+      "defaultConfig": {
+        "hasFriendList": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-content-classification-presence-filter",
@@ -4611,9 +5121,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "content classification presence filter",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-android-fresco-cache",
@@ -4631,9 +5142,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "android fresco cache",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02-android-chat-mosaic-shared-pool",
@@ -4651,9 +5163,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "android chat mosaic shared pool",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-02_past_vc_activity_messages",
@@ -4681,6 +5194,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Past VC Activity Messages — → Show past VC activity messages in system channel",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -4710,13 +5225,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Hangout Window",
+      "defaultConfig": {
+        "_raw": "{enableHangoutWindow:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Enable Hangout Window\",config:{enableHangoutWindow:!0}"
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2026-01-wmf-gpu-encode-intel",
       "kind": "user",
-      "label": null,
+      "label": "wmf gpu encode intel",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4729,14 +5248,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wmf gpu encode intel — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-voice-dares-v0",
       "kind": "user",
-      "label": null,
+      "label": "voice dares v0",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4749,9 +5271,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "voice dares v0 — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-libdiscore-batch-store-refactor",
@@ -4769,14 +5294,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "libdiscore batch store refactor",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-less-personalized-ads",
       "kind": "user",
-      "label": null,
+      "label": "less personalized ads",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4789,14 +5315,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "less personalized ads — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-ios-push-notif-json-fix",
       "kind": "user",
-      "label": null,
+      "label": "ios push notif json fix",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4809,14 +5338,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "ios push notif json fix — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-favorites-server",
       "kind": "user",
-      "label": null,
+      "label": "favorites server",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4829,9 +5361,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "favorites server — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-family-center-v3",
@@ -4849,14 +5384,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "family center v3",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-cms-layouts",
       "kind": "user",
-      "label": null,
+      "label": "cms layouts",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4869,14 +5405,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "cms layouts — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-bug-reporter",
       "kind": "user",
-      "label": null,
+      "label": "bug reporter",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4889,9 +5428,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "bug reporter — Config keys: hasBugReporterAccess",
+      "defaultConfig": {
+        "hasBugReporterAccess": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2026-01-android-rmle",
@@ -4909,14 +5451,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "android rmle",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-wmf-gpu-encode",
       "kind": "user",
-      "label": null,
+      "label": "wmf gpu encode",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4929,9 +5472,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "wmf gpu encode — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-windows-audio-effects",
@@ -4949,14 +5495,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "windows audio effects",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
       "kind": "user",
-      "label": null,
+      "label": "social layer storefront wishlist user account popout",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4969,14 +5516,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "social layer storefront wishlist user account popout — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
       "kind": "user",
-      "label": null,
+      "label": "social layer storefront activity card entrypoints user experiment",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -4989,9 +5539,13 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "social layer storefront activity card entrypoints user experiment — Config keys: voiceChannelActivitiesEnabled, guildActivitiesEnabled",
+      "defaultConfig": {
+        "voiceChannelActivitiesEnabled": false,
+        "guildActivitiesEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-proportional-vad-indicator",
@@ -5009,14 +5563,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "proportional vad indicator",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-nitro-s-rewards",
       "kind": "user",
-      "label": null,
+      "label": "nitro s rewards",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5029,14 +5584,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "nitro s rewards — Config keys: treatment",
+      "defaultConfig": {
+        "treatment": "control"
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-katsudon",
       "kind": "user",
-      "label": null,
+      "label": "katsudon",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5049,14 +5607,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "katsudon — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-hdr-accessibility-setting",
       "kind": "user",
-      "label": null,
+      "label": "hdr accessibility setting",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5069,9 +5630,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "hdr accessibility setting — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12-09-ptt-education",
@@ -5089,9 +5653,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "09 ptt education",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-12_voice_channel_hoisting",
@@ -5127,13 +5692,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Voice Channel Hoisting — Variants: T1: Both waveform and highlight · T2: Waveform icon only",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
     {
       "id": "2025-11-video-end-card-v2",
       "kind": "user",
-      "label": null,
+      "label": "video end card v2",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5146,14 +5713,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video end card v2 — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-rtc-panel-entry-point-new-copy",
       "kind": "user",
-      "label": null,
+      "label": "rtc panel entry point new copy",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5166,14 +5736,19 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "rtc panel entry point new copy — Config keys: altTitle, altBody, altCta",
+      "defaultConfig": {
+        "altTitle": false,
+        "altBody": false,
+        "altCta": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-overlay-chat",
       "kind": "user",
-      "label": null,
+      "label": "overlay chat",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5186,14 +5761,19 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "overlay chat — Config keys: hasChat, hasFriendList, showNowPlayingForDifferentGames",
+      "defaultConfig": {
+        "hasChat": false,
+        "hasFriendList": false,
+        "showNowPlayingForDifferentGames": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-mana-context-menu",
       "kind": "user",
-      "label": null,
+      "label": "mana context menu",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5206,9 +5786,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "mana context menu — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-global-frame-pool-lock",
@@ -5226,9 +5809,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "global frame pool lock",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-defer-load-late-lazy-cache",
@@ -5246,9 +5830,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "defer load late lazy cache",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -5266,9 +5851,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "age verification expressive everywhere",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-10-low-latency-rate-control",
@@ -5286,9 +5872,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "low latency rate control",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-10-go-live-auto-quality",
@@ -5306,9 +5893,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "go live auto quality",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-10-friend-request-alerts-v2",
@@ -5326,9 +5914,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "friend request alerts v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-10-force-sdr-emojis-stickers",
@@ -5346,9 +5935,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "force sdr emojis stickers",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-10-desktop-communication-notifications-emoji",
@@ -5366,14 +5956,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop communication notifications emoji",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-video-qoe-metrics-tracking",
       "kind": "user",
-      "label": null,
+      "label": "video qoe metrics tracking",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5386,14 +5977,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "video qoe metrics tracking — Config keys: externalAnalyticsEnabled",
+      "defaultConfig": {
+        "externalAnalyticsEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-threads-also-send-to-channel",
       "kind": "user",
-      "label": null,
+      "label": "threads also send to channel",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5406,14 +6000,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "threads also send to channel — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-server-nsfw-level",
       "kind": "user",
-      "label": null,
+      "label": "server nsfw level",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5426,14 +6023,17 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "server nsfw level — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-sensitive-content-self-harm",
       "kind": "user",
-      "label": null,
+      "label": "sensitive content self harm",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5446,9 +6046,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "sensitive content self harm — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-overlay-state-tracking",
@@ -5466,9 +6069,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "overlay state tracking",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-libdiscore-telemetry",
@@ -5486,14 +6090,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "libdiscore telemetry",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-image-attachment-mezzanine-v2",
       "kind": "user",
-      "label": null,
+      "label": "image attachment mezzanine v2",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5506,9 +6111,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "image attachment mezzanine v2 — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09-agc2-v2",
@@ -5526,9 +6134,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "agc2 v2",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-09_hotwheels_nvidia_boost",
@@ -5564,9 +6173,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Next iteration of the activity feed ranking model. — Variants: T16: ML model V3 - Nvidia small boost · T17: ML model V3 - Nvidia big boost",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-08-voice-user-affinity",
@@ -5584,14 +6194,15 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "voice user affinity",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-08-browser-hevc",
       "kind": "user",
-      "label": null,
+      "label": "browser hevc",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5604,9 +6215,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "browser hevc — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-08_portkey_enabled",
@@ -5634,6 +6248,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "GameServer Enabled — → Enable GameServer — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -5687,14 +6305,19 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Native Intents — Variants: T1: All enabled · T2: Clear Only · T3: Activities Only · T4: Activities and Clear — Config keys: searchEnabled, clearEnabled, activityEnabled",
+      "defaultConfig": {
+        "searchEnabled": false,
+        "clearEnabled": false,
+        "activityEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-05-search-results-feedback",
       "kind": "user",
-      "label": null,
+      "label": "search results feedback",
       "isApex": false,
       "source": "client",
       "variantType": "variation",
@@ -5707,9 +6330,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "search results feedback — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2025-04-desktop-refresh-fast-follows",
@@ -5727,38 +6353,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "desktop refresh fast follows",
+      "defaultConfig": null,
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
-    },
-    {
-      "id": "2024-12_guild_voice_channel_ringing",
-      "kind": "guild",
-      "label": "Guild Voice Ringing",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Allow users to ring each other in Guild Voice Channels"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Allow users to ring each other in Guild Voice Channels"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594042",
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentReliable": false
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
@@ -5826,9 +6424,14 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "RTC Pacer & Golive Simulcast — Variants: T1: Golive Simulcast without prober 720p@500k · T2: Golive Simulcast 720p@500k · T3: Golive with pacing · T4: Golive with pacing and probing · T5: Golive Simulcast 720p@750k — Config keys: enabled, fullname, simulcastEnabled",
+      "defaultConfig": {
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+        "simulcastEnabled": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2023-02_guest_voice_invites",
@@ -5861,6 +6464,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Guest Voice Invites — → None",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -5895,6 +6500,10 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Automod Mention Raid Limit — → Automod Mention Raid Limit — Config keys: enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -5929,6 +6538,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Disable mass mentions for communities by default — → None",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -5963,6 +6574,8 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Voice in Threads — → Treatment 1",
+      "defaultConfig": null,
       "percentSource": "api_guild_populations",
       "percentReliable": true
     },
@@ -5992,9 +6605,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Block purchases based on country — → Payments Blocked — Config keys: paymentsBlocked",
+      "defaultConfig": {
+        "paymentsBlocked": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     },
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6022,9 +6638,12 @@
       "previousCount": null,
       "previousTreatments": null,
       "buildNumber": "594042",
+      "purpose": "Display QS scores in results. Not a real experiment — → Show scores in QS results — Config keys: showScores",
+      "defaultConfig": {
+        "showScores": false
+      },
       "percentSource": "none",
-      "percentReliable": false,
-      "sampleNote": "No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %."
+      "percentReliable": false
     }
   ]
 }

@@ -1,0 +1,2059 @@
+{
+  "scrapedAt": "2026-08-15T22:06:15.869Z",
+  "count": 165,
+  "definitions": {
+    "2021-02_staff_qc_debugging": {
+      "id": "2021-02_staff_qc_debugging",
+      "kind": "user",
+      "label": "Display QS scores in results. Not a real experiment",
+      "defaultConfig": {
+        "showScores": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Show scores in QS results",
+          "config": {
+            "showScores": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Display QS scores in results. Not a real experiment — → Show scores in QS results — Config keys: showScores"
+    },
+    "2022-03_block_russian_purchases": {
+      "id": "2022-03_block_russian_purchases",
+      "kind": "user",
+      "label": "Block purchases based on country",
+      "defaultConfig": {
+        "paymentsBlocked": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Payments Blocked",
+          "config": {
+            "paymentsBlocked": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Block purchases based on country — → Payments Blocked — Config keys: paymentsBlocked"
+    },
+    "2022-12_mention_raid_limit": {
+      "id": "2022-12_mention_raid_limit",
+      "kind": "guild",
+      "label": "Automod Mention Raid Limit",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Automod Mention Raid Limit",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Automod Mention Raid Limit — → Automod Mention Raid Limit — Config keys: enabled"
+    },
+    "2024-06_rtc_pacer__simulcast": {
+      "id": "2024-06_rtc_pacer__simulcast",
+      "kind": "user",
+      "label": "RTC Pacer & Golive Simulcast",
+      "defaultConfig": {
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+        "simulcastEnabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Golive Simulcast without prober 720p@500k",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+            "simulcastEnabled": true
+          }
+        },
+        {
+          "id": 2,
+          "label": "Golive Simulcast 720p@500k",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+            "simulcastEnabled": true
+          }
+        },
+        {
+          "id": 3,
+          "label": "Golive with pacing",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer",
+            "simulcastEnabled": false
+          }
+        },
+        {
+          "id": 4,
+          "label": "Golive with pacing and probing",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+            "simulcastEnabled": false
+          }
+        },
+        {
+          "id": 5,
+          "label": "Golive Simulcast 720p@750k",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-750k",
+            "simulcastEnabled": true
+          }
+        },
+        {
+          "id": 6,
+          "label": "Golive Simulcast 720p@1000k",
+          "config": {
+            "enabled": true,
+            "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-1000k",
+            "simulcastEnabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "RTC Pacer & Golive Simulcast — Variants: T1: Golive Simulcast without prober 720p@500k · T2: Golive Simulcast 720p@500k · T3: Golive with pacing · T4: Golive with pacing and probing · T5: Golive Simulcast 720p@750k — Config keys: enabled, fullname, simulcastEnabled"
+    },
+    "2024-12_guild_voice_channel_ringing": {
+      "id": "2024-12_guild_voice_channel_ringing",
+      "kind": "guild",
+      "label": "Guild Voice Ringing",
+      "defaultConfig": {
+        "_raw": "{enabled:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Allow users to ring each other in Guild Voice Channels\",config:{enabled:!0}"
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Show past VC activity messages in system channel",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Guild Voice Ringing — → Show past VC activity messages in system channel"
+    },
+    "2025-05-search-results-feedback": {
+      "id": "2025-05-search-results-feedback",
+      "kind": "user",
+      "label": "search results feedback",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "search results feedback — Config keys: enabled"
+    },
+    "2025-06_native_intents": {
+      "id": "2025-06_native_intents",
+      "kind": "user",
+      "label": "Native Intents",
+      "defaultConfig": {
+        "searchEnabled": false,
+        "clearEnabled": false,
+        "activityEnabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "All enabled",
+          "config": {
+            "searchEnabled": true,
+            "clearEnabled": true,
+            "activityEnabled": true
+          }
+        },
+        {
+          "id": 2,
+          "label": "Clear Only",
+          "config": {
+            "searchEnabled": false,
+            "clearEnabled": true,
+            "activityEnabled": false
+          }
+        },
+        {
+          "id": 3,
+          "label": "Activities Only",
+          "config": {
+            "searchEnabled": false,
+            "clearEnabled": false,
+            "activityEnabled": true
+          }
+        },
+        {
+          "id": 4,
+          "label": "Activities and Clear",
+          "config": {
+            "searchEnabled": false,
+            "clearEnabled": true,
+            "activityEnabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Native Intents — Variants: T1: All enabled · T2: Clear Only · T3: Activities Only · T4: Activities and Clear — Config keys: searchEnabled, clearEnabled, activityEnabled"
+    },
+    "2025-08_portkey_enabled": {
+      "id": "2025-08_portkey_enabled",
+      "kind": "guild",
+      "label": "GameServer Enabled",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable GameServer",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "GameServer Enabled — → Enable GameServer — Config keys: enabled"
+    },
+    "2025-08-browser-hevc": {
+      "id": "2025-08-browser-hevc",
+      "kind": "user",
+      "label": "browser hevc",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "browser hevc — Config keys: enabled"
+    },
+    "2025-09-image-attachment-mezzanine-v2": {
+      "id": "2025-09-image-attachment-mezzanine-v2",
+      "kind": "user",
+      "label": "image attachment mezzanine v2",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "image attachment mezzanine v2 — Config keys: enabled"
+    },
+    "2025-09-sensitive-content-self-harm": {
+      "id": "2025-09-sensitive-content-self-harm",
+      "kind": "user",
+      "label": "sensitive content self harm",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "sensitive content self harm — Config keys: enabled"
+    },
+    "2025-09-server-nsfw-level": {
+      "id": "2025-09-server-nsfw-level",
+      "kind": "user",
+      "label": "server nsfw level",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "server nsfw level — Config keys: enabled"
+    },
+    "2025-09-threads-also-send-to-channel": {
+      "id": "2025-09-threads-also-send-to-channel",
+      "kind": "user",
+      "label": "threads also send to channel",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "threads also send to channel — Config keys: enabled"
+    },
+    "2025-09-video-qoe-metrics-tracking": {
+      "id": "2025-09-video-qoe-metrics-tracking",
+      "kind": "user",
+      "label": "video qoe metrics tracking",
+      "defaultConfig": {
+        "externalAnalyticsEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video qoe metrics tracking — Config keys: externalAnalyticsEnabled"
+    },
+    "2025-11-mana-context-menu": {
+      "id": "2025-11-mana-context-menu",
+      "kind": "user",
+      "label": "mana context menu",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mana context menu — Config keys: enabled"
+    },
+    "2025-11-overlay-chat": {
+      "id": "2025-11-overlay-chat",
+      "kind": "user",
+      "label": "overlay chat",
+      "defaultConfig": {
+        "hasChat": false,
+        "hasFriendList": false,
+        "showNowPlayingForDifferentGames": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "overlay chat — Config keys: hasChat, hasFriendList, showNowPlayingForDifferentGames"
+    },
+    "2025-11-rtc-panel-entry-point-new-copy": {
+      "id": "2025-11-rtc-panel-entry-point-new-copy",
+      "kind": "user",
+      "label": "rtc panel entry point new copy",
+      "defaultConfig": {
+        "altTitle": false,
+        "altBody": false,
+        "altCta": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "rtc panel entry point new copy — Config keys: altTitle, altBody, altCta"
+    },
+    "2025-11-video-end-card-v2": {
+      "id": "2025-11-video-end-card-v2",
+      "kind": "user",
+      "label": "video end card v2",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video end card v2 — Config keys: enabled"
+    },
+    "2025-12-hdr-accessibility-setting": {
+      "id": "2025-12-hdr-accessibility-setting",
+      "kind": "user",
+      "label": "hdr accessibility setting",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "hdr accessibility setting — Config keys: enabled"
+    },
+    "2025-12-katsudon": {
+      "id": "2025-12-katsudon",
+      "kind": "user",
+      "label": "katsudon",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "katsudon — Config keys: enabled"
+    },
+    "2025-12-nitro-s-rewards": {
+      "id": "2025-12-nitro-s-rewards",
+      "kind": "user",
+      "label": "nitro s rewards",
+      "defaultConfig": {
+        "treatment": "control"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "nitro s rewards — Config keys: treatment"
+    },
+    "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment": {
+      "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
+      "kind": "user",
+      "label": "social layer storefront activity card entrypoints user experiment",
+      "defaultConfig": {
+        "voiceChannelActivitiesEnabled": false,
+        "guildActivitiesEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "social layer storefront activity card entrypoints user experiment — Config keys: voiceChannelActivitiesEnabled, guildActivitiesEnabled"
+    },
+    "2025-12-social-layer-storefront-wishlist-user-account-popout": {
+      "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
+      "kind": "user",
+      "label": "social layer storefront wishlist user account popout",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "social layer storefront wishlist user account popout — Config keys: enabled"
+    },
+    "2025-12-wmf-gpu-encode": {
+      "id": "2025-12-wmf-gpu-encode",
+      "kind": "user",
+      "label": "wmf gpu encode",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wmf gpu encode — Config keys: enabled"
+    },
+    "2026-01-bug-reporter": {
+      "id": "2026-01-bug-reporter",
+      "kind": "user",
+      "label": "bug reporter",
+      "defaultConfig": {
+        "hasBugReporterAccess": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "bug reporter — Config keys: hasBugReporterAccess"
+    },
+    "2026-01-cms-layouts": {
+      "id": "2026-01-cms-layouts",
+      "kind": "user",
+      "label": "cms layouts",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "cms layouts — Config keys: enabled"
+    },
+    "2026-01-favorites-server": {
+      "id": "2026-01-favorites-server",
+      "kind": "user",
+      "label": "favorites server",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "favorites server — Config keys: enabled"
+    },
+    "2026-01-ios-push-notif-json-fix": {
+      "id": "2026-01-ios-push-notif-json-fix",
+      "kind": "user",
+      "label": "ios push notif json fix",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ios push notif json fix — Config keys: enabled"
+    },
+    "2026-01-less-personalized-ads": {
+      "id": "2026-01-less-personalized-ads",
+      "kind": "user",
+      "label": "less personalized ads",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "less personalized ads — Config keys: enabled"
+    },
+    "2026-01-voice-dares-v0": {
+      "id": "2026-01-voice-dares-v0",
+      "kind": "user",
+      "label": "voice dares v0",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "voice dares v0 — Config keys: enabled"
+    },
+    "2026-01-wmf-gpu-encode-intel": {
+      "id": "2026-01-wmf-gpu-encode-intel",
+      "kind": "user",
+      "label": "wmf gpu encode intel",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wmf gpu encode intel — Config keys: enabled"
+    },
+    "2026-02_hangout_window": {
+      "id": "2026-02_hangout_window",
+      "kind": "guild",
+      "label": "Hangout Window",
+      "defaultConfig": {
+        "_raw": "{enableHangoutWindow:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Enable Hangout Window\",config:{enableHangoutWindow:!0}"
+      },
+      "treatments": [],
+      "source": "client_definition",
+      "purpose": "Hangout Window"
+    },
+    "2026-02-friends-list": {
+      "id": "2026-02-friends-list",
+      "kind": "user",
+      "label": "friends list",
+      "defaultConfig": {
+        "hasFriendList": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "friends list — Config keys: hasFriendList"
+    },
+    "2026-02-game-server-tab-always-on": {
+      "id": "2026-02-game-server-tab-always-on",
+      "kind": "user",
+      "label": "game server tab always on",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "game server tab always on — Config keys: enabled"
+    },
+    "2026-02-gifting-modal-redesign": {
+      "id": "2026-02-gifting-modal-redesign",
+      "kind": "user",
+      "label": "gifting modal redesign",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gifting modal redesign — Config keys: enabled"
+    },
+    "2026-02-go-live-hdr": {
+      "id": "2026-02-go-live-hdr",
+      "kind": "user",
+      "label": "go live hdr",
+      "defaultConfig": {
+        "hdrCaptureMode": "never"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "go live hdr — Config keys: hdrCaptureMode"
+    },
+    "2026-02-gsh-game-detection-upsell": {
+      "id": "2026-02-gsh-game-detection-upsell",
+      "kind": "user",
+      "label": "gsh game detection upsell",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gsh game detection upsell — Config keys: enabled"
+    },
+    "2026-02-join-game-community-cta": {
+      "id": "2026-02-join-game-community-cta",
+      "kind": "user",
+      "label": "join game community cta",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "join game community cta — Config keys: enabled"
+    },
+    "2026-02-lazy-load-all-images": {
+      "id": "2026-02-lazy-load-all-images",
+      "kind": "user",
+      "label": "lazy load all images",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "lazy load all images — Config keys: enabled"
+    },
+    "2026-02-mana-playground-access": {
+      "id": "2026-02-mana-playground-access",
+      "kind": "user",
+      "label": "mana playground access",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mana playground access — Config keys: enabled"
+    },
+    "2026-02-mobile-volume-output-slider-removal": {
+      "id": "2026-02-mobile-volume-output-slider-removal",
+      "kind": "user",
+      "label": "mobile volume output slider removal",
+      "defaultConfig": {
+        "audioOutputPresent": true,
+        "nonContextualStreamOutputPresent": true,
+        "showTileVolumeIndicator": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mobile volume output slider removal — Config keys: audioOutputPresent, nonContextualStreamOutputPresent, showTileVolumeIndicator"
+    },
+    "2026-02-non-dm-gifting-modal-redesign": {
+      "id": "2026-02-non-dm-gifting-modal-redesign",
+      "kind": "user",
+      "label": "non dm gifting modal redesign",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "non dm gifting modal redesign — Config keys: enabled"
+    },
+    "2026-02-premium-offer-reminder-xp": {
+      "id": "2026-02-premium-offer-reminder-xp",
+      "kind": "user",
+      "label": "premium offer reminder xp",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "premium offer reminder xp — Config keys: enabled"
+    },
+    "2026-02-private-channel-hiding": {
+      "id": "2026-02-private-channel-hiding",
+      "kind": "user",
+      "label": "private channel hiding",
+      "defaultConfig": {
+        "enableObfuscation": false,
+        "enableIntegrityCheck": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "private channel hiding — Config keys: enableObfuscation, enableIntegrityCheck"
+    },
+    "2026-02-private-profiles": {
+      "id": "2026-02-private-profiles",
+      "kind": "user",
+      "label": "private profiles",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "private profiles — Config keys: enabled"
+    },
+    "2026-02-process-boost-on-voice": {
+      "id": "2026-02-process-boost-on-voice",
+      "kind": "user",
+      "label": "process boost on voice",
+      "defaultConfig": {
+        "_raw": "{processPriority:B.E6.HIGH,threadPriorityConfiguration:0}"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "process boost on voice"
+    },
+    "2026-02-pubsub-bulk-ban-users": {
+      "id": "2026-02-pubsub-bulk-ban-users",
+      "kind": "user",
+      "label": "pubsub bulk ban users",
+      "defaultConfig": {
+        "usePubSub": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "pubsub bulk ban users — Config keys: usePubSub"
+    },
+    "2026-02-referral-reminder-dc": {
+      "id": "2026-02-referral-reminder-dc",
+      "kind": "user",
+      "label": "referral reminder dc",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "referral reminder dc — Config keys: enabled"
+    },
+    "2026-02-sticker-padding": {
+      "id": "2026-02-sticker-padding",
+      "kind": "user",
+      "label": "sticker padding",
+      "defaultConfig": {
+        "padding": 2
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "sticker padding — Config keys: padding"
+    },
+    "2026-02-voice-channel-link-click": {
+      "id": "2026-02-voice-channel-link-click",
+      "kind": "user",
+      "label": "voice channel link click",
+      "defaultConfig": {
+        "navigateOnly": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "voice channel link click — Config keys: navigateOnly"
+    },
+    "2026-02-wgc-dirty-regions": {
+      "id": "2026-02-wgc-dirty-regions",
+      "kind": "user",
+      "label": "wgc dirty regions",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wgc dirty regions — Config keys: enabled"
+    },
+    "2026-02-wgc-dirty-regions-all": {
+      "id": "2026-02-wgc-dirty-regions-all",
+      "kind": "user",
+      "label": "wgc dirty regions all",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wgc dirty regions all — Config keys: enabled"
+    },
+    "2026-03_file_upload_250_mb_powerup": {
+      "id": "2026-03_file_upload_250_mb_powerup",
+      "kind": "guild",
+      "label": "File Upload 250MB Powerup",
+      "defaultConfig": {
+        "enabled": false,
+        "rollbackEnabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable File Upload 250MB Powerup",
+          "config": {
+            "enabled": true,
+            "rollbackEnabled": false
+          }
+        },
+        {
+          "id": 2,
+          "label": "Rollback UI for File Upload 250MB Powerup",
+          "config": {
+            "enabled": true,
+            "rollbackEnabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "File Upload 250MB Powerup — Variants: T1: Enable File Upload 250MB Powerup · T2: Rollback UI for File Upload 250MB Powerup — Config keys: enabled, rollbackEnabled"
+    },
+    "2026-03_game_server_pricing": {
+      "id": "2026-03_game_server_pricing",
+      "kind": "guild",
+      "label": "Game Server Pricing",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable Game Server Pricing",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Game Server Pricing — → Enable Game Server Pricing — Config keys: enabled"
+    },
+    "2026-03_guild_official_messages": {
+      "id": "2026-03_guild_official_messages",
+      "kind": "guild",
+      "label": "Guild Official Messages",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable official messages",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Guild Official Messages — → Enable official messages — Config keys: enabled"
+    },
+    "2026-03-arborium-highlight": {
+      "id": "2026-03-arborium-highlight",
+      "kind": "user",
+      "label": "arborium highlight",
+      "defaultConfig": {
+        "enabled": false,
+        "preferNative": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "arborium highlight — Config keys: enabled, preferNative"
+    },
+    "2026-03-block-purchases": {
+      "id": "2026-03-block-purchases",
+      "kind": "user",
+      "label": "block purchases",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "block purchases — Config keys: enabled"
+    },
+    "2026-03-boost-to-unlock-mobile-coachmark": {
+      "id": "2026-03-boost-to-unlock-mobile-coachmark",
+      "kind": "user",
+      "label": "boost to unlock mobile coachmark",
+      "defaultConfig": {
+        "showCoachmark": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "boost to unlock mobile coachmark — Config keys: showCoachmark"
+    },
+    "2026-03-collectibles-profile-frames": {
+      "id": "2026-03-collectibles-profile-frames",
+      "kind": "user",
+      "label": "collectibles profile frames",
+      "defaultConfig": {
+        "enableProfileFrames": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "collectibles profile frames — Config keys: enableProfileFrames"
+    },
+    "2026-03-crepe": {
+      "id": "2026-03-crepe",
+      "kind": "user",
+      "label": "crepe",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "crepe — Config keys: enabled"
+    },
+    "2026-03-croissant": {
+      "id": "2026-03-croissant",
+      "kind": "user",
+      "label": "croissant",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "croissant — Config keys: enabled"
+    },
+    "2026-03-debug-experiment": {
+      "id": "2026-03-debug-experiment",
+      "kind": "user",
+      "label": "debug experiment",
+      "defaultConfig": {},
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "debug experiment"
+    },
+    "2026-03-icymi-desktop": {
+      "id": "2026-03-icymi-desktop",
+      "kind": "user",
+      "label": "icymi desktop",
+      "defaultConfig": {
+        "icymiDesktopEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "icymi desktop — Config keys: icymiDesktopEnabled"
+    },
+    "2026-03-icymi-staff-debugging-utility": {
+      "id": "2026-03-icymi-staff-debugging-utility",
+      "kind": "user",
+      "label": "icymi staff debugging utility",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "icymi staff debugging utility — Config keys: enabled"
+    },
+    "2026-03-image-load-metrics": {
+      "id": "2026-03-image-load-metrics",
+      "kind": "user",
+      "label": "image load metrics",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "image load metrics — Config keys: enabled"
+    },
+    "2026-03-ios-audio-interrupt-handling": {
+      "id": "2026-03-ios-audio-interrupt-handling",
+      "kind": "user",
+      "label": "ios audio interrupt handling",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ios audio interrupt handling — Config keys: enabled"
+    },
+    "2026-03-media-play-metrics": {
+      "id": "2026-03-media-play-metrics",
+      "kind": "user",
+      "label": "media play metrics",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "media play metrics — Config keys: enabled"
+    },
+    "2026-03-message-bookmarks": {
+      "id": "2026-03-message-bookmarks",
+      "kind": "user",
+      "label": "message bookmarks",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "message bookmarks — Config keys: enabled"
+    },
+    "2026-03-mobile-quest-home-red-dot-notification": {
+      "id": "2026-03-mobile-quest-home-red-dot-notification",
+      "kind": "user",
+      "label": "mobile quest home red dot notification",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mobile quest home red dot notification — Config keys: enabled"
+    },
+    "2026-03-muted-video-quest-new-defaults": {
+      "id": "2026-03-muted-video-quest-new-defaults",
+      "kind": "user",
+      "label": "muted video quest new defaults",
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "muted video quest new defaults — Config keys: enabled, variant"
+    },
+    "2026-03-overlay-default-keybind": {
+      "id": "2026-03-overlay-default-keybind",
+      "kind": "user",
+      "label": "overlay default keybind",
+      "defaultConfig": {
+        "keybindOverride": null
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "overlay default keybind — Config keys: keybindOverride"
+    },
+    "2026-03-private-profiles-strict": {
+      "id": "2026-03-private-profiles-strict",
+      "kind": "user",
+      "label": "private profiles strict",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "private profiles strict — Config keys: enabled"
+    },
+    "2026-03-private-profiles-strict-gb": {
+      "id": "2026-03-private-profiles-strict-gb",
+      "kind": "user",
+      "label": "private profiles strict gb",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "private profiles strict gb — Config keys: enabled"
+    },
+    "2026-03-quest-home-bounties": {
+      "id": "2026-03-quest-home-bounties",
+      "kind": "user",
+      "label": "quest home bounties",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quest home bounties — Config keys: enabled"
+    },
+    "2026-03-quest-reload-video-on-obscured": {
+      "id": "2026-03-quest-reload-video-on-obscured",
+      "kind": "user",
+      "label": "quest reload video on obscured",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quest reload video on obscured — Config keys: enabled"
+    },
+    "2026-03-requiremodule-caching-redux": {
+      "id": "2026-03-requiremodule-caching-redux",
+      "kind": "user",
+      "label": "requiremodule caching redux",
+      "defaultConfig": {
+        "moduleCacheEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "requiremodule caching redux — Config keys: moduleCacheEnabled"
+    },
+    "2026-03-soundmoji-rendering": {
+      "id": "2026-03-soundmoji-rendering",
+      "kind": "user",
+      "label": "soundmoji rendering",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "soundmoji rendering — Config keys: enabled"
+    },
+    "2026-03-soundmoji-sending": {
+      "id": "2026-03-soundmoji-sending",
+      "kind": "user",
+      "label": "soundmoji sending",
+      "defaultConfig": {
+        "enabled": false,
+        "showSoundmojiInEmojiPicker": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "soundmoji sending — Config keys: enabled, showSoundmojiInEmojiPicker"
+    },
+    "2026-03-video-capture-device-no-reuse": {
+      "id": "2026-03-video-capture-device-no-reuse",
+      "kind": "user",
+      "label": "video capture device no reuse",
+      "defaultConfig": {
+        "overrideDeviceReuse": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video capture device no reuse — Config keys: overrideDeviceReuse"
+    },
+    "2026-03-video-quest-player-refactor": {
+      "id": "2026-03-video-quest-player-refactor",
+      "kind": "user",
+      "label": "video quest player refactor",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video quest player refactor — Config keys: enabled"
+    },
+    "2026-03-wishlisting-nitro": {
+      "id": "2026-03-wishlisting-nitro",
+      "kind": "user",
+      "label": "wishlisting nitro",
+      "defaultConfig": {
+        "isEnabled": false,
+        "isRoadblocksEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wishlisting nitro — Config keys: isEnabled, isRoadblocksEnabled"
+    },
+    "2026-03-wysiwyg-user-profile-editing": {
+      "id": "2026-03-wysiwyg-user-profile-editing",
+      "kind": "user",
+      "label": "wysiwyg user profile editing",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wysiwyg user profile editing — Config keys: enabled"
+    },
+    "2026-04_server_theme": {
+      "id": "2026-04_server_theme",
+      "kind": "guild",
+      "label": "Server Theme",
+      "defaultConfig": {
+        "enabled": false,
+        "inExperiment": false,
+        "gatesApex": false
+      },
+      "treatments": [
+        {
+          "id": 0,
+          "label": "Control",
+          "config": {
+            "enabled": false,
+            "inExperiment": true,
+            "gatesApex": false
+          }
+        },
+        {
+          "id": 1,
+          "label": "Enable Server Theme",
+          "config": {
+            "enabled": true,
+            "inExperiment": true,
+            "gatesApex": false
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Server Theme — → Enable Server Theme — Config keys: enabled, inExperiment, gatesApex"
+    },
+    "2026-04-badge-discovery": {
+      "id": "2026-04-badge-discovery",
+      "kind": "user",
+      "label": "badge discovery",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "badge discovery — Config keys: enabled"
+    },
+    "2026-04-browser-transceiver-padding-removal": {
+      "id": "2026-04-browser-transceiver-padding-removal",
+      "kind": "user",
+      "label": "browser transceiver padding removal",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "browser transceiver padding removal — Config keys: enabled"
+    },
+    "2026-04-collectibles-profile-frames-purchase": {
+      "id": "2026-04-collectibles-profile-frames-purchase",
+      "kind": "user",
+      "label": "collectibles profile frames purchase",
+      "defaultConfig": {
+        "bucket": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "collectibles profile frames purchase — Config keys: bucket"
+    },
+    "2026-04-composed-quest-player": {
+      "id": "2026-04-composed-quest-player",
+      "kind": "user",
+      "label": "composed quest player",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "composed quest player — Config keys: enabled"
+    },
+    "2026-04-consistent-profiles": {
+      "id": "2026-04-consistent-profiles",
+      "kind": "user",
+      "label": "consistent profiles",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "consistent profiles — Config keys: enabled"
+    },
+    "2026-04-desktop-notification-center": {
+      "id": "2026-04-desktop-notification-center",
+      "kind": "user",
+      "label": "desktop notification center",
+      "defaultConfig": {
+        "notificationCenterVariant": null,
+        "entrypoint": null,
+        "filterStyle": null
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop notification center — Config keys: notificationCenterVariant, entrypoint, filterStyle"
+    },
+    "2026-04-desktop-tti-dnstcp-warmup": {
+      "id": "2026-04-desktop-tti-dnstcp-warmup",
+      "kind": "user",
+      "label": "desktop tti dnstcp warmup",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti dnstcp warmup — Config keys: enabled"
+    },
+    "2026-04-desktop-tti-early-update-check": {
+      "id": "2026-04-desktop-tti-early-update-check",
+      "kind": "user",
+      "label": "desktop tti early update check",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti early update check — Config keys: enabled"
+    },
+    "2026-04-desktop-tti-update-backoff": {
+      "id": "2026-04-desktop-tti-update-backoff",
+      "kind": "user",
+      "label": "desktop tti update backoff",
+      "defaultConfig": {
+        "maxBackoffMs": 30000
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti update backoff — Config keys: maxBackoffMs"
+    },
+    "2026-04-desktop-tti-v8-cache": {
+      "id": "2026-04-desktop-tti-v8-cache",
+      "kind": "user",
+      "label": "desktop tti v8 cache",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti v8 cache — Config keys: enabled"
+    },
+    "2026-04-disable-hook-frame-pacer": {
+      "id": "2026-04-disable-hook-frame-pacer",
+      "kind": "user",
+      "label": "disable hook frame pacer",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "disable hook frame pacer — Config keys: enabled"
+    },
+    "2026-04-ensure-received-messages-added-in-order": {
+      "id": "2026-04-ensure-received-messages-added-in-order",
+      "kind": "user",
+      "label": "ensure received messages added in order",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ensure received messages added in order — Config keys: enabled"
+    },
+    "2026-04-gift-promotion-reminder": {
+      "id": "2026-04-gift-promotion-reminder",
+      "kind": "user",
+      "label": "gift promotion reminder",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gift promotion reminder — Config keys: enabled"
+    },
+    "2026-04-gifting-badge": {
+      "id": "2026-04-gifting-badge",
+      "kind": "user",
+      "label": "gifting badge",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gifting badge — Config keys: enabled"
+    },
+    "2026-04-icymi-staff-only": {
+      "id": "2026-04-icymi-staff-only",
+      "kind": "user",
+      "label": "icymi staff only",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "icymi staff only — Config keys: enabled"
+    },
+    "2026-04-inappropriate-conversations-prescan": {
+      "id": "2026-04-inappropriate-conversations-prescan",
+      "kind": "user",
+      "label": "inappropriate conversations prescan",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "inappropriate conversations prescan — Config keys: enabled"
+    },
+    "2026-04-kestrel": {
+      "id": "2026-04-kestrel",
+      "kind": "user",
+      "label": "kestrel",
+      "defaultConfig": {
+        "enabled": false,
+        "threshold": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "kestrel — Config keys: enabled, threshold"
+    },
+    "2026-04-overlay-fps-limit": {
+      "id": "2026-04-overlay-fps-limit",
+      "kind": "user",
+      "label": "overlay fps limit",
+      "defaultConfig": {
+        "overlayFPSLimit": null,
+        "mainWindowFPSLimit": null
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "overlay fps limit — Config keys: overlayFPSLimit, mainWindowFPSLimit"
+    },
+    "2026-04-overlay-streamer-mode": {
+      "id": "2026-04-overlay-streamer-mode",
+      "kind": "user",
+      "label": "overlay streamer mode",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "overlay streamer mode — Config keys: enabled"
+    },
+    "2026-04-profile-frames-ea-marketing": {
+      "id": "2026-04-profile-frames-ea-marketing",
+      "kind": "user",
+      "label": "profile frames ea marketing",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "profile frames ea marketing — Config keys: enabled"
+    },
+    "2026-04-quests-premium-orb-multiplier-marketing": {
+      "id": "2026-04-quests-premium-orb-multiplier-marketing",
+      "kind": "user",
+      "label": "quests premium orb multiplier marketing",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quests premium orb multiplier marketing — Config keys: enabled"
+    },
+    "2026-04-safety-flows": {
+      "id": "2026-04-safety-flows",
+      "kind": "user",
+      "label": "safety flows",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "safety flows — Config keys: enabled"
+    },
+    "2026-04-server-boost-copy-1440p": {
+      "id": "2026-04-server-boost-copy-1440p",
+      "kind": "user",
+      "label": "server boost copy 1440p",
+      "defaultConfig": {
+        "_raw": "{streamQualityMarketingResolution:r}"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "server boost copy 1440p"
+    },
+    "2026-04-video-hook-dx12": {
+      "id": "2026-04-video-hook-dx12",
+      "kind": "user",
+      "label": "video hook dx12",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video hook dx12 — Config keys: enabled"
+    },
+    "2026-04-voice-gateway-protocol-version": {
+      "id": "2026-04-voice-gateway-protocol-version",
+      "kind": "user",
+      "label": "voice gateway protocol version",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "voice gateway protocol version — Config keys: enabled"
+    },
+    "2026-04-wetf-parser": {
+      "id": "2026-04-wetf-parser",
+      "kind": "user",
+      "label": "wetf parser",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wetf parser — Config keys: enabled"
+    },
+    "2026-05-app-store-overlay-feature-gate": {
+      "id": "2026-05-app-store-overlay-feature-gate",
+      "kind": "user",
+      "label": "app store overlay feature gate",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "app store overlay feature gate — Config keys: enabled"
+    },
+    "2026-05-av1-bitrate-tuning": {
+      "id": "2026-05-av1-bitrate-tuning",
+      "kind": "user",
+      "label": "av1 bitrate tuning",
+      "defaultConfig": {
+        "bitrate": 3500000
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "av1 bitrate tuning — Config keys: bitrate"
+    },
+    "2026-05-badge-discovery-milestone-2": {
+      "id": "2026-05-badge-discovery-milestone-2",
+      "kind": "user",
+      "label": "badge discovery milestone 2",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "badge discovery milestone 2 — Config keys: enabled"
+    },
+    "2026-05-block-user-feedback": {
+      "id": "2026-05-block-user-feedback",
+      "kind": "user",
+      "label": "block user feedback",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "block user feedback — Config keys: enabled"
+    },
+    "2026-05-bounties-stage-1": {
+      "id": "2026-05-bounties-stage-1",
+      "kind": "user",
+      "label": "bounties stage 1",
+      "defaultConfig": {
+        "enabled": false,
+        "verticalScrollEnabled": false,
+        "loopingEnabled": false,
+        "ctaTimerMilliSeconds": 3000,
+        "rewardTimerSeconds": 15,
+        "orbAmount": 50
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "bounties stage 1 — Config keys: enabled, verticalScrollEnabled, loopingEnabled, ctaTimerMilliSeconds, rewardTimerSeconds, orbAmount"
+    },
+    "2026-05-bounty-stale-refresh-quest-home": {
+      "id": "2026-05-bounty-stale-refresh-quest-home",
+      "kind": "user",
+      "label": "bounty stale refresh quest home",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "bounty stale refresh quest home — Config keys: enabled"
+    },
+    "2026-05-collectibles-collection-page": {
+      "id": "2026-05-collectibles-collection-page",
+      "kind": "user",
+      "label": "collectibles collection page",
+      "defaultConfig": {
+        "useIndexPage": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "collectibles collection page — Config keys: useIndexPage"
+    },
+    "2026-05-device-form-factor-indicators": {
+      "id": "2026-05-device-form-factor-indicators",
+      "kind": "user",
+      "label": "device form factor indicators",
+      "defaultConfig": {
+        "showDeviceFormFactorIndicators": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "device form factor indicators — Config keys: showDeviceFormFactorIndicators"
+    },
+    "2026-05-disable-camera-simulcast": {
+      "id": "2026-05-disable-camera-simulcast",
+      "kind": "user",
+      "label": "disable camera simulcast",
+      "defaultConfig": {
+        "enableSimulcast": true
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "disable camera simulcast — Config keys: enableSimulcast"
+    },
+    "2026-05-global-soundboard-wheel-popout": {
+      "id": "2026-05-global-soundboard-wheel-popout",
+      "kind": "user",
+      "label": "global soundboard wheel popout",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "global soundboard wheel popout — Config keys: enabled"
+    },
+    "2026-05-ignore-user-feedback": {
+      "id": "2026-05-ignore-user-feedback",
+      "kind": "user",
+      "label": "ignore user feedback",
+      "defaultConfig": {
+        "enabled": false,
+        "shouldGetShorterIgnoreDuration": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ignore user feedback — Config keys: enabled, shouldGetShorterIgnoreDuration"
+    },
+    "2026-05-mana-type-consolidation": {
+      "id": "2026-05-mana-type-consolidation",
+      "kind": "user",
+      "label": "mana type consolidation",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mana type consolidation — Config keys: enabled"
+    },
+    "2026-05-quest-home-tile-redesign": {
+      "id": "2026-05-quest-home-tile-redesign",
+      "kind": "user",
+      "label": "quest home tile redesign",
+      "defaultConfig": {
+        "useNewLayoutWithSearch": false,
+        "useNewTile": false,
+        "useLargeFeaturedTiles": false,
+        "ctaOnHover": false,
+        "clickableTile": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quest home tile redesign — Config keys: useNewLayoutWithSearch, useNewTile, useLargeFeaturedTiles, ctaOnHover, clickableTile"
+    },
+    "2026-05-spatial-audio-for-voice": {
+      "id": "2026-05-spatial-audio-for-voice",
+      "kind": "user",
+      "label": "spatial audio for voice",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "spatial audio for voice — Config keys: enabled"
+    },
+    "2026-05-use-ad-analytics-interface": {
+      "id": "2026-05-use-ad-analytics-interface",
+      "kind": "user",
+      "label": "use ad analytics interface",
+      "defaultConfig": {
+        "enabled": false,
+        "maxStep": -1
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "use ad analytics interface — Config keys: enabled, maxStep"
+    },
+    "2026-06_guild_spaces": {
+      "id": "2026-06_guild_spaces",
+      "kind": "guild",
+      "label": "Guild Space",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Enable Guild Space",
+          "config": {
+            "enabled": true
+          }
+        }
+      ],
+      "source": "client_definition",
+      "purpose": "Guild Space — → Enable Guild Space — Config keys: enabled"
+    },
+    "2026-06-android-two-week-trials": {
+      "id": "2026-06-android-two-week-trials",
+      "kind": "user",
+      "label": "android two week trials",
+      "defaultConfig": {
+        "enabled": false,
+        "trialCTAEnabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "android two week trials — Config keys: enabled, trialCTAEnabled"
+    },
+    "2026-06-av1-encode-linux": {
+      "id": "2026-06-av1-encode-linux",
+      "kind": "user",
+      "label": "av1 encode linux",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "av1 encode linux — Config keys: enabled"
+    },
+    "2026-06-battlenet-social-sdk-migration": {
+      "id": "2026-06-battlenet-social-sdk-migration",
+      "kind": "user",
+      "label": "battlenet social sdk migration",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "battlenet social sdk migration — Config keys: enabled"
+    },
+    "2026-06-chat-bar-customization": {
+      "id": "2026-06-chat-bar-customization",
+      "kind": "user",
+      "label": "chat bar customization",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "chat bar customization — Config keys: enabled"
+    },
+    "2026-06-clickstream-analytics": {
+      "id": "2026-06-clickstream-analytics",
+      "kind": "user",
+      "label": "clickstream analytics",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "clickstream analytics — Config keys: enabled"
+    },
+    "2026-06-desktop-tti-http-cdt": {
+      "id": "2026-06-desktop-tti-http-cdt",
+      "kind": "user",
+      "label": "desktop tti http cdt",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti http cdt — Config keys: enabled"
+    },
+    "2026-06-desktop-tti-splash-asset": {
+      "id": "2026-06-desktop-tti-splash-asset",
+      "kind": "user",
+      "label": "desktop tti splash asset",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti splash asset — Config keys: enabled"
+    },
+    "2026-06-family-center-connection-prereq": {
+      "id": "2026-06-family-center-connection-prereq",
+      "kind": "user",
+      "label": "family center connection prereq",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "family center connection prereq — Config keys: enabled"
+    },
+    "2026-06-game-server-hosting-in-shop": {
+      "id": "2026-06-game-server-hosting-in-shop",
+      "kind": "user",
+      "label": "game server hosting in shop",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "game server hosting in shop — Config keys: enabled"
+    },
+    "2026-06-gifting-badge-desktop": {
+      "id": "2026-06-gifting-badge-desktop",
+      "kind": "user",
+      "label": "gifting badge desktop",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gifting badge desktop — Config keys: enabled"
+    },
+    "2026-06-minimal-detectable": {
+      "id": "2026-06-minimal-detectable",
+      "kind": "user",
+      "label": "minimal detectable",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "minimal detectable — Config keys: enabled"
+    },
+    "2026-06-ml-offer-creation-ui-upgrade": {
+      "id": "2026-06-ml-offer-creation-ui-upgrade",
+      "kind": "user",
+      "label": "ml offer creation ui upgrade",
+      "defaultConfig": {
+        "_raw": "{badgeStyle:m1.v.GRADIENT,surface:m1.F.NONE}"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ml offer creation ui upgrade"
+    },
+    "2026-06-mobile-server-tag": {
+      "id": "2026-06-mobile-server-tag",
+      "kind": "user",
+      "label": "mobile server tag",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "mobile server tag — Config keys: enabled"
+    },
+    "2026-06-quest-home-layout-visual-tweaks": {
+      "id": "2026-06-quest-home-layout-visual-tweaks",
+      "kind": "user",
+      "label": "quest home layout visual tweaks",
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quest home layout visual tweaks — Config keys: enabled, variant"
+    },
+    "2026-06-server-ladder": {
+      "id": "2026-06-server-ladder",
+      "kind": "user",
+      "label": "server ladder",
+      "defaultConfig": {
+        "bitrate": 9000000,
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "server ladder — Config keys: bitrate, enabled"
+    },
+    "2026-06-upscale-small-captured-frames": {
+      "id": "2026-06-upscale-small-captured-frames",
+      "kind": "user",
+      "label": "upscale small captured frames",
+      "defaultConfig": {
+        "minCaptureWidth": 0,
+        "minCaptureHeight": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "upscale small captured frames — Config keys: minCaptureWidth, minCaptureHeight"
+    },
+    "2026-06-use-new-badge-image-source": {
+      "id": "2026-06-use-new-badge-image-source",
+      "kind": "user",
+      "label": "use new badge image source",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "use new badge image source — Config keys: enabled"
+    },
+    "2026-06-wmf-cpu-encode-intel": {
+      "id": "2026-06-wmf-cpu-encode-intel",
+      "kind": "user",
+      "label": "wmf cpu encode intel",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "wmf cpu encode intel — Config keys: enabled"
+    },
+    "2026-07-ad-recheck-interval-experiment": {
+      "id": "2026-07-ad-recheck-interval-experiment",
+      "kind": "user",
+      "label": "ad recheck interval experiment",
+      "defaultConfig": {
+        "enableFastAdRecheck": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "ad recheck interval experiment — Config keys: enableFastAdRecheck"
+    },
+    "2026-07-aws-gateway": {
+      "id": "2026-07-aws-gateway",
+      "kind": "user",
+      "label": "aws gateway",
+      "defaultConfig": {
+        "enableAltGateway": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "aws gateway — Config keys: enableAltGateway"
+    },
+    "2026-07-bounties-vertical-scroll": {
+      "id": "2026-07-bounties-vertical-scroll",
+      "kind": "user",
+      "label": "bounties vertical scroll",
+      "defaultConfig": {
+        "enabled": false,
+        "verticalScrollEnabled": false,
+        "scrollAffordanceVariant": "none",
+        "autoScrollLeadMs": 3000,
+        "autoScrollEndCardMs": 3000,
+        "peekFraction": 0,
+        "ctaTimerMilliSeconds": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "bounties vertical scroll"
+    },
+    "2026-07-custom-app-store-overlay": {
+      "id": "2026-07-custom-app-store-overlay",
+      "kind": "user",
+      "label": "custom app store overlay",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "custom app store overlay — Config keys: enabled"
+    },
+    "2026-07-desktop-tti-update-backoff-algo": {
+      "id": "2026-07-desktop-tti-update-backoff-algo",
+      "kind": "user",
+      "label": "desktop tti update backoff algo",
+      "defaultConfig": {
+        "algo": 0
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop tti update backoff algo — Config keys: algo"
+    },
+    "2026-07-game-mentions-v2-mobile": {
+      "id": "2026-07-game-mentions-v2-mobile",
+      "kind": "user",
+      "label": "game mentions v2 mobile",
+      "defaultConfig": {
+        "enabled": false,
+        "showNewTag": false,
+        "combineMentionAutocomplete": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "game mentions v2 mobile — Config keys: enabled, showNewTag, combineMentionAutocomplete"
+    },
+    "2026-07-hotwheels-clickable-game-icon": {
+      "id": "2026-07-hotwheels-clickable-game-icon",
+      "kind": "user",
+      "label": "hotwheels clickable game icon",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "hotwheels clickable game icon — Config keys: enabled"
+    },
+    "2026-07-personal-widget": {
+      "id": "2026-07-personal-widget",
+      "kind": "user",
+      "label": "personal widget",
+      "defaultConfig": {
+        "enabled": false,
+        "showCreateEntrypoint": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "personal widget — Config keys: enabled, showCreateEntrypoint"
+    },
+    "2026-07-quest-bar-secondary-cta": {
+      "id": "2026-07-quest-bar-secondary-cta",
+      "kind": "user",
+      "label": "quest bar secondary cta",
+      "defaultConfig": {
+        "enabled": false,
+        "showPlayInstantlyLabel": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "quest bar secondary cta — Config keys: enabled, showPlayInstantlyLabel"
+    },
+    "2026-07-reject-with-error-kill-switch": {
+      "id": "2026-07-reject-with-error-kill-switch",
+      "kind": "user",
+      "label": "reject with error kill switch",
+      "defaultConfig": {
+        "migrationKilled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "reject with error kill switch — Config keys: migrationKilled"
+    },
+    "2026-07-renewable-end-date-sort": {
+      "id": "2026-07-renewable-end-date-sort",
+      "kind": "user",
+      "label": "renewable end date sort",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "renewable end date sort — Config keys: enabled"
+    },
+    "2026-07-typing-users-css-dots": {
+      "id": "2026-07-typing-users-css-dots",
+      "kind": "user",
+      "label": "typing users css dots",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "typing users css dots — Config keys: enabled"
+    },
+    "2026-07-vibegrations-guild": {
+      "id": "2026-07-vibegrations-guild",
+      "kind": "guild",
+      "label": "vibegrations guild",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "vibegrations guild — Config keys: enabled"
+    },
+    "2026-08-bounties-mobile-quest-bar": {
+      "id": "2026-08-bounties-mobile-quest-bar",
+      "kind": "user",
+      "label": "bounties mobile quest bar",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "bounties mobile quest bar — Config keys: enabled"
+    },
+    "2026-08-favorites-server": {
+      "id": "2026-08-favorites-server",
+      "kind": "user",
+      "label": "favorites server",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "favorites server — Config keys: enabled"
+    },
+    "2026-08-gsh-subs-activity-bar": {
+      "id": "2026-08-gsh-subs-activity-bar",
+      "kind": "user",
+      "label": "gsh subs activity bar",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "gsh subs activity bar — Config keys: enabled"
+    },
+    "2026-08-kestrel-ga": {
+      "id": "2026-08-kestrel-ga",
+      "kind": "user",
+      "label": "kestrel ga",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "kestrel ga — Config keys: enabled"
+    },
+    "2026-08-premium-gifting-gogo-promotion": {
+      "id": "2026-08-premium-gifting-gogo-promotion",
+      "kind": "user",
+      "label": "premium gifting gogo promotion",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "premium gifting gogo promotion — Config keys: enabled"
+    },
+    "2026-08-profile-embed-rendering": {
+      "id": "2026-08-profile-embed-rendering",
+      "kind": "user",
+      "label": "profile embed rendering",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "profile embed rendering — Config keys: enabled"
+    },
+    "2026-08-user-bio-max-length": {
+      "id": "2026-08-user-bio-max-length",
+      "kind": "user",
+      "label": "user bio max length",
+      "defaultConfig": {
+        "_raw": "{maxLength:r.NA2}"
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "user bio max length"
+    },
+    "2026-08-video-guard": {
+      "id": "2026-08-video-guard",
+      "kind": "user",
+      "label": "video guard",
+      "defaultConfig": {
+        "videoEnabled": true
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "video guard — Config keys: videoEnabled"
+    },
+    "2026-08-vq-remaining-time-truncation": {
+      "id": "2026-08-vq-remaining-time-truncation",
+      "kind": "user",
+      "label": "vq remaining time truncation",
+      "defaultConfig": {
+        "truncateMoreThanSeconds": null
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "vq remaining time truncation — Config keys: truncateMoreThanSeconds"
+    }
+  }
+}
