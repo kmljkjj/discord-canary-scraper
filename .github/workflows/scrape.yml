@@ -14,6 +14,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,6 +30,10 @@ jobs:
       - name: Run scraper
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Optional user token → full assignment list (like DEH / Wumpus sampling)
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          USER_ROLLOUT_SAMPLES: '60'
+          USER_ROLLOUT_DELAY_MS: '350'
         run: npm run scrape
 
       - name: Commit & push if changes
