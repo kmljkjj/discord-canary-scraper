@@ -1,13 +1,12 @@
 /**
  * Builds data/experiments.json after a scrape.
- * Merges:
- *  - client findings + definitions (variations)
- *  - guild API real %
- *  - user_rollouts.json estimated % (DEH/Wumpus-style sampling)
+ * Merges client findings, guild %, user sampling, and rich definitions
+ * (label, purpose, treatment configs).
  */
 const fs = require('fs-extra');
 const path = require('path');
 const { buildExperimentsCatalog } = require('./experiments_catalog');
+const { buildPurpose } = require('./extract_definitions');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
@@ -15,6 +14,13 @@ const GUILD_EXP_FILE = path.join(DATA_DIR, 'guild_experiments.json');
 const BUILD_FILE = path.join(DATA_DIR, 'build.json');
 const EXPERIMENTS_FILE = path.join(DATA_DIR, 'experiments.json');
 const USER_ROLLOUTS_FILE = path.join(DATA_DIR, 'user_rollouts.json');
+const CLIENT_DEFS_FILE = path.join(DATA_DIR, 'definitions_client.json');
+
+function normalizeId(id) {
+  return String(id || '')
+    .toLowerCase()
+    .replace(/-/g, '_');
+}
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
@@ -23,6 +29,7 @@ async function main() {
   let guild = [];
   let build = {};
   let userRollouts = { experiments: [] };
+  let clientDefs = { definitions: {} };
 
   try {
     if (await fs.pathExists(FINDINGS_FILE)) findings = await fs.readJson(FINDINGS_FILE);
@@ -37,6 +44,10 @@ async function main() {
     if (await fs.pathExists(USER_ROLLOUTS_FILE))
       userRollouts = await fs.readJson(USER_ROLLOUTS_FILE);
   } catch {}
+  try {
+    if (await fs.pathExists(CLIENT_DEFS_FILE))
+      clientDefs = await fs.readJson(CLIENT_DEFS_FILE);
+  } catch {}
 
   let previousCatalog = null;
   try {
@@ -45,6 +56,13 @@ async function main() {
     }
   } catch {}
 
+  // Index definitions by normalized id
+  const defById = new Map();
+  for (const [id, def] of Object.entries(clientDefs.definitions || {})) {
+    defById.set(normalizeId(id), def);
+    defById.set(normalizeId(id.replace(/_/g, '-')), def);
+  }
+
   const guildEnriched = (Array.isArray(guild) ? guild : []).map((g) => ({
     ...g,
     id: g.id || g.definitionId || (g.hash != null ? `hash:${g.hash}` : null),
@@ -52,60 +70,82 @@ async function main() {
     rolloutSummary: g.rolloutSummary || [],
   }));
 
-  // Index sampled user % by id and hash
   const userById = new Map();
   const userByHash = new Map();
   for (const u of userRollouts.experiments || []) {
-    if (u.id) userById.set(String(u.id).toLowerCase(), u);
+    if (u.id) userById.set(normalizeId(u.id), u);
     if (u.hash != null) userByHash.set(Number(u.hash), u);
   }
 
-  // Attach estimated % onto client experiments before catalog build
   const clientEnriched = (findings.experiments || []).map((e) => {
+    const def =
+      defById.get(normalizeId(e.id)) ||
+      defById.get(normalizeId(String(e.id).replace(/-/g, '_'))) ||
+      null;
     const sampled =
-      userById.get(String(e.id).toLowerCase()) ||
+      userById.get(normalizeId(e.id)) ||
       (e.hash != null ? userByHash.get(Number(e.hash)) : null);
-    if (!sampled) return e;
+
+    let treatments = e.treatments || [];
+    if (def?.treatments?.length) {
+      treatments = def.treatments.map((t) => {
+        const match = (sampled?.treatments || []).find(
+          (s) => String(s.id) === String(t.id),
+        );
+        return {
+          id: t.id,
+          label: t.label,
+          config: t.config || null,
+          percent: match?.percent,
+          ranges: match?.ranges,
+        };
+      });
+    } else if (sampled?.treatments?.length && !treatments.length) {
+      treatments = sampled.treatments;
+    }
+
+    const label = def?.label || e.label || null;
+    const defaultConfig = def?.defaultConfig || e.defaultConfig || null;
+    const purpose =
+      def?.purpose ||
+      buildPurpose({
+        id: e.id,
+        label,
+        treatments,
+        defaultConfig,
+      });
+
     return {
       ...e,
-      sampledRollout: {
-        reliability: sampled.reliability,
-        method: sampled.method,
-        totalSamples: sampled.totalSamples,
-        treatments: sampled.treatments,
-      },
-      // If definitions had no treatments, use sampled list
-      treatments:
-        e.treatments?.length > 0
-          ? e.treatments.map((t) => {
-              const match = (sampled.treatments || []).find(
-                (s) => String(s.id) === String(t.id),
-              );
-              return match
-                ? { ...t, percent: match.percent, ranges: match.ranges }
-                : t;
-            })
-          : sampled.treatments || e.treatments || [],
+      label,
+      purpose,
+      defaultConfig,
+      treatments,
+      definitionSource: def?.source || null,
+      sampledRollout: sampled
+        ? {
+            reliability: sampled.reliability,
+            method: sampled.method,
+            totalSamples: sampled.totalSamples,
+          }
+        : null,
     };
   });
 
-  // Also add pure sampled experiments not seen in client scan
-  const seen = new Set(clientEnriched.map((e) => String(e.id).toLowerCase()));
-  for (const u of userRollouts.experiments || []) {
-    if (!u.id || seen.has(String(u.id).toLowerCase())) continue;
+  // Add defs not in client scan
+  const seen = new Set(clientEnriched.map((e) => normalizeId(e.id)));
+  for (const [id, def] of Object.entries(clientDefs.definitions || {})) {
+    if (seen.has(normalizeId(id))) continue;
     clientEnriched.push({
-      id: u.id,
-      kind: u.kind || 'user',
-      label: u.label,
-      type: 'user',
+      id: def.id,
+      kind: def.kind || 'user',
+      type: def.kind || 'user',
+      label: def.label,
+      purpose: def.purpose || buildPurpose(def),
+      defaultConfig: def.defaultConfig,
+      treatments: def.treatments || [],
+      definitionSource: def.source,
       isApex: false,
-      treatments: u.treatments || [],
-      sampledRollout: {
-        reliability: u.reliability,
-        method: u.method,
-        totalSamples: u.totalSamples,
-        treatments: u.treatments,
-      },
     });
   }
 
@@ -117,57 +157,55 @@ async function main() {
     scrapedAt: build.scrapedAt || new Date().toISOString(),
   });
 
-  // Enrich catalog entries with percent fields from sampled / guild data
+  // Final enrich catalog rows
   catalog.experiments = catalog.experiments.map((e) => {
+    const def = defById.get(normalizeId(e.id));
+    const sampled = userById.get(normalizeId(e.id));
+    const purpose =
+      e.purpose ||
+      def?.purpose ||
+      buildPurpose({
+        id: e.id,
+        label: e.label || def?.label,
+        treatments: e.treatments || def?.treatments,
+        defaultConfig: def?.defaultConfig,
+      });
+
+    const base = {
+      ...e,
+      label: e.label || def?.label || null,
+      purpose,
+      defaultConfig: e.defaultConfig || def?.defaultConfig || null,
+    };
+
     if (e.kind === 'guild' && e.treatments?.length) {
       return {
-        ...e,
+        ...base,
         percentSource: 'api_guild_populations',
         percentReliable: true,
       };
     }
-    const sampled =
-      userById.get(String(e.id).toLowerCase()) ||
-      (e.hash != null ? userByHash.get(Number(e.hash)) : null);
     if (sampled) {
       return {
-        ...e,
+        ...base,
         percentSource: 'sampled_user_assignments',
         percentReliable: false,
         reliability: sampled.reliability,
-        sampleNote: sampled.note,
-        treatments: (e.treatments || []).map((t) => {
-          const match = (sampled.treatments || []).find(
-            (s) => String(s.id) === String(t.id),
-          );
-          return match
-            ? {
-                ...t,
-                percent: match.percent,
-                ranges: match.ranges,
-                samples: match.samples,
-              }
-            : t;
-        }),
       };
     }
     return {
-      ...e,
-      percentSource: 'none',
+      ...base,
+      percentSource: e.percentSource || 'none',
       percentReliable: false,
-      sampleNote:
-        'No global user % published by Discord. Run sample_user_rollouts (optional DISCORD_TOKEN) or use guild API %.',
     };
   });
 
   await fs.writeJson(EXPERIMENTS_FILE, catalog, { spaces: 2 });
-
   console.log(
-    `🧪 experiments.json: ${catalog.totals.all} total | +${catalog.totals.added} added | ~${catalog.totals.treatments_changed} treatments_changed`,
+    `🧪 experiments.json: ${catalog.totals.all} total | +${catalog.totals.added} added | ~${catalog.totals.treatments_changed} changed`,
   );
-  console.log(
-    `   user sampled rollouts merged: ${(userRollouts.experiments || []).length}`,
-  );
+  const withPurpose = catalog.experiments.filter((e) => e.purpose).length;
+  console.log(`   with purpose/summary: ${withPurpose}`);
 }
 
 main().catch((err) => {
