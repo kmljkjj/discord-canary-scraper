@@ -1,0 +1,45 @@
+name: Mobile Versions
+
+on:
+  schedule:
+    # Toutes les 5 minutes — détection rapide des nouvelles versions mobile
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-mobile-versions]
+
+permissions:
+  contents: write
+
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check mobile versions
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node src/mobile_versions.js
+
+      - name: Commit state if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/mobile_versions.json || true
+          if git diff --staged --quiet; then
+            echo "No mobile version changes"
+          else
+            git commit -m "📱 Mobile version update"
+            git push
+          fi
