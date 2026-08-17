@@ -1,16 +1,360 @@
 {
-  "scrapedAt": "2026-08-17T14:19:35.107Z",
+  "scrapedAt": "2026-08-17T14:51:31.840Z",
   "buildNumber": "594278",
   "totals": {
     "all": 278,
-    "added": 0,
-    "treatments_changed": 2,
-    "unchanged": 276
+    "added": 4,
+    "treatments_changed": 9,
+    "unchanged": 265
   },
   "experiments": [
     {
-      "id": "2022-12_mention_raid_limit",
+      "id": "hash:944104242",
       "kind": "guild",
+      "label": null,
+      "hash": 944104242,
+      "isApex": false,
+      "source": "api",
+      "variantType": "treatment",
+      "count": 1,
+      "variationCount": 1,
+      "treatmentCount": 1,
+      "variants": [
+        {
+          "id": "1",
+          "label": "Treatment 1",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "treatments": [
+        {
+          "id": "1",
+          "label": "Treatment 1",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "status": "added",
+      "previousCount": null,
+      "previousTreatments": null,
+      "buildNumber": "594278",
+      "purpose": "hash:944104242 — → Treatment 1",
+      "defaultConfig": null,
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
+    },
+    {
+      "id": "hash:2462216785",
+      "kind": "guild",
+      "label": null,
+      "hash": 2462216785,
+      "isApex": false,
+      "source": "api",
+      "variantType": "treatment",
+      "count": 1,
+      "variationCount": 1,
+      "treatmentCount": 1,
+      "variants": [
+        {
+          "id": "-1",
+          "label": "None",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "treatments": [
+        {
+          "id": "-1",
+          "label": "None",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "status": "added",
+      "previousCount": null,
+      "previousTreatments": null,
+      "buildNumber": "594278",
+      "purpose": "hash:2462216785 — → None",
+      "defaultConfig": null,
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
+    },
+    {
+      "id": "hash:1727857487",
+      "kind": "guild",
+      "label": null,
+      "hash": 1727857487,
+      "isApex": false,
+      "source": "api",
+      "variantType": "treatment",
+      "count": 1,
+      "variationCount": 1,
+      "treatmentCount": 1,
+      "variants": [
+        {
+          "id": "-1",
+          "label": "None",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "treatments": [
+        {
+          "id": "-1",
+          "label": "None",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "status": "added",
+      "previousCount": null,
+      "previousTreatments": null,
+      "buildNumber": "594278",
+      "purpose": "hash:1727857487 — → None",
+      "defaultConfig": null,
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
+    },
+    {
+      "id": "hash:1318029053",
+      "kind": "guild",
+      "label": null,
+      "hash": 1318029053,
+      "isApex": false,
+      "source": "api",
+      "variantType": "treatment",
+      "count": 1,
+      "variationCount": 1,
+      "treatmentCount": 1,
+      "variants": [
+        {
+          "id": "1",
+          "label": "Treatment 1",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "treatments": [
+        {
+          "id": "1",
+          "label": "Treatment 1",
+          "percent": 100,
+          "ranges": "0–10000"
+        }
+      ],
+      "status": "added",
+      "previousCount": null,
+      "previousTreatments": null,
+      "buildNumber": "594278",
+      "purpose": "hash:1318029053 — → Treatment 1",
+      "defaultConfig": null,
+      "percentSource": "api_guild_populations",
+      "percentReliable": true
+    },
+    {
+      "id": "2026-06_guild_rooms",
+      "kind": "guild",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 2,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Enable Guild Rooms in this guild"
+        },
+        {
+          "id": 2,
+          "label": "Enable Guild Rooms in this guild"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "guild rooms",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2026-04_voice_call_trigger_point",
+      "kind": "user",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 1,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Treatment"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "voice call trigger point",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2026-03_voice_badge",
+      "kind": "user",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 2,
+      "previousTreatments": [
+        {
+          "id": 0,
+          "label": "Control"
+        },
+        {
+          "id": 1,
+          "label": "Show voice badges"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "voice badge",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2026-02_past_vc_activity_messages",
+      "kind": "user",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 1,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Show past VC activity messages in system channel"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "past vc activity messages",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2026-02_hangout_window",
+      "kind": "user",
+      "label": "Hangout Window",
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 1,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Enable Hangout Window"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "Hangout Window",
+      "defaultConfig": {
+        "_raw": "{enableHangoutWindow:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Enable Hangout Window\",config:{enableHangoutWindow:!0}"
+      },
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2025-12_voice_channel_hoisting",
+      "kind": "user",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 2,
+      "previousTreatments": [
+        {
+          "id": 1,
+          "label": "Both waveform and highlight"
+        },
+        {
+          "id": 2,
+          "label": "Waveform icon only"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "voice channel hoisting",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2025-09_hotwheels_nvidia_boost",
+      "kind": "user",
+      "label": null,
+      "isApex": false,
+      "source": "client",
+      "variantType": "variation",
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
+      "status": "treatments_changed",
+      "previousCount": 2,
+      "previousTreatments": [
+        {
+          "id": 16,
+          "label": "ML model V3 - Nvidia small boost"
+        },
+        {
+          "id": 17,
+          "label": "ML model V3 - Nvidia big boost"
+        }
+      ],
+      "buildNumber": "594278",
+      "purpose": "hotwheels nvidia boost",
+      "defaultConfig": null,
+      "percentSource": "none",
+      "percentReliable": false
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "kind": "user",
       "label": "Automod Mention Raid Limit",
       "isApex": false,
       "source": "client",
@@ -45,31 +389,21 @@
       "defaultConfig": {
         "enabled": false
       },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "2022-07_voice_in_threads",
-      "kind": "guild",
-      "label": "Voice in Threads",
+      "kind": "user",
+      "label": null,
       "isApex": false,
       "source": "client",
       "variantType": "variation",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": 1,
-          "label": "On"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "On"
-        }
-      ],
+      "count": 0,
+      "variationCount": 0,
+      "treatmentCount": 0,
+      "variants": [],
+      "treatments": [],
       "status": "treatments_changed",
       "previousCount": 1,
       "previousTreatments": [
@@ -81,10 +415,10 @@
         }
       ],
       "buildNumber": "594278",
-      "purpose": "Voice in Threads — → On",
+      "purpose": "voice in threads",
       "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "hash:3633668656",
@@ -2050,45 +2384,6 @@
       "percentReliable": true
     },
     {
-      "id": "2026-06_guild_rooms",
-      "kind": "guild",
-      "label": "Guild Rooms",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 2,
-      "variationCount": 2,
-      "treatmentCount": 2,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Enable Guild Rooms in this guild"
-        },
-        {
-          "id": 2,
-          "label": "Enable Guild Rooms in this guild"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable Guild Rooms in this guild"
-        },
-        {
-          "id": 2,
-          "label": "Enable Guild Rooms in this guild"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Guild Rooms — Variants: T1: Enable Guild Rooms in this guild · T2: Enable Guild Rooms in this guild",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
       "id": "2026-05-use-ad-analytics-interface",
       "kind": "user",
       "label": "use ad analytics interface",
@@ -3341,39 +3636,8 @@
       "percentReliable": false
     },
     {
-      "id": "2026-04_voice_call_trigger_point",
-      "kind": "guild",
-      "label": "Voice Call Trigger Point Experiment",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Treatment"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Treatment"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Voice Call Trigger Point Experiment — → Treatment",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
       "id": "2026-04_server_theme",
-      "kind": "guild",
+      "kind": "user",
       "label": "Server Theme",
       "isApex": false,
       "source": "client",
@@ -3411,8 +3675,8 @@
         "inExperiment": false,
         "gatesApex": false
       },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "2026-03-wysiwyg-user-profile-editing",
@@ -4374,45 +4638,6 @@
       "percentReliable": false
     },
     {
-      "id": "2026-03_voice_badge",
-      "kind": "guild",
-      "label": "Display Voice Channel Badge",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 2,
-      "variationCount": 2,
-      "treatmentCount": 2,
-      "variants": [
-        {
-          "id": 0,
-          "label": "Control"
-        },
-        {
-          "id": 1,
-          "label": "Show voice badges"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 0,
-          "label": "Control"
-        },
-        {
-          "id": 1,
-          "label": "Show voice badges"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Display Voice Channel Badge — → Show voice badges",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
       "id": "2026-03_guild_official_messages",
       "kind": "guild",
       "label": "Guild Official Messages",
@@ -4447,7 +4672,7 @@
     },
     {
       "id": "2026-03_game_server_pricing",
-      "kind": "guild",
+      "kind": "user",
       "label": "Game Server Pricing",
       "isApex": false,
       "source": "client",
@@ -4475,12 +4700,12 @@
       "defaultConfig": {
         "enabled": false
       },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "2026-03_file_upload_250_mb_powerup",
-      "kind": "guild",
+      "kind": "user",
       "label": "File Upload 250MB Powerup",
       "isApex": false,
       "source": "client",
@@ -4517,8 +4742,8 @@
         "enabled": false,
         "rollbackEnabled": false
       },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "2026-02-wgc-dirty-regions-all",
@@ -5131,70 +5356,6 @@
       "percentReliable": false
     },
     {
-      "id": "2026-02_past_vc_activity_messages",
-      "kind": "guild",
-      "label": "Past VC Activity Messages",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Show past VC activity messages in system channel"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Show past VC activity messages in system channel"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Past VC Activity Messages — → Show past VC activity messages in system channel",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
-      "id": "2026-02_hangout_window",
-      "kind": "guild",
-      "label": "Hangout Window",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Enable Hangout Window"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable Hangout Window"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Hangout Window",
-      "defaultConfig": {
-        "_raw": "{enableHangoutWindow:!1},commonTriggerPoint:r.$G.VOICE_CALL,treatments:[{id:1,label:\"Enable Hangout Window\",config:{enableHangoutWindow:!0}"
-      },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
       "id": "2026-01-wmf-gpu-encode-intel",
       "kind": "user",
       "label": "wmf gpu encode intel",
@@ -5619,45 +5780,6 @@
       "defaultConfig": null,
       "percentSource": "none",
       "percentReliable": false
-    },
-    {
-      "id": "2025-12_voice_channel_hoisting",
-      "kind": "guild",
-      "label": "Voice Channel Hoisting",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 2,
-      "variationCount": 2,
-      "treatmentCount": 2,
-      "variants": [
-        {
-          "id": 1,
-          "label": "Both waveform and highlight"
-        },
-        {
-          "id": 2,
-          "label": "Waveform icon only"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Both waveform and highlight"
-        },
-        {
-          "id": 2,
-          "label": "Waveform icon only"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Voice Channel Hoisting — Variants: T1: Both waveform and highlight · T2: Waveform icon only",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
     },
     {
       "id": "2025-11-video-end-card-v2",
@@ -6102,45 +6224,6 @@
       "percentReliable": false
     },
     {
-      "id": "2025-09_hotwheels_nvidia_boost",
-      "kind": "user",
-      "label": "Next iteration of the activity feed ranking model.",
-      "isApex": false,
-      "source": "client",
-      "variantType": "variation",
-      "count": 2,
-      "variationCount": 2,
-      "treatmentCount": 2,
-      "variants": [
-        {
-          "id": 16,
-          "label": "ML model V3 - Nvidia small boost"
-        },
-        {
-          "id": 17,
-          "label": "ML model V3 - Nvidia big boost"
-        }
-      ],
-      "treatments": [
-        {
-          "id": 16,
-          "label": "ML model V3 - Nvidia small boost"
-        },
-        {
-          "id": 17,
-          "label": "ML model V3 - Nvidia big boost"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Next iteration of the activity feed ranking model. — Variants: T16: ML model V3 - Nvidia small boost · T17: ML model V3 - Nvidia big boost",
-      "defaultConfig": null,
-      "percentSource": "none",
-      "percentReliable": false
-    },
-    {
       "id": "2025-08-voice-user-affinity",
       "kind": "user",
       "label": null,
@@ -6186,7 +6269,7 @@
     },
     {
       "id": "2025-08_portkey_enabled",
-      "kind": "guild",
+      "kind": "user",
       "label": "GameServer Enabled",
       "isApex": false,
       "source": "client",
@@ -6214,8 +6297,8 @@
       "defaultConfig": {
         "enabled": false
       },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
+      "percentSource": "none",
+      "percentReliable": false
     },
     {
       "id": "2025-06_native_intents",
@@ -6427,152 +6510,6 @@
       },
       "percentSource": "none",
       "percentReliable": false
-    },
-    {
-      "id": "2023-02_guest_voice_invites",
-      "kind": "guild",
-      "label": "Guest Voice Invites",
-      "hash": 1727857487,
-      "isApex": false,
-      "source": "api",
-      "variantType": "treatment",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": "-1",
-          "label": "None",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "treatments": [
-        {
-          "id": "-1",
-          "label": "None",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Guest Voice Invites — → None",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
-      "id": "2022-12_mention_raid_limit",
-      "kind": "guild",
-      "label": "Automod Mention Raid Limit",
-      "hash": 1318029053,
-      "isApex": false,
-      "source": "api",
-      "variantType": "treatment",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": "1",
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "treatments": [
-        {
-          "id": "1",
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Automod Mention Raid Limit — → Automod Mention Raid Limit — Config keys: enabled",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
-      "id": "2022-11_default_disable_mass_mention",
-      "kind": "guild",
-      "label": "Disable mass mentions for communities by default",
-      "hash": 2462216785,
-      "isApex": false,
-      "source": "api",
-      "variantType": "treatment",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": "-1",
-          "label": "None",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "treatments": [
-        {
-          "id": "-1",
-          "label": "None",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Disable mass mentions for communities by default — → None",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
-    },
-    {
-      "id": "2022-07_voice_in_threads",
-      "kind": "guild",
-      "label": "Voice in Threads",
-      "hash": 944104242,
-      "isApex": false,
-      "source": "api",
-      "variantType": "treatment",
-      "count": 1,
-      "variationCount": 1,
-      "treatmentCount": 1,
-      "variants": [
-        {
-          "id": "1",
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "treatments": [
-        {
-          "id": "1",
-          "label": "Treatment 1",
-          "percent": 100,
-          "ranges": "0–10000"
-        }
-      ],
-      "status": "unchanged",
-      "previousCount": null,
-      "previousTreatments": null,
-      "buildNumber": "594278",
-      "purpose": "Voice in Threads — → Treatment 1",
-      "defaultConfig": null,
-      "percentSource": "api_guild_populations",
-      "percentReliable": true
     },
     {
       "id": "2022-03_block_russian_purchases",

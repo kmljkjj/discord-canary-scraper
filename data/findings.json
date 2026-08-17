@@ -4,99 +4,49 @@
       "id": "2021-02_staff_qc_debugging",
       "type": "user",
       "isApex": false,
-      "label": "Display QS scores in results. Not a real experiment",
-      "kind": "user",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Show scores in QS results"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2022-03_block_russian_purchases",
       "type": "user",
       "isApex": false,
-      "label": "Block purchases based on country",
-      "kind": "user",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Payments Blocked"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2022-07_voice_in_threads",
       "type": "user",
       "isApex": false,
-      "label": "Voice in Threads",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "On"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2022-12_mention_raid_limit",
       "type": "user",
       "isApex": false,
-      "label": "Automod Mention Raid Limit",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Automod Mention Raid Limit"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
       "type": "user",
       "isApex": false,
-      "label": "RTC Pacer & Golive Simulcast",
-      "kind": "user",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Golive Simulcast without prober 720p@500k"
-        },
-        {
-          "id": 2,
-          "label": "Golive Simulcast 720p@500k"
-        },
-        {
-          "id": 3,
-          "label": "Golive with pacing"
-        },
-        {
-          "id": 4,
-          "label": "Golive with pacing and probing"
-        },
-        {
-          "id": 5,
-          "label": "Golive Simulcast 720p@750k"
-        },
-        {
-          "id": 6,
-          "label": "Golive Simulcast 720p@1000k"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2024-12_guild_voice_channel_ringing",
       "type": "guild",
       "isApex": false,
-      "label": "Guild Voice Ringing",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Allow users to ring each other in Guild Voice Channels"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
     },
     {
       "id": "2025-04-desktop-refresh-fast-follows",
@@ -118,39 +68,17 @@
       "id": "2025-06_native_intents",
       "type": "user",
       "isApex": false,
-      "label": "Native Intents",
-      "kind": "user",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "All enabled"
-        },
-        {
-          "id": 2,
-          "label": "Clear Only"
-        },
-        {
-          "id": 3,
-          "label": "Activities Only"
-        },
-        {
-          "id": 4,
-          "label": "Activities and Clear"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2025-08_portkey_enabled",
       "type": "user",
       "isApex": false,
-      "label": "GameServer Enabled",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable GameServer"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2025-08-browser-hevc",
@@ -172,18 +100,9 @@
       "id": "2025-09_hotwheels_nvidia_boost",
       "type": "user",
       "isApex": false,
-      "label": "Next iteration of the activity feed ranking model.",
-      "kind": "user",
-      "treatments": [
-        {
-          "id": 16,
-          "label": "ML model V3 - Nvidia small boost"
-        },
-        {
-          "id": 17,
-          "label": "ML model V3 - Nvidia big boost"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2025-09-agc2-v2",
@@ -349,18 +268,9 @@
       "id": "2025-12_voice_channel_hoisting",
       "type": "user",
       "isApex": false,
-      "label": "Voice Channel Hoisting",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Both waveform and highlight"
-        },
-        {
-          "id": 2,
-          "label": "Waveform icon only"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2025-12-09-ptt-education",
@@ -518,27 +428,17 @@
       "id": "2026-02_hangout_window",
       "type": "user",
       "isApex": false,
-      "label": "Hangout Window",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable Hangout Window"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-02_past_vc_activity_messages",
       "type": "user",
       "isApex": false,
-      "label": "Past VC Activity Messages",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Show past VC activity messages in system channel"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-02-android-chat-mosaic-shared-pool",
@@ -760,61 +660,33 @@
       "id": "2026-03_file_upload_250_mb_powerup",
       "type": "user",
       "isApex": false,
-      "label": "File Upload 250MB Powerup",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable File Upload 250MB Powerup"
-        },
-        {
-          "id": 2,
-          "label": "Rollback UI for File Upload 250MB Powerup"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-03_game_server_pricing",
       "type": "user",
       "isApex": false,
-      "label": "Game Server Pricing",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable Game Server Pricing"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-03_guild_official_messages",
       "type": "guild",
       "isApex": false,
-      "label": "Guild Official Messages",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable official messages"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
     },
     {
       "id": "2026-03_voice_badge",
       "type": "user",
       "isApex": false,
-      "label": "Display Voice Channel Badge",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 0,
-          "label": "Control"
-        },
-        {
-          "id": 1,
-          "label": "Show voice badges"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-03-age-verification-google-wallet",
@@ -1164,31 +1036,17 @@
       "id": "2026-04_server_theme",
       "type": "user",
       "isApex": false,
-      "label": "Server Theme",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 0,
-          "label": "Control"
-        },
-        {
-          "id": 1,
-          "label": "Enable Server Theme"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-04_voice_call_trigger_point",
       "type": "user",
       "isApex": false,
-      "label": "Voice Call Trigger Point Experiment",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Treatment"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "user"
     },
     {
       "id": "2026-04-badge-discovery",
@@ -1634,18 +1492,9 @@
       "id": "2026-06_guild_rooms",
       "type": "guild",
       "isApex": false,
-      "label": "Guild Rooms",
-      "kind": "guild",
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Enable Guild Rooms in this guild"
-        },
-        {
-          "id": 2,
-          "label": "Enable Guild Rooms in this guild"
-        }
-      ]
+      "label": null,
+      "treatments": [],
+      "kind": "guild"
     },
     {
       "id": "2026-06_guild_spaces",
@@ -2598,5 +2447,5 @@
       "kind": "modal"
     }
   ],
-  "scrapedAt": "2026-08-17T14:19:35.107Z"
+  "scrapedAt": "2026-08-17T14:51:31.840Z"
 }
