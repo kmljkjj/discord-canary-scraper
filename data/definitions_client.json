@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-08-17T21:37:07.301Z",
-  "count": 165,
+  "scrapedAt": "2026-08-17T21:59:29.124Z",
+  "count": 166,
   "definitions": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -1728,7 +1728,7 @@
       "kind": "user",
       "label": "ml offer creation ui upgrade",
       "defaultConfig": {
-        "_raw": "{badgeStyle:m4.v.GRADIENT,surface:m4.F.NONE}"
+        "_raw": "{badgeStyle:m7.v.GRADIENT,surface:m7.F.NONE}"
       },
       "treatments": [],
       "source": "client_name_variations",
@@ -1852,6 +1852,17 @@
       "treatments": [],
       "source": "client_name_variations",
       "purpose": "custom app store overlay — Config keys: enabled"
+    },
+    "2026-07-desktop-channel-tabs": {
+      "id": "2026-07-desktop-channel-tabs",
+      "kind": "user",
+      "label": "desktop channel tabs",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "treatments": [],
+      "source": "client_name_variations",
+      "purpose": "desktop channel tabs — Config keys: enabled"
     },
     "2026-07-desktop-tti-update-backoff-algo": {
       "id": "2026-07-desktop-tti-update-backoff-algo",
