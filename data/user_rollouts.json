@@ -1,10 +1,33 @@
 {
-  "scrapedAt": "2026-08-17T18:22:26.693Z",
+  "scrapedAt": "2026-08-17T19:07:56.854Z",
   "sampleCount": 60,
   "usedToken": false,
-  "experimentCount": 5,
+  "experimentCount": 6,
   "lastError": null,
   "experiments": [
+    {
+      "hash": 704914099,
+      "id": null,
+      "label": null,
+      "kind": "user",
+      "source": "sampled",
+      "method": "fingerprint_or_token_sampling",
+      "reliability": "low",
+      "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
+      "totalSamples": 4,
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Treatment 1",
+          "percent": 3.19,
+          "percentByFrequency": 100,
+          "percentByRangeSpan": 3.19,
+          "samples": 4,
+          "ranges": "9638–9957"
+        }
+      ],
+      "count": 1
+    },
     {
       "hash": 3013881204,
       "id": null,
@@ -21,9 +44,9 @@
           "label": "Treatment 11",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 96.14,
+          "percentByRangeSpan": 96.6,
           "samples": 60,
-          "ranges": "75–9689"
+          "ranges": "203–9863"
         }
       ],
       "count": 1
@@ -44,9 +67,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.14,
+          "percentByRangeSpan": 98.27,
           "samples": 60,
-          "ranges": "13–9827"
+          "ranges": "133–9960"
         }
       ],
       "count": 1
@@ -67,9 +90,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 94.83,
+          "percentByRangeSpan": 95,
           "samples": 60,
-          "ranges": "327–9810"
+          "ranges": "382–9882"
         }
       ],
       "count": 1
@@ -83,16 +106,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 2,
+      "totalSamples": 1,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 3.95,
+          "percent": 0,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 3.95,
-          "samples": 2,
-          "ranges": "45–440"
+          "percentByRangeSpan": 0,
+          "samples": 1,
+          "ranges": "120–120"
         }
       ],
       "count": 1
@@ -113,9 +136,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.4,
+          "percentByRangeSpan": 97.25,
           "samples": 60,
-          "ranges": "83–9923"
+          "ranges": "229–9954"
         }
       ],
       "count": 1
