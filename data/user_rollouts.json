@@ -1,56 +1,10 @@
 {
-  "scrapedAt": "2026-08-17T15:49:04.323Z",
+  "scrapedAt": "2026-08-17T16:11:33.159Z",
   "sampleCount": 60,
   "usedToken": false,
-  "experimentCount": 6,
+  "experimentCount": 5,
   "lastError": null,
   "experiments": [
-    {
-      "hash": 704914099,
-      "id": null,
-      "label": null,
-      "kind": "user",
-      "source": "sampled",
-      "method": "fingerprint_or_token_sampling",
-      "reliability": "low",
-      "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 2,
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Treatment 1",
-          "percent": 2.54,
-          "percentByFrequency": 100,
-          "percentByRangeSpan": 2.54,
-          "samples": 2,
-          "ranges": "9609–9863"
-        }
-      ],
-      "count": 1
-    },
-    {
-      "hash": 4055210228,
-      "id": null,
-      "label": null,
-      "kind": "user",
-      "source": "sampled",
-      "method": "fingerprint_or_token_sampling",
-      "reliability": "low",
-      "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 60,
-      "treatments": [
-        {
-          "id": 1,
-          "label": "Treatment 1",
-          "percent": 100,
-          "percentByFrequency": 100,
-          "percentByRangeSpan": 95.29,
-          "samples": 60,
-          "ranges": "248–9777"
-        }
-      ],
-      "count": 1
-    },
     {
       "hash": 3013881204,
       "id": null,
@@ -67,17 +21,17 @@
           "label": "Treatment 11",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 96.55,
+          "percentByRangeSpan": 96.53,
           "samples": 60,
-          "ranges": "210–9865"
+          "ranges": "42–9695"
         }
       ],
       "count": 1
     },
     {
-      "hash": 2180379513,
-      "id": null,
-      "label": null,
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "label": "Tida Webform",
       "kind": "user",
       "source": "sampled",
       "method": "fingerprint_or_token_sampling",
@@ -90,9 +44,32 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.57,
+          "percentByRangeSpan": 98.85,
           "samples": 60,
-          "ranges": "89–9946"
+          "ranges": "103–9988"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "hash": 2180379513,
+      "id": "2023-09_iar_user_reporting",
+      "label": "Safety Experience IAR User Reporting",
+      "kind": "user",
+      "source": "sampled",
+      "method": "fingerprint_or_token_sampling",
+      "reliability": "low",
+      "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
+      "totalSamples": 60,
+      "treatments": [
+        {
+          "id": 1,
+          "label": "Treatment 1",
+          "percent": 100,
+          "percentByFrequency": 100,
+          "percentByRangeSpan": 99.1,
+          "samples": 60,
+          "ranges": "8–9918"
         }
       ],
       "count": 1
@@ -106,16 +83,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 4,
+      "totalSamples": 5,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 1.53,
+          "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 1.53,
-          "samples": 4,
-          "ranges": "106–259"
+          "percentByRangeSpan": 3.89,
+          "samples": 5,
+          "ranges": "56–445"
         }
       ],
       "count": 1
@@ -136,9 +113,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 99.38,
+          "percentByRangeSpan": 98.29,
           "samples": 60,
-          "ranges": "42–9980"
+          "ranges": "110–9939"
         }
       ],
       "count": 1
