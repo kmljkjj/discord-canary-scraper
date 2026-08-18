@@ -1,6 +1,7 @@
 /**
  * Discord Canary scraper
- * Webhook messages: Strings · Endpoints · New Apex / New Experiment
+ * Strings = Discord i18n UI messages (hashed keys like KdgI4k or SCREAMING_SNAKE)
+ * NOT webpack meta (release / discord_web-hash / etc.)
  */
 
 const fetch = require('node-fetch');
@@ -249,37 +250,66 @@ function unescapeStr(s) {
     .replace(/\\\\/g, '\\');
 }
 
-function shouldKeepString(key, val) {
-  if (!key || val == null || typeof val !== 'string') return false;
-  const v = val.trim();
-  if (v.length < 1 || v.length > 600) return false;
-  if (/^https?:\/\//i.test(v) && !/\s/.test(v)) return false;
-  if (/^\/[a-z0-9_\-{}\/]+$/i.test(v)) return false;
-  if (/^[a-f0-9]{20,}$/i.test(v)) return false;
-  if (/webpack|function\s*\(|=>\s*\{/.test(v)) return false;
-  if (/^[\d.]+$/.test(v)) return false;
-  // Discord short i18n keys like KdgI4k / 67PpcP
-  if (/^[A-Za-z0-9]{5,12}$/.test(key) && /[A-Za-z]/.test(v) && v.length >= 2) return true;
-  if (/^[A-Z][A-Z0-9_]{4,}$/.test(key) && v.length >= 2) return true;
-  if (/\s/.test(v)) return true;
-  if (/^[A-Z][a-z]/.test(v) && v.length >= 4) return true;
+/**
+ * Discord "Strings" in datamining sense:
+ * - Runtime-hashed i18n keys: short mixed alnum e.g. KdgI4k, 67PpcP (usually 5–8 chars)
+ * - Legacy: SCREAMING_SNAKE_CASE message keys
+ * Values: human UI text ("Interrupt the current work")
+ *
+ * NOT: release/version/webpack metadata, discord_web-*, hashes, routes, URLs alone.
+ */
+function isDiscordI18nKey(key) {
+  if (!key || key.length < 5 || key.length > 80) return false;
+  // junk meta keys that produced ~ release: discord_web-...
+  if (
+    /^(release|version|hash|build|chunk|module|default|exports|require|length|prototype|constructor|undefined|null|type|name|id|key|value|data|src|href|path|url|main|index|entry)$/i.test(
+      key,
+    )
+  ) {
+    return false;
+  }
+  // hashed message key (Discord intl runtime hash)
+  if (/^[A-Za-z0-9]{5,8}$/.test(key) && /[A-Za-z]/.test(key)) return true;
+  // legacy ALL_CAPS_WITH_UNDERSCORES
+  if (/^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/.test(key)) return true;
   return false;
 }
 
-/** Extract Discord-style strings (short keys + SCREAMING keys) */
+function isDiscordI18nValue(val) {
+  if (val == null || typeof val !== 'string') return false;
+  const v = val.trim();
+  if (v.length < 2 || v.length > 400) return false;
+  // webpack / build noise
+  if (/discord_web[-_]/i.test(v)) return false;
+  if (/^web\.[a-f0-9]+/i.test(v)) return false;
+  if (/^[a-f0-9]{16,}$/i.test(v)) return false;
+  if (/\.(js|css|map|json|woff2?|png|svg)(\?|$)/i.test(v)) return false;
+  if (/^https?:\/\//i.test(v) && !/\s/.test(v)) return false;
+  if (/^\/[a-zA-Z0-9_\-{}\/.@]+$/.test(v)) return false;
+  if (/webpack|function\s*\(|=>\s*\{|node_modules|__webpack/i.test(v)) return false;
+  if (/^[\d.]+$/.test(v)) return false;
+  // must contain real letters (UI copy)
+  if (!/[A-Za-zÀ-ÿ]{2,}/.test(v)) return false;
+  return true;
+}
+
+function shouldKeepString(key, val) {
+  return isDiscordI18nKey(key) && isDiscordI18nValue(val);
+}
+
 function extractStringsFromContent(content, outMap) {
   // "KdgI4k": "Interrupt the current work"
   const reQuoted =
-    /["']([A-Za-z0-9_]{4,80})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
+    /["']([A-Za-z0-9_]{5,80})["']\s*:\s*["']((?:[^"'\\]|\\.){1,400})["']/g;
   let m;
   while ((m = reQuoted.exec(content)) !== null) {
     const key = m[1];
     const val = unescapeStr(m[2]);
     if (shouldKeepString(key, val)) outMap.set(key, val);
   }
-  // KdgI4k: "text" or KdgI4k:"text"
+  // bare KEY: "text"
   const reBare =
-    /(?:^|[,{;\s])([A-Za-z][A-Za-z0-9_]{4,80})\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
+    /(?:^|[,{;\s])([A-Za-z][A-Za-z0-9_]{4,80})\s*:\s*["']((?:[^"'\\]|\\.){1,400})["']/g;
   while ((m = reBare.exec(content)) !== null) {
     const key = m[1];
     const val = unescapeStr(m[2]);
@@ -293,7 +323,6 @@ function isExpId(id) {
   return true;
 }
 
-/** Named endpoints: GIFTING_...: "/users/@me/..." */
 function extractEndpointsFromContent(content, outMap) {
   const reNamed =
     /["']?([A-Z][A-Z0-9_]{6,120})["']?\s*:\s*["'](\/(?:api\/v\d+|users|guilds|channels|quests|oauth2|store|partners|applications)[a-zA-Z0-9_\-\/{}.@]*)["']/g;
@@ -304,14 +333,12 @@ function extractEndpointsFromContent(content, outMap) {
     if (route.length < 4 || route.length > 160) continue;
     outMap.set(name, route);
   }
-  // bare path strings as anonymous endpoints (keyed by path)
   const rePath =
     /["'](\/(?:api\/v\d+|users\/@me|guilds|channels|quests)[a-zA-Z0-9_\-\/{}.]*)["']/g;
   while ((m = rePath.exec(content)) !== null) {
     const route = m[1];
     if (route.length > 6 && route.length < 120) {
       if (![...outMap.values()].includes(route)) {
-        // only add if not already named
         const key = route.replace(/[^a-zA-Z0-9]+/g, '_').toUpperCase().slice(0, 80);
         if (!outMap.has(key)) outMap.set(key, route);
       }
@@ -391,7 +418,7 @@ async function analyzeDownloadedAssets() {
   const endpointsObj = Object.fromEntries(
     [...endpointMap.entries()].sort((a, b) => a[0].localeCompare(b[0])),
   );
-  console.log(`    → ${Object.keys(stringsObj).length} strings extracted`);
+  console.log(`    → ${Object.keys(stringsObj).length} i18n strings extracted`);
   console.log(`    → ${Object.keys(endpointsObj).length} endpoints extracted`);
   return {
     experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
@@ -436,35 +463,41 @@ function chunkLines(lines, maxChars = 3800) {
   return chunks;
 }
 
-/** Example format: Strings / + KEY: value / Build Id - N */
+/** Format: + KEY: human text */
 function stringsEmbeds(stringDiff, buildNumber) {
   const lines = [];
   for (const [k, v] of Object.entries(stringDiff.added || {})) {
+    if (!shouldKeepString(k, v)) continue;
     lines.push(`+ ${k}: ${v}`);
   }
   for (const [k, v] of Object.entries(stringDiff.modified || {})) {
+    if (!shouldKeepString(k, v)) continue;
     lines.push(`~ ${k}: ${v}`);
   }
   for (const k of stringDiff.removed || []) {
+    if (!isDiscordI18nKey(k)) continue;
     lines.push(`- ${k}`);
   }
   if (!lines.length) return [];
-  const header = '**Strings**\n_Added · removed · modified_\n';
   const footer = `\n\n**Build Id** — ${buildNumber}`;
   const embeds = [];
   const chunks = chunkLines(lines, 3500);
   chunks.forEach((body, i) => {
     embeds.push({
       title: i === 0 ? 'Strings' : `Strings (${i + 1})`,
-      description: (i === 0 ? header : '') + '```\n' + body + '\n```' + (i === chunks.length - 1 ? footer : ''),
-      color: 0x57F287,
+      description:
+        (i === 0 ? '_Added · removed · modified_\n' : '') +
+        '```\n' +
+        body +
+        '\n```' +
+        (i === chunks.length - 1 ? footer : ''),
+      color: 0x57f287,
       timestamp: new Date().toISOString(),
     });
   });
   return embeds;
 }
 
-/** Example: Endpoints / + NAME: /path */
 function endpointsEmbeds(epDiff, buildNumber) {
   const lines = [];
   for (const [name, route] of Object.entries(epDiff.added || {})) {
@@ -477,22 +510,25 @@ function endpointsEmbeds(epDiff, buildNumber) {
     lines.push(`- ${name}`);
   }
   if (!lines.length) return [];
-  const header = '**Endpoints**\n_Added · removed · modified_\n';
   const footer = `\n\n**Build Id** — ${buildNumber}`;
   const embeds = [];
   const chunks = chunkLines(lines, 3500);
   chunks.forEach((body, i) => {
     embeds.push({
       title: i === 0 ? 'Endpoints' : `Endpoints (${i + 1})`,
-      description: (i === 0 ? header : '') + '```\n' + body + '\n```' + (i === chunks.length - 1 ? footer : ''),
-      color: 0x5865F2,
+      description:
+        (i === 0 ? '_Added · removed · modified_\n' : '') +
+        '```\n' +
+        body +
+        '\n```' +
+        (i === chunks.length - 1 ? footer : ''),
+      color: 0x5865f2,
       timestamp: new Date().toISOString(),
     });
   });
   return embeds;
 }
 
-/** Example: New Apex Experiments / + id (user) / * Variant 1 / Type / Build */
 function experimentEmbed(exp, buildNumber) {
   const isApex = exp.isApex || exp.aaMode;
   const type = exp.kind || exp.type || 'user';
@@ -508,7 +544,7 @@ function experimentEmbed(exp, buildNumber) {
   return {
     title: isApex ? 'New Apex Experiment' : 'New Experiment',
     description: desc,
-    color: isApex ? 0xFEE75C : 0xEB459E,
+    color: isApex ? 0xfee75c : 0xeb459e,
     timestamp: new Date().toISOString(),
   };
 }
@@ -528,7 +564,7 @@ function guildExperimentEmbed(g, buildNumber) {
   return {
     title: g.aaMode ? 'New Apex Experiment' : 'New Experiment',
     description: desc,
-    color: 0xFEE75C,
+    color: 0xfee75c,
     timestamp: new Date().toISOString(),
   };
 }
@@ -541,7 +577,6 @@ async function postWebhook(payload) {
   });
   if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
   else console.log('Webhook sent');
-  // Discord rate limit: small pause between multi-posts
   await new Promise((r) => setTimeout(r, 600));
 }
 
@@ -549,9 +584,6 @@ async function notify({
   build,
   isNewBuild,
   diff,
-  enriched,
-  clientFindings,
-  guildEnriched,
   stringDiff,
   endpointDiff,
 }) {
@@ -560,11 +592,8 @@ async function notify({
     return;
   }
 
-  const hasStrings =
-    Object.keys(stringDiff.added || {}).length +
-      Object.keys(stringDiff.modified || {}).length +
-      (stringDiff.removed || []).length >
-    0;
+  const stringEmbeds = stringsEmbeds(stringDiff, build.buildNumber);
+  const hasStrings = stringEmbeds.length > 0;
   const hasEndpoints =
     Object.keys(endpointDiff.added || {}).length +
       Object.keys(endpointDiff.modified || {}).length +
@@ -574,14 +603,13 @@ async function notify({
     (diff.newClientExperiments?.length || 0) + (diff.newGuild?.length || 0) > 0;
   const hasNewUI = (diff.newUI?.length || 0) > 0;
 
-  // 1) Summary only on new build or important deltas
   if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints) {
     await postWebhook({
       username: 'Canary Scraper',
       embeds: [
         {
           title: isNewBuild ? 'New Discord Canary Build' : 'Canary Changes',
-          color: hasNewExp ? 0xED4245 : 0x57F287,
+          color: hasNewExp ? 0xed4245 : 0x57f287,
           fields: [
             { name: 'Build', value: String(build.buildNumber), inline: true },
             { name: 'Channel', value: build.releaseChannel || 'canary', inline: true },
@@ -604,17 +632,14 @@ async function notify({
     });
   }
 
-  // 2) Strings (exact style)
-  for (const emb of stringsEmbeds(stringDiff, build.buildNumber).slice(0, 4)) {
+  for (const emb of stringEmbeds.slice(0, 4)) {
     await postWebhook({ username: 'Canary Scraper', embeds: [emb] });
   }
 
-  // 3) Endpoints
   for (const emb of endpointsEmbeds(endpointDiff, build.buildNumber).slice(0, 4)) {
     await postWebhook({ username: 'Canary Scraper', embeds: [emb] });
   }
 
-  // 4) New experiments (Apex first)
   const sortedNew = [...(diff.newClientExperiments || [])].sort((a, b) => {
     const aa = a.isApex ? 0 : 1;
     const bb = b.isApex ? 0 : 1;
@@ -634,14 +659,13 @@ async function notify({
     });
   }
 
-  // 5) New UI (important)
   if (hasNewUI) {
     await postWebhook({
       username: 'Canary Scraper',
       embeds: [
         {
           title: 'New UI',
-          color: 0xF47B67,
+          color: 0xf47b67,
           description: diff.newUI
             .slice(0, 25)
             .map((u) => `+ \`${u.name}\` (**${u.kind}**)`)
@@ -655,7 +679,7 @@ async function notify({
 }
 
 async function main() {
-  console.log('🔍 Canary scrape — Strings / Endpoints / Experiments webhook\n');
+  console.log('🔍 Canary scrape — real i18n Strings only\n');
   await fs.ensureDir(DATA_DIR);
 
   const html = await httpGet(CANARY_APP);
@@ -741,18 +765,22 @@ async function main() {
     newGuild: guildEnriched.filter((g) => !prevGuildHashes.has(g.hash)),
   };
 
-  // —— Strings diff (added / removed / modified)
   const allStrings = clientFindings.strings || {};
   let prevStrings = {};
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
+  // Drop junk from old baseline so we don't keep notifying ~ release
+  const prevClean = {};
+  for (const [k, v] of Object.entries(prevStrings)) {
+    if (shouldKeepString(k, v)) prevClean[k] = v;
+  }
   const stringDiff = { added: {}, removed: [], modified: {} };
   for (const [k, v] of Object.entries(allStrings)) {
-    if (!(k in prevStrings)) stringDiff.added[k] = v;
-    else if (prevStrings[k] !== v) stringDiff.modified[k] = v;
+    if (!(k in prevClean)) stringDiff.added[k] = v;
+    else if (prevClean[k] !== v) stringDiff.modified[k] = v;
   }
-  for (const k of Object.keys(prevStrings)) {
+  for (const k of Object.keys(prevClean)) {
     if (!(k in allStrings)) stringDiff.removed.push(k);
   }
   await fs.writeJson(STRINGS_FILE, allStrings, { spaces: 2 });
@@ -769,7 +797,6 @@ async function main() {
     { spaces: 2 },
   );
 
-  // —— Endpoints diff
   const allEndpoints = clientFindings.endpoints || {};
   let prevEndpoints = {};
   try {
@@ -832,9 +859,6 @@ async function main() {
     build,
     isNewBuild,
     diff,
-    enriched,
-    clientFindings,
-    guildEnriched,
     stringDiff,
     endpointDiff,
   });
