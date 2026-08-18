@@ -1,9 +1,6 @@
 /**
- * Discord Canary scraper — Wumpus Central style
- *
- * Guild experiment % : real, from /api/v10/experiments populations (s/e over 10000)
- * User experiment %  : Discord does NOT publish global rollouts publicly
- * Strings             : data/strings.json (like discrapper-canary) — NOT sent to Discord
+ * Discord Canary scraper
+ * Webhook messages: Strings · Endpoints · New Apex / New Experiment
  */
 
 const fetch = require('node-fetch');
@@ -25,14 +22,11 @@ const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 const GUILD_EXP_FILE = path.join(DATA_DIR, 'guild_experiments.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const STRINGS_NEW_FILE = path.join(DATA_DIR, 'strings_new.json');
+const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
 
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
-
-function murmur3(str) {
-  return murmur3_full(str);
-}
 
 function murmur3_full(key) {
   const data = Buffer.from(key, 'utf8');
@@ -247,35 +241,49 @@ function matchDefinitionByHash(hash, definitions) {
   return null;
 }
 
+function unescapeStr(s) {
+  return s
+    .replace(/\\n/g, '\n')
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .replace(/\\\\/g, '\\');
+}
+
 function shouldKeepString(key, val) {
-  if (!key || !val || typeof val !== 'string') return false;
-  if (val.length < 2 || val.length > 500) return false;
-  if (/^https?:\/\//i.test(val) && !/\s/.test(val)) return false;
-  if (/^\/[a-z0-9_\-{}\/]+$/i.test(val)) return false;
-  if (/^[a-f0-9]{16,}$/i.test(val)) return false;
-  if (/webpack|function\s*\(|=>\s*\{/.test(val)) return false;
-  if (/^[\d.]+$/.test(val)) return false;
-  if (/\s/.test(val)) return true;
-  if (/^[A-Z][a-z]/.test(val) && val.length >= 4) return true;
-  if (/^[A-Z][A-Z0-9_]+$/.test(key) && val.length >= 3) return true;
+  if (!key || val == null || typeof val !== 'string') return false;
+  const v = val.trim();
+  if (v.length < 1 || v.length > 600) return false;
+  if (/^https?:\/\//i.test(v) && !/\s/.test(v)) return false;
+  if (/^\/[a-z0-9_\-{}\/]+$/i.test(v)) return false;
+  if (/^[a-f0-9]{20,}$/i.test(v)) return false;
+  if (/webpack|function\s*\(|=>\s*\{/.test(v)) return false;
+  if (/^[\d.]+$/.test(v)) return false;
+  // Discord short i18n keys like KdgI4k / 67PpcP
+  if (/^[A-Za-z0-9]{5,12}$/.test(key) && /[A-Za-z]/.test(v) && v.length >= 2) return true;
+  if (/^[A-Z][A-Z0-9_]{4,}$/.test(key) && v.length >= 2) return true;
+  if (/\s/.test(v)) return true;
+  if (/^[A-Z][a-z]/.test(v) && v.length >= 4) return true;
   return false;
 }
 
-/** Wumpus-style string extraction → data/strings.json only */
+/** Extract Discord-style strings (short keys + SCREAMING keys) */
 function extractStringsFromContent(content, outMap) {
-  const re1 = /(?:^|[,{;])([A-Z][A-Z0-9_]{5,100})\s*:\s*"((?:[^"\\]|\\.){2,400})"/g;
+  // "KdgI4k": "Interrupt the current work"
+  const reQuoted =
+    /["']([A-Za-z0-9_]{4,80})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
   let m;
-  while ((m = re1.exec(content)) !== null) {
-    if (shouldKeepString(m[1], m[2])) outMap.set(m[1], m[2]);
+  while ((m = reQuoted.exec(content)) !== null) {
+    const key = m[1];
+    const val = unescapeStr(m[2]);
+    if (shouldKeepString(key, val)) outMap.set(key, val);
   }
-  const re2 = /"([A-Z][A-Z0-9_]{5,100})"\s*:\s*"((?:[^"\\]|\\.){2,400})"/g;
-  while ((m = re2.exec(content)) !== null) {
-    if (shouldKeepString(m[1], m[2])) outMap.set(m[1], m[2]);
-  }
-  const re3 = /"([a-zA-Z][a-zA-Z0-9_.]{4,80})"\s*:\s*"((?:[^"\\]|\\.){8,300})"/g;
-  while ((m = re3.exec(content)) !== null) {
-    if (!/[ _]/.test(m[2]) && !/[a-z]/.test(m[2])) continue;
-    if (shouldKeepString(m[1], m[2])) outMap.set(m[1], m[2]);
+  // KdgI4k: "text" or KdgI4k:"text"
+  const reBare =
+    /(?:^|[,{;\s])([A-Za-z][A-Za-z0-9_]{4,80})\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
+  while ((m = reBare.exec(content)) !== null) {
+    const key = m[1];
+    const val = unescapeStr(m[2]);
+    if (shouldKeepString(key, val)) outMap.set(key, val);
   }
 }
 
@@ -285,9 +293,35 @@ function isExpId(id) {
   return true;
 }
 
+/** Named endpoints: GIFTING_...: "/users/@me/..." */
+function extractEndpointsFromContent(content, outMap) {
+  const reNamed =
+    /["']?([A-Z][A-Z0-9_]{6,120})["']?\s*:\s*["'](\/(?:api\/v\d+|users|guilds|channels|quests|oauth2|store|partners|applications)[a-zA-Z0-9_\-\/{}.@]*)["']/g;
+  let m;
+  while ((m = reNamed.exec(content)) !== null) {
+    const name = m[1];
+    const route = m[2];
+    if (route.length < 4 || route.length > 160) continue;
+    outMap.set(name, route);
+  }
+  // bare path strings as anonymous endpoints (keyed by path)
+  const rePath =
+    /["'](\/(?:api\/v\d+|users\/@me|guilds|channels|quests)[a-zA-Z0-9_\-\/{}.]*)["']/g;
+  while ((m = rePath.exec(content)) !== null) {
+    const route = m[1];
+    if (route.length > 6 && route.length < 120) {
+      if (![...outMap.values()].includes(route)) {
+        // only add if not already named
+        const key = route.replace(/[^a-zA-Z0-9]+/g, '_').toUpperCase().slice(0, 80);
+        if (!outMap.has(key)) outMap.set(key, route);
+      }
+    }
+  }
+}
+
 function analyzeClientJS(content) {
   const experiments = new Map();
-  const routes = new Set();
+  const endpoints = new Map();
   const ui = new Map();
   const idRe = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80})["']/gi;
   let m;
@@ -302,11 +336,7 @@ function analyzeClientJS(content) {
       });
     }
   }
-  const routeRe =
-    /["'](\/(?:api\/v\d+|users\/@me|guilds|channels|quests)[a-z0-9_\-\/{}.]*)["']/gi;
-  while ((m = routeRe.exec(content)) !== null) {
-    if (m[1].length > 6 && m[1].length < 100) routes.add(m[1]);
-  }
+  extractEndpointsFromContent(content, endpoints);
   const uiRe =
     /["']([A-Z][A-Za-z0-9]*(?:Modal|Panel|Popout|Drawer|Sheet|Sidebar|Overlay))["']/g;
   while ((m = uiRe.exec(content)) !== null) {
@@ -320,19 +350,19 @@ function analyzeClientJS(content) {
   }
   return {
     experiments: [...experiments.values()],
-    routes: [...routes].sort(),
+    endpoints: Object.fromEntries(endpoints),
     ui: [...ui.values()],
   };
 }
 
 async function analyzeDownloadedAssets() {
   if (!(await fs.pathExists(ASSETS_DIR))) {
-    return { experiments: [], routes: [], ui: [], strings: {} };
+    return { experiments: [], endpoints: {}, ui: [], strings: {} };
   }
   const files = (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'));
   files.sort((a, b) => (/^web\./i.test(a) ? 0 : 1) - (/^web\./i.test(b) ? 0 : 1));
   const expMap = new Map();
-  const routes = new Set();
+  const endpointMap = new Map();
   const uiMap = new Map();
   const stringMap = new Map();
   for (const file of files) {
@@ -344,7 +374,7 @@ async function analyzeDownloadedAssets() {
       console.log(`  scan ${file} (${(st.size / 1024 / 1024).toFixed(1)} MB)`);
       const found = analyzeClientJS(content);
       for (const e of found.experiments) expMap.set(e.id, e);
-      found.routes.forEach((r) => routes.add(r));
+      for (const [k, v] of Object.entries(found.endpoints || {})) endpointMap.set(k, v);
       for (const u of found.ui) uiMap.set(u.name, u);
       extractStringsFromContent(content, stringMap);
       if (/^web\./i.test(file)) {
@@ -358,10 +388,14 @@ async function analyzeDownloadedAssets() {
   for (const [k, v] of [...stringMap.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
     stringsObj[k] = v;
   }
+  const endpointsObj = Object.fromEntries(
+    [...endpointMap.entries()].sort((a, b) => a[0].localeCompare(b[0])),
+  );
   console.log(`    → ${Object.keys(stringsObj).length} strings extracted`);
+  console.log(`    → ${Object.keys(endpointsObj).length} endpoints extracted`);
   return {
     experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
-    routes: [...routes].sort(),
+    endpoints: endpointsObj,
     ui: [...uiMap.values()].sort((a, b) => a.name.localeCompare(b.name)),
     strings: stringsObj,
   };
@@ -384,182 +418,244 @@ function enrichWithDefinitions(experiments, definitions) {
   });
 }
 
+function chunkLines(lines, maxChars = 3800) {
+  const chunks = [];
+  let buf = [];
+  let len = 0;
+  for (const line of lines) {
+    const add = line.length + 1;
+    if (buf.length && len + add > maxChars) {
+      chunks.push(buf.join('\n'));
+      buf = [];
+      len = 0;
+    }
+    buf.push(line);
+    len += add;
+  }
+  if (buf.length) chunks.push(buf.join('\n'));
+  return chunks;
+}
+
+/** Example format: Strings / + KEY: value / Build Id - N */
+function stringsEmbeds(stringDiff, buildNumber) {
+  const lines = [];
+  for (const [k, v] of Object.entries(stringDiff.added || {})) {
+    lines.push(`+ ${k}: ${v}`);
+  }
+  for (const [k, v] of Object.entries(stringDiff.modified || {})) {
+    lines.push(`~ ${k}: ${v}`);
+  }
+  for (const k of stringDiff.removed || []) {
+    lines.push(`- ${k}`);
+  }
+  if (!lines.length) return [];
+  const header = '**Strings**\n_Added · removed · modified_\n';
+  const footer = `\n\n**Build Id** — ${buildNumber}`;
+  const embeds = [];
+  const chunks = chunkLines(lines, 3500);
+  chunks.forEach((body, i) => {
+    embeds.push({
+      title: i === 0 ? 'Strings' : `Strings (${i + 1})`,
+      description: (i === 0 ? header : '') + '```\n' + body + '\n```' + (i === chunks.length - 1 ? footer : ''),
+      color: 0x57F287,
+      timestamp: new Date().toISOString(),
+    });
+  });
+  return embeds;
+}
+
+/** Example: Endpoints / + NAME: /path */
+function endpointsEmbeds(epDiff, buildNumber) {
+  const lines = [];
+  for (const [name, route] of Object.entries(epDiff.added || {})) {
+    lines.push(`+ ${name}: ${route}`);
+  }
+  for (const [name, route] of Object.entries(epDiff.modified || {})) {
+    lines.push(`~ ${name}: ${route}`);
+  }
+  for (const name of epDiff.removed || []) {
+    lines.push(`- ${name}`);
+  }
+  if (!lines.length) return [];
+  const header = '**Endpoints**\n_Added · removed · modified_\n';
+  const footer = `\n\n**Build Id** — ${buildNumber}`;
+  const embeds = [];
+  const chunks = chunkLines(lines, 3500);
+  chunks.forEach((body, i) => {
+    embeds.push({
+      title: i === 0 ? 'Endpoints' : `Endpoints (${i + 1})`,
+      description: (i === 0 ? header : '') + '```\n' + body + '\n```' + (i === chunks.length - 1 ? footer : ''),
+      color: 0x5865F2,
+      timestamp: new Date().toISOString(),
+    });
+  });
+  return embeds;
+}
+
+/** Example: New Apex Experiments / + id (user) / * Variant 1 / Type / Build */
 function experimentEmbed(exp, buildNumber) {
   const isApex = exp.isApex || exp.aaMode;
-  const fields = [
-    { name: 'Name', value: `\`${exp.id}\``, inline: false },
-    { name: 'Type', value: exp.kind || exp.type || 'user', inline: true },
-    { name: 'Build', value: String(buildNumber), inline: true },
-  ];
-  if (exp.label) fields.push({ name: 'Label', value: exp.label, inline: false });
-  if (exp.treatments?.length) {
-    fields.push({
-      name: 'Variations',
-      value: exp.treatments
-        .slice(0, 8)
-        .map((t) => `• **Variation ${t.id}** — ${t.label}`)
-        .join('\n')
-        .slice(0, 900),
-      inline: false,
-    });
-  } else {
-    fields.push({ name: 'Variations', value: '• Variation 0\n• Variation 1', inline: false });
-  }
-  fields.push({
-    name: 'Rollout %',
-    value: '_Non publié par Discord pour les user experiments (API publique)_',
-    inline: false,
-  });
+  const type = exp.kind || exp.type || 'user';
+  const variants = (exp.treatments || []).length
+    ? exp.treatments.map((t) => `* Variant ${t.id}${t.label ? ` — ${t.label}` : ''}`)
+    : ['* Variant 0', '* Variant 1'];
+  const desc = [
+    `+ \`${exp.id}\` (**${type}**)`,
+    ...variants.slice(0, 12),
+    `Type: **${type}**`,
+    `Build: **${buildNumber}**`,
+  ].join('\n');
   return {
     title: isApex ? 'New Apex Experiment' : 'New Experiment',
+    description: desc,
     color: isApex ? 0xFEE75C : 0xEB459E,
-    fields,
     timestamp: new Date().toISOString(),
   };
 }
 
 function guildExperimentEmbed(g, buildNumber) {
   const name = g.id || g.definitionId || `hash:${g.hash}`;
-  const lines = (g.rolloutSummary || []).map(
-    (b) => `• **${b.label}**: **${b.percent}%** \`${b.ranges || '—'}\``,
+  const type = 'guild';
+  const variants = (g.rolloutSummary || []).map(
+    (b) => `* ${b.label} — **${b.percent}%**`,
   );
-  const fields = [
-    { name: 'Name', value: `\`${name}\``, inline: false },
-    { name: 'Type', value: 'guild', inline: true },
-    { name: 'Hash', value: String(g.hash), inline: true },
-    { name: 'Build', value: String(buildNumber), inline: true },
-  ];
-  if (g.label) fields.push({ name: 'Label', value: g.label, inline: false });
-  fields.push({
-    name: 'Rollout (vrai % API)',
-    value: (lines.join('\n') || '—').slice(0, 1000),
-    inline: false,
-  });
+  const desc = [
+    `+ \`${name}\` (**${type}**)`,
+    ...(variants.length ? variants : ['* Variant 0', '* Variant 1']),
+    `Type: **${type}**`,
+    `Build: **${buildNumber}**`,
+  ].join('\n');
   return {
-    title: g.aaMode ? 'New Apex Guild Experiment' : 'New Guild Experiment',
+    title: g.aaMode ? 'New Apex Experiment' : 'New Experiment',
+    description: desc,
     color: 0xFEE75C,
-    fields,
-    footer: { text: 'Pourcentages = ranges Discord / 10000' },
     timestamp: new Date().toISOString(),
   };
 }
 
-function truncate(arr, max = 40) {
-  if (!arr?.length) return '—';
-  const lines = arr
-    .slice(0, max)
-    .map((x) => `• \`${typeof x === 'string' ? x : x.id || x.name}\``);
-  if (arr.length > max) lines.push(`… +${arr.length - max} more`);
-  return lines.join('\n').slice(0, 3900);
+async function postWebhook(payload) {
+  const res = await fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
+  else console.log('Webhook sent');
+  // Discord rate limit: small pause between multi-posts
+  await new Promise((r) => setTimeout(r, 600));
 }
 
-async function notify({ build, isNewBuild, diff, enriched, clientFindings, guildEnriched }) {
+async function notify({
+  build,
+  isNewBuild,
+  diff,
+  enriched,
+  clientFindings,
+  guildEnriched,
+  stringDiff,
+  endpointDiff,
+}) {
   if (!WEBHOOK_URL) {
     console.log('No DISCORD_WEBHOOK_URL — skip notify');
     return;
   }
+
+  const hasStrings =
+    Object.keys(stringDiff.added || {}).length +
+      Object.keys(stringDiff.modified || {}).length +
+      (stringDiff.removed || []).length >
+    0;
+  const hasEndpoints =
+    Object.keys(endpointDiff.added || {}).length +
+      Object.keys(endpointDiff.modified || {}).length +
+      (endpointDiff.removed || []).length >
+    0;
   const hasNewExp =
     (diff.newClientExperiments?.length || 0) + (diff.newGuild?.length || 0) > 0;
   const hasNewUI = (diff.newUI?.length || 0) > 0;
-  const hasNewRoutes = (diff.newRoutes?.length || 0) > 0;
-  const important = hasNewExp || hasNewUI || hasNewRoutes;
-  const embeds = [];
-  embeds.push({
-    title: important
-      ? '🚨 Important Canary Changes'
-      : isNewBuild
-        ? '🚀 New Discord Canary Build'
-        : 'ℹ️ Discord Canary Check',
-    color: important ? 0xED4245 : isNewBuild ? 0x57F287 : 0x5865F2,
-    fields: [
-      { name: 'Build', value: String(build.buildNumber), inline: true },
-      { name: 'Channel', value: build.releaseChannel || 'canary', inline: true },
-      {
-        name: 'Version',
-        value: build.versionHash ? `\`${build.versionHash.slice(0, 10)}…\`` : '—',
-        inline: true,
-      },
-      {
-        name: 'Tracked',
-        value: `Client exp: **${enriched.length}** · Guild API: **${(guildEnriched || []).length}** · UI: **${(clientFindings.ui || []).length}** · Strings: **${Object.keys(clientFindings.strings || {}).length}** (fichier only)`,
-        inline: false,
-      },
-    ],
-    footer: { text: 'Strings → data/strings.json (pas Discord)' },
-    timestamp: new Date().toISOString(),
+
+  // 1) Summary only on new build or important deltas
+  if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints) {
+    await postWebhook({
+      username: 'Canary Scraper',
+      embeds: [
+        {
+          title: isNewBuild ? 'New Discord Canary Build' : 'Canary Changes',
+          color: hasNewExp ? 0xED4245 : 0x57F287,
+          fields: [
+            { name: 'Build', value: String(build.buildNumber), inline: true },
+            { name: 'Channel', value: build.releaseChannel || 'canary', inline: true },
+            {
+              name: 'Delta',
+              value: [
+                hasNewExp ? 'Experiments' : null,
+                hasStrings ? 'Strings' : null,
+                hasEndpoints ? 'Endpoints' : null,
+                hasNewUI ? 'UI' : null,
+              ]
+                .filter(Boolean)
+                .join(' · ') || 'check',
+              inline: false,
+            },
+          ],
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    });
+  }
+
+  // 2) Strings (exact style)
+  for (const emb of stringsEmbeds(stringDiff, build.buildNumber).slice(0, 4)) {
+    await postWebhook({ username: 'Canary Scraper', embeds: [emb] });
+  }
+
+  // 3) Endpoints
+  for (const emb of endpointsEmbeds(endpointDiff, build.buildNumber).slice(0, 4)) {
+    await postWebhook({ username: 'Canary Scraper', embeds: [emb] });
+  }
+
+  // 4) New experiments (Apex first)
+  const sortedNew = [...(diff.newClientExperiments || [])].sort((a, b) => {
+    const aa = a.isApex ? 0 : 1;
+    const bb = b.isApex ? 0 : 1;
+    if (aa !== bb) return aa - bb;
+    return b.id.localeCompare(a.id);
   });
+  for (const exp of sortedNew.slice(0, 8)) {
+    await postWebhook({
+      username: 'Canary Scraper',
+      embeds: [experimentEmbed(exp, build.buildNumber)],
+    });
+  }
   for (const g of (diff.newGuild || []).slice(0, 5)) {
-    embeds.push(guildExperimentEmbed(g, build.buildNumber));
-  }
-  const sortedNew = [...(diff.newClientExperiments || [])].sort((a, b) =>
-    b.id.localeCompare(a.id),
-  );
-  for (const exp of sortedNew.slice(0, 5)) {
-    embeds.push(experimentEmbed(exp, build.buildNumber));
-  }
-  if (sortedNew.length > 5) {
-    embeds.push({
-      title: `New Experiments (+${sortedNew.length - 5} more)`,
-      color: 0xEB459E,
-      description: truncate(sortedNew.slice(5).map((e) => e.id), 40),
+    await postWebhook({
+      username: 'Canary Scraper',
+      embeds: [guildExperimentEmbed(g, build.buildNumber)],
     });
   }
+
+  // 5) New UI (important)
   if (hasNewUI) {
-    embeds.push({
-      title: '🧩 New UI',
-      color: 0xF47B67,
-      description: diff.newUI
-        .slice(0, 20)
-        .map((u) => `• \`${u.name}\` (**${u.kind}**)`)
-        .join('\n'),
+    await postWebhook({
+      username: 'Canary Scraper',
+      embeds: [
+        {
+          title: 'New UI',
+          color: 0xF47B67,
+          description: diff.newUI
+            .slice(0, 25)
+            .map((u) => `+ \`${u.name}\` (**${u.kind}**)`)
+            .join('\n'),
+          footer: { text: `Build Id — ${build.buildNumber}` },
+          timestamp: new Date().toISOString(),
+        },
+      ],
     });
   }
-  if (hasNewRoutes) {
-    embeds.push({
-      title: 'New Routes',
-      color: 0x5865F2,
-      description: truncate(diff.newRoutes, 20),
-    });
-  }
-  if ((guildEnriched || []).length && (isNewBuild || (diff.newGuild || []).length)) {
-    const lines = guildEnriched.slice(0, 12).map((g) => {
-      const name = g.id || g.definitionId || g.hash;
-      const top = (g.rolloutSummary || [])
-        .filter((b) => b.percent > 0)
-        .map((b) => `${b.label} ${b.percent}%`)
-        .join(', ');
-      return `• \`${name}\` — ${top || '0%'}`;
-    });
-    embeds.push({
-      title: `Guild rollouts (API) — ${(guildEnriched || []).length}`,
-      color: 0x1ABC9C,
-      description: lines.join('\n').slice(0, 3900),
-    });
-  }
-  if (isNewBuild && enriched.length) {
-    const recent = [...enriched].sort((a, b) => b.id.localeCompare(a.id));
-    embeds.push({
-      title: `Client experiments (${enriched.length})`,
-      color: 0x9B59B6,
-      description: truncate(recent.map((e) => e.id), 50),
-    });
-  }
-  const body = {
-    username: 'Canary Scraper',
-    avatar_url: 'https://cdn.discordapp.com/emojis/1044610189761052752.webp',
-    embeds: embeds.slice(0, 10),
-  };
-  const res = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
-  else console.log('Webhook sent');
 }
 
 async function main() {
-  console.log('🔍 Canary scrape + strings.json (no Discord for strings)\n');
+  console.log('🔍 Canary scrape — Strings / Endpoints / Experiments webhook\n');
   await fs.ensureDir(DATA_DIR);
 
   const html = await httpGet(CANARY_APP);
@@ -622,6 +718,7 @@ async function main() {
   const clientFindings = await analyzeDownloadedAssets();
   console.log(`  Experiments : ${clientFindings.experiments.length}`);
   console.log(`  Strings     : ${Object.keys(clientFindings.strings || {}).length}`);
+  console.log(`  Endpoints   : ${Object.keys(clientFindings.endpoints || {}).length}`);
 
   const enriched = enrichWithDefinitions(clientFindings.experiments, definitions);
 
@@ -636,15 +733,57 @@ async function main() {
 
   const prevExpIds = new Set((previous?.experiments || []).map((e) => e.id));
   const prevUI = new Set((previous?.ui || []).map((u) => u.name));
-  const prevRoutes = new Set(previous?.routes || []);
   const prevGuildHashes = new Set((previousGuild || []).map((g) => g.hash));
 
   const diff = {
     newClientExperiments: enriched.filter((e) => !prevExpIds.has(e.id)),
     newUI: clientFindings.ui.filter((u) => !prevUI.has(u.name)),
-    newRoutes: clientFindings.routes.filter((r) => !prevRoutes.has(r)),
     newGuild: guildEnriched.filter((g) => !prevGuildHashes.has(g.hash)),
   };
+
+  // —— Strings diff (added / removed / modified)
+  const allStrings = clientFindings.strings || {};
+  let prevStrings = {};
+  try {
+    if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
+  } catch {}
+  const stringDiff = { added: {}, removed: [], modified: {} };
+  for (const [k, v] of Object.entries(allStrings)) {
+    if (!(k in prevStrings)) stringDiff.added[k] = v;
+    else if (prevStrings[k] !== v) stringDiff.modified[k] = v;
+  }
+  for (const k of Object.keys(prevStrings)) {
+    if (!(k in allStrings)) stringDiff.removed.push(k);
+  }
+  await fs.writeJson(STRINGS_FILE, allStrings, { spaces: 2 });
+  await fs.writeJson(
+    STRINGS_NEW_FILE,
+    {
+      scrapedAt: new Date().toISOString(),
+      buildNumber,
+      added: Object.keys(stringDiff.added).length,
+      removed: stringDiff.removed.length,
+      modified: Object.keys(stringDiff.modified).length,
+      strings: stringDiff.added,
+    },
+    { spaces: 2 },
+  );
+
+  // —— Endpoints diff
+  const allEndpoints = clientFindings.endpoints || {};
+  let prevEndpoints = {};
+  try {
+    if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
+  } catch {}
+  const endpointDiff = { added: {}, removed: [], modified: {} };
+  for (const [k, v] of Object.entries(allEndpoints)) {
+    if (!(k in prevEndpoints)) endpointDiff.added[k] = v;
+    else if (prevEndpoints[k] !== v) endpointDiff.modified[k] = v;
+  }
+  for (const k of Object.keys(prevEndpoints)) {
+    if (!(k in allEndpoints)) endpointDiff.removed.push(k);
+  }
+  await fs.writeJson(ENDPOINTS_FILE, allEndpoints, { spaces: 2 });
 
   const build = {
     buildNumber,
@@ -660,36 +799,11 @@ async function main() {
     FINDINGS_FILE,
     {
       experiments: enriched,
-      routes: clientFindings.routes,
+      endpoints: allEndpoints,
       ui: clientFindings.ui,
       scrapedAt: build.scrapedAt,
     },
     { spaces: 2 },
-  );
-
-  // Strings — Wumpus style, FILE ONLY (never Discord webhook)
-  const allStrings = clientFindings.strings || {};
-  let prevStrings = {};
-  try {
-    if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
-  } catch {}
-  const newStringKeys = Object.keys(allStrings).filter((k) => !(k in prevStrings));
-  const newStrings = {};
-  for (const k of newStringKeys.sort()) newStrings[k] = allStrings[k];
-  await fs.writeJson(STRINGS_FILE, allStrings, { spaces: 2 });
-  await fs.writeJson(
-    STRINGS_NEW_FILE,
-    {
-      scrapedAt: build.scrapedAt,
-      buildNumber: build.buildNumber,
-      count: newStringKeys.length,
-      total: Object.keys(allStrings).length,
-      strings: newStrings,
-    },
-    { spaces: 2 },
-  );
-  console.log(
-    `\n📝 Strings: ${Object.keys(allStrings).length} total, ${newStringKeys.length} new → data/strings.json (NOT sent to Discord)`,
   );
 
   await fs.writeJson(
@@ -706,6 +820,14 @@ async function main() {
     { spaces: 2 },
   );
 
+  console.log(
+    `\n📝 Strings +${Object.keys(stringDiff.added).length} ~${Object.keys(stringDiff.modified).length} -${stringDiff.removed.length}`,
+  );
+  console.log(
+    `🔗 Endpoints +${Object.keys(endpointDiff.added).length} ~${Object.keys(endpointDiff.modified).length} -${endpointDiff.removed.length}`,
+  );
+  console.log(`🧪 New experiments: ${diff.newClientExperiments.length} client, ${diff.newGuild.length} guild`);
+
   await notify({
     build,
     isNewBuild,
@@ -713,6 +835,8 @@ async function main() {
     enriched,
     clientFindings,
     guildEnriched,
+    stringDiff,
+    endpointDiff,
   });
 
   console.log('\n✅ Done');
