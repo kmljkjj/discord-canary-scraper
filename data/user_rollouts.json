@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-18T23:00:01.223Z",
+  "scrapedAt": "2026-08-18T23:31:57.566Z",
   "sampleCount": 60,
   "usedToken": false,
   "experimentCount": 6,
@@ -19,11 +19,11 @@
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 2.2,
+          "percent": 0.26,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 2.2,
+          "percentByRangeSpan": 0.26,
           "samples": 2,
-          "ranges": "9615–9835"
+          "ranges": "9933–9959"
         }
       ],
       "count": 1
@@ -44,9 +44,9 @@
           "label": "Treatment 11",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.24,
+          "percentByRangeSpan": 93.51,
           "samples": 60,
-          "ranges": "140–9964"
+          "ranges": "173–9524"
         }
       ],
       "count": 1
@@ -67,9 +67,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 97.04,
+          "percentByRangeSpan": 97.62,
           "samples": 60,
-          "ranges": "203–9907"
+          "ranges": "199–9961"
         }
       ],
       "count": 1
@@ -90,9 +90,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 96.07,
+          "percentByRangeSpan": 96.74,
           "samples": 60,
-          "ranges": "221–9828"
+          "ranges": "137–9811"
         }
       ],
       "count": 1
@@ -106,16 +106,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 1,
+      "totalSamples": 2,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 0,
+          "percent": 0.81,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 0,
-          "samples": 1,
-          "ranges": "352–352"
+          "percentByRangeSpan": 0.81,
+          "samples": 2,
+          "ranges": "411–492"
         }
       ],
       "count": 1
@@ -136,9 +136,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 96.6,
+          "percentByRangeSpan": 99.75,
           "samples": 60,
-          "ranges": "190–9850"
+          "ranges": "13–9988"
         }
       ],
       "count": 1
