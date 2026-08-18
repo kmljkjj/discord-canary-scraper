@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-18T09:03:47.469Z",
+  "scrapedAt": "2026-08-18T09:46:34.947Z",
   "sampleCount": 60,
   "usedToken": false,
   "experimentCount": 6,
@@ -14,16 +14,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 4,
+      "totalSamples": 2,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 1.52,
+          "percent": 2.81,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 1.52,
-          "samples": 4,
-          "ranges": "9627–9779"
+          "percentByRangeSpan": 2.81,
+          "samples": 2,
+          "ranges": "9696–9977"
         }
       ],
       "count": 1
@@ -44,9 +44,9 @@
           "label": "Treatment 11",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.45,
+          "percentByRangeSpan": 97.29,
           "samples": 60,
-          "ranges": "5–9850"
+          "ranges": "63–9792"
         }
       ],
       "count": 1
@@ -67,9 +67,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.29,
+          "percentByRangeSpan": 97.63,
           "samples": 60,
-          "ranges": "112–9941"
+          "ranges": "221–9984"
         }
       ],
       "count": 1
@@ -90,9 +90,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 97.81,
+          "percentByRangeSpan": 95.85,
           "samples": 60,
-          "ranges": "83–9864"
+          "ranges": "410–9995"
         }
       ],
       "count": 1
@@ -106,16 +106,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 3,
+      "totalSamples": 2,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 1.31,
+          "percent": 0.37,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 1.31,
-          "samples": 3,
-          "ranges": "295–426"
+          "percentByRangeSpan": 0.37,
+          "samples": 2,
+          "ranges": "157–194"
         }
       ],
       "count": 1
@@ -136,9 +136,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 97.43,
+          "percentByRangeSpan": 97.86,
           "samples": 60,
-          "ranges": "167–9910"
+          "ranges": "13–9799"
         }
       ],
       "count": 1
