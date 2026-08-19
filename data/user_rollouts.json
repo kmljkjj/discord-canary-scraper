@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-19T04:20:21.119Z",
+  "scrapedAt": "2026-08-19T05:00:41.521Z",
   "sampleCount": 60,
   "usedToken": false,
   "experimentCount": 5,
@@ -14,16 +14,16 @@
       "method": "fingerprint_or_token_sampling",
       "reliability": "low",
       "note": "Estimated — Discord does not publish global user rollout ranges. Same approach as DEH rollout-calculation / Wumpus crowd sampling.",
-      "totalSamples": 3,
+      "totalSamples": 2,
       "treatments": [
         {
           "id": 1,
           "label": "Treatment 1",
-          "percent": 3.02,
+          "percent": 0.58,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 3.02,
-          "samples": 3,
-          "ranges": "9684–9986"
+          "percentByRangeSpan": 0.58,
+          "samples": 2,
+          "ranges": "9898–9956"
         }
       ],
       "count": 1
@@ -44,9 +44,9 @@
           "label": "Treatment 11",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 96.02,
+          "percentByRangeSpan": 96.11,
           "samples": 60,
-          "ranges": "201–9803"
+          "ranges": "338–9949"
         }
       ],
       "count": 1
@@ -67,9 +67,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.31,
+          "percentByRangeSpan": 98.25,
           "samples": 60,
-          "ranges": "16–9847"
+          "ranges": "33–9858"
         }
       ],
       "count": 1
@@ -90,9 +90,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 98.44,
+          "percentByRangeSpan": 95.4,
           "samples": 60,
-          "ranges": "52–9896"
+          "ranges": "87–9627"
         }
       ],
       "count": 1
@@ -113,9 +113,9 @@
           "label": "Treatment 1",
           "percent": 100,
           "percentByFrequency": 100,
-          "percentByRangeSpan": 94.04,
+          "percentByRangeSpan": 99.07,
           "samples": 60,
-          "ranges": "137–9541"
+          "ranges": "30–9937"
         }
       ],
       "count": 1
