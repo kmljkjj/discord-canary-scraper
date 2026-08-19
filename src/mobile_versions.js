@@ -1,15 +1,17 @@
 /**
- * Track Discord mobile app versions and notify on updates.
+ * Discord mobile version tracker
+ * Same notification style as Canary scraper:
+ *  - New Discord Mobile Build (summary)
+ *  - Per-channel update embeds (iOS/Android · stable/beta/alpha)
  *
- * Channels:
- *  - iOS Stable  → Apple iTunes Lookup API (public, reliable)
- *  - iOS Beta    → highest iOS OTA manifest (often tracks TestFlight-ish builds)
- *  - Android Stable → highest public OTA manifest + cross-check
- *  - Android Beta / Alpha → higher OTA builds when Discord publishes them;
- *    otherwise marked unavailable (Play internal tracks are not public)
+ * Sources (public):
+ *  - iOS Stable → Apple iTunes Lookup
+ *  - iOS Beta/OTA → discord.com/ios/{version}/manifest.json
+ *  - Android Stable → apkcombo / play listing scrape
+ *  - Android Beta/Alpha → public listing when available (Play internal tracks need auth)
  *
- * State: data/mobile_versions.json
- * Webhook: DISCORD_WEBHOOK_URL (same as main scraper)
+ * Full mobile experiment mining needs APK/Hermes unpack (Wumpus midroid / mobile-scraper);
+ * this job focuses on reliable version detection + clear webhooks.
  */
 
 const fetch = require('node-fetch');
@@ -18,10 +20,10 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
+const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
 const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
-
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const IOS_APP_ID = '985746746';
 
 function parseVersion(v) {
@@ -52,8 +54,19 @@ async function fetchText(url, opts = {}) {
 }
 
 async function fetchJson(url, opts = {}) {
-  const text = await fetchText(url, opts);
-  return JSON.parse(text);
+  return JSON.parse(await fetchText(url, opts));
+}
+
+async function postWebhook(payload) {
+  if (!WEBHOOK_URL) return;
+  const res = await fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
+  else console.log('Webhook sent');
+  await new Promise((r) => setTimeout(r, 500));
 }
 
 async function iosStable() {
@@ -68,47 +81,42 @@ async function iosStable() {
     version: r.version,
     build: null,
     releaseDate: r.currentVersionReleaseDate || null,
-    releaseNotes: (r.releaseNotes || '').slice(0, 400) || null,
+    releaseNotes: (r.releaseNotes || '').slice(0, 500) || null,
     storeUrl: r.trackViewUrl || `https://apps.apple.com/app/id${IOS_APP_ID}`,
     source: 'itunes_lookup',
   };
 }
 
-/** Probe public OTA manifests for a platform; return highest version found. */
-async function probeOtaLatest(os, majorFrom, majorTo) {
+/** Binary-ish scan of public Discord iOS OTA manifests */
+async function probeIosOta(centerMajor) {
   const found = [];
-  // Discord mobile versions are usually MAJOR.MINOR (iOS often MAJOR.0)
-  const minors =
-    os === 'ios'
-      ? [0, 1, 2, 3, 4, 5]
-      : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+  const majors = [];
+  for (let m = centerMajor + 12; m >= Math.max(200, centerMajor - 8); m--) majors.push(m);
+  const minors = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20];
 
-  // Scan from high majors downward for speed once we have a hit
-  for (let major = majorTo; major >= majorFrom; major--) {
-    let anyInMajor = false;
+  for (const major of majors) {
+    let hits = 0;
     for (const minor of minors) {
       const version = `${major}.${minor}`;
       try {
-        const data = await fetchJson(
-          `https://discord.com/${os}/${version}/manifest.json`,
-        );
-        const meta = data.metadata || {};
+        const data = await fetchJson(`https://discord.com/ios/${version}/manifest.json`);
+        const meta = data.metadata || data || {};
         found.push({
           version,
-          build: meta.build || null,
+          build: meta.build != null ? String(meta.build) : null,
           commit: meta.commit || null,
-          releaseName: meta.release_name || null,
         });
-        anyInMajor = true;
+        hits++;
       } catch {
-        // 404 etc.
+        /* 404 */
       }
     }
-    // If we already found something in a higher major and this major is empty,
-    // we can stop early when scanning downward — but keep 1 major below max for safety
-    if (found.length && !anyInMajor && major < majorTo - 1) break;
+    // stop after a few empty majors below the top hit
+    if (found.length && hits === 0) {
+      const topMaj = parseVersion(found[0].version)[0];
+      if (major < topMaj - 2) break;
+    }
   }
-
   found.sort((a, b) => cmpVersion(b.version, a.version));
   return found;
 }
@@ -116,19 +124,47 @@ async function probeOtaLatest(os, majorFrom, majorTo) {
 async function androidFromApkcombo() {
   try {
     const html = await fetchText('https://apkcombo.com/discord/com.discord/');
-    const m = html.match(/(?:version|Version)[^0-9]{0,30}(\d+\.\d+(?:\.\d+)?)/i);
+    // Prefer explicit version patterns near "Discord"
+    const patterns = [
+      /softwareVersion["'\s:>]+(\d+\.\d+(?:\.\d+)?)/i,
+      /itemprop=["']version["'][^>]*content=["'](\d+\.\d+(?:\.\d+)?)["']/i,
+      /(?:Version|version)[^\d]{0,40}(\d{2,3}\.\d+(?:\.\d+)?)/,
+    ];
+    for (const re of patterns) {
+      const m = html.match(re);
+      if (m) {
+        return {
+          platform: 'android',
+          channel: 'stable',
+          version: m[1],
+          build: null,
+          source: 'apkcombo',
+          storeUrl: 'https://play.google.com/store/apps/details?id=com.discord',
+        };
+      }
+    }
+  } catch (e) {
+    console.warn('apkcombo failed:', e.message);
+  }
+  return null;
+}
+
+async function androidFromApkpure() {
+  try {
+    const html = await fetchText('https://apkpure.com/discord-talk-chat-hang-out/com.discord');
+    const m = html.match(/(\d{2,3}\.\d+(?:\.\d+)?)\s*(?:\(|<)/);
     if (m) {
       return {
         platform: 'android',
         channel: 'stable',
         version: m[1],
         build: null,
-        source: 'apkcombo',
+        source: 'apkpure',
         storeUrl: 'https://play.google.com/store/apps/details?id=com.discord',
       };
     }
   } catch (e) {
-    console.warn('apkcombo failed:', e.message);
+    console.warn('apkpure failed:', e.message);
   }
   return null;
 }
@@ -137,142 +173,81 @@ async function collectAll() {
   const now = new Date().toISOString();
   const channels = [];
 
-  // --- iOS Stable ---
+  // iOS Stable
+  let iosStableVer = null;
   try {
     const ios = await iosStable();
-    channels.push({ ...ios, checkedAt: now });
+    iosStableVer = ios.version;
+    channels.push({ ...ios, available: true, checkedAt: now });
+    console.log(`iOS stable: ${ios.version}`);
   } catch (e) {
     console.warn('iOS stable failed:', e.message);
   }
 
-  // --- iOS OTA (proxy for latest published mobile build, incl. some beta) ---
+  // iOS OTA / beta lineage
   let iosOta = [];
   try {
-    // Start near current stable major
-    const baseMajor = channels.find((c) => c.platform === 'ios')
-      ? parseVersion(channels.find((c) => c.platform === 'ios').version)[0]
-      : 340;
-    iosOta = await probeOtaLatest('ios', Math.max(320, baseMajor - 5), baseMajor + 8);
+    const baseMajor = iosStableVer ? parseVersion(iosStableVer)[0] : 340;
+    iosOta = await probeIosOta(baseMajor);
     if (iosOta[0]) {
       const latest = iosOta[0];
-      const stable = channels.find((c) => c.platform === 'ios' && c.channel === 'stable');
-      const isNewerThanStable =
-        stable && cmpVersion(latest.version, stable.version) > 0;
+      const newer =
+        iosStableVer && cmpVersion(latest.version, iosStableVer) > 0;
       channels.push({
         platform: 'ios',
-        channel: isNewerThanStable ? 'beta' : 'ota_latest',
+        channel: newer ? 'beta' : 'ota_latest',
         version: latest.version,
         build: latest.build,
         commit: latest.commit,
         source: 'discord_ota_manifest',
         storeUrl: 'https://testflight.apple.com/join/gdE4pRzI',
-        note: isNewerThanStable
-          ? 'OTA build newer than App Store stable — likely TestFlight/beta lineage'
-          : 'Matches or trails App Store stable',
+        available: true,
+        note: newer
+          ? 'OTA newer than App Store — likely TestFlight / beta'
+          : 'OTA in line with or behind App Store stable',
         checkedAt: now,
       });
+      console.log(`iOS OTA latest: ${latest.version} build=${latest.build}`);
     }
   } catch (e) {
-    console.warn('iOS OTA probe failed:', e.message);
+    console.warn('iOS OTA failed:', e.message);
   }
 
-  // --- Android OTA ---
-  let androidOta = [];
-  try {
-    const baseMajor = 340;
-    androidOta = await probeOtaLatest('android', baseMajor - 5, baseMajor + 15);
-    if (androidOta[0]) {
-      const latest = androidOta[0];
-      channels.push({
-        platform: 'android',
-        channel: 'stable',
-        version: latest.version,
-        build: latest.build,
-        commit: latest.commit,
-        releaseName: latest.releaseName,
-        source: 'discord_ota_manifest',
-        storeUrl: 'https://play.google.com/store/apps/details?id=com.discord',
-        checkedAt: now,
-      });
-
-      // Heuristic: versions clearly above "stable" latest may be beta/alpha tracks
-      // Discord often ships beta ~+1 major family, alpha ~+2 (observed on APK hosts).
-      // We keep the top 3 distinct majors as stable / beta / alpha when available.
-      const byMajor = new Map();
-      for (const row of androidOta) {
-        const maj = parseVersion(row.version)[0];
-        if (!byMajor.has(maj) || cmpVersion(row.version, byMajor.get(maj).version) > 0) {
-          byMajor.set(maj, row);
-        }
-      }
-      const majors = [...byMajor.keys()].sort((a, b) => b - a);
-      if (majors.length >= 2) {
-        const beta = byMajor.get(majors[0]);
-        // if top major is same as stable channel version major, skip
-        const stableMaj = parseVersion(latest.version)[0];
-        if (majors[0] > stableMaj) {
-          // reclassify: highest major = alpha-ish, second = beta-ish when 3+ majors
-          // With only public OTA we usually only see stable lineage — still report newest as "latest_ota"
-        }
-      }
-    }
-  } catch (e) {
-    console.warn('Android OTA probe failed:', e.message);
+  // Android stable from public listings
+  let android = await androidFromApkcombo();
+  if (!android) android = await androidFromApkpure();
+  if (android) {
+    channels.push({ ...android, available: true, checkedAt: now });
+    console.log(`Android stable: ${android.version} (${android.source})`);
   }
 
-  // Cross-check apkcombo for Android stable version string
-  try {
-    const apk = await androidFromApkcombo();
-    if (apk) {
-      const existing = channels.find(
-        (c) => c.platform === 'android' && c.channel === 'stable',
-      );
-      if (!existing) {
-        channels.push({ ...apk, checkedAt: now });
-      } else if (cmpVersion(apk.version, existing.version) !== 0) {
-        channels.push({
-          ...apk,
-          channel: 'stable_store_listing',
-          note: `Store listing reports ${apk.version} (OTA latest ${existing.version})`,
-          checkedAt: now,
-        });
-      }
-    }
-  } catch {}
-
-  // Explicit placeholders so the state file always documents all requested tracks
+  // Placeholders for tracks that are not public
   const ensure = [
     {
       platform: 'ios',
       channel: 'beta',
-      fallbackNote:
-        'TestFlight versions are not fully public. OTA probe used when a build newer than App Store appears.',
+      note: 'Filled when OTA build is newer than App Store stable.',
     },
     {
       platform: 'android',
       channel: 'beta',
-      fallbackNote:
-        'Play Store beta track is not publicly readable without Google auth. Will fill when a public OTA/build is detected.',
+      note: 'Play beta is not public without Google auth. No public OTA path found currently.',
     },
     {
       platform: 'android',
       channel: 'alpha',
-      fallbackNote:
-        'Play Store alpha track is not publicly readable. Will fill when a public OTA/build is detected.',
+      note: 'Play alpha is not public. No public OTA path found currently.',
     },
   ];
   for (const e of ensure) {
-    const has = channels.some(
-      (c) => c.platform === e.platform && c.channel === e.channel,
-    );
-    if (!has) {
+    if (!channels.some((c) => c.platform === e.platform && c.channel === e.channel)) {
       channels.push({
         platform: e.platform,
         channel: e.channel,
         version: null,
         build: null,
         available: false,
-        note: e.fallbackNote,
+        note: e.note,
         checkedAt: now,
       });
     }
@@ -281,10 +256,7 @@ async function collectAll() {
   return {
     scrapedAt: now,
     channels,
-    otaIndex: {
-      ios: iosOta.slice(0, 15),
-      android: androidOta.slice(0, 15),
-    },
+    otaIndex: { ios: iosOta.slice(0, 20), android: [] },
   };
 }
 
@@ -295,79 +267,93 @@ function channelKey(c) {
 function detectChanges(prev, next) {
   const changes = [];
   const prevMap = new Map(
-    (prev?.channels || [])
-      .filter((c) => c.version)
-      .map((c) => [channelKey(c), c]),
+    (prev?.channels || []).filter((c) => c.version).map((c) => [channelKey(c), c]),
   );
   for (const c of next.channels) {
     if (!c.version) continue;
     const p = prevMap.get(channelKey(c));
     if (!p) {
-      changes.push({ type: 'new_channel', channel: c });
-    } else if (
-      p.version !== c.version ||
-      (c.build && p.build && p.build !== c.build)
-    ) {
-      changes.push({
-        type: 'updated',
-        previous: p,
-        channel: c,
-      });
+      changes.push({ type: 'new', channel: c });
+    } else if (p.version !== c.version || (c.build && p.build && p.build !== c.build)) {
+      changes.push({ type: 'updated', previous: p, channel: c });
     }
   }
   return changes;
 }
 
+function colorFor(channel) {
+  if (channel === 'alpha') return 0xed4245;
+  if (channel === 'beta' || channel === 'ota_latest') return 0xfaa61a;
+  return 0x5865f2;
+}
+
+/** Same spirit as Canary "New Discord Canary Build" + experiment cards */
 async function notify(changes, snapshot) {
-  const webhook = process.env.DISCORD_WEBHOOK_URL;
-  if (!webhook) {
-    console.log('No DISCORD_WEBHOOK_URL — skip notify');
+  if (!WEBHOOK_URL || !changes.length) {
+    if (!WEBHOOK_URL) console.log('No DISCORD_WEBHOOK_URL — skip notify');
     return;
   }
-  if (!changes.length) return;
 
-  const embeds = changes.slice(0, 8).map((ch) => {
-    const c = ch.channel;
-    const title =
-      ch.type === 'updated'
-        ? `📱 New Discord ${c.platform.toUpperCase()} ${c.channel}`
-        : `📱 Discord ${c.platform.toUpperCase()} ${c.channel} tracked`;
-    const desc =
-      ch.type === 'updated'
-        ? `**${ch.previous.version}** → **${c.version}**`
-        : `Version **${c.version}**`;
-    const fields = [
-      { name: 'Platform', value: c.platform, inline: true },
-      { name: 'Channel', value: c.channel, inline: true },
-      { name: 'Version', value: String(c.version), inline: true },
-    ];
-    if (c.build) fields.push({ name: 'Build', value: String(c.build), inline: true });
-    if (c.commit)
-      fields.push({ name: 'Commit', value: `\`${c.commit.slice(0, 12)}\``, inline: true });
-    if (c.source) fields.push({ name: 'Source', value: c.source, inline: true });
-    if (c.note) fields.push({ name: 'Note', value: c.note.slice(0, 200) });
-    if (c.releaseNotes)
-      fields.push({ name: 'Release notes', value: c.releaseNotes.slice(0, 300) });
-    if (c.storeUrl) fields.push({ name: 'Link', value: c.storeUrl });
-
-    const color =
-      c.channel === 'alpha'
-        ? 0xe74c3c
-        : c.channel === 'beta'
-          ? 0xf39c12
-          : 0x5865f2;
-
-    return {
-      title,
-      description: desc,
-      color,
-      fields,
-      timestamp: new Date().toISOString(),
-      footer: { text: 'discord-canary-scraper · mobile versions' },
-    };
+  // 1) Summary
+  await postWebhook({
+    username: 'Mobile Scraper',
+    embeds: [
+      {
+        title: 'New Discord Mobile Build',
+        color: 0xed4245,
+        fields: [
+          {
+            name: 'Updates',
+            value: String(changes.length),
+            inline: true,
+          },
+          {
+            name: 'Delta',
+            value: changes
+              .map((ch) => `${ch.channel.platform}/${ch.channel.channel}`)
+              .join(' · ')
+              .slice(0, 200),
+            inline: false,
+          },
+        ],
+        timestamp: new Date().toISOString(),
+      },
+    ],
   });
 
-  // Summary embed of all known versions
+  // 2) One embed per change (experiment-style)
+  for (const ch of changes.slice(0, 10)) {
+    const c = ch.channel;
+    const lines = [
+      `+ \`${c.platform}/${c.channel}\``,
+      ch.type === 'updated'
+        ? `* ${ch.previous.version} → **${c.version}**`
+        : `* Version **${c.version}**`,
+    ];
+    if (c.build) lines.push(`* Build **${c.build}**`);
+    if (c.commit) lines.push(`* Commit \`${String(c.commit).slice(0, 12)}\``);
+    if (c.source) lines.push(`Source: **${c.source}**`);
+    if (c.note) lines.push(c.note.slice(0, 180));
+    if (c.storeUrl) lines.push(c.storeUrl);
+
+    await postWebhook({
+      username: 'Mobile Scraper',
+      embeds: [
+        {
+          title:
+            c.channel === 'beta' || c.channel === 'alpha'
+              ? `New Mobile ${c.platform.toUpperCase()} ${c.channel}`
+              : `New Mobile ${c.platform.toUpperCase()} Build`,
+          description: lines.join('\n'),
+          color: colorFor(c.channel),
+          footer: { text: `Mobile · ${c.platform} · ${c.channel}` },
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    });
+  }
+
+  // 3) Snapshot of all known versions
   const lines = snapshot.channels
     .filter((c) => c.version)
     .map(
@@ -375,23 +361,17 @@ async function notify(changes, snapshot) {
         `• **${c.platform}/${c.channel}**: \`${c.version}\`${c.build ? ` (build ${c.build})` : ''}`,
     )
     .join('\n');
-  embeds.push({
-    title: '📋 Current mobile versions',
-    description: lines || '_none_',
-    color: 0x2f3136,
-    timestamp: new Date().toISOString(),
+  await postWebhook({
+    username: 'Mobile Scraper',
+    embeds: [
+      {
+        title: 'Current mobile versions',
+        description: lines || '_none detected_',
+        color: 0x57f287,
+        timestamp: new Date().toISOString(),
+      },
+    ],
   });
-
-  const res = await fetch(webhook, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ embeds }),
-  });
-  if (!res.ok) {
-    console.warn('Webhook failed', res.status, await res.text());
-  } else {
-    console.log(`🔔 Notified ${changes.length} mobile version change(s)`);
-  }
 }
 
 async function main() {
@@ -403,7 +383,7 @@ async function main() {
     } catch {}
   }
 
-  console.log('📱 Checking Discord mobile versions…');
+  console.log('📱 Discord mobile versions…');
   const snapshot = await collectAll();
   const changes = detectChanges(previous, snapshot);
 
@@ -413,6 +393,7 @@ async function main() {
     key: channelKey(c.channel),
     from: c.previous?.version || null,
     to: c.channel.version,
+    build: c.channel.build || null,
   }));
 
   await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
@@ -424,9 +405,8 @@ async function main() {
   }
   console.log(`Changes: ${changes.length}`);
 
-  if (changes.length) {
-    await notify(changes, snapshot);
-  }
+  if (changes.length) await notify(changes, snapshot);
+  console.log('✅ Mobile check done');
 }
 
 main().catch((e) => {

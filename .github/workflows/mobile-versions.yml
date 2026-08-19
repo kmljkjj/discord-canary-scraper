@@ -2,7 +2,6 @@ name: Mobile Versions
 
 on:
   schedule:
-    # Toutes les 5 minutes — détection rapide des nouvelles versions mobile
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -14,10 +13,12 @@ permissions:
 jobs:
   mobile:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -39,7 +40,8 @@ jobs:
           git add data/mobile_versions.json || true
           if git diff --staged --quiet; then
             echo "No mobile version changes"
-          else
-            git commit -m "📱 Mobile version update"
-            git push
+            exit 0
           fi
+          git commit -m "📱 Mobile version update"
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push origin HEAD:main
