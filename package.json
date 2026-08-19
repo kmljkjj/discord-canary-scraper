@@ -1,7 +1,7 @@
 {
   "name": "discord-canary-scraper",
-  "version": "1.3.0",
-  "description": "Discord Canary client datamining scraper - archives assets and notifies Discord",
+  "version": "1.4.0",
+  "description": "Discord Canary + mobile datamining scraper",
   "main": "src/scrape.js",
   "scripts": {
     "scrape": "node src/scrape.js && node src/extract_definitions.js && node src/sample_user_rollouts.js && node src/write_experiments.js",
@@ -9,7 +9,8 @@
     "experiments": "node src/write_experiments.js",
     "sample-user": "node src/sample_user_rollouts.js",
     "defs": "node src/extract_definitions.js",
-    "mobile": "node src/mobile_versions.js"
+    "mobile": "node src/mobile_versions.js",
+    "mobile-files": "node src/mobile_from_files.js"
   },
   "keywords": [
     "discord",

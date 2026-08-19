@@ -1,8 +1,8 @@
-name: Mobile Versions
+name: Mobile Versions + Files
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-mobile-versions]
@@ -13,7 +13,7 @@ permissions:
 jobs:
   mobile:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,20 +28,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Check mobile versions
+      - name: Mobile versions (store / OTA)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/mobile_versions.js
+
+      - name: Mobile experiments from real files
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MOBILE_DATAMINE_REPO: https://github.com/Wumpus-Central/discord-mobile-datamining.git
+        run: node src/mobile_from_files.js
 
       - name: Commit state if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/mobile_versions.json || true
+          git add data/mobile_versions.json data/mobile_experiments.json || true
           if git diff --staged --quiet; then
-            echo "No mobile version changes"
+            echo "No mobile state changes"
             exit 0
           fi
-          git commit -m "📱 Mobile version update"
+          git commit -m "📱 Mobile versions + experiments from files"
           git pull --rebase origin main || git pull --rebase --autostash origin main
           git push origin HEAD:main
