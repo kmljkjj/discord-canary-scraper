@@ -1,0 +1,2285 @@
+{
+  "scrapedAt": "2026-08-19T20:00:42.121Z",
+  "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
+  "sourceCommit": "0abeb40d",
+  "experimentCount": 283,
+  "stringCount": 7,
+  "newExperimentCount": 283,
+  "experiments": [
+    {
+      "id": "2022-03_block_russian_purchases",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/experiments/BlockedPaymentsCountryExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2022-07_voice_in_threads",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/threads/ThreadHooks.tsx"
+      ]
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_automod/AutomodExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2023-09_iar_user_reporting",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/in_app_reports/SafetyExperienceIarUserReportingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2024-06_rtc_pacer__simulcast",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/BandwidthEstimationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2024-09_secure_frames_deeplink",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/rtc/SecureFramesDeeplinkExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2024-12_guild_voice_channel_ringing",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/GuildVoiceRingingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-01-allow-nonstaff-to-preview-app-collections",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/global_discovery_apps/AllowNonStaffToPreviewAppCollectionsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-05-search-results-feedback",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/search/experiments/SearchResultsFeedbackExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-06_native_intents",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/native_intents/NativeIntentsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-08_default_invite_expiration_guild",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/instant_invite/DefaultInviteExpirationExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2025-08_portkey_enabled",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_server/GameServerExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-08-animated-keyboard-android",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/keyboard/native/AnimatedKeyboardExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-08-browser-hevc",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/BrowserHevcExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-08-voice-user-affinity",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_affinities/VoiceUserAffinityExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09_hotwheels_nvidia_boost",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/content_inventory/ContentInventoryExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-agc2-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/AGC2Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-image-attachment-mezzanine-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/ImageAttachmentMezzanineV2Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-libdiscore-telemetry",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-premium-trial-offer-action-sheet-ks",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/PremiumTrialOfferActionSheetKillSwitchExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-sensitive-content-self-harm",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/explicit_media_redaction/SensitiveContentSelfHarmExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-server-nsfw-level",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_gate/ServerNSFWLevelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-09-video-qoe-metrics-tracking",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/video-qoe/experiments/VideoQoEMetricsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-clear-channel-notifications-on-app-foreground-ios",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/native/ClearChannelNotificationsOnAppForegroundExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-force-sdr-emojis-stickers",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/image_upload/ForceSdrEmojisStickersExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-friend-request-alerts-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_settings/content_and_social/FriendRequestAlertsV2.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-low-latency-rate-control",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/LowLatencyRateControlExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-mobile-home-drawer",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/home_drawer/native/HomeDrawerExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-10-video-frame-rate-validation",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/VideoFrameRateValidationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild/TidaWebformExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-age-verification-expressive-everywhere",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/AgeVerificationExpressiveModalEverywhereExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-defer-load-late-lazy-cache",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-enhanced-jpeg-encoding-on-ios",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/IosJpegliExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-global-frame-pool-lock",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/GlobalFramePoolLockExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-hide-manual-link",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/HideManualAgeVerificationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-overlay-chat",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/overlay/OverlayV3Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-11-video-end-card-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2025-12_voice_channel_hoisting",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/channel/VoiceChannelHoistingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-connection-indicator",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/ConnectionIndicatorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-katsudon",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/PremiumGroupExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-mobile-lossless-image-upload-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/image_upload/MobileLosslessImageUploadV2Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-nitro-s-rewards",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/tenure_reward/experiments/PremiumRewardsOrbsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-orb-redemption-thru-orders",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/virtual_currency/experiments/OrbRedemptionOrdersExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-proportional-vad-indicator",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/calls/ProportionalVadIndicatorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-shadow-node-spike",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/memory/MemoryExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-wmf-gpu-encode",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/WindowsMediaFoundationGpuEncode.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-zoomed-analytics",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/telemetry_ring/native/ZoomedInAnalyticsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-android-rmle",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-bug-reporter",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/bug_reporter/BugReporterExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-chat-loading-indicator",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/chat/native/ChatLoadingIndicatorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-family-center-v3",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/parent_tools/FamilyCenterV3Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-favorites-server",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/favorites/FavoritesGuildExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-image-optimized-encoding-ladder",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/MobileImageEncodingLadderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-ios-apptransactionid-tracking",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_identifiers/native/IOSAppTransactionIdExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-ios-push-notif-json-fix",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/IOSPushNotificationRawPayloadFixExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-less-personalized-ads",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/LessPersonalizedAdsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-libdiscore-batch-store-refactor",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-mobile-action-sheet-killswitch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/upsell_tooltip/experiments/MainViewTooltipActionSheetsDisabledExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-mobile-go-live-entrypoint",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/go_live/MobileGoLiveEntrypointExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-profile-updates-notification",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/profile_updates/ProfileUpdatesNotificationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-wmf-gpu-encode-intel",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/WindowsMediaFoundationGpuEncodeIntel.tsx"
+      ]
+    },
+    {
+      "id": "2026-01-yytext-replacement-ios",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/messages/YYTextReplacementExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02_game_claim_coachmark",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_claim/experiments/GameClaimCoachmarkExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02_hangout_window",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/hangout_window/HangoutWindowExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02_past_vc_activity_messages",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/PastVcActivityMessagesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-activity-privacy-matching",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/activity_privacy/ActivityPrivacyMatchingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-android-chat-mosaic-shared-pool",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-android-fresco-cache",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-callkit-metric-collection",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/CallKitMetricCollectionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-content-classification-presence-filter",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/presence/ContentClassificationPresenceFilterExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-default-audio-route",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/DefaultAudioRouteExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-expiring-powerup-coachmark",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ExpiringPowerupCoachmarkExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-game-server-tab-always-on",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_server/experiments/GameServerTabAlwaysOnExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-gift-cards",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/experiments/GiftCardsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-go-live-hdr",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/GoLiveHdrExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-mana-playground-access",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/design/PlaygroundAccessExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-mobile-account-linking",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/application_account_linking/experiments/mobileAccountLinkingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-mobile-mute-indicator",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/calls/MobileMuteIndicatorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-mobile-visual-refresh",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/themes/experiments/MobileVisualRefreshExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-mobile-volume-output-slider-removal",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/MobileAudioOutputExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-premium-offer-reminder-xp",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/PremiumOfferReminderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-private-channel-hiding",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/gateway/PrivateChannelHidingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-private-profiles",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/PrivateProfilesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-process-boost-on-voice",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/ProcessBoostExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-pubsub-bulk-ban-users",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_mod_dash_member_safety/web/BulkBanPubSubExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-referral-reminder-dc",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/ReferralReminderDCExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/WGCDirtyRegionsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions-all",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/WGCDirtyRegionsAllExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03_file_upload_250_mb_powerup",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/FileUpload250MbPowerupExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03_game_server_pricing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_server/experiments/GameServerPricingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03_guild_official_messages",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/messages/GuildOfficialMessagesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03_voice_badge",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/channel/VoiceChannelBadgeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-acom-modify-dark-launch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-age-verification-google-wallet",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/GoogleWalletExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-block-purchases",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/experiments/BlockedPaymentsCountryExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-bogo-promotion-gate-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/BogoPromotionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-bogo-promotion-marketing-materials-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/BOGOPromotionMarketingMaterialsExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-boost-to-unlock-mobile-coachmark",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_boosting/experiments/BoostToUnlockMobileCoachmarkExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-browser-inverted-wants",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/BrowserInvertedWantsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-churro",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_console/PlayStationVoiceExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-clips-experiment",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/clips/ClipsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-collectibles-profile-frames",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/CollectiblesProfileFramesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-content-inventory-memberlist-and-ranker",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/content_inventory/ContentInventoryExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-conversation-highlighting-utility",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/conversations/ConversationExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-crepe",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/croissant/crepe/CrepeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-debug-experiment",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/experiments/apex/ApexExperimentStore.tsx",
+        "discord_app/modules/experiments/apex/DebugExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-denormalized-perks-access-read",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/DenormalizedPerksReadExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-file-upload-powerup-holdout",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/FileUploadPowerupHoldoutExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-friend-is-online-v3",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/friend_online/FriendOnlineNotificationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-friend-request-message",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/people/FriendRequestMessageExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-icymi-desktop",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/icymi/ICYMIExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-icymi-staff-debugging-utility",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/icymi/ICYMIExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-ios-audio-interrupt-handling",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/IOSAudioInterruptExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-message-bookmarks",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/saved_messages/ForLaterExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-mobile-accessibility-label-optimization",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/a11y/native/AccessibilityLabelOptimizationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-mobile-hermes-occupancy-target",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-mobile-quest-home-red-dot-notification",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-muted-video-quest-new-defaults",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-nitro-acom-subscription",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-notification-load-messages",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/cache/NotificationLoadMessagesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-overlay-default-keybind",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/overlay/OverlayV3Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-private-profiles-strict",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/PrivateProfilesStrictExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-private-profiles-strict-gb",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/PrivateProfilesStrictGbExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-quest-home-bounties",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/QuestHomeBountiesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-quest-reload-video-on-obscured",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-soundmoji-rendering",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/sounds/soundmoji/SoundmojiRenderingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-soundmoji-sending",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/sounds/soundmoji/SoundmojiSendingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-stage-voice-panel",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/stage_channels/StageVoicePanelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-surface-direct-renderer",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/video_calls/native/SurfaceDirectRendererExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-video-capture-device-no-reuse",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/VideoCaptureDeviceNoReuse.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-video-quest-player-refactor",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-video-stutter-mitigation",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/VideoStutterMitigationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-wishlisting-nitro",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/wishlists/experiments/WishlistingNitroExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-wysiwyg-user-profile-editing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/UserProfileWYSIWYGEditingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04_application_identity_linked_roles",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/connections/experiments/ApplicationIdentityLinkedRolesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04_server_theme",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ServerThemeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04_voice_call_trigger_point",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/VoiceCallTriggerPointExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-attachment-quality-metrics",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/AttachmentQualityMetricsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-browser-transceiver-padding-removal",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/BrowserTransceiverPaddingRemovalExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-clips-v3-runtime",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/clips/ClipsV3RuntimeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-collectibles-profile-frames-purchase",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/CollectiblesProfileFramesPurchaseExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-composed-quest-player",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-declarative-notif-settings",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/native/NotifSettingsExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-disable-hook-frame-pacer",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/DisableHookFramePacerExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-ensure-received-messages-added-in-order",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/lib/EnsureReceivedMessagesAddedInOrderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-gift-promotion-reminder",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/gifting/experiments/GiftPromotionReminderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-gifting-badge",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/gifting/experiments/GiftingBadgeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-hide-covered-channels",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/HideCoveredChannelsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-http-request-sample",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/telemetry_ring/HttpRequestSampleExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-icymi-staff-only",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/icymi/ICYMIExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-inappropriate-conversations-default-on",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/self_mod/inappropriate_conversation/InappropriateConversationsDefaultOn.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-inappropriate-conversations-prescan",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/self_mod/inappropriate_conversation/SelfModInappropriateConversationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-kestrel",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/KestrelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-krisp-v9-ios",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/KrispV9iOSExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-mobile-boost-progress-bar",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/MobileBoostProgressBarExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-mobile-go-live-upsell",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/go_live/native/MobileGoLiveUpsellExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-new-games-coachmark",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_server/experiments/NewGamesCoachmarkExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-one-day-fractional-nitro",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/OneDayFractionalNitroExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-overlay-streamer-mode",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/overlay/OverlayV3Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-post-reaction-push-banner",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/nuf/native/PostReactionPermissionNudgeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-profile-frames-ea-marketing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/CollectiblesProfileFramesEAMarketingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-quests-premium-orb-multiplier-marketing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-safety-flows",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/safety_flows/SafetyFlowsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-server-boost-copy-1440p",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ServerBoostStreamQualityMarketingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-shop-card-impression-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/CollectiblesShopCardImpressionMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-social-layer-storefront-mobile-purchasing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/slayer_storefront/experiments/SocialLayerStorefrontMobilePurchasingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-topical-navigation-staff-control",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/conversations/ConversationExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-upcoming-server-event",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/upcoming_server_event/UpcomingServerEventExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-user-profile-performance-analytics",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/UserProfilePerformanceAnalyticsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-video-hook-dx12",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/VideoHookDX12Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-04-voice-gateway-protocol-version",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/VoiceGatewayProtocolVersionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05_default_invite_expiration_guild_web",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/instant_invite/DefaultInviteExpirationExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-05_voice_channel_list_invite_embed",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/messages/VoiceChannelListInviteExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-age-restricted-application-commands",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/application_commands/AgeRestrictedApplicationCommandsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-app-store-overlay-feature-gate",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-av1-bitrate-tuning",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/AV1BitrateTuningExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-bounties-stage-1",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/BountiesStage1Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-bounty-stale-refresh-quest-home",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-dice-roll-slash-command",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/dice_roll/DiceRollExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-disable-camera-simulcast",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/DisableCameraSimulcastExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-distributed-clips",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/clips/DistributedClipsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-electron-multilang-spellcheck",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/lib/spellcheck/SpellcheckExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-ios-video-stabilization",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/calls/VideoStabilizationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-mana-type-consolidation",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/design/ManaTypeConsolidationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-mobile-referral-subscriber-profile-entrypoint-button",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/tabs/you/MobileReferralSubscriberProfileEntrypointButtonExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-mobile-request-review-no-tti",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/feedback/native/RequestReviewNoTTIExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-noisier-notif-settings-defaults",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/NotificationSettingsConstants.tsx",
+        "discord_app/modules/notifications/NotificationSettingsExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-quest-home-tile-redesign",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-server-theme-user",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ServerThemeUserExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-spatial-audio-for-voice",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_panel/SpatialAudioForVoiceExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-use-ad-analytics-interface",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/AdAnalyticsInterfaceExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06_guild_rooms",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_rooms/GuildRoomsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06_guild_spaces",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_space/GuildSpaceExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-age-verification-incode",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/AgeVerificationIncodeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-android-shop-orders",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/experiments/AndroidShopOrdersExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-android-two-week-trials",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/AndroidTwoWeekTrialsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-av1-encode-linux",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/AV1EncodeExperimentLinux.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-battlenet-social-sdk-migration",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/application_account_linking/experiments/socialSDKMigration.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-bounties-shop-carousel",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/BountiesShopCarouselExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-clickstream-analytics",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/app_analytics/clickstream/ClickstreamExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-content-classification-embedded-activity-filter",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/activities/ContentClassificationEmbeddedActivityFilterExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-contextual-opt-in-nudge-holdout",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/nuf/native/ContextualOptInNudgeHoldoutExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-dont-badge-muted-vcs",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guilds_bar/DontBadgeMutedVcsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-family-center-connection-prereq",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/parent_tools/FamilyCenterConnectionPrereqExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-gift-acom-order",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-gifting-badge-desktop",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/gifting/experiments/GiftingBadgeDesktopExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-gummy-bears",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/display_name_styles/DisplayNameStylesFlywheelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-gummy-viewers",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/display_name_styles/DisplayNameStylesFlywheelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-ios-ota-streaming",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-macaron",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/MobileNitroManageSubscriptionsSettingsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-messages-list-impl",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/tabs/messages/MessagesListImplExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-mobile-friendship-anniversary",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/gifting/native/MobileFriendAnniversaryExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-mobile-media-viewer-share",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_viewer/native/MobileMediaViewerShareExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-mobile-server-tag",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_settings/MobileServerTagExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-non-friend-messages-requests-in-uk",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/message_request/MessageRequestRestrictionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-orbs-holdout",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/OrbsHoldoutExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-otp-acom-order",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-quest-home-layout-visual-tweaks",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-rive-app-state-playback",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/design/RiveAppStatePlaybackExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-server-ladder",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/ServerLadderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-server-setup-boost-cta",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ServerSetupBoostCtaExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-server-theme-apex-shadow",
+      "type": "user",
+      "isApex": true,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/ServerThemeApexShadowExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-similar-games-desktop",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_profile/SimilarGamesExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-similar-games-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_profile/SimilarGamesExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-soundboard-frequently-used",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/soundboard/SoundboardFrequentlyUsedExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/SystemwideEchoCancellationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-topical-navigation-guild",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/conversations/ConversationExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-upscale-small-captured-frames",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/UpscaleSmallCapturedFramesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-06-wmf-cpu-encode-intel",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/WindowsMediaFoundationCpuEncodeIntel.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-ad-recheck-interval-experiment",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/AdRecheckIntervalExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-attachment-image-ladder",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/image_upload/AttachmentImageLadderExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-autoclipping-default-override",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/clips/AutoclippingDefaultOverrideExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-aws-gateway",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/gateway/GatewayAltEndpointExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-bounties-modal-transitions-refactor",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/BountiesModalTransitionsRefactorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-bounties-vertical-scroll",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/BountiesVerticalScrollExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-clips-game-events-on-player",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/clips/GameEventsOnPlayerExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-custom-app-store-overlay",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-custom-typing-indicator",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/custom_typing_indicator/CustomTypingIndicatorExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-expressive-modal-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/ExpressiveModalV2Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-game-mentions-v2-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_mentions/GameMentionsMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-hotwheels-clickable-game-icon",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/content_inventory/ContentInventoryExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-krisp-cpu-disablement",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/KrispCpuDisablementExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-message-bookmarks-v2",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/saved_messages/ForLaterExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-message-request-push-notification",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/message_request/MessageRequestPushNotificationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-mkl-zen-cpu-dispatch-override",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/MklZenOverrideExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-mobile-boosting-optimizations",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/powerups/experiments/MobileBoostingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-mobile-game-collection",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/UserProfileMobileGameCollectionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-mobile-reaction-to-profile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/reactions/ReactionToProfileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-nitro-acom-discounts",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-nitro-acom-trials",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/billing/native/ACOMExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-nitro-floating-subscribe",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_settings/premium/native/PremiumMarketingFloatingSubscribeExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-nitro-visual-ux",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium_marketing/native/BuyNitroMarketingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-nvenc-reconstructed-frames",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/NvencReconstructedFrameExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-parental-consent-warning-fetch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/parent_tools/ParentalConsentWarningFetchExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-premium-group-announcement-modal",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/premium_group/PremiumGroupConstants.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-quest-bar-secondary-cta",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-react-native-plain-text",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/design/PlainTextExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-reject-with-error-kill-switch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/lib/superagentPatch.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-renewable-end-date-sort",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/RenewableEndDateSortExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-server-tag-game-profiles-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_profile/GuildProfileGameProfilesExperiment.native.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-shop-this-look-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/ShopThisLookMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-smag-mobile-wishlist-suggestions",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/wishlists/experiments/MobileWishlistSuggestionsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-smag-wishlist-recommendations-dismiss-threshold",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/hooks/useWishlistSuggestionsDismissibleContent.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-tr-offer-1-campaign",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/PremiumConstants.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-vibegrations-guild",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/vibegrations/experiments/VibegrationsGuildExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-you-bar-guild-tag",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/you_bar/YouBarGuildTagExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-ad-topic-opt-out-client",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/ads/AdTopicOptOutClientExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-android-rn-reparenting-flag",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-audio-fidelity",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/AudioFidelityExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-badge-management",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/badges/BadgeManagementExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-bounties-mobile-quest-bar",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/BountiesMobileQuestBarExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-fake-play-age-signals",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/native/FakePlayAgeSignalsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-favorites-server",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/favorites/FavoritesGuildExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-game-community-add-server-entry",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_community_upsell/native/GameCommunityUpsellExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-guild-members-in-mobile-vc-invites",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/instant_invite/GuildMembersInMobileVCInvitesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-kestrel-ga",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/KestrelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-mobile-voice-channel-games",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_panel/experiments/VoiceChannelGamesExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-premium-gifting-gogo-promotion",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/gifting/experiments/PremiumGiftingGogoPromotionExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-profile-embed-rendering",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/UserProfileEmbedRenderingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-shop-standalone-pdp-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/collectibles/experiments/ShopStandalonePdpMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-user-bio-max-length",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/BioMaxLengthExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-video-guard",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/VideoGuardExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-vq-remaining-time-truncation",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/VQRemainingTimeTruncationExperiment.tsx"
+      ]
+    }
+  ],
+  "strings": {
+    "180deg": "0deg",
+    "45deg": "0deg",
+    "pageType": " + closure_5 + ",
+    "relative": "absolute",
+    "right": "left",
+    "start": " + youtubeVideoIdFromURI.start + ",
+    "Window": " + String(source) + "
+  }
+}
