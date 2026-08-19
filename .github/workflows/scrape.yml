@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Needed so we can pull/push against latest main
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,7 +33,6 @@ jobs:
       - name: Run scraper
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Optional user token → full assignment list (like DEH / Wumpus sampling)
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           USER_ROLLOUT_SAMPLES: '60'
           USER_ROLLOUT_DELAY_MS: '350'
@@ -43,7 +45,9 @@ jobs:
           git add assets/ data/ || true
           if git diff --staged --quiet; then
             echo "No changes to commit"
-          else
-            git commit -m "🔄 New Discord Canary build / findings"
-            git push
+            exit 0
           fi
+          git commit -m "🔄 New Discord Canary build / findings"
+          # Remote may have newer commits (manual push / parallel run)
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push origin HEAD:main
