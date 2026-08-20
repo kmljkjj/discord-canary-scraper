@@ -2,6 +2,7 @@ name: Scrape Discord Canary
 
 on:
   schedule:
+    # Every minute (GitHub may delay under load)
     - cron: '* * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -17,7 +18,7 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,9 +31,16 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund --prefer-offline
+        run: npm install --no-audit --no-fund
 
-      - name: Run scraper (fast)
+      # 1) Instant build check + early webhook
+      - name: Watch build (instant)
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node src/watch_build.js
+
+      # 2) Full scrape (strings / endpoints / experiments)
+      - name: Full scrape
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           FAST_MODE: '1'
