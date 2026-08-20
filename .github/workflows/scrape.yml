@@ -2,7 +2,6 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Fastest GitHub allows (can still be delayed by GH load)
     - cron: '* * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -12,7 +11,6 @@ permissions:
   contents: write
 
 concurrency:
-  # Don't queue behind a slow run — cancel previous if still going
   group: canary-scrape
   cancel-in-progress: true
 
@@ -30,12 +28,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit --no-fund
+        run: npm install --no-audit --no-fund --prefer-offline
 
-      # FAST PATH ONLY — no sample_user_rollouts (that is slow)
       - name: Run scraper (fast)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
