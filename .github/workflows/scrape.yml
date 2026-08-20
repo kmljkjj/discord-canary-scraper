@@ -2,52 +2,55 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Toutes les 5 minutes (UTC). GitHub peut retarder un peu.
-    - cron: '*/5 * * * *'
-  workflow_dispatch: # Manuel (bouton Run workflow)
-  repository_dispatch: # Trigger externe (comme Wumpus Central)
+    # Fastest GitHub allows (can still be delayed by GH load)
+    - cron: '* * * * *'
+  workflow_dispatch:
+  repository_dispatch:
     types: [trigger-scraping]
 
 permissions:
   contents: write
 
+concurrency:
+  # Don't queue behind a slow run — cancel previous if still going
+  group: canary-scrape
+  cancel-in-progress: true
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # Needed so we can pull/push against latest main
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --prefer-offline --no-audit --no-fund
 
-      - name: Run scraper
+      # FAST PATH ONLY — no sample_user_rollouts (that is slow)
+      - name: Run scraper (fast)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          USER_ROLLOUT_SAMPLES: '60'
-          USER_ROLLOUT_DELAY_MS: '350'
-        run: npm run scrape
+          FAST_MODE: '1'
+        run: node src/scrape.js
 
       - name: Commit & push if changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/ data/ || true
+          git add data/ assets/ 2>/dev/null || git add data/ || true
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "No changes"
             exit 0
           fi
-          git commit -m "🔄 New Discord Canary build / findings"
-          # Remote may have newer commits (manual push / parallel run)
-          git pull --rebase origin main || git pull --rebase --autostash origin main
-          git push origin HEAD:main
+          git commit -m "🔄 Canary build / findings" || exit 0
+          git pull --rebase origin main || true
+          git push origin HEAD:main || git push --force-with-lease origin HEAD:main
