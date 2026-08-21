@@ -2,6 +2,7 @@
  * Discord Canary scraper
  * Strings: strict Wumpus-style i18n
  * Lines: persistent stats in data/asset_stats.json (survives GHA)
+ * Notify: deduped via notify_guard (no double messages)
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -26,6 +27,8 @@ const {
   loadStats,
   saveStats,
 } = require('./line_diff');
+const { log } = require('./logger');
+const { claim, wasBuildAnnounced, hashPayload } = require('./notify_guard');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
@@ -177,16 +180,28 @@ async function analyzeAssets() {
   };
 }
 
-async function postWebhook(payload) {
-  if (!WEBHOOK_URL) return;
+async function postWebhook(payload, dedupeKey) {
+  if (!WEBHOOK_URL) return false;
+  if (dedupeKey) {
+    const ok = await claim(dedupeKey);
+    if (!ok) {
+      await log.info('Webhook skipped (duplicate)', { dedupeKey });
+      return false;
+    }
+  }
   const res = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
-  else console.log('Webhook sent');
+  if (!res.ok) {
+    const text = await res.text();
+    await log.warn('Webhook failed', { status: res.status, text: text.slice(0, 200) });
+  } else {
+    await log.info('Webhook sent', { dedupeKey: dedupeKey || null, status: res.status });
+  }
   await new Promise((r) => setTimeout(r, 250));
+  return res.ok;
 }
 
 function countKeys(obj) {
@@ -211,17 +226,17 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
 
   const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
 
-  // Never spam on same build with no real content
   if (!isNewBuild && !hasContent) {
-    console.log('No notify (same build, no content delta)');
+    await log.info('No notify (same build, no content delta)');
     return;
   }
 
   const showLines = isNewBuild && lineDiff && !lineDiff.skipped;
   const added = showLines ? lineDiff.added : 0;
   const removed = showLines ? lineDiff.removed : 0;
+  const alreadyAnnounced = isNewBuild && (await wasBuildAnnounced(build.buildNumber));
 
-  if (isNewBuild || hasContent) {
+  if ((isNewBuild && !alreadyAnnounced) || (!isNewBuild && hasContent) || (isNewBuild && alreadyAnnounced && (hasContent || showLines))) {
     const deltaParts = [
       hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
       hasStrings
@@ -233,82 +248,106 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
       hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
     ].filter(Boolean);
 
-    await postWebhook({
-      username: 'Canary Scraper',
-      embeds: [
+    const title = isNewBuild
+      ? alreadyAnnounced
+        ? 'Canary Build Details'
+        : 'New Discord Canary Build'
+      : 'Canary Changes';
+
+    // If early announce already sent and nothing extra, skip second card
+    if (isNewBuild && alreadyAnnounced && !hasContent && !showLines) {
+      await log.info('Skip build card (early announce only)', { build: build.buildNumber });
+    } else {
+      await postWebhook(
         {
-          title: isNewBuild ? 'New Discord Canary Build' : 'Canary Changes',
-          color: hasNewExp ? 0xed4245 : 0x57f287,
-          fields: [
-            { name: 'Build', value: String(build.buildNumber), inline: true },
-            { name: 'Channel', value: 'canary', inline: true },
+          username: 'Canary Scraper',
+          embeds: [
             {
-              name: 'Lines',
-              value: showLines ? `+${added} · −${removed}` : isNewBuild ? 'baseline' : '—',
-              inline: true,
-            },
-            {
-              name: 'Delta',
-              value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
+              title,
+              color: hasNewExp ? 0xed4245 : 0x57f287,
+              fields: [
+                { name: 'Build', value: String(build.buildNumber), inline: true },
+                { name: 'Channel', value: 'canary', inline: true },
+                {
+                  name: 'Lines',
+                  value: showLines ? `+${added} · −${removed}` : isNewBuild ? 'baseline' : '—',
+                  inline: true,
+                },
+                {
+                  name: 'Delta',
+                  value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
+                },
+              ],
+              timestamp: new Date().toISOString(),
             },
           ],
-          timestamp: new Date().toISOString(),
         },
-      ],
-    });
+        `build-card:${build.buildNumber}:${title}`,
+      );
+    }
   }
 
   if (hasStrings) {
     const emb = formatStringsEmbed(stringDiff, build.buildNumber);
     if (emb) {
-      await postWebhook({
-        username: 'Canary Scraper',
-        embeds: [emb],
-      });
+      await postWebhook(
+        { username: 'Canary Scraper', embeds: [emb] },
+        `strings:${build.buildNumber}:${hashPayload(stringDiff)}`,
+      );
     }
   }
 
   if (hasEndpoints) {
-    await postWebhook({
-      username: 'Canary Scraper',
-      embeds: [
-        {
-          title: 'Endpoints',
-          description:
-            '```\n' +
-            epLines.slice(0, 40).join('\n').slice(0, 3500) +
-            '\n```\n\n**Build Id** — ' +
-            build.buildNumber,
-          color: 0x5865f2,
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
+    await postWebhook(
+      {
+        username: 'Canary Scraper',
+        embeds: [
+          {
+            title: 'Endpoints',
+            description:
+              '```\n' +
+              epLines.slice(0, 40).join('\n').slice(0, 3500) +
+              '\n```\n\n**Build Id** — ' +
+              build.buildNumber,
+            color: 0x5865f2,
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      },
+      `endpoints:${build.buildNumber}:${hashPayload(endpointDiff)}`,
+    );
   }
 
   for (const exp of (diff.newClientExperiments || []).slice(0, 10)) {
-    await postWebhook({
-      username: 'Canary Scraper',
-      embeds: [formatExperimentWithUi(exp, build.buildNumber)],
-    });
+    await postWebhook(
+      {
+        username: 'Canary Scraper',
+        embeds: [formatExperimentWithUi(exp, build.buildNumber)],
+      },
+      `exp:${build.buildNumber}:${exp.id}`,
+    );
   }
 
   if (hasNewUI) {
-    await postWebhook({
-      username: 'Canary Scraper',
-      embeds: [
-        {
-          title: 'New UI',
-          color: 0xf47b67,
-          description: formatNewUiDescription(diff.newUI, build.buildNumber),
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
+    await postWebhook(
+      {
+        username: 'Canary Scraper',
+        embeds: [
+          {
+            title: 'New UI',
+            color: 0xf47b67,
+            description: formatNewUiDescription(diff.newUI, build.buildNumber),
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      },
+      `ui:${build.buildNumber}:${hashPayload(diff.newUI)}`,
+    );
   }
 }
 
 async function main() {
+  await log.info('scrape start');
   console.log('🔍 Canary scrape\n');
   await fs.ensureDir(DATA_DIR);
   const html = await httpGet(CANARY_APP);
@@ -318,6 +357,7 @@ async function main() {
     env.BUILD_NUMBER ||
     `hash-${crypto.createHash('sha256').update(html).digest('hex').slice(0, 10)}`;
   console.log('Build', buildNumber);
+  await log.info('build detected', { buildNumber });
 
   let previousBuild = null;
   try {
@@ -331,7 +371,6 @@ async function main() {
     console.warn('experiments API', e.message);
   }
 
-  // Load PREVIOUS line baseline from git-backed JSON (survives runners)
   const prevAssetStats = await loadStats(ASSET_STATS_FILE);
 
   const webUrl = assetUrls.find((u) => /\/web\.[a-f0-9]+\.js/i.test(u));
@@ -347,28 +386,21 @@ async function main() {
     await downloadPriorityAssets(assetUrls);
   }
 
-  // Current asset stats + diff vs persisted baseline
   const currAssetStats = await collectAssetStats(ASSETS_DIR);
   let lineDiff = { added: 0, removed: 0, skipped: true, changedFiles: 0 };
   if (isNewBuild) {
     lineDiff = diffAssetStats(prevAssetStats, currAssetStats);
-    console.log(
-      lineDiff.skipped
-        ? `Lines: baseline seed (${lineDiff.reason || 'skip'})`
-        : `Lines: +${lineDiff.added} −${lineDiff.removed} (${lineDiff.changedFiles} files)`,
-    );
+    await log.info('line diff', lineDiff);
   } else {
-    console.log('Lines: skipped (same build)');
+    await log.info('Lines skipped (same build)');
   }
 
-  // Always refresh persisted stats so next NEW build can diff
   await saveStats(ASSET_STATS_FILE, currAssetStats, buildNumber);
 
   const findings = await analyzeAssets();
   findings.strings = sanitizeStringsMap(findings.strings);
 
   if (SEED_WUMPUS && Object.keys(findings.strings).length < 3000) {
-    console.log('Seeding/merging Wumpus strings.json…');
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
       let merged = 0;
@@ -379,7 +411,7 @@ async function main() {
         }
       }
       findings.strings = sanitizeStringsMap(findings.strings);
-      console.log(`Merged ${merged} keys (${Object.keys(findings.strings).length} total)`);
+      await log.info('Merged Wumpus strings', { merged, total: Object.keys(findings.strings).length });
     }
   }
 
@@ -418,7 +450,7 @@ async function main() {
 
   const stringDiff = diffStrings(cleanedPrev, findings.strings);
   if (countKeys(stringDiff.removed) > 20 && countKeys(stringDiff.added) < 10) {
-    console.log('Strings junk purge — skip notify');
+    await log.info('Strings junk purge — skip notify');
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
@@ -460,14 +492,20 @@ async function main() {
     { spaces: 2 },
   );
 
-  console.log(
-    `newBuild=${isNewBuild} Lines +${lineDiff.added || 0} −${lineDiff.removed || 0} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
-  );
+  await log.info('scrape summary', {
+    isNewBuild,
+    linesAdded: lineDiff.added || 0,
+    linesRemoved: lineDiff.removed || 0,
+    stringsAdded: countKeys(stringDiff.added),
+    stringsRemoved: countKeys(stringDiff.removed),
+  });
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
+  await log.info('scrape done');
   console.log('✅ Done');
 }
 
-main().catch((e) => {
+main().catch(async (e) => {
+  await log.error('scrape failed', { err: String(e.message || e) });
   console.error(e);
   process.exit(1);
 });
