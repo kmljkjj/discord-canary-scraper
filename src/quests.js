@@ -55,7 +55,7 @@ function taskSummary(config) {
   for (const [key, val] of Object.entries(tasks)) {
     const target = val?.target ?? val?.target_seconds ?? '?';
     const type = val?.type || val?.event_name || key;
-    lines.push(`• **${type}** — target \`${target}\``);
+    lines.push('• **' + type + '** — target `' + target + '`');
   }
   return lines.length ? lines.join('\n') : '_No task info_';
 }
@@ -73,12 +73,7 @@ function normalizeQuest(raw) {
     assetUrl(id, assets.hero) ||
     assetUrl(id, assets.game_tile) ||
     assetUrl(id, assets.quest_bar_hero);
-  const video =
-    assetUrl(id, assets.hero_video) ||
-    assetUrl(id, assets.quest_bar_hero_video) ||
-    assetUrl(id, assets.quest_bar_hero?.endsWith?.('.webm') ? assets.quest_bar_hero : null);
 
-  // Prefer explicit video filenames
   let videoUrl = null;
   for (const key of ['hero_video', 'quest_bar_hero_video']) {
     if (assets[key]) {
@@ -135,7 +130,7 @@ async function fetchOfficialQuests() {
   if (!DISCORD_TOKEN) return [];
   const res = await fetch(OFFICIAL_QUESTS_URL, {
     headers: {
-      Authorization: DISCORD_TOKEN.startsWith('Bot ') ? DISCORD_TOKEN : DISCORD_TOKEN,
+      Authorization: DISCORD_TOKEN,
       'User-Agent': UA,
       Accept: 'application/json',
     },
@@ -163,7 +158,7 @@ function buildComponentsV2(quest) {
       let line = `• **${r.typeLabel}**`;
       if (r.name) line += `: ${r.name}`;
       if (r.orbQuantity != null) line += ` (×${r.orbQuantity})`;
-      if (r.skuId) line += ` · \\`${r.skuId}\\``;
+      if (r.skuId) line += ' · `' + r.skuId + '`';
       return line;
     })
     .join('\n');
@@ -174,7 +169,7 @@ function buildComponentsV2(quest) {
     quest.publisher ? `**Publisher:** ${quest.publisher}` : null,
     quest.startsAt ? `**Starts:** ${quest.startsAt}` : null,
     quest.expiresAt ? `**Expires:** ${quest.expiresAt}` : null,
-    quest.applicationId ? `**App ID:** \\`${quest.applicationId}\\`` : null,
+    quest.applicationId ? '**App ID:** `' + quest.applicationId + '`' : null,
     quest.preview ? '⚠️ **Preview quest**' : null,
   ]
     .filter(Boolean)
@@ -199,7 +194,6 @@ function buildComponentsV2(quest) {
     inner.push({ type: 10, content: `### Rewards\n${rewardLines}` });
   }
 
-  // Reward images
   const rewardMedia = (quest.rewards || [])
     .map((r) => r.asset || r.assetVideo)
     .filter(Boolean)
@@ -219,7 +213,7 @@ function buildComponentsV2(quest) {
   }
 
   inner.push({ type: 14, divider: true, spacing: 1 });
-  inner.push({ type: 10, content: `Quest ID: \\`${quest.id}\\`` });
+  inner.push({ type: 10, content: 'Quest ID: `' + quest.id + '`' });
 
   if (quest.applicationLink) {
     inner.push({
@@ -266,7 +260,6 @@ async function sendQuestWebhook(quest) {
   if (!res.ok) {
     const text = await res.text();
     console.warn('Quest webhook failed', res.status, text.slice(0, 400));
-    // Fallback classic embed if Components V2 rejected
     if (res.status === 400) {
       await sendQuestEmbedFallback(quest);
     }
@@ -294,7 +287,7 @@ async function sendQuestEmbedFallback(quest) {
 
   const embed = {
     title: quest.name,
-    description: `Quest ID: \\`${quest.id}\\``,
+    description: 'Quest ID: `' + quest.id + '`',
     color: parseColor(quest.primaryColor),
     fields,
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
@@ -335,12 +328,11 @@ async function main() {
     console.warn('Official quests:', e.message);
   }
 
-  // Focus on “current” quests: started and not expired (or ending far future still listed)
   const now = Date.now();
   const active = quests.filter((q) => {
     const exp = q.expiresAt ? Date.parse(q.expiresAt) : null;
     const start = q.startsAt ? Date.parse(q.startsAt) : null;
-    if (start && start > now + 86400000) return false; // starts >1d in future optional keep
+    if (start && start > now + 86400000) return false;
     if (exp && exp < now) return false;
     return true;
   });
@@ -353,12 +345,8 @@ async function main() {
   }
   const prevIds = new Set(previous.ids || []);
 
-  // First run: seed state without flooding
   const isFirstRun = !previous.ids || previous.ids.length === 0;
-  const newQuests = isFirstRun
-    ? []
-    : active.filter((q) => !prevIds.has(q.id));
-
+  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
   const allIds = [...new Set([...active.map((q) => q.id), ...prevIds])];
 
   await fs.writeJson(
