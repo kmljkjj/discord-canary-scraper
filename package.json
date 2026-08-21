@@ -1,25 +1,16 @@
 {
   "name": "discord-canary-scraper",
-  "version": "1.4.0",
-  "description": "Discord Canary + mobile datamining scraper",
+  "version": "1.5.0",
+  "description": "Discord Canary + mobile + quests datamining scraper",
   "main": "src/scrape.js",
   "scripts": {
-    "scrape": "node src/scrape.js && node src/extract_definitions.js && node src/sample_user_rollouts.js && node src/write_experiments.js",
-    "start": "node src/scrape.js && node src/extract_definitions.js && node src/sample_user_rollouts.js && node src/write_experiments.js",
-    "experiments": "node src/write_experiments.js",
-    "sample-user": "node src/sample_user_rollouts.js",
-    "defs": "node src/extract_definitions.js",
+    "scrape": "node src/scrape.js",
+    "start": "node src/scrape.js",
+    "quests": "node src/quests.js",
     "mobile": "node src/mobile_versions.js",
     "mobile-files": "node src/mobile_from_files.js"
   },
-  "keywords": [
-    "discord",
-    "canary",
-    "datamining",
-    "scraper",
-    "webpack",
-    "mobile"
-  ],
+  "keywords": ["discord", "canary", "quests", "datamining"],
   "author": "kmljkjj",
   "license": "MIT",
   "dependencies": {

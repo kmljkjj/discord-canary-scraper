@@ -1,0 +1,50 @@
+name: Discord Quests
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-quests]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: discord-quests
+  cancel-in-progress: true
+
+jobs:
+  quests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Check quests
+        env:
+          QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: node src/quests.js
+
+      - name: Commit state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/quests.json || true
+          if git diff --staged --quiet; then
+            echo "No quest state changes"
+            exit 0
+          fi
+          git commit -m "🎮 Quests state update" || exit 0
+          git pull --rebase origin main || true
+          git push origin HEAD:main || git push --force-with-lease origin HEAD:main
