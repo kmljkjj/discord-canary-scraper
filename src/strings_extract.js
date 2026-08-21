@@ -1,25 +1,29 @@
 /**
- * Wumpus / discrapper-canary style Discord i18n strings extraction.
+ * Wumpus / discrapper-canary style Discord i18n strings.
  *
- * Reference format:
+ * Reference:
  *   https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/strings.json
- * Keys: exactly 6 chars from [A-Za-z0-9+/]
- * Values: UI message strings
+ *
+ * Real examples:
+ *   "ihBfyA": "Add to Favorites"
+ *   "ZEs/pI": "Add reaction"
+ *   "owG+AO": "..."
+ *
+ * NOT strings:
+ *   "173309": "c8fb0200b419bf54"
+ *   "Number": "598883"
  */
 
 const WUMPUS_STRINGS_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/strings.json';
 
 function unescapeValue(raw) {
-  let s = raw;
   try {
-    // Prefer JSON string rules
-    s = JSON.parse('"' + raw.replace(/\\/g, '\\').replace(/"/g, '\\"') + '"');
-    return s;
+    return JSON.parse('"' + String(raw).replace(/\\/g, '\\').replace(/"/g, '\\"') + '"');
   } catch {
     /* fall through */
   }
-  return raw
+  return String(raw)
     .replace(/\\u([0-9a-fA-F]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
     .replace(/\\n/g, '\n')
     .replace(/\\r/g, '\r')
@@ -29,36 +33,72 @@ function unescapeValue(raw) {
     .replace(/\\\\/g, '\\');
 }
 
+/**
+ * Wumpus keys are 6 chars base64 alphabet, but almost never pure digits.
+ * Require at least one letter.
+ */
 function isValidKey(key) {
-  return typeof key === 'string' && /^[A-Za-z0-9+/]{6}$/.test(key);
-}
-
-function isValidValue(val) {
-  if (typeof val !== 'string') return false;
-  const v = val.trim();
-  if (v.length < 1 || v.length > 800) return false;
-  // Junk filters (same spirit as dataminers)
-  if (/discord_web[-_]/i.test(v)) return false;
-  if (/^function\b|=>\s*\{|webpackJsonp|__webpack/i.test(v)) return false;
-  if (/^[a-f0-9]{20,}$/i.test(v)) return false;
-  if (/^\/assets\//i.test(v)) return false;
-  // Must look like human / UI text (letters or common punctuation messages)
-  if (!/[A-Za-zÀ-ÿ\u0400-\u04FF\u3040-\u30FF\u4E00-\u9FFF]/.test(v) && v.length > 12) {
-    // allow pure symbols short UI like "…" "—"
-    if (!/[\p{L}]/u.test(v)) return false;
-  }
+  if (typeof key !== 'string') return false;
+  if (!/^[A-Za-z0-9+/]{6}$/.test(key)) return false;
+  // pure digits like 173309 / 598883 — not i18n hashes in practice for UI map
+  if (/^[0-9]{6}$/.test(key)) return false;
+  // must contain a letter (Wumpus samples: ihBfyA, ZEs/pI, owG+AO)
+  if (!/[A-Za-z]/.test(key)) return false;
+  // skip obvious code identifiers mistaken as keys
+  if (/^(number|Number|string|String|object|Object|length|Length)$/.test(key)) return false;
   return true;
 }
 
 /**
- * Extract from arbitrary JS chunk content into Map key -> value
+ * Values must look like real UI copy, not hashes / build ids / code.
+ */
+function isValidValue(val) {
+  if (typeof val !== 'string') return false;
+  const v = val.trim();
+  if (v.length < 1 || v.length > 400) return false;
+
+  // Build numbers / pure numbers
+  if (/^[0-9]{4,}$/.test(v)) return false;
+
+  // Hex hashes (8–64 hex chars)
+  if (/^[a-f0-9]{8,64}$/i.test(v)) return false;
+
+  // webpack / code junk
+  if (/discord_web[-_]/i.test(v)) return false;
+  if (/^function\b|=>\s*\{|webpackJsonp|__webpack|use strict/i.test(v)) return false;
+  if (/^\/assets\//i.test(v)) return false;
+  if (/^https?:\/\/cdn\.discordapp\.com\//i.test(v)) return false;
+
+  // Must contain at least 2 letters (any alphabet) — real UI text
+  const letters = v.match(/[A-Za-zÀ-ÿ\u0400-\u04FF\u3040-\u30FF\u4E00-\u9FFF]/g);
+  if (!letters || letters.length < 2) return false;
+
+  // Reject values that are mostly hex-like tokens
+  const hexRatio = (v.match(/[a-f0-9]/gi) || []).length / v.length;
+  if (v.length >= 12 && hexRatio > 0.85 && !/\s/.test(v)) return false;
+
+  return true;
+}
+
+function sanitizeStringsMap(obj) {
+  const out = {};
+  if (!obj || typeof obj !== 'object') return out;
+  for (const [k, v] of Object.entries(obj)) {
+    if (isValidKey(k) && isValidValue(String(v))) out[k] = String(v);
+  }
+  return out;
+}
+
+/**
+ * Extract only quoted object-style i18n entries (closest to Wumpus output).
+ * Avoid unquoted dense key:value noise that pulls hashes.
  */
 function extractStringsFromContent(content, outMap = new Map()) {
   if (!content || typeof content !== 'string') return outMap;
 
-  // 1) Classic object entries: "Ab12+/" : "Some text"
+  // "AbC12+": "Some UI text"   or  'ZEs/pI': 'Add reaction'
   const reQuoted =
-    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,800})["']/g;
+    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,400})["']/g;
   let m;
   while ((m = reQuoted.exec(content)) !== null) {
     const key = m[1];
@@ -66,13 +106,17 @@ function extractStringsFromContent(content, outMap = new Map()) {
     if (isValidKey(key) && isValidValue(val)) outMap.set(key, val);
   }
 
-  // 2) JSON.parse("{...}") big locale blobs (common in webpack)
-  const reJsonParse = /JSON\.parse\(\s*["'](\{[\s\S]{20,500000}?\})["']\s*\)/g;
+  // JSON.parse("{ \"ihBfyA\": \"Add to Favorites\", ... }")
+  const reJsonParse = /JSON\.parse\(\s*["'](\{[\s\S]{50,400000}?\})["']\s*\)/g;
   while ((m = reJsonParse.exec(content)) !== null) {
     try {
-      const inner = m[1]
+      let inner = m[1];
+      // content is inside a JS string — unescape common sequences
+      inner = inner
         .replace(/\\"/g, '"')
         .replace(/\\n/g, '\n')
+        .replace(/\\r/g, '\r')
+        .replace(/\\t/g, '\t')
         .replace(/\\\\/g, '\\');
       const obj = JSON.parse(inner);
       if (obj && typeof obj === 'object') {
@@ -81,17 +125,8 @@ function extractStringsFromContent(content, outMap = new Map()) {
         }
       }
     } catch {
-      /* ignore bad blobs */
+      /* ignore */
     }
-  }
-
-  // 3) Dense minified: {Ab12+f:"Text",Cd34/g:"More"} without spaces
-  const reDense =
-    /([A-Za-z0-9+/]{6}):\"((?:[^\"\\]|\\.){1,800})\"/g;
-  while ((m = reDense.exec(content)) !== null) {
-    const key = m[1];
-    const val = unescapeValue(m[2]);
-    if (isValidKey(key) && isValidValue(val)) outMap.set(key, val);
   }
 
   return outMap;
@@ -101,8 +136,8 @@ function diffStrings(prev, curr) {
   const added = {};
   const removed = {};
   const modified = {};
-  prev = prev || {};
-  curr = curr || {};
+  prev = sanitizeStringsMap(prev);
+  curr = sanitizeStringsMap(curr);
   for (const [k, v] of Object.entries(curr)) {
     if (!(k in prev)) added[k] = v;
     else if (prev[k] !== v) modified[k] = v;
@@ -113,10 +148,14 @@ function diffStrings(prev, curr) {
   return { added, removed, modified };
 }
 
+function singleLine(v) {
+  return String(v).replace(/\s+/g, ' ').trim().slice(0, 140);
+}
+
 /**
- * Format like Wumpus / user examples for Discord embeds
+ * Embed format close to user / Wumpus channel style
  */
-function formatStringsEmbed(stringDiff, buildNumber, limit = 35) {
+function formatStringsEmbed(stringDiff, buildNumber, limit = 40) {
   const lines = [];
   for (const [k, v] of Object.entries(stringDiff.added || {})) {
     lines.push(`+ ${k}: ${singleLine(v)}`);
@@ -132,27 +171,24 @@ function formatStringsEmbed(stringDiff, buildNumber, limit = 35) {
   const r = Object.keys(stringDiff.removed || {}).length;
   const m = Object.keys(stringDiff.modified || {}).length;
 
-  const header = `**Strings**\nAdded \`${a}\` · Removed \`${r}\` · Modified \`${m}\``;
+  if (a + r + m === 0) return null;
+
+  const header = `Added · removed · modified`;
   const body = lines.slice(0, limit).join('\n');
-  const more =
-    lines.length > limit ? `\n… +${lines.length - limit} more` : '';
+  const more = lines.length > limit ? `\n… +${lines.length - limit} more` : '';
 
   return {
     title: 'Strings',
     description:
       header +
       '\n```\n' +
-      (body || '(no string changes)') +
+      body +
       more +
       '\n```\n**Build Id** — ' +
       buildNumber,
     color: 0x57f287,
     timestamp: new Date().toISOString(),
   };
-}
-
-function singleLine(v) {
-  return String(v).replace(/\s+/g, ' ').trim().slice(0, 120);
 }
 
 async function fetchWumpusStrings(fetchImpl) {
@@ -163,12 +199,7 @@ async function fetchWumpusStrings(fetchImpl) {
     });
     if (!res.ok) return null;
     const data = await res.json();
-    if (!data || typeof data !== 'object') return null;
-    const cleaned = {};
-    for (const [k, v] of Object.entries(data)) {
-      if (isValidKey(k) && typeof v === 'string' && isValidValue(v)) cleaned[k] = v;
-    }
-    return cleaned;
+    return sanitizeStringsMap(data);
   } catch {
     return null;
   }
@@ -179,6 +210,7 @@ module.exports = {
   diffStrings,
   formatStringsEmbed,
   fetchWumpusStrings,
+  sanitizeStringsMap,
   isValidKey,
   isValidValue,
   WUMPUS_STRINGS_URL,
