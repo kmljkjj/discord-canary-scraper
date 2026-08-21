@@ -15,14 +15,11 @@ const {
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
   'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true';
-const DEFINITIONS_URL =
-  'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
 
 const ASSETS_DIR = path.join(__dirname, '..', 'assets');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const BUILD_FILE = path.join(DATA_DIR, 'build.json');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
-const GUILD_EXP_FILE = path.join(DATA_DIR, 'guild_experiments.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
@@ -196,7 +193,11 @@ async function postWebhook(payload) {
   await new Promise((r) => setTimeout(r, 250));
 }
 
-async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff }) {
+function countKeys(obj) {
+  return Object.keys(obj || {}).length;
+}
+
+async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats }) {
   if (!WEBHOOK_URL) return;
   const hasNewUI = (diff.newUI || []).length > 0;
   const hasNewExp =
@@ -204,10 +205,16 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff }) {
   const strLines = [];
   for (const [k, v] of Object.entries(stringDiff.added || {})) strLines.push(`+ ${k}: ${v}`);
   for (const [k, v] of Object.entries(stringDiff.modified || {})) strLines.push(`~ ${k}: ${v}`);
+  for (const [k, v] of Object.entries(stringDiff.removed || {})) strLines.push(`- ${k}: ${v}`);
   const hasStrings = strLines.length > 0;
   const epLines = [];
   for (const [k, v] of Object.entries(endpointDiff.added || {})) epLines.push(`+ ${k}: ${v}`);
+  for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
   const hasEndpoints = epLines.length > 0;
+
+  const added = stats?.added ?? 0;
+  const removed = stats?.removed ?? 0;
+  const modified = stats?.modified ?? 0;
 
   if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints) {
     await postWebhook({
@@ -220,15 +227,24 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff }) {
             { name: 'Build', value: String(build.buildNumber), inline: true },
             { name: 'Channel', value: 'canary', inline: true },
             {
+              name: 'Lines',
+              value: `+${added} · −${removed}${modified ? ` · ~${modified}` : ''}`,
+              inline: true,
+            },
+            {
               name: 'Delta',
               value: [
-                hasNewExp ? 'Experiments' : null,
-                hasStrings ? 'Strings' : null,
-                hasEndpoints ? 'Endpoints' : null,
-                hasNewUI ? 'UI' : null,
+                hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
+                hasStrings
+                  ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`
+                  : null,
+                hasEndpoints
+                  ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
+                  : null,
+                hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
               ]
                 .filter(Boolean)
-                .join(' · ') || 'check',
+                .join('\n') || 'check',
             },
           ],
           timestamp: new Date().toISOString(),
@@ -244,7 +260,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff }) {
         {
           title: 'Strings',
           description:
-            '_Added · modified_\n```\n' +
+            '_Added · removed · modified_\n```\n' +
             strLines.slice(0, 40).join('\n').slice(0, 3500) +
             '\n```\n\n**Build Id** — ' +
             build.buildNumber,
@@ -312,10 +328,8 @@ async function main() {
   } catch {}
   const isNewBuild = !previousBuild || previousBuild.buildNumber !== buildNumber;
 
-  let official = { guildExperiments: [] };
   try {
-    const data = await httpGet(EXPERIMENTS_API, false);
-    official.guildExperiments = data.guild_experiments || [];
+    await httpGet(EXPERIMENTS_API, false);
   } catch (e) {
     console.warn('experiments API', e.message);
   }
@@ -341,10 +355,14 @@ async function main() {
   } catch {}
   const prevExpIds = new Set((previous?.experiments || []).map((e) => e.id));
   const prevUI = new Set((previous?.ui || []).map((u) => u.name));
+  const currExpIds = new Set(findings.experiments.map((e) => e.id));
+  const currUI = new Set(findings.ui.map((u) => u.name));
 
   const diff = {
     newClientExperiments: findings.experiments.filter((e) => !prevExpIds.has(e.id)),
+    removedExperiments: (previous?.experiments || []).filter((e) => !currExpIds.has(e.id)),
     newUI: findings.ui.filter((u) => !prevUI.has(u.name)),
+    removedUI: (previous?.ui || []).filter((u) => !currUI.has(u.name)),
     newGuild: [],
   };
 
@@ -352,10 +370,13 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
-  const stringDiff = { added: {}, modified: {} };
+  const stringDiff = { added: {}, modified: {}, removed: {} };
   for (const [k, v] of Object.entries(findings.strings)) {
     if (!(k in prevStrings)) stringDiff.added[k] = v;
     else if (prevStrings[k] !== v) stringDiff.modified[k] = v;
+  }
+  for (const [k, v] of Object.entries(prevStrings)) {
+    if (!(k in findings.strings)) stringDiff.removed[k] = v;
   }
   await fs.writeJson(STRINGS_FILE, findings.strings, { spaces: 2 });
 
@@ -363,11 +384,29 @@ async function main() {
   try {
     if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
   } catch {}
-  const endpointDiff = { added: {} };
+  const endpointDiff = { added: {}, removed: {} };
   for (const [k, v] of Object.entries(findings.endpoints)) {
     if (!(k in prevEndpoints)) endpointDiff.added[k] = v;
   }
+  for (const [k, v] of Object.entries(prevEndpoints)) {
+    if (!(k in findings.endpoints)) endpointDiff.removed[k] = v;
+  }
   await fs.writeJson(ENDPOINTS_FILE, findings.endpoints, { spaces: 2 });
+
+  // Totaux type “lines” = items ajoutés / supprimés (strings + endpoints + experiments + UI)
+  const stats = {
+    added:
+      countKeys(stringDiff.added) +
+      countKeys(endpointDiff.added) +
+      diff.newClientExperiments.length +
+      diff.newUI.length,
+    removed:
+      countKeys(stringDiff.removed) +
+      countKeys(endpointDiff.removed) +
+      diff.removedExperiments.length +
+      diff.removedUI.length,
+    modified: countKeys(stringDiff.modified),
+  };
 
   const build = {
     buildNumber,
@@ -375,6 +414,7 @@ async function main() {
     releaseChannel: env.RELEASE_CHANNEL || 'canary',
     scrapedAt: new Date().toISOString(),
     experimentCount: findings.experiments.length,
+    stats,
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
   await fs.writeJson(
@@ -389,9 +429,9 @@ async function main() {
   );
 
   console.log(
-    `New exp ${diff.newClientExperiments.length} UI ${diff.newUI.length} strings +${Object.keys(stringDiff.added).length}`,
+    `New exp ${diff.newClientExperiments.length} UI ${diff.newUI.length} strings +${countKeys(stringDiff.added)} −${countKeys(stringDiff.removed)} ~${countKeys(stringDiff.modified)}`,
   );
-  await notify({ build, isNewBuild, diff, stringDiff, endpointDiff });
+  await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats });
   console.log('✅ Done');
 }
 
