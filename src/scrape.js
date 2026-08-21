@@ -1,7 +1,7 @@
 /**
  * Discord Canary scraper
- * Strings: strict Wumpus-style i18n only (no hashes / build numbers)
- * Lines: JS asset diff on NEW build only
+ * Strings: strict Wumpus-style i18n
+ * Lines: persistent stats in data/asset_stats.json (survives GHA)
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -20,18 +20,24 @@ const {
   fetchWumpusStrings,
   sanitizeStringsMap,
 } = require('./strings_extract');
+const {
+  collectAssetStats,
+  diffAssetStats,
+  loadStats,
+  saveStats,
+} = require('./line_diff');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
   'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true';
 
 const ASSETS_DIR = path.join(__dirname, '..', 'assets');
-const PREV_ASSETS_DIR = path.join(__dirname, '..', 'assets_prev');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const BUILD_FILE = path.join(DATA_DIR, 'build.json');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
+const ASSET_STATS_FILE = path.join(DATA_DIR, 'asset_stats.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const SEED_WUMPUS = process.env.SEED_WUMPUS_STRINGS !== '0';
 const UA =
@@ -104,108 +110,6 @@ async function downloadPriorityAssets(assetUrls) {
       console.warn(`✗ ${name}: ${e.message}`);
     }
   }
-}
-
-function logicalName(filename) {
-  if (/^web\.[a-f0-9]+\.js$/i.test(filename)) return 'web';
-  if (/^sentry\./i.test(filename)) return 'sentry';
-  return filename.replace(/\.[a-f0-9]{8,}\./i, '.').replace(/\.[a-f0-9]{16,}/i, '');
-}
-
-function diffStats(oldText, newText) {
-  if (oldText === newText) return { added: 0, removed: 0 };
-  const oldLines = oldText.split(/\r?\n/);
-  const newLines = newText.split(/\r?\n/);
-  const minified = oldLines.length <= 8 && newLines.length <= 8;
-  if (minified) {
-    const o = oldText.split(';');
-    const n = newText.split(';');
-    const oSet = new Set(o);
-    const nSet = new Set(n);
-    let added = 0;
-    let removed = 0;
-    for (const t of n) if (!oSet.has(t)) added++;
-    for (const t of o) if (!nSet.has(t)) removed++;
-    return { added, removed };
-  }
-  const oSet = new Set(oldLines);
-  const nSet = new Set(newLines);
-  let added = 0;
-  let removed = 0;
-  for (const l of newLines) if (!oSet.has(l)) added++;
-  for (const l of oldLines) if (!nSet.has(l)) removed++;
-  return { added, removed };
-}
-
-async function snapshotPrevAssets() {
-  await fs.remove(PREV_ASSETS_DIR);
-  if (!(await fs.pathExists(ASSETS_DIR))) return;
-  await fs.copy(ASSETS_DIR, PREV_ASSETS_DIR);
-  console.log('Snapshot assets → assets_prev');
-}
-
-async function computeLineDiff() {
-  let added = 0;
-  let removed = 0;
-  const details = [];
-  const prevFiles = (await fs.pathExists(PREV_ASSETS_DIR))
-    ? (await fs.readdir(PREV_ASSETS_DIR)).filter((f) => f.endsWith('.js'))
-    : [];
-  const currFiles = (await fs.pathExists(ASSETS_DIR))
-    ? (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'))
-    : [];
-
-  if (!prevFiles.length) {
-    console.log('Line diff skipped (no assets_prev baseline)');
-    return { added: 0, removed: 0, details: [], skipped: true };
-  }
-
-  const prevByLogical = new Map();
-  for (const f of prevFiles) {
-    const key = logicalName(f);
-    const full = path.join(PREV_ASSETS_DIR, f);
-    const st = await fs.stat(full);
-    const prev = prevByLogical.get(key);
-    if (!prev || st.size > prev.size) prevByLogical.set(key, { file: f, size: st.size });
-  }
-  const currByLogical = new Map();
-  for (const f of currFiles) {
-    const key = logicalName(f);
-    const full = path.join(ASSETS_DIR, f);
-    const st = await fs.stat(full);
-    const prev = currByLogical.get(key);
-    if (!prev || st.size > prev.size) currByLogical.set(key, { file: f, size: st.size });
-  }
-
-  const keys = new Set([...prevByLogical.keys(), ...currByLogical.keys()]);
-  for (const key of keys) {
-    const p = prevByLogical.get(key);
-    const c = currByLogical.get(key);
-    if (p && !c) {
-      const text = await fs.readFile(path.join(PREV_ASSETS_DIR, p.file), 'utf8');
-      const n = Math.max(text.split(/\r?\n/).length, text.split(';').length);
-      removed += n;
-      details.push({ key, removed: n, added: 0 });
-      continue;
-    }
-    if (!p && c) {
-      const text = await fs.readFile(path.join(ASSETS_DIR, c.file), 'utf8');
-      const n = Math.max(text.split(/\r?\n/).length, text.split(';').length);
-      added += n;
-      details.push({ key, removed: 0, added: n });
-      continue;
-    }
-    if (p && c) {
-      const oldText = await fs.readFile(path.join(PREV_ASSETS_DIR, p.file), 'utf8');
-      const newText = await fs.readFile(path.join(ASSETS_DIR, c.file), 'utf8');
-      const d = diffStats(oldText, newText);
-      added += d.added;
-      removed += d.removed;
-      if (d.added || d.removed) details.push({ key, ...d });
-    }
-  }
-  console.log(`Line/token diff: +${added} −${removed}`);
-  return { added, removed, details: details.slice(0, 20), skipped: false };
 }
 
 function isExpId(id) {
@@ -307,13 +211,15 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
 
   const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
 
+  // Never spam on same build with no real content
   if (!isNewBuild && !hasContent) {
     console.log('No notify (same build, no content delta)');
     return;
   }
 
-  const added = isNewBuild && !lineDiff?.skipped ? lineDiff?.added ?? 0 : 0;
-  const removed = isNewBuild && !lineDiff?.skipped ? lineDiff?.removed ?? 0 : 0;
+  const showLines = isNewBuild && lineDiff && !lineDiff.skipped;
+  const added = showLines ? lineDiff.added : 0;
+  const removed = showLines ? lineDiff.removed : 0;
 
   if (isNewBuild || hasContent) {
     const deltaParts = [
@@ -338,7 +244,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
             { name: 'Channel', value: 'canary', inline: true },
             {
               name: 'Lines',
-              value: isNewBuild ? `+${added} · −${removed}` : '—',
+              value: showLines ? `+${added} · −${removed}` : isNewBuild ? 'baseline' : '—',
               inline: true,
             },
             {
@@ -403,7 +309,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
 }
 
 async function main() {
-  console.log('🔍 Canary scrape (strict Wumpus strings)\n');
+  console.log('🔍 Canary scrape\n');
   await fs.ensureDir(DATA_DIR);
   const html = await httpGet(CANARY_APP);
   const env = parseGlobalEnv(html);
@@ -425,6 +331,9 @@ async function main() {
     console.warn('experiments API', e.message);
   }
 
+  // Load PREVIOUS line baseline from git-backed JSON (survives runners)
+  const prevAssetStats = await loadStats(ASSET_STATS_FILE);
+
   const webUrl = assetUrls.find((u) => /\/web\.[a-f0-9]+\.js/i.test(u));
   const webName = webUrl ? path.basename(webUrl.split('?')[0]) : null;
   let webOk = false;
@@ -434,22 +343,32 @@ async function main() {
   }
 
   if (isNewBuild || !webOk) {
-    if (isNewBuild) {
-      await snapshotPrevAssets();
-      await fs.emptyDir(ASSETS_DIR);
-    }
+    if (isNewBuild) await fs.emptyDir(ASSETS_DIR);
     await downloadPriorityAssets(assetUrls);
   }
 
-  const lineDiff = isNewBuild
-    ? await computeLineDiff()
-    : { added: 0, removed: 0, details: [], skipped: true };
+  // Current asset stats + diff vs persisted baseline
+  const currAssetStats = await collectAssetStats(ASSETS_DIR);
+  let lineDiff = { added: 0, removed: 0, skipped: true, changedFiles: 0 };
+  if (isNewBuild) {
+    lineDiff = diffAssetStats(prevAssetStats, currAssetStats);
+    console.log(
+      lineDiff.skipped
+        ? `Lines: baseline seed (${lineDiff.reason || 'skip'})`
+        : `Lines: +${lineDiff.added} −${lineDiff.removed} (${lineDiff.changedFiles} files)`,
+    );
+  } else {
+    console.log('Lines: skipped (same build)');
+  }
+
+  // Always refresh persisted stats so next NEW build can diff
+  await saveStats(ASSET_STATS_FILE, currAssetStats, buildNumber);
 
   const findings = await analyzeAssets();
   findings.strings = sanitizeStringsMap(findings.strings);
 
   if (SEED_WUMPUS && Object.keys(findings.strings).length < 3000) {
-    console.log('Seeding/merging Wumpus strings.json for coverage…');
+    console.log('Seeding/merging Wumpus strings.json…');
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
       let merged = 0;
@@ -460,7 +379,7 @@ async function main() {
         }
       }
       findings.strings = sanitizeStringsMap(findings.strings);
-      console.log(`Merged ${merged} keys from Wumpus (${Object.keys(findings.strings).length} total)`);
+      console.log(`Merged ${merged} keys (${Object.keys(findings.strings).length} total)`);
     }
   }
 
@@ -498,9 +417,8 @@ async function main() {
   findings.strings = sanitizeStringsMap(findings.strings);
 
   const stringDiff = diffStrings(cleanedPrev, findings.strings);
-  // Purging old junk (hashes / build numbers) must not spam the channel
   if (countKeys(stringDiff.removed) > 20 && countKeys(stringDiff.added) < 10) {
-    console.log('Strings junk purge — skip notify flood');
+    console.log('Strings junk purge — skip notify');
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
@@ -528,7 +446,7 @@ async function main() {
     scrapedAt: new Date().toISOString(),
     experimentCount: findings.experiments.length,
     stringCount: Object.keys(findings.strings).length,
-    lineDiff: { added: lineDiff.added, removed: lineDiff.removed },
+    lineDiff: { added: lineDiff.added || 0, removed: lineDiff.removed || 0, skipped: !!lineDiff.skipped },
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
   await fs.writeJson(
@@ -543,7 +461,7 @@ async function main() {
   );
 
   console.log(
-    `newBuild=${isNewBuild} Lines +${lineDiff.added} −${lineDiff.removed} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
+    `newBuild=${isNewBuild} Lines +${lineDiff.added || 0} −${lineDiff.removed || 0} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
   );
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   console.log('✅ Done');
