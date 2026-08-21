@@ -1,7 +1,7 @@
 /**
  * Discord Canary scraper
  * Strings: Wumpus discrapper-canary style (6-char keys + dense i18n scan)
- * Lines: real JS asset token/line diff across builds
+ * Lines: real JS asset token/line diff across builds (only on NEW build)
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -154,6 +154,12 @@ async function computeLineDiff() {
     ? (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'))
     : [];
 
+  // No previous snapshot → no meaningful line diff (avoids +70000 spam)
+  if (!prevFiles.length) {
+    console.log('Line diff skipped (no assets_prev baseline)');
+    return { added: 0, removed: 0, details: [], skipped: true };
+  }
+
   const prevByLogical = new Map();
   for (const f of prevFiles) {
     const key = logicalName(f);
@@ -199,7 +205,7 @@ async function computeLineDiff() {
     }
   }
   console.log(`Line/token diff: +${added} −${removed}`);
-  return { added, removed, details: details.slice(0, 20) };
+  return { added, removed, details: details.slice(0, 20), skipped: false };
 }
 
 function isExpId(id) {
@@ -285,6 +291,7 @@ function countKeys(obj) {
 
 async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff }) {
   if (!WEBHOOK_URL) return;
+
   const hasNewUI = (diff.newUI || []).length > 0;
   const hasNewExp =
     (diff.newClientExperiments || []).length + (diff.newGuild || []).length > 0;
@@ -298,10 +305,31 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
   const hasEndpoints = epLines.length > 0;
 
-  const added = lineDiff?.added ?? 0;
-  const removed = lineDiff?.removed ?? 0;
+  // REAL content only — never notify just because of line noise
+  const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
 
-  if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints || added || removed) {
+  // Same build + nothing useful → silent (fixes spam)
+  if (!isNewBuild && !hasContent) {
+    console.log('No notify (same build, no content delta)');
+    return;
+  }
+
+  const added = isNewBuild && !lineDiff?.skipped ? lineDiff?.added ?? 0 : 0;
+  const removed = isNewBuild && !lineDiff?.skipped ? lineDiff?.removed ?? 0 : 0;
+
+  // New build with zero content and zero line baseline → still announce once
+  if (isNewBuild || hasContent) {
+    const deltaParts = [
+      hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
+      hasStrings
+        ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`
+        : null,
+      hasEndpoints
+        ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
+        : null,
+      hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
+    ].filter(Boolean);
+
     await postWebhook({
       username: 'Canary Scraper',
       embeds: [
@@ -313,23 +341,12 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
             { name: 'Channel', value: 'canary', inline: true },
             {
               name: 'Lines',
-              value: `+${added} · −${removed}`,
+              value: isNewBuild ? `+${added} · −${removed}` : '—',
               inline: true,
             },
             {
               name: 'Delta',
-              value: [
-                hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
-                hasStrings
-                  ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`
-                  : null,
-                hasEndpoints
-                  ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
-                  : null,
-                hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
-              ]
-                .filter(Boolean)
-                .join('\n') || 'check',
+              value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
             },
           ],
           timestamp: new Date().toISOString(),
@@ -424,10 +441,13 @@ async function main() {
     await downloadPriorityAssets(assetUrls);
   }
 
-  const lineDiff = await computeLineDiff();
+  // Line diff only useful on new build
+  const lineDiff = isNewBuild
+    ? await computeLineDiff()
+    : { added: 0, removed: 0, details: [], skipped: true };
+
   const findings = await analyzeAssets();
 
-  // Optional: merge missing keys from Wumpus public strings.json (same format)
   if (SEED_WUMPUS && Object.keys(findings.strings).length < 5000) {
     console.log('Seeding/merging Wumpus strings.json for coverage…');
     const wumpus = await fetchWumpusStrings(fetch);
@@ -473,14 +493,12 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
-  // Keep only real i18n keys
   const cleanedPrev = {};
   for (const [k, v] of Object.entries(prevStrings)) {
     if (/^[A-Za-z0-9+/]{6}$/.test(k)) cleanedPrev[k] = v;
   }
 
   const stringDiff = diffStrings(cleanedPrev, findings.strings);
-  // First meaningful strings file: seed without flooding webhook
   const prevCount = Object.keys(cleanedPrev).length;
   const isStringSeed = prevCount < 100 && Object.keys(findings.strings).length > 500;
   if (isStringSeed) {
@@ -527,7 +545,7 @@ async function main() {
   );
 
   console.log(
-    `Lines +${lineDiff.added} −${lineDiff.removed} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`,
+    `newBuild=${isNewBuild} Lines +${lineDiff.added} −${lineDiff.removed} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
   );
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   console.log('✅ Done');
