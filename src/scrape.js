@@ -1,6 +1,7 @@
 /**
- * Discord Canary scraper (compact) + UI linked to experiments
- * Strings format aligned with Wumpus-Central/discrapper-canary data/strings.json
+ * Discord Canary scraper
+ * - Real line/token diff on JS assets (like Wumpus discrapper git +/-)
+ * - Strings: 6-char base64 keys (discrapper-canary format)
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -18,6 +19,7 @@ const EXPERIMENTS_API =
   'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true';
 
 const ASSETS_DIR = path.join(__dirname, '..', 'assets');
+const PREV_ASSETS_DIR = path.join(__dirname, '..', 'assets_prev');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const BUILD_FILE = path.join(DATA_DIR, 'build.json');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
@@ -78,7 +80,8 @@ async function downloadPriorityAssets(assetUrls) {
   await fs.ensureDir(ASSETS_DIR);
   const web = assetUrls.filter((u) => /\/assets\/web\.[a-f0-9]+\.js/i.test(u));
   const otherJs = assetUrls.filter((u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u));
-  const toFetch = [...web, ...otherJs.slice(0, 20)];
+  // More chunks = better strings coverage (Wumpus pulls hundreds)
+  const toFetch = [...web, ...otherJs.slice(0, 80)];
   for (const url of toFetch) {
     const name = path.basename(url.split('?')[0]);
     const dest = path.join(ASSETS_DIR, name);
@@ -96,6 +99,115 @@ async function downloadPriorityAssets(assetUrls) {
   }
 }
 
+/** Logical role so web.abc.js matches web.xyz.js across builds */
+function logicalName(filename) {
+  if (/^web\.[a-f0-9]+\.js$/i.test(filename)) return 'web';
+  if (/^sentry\./i.test(filename)) return 'sentry';
+  // strip long hex hashes in the middle: foo.a1b2c3d4.js -> foo.js
+  return filename.replace(/\.[a-f0-9]{8,}\./i, '.').replace(/\.[a-f0-9]{16,}/i, '');
+}
+
+/**
+ * Diff stats between two file contents.
+ * Minified bundles are often 1–few lines → split on ';' tokens (Wumpus-like volume).
+ */
+function diffStats(oldText, newText) {
+  if (oldText === newText) return { added: 0, removed: 0 };
+  const oldLines = oldText.split(/\r?\n/);
+  const newLines = newText.split(/\r?\n/);
+  const minified = oldLines.length <= 8 && newLines.length <= 8;
+
+  if (minified) {
+    const o = oldText.split(';');
+    const n = newText.split(';');
+    const oSet = new Set(o);
+    const nSet = new Set(n);
+    let added = 0;
+    let removed = 0;
+    for (const t of n) if (!oSet.has(t)) added++;
+    for (const t of o) if (!nSet.has(t)) removed++;
+    return { added, removed };
+  }
+
+  const oSet = new Set(oldLines);
+  const nSet = new Set(newLines);
+  let added = 0;
+  let removed = 0;
+  for (const l of newLines) if (!oSet.has(l)) added++;
+  for (const l of oldLines) if (!nSet.has(l)) removed++;
+  return { added, removed };
+}
+
+async function snapshotPrevAssets() {
+  await fs.remove(PREV_ASSETS_DIR);
+  if (!(await fs.pathExists(ASSETS_DIR))) return;
+  await fs.copy(ASSETS_DIR, PREV_ASSETS_DIR);
+  console.log('Snapshot assets → assets_prev');
+}
+
+async function computeLineDiff() {
+  let added = 0;
+  let removed = 0;
+  const details = [];
+
+  const prevFiles = (await fs.pathExists(PREV_ASSETS_DIR))
+    ? (await fs.readdir(PREV_ASSETS_DIR)).filter((f) => f.endsWith('.js'))
+    : [];
+  const currFiles = (await fs.pathExists(ASSETS_DIR))
+    ? (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'))
+    : [];
+
+  const prevByLogical = new Map();
+  for (const f of prevFiles) {
+    const key = logicalName(f);
+    // prefer largest file for a logical name
+    const full = path.join(PREV_ASSETS_DIR, f);
+    const st = await fs.stat(full);
+    const prev = prevByLogical.get(key);
+    if (!prev || st.size > prev.size) prevByLogical.set(key, { file: f, size: st.size });
+  }
+
+  const currByLogical = new Map();
+  for (const f of currFiles) {
+    const key = logicalName(f);
+    const full = path.join(ASSETS_DIR, f);
+    const st = await fs.stat(full);
+    const prev = currByLogical.get(key);
+    if (!prev || st.size > prev.size) currByLogical.set(key, { file: f, size: st.size });
+  }
+
+  const keys = new Set([...prevByLogical.keys(), ...currByLogical.keys()]);
+  for (const key of keys) {
+    const p = prevByLogical.get(key);
+    const c = currByLogical.get(key);
+    if (p && !c) {
+      const text = await fs.readFile(path.join(PREV_ASSETS_DIR, p.file), 'utf8');
+      const n = Math.max(text.split(/\r?\n/).length, text.split(';').length);
+      removed += n;
+      details.push({ key, removed: n, added: 0 });
+      continue;
+    }
+    if (!p && c) {
+      const text = await fs.readFile(path.join(ASSETS_DIR, c.file), 'utf8');
+      const n = Math.max(text.split(/\r?\n/).length, text.split(';').length);
+      added += n;
+      details.push({ key, removed: 0, added: n });
+      continue;
+    }
+    if (p && c) {
+      const oldText = await fs.readFile(path.join(PREV_ASSETS_DIR, p.file), 'utf8');
+      const newText = await fs.readFile(path.join(ASSETS_DIR, c.file), 'utf8');
+      const d = diffStats(oldText, newText);
+      added += d.added;
+      removed += d.removed;
+      if (d.added || d.removed) details.push({ key, ...d });
+    }
+  }
+
+  console.log(`Line/token diff: +${added} −${removed} (${details.length} files changed)`);
+  return { added, removed, details: details.slice(0, 20) };
+}
+
 function isExpId(id) {
   return /^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id) && !/^20\d{2}-\d{2}$/.test(id);
 }
@@ -107,10 +219,6 @@ function extractEndpoints(content, outMap) {
   while ((m = re.exec(content)) !== null) outMap.set(m[1], m[2]);
 }
 
-/**
- * Real Discord i18n keys (same as Wumpus discrapper-canary strings.json):
- * exactly 6 chars from base64 alphabet A-Za-z0-9+/
- */
 function shouldKeepString(key, val) {
   if (!key || typeof val !== 'string') return false;
   if (!/^[A-Za-z0-9+/]{6}$/.test(key)) return false;
@@ -118,25 +226,29 @@ function shouldKeepString(key, val) {
   if (v.length < 1 || v.length > 500) return false;
   if (/discord_web[-_]|webpack|function\s*\(|=>\s*\{/i.test(v)) return false;
   if (/^[a-f0-9]{16,}$/i.test(v)) return false;
-  if (/^https?:\/\/canary\.discord\.com\/assets\//i.test(v)) return false;
-  if (!/[A-Za-zÀ-ÿ]{1,}/.test(v) && v.length < 2) return false;
+  if (/^https?:\/\//i.test(v) && v.length > 80) return false;
+  if (!/[A-Za-zÀ-ÿ]/.test(v) && v.length < 2) return false;
   return true;
 }
 
 function extractStrings(content, outMap) {
-  // "AbC12+": "Some UI text"  or  'ZEs/pI': 'Add reaction'
-  const re =
-    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
-  let m;
-  while ((m = re.exec(content)) !== null) {
-    let val = m[2];
-    val = val
-      .replace(/\\n/g, '\n')
-      .replace(/\\t/g, '\t')
-      .replace(/\\'/g, "'")
-      .replace(/\\"/g, '"')
-      .replace(/\\\\/g, '\\');
-    if (shouldKeepString(m[1], val)) outMap.set(m[1], val);
+  // Double and single quoted; also unquoted values rare — skip
+  const patterns = [
+    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g,
+    /([A-Za-z0-9+/]{6}):\"((?:[^\"\\]|\\.){1,500})\"/g,
+  ];
+  for (const re of patterns) {
+    let m;
+    while ((m = re.exec(content)) !== null) {
+      let val = m[2];
+      val = val
+        .replace(/\\n/g, '\n')
+        .replace(/\\t/g, '\t')
+        .replace(/\\'/g, "'")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, '\\');
+      if (shouldKeepString(m[1], val)) outMap.set(m[1], val);
+    }
   }
 }
 
@@ -155,8 +267,8 @@ async function analyzeAssets() {
       const full = path.join(ASSETS_DIR, file);
       const st = await fs.stat(full);
       let content = await fs.readFile(full, 'utf8');
-      if (st.size > 12_000_000 && !/^web\./i.test(file)) content = content.slice(0, 6_000_000);
-      console.log(`  scan ${file}`);
+      if (st.size > 15_000_000 && !/^web\./i.test(file)) content = content.slice(0, 8_000_000);
+      console.log(`  scan ${file} (${Math.round(st.size / 1024)}kb)`);
       const linked = extractUiAndExperiments(content);
       extractEndpoints(content, endpointMap);
       extractStrings(content, stringMap);
@@ -210,7 +322,7 @@ function countKeys(obj) {
   return Object.keys(obj || {}).length;
 }
 
-async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats }) {
+async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff }) {
   if (!WEBHOOK_URL) return;
   const hasNewUI = (diff.newUI || []).length > 0;
   const hasNewExp =
@@ -225,11 +337,10 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats
   for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
   const hasEndpoints = epLines.length > 0;
 
-  const added = stats?.added ?? 0;
-  const removed = stats?.removed ?? 0;
-  const modified = stats?.modified ?? 0;
+  const added = lineDiff?.added ?? 0;
+  const removed = lineDiff?.removed ?? 0;
 
-  if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints) {
+  if (isNewBuild || hasNewExp || hasNewUI || hasStrings || hasEndpoints || added || removed) {
     await postWebhook({
       username: 'Canary Scraper',
       embeds: [
@@ -241,7 +352,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats
             { name: 'Channel', value: 'canary', inline: true },
             {
               name: 'Lines',
-              value: `+${added} · −${removed}${modified ? ` · ~${modified}` : ''}`,
+              value: `+${added} · −${removed}`,
               inline: true,
             },
             {
@@ -255,6 +366,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats
                   ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
                   : null,
                 hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
+                `JS files Δ ${lineDiff?.details?.length || 0}`,
               ]
                 .filter(Boolean)
                 .join('\n') || 'check',
@@ -325,7 +437,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats
 }
 
 async function main() {
-  console.log('🔍 Canary scrape (UI ↔ experiments)\n');
+  console.log('🔍 Canary scrape\n');
   await fs.ensureDir(DATA_DIR);
   const html = await httpGet(CANARY_APP);
   const env = parseGlobalEnv(html);
@@ -354,10 +466,17 @@ async function main() {
     const webPath = path.join(ASSETS_DIR, webName);
     if (await fs.pathExists(webPath)) webOk = (await fs.stat(webPath)).size > 2_000_000;
   }
+
+  // Snapshot BEFORE wipe so we can diff lines (Wumpus-style)
   if (isNewBuild || !webOk) {
-    if (isNewBuild) await fs.emptyDir(ASSETS_DIR);
+    if (isNewBuild) {
+      await snapshotPrevAssets();
+      await fs.emptyDir(ASSETS_DIR);
+    }
     await downloadPriorityAssets(assetUrls);
   }
+
+  const lineDiff = await computeLineDiff();
 
   const findings = await analyzeAssets();
   console.log(
@@ -390,7 +509,6 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
-  // Drop old junk keys that are not real i18n (migration)
   const cleanedPrev = {};
   for (const [k, v] of Object.entries(prevStrings)) {
     if (/^[A-Za-z0-9+/]{6}$/.test(k)) cleanedPrev[k] = v;
@@ -420,20 +538,6 @@ async function main() {
   }
   await fs.writeJson(ENDPOINTS_FILE, findings.endpoints, { spaces: 2 });
 
-  const stats = {
-    added:
-      countKeys(stringDiff.added) +
-      countKeys(endpointDiff.added) +
-      diff.newClientExperiments.length +
-      diff.newUI.length,
-    removed:
-      countKeys(stringDiff.removed) +
-      countKeys(endpointDiff.removed) +
-      diff.removedExperiments.length +
-      diff.removedUI.length,
-    modified: countKeys(stringDiff.modified),
-  };
-
   const build = {
     buildNumber,
     versionHash: env.VERSION_HASH || null,
@@ -441,7 +545,7 @@ async function main() {
     scrapedAt: new Date().toISOString(),
     experimentCount: findings.experiments.length,
     stringCount: Object.keys(findings.strings).length,
-    stats,
+    lineDiff: { added: lineDiff.added, removed: lineDiff.removed },
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
   await fs.writeJson(
@@ -456,9 +560,9 @@ async function main() {
   );
 
   console.log(
-    `New exp ${diff.newClientExperiments.length} UI ${diff.newUI.length} strings +${countKeys(stringDiff.added)} −${countKeys(stringDiff.removed)} ~${countKeys(stringDiff.modified)}`,
+    `Lines +${lineDiff.added} −${lineDiff.removed} | exp +${diff.newClientExperiments.length} strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
   );
-  await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, stats });
+  await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   console.log('✅ Done');
 }
 
