@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Statut Discord — Canary Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="nav">
+    <a class="nav-brand" href="index.html"><span class="nav-logo">◈</span> Canary Lab</a>
+    <div class="nav-links">
+      <a href="index.html">Experiments</a>
+      <a href="shop.html">Boutique</a>
+      <a class="active" href="status.html">Statut</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="header">
+      <div class="brand-block">
+        <h1>Statut Discord</h1>
+        <p class="subtitle">Live depuis discordstatus.com · composants & incidents</p>
+      </div>
+    </header>
+
+    <div class="status-hero" id="hero">
+      <div class="status-dot" id="hero-dot"></div>
+      <div>
+        <div style="font-weight:800;font-size:1.15rem" id="hero-title">Chargement…</div>
+        <div class="subtitle" id="hero-sub"></div>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Composants par statut</h3>
+        <div class="chart-wrap"><canvas id="chartStatus"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Impact des incidents récents</h3>
+        <div class="chart-wrap"><canvas id="chartImpact"></canvas></div>
+      </div>
+    </div>
+
+    <h2 style="font-size:1.1rem;margin:0 0 0.75rem">Composants</h2>
+    <div id="components" style="margin-bottom:1.75rem"></div>
+
+    <h2 style="font-size:1.1rem;margin:0 0 0.75rem">Incidents récents</h2>
+    <div id="incidents"></div>
+
+    <footer class="footer">
+      <span>Source · <a href="https://discordstatus.com" target="_blank" rel="noopener">discordstatus.com</a></span>
+      <span id="updated"></span>
+    </footer>
+  </div>
+
+  <script src="status.js"></script>
+</body>
+</html>

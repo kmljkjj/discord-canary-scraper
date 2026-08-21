@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Discord Experiments — Canary</title>
-  <meta name="description" content="Galerie stylée des experiments Discord Canary" />
+  <title>Experiments — Discord Canary</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -14,42 +13,50 @@
   <div class="bg-glow"></div>
   <div class="bg-grid"></div>
 
-  <header class="header">
-    <div class="brand">
-      <div class="logo">◈</div>
-      <div>
+  <nav class="nav">
+    <a class="nav-brand" href="index.html"><span class="nav-logo">◈</span> Canary Lab</a>
+    <div class="nav-links">
+      <a class="active" href="index.html">Experiments</a>
+      <a href="shop.html">Boutique</a>
+      <a href="status.html">Statut</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="header">
+      <div class="brand-block">
         <h1>Experiments</h1>
-        <p class="subtitle">Discord Canary · live from your scraper</p>
+        <p class="subtitle">Discord Canary · données du scraper</p>
       </div>
-    </div>
-    <div class="stats" id="stats">
-      <div class="stat"><span class="stat-val" id="stat-total">—</span><span class="stat-label">Total</span></div>
-      <div class="stat"><span class="stat-val" id="stat-user">—</span><span class="stat-label">User</span></div>
-      <div class="stat"><span class="stat-val" id="stat-guild">—</span><span class="stat-label">Guild</span></div>
-      <div class="stat"><span class="stat-val" id="stat-apex">—</span><span class="stat-label">Apex</span></div>
-    </div>
-  </header>
+      <div class="stats">
+        <div class="stat"><span class="stat-val" id="stat-total">—</span><span class="stat-label">Total</span></div>
+        <div class="stat"><span class="stat-val" id="stat-user">—</span><span class="stat-label">User</span></div>
+        <div class="stat"><span class="stat-val" id="stat-guild">—</span><span class="stat-label">Guild</span></div>
+        <div class="stat"><span class="stat-val" id="stat-apex">—</span><span class="stat-label">Apex</span></div>
+      </div>
+    </header>
 
-  <section class="toolbar">
-    <div class="search-wrap">
-      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Rechercher un experiment…" autocomplete="off" />
-    </div>
-    <div class="filters">
-      <button class="chip active" data-filter="all">Tous</button>
-      <button class="chip" data-filter="user">User</button>
-      <button class="chip" data-filter="guild">Guild</button>
-      <button class="chip" data-filter="apex">Apex</button>
-    </div>
-    <div class="meta" id="meta">Chargement…</div>
-  </section>
+    <section class="toolbar">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Rechercher un experiment…" autocomplete="off" />
+      </div>
+      <div class="filters">
+        <button class="chip active" data-filter="all">Tous</button>
+        <button class="chip" data-filter="user">User</button>
+        <button class="chip" data-filter="guild">Guild</button>
+        <button class="chip" data-filter="apex">Apex</button>
+      </div>
+      <div class="meta" id="meta">Chargement…</div>
+    </section>
 
-  <main class="grid" id="grid"></main>
+    <main class="grid" id="grid"></main>
 
-  <footer class="footer">
-    <span>Data · <a href="https://github.com/kmljkjj/discord-canary-scraper" target="_blank" rel="noopener">discord-canary-scraper</a></span>
-    <span id="updated"></span>
-  </footer>
+    <footer class="footer">
+      <span>Data · <a href="https://github.com/kmljkjj/discord-canary-scraper" target="_blank" rel="noopener">discord-canary-scraper</a></span>
+      <span id="updated"></span>
+    </footer>
+  </div>
 
   <script src="app.js"></script>
 </body>
