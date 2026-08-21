@@ -1,7 +1,7 @@
 /**
  * Discord Canary scraper
- * - Real line/token diff on JS assets (like Wumpus discrapper git +/-)
- * - Strings: 6-char base64 keys (discrapper-canary format)
+ * Strings: Wumpus discrapper-canary style (6-char keys + dense i18n scan)
+ * Lines: real JS asset token/line diff across builds
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -13,6 +13,12 @@ const {
   formatNewUiDescription,
   formatExperimentWithUi,
 } = require('./ui_experiments');
+const {
+  extractStringsFromContent,
+  diffStrings,
+  formatStringsEmbed,
+  fetchWumpusStrings,
+} = require('./strings_extract');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
@@ -26,6 +32,7 @@ const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
+const SEED_WUMPUS = process.env.SEED_WUMPUS_STRINGS !== '0';
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
@@ -80,8 +87,7 @@ async function downloadPriorityAssets(assetUrls) {
   await fs.ensureDir(ASSETS_DIR);
   const web = assetUrls.filter((u) => /\/assets\/web\.[a-f0-9]+\.js/i.test(u));
   const otherJs = assetUrls.filter((u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u));
-  // More chunks = better strings coverage (Wumpus pulls hundreds)
-  const toFetch = [...web, ...otherJs.slice(0, 80)];
+  const toFetch = [...web, ...otherJs.slice(0, 100)];
   for (const url of toFetch) {
     const name = path.basename(url.split('?')[0]);
     const dest = path.join(ASSETS_DIR, name);
@@ -99,24 +105,17 @@ async function downloadPriorityAssets(assetUrls) {
   }
 }
 
-/** Logical role so web.abc.js matches web.xyz.js across builds */
 function logicalName(filename) {
   if (/^web\.[a-f0-9]+\.js$/i.test(filename)) return 'web';
   if (/^sentry\./i.test(filename)) return 'sentry';
-  // strip long hex hashes in the middle: foo.a1b2c3d4.js -> foo.js
   return filename.replace(/\.[a-f0-9]{8,}\./i, '.').replace(/\.[a-f0-9]{16,}/i, '');
 }
 
-/**
- * Diff stats between two file contents.
- * Minified bundles are often 1–few lines → split on ';' tokens (Wumpus-like volume).
- */
 function diffStats(oldText, newText) {
   if (oldText === newText) return { added: 0, removed: 0 };
   const oldLines = oldText.split(/\r?\n/);
   const newLines = newText.split(/\r?\n/);
   const minified = oldLines.length <= 8 && newLines.length <= 8;
-
   if (minified) {
     const o = oldText.split(';');
     const n = newText.split(';');
@@ -128,7 +127,6 @@ function diffStats(oldText, newText) {
     for (const t of o) if (!nSet.has(t)) removed++;
     return { added, removed };
   }
-
   const oSet = new Set(oldLines);
   const nSet = new Set(newLines);
   let added = 0;
@@ -149,7 +147,6 @@ async function computeLineDiff() {
   let added = 0;
   let removed = 0;
   const details = [];
-
   const prevFiles = (await fs.pathExists(PREV_ASSETS_DIR))
     ? (await fs.readdir(PREV_ASSETS_DIR)).filter((f) => f.endsWith('.js'))
     : [];
@@ -160,13 +157,11 @@ async function computeLineDiff() {
   const prevByLogical = new Map();
   for (const f of prevFiles) {
     const key = logicalName(f);
-    // prefer largest file for a logical name
     const full = path.join(PREV_ASSETS_DIR, f);
     const st = await fs.stat(full);
     const prev = prevByLogical.get(key);
     if (!prev || st.size > prev.size) prevByLogical.set(key, { file: f, size: st.size });
   }
-
   const currByLogical = new Map();
   for (const f of currFiles) {
     const key = logicalName(f);
@@ -203,8 +198,7 @@ async function computeLineDiff() {
       if (d.added || d.removed) details.push({ key, ...d });
     }
   }
-
-  console.log(`Line/token diff: +${added} −${removed} (${details.length} files changed)`);
+  console.log(`Line/token diff: +${added} −${removed}`);
   return { added, removed, details: details.slice(0, 20) };
 }
 
@@ -217,39 +211,6 @@ function extractEndpoints(content, outMap) {
     /["']?([A-Z][A-Z0-9_]{6,120})["']?\s*:\s*["'](\/(?:api\/v\d+|users|guilds|channels|quests|oauth2|store|partners|applications)[a-zA-Z0-9_\-\/{}.@]*)["']/g;
   let m;
   while ((m = re.exec(content)) !== null) outMap.set(m[1], m[2]);
-}
-
-function shouldKeepString(key, val) {
-  if (!key || typeof val !== 'string') return false;
-  if (!/^[A-Za-z0-9+/]{6}$/.test(key)) return false;
-  const v = val.trim();
-  if (v.length < 1 || v.length > 500) return false;
-  if (/discord_web[-_]|webpack|function\s*\(|=>\s*\{/i.test(v)) return false;
-  if (/^[a-f0-9]{16,}$/i.test(v)) return false;
-  if (/^https?:\/\//i.test(v) && v.length > 80) return false;
-  if (!/[A-Za-zÀ-ÿ]/.test(v) && v.length < 2) return false;
-  return true;
-}
-
-function extractStrings(content, outMap) {
-  // Double and single quoted; also unquoted values rare — skip
-  const patterns = [
-    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g,
-    /([A-Za-z0-9+/]{6}):\"((?:[^\"\\]|\\.){1,500})\"/g,
-  ];
-  for (const re of patterns) {
-    let m;
-    while ((m = re.exec(content)) !== null) {
-      let val = m[2];
-      val = val
-        .replace(/\\n/g, '\n')
-        .replace(/\\t/g, '\t')
-        .replace(/\\'/g, "'")
-        .replace(/\\"/g, '"')
-        .replace(/\\\\/g, '\\');
-      if (shouldKeepString(m[1], val)) outMap.set(m[1], val);
-    }
-  }
 }
 
 async function analyzeAssets() {
@@ -268,10 +229,10 @@ async function analyzeAssets() {
       const st = await fs.stat(full);
       let content = await fs.readFile(full, 'utf8');
       if (st.size > 15_000_000 && !/^web\./i.test(file)) content = content.slice(0, 8_000_000);
-      console.log(`  scan ${file} (${Math.round(st.size / 1024)}kb)`);
+      console.log(`  scan ${file}`);
       const linked = extractUiAndExperiments(content);
       extractEndpoints(content, endpointMap);
-      extractStrings(content, stringMap);
+      extractStringsFromContent(content, stringMap);
       for (const e of linked.experiments) {
         if (!isExpId(e.id)) continue;
         if (!expMap.has(e.id)) expMap.set(e.id, { ...e });
@@ -327,11 +288,11 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   const hasNewUI = (diff.newUI || []).length > 0;
   const hasNewExp =
     (diff.newClientExperiments || []).length + (diff.newGuild || []).length > 0;
-  const strLines = [];
-  for (const [k, v] of Object.entries(stringDiff.added || {})) strLines.push(`+ ${k}: ${v}`);
-  for (const [k, v] of Object.entries(stringDiff.modified || {})) strLines.push(`~ ${k}: ${v}`);
-  for (const [k, v] of Object.entries(stringDiff.removed || {})) strLines.push(`- ${k}: ${v}`);
-  const hasStrings = strLines.length > 0;
+  const hasStrings =
+    countKeys(stringDiff.added) +
+      countKeys(stringDiff.removed) +
+      countKeys(stringDiff.modified) >
+    0;
   const epLines = [];
   for (const [k, v] of Object.entries(endpointDiff.added || {})) epLines.push(`+ ${k}: ${v}`);
   for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
@@ -360,13 +321,12 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
               value: [
                 hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
                 hasStrings
-                  ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`
+                  ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`
                   : null,
                 hasEndpoints
                   ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
                   : null,
                 hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
-                `JS files Δ ${lineDiff?.details?.length || 0}`,
               ]
                 .filter(Boolean)
                 .join('\n') || 'check',
@@ -381,18 +341,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   if (hasStrings) {
     await postWebhook({
       username: 'Canary Scraper',
-      embeds: [
-        {
-          title: 'Strings',
-          description:
-            '_Added · removed · modified_\n```\n' +
-            strLines.slice(0, 40).join('\n').slice(0, 3500) +
-            '\n```\n\n**Build Id** — ' +
-            build.buildNumber,
-          color: 0x57f287,
-          timestamp: new Date().toISOString(),
-        },
-      ],
+      embeds: [formatStringsEmbed(stringDiff, build.buildNumber)],
     });
   }
 
@@ -437,7 +386,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
 }
 
 async function main() {
-  console.log('🔍 Canary scrape\n');
+  console.log('🔍 Canary scrape (Wumpus-style strings)\n');
   await fs.ensureDir(DATA_DIR);
   const html = await httpGet(CANARY_APP);
   const env = parseGlobalEnv(html);
@@ -467,7 +416,6 @@ async function main() {
     if (await fs.pathExists(webPath)) webOk = (await fs.stat(webPath)).size > 2_000_000;
   }
 
-  // Snapshot BEFORE wipe so we can diff lines (Wumpus-style)
   if (isNewBuild || !webOk) {
     if (isNewBuild) {
       await snapshotPrevAssets();
@@ -477,8 +425,24 @@ async function main() {
   }
 
   const lineDiff = await computeLineDiff();
-
   const findings = await analyzeAssets();
+
+  // Optional: merge missing keys from Wumpus public strings.json (same format)
+  if (SEED_WUMPUS && Object.keys(findings.strings).length < 5000) {
+    console.log('Seeding/merging Wumpus strings.json for coverage…');
+    const wumpus = await fetchWumpusStrings(fetch);
+    if (wumpus) {
+      let merged = 0;
+      for (const [k, v] of Object.entries(wumpus)) {
+        if (!(k in findings.strings)) {
+          findings.strings[k] = v;
+          merged++;
+        }
+      }
+      console.log(`Merged ${merged} keys from Wumpus (${Object.keys(findings.strings).length} total)`);
+    }
+  }
+
   console.log(
     'Experiments',
     findings.experiments.length,
@@ -509,20 +473,23 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
+  // Keep only real i18n keys
   const cleanedPrev = {};
   for (const [k, v] of Object.entries(prevStrings)) {
     if (/^[A-Za-z0-9+/]{6}$/.test(k)) cleanedPrev[k] = v;
   }
-  prevStrings = cleanedPrev;
 
-  const stringDiff = { added: {}, modified: {}, removed: {} };
-  for (const [k, v] of Object.entries(findings.strings)) {
-    if (!(k in prevStrings)) stringDiff.added[k] = v;
-    else if (prevStrings[k] !== v) stringDiff.modified[k] = v;
+  const stringDiff = diffStrings(cleanedPrev, findings.strings);
+  // First meaningful strings file: seed without flooding webhook
+  const prevCount = Object.keys(cleanedPrev).length;
+  const isStringSeed = prevCount < 100 && Object.keys(findings.strings).length > 500;
+  if (isStringSeed) {
+    console.log('Strings baseline seed — skip notify flood');
+    stringDiff.added = {};
+    stringDiff.removed = {};
+    stringDiff.modified = {};
   }
-  for (const [k, v] of Object.entries(prevStrings)) {
-    if (!(k in findings.strings)) stringDiff.removed[k] = v;
-  }
+
   await fs.writeJson(STRINGS_FILE, findings.strings, { spaces: 2 });
 
   let prevEndpoints = {};
@@ -560,7 +527,7 @@ async function main() {
   );
 
   console.log(
-    `Lines +${lineDiff.added} −${lineDiff.removed} | exp +${diff.newClientExperiments.length} strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}`,
+    `Lines +${lineDiff.added} −${lineDiff.removed} | strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`,
   );
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   console.log('✅ Done');
