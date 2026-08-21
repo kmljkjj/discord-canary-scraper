@@ -1,5 +1,6 @@
 /**
  * Discord Canary scraper (compact) + UI linked to experiments
+ * Strings format aligned with Wumpus-Central/discrapper-canary data/strings.json
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -106,24 +107,36 @@ function extractEndpoints(content, outMap) {
   while ((m = re.exec(content)) !== null) outMap.set(m[1], m[2]);
 }
 
+/**
+ * Real Discord i18n keys (same as Wumpus discrapper-canary strings.json):
+ * exactly 6 chars from base64 alphabet A-Za-z0-9+/
+ */
 function shouldKeepString(key, val) {
   if (!key || typeof val !== 'string') return false;
+  if (!/^[A-Za-z0-9+/]{6}$/.test(key)) return false;
   const v = val.trim();
-  if (v.length < 2 || v.length > 400) return false;
-  if (/discord_web|webpack|function\s*\(/i.test(v)) return false;
+  if (v.length < 1 || v.length > 500) return false;
+  if (/discord_web[-_]|webpack|function\s*\(|=>\s*\{/i.test(v)) return false;
   if (/^[a-f0-9]{16,}$/i.test(v)) return false;
-  if (!/^[A-Za-z0-9]{5,8}$/.test(key) && !/^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/.test(key))
-    return false;
-  if (!/[A-Za-zÀ-ÿ]{2,}/.test(v)) return false;
+  if (/^https?:\/\/canary\.discord\.com\/assets\//i.test(v)) return false;
+  if (!/[A-Za-zÀ-ÿ]{1,}/.test(v) && v.length < 2) return false;
   return true;
 }
 
 function extractStrings(content, outMap) {
+  // "AbC12+": "Some UI text"  or  'ZEs/pI': 'Add reaction'
   const re =
-    /["']([A-Za-z0-9_]{5,80})["']\s*:\s*["']((?:[^"'\\]|\\.){1,400})["']/g;
+    /["']([A-Za-z0-9+/]{6})["']\s*:\s*["']((?:[^"'\\]|\\.){1,500})["']/g;
   let m;
   while ((m = re.exec(content)) !== null) {
-    if (shouldKeepString(m[1], m[2])) outMap.set(m[1], m[2]);
+    let val = m[2];
+    val = val
+      .replace(/\\n/g, '\n')
+      .replace(/\\t/g, '\t')
+      .replace(/\\'/g, "'")
+      .replace(/\\"/g, '"')
+      .replace(/\\\\/g, '\\');
+    if (shouldKeepString(m[1], val)) outMap.set(m[1], val);
   }
 }
 
@@ -347,7 +360,14 @@ async function main() {
   }
 
   const findings = await analyzeAssets();
-  console.log('Experiments', findings.experiments.length, 'UI', findings.ui.length);
+  console.log(
+    'Experiments',
+    findings.experiments.length,
+    'UI',
+    findings.ui.length,
+    'Strings',
+    Object.keys(findings.strings).length,
+  );
 
   let previous = null;
   try {
@@ -370,6 +390,13 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
+  // Drop old junk keys that are not real i18n (migration)
+  const cleanedPrev = {};
+  for (const [k, v] of Object.entries(prevStrings)) {
+    if (/^[A-Za-z0-9+/]{6}$/.test(k)) cleanedPrev[k] = v;
+  }
+  prevStrings = cleanedPrev;
+
   const stringDiff = { added: {}, modified: {}, removed: {} };
   for (const [k, v] of Object.entries(findings.strings)) {
     if (!(k in prevStrings)) stringDiff.added[k] = v;
@@ -393,7 +420,6 @@ async function main() {
   }
   await fs.writeJson(ENDPOINTS_FILE, findings.endpoints, { spaces: 2 });
 
-  // Totaux type “lines” = items ajoutés / supprimés (strings + endpoints + experiments + UI)
   const stats = {
     added:
       countKeys(stringDiff.added) +
@@ -414,6 +440,7 @@ async function main() {
     releaseChannel: env.RELEASE_CHANNEL || 'canary',
     scrapedAt: new Date().toISOString(),
     experimentCount: findings.experiments.length,
+    stringCount: Object.keys(findings.strings).length,
     stats,
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
