@@ -1,7 +1,7 @@
 /**
  * Discord Canary scraper
- * Strings: Wumpus discrapper-canary style (6-char keys + dense i18n scan)
- * Lines: real JS asset token/line diff across builds (only on NEW build)
+ * Strings: strict Wumpus-style i18n only (no hashes / build numbers)
+ * Lines: JS asset diff on NEW build only
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -18,6 +18,7 @@ const {
   diffStrings,
   formatStringsEmbed,
   fetchWumpusStrings,
+  sanitizeStringsMap,
 } = require('./strings_extract');
 
 const CANARY_APP = 'https://canary.discord.com/app';
@@ -154,7 +155,6 @@ async function computeLineDiff() {
     ? (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'))
     : [];
 
-  // No previous snapshot → no meaningful line diff (avoids +70000 spam)
   if (!prevFiles.length) {
     console.log('Line diff skipped (no assets_prev baseline)');
     return { added: 0, removed: 0, details: [], skipped: true };
@@ -305,10 +305,8 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
   const hasEndpoints = epLines.length > 0;
 
-  // REAL content only — never notify just because of line noise
   const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
 
-  // Same build + nothing useful → silent (fixes spam)
   if (!isNewBuild && !hasContent) {
     console.log('No notify (same build, no content delta)');
     return;
@@ -317,7 +315,6 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   const added = isNewBuild && !lineDiff?.skipped ? lineDiff?.added ?? 0 : 0;
   const removed = isNewBuild && !lineDiff?.skipped ? lineDiff?.removed ?? 0 : 0;
 
-  // New build with zero content and zero line baseline → still announce once
   if (isNewBuild || hasContent) {
     const deltaParts = [
       hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
@@ -356,10 +353,13 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   }
 
   if (hasStrings) {
-    await postWebhook({
-      username: 'Canary Scraper',
-      embeds: [formatStringsEmbed(stringDiff, build.buildNumber)],
-    });
+    const emb = formatStringsEmbed(stringDiff, build.buildNumber);
+    if (emb) {
+      await postWebhook({
+        username: 'Canary Scraper',
+        embeds: [emb],
+      });
+    }
   }
 
   if (hasEndpoints) {
@@ -403,7 +403,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
 }
 
 async function main() {
-  console.log('🔍 Canary scrape (Wumpus-style strings)\n');
+  console.log('🔍 Canary scrape (strict Wumpus strings)\n');
   await fs.ensureDir(DATA_DIR);
   const html = await httpGet(CANARY_APP);
   const env = parseGlobalEnv(html);
@@ -441,14 +441,14 @@ async function main() {
     await downloadPriorityAssets(assetUrls);
   }
 
-  // Line diff only useful on new build
   const lineDiff = isNewBuild
     ? await computeLineDiff()
     : { added: 0, removed: 0, details: [], skipped: true };
 
   const findings = await analyzeAssets();
+  findings.strings = sanitizeStringsMap(findings.strings);
 
-  if (SEED_WUMPUS && Object.keys(findings.strings).length < 5000) {
+  if (SEED_WUMPUS && Object.keys(findings.strings).length < 3000) {
     console.log('Seeding/merging Wumpus strings.json for coverage…');
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
@@ -459,6 +459,7 @@ async function main() {
           merged++;
         }
       }
+      findings.strings = sanitizeStringsMap(findings.strings);
       console.log(`Merged ${merged} keys from Wumpus (${Object.keys(findings.strings).length} total)`);
     }
   }
@@ -493,16 +494,13 @@ async function main() {
   try {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
-  const cleanedPrev = {};
-  for (const [k, v] of Object.entries(prevStrings)) {
-    if (/^[A-Za-z0-9+/]{6}$/.test(k)) cleanedPrev[k] = v;
-  }
+  const cleanedPrev = sanitizeStringsMap(prevStrings);
+  findings.strings = sanitizeStringsMap(findings.strings);
 
   const stringDiff = diffStrings(cleanedPrev, findings.strings);
-  const prevCount = Object.keys(cleanedPrev).length;
-  const isStringSeed = prevCount < 100 && Object.keys(findings.strings).length > 500;
-  if (isStringSeed) {
-    console.log('Strings baseline seed — skip notify flood');
+  // Purging old junk (hashes / build numbers) must not spam the channel
+  if (countKeys(stringDiff.removed) > 20 && countKeys(stringDiff.added) < 10) {
+    console.log('Strings junk purge — skip notify flood');
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
