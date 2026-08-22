@@ -1,6 +1,6 @@
 /**
  * Discord Canary scraper
- * Strings: strict Wumpus-style i18n
+ * Strings: strict Wumpus-style i18n (merge partial scans)
  * Routes: Wumpus data/routes.json style
  * Lines: persistent stats in data/asset_stats.json
  * Notify: deduped via notify_guard
@@ -396,7 +396,13 @@ async function main() {
   findings.strings = sanitizeStringsMap(findings.strings);
   findings.endpoints = sanitizeRoutesMap(findings.endpoints);
 
-  if (Object.keys(findings.endpoints).length < 200) {
+  let diskRouteCount = 0;
+  try {
+    if (await fs.pathExists(ROUTES_FILE)) {
+      diskRouteCount = Object.keys(await fs.readJson(ROUTES_FILE)).length;
+    }
+  } catch {}
+  if (diskRouteCount < 50 && Object.keys(findings.endpoints).length < 50) {
     await log.info('Seeding routes from Wumpus routes.json…');
     const wr = await fetchWumpusRoutes(fetch);
     if (wr) {
@@ -408,14 +414,21 @@ async function main() {
         }
       }
       findings.endpoints = sanitizeRoutesMap(findings.endpoints);
-      await log.info('Merged Wumpus routes', {
+      await log.info('Merged Wumpus routes (one-time seed)', {
         merged,
         total: Object.keys(findings.endpoints).length,
       });
     }
   }
 
-  if (SEED_WUMPUS && Object.keys(findings.strings).length < 3000) {
+  // Seed only when we have almost no local baseline (avoid re-merge every run)
+  let diskStringCount = 0;
+  try {
+    if (await fs.pathExists(STRINGS_FILE)) {
+      diskStringCount = Object.keys(await fs.readJson(STRINGS_FILE)).length;
+    }
+  } catch {}
+  if (SEED_WUMPUS && diskStringCount < 100 && Object.keys(findings.strings).length < 500) {
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
       let merged = 0;
@@ -426,7 +439,7 @@ async function main() {
         }
       }
       findings.strings = sanitizeStringsMap(findings.strings);
-      await log.info('Merged Wumpus strings', {
+      await log.info('Merged Wumpus strings (one-time seed)', {
         merged,
         total: Object.keys(findings.strings).length,
       });
@@ -466,11 +479,24 @@ async function main() {
     if (await fs.pathExists(STRINGS_FILE)) prevStrings = await fs.readJson(STRINGS_FILE);
   } catch {}
   const cleanedPrev = sanitizeStringsMap(prevStrings);
-  findings.strings = sanitizeStringsMap(findings.strings);
+  const extracted = sanitizeStringsMap(findings.strings);
 
-  const stringDiff = diffStrings(cleanedPrev, findings.strings);
-  if (countKeys(stringDiff.removed) > 20 && countKeys(stringDiff.added) < 10) {
-    await log.info('Strings junk purge — skip notify');
+  // Incomplete local scan must NOT wipe the baseline (would spam −thousands of strings)
+  const mergedStrings = { ...cleanedPrev, ...extracted };
+  findings.strings = mergedStrings;
+
+  const stringDiff = diffStrings(cleanedPrev, mergedStrings);
+  if (Object.keys(extracted).length < 500) {
+    if (countKeys(stringDiff.removed) > 0) {
+      await log.info('Strings: ignore removals (partial scan)', {
+        extracted: Object.keys(extracted).length,
+        removedIgnored: countKeys(stringDiff.removed),
+      });
+    }
+    stringDiff.removed = {};
+  }
+  if (countKeys(stringDiff.added) > 500 && Object.keys(cleanedPrev).length < 100) {
+    await log.info('Strings baseline seed — skip notify flood');
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
@@ -484,14 +510,24 @@ async function main() {
     else if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
   } catch {}
   prevEndpoints = sanitizeRoutesMap(prevEndpoints);
-  findings.endpoints = sanitizeRoutesMap(findings.endpoints);
+  const extractedRoutes = sanitizeRoutesMap(findings.endpoints);
+  const mergedRoutes = { ...prevEndpoints, ...extractedRoutes };
+  findings.endpoints = mergedRoutes;
 
-  const endpointDiff = diffRoutes(prevEndpoints, findings.endpoints);
+  const endpointDiff = diffRoutes(prevEndpoints, mergedRoutes);
+  if (Object.keys(extractedRoutes).length < 30) {
+    if (countKeys(endpointDiff.removed) > 0) {
+      await log.info('Routes: ignore removals (partial scan)', {
+        extracted: Object.keys(extractedRoutes).length,
+      });
+    }
+    endpointDiff.removed = {};
+  }
   if (
     Object.keys(prevEndpoints).length < 50 ||
-    (countKeys(endpointDiff.removed) > 30 && countKeys(endpointDiff.added) < 15)
+    (countKeys(endpointDiff.added) > 200 && Object.keys(prevEndpoints).length < 50)
   ) {
-    await log.info('Routes baseline/cleanup — skip endpoint notify flood');
+    await log.info('Routes baseline — skip endpoint notify flood');
     endpointDiff.added = {};
     endpointDiff.removed = {};
     endpointDiff.modified = {};
@@ -540,8 +576,10 @@ async function main() {
   console.log('✅ Done');
 }
 
-main().catch(async (e) => {
-  await log.error('scrape failed', { err: String(e.message || e) });
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch(async (e) => {
+    await log.error('scrape failed', { err: String(e.message || e) });
+    console.error(e);
+    process.exit(1);
+  });
+}
