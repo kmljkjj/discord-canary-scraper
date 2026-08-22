@@ -46,7 +46,8 @@ async function main() {
   await log.info(`Build ${buildNumber}`, { isNew, ms: Date.now() - t0 });
 
   if (!isNew || !WEBHOOK_URL) {
-    await log.info('watch_build skip (not new or no webhook)');
+    if (!isNew) await log.info('watch_build skip (same build)');
+    else await log.info('watch_build skip (no DISCORD_WEBHOOK_URL)');
     process.exit(0);
   }
 
