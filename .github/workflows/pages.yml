@@ -3,9 +3,6 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'docs/**'
-      - 'data/findings.json'
   workflow_dispatch:
 
 permissions:
@@ -33,19 +30,34 @@ jobs:
             echo '{"experiments":[],"scrapedAt":null}' > docs/data/findings.json
             echo "Placeholder findings.json"
           fi
+          [ -f data/routes.json ] && cp data/routes.json docs/data/routes.json || true
+          [ -f data/build.json ] && cp data/build.json docs/data/build.json || true
 
-      - uses: actions/configure-pages@v5
+      - name: Configure Pages
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@v5
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        if: steps.pages.outcome == 'success'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
+      - name: Pages not enabled
+        if: steps.pages.outcome != 'success'
+        run: |
+          echo "::warning::GitHub Pages not configured. Enable: Settings → Pages → Source: GitHub Actions"
+          exit 0
+
   deploy:
     needs: build
+    if: needs.build.result == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
