@@ -52,7 +52,7 @@ function taskSummary(config) {
   for (const [key, val] of Object.entries(tasks)) {
     const target = val?.target ?? val?.target_seconds ?? '?';
     const type = val?.type || val?.event_name || key;
-    lines.push(`• **${type}** — target \`${target}\``);
+    lines.push(`• **${type}** — target \`${target}\`);
   }
   return lines.length ? lines.join('\n') : '_No task info_';
 }
@@ -264,7 +264,6 @@ async function sendQuestWebhook(quest) {
     return false;
   }
 
-  // Default: classic embed (reliable). V2 only if QUEST_COMPONENTS_V2=1
   if (USE_COMPONENTS_V2) {
     const v2 = await postWebhook({
       username: 'Discord Quests',
@@ -334,7 +333,6 @@ async function main() {
   const active = quests.filter((q) => {
     const exp = q.expiresAt ? Date.parse(q.expiresAt) : null;
     const start = q.startsAt ? Date.parse(q.startsAt) : null;
-    // keep upcoming (starts within 7d) and not expired
     if (start && start > now + 7 * 86400000) return false;
     if (exp && exp < now) return false;
     return true;
@@ -351,7 +349,6 @@ async function main() {
   const isFirstRun = prevIds.size === 0;
 
   const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
-  // Keep known + currently active (don't lose history of seen ids)
   const allIds = [...new Set([...prevIds, ...active.map((q) => q.id)])];
 
   await fs.writeJson(
@@ -387,7 +384,9 @@ async function main() {
   console.log('✅ Quests check done');
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
