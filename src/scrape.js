@@ -1,8 +1,9 @@
 /**
  * Discord Canary scraper
  * Strings: strict Wumpus-style i18n
- * Lines: persistent stats in data/asset_stats.json (survives GHA)
- * Notify: deduped via notify_guard (no double messages)
+ * Routes: Wumpus data/routes.json style
+ * Lines: persistent stats in data/asset_stats.json
+ * Notify: deduped via notify_guard
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -29,6 +30,13 @@ const {
 } = require('./line_diff');
 const { log } = require('./logger');
 const { claim, wasBuildAnnounced, hashPayload } = require('./notify_guard');
+const {
+  extractEndpointsFromContent,
+  sanitizeRoutesMap,
+  diffRoutes,
+  formatEndpointsEmbed,
+  fetchWumpusRoutes,
+} = require('./endpoints_extract');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
@@ -40,6 +48,7 @@ const BUILD_FILE = path.join(DATA_DIR, 'build.json');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
+const ROUTES_FILE = path.join(DATA_DIR, 'routes.json');
 const ASSET_STATS_FILE = path.join(DATA_DIR, 'asset_stats.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const SEED_WUMPUS = process.env.SEED_WUMPUS_STRINGS !== '0';
@@ -119,13 +128,6 @@ function isExpId(id) {
   return /^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id) && !/^20\d{2}-\d{2}$/.test(id);
 }
 
-function extractEndpoints(content, outMap) {
-  const re =
-    /["']?([A-Z][A-Z0-9_]{6,120})["']?\s*:\s*["'](\/(?:api\/v\d+|users|guilds|channels|quests|oauth2|store|partners|applications)[a-zA-Z0-9_\-\/{}.@]*)["']/g;
-  let m;
-  while ((m = re.exec(content)) !== null) outMap.set(m[1], m[2]);
-}
-
 async function analyzeAssets() {
   if (!(await fs.pathExists(ASSETS_DIR))) {
     return { experiments: [], endpoints: {}, ui: [], strings: {} };
@@ -144,7 +146,7 @@ async function analyzeAssets() {
       if (st.size > 15_000_000 && !/^web\./i.test(file)) content = content.slice(0, 8_000_000);
       console.log(`  scan ${file}`);
       const linked = extractUiAndExperiments(content);
-      extractEndpoints(content, endpointMap);
+      extractEndpointsFromContent(content, endpointMap);
       extractStringsFromContent(content, stringMap);
       for (const e of linked.experiments) {
         if (!isExpId(e.id)) continue;
@@ -219,10 +221,11 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
       countKeys(stringDiff.removed) +
       countKeys(stringDiff.modified) >
     0;
-  const epLines = [];
-  for (const [k, v] of Object.entries(endpointDiff.added || {})) epLines.push(`+ ${k}: ${v}`);
-  for (const [k, v] of Object.entries(endpointDiff.removed || {})) epLines.push(`- ${k}: ${v}`);
-  const hasEndpoints = epLines.length > 0;
+  const hasEndpoints =
+    countKeys(endpointDiff.added) +
+      countKeys(endpointDiff.removed) +
+      countKeys(endpointDiff.modified || {}) >
+    0;
 
   const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
 
@@ -236,14 +239,18 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   const removed = showLines ? lineDiff.removed : 0;
   const alreadyAnnounced = isNewBuild && (await wasBuildAnnounced(build.buildNumber));
 
-  if ((isNewBuild && !alreadyAnnounced) || (!isNewBuild && hasContent) || (isNewBuild && alreadyAnnounced && (hasContent || showLines))) {
+  if (
+    (isNewBuild && !alreadyAnnounced) ||
+    (!isNewBuild && hasContent) ||
+    (isNewBuild && alreadyAnnounced && (hasContent || showLines))
+  ) {
     const deltaParts = [
       hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
       hasStrings
         ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`
         : null,
       hasEndpoints
-        ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}`
+        ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}/~${countKeys(endpointDiff.modified || {})}`
         : null,
       hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
     ].filter(Boolean);
@@ -254,7 +261,6 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
         : 'New Discord Canary Build'
       : 'Canary Changes';
 
-    // If early announce already sent and nothing extra, skip second card
     if (isNewBuild && alreadyAnnounced && !hasContent && !showLines) {
       await log.info('Skip build card (early announce only)', { build: build.buildNumber });
     } else {
@@ -298,24 +304,13 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   }
 
   if (hasEndpoints) {
-    await postWebhook(
-      {
-        username: 'Canary Scraper',
-        embeds: [
-          {
-            title: 'Endpoints',
-            description:
-              '```\n' +
-              epLines.slice(0, 40).join('\n').slice(0, 3500) +
-              '\n```\n\n**Build Id** — ' +
-              build.buildNumber,
-            color: 0x5865f2,
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      },
-      `endpoints:${build.buildNumber}:${hashPayload(endpointDiff)}`,
-    );
+    const emb = formatEndpointsEmbed(endpointDiff, build.buildNumber);
+    if (emb) {
+      await postWebhook(
+        { username: 'Canary Scraper', embeds: [emb] },
+        `endpoints:${build.buildNumber}:${hashPayload(endpointDiff)}`,
+      );
+    }
   }
 
   for (const exp of (diff.newClientExperiments || []).slice(0, 10)) {
@@ -399,6 +394,26 @@ async function main() {
 
   const findings = await analyzeAssets();
   findings.strings = sanitizeStringsMap(findings.strings);
+  findings.endpoints = sanitizeRoutesMap(findings.endpoints);
+
+  if (Object.keys(findings.endpoints).length < 200) {
+    await log.info('Seeding routes from Wumpus routes.json…');
+    const wr = await fetchWumpusRoutes(fetch);
+    if (wr) {
+      let merged = 0;
+      for (const [k, v] of Object.entries(wr)) {
+        if (!(k in findings.endpoints)) {
+          findings.endpoints[k] = v;
+          merged++;
+        }
+      }
+      findings.endpoints = sanitizeRoutesMap(findings.endpoints);
+      await log.info('Merged Wumpus routes', {
+        merged,
+        total: Object.keys(findings.endpoints).length,
+      });
+    }
+  }
 
   if (SEED_WUMPUS && Object.keys(findings.strings).length < 3000) {
     const wumpus = await fetchWumpusStrings(fetch);
@@ -411,7 +426,10 @@ async function main() {
         }
       }
       findings.strings = sanitizeStringsMap(findings.strings);
-      await log.info('Merged Wumpus strings', { merged, total: Object.keys(findings.strings).length });
+      await log.info('Merged Wumpus strings', {
+        merged,
+        total: Object.keys(findings.strings).length,
+      });
     }
   }
 
@@ -422,6 +440,8 @@ async function main() {
     findings.ui.length,
     'Strings',
     Object.keys(findings.strings).length,
+    'Routes',
+    Object.keys(findings.endpoints).length,
   );
 
   let previous = null;
@@ -460,15 +480,24 @@ async function main() {
 
   let prevEndpoints = {};
   try {
-    if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
+    if (await fs.pathExists(ROUTES_FILE)) prevEndpoints = await fs.readJson(ROUTES_FILE);
+    else if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
   } catch {}
-  const endpointDiff = { added: {}, removed: {} };
-  for (const [k, v] of Object.entries(findings.endpoints)) {
-    if (!(k in prevEndpoints)) endpointDiff.added[k] = v;
+  prevEndpoints = sanitizeRoutesMap(prevEndpoints);
+  findings.endpoints = sanitizeRoutesMap(findings.endpoints);
+
+  const endpointDiff = diffRoutes(prevEndpoints, findings.endpoints);
+  if (
+    Object.keys(prevEndpoints).length < 50 ||
+    (countKeys(endpointDiff.removed) > 30 && countKeys(endpointDiff.added) < 15)
+  ) {
+    await log.info('Routes baseline/cleanup — skip endpoint notify flood');
+    endpointDiff.added = {};
+    endpointDiff.removed = {};
+    endpointDiff.modified = {};
   }
-  for (const [k, v] of Object.entries(prevEndpoints)) {
-    if (!(k in findings.endpoints)) endpointDiff.removed[k] = v;
-  }
+
+  await fs.writeJson(ROUTES_FILE, findings.endpoints, { spaces: 2 });
   await fs.writeJson(ENDPOINTS_FILE, findings.endpoints, { spaces: 2 });
 
   const build = {
@@ -478,7 +507,12 @@ async function main() {
     scrapedAt: new Date().toISOString(),
     experimentCount: findings.experiments.length,
     stringCount: Object.keys(findings.strings).length,
-    lineDiff: { added: lineDiff.added || 0, removed: lineDiff.removed || 0, skipped: !!lineDiff.skipped },
+    routeCount: Object.keys(findings.endpoints).length,
+    lineDiff: {
+      added: lineDiff.added || 0,
+      removed: lineDiff.removed || 0,
+      skipped: !!lineDiff.skipped,
+    },
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
   await fs.writeJson(
@@ -498,6 +532,8 @@ async function main() {
     linesRemoved: lineDiff.removed || 0,
     stringsAdded: countKeys(stringDiff.added),
     stringsRemoved: countKeys(stringDiff.removed),
+    routesAdded: countKeys(endpointDiff.added),
+    routesRemoved: countKeys(endpointDiff.removed),
   });
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   await log.info('scrape done');
