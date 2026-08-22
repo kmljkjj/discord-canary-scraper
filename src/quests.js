@@ -31,7 +31,7 @@ const IS_COMPONENTS_V2 = 1 << 15;
 function assetUrl(questId, filename) {
   if (!filename) return null;
   if (/^https?:\/\//i.test(filename)) return filename;
-  return `https://cdn.discordapp.com/quests/${questId}/${filename}`;
+  return 'https://cdn.discordapp.com/quests/' + questId + '/' + filename;
 }
 
 function rewardTypeLabel(type) {
@@ -42,7 +42,7 @@ function rewardTypeLabel(type) {
     4: 'Orbs',
     5: 'Fraction of Orbs',
   };
-  return map[type] || `Type ${type}`;
+  return map[type] || 'Type ' + type;
 }
 
 function taskSummary(config) {
@@ -50,20 +50,21 @@ function taskSummary(config) {
   const tasks = tc.tasks || {};
   const lines = [];
   for (const [key, val] of Object.entries(tasks)) {
-    const target = val?.target ?? val?.target_seconds ?? '?';
-    const type = val?.type || val?.event_name || key;
-    lines.push(`• **${type}** — target \`${target}\`);
+    const target = val && (val.target != null ? val.target : val.target_seconds);
+    const t = target != null ? target : '?';
+    const type = (val && (val.type || val.event_name)) || key;
+    lines.push('• **' + type + '** — target `' + t + '`');
   }
   return lines.length ? lines.join('\n') : '_No task info_';
 }
 
 function normalizeQuest(raw) {
-  const id = String(raw.id || raw.config?.id || '');
+  const id = String(raw.id || (raw.config && raw.config.id) || '');
   const config = raw.config || {};
   const messages = config.messages || {};
   const assets = config.assets || {};
   const app = config.application || {};
-  const rewards = config.rewards_config?.rewards || [];
+  const rewards = (config.rewards_config && config.rewards_config.rewards) || [];
   const colors = config.colors || {};
 
   const hero =
@@ -81,7 +82,7 @@ function normalizeQuest(raw) {
 
   return {
     id,
-    name: messages.quest_name || messages.game_title || app.name || `Quest ${id}`,
+    name: messages.quest_name || messages.game_title || app.name || 'Quest ' + id,
     gameTitle: messages.game_title || app.name || null,
     publisher: messages.game_publisher || null,
     applicationId: app.id || null,
@@ -96,9 +97,9 @@ function normalizeQuest(raw) {
     rewards: rewards.map((r) => ({
       type: r.type,
       typeLabel: rewardTypeLabel(r.type),
-      name: r.messages?.name || null,
+      name: (r.messages && r.messages.name) || null,
       skuId: r.sku_id || null,
-      orbQuantity: r.orb_quantity ?? null,
+      orbQuantity: r.orb_quantity != null ? r.orb_quantity : null,
       asset: assetUrl(id, r.asset),
       assetVideo: assetUrl(id, r.asset_video),
       redemptionLink: r.redemption_link || null,
@@ -113,7 +114,7 @@ async function fetchPublicQuests() {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
     timeout: 30000,
   });
-  if (!res.ok) throw new Error(`public quests HTTP ${res.status}`);
+  if (!res.ok) throw new Error('public quests HTTP ' + res.status);
   const data = await res.json();
   const list = Array.isArray(data) ? data : data.quests || data.data || [];
   return list.map(normalizeQuest).filter((q) => q.id);
@@ -140,16 +141,17 @@ async function fetchOfficialQuests() {
 function parseColor(hex) {
   if (!hex || typeof hex !== 'string') return 0xfee75c;
   const h = hex.replace('#', '').trim();
-  const n = parseInt(h.length === 3 ? h.split('').map((c) => c + c).join('') : h, 16);
+  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+  const n = parseInt(full, 16);
   return Number.isFinite(n) ? n : 0xfee75c;
 }
 
 function buildClassicEmbed(quest) {
   const rewardText = (quest.rewards || [])
     .map((r) => {
-      let line = `• ${r.typeLabel}`;
-      if (r.name) line += `: ${r.name}`;
-      if (r.orbQuantity != null) line += ` (×${r.orbQuantity})`;
+      let line = '• ' + r.typeLabel;
+      if (r.name) line += ': ' + r.name;
+      if (r.orbQuantity != null) line += ' (×' + r.orbQuantity + ')';
       return line;
     })
     .join('\n')
@@ -177,8 +179,12 @@ function buildClassicEmbed(quest) {
   ].filter(Boolean);
 
   return {
-    title: `New Quest — ${quest.name}`.slice(0, 256),
-    description: `Quest ID: \`${quest.id}\`${quest.preview ? '\n⚠️ Preview' : ''}`,
+    title: ('New Quest — ' + quest.name).slice(0, 256),
+    description:
+      'Quest ID: `' +
+      quest.id +
+      '`' +
+      (quest.preview ? '\n⚠️ Preview' : ''),
     color: parseColor(quest.primaryColor),
     fields,
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
@@ -186,65 +192,6 @@ function buildClassicEmbed(quest) {
     timestamp: new Date().toISOString(),
     footer: { text: 'Discord Quests' },
   };
-}
-
-function buildComponentsV2(quest) {
-  const rewardLines = (quest.rewards || [])
-    .map((r) => {
-      let line = `• **${r.typeLabel}**`;
-      if (r.name) line += `: ${r.name}`;
-      if (r.orbQuantity != null) line += ` (×${r.orbQuantity})`;
-      if (r.skuId) line += ` · \`${r.skuId}\``;
-      return line;
-    })
-    .join('\n');
-
-  const info = [
-    `## ${quest.name}`,
-    quest.gameTitle ? `**Game:** ${quest.gameTitle}` : null,
-    quest.publisher ? `**Publisher:** ${quest.publisher}` : null,
-    quest.startsAt ? `**Starts:** ${quest.startsAt}` : null,
-    quest.expiresAt ? `**Expires:** ${quest.expiresAt}` : null,
-    quest.preview ? '⚠️ **Preview quest**' : null,
-  ]
-    .filter(Boolean)
-    .join('\n');
-
-  const inner = [
-    { type: 10, content: info },
-    { type: 14, divider: true, spacing: 1 },
-    { type: 10, content: `### Tasks\n${quest.tasksText}` },
-  ];
-
-  if (quest.heroImage) {
-    inner.push({ type: 14, divider: true, spacing: 1 });
-    inner.push({
-      type: 12,
-      items: [{ media: { url: quest.heroImage }, spoiler: false }],
-    });
-  }
-
-  if (rewardLines) {
-    inner.push({ type: 14, divider: true, spacing: 1 });
-    inner.push({ type: 10, content: `### Rewards\n${rewardLines}` });
-  }
-
-  if (quest.videoUrl) {
-    inner.push({ type: 14, divider: true, spacing: 1 });
-    inner.push({ type: 10, content: `### Video\n${quest.videoUrl}` });
-  }
-
-  inner.push({ type: 14, divider: true, spacing: 1 });
-  inner.push({ type: 10, content: `Quest ID: \`${quest.id}\`` });
-
-  return [
-    {
-      type: 17,
-      accent_color: parseColor(quest.primaryColor),
-      spoiler: false,
-      components: inner,
-    },
-  ];
 }
 
 async function postWebhook(body) {
@@ -264,26 +211,12 @@ async function sendQuestWebhook(quest) {
     return false;
   }
 
-  if (USE_COMPONENTS_V2) {
-    const v2 = await postWebhook({
-      username: 'Discord Quests',
-      flags: IS_COMPONENTS_V2,
-      components: buildComponentsV2(quest),
-    });
-    if (v2.ok) {
-      console.log(`🔔 V2 OK: ${quest.name} (${quest.id})`);
-      await new Promise((r) => setTimeout(r, 500));
-      return true;
-    }
-    console.warn('V2 failed, fallback embed', v2.status, v2.text);
-  }
-
   const emb = await postWebhook({
     username: 'Discord Quests',
     embeds: [buildClassicEmbed(quest)],
   });
   if (emb.ok) {
-    console.log(`🔔 Embed OK: ${quest.name} (${quest.id})`);
+    console.log('🔔 Embed OK: ' + quest.name + ' (' + quest.id + ')');
   } else {
     console.warn('Embed failed', emb.status, emb.text);
   }
@@ -306,7 +239,7 @@ async function main() {
   let quests = [];
   try {
     quests = await fetchPublicQuests();
-    console.log(`Public API: ${quests.length} quests`);
+    console.log('Public API: ' + quests.length + ' quests');
   } catch (e) {
     console.error('Public API failed:', e.message);
     process.exitCode = 1;
@@ -316,9 +249,9 @@ async function main() {
     const official = await fetchOfficialQuests();
     if (official.length) {
       const byId = new Map(quests.map((q) => [q.id, q]));
-      for (const q of official) byId.set(q.id, { ...byId.get(q.id), ...q });
-      quests = [...byId.values()];
-      console.log(`Merged official: ${quests.length}`);
+      for (const q of official) byId.set(q.id, Object.assign({}, byId.get(q.id), q));
+      quests = Array.from(byId.values());
+      console.log('Merged official: ' + quests.length);
     }
   } catch (e) {
     console.warn('Official quests:', e.message);
@@ -337,19 +270,19 @@ async function main() {
     if (exp && exp < now) return false;
     return true;
   });
-  console.log(`Active/upcoming: ${active.length}`);
+  console.log('Active/upcoming: ' + active.length);
 
   let previous = { ids: [] };
   if (await fs.pathExists(STATE_FILE)) {
     try {
       previous = await fs.readJson(STATE_FILE);
-    } catch {}
+    } catch (e) {}
   }
   const prevIds = new Set(previous.ids || []);
   const isFirstRun = prevIds.size === 0;
 
   const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
-  const allIds = [...new Set([...prevIds, ...active.map((q) => q.id)])];
+  const allIds = Array.from(new Set([].concat(Array.from(prevIds), active.map((q) => q.id))));
 
   await fs.writeJson(
     STATE_FILE,
@@ -369,12 +302,12 @@ async function main() {
   );
 
   if (isFirstRun) {
-    console.log(`First run — seeded ${active.length} quest ids (no flood)`);
+    console.log('First run — seeded ' + active.length + ' quest ids (no flood)');
     console.log('Next new quest will be posted to the webhook.');
     return;
   }
 
-  console.log(`New quests: ${newQuests.length}`);
+  console.log('New quests: ' + newQuests.length);
   if (!WEBHOOK && newQuests.length) {
     console.warn('New quests found but NO webhook configured');
   }
