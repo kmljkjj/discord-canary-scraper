@@ -87,7 +87,9 @@ async function main() {
   await log.info(`Early webhook ${wr.status}`, { buildNumber, ms: Date.now() - t0 });
 }
 
-main().catch(async (e) => {
-  await log.error('watch_build failed', { err: String(e.message || e) });
-  process.exit(0);
-});
+if (require.main === module) {
+  main().catch(async (e) => {
+    await log.error('watch_build failed', { err: String(e.message || e) });
+    process.exit(0);
+  });
+}
