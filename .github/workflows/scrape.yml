@@ -18,7 +18,7 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,6 +45,14 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           FAST_MODE: '1'
         run: node src/scrape.js
+
+      # 3) Discord Quests (new quests → webhook)
+      - name: Quests
+        env:
+          QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: node src/quests.js
 
       - name: Commit & push if changes
         run: |
