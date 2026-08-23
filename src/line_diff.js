@@ -1,44 +1,26 @@
 /**
- * Persistent line/token stats for Discord Canary JS assets.
- *
- * Why not assets_prev/ on disk?
- *   GitHub Actions runners are ephemeral — folders vanish between runs.
- *   Wumpus gets +/- from git commits of chunks; we persist compact stats in
- *   data/asset_stats.json (committed with the rest of data/).
- *
- * Model (minified bundles = often 1 physical line):
- *   - tokens ≈ content.split(';').length  (stable volume signal)
- *   - if file hash changes → count full old tokens as removed, new as added
- *     (same idea as git replacing a whole file)
+ * Line / unit stats for Discord asset JS files.
+ * Persisted in data/asset_stats.json for cross-run diffs.
  */
-
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
 
 function logicalName(filename) {
-  if (/^web\.[a-f0-9]+\.js$/i.test(filename)) return 'web';
-  if (/^sentry\./i.test(filename)) return 'sentry';
-  return filename
-    .replace(/\.[a-f0-9]{8,}\./gi, '.')
-    .replace(/\.[a-f0-9]{16,}/gi, '');
+  // web.abc123.js → web.js
+  const m = filename.match(/^([a-zA-Z0-9_-]+)\.[a-f0-9]{8,}\.(js)$/i);
+  if (m) return `${m[1]}.${m[3]}`;
+  return filename;
 }
 
-function measureContent(bufOrStr) {
-  const text = Buffer.isBuffer(bufOrStr) ? bufOrStr.toString('utf8') : String(bufOrStr);
-  const bytes = Buffer.byteLength(text, 'utf8');
-  const lines = text.length ? text.split(/\r?\n/).length : 0;
-  // Minified JS: token count is the useful “line” proxy
-  const tokens = text.length ? text.split(';').length : 0;
-  const hash = crypto.createHash('sha256').update(text).digest('hex').slice(0, 16);
-  // Prefer tokens for volume; fall back to lines if somehow huge line count
-  const units = Math.max(tokens, lines > 20 ? lines : 0);
-  return { bytes, lines, tokens, units, hash };
+function measureContent(buf) {
+  const text = Buffer.isBuffer(buf) ? buf.toString('utf8') : String(buf);
+  // Approx "units" = tokens-ish (split on non-alnum)
+  const units = text.split(/[^a-zA-Z0-9_$]+/).filter(Boolean).length;
+  const hash = crypto.createHash('sha1').update(buf).digest('hex').slice(0, 16);
+  return { units, bytes: Buffer.byteLength(text), hash };
 }
 
-/**
- * Build map logicalName -> stats for all .js under assetsDir
- */
 async function collectAssetStats(assetsDir) {
   const files = {};
   if (!(await fs.pathExists(assetsDir))) return { files, totalUnits: 0 };
@@ -52,12 +34,10 @@ async function collectAssetStats(assetsDir) {
     } catch {
       continue;
     }
-    // Cap read size for safety
     if (st.size > 25_000_000) continue;
     const buf = await fs.readFile(full);
     const m = measureContent(buf);
     const key = logicalName(name);
-    // Keep largest file for a logical key (web.*.js)
     if (!files[key] || m.bytes > files[key].bytes) {
       files[key] = { ...m, file: name };
     }
@@ -69,18 +49,32 @@ async function collectAssetStats(assetsDir) {
 }
 
 /**
- * Compare previous persisted stats vs current.
- * Returns { added, removed, changedFiles, skipped }
+ * Compare previous vs current stats.
+ * Wholesale hash renames (all files replaced, similar size) → net-only + flag.
  */
 function diffAssetStats(prev, curr) {
   const prevFiles = (prev && prev.files) || {};
   const currFiles = (curr && curr.files) || {};
 
   if (!Object.keys(prevFiles).length) {
-    return { added: 0, removed: 0, changedFiles: 0, skipped: true, reason: 'no_baseline' };
+    return {
+      added: 0,
+      removed: 0,
+      changedFiles: 0,
+      skipped: true,
+      reason: 'no_baseline',
+      meaningful: false,
+    };
   }
   if (!Object.keys(currFiles).length) {
-    return { added: 0, removed: 0, changedFiles: 0, skipped: true, reason: 'no_current' };
+    return {
+      added: 0,
+      removed: 0,
+      changedFiles: 0,
+      skipped: true,
+      reason: 'no_current',
+      meaningful: false,
+    };
   }
 
   let added = 0;
@@ -102,14 +96,39 @@ function diffAssetStats(prev, curr) {
       continue;
     }
     if (a && b && a.hash !== b.hash) {
-      // File replaced / rewritten (typical for hashed canary chunks)
       removed += a.units;
       added += b.units;
       changedFiles++;
     }
   }
 
-  return { added, removed, changedFiles, skipped: false };
+  const max = Math.max(added, removed, 1);
+  const ratio = Math.abs(added - removed) / max;
+  // Full asset refresh: huge + and − almost equal → not useful in Discord
+  const wholesale = added > 5000 && removed > 5000 && ratio < 0.08;
+
+  if (wholesale) {
+    const net = added - removed;
+    return {
+      added: net > 0 ? net : 0,
+      removed: net < 0 ? -net : 0,
+      changedFiles,
+      skipped: false,
+      wholesale: true,
+      meaningful: Math.abs(net) > 50,
+      rawAdded: added,
+      rawRemoved: removed,
+    };
+  }
+
+  return {
+    added,
+    removed,
+    changedFiles,
+    skipped: false,
+    wholesale: false,
+    meaningful: changedFiles > 0 && (added > 0 || removed > 0),
+  };
 }
 
 async function loadStats(statsPath) {
