@@ -1,6 +1,5 @@
 /**
- * FAST path: detect new BUILD_NUMBER and announce once.
- * Deduped via notify_guard so scrape.js won't double-announce.
+ * FAST path: detect new BUILD_NUMBER and announce immediately.
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -18,12 +17,17 @@ const UA =
 async function main() {
   const t0 = Date.now();
   await log.info('watch_build start');
+  await fs.ensureDir(DATA_DIR);
+
+  if (!WEBHOOK_URL) {
+    await log.warn('DISCORD_WEBHOOK_URL missing — cannot notify');
+  }
 
   const res = await fetch(CANARY_APP, {
     headers: { 'User-Agent': UA, Accept: 'text/html' },
-    timeout: 12000,
+    timeout: 15000,
   });
-  if (!res.ok) throw new Error(`canary app ${res.status}`);
+  if (!res.ok) throw new Error('canary app ' + res.status);
   const html = await res.text();
 
   const m = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d+)"?/);
@@ -36,25 +40,32 @@ async function main() {
     process.exit(0);
   }
 
-  await fs.ensureDir(DATA_DIR);
   let prev = null;
   try {
     if (await fs.pathExists(BUILD_FILE)) prev = await fs.readJson(BUILD_FILE);
-  } catch {}
+  } catch (e) {}
 
   const isNew = !prev || String(prev.buildNumber) !== String(buildNumber);
-  await log.info(`Build ${buildNumber}`, { isNew, ms: Date.now() - t0 });
+  await log.info('Build ' + buildNumber, {
+    isNew,
+    prev: prev && prev.buildNumber,
+    ms: Date.now() - t0,
+  });
 
-  if (!isNew || !WEBHOOK_URL) {
-    if (!isNew) await log.info('watch_build skip (same build)');
-    else await log.info('watch_build skip (no DISCORD_WEBHOOK_URL)');
+  if (!isNew) {
+    await log.info('watch_build skip (same build)');
     process.exit(0);
   }
 
-  const key = `build-announce:${buildNumber}`;
+  if (!WEBHOOK_URL) {
+    await log.info('watch_build skip (no webhook)');
+    process.exit(0);
+  }
+
+  const key = 'build-announce:' + buildNumber;
   const ok = await claim(key);
   if (!ok) {
-    await log.info('watch_build skip — already announced', { buildNumber });
+    await log.info('watch_build skip — already claimed', { buildNumber });
     process.exit(0);
   }
 
@@ -72,7 +83,7 @@ async function main() {
             value: versionHash ? '`' + versionHash.slice(0, 12) + '`' : '—',
             inline: true,
           },
-          { name: 'Status', value: 'Detected — scanning…', inline: false },
+          { name: 'Status', value: 'Detected — full scan running…', inline: false },
         ],
         timestamp: new Date().toISOString(),
       },
@@ -84,8 +95,17 @@ async function main() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
+  const txt = await wr.text().catch(() => '');
   await markBuildAnnounced(buildNumber);
-  await log.info(`Early webhook ${wr.status}`, { buildNumber, ms: Date.now() - t0 });
+  await log.info('Early webhook ' + wr.status, {
+    buildNumber,
+    ms: Date.now() - t0,
+    body: txt.slice(0, 120),
+  });
+
+  if (!wr.ok) {
+    await log.warn('Webhook POST failed — check DISCORD_WEBHOOK_URL secret');
+  }
 }
 
 if (require.main === module) {

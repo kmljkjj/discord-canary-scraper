@@ -2,7 +2,8 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    - cron: '*/2 * * * *'
+    # Every 5 minutes — avoids overlapping cancels
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -10,30 +11,36 @@ on:
 permissions:
   contents: write
 
+# Never cancel a running scrape — that was blocking commits + webhooks
 concurrency:
   group: canary-scrape
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
 
-      - name: Watch build (instant)
+      - name: Watch build (instant webhook)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/watch_build.js
@@ -52,16 +59,19 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node src/quests.js
 
-      - name: Commit & push if changes
+      - name: Commit & push state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ 2>/dev/null || true
-          git add assets/.gitkeep 2>/dev/null || true
+          git add data/ || true
           if git diff --staged --quiet; then
-            echo "No changes"
+            echo "No data changes to commit"
             exit 0
           fi
-          git commit -m "🔄 Canary build / findings" || exit 0
-          git pull --rebase origin main || true
-          git push origin HEAD:main || git push --force-with-lease origin HEAD:main
+          git commit -m "🔄 Canary scrape $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
+          # retry push against concurrent commits
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && break
+            echo "push retry $i"
+            sleep 3
+          done
