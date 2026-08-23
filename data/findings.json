@@ -2,1694 +2,4428 @@
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2022-03_block_russian_purchases",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2022-07_voice_in_threads",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2022-12_mention_raid_limit",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2024-12_guild_voice_channel_ringing",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-04-desktop-refresh-fast-follows",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-05-search-results-feedback",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-06_native_intents",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        },
+        {
+          "id": 2,
+          "label": null
+        },
+        {
+          "id": 3,
+          "label": null
+        },
+        {
+          "id": 4,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-08_portkey_enabled",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-08-browser-hevc",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-08-voice-user-affinity",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09_hotwheels_nvidia_boost",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-agc2-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-image-attachment-mezzanine-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-libdiscore-telemetry",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-overlay-state-tracking",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-sensitive-content-self-harm",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-server-nsfw-level",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-threads-also-send-to-channel",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-09-video-qoe-metrics-tracking",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-10-desktop-communication-notifications-emoji",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-10-force-sdr-emojis-stickers",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-10-friend-request-alerts-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-10-go-live-auto-quality",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-10-low-latency-rate-control",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-age-verification-expressive-everywhere",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-defer-load-late-lazy-cache",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-global-frame-pool-lock",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-mana-context-menu",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-overlay-chat",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-11-rtc-panel-entry-point-new-copy",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu",
-        "ClipsPanelButton"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2025-11-video-end-card-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12_voice_channel_hoisting",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        },
+        {
+          "id": 2,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-09-ptt-education",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-hdr-accessibility-setting",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-katsudon",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-nitro-s-rewards",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-proportional-vad-indicator",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-windows-audio-effects",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2025-12-wmf-gpu-encode",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-android-rmle",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-bug-reporter",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-cms-layouts",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-family-center-v3",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-favorites-server",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-ios-push-notif-json-fix",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-less-personalized-ads",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-libdiscore-batch-store-refactor",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-voice-dares-v0",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-01-wmf-gpu-encode-intel",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02_hangout_window",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu",
-        "ListItem"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-02_past_vc_activity_messages",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-android-chat-mosaic-shared-pool",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-android-fresco-cache",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-content-classification-presence-filter",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-friends-list",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-game-server-tab-always-on",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-gifting-modal-redesign",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-go-live-hdr",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-go-live-video-preset-resolution",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-gsh-game-detection-upsell",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu",
-        "ClipsPanelButton"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-02-join-game-community-cta",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-lazy-load-all-images",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-02-longer-group-dm-invites",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-mana-playground-access",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-mobile-visual-refresh",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-mobile-volume-output-slider-removal",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-non-dm-gifting-modal-redesign",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-premium-offer-reminder-xp",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-private-channel-hiding",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-private-profiles",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-process-boost-on-voice",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-pubsub-bulk-ban-users",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-referral-reminder-dc",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-silence-warning-aggression",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "VideoGuardBanner"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-02-sticker-padding",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-voice-channel-link-click",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-wgc-dirty-regions",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-02-wgc-dirty-regions-all",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03_file_upload_250_mb_powerup",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        },
+        {
+          "id": 2,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03_game_server_pricing",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03_guild_official_messages",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03_voice_badge",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0,
+          "label": null
+        },
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-age-verification-google-wallet",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-arborium-highlight",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-audio-effects-probe",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-block-purchases",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-bogo-promotion-gate-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-bogo-promotion-marketing-materials-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-boost-to-unlock-mobile-coachmark",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-browser-inverted-wants",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-churro",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-clips-experiment",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-collectibles-profile-frames",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-content-inventory-memberlist-and-ranker",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 16,
+          "label": null
+        },
+        {
+          "id": 17,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-conversation-highlighting-utility",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-crepe",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-croissant",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ParentalConsentWarningModal"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-03-debug-experiment",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-denormalized-perks-access-read",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-file-upload-powerup-holdout",
+      "kind": "user",
       "type": "user",
-      "isApex": false,
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
+      "isApex": true,
+      "aaMode": true,
       "relatedUI": []
     },
     {
       "id": "2026-03-friend-request-message",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-icymi-desktop",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-icymi-staff-debugging-utility",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-image-load-metrics",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-03-ios-audio-interrupt-handling",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-krisp-stats-collection",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-media-play-metrics",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-message-bookmarks",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-mobile-hermes-occupancy-target",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-overlay-default-keybind",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-private-profiles-strict",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-private-profiles-strict-gb",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-quest-home-bounties",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-quest-reload-video-on-obscured",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-requiremodule-caching-redux",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-soundmoji-rendering",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-soundmoji-sending",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-stage-voice-panel",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-surface-direct-renderer",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-video-capture-device-no-reuse",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-video-quest-player-refactor",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-wishlisting-nitro",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-03-wysiwyg-user-profile-editing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04_server_theme",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0,
+          "label": null
+        },
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04_voice_call_trigger_point",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-badge-discovery",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-browser-transceiver-padding-removal",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-clips-v3-runtime",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-collectibles-profile-frames-purchase",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-composed-quest-player",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-consistent-profiles",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-desktop-notification-center",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-desktop-tti-dnstcp-warmup",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-desktop-tti-early-update-check",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-desktop-tti-update-backoff",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-desktop-tti-v8-cache",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-disable-hook-frame-pacer",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-ensure-received-messages-added-in-order",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-gift-promotion-reminder",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-gifting-badge",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-http-request-sample",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-icymi-staff-only",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-inappropriate-conversations-prescan",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-kestrel",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-krisp-v9-ios",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-overlay-fps-limit",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-overlay-streamer-mode",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-premium-group-primary-reminder-nagbar",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-profile-frames-ea-marketing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-quests-premium-orb-multiplier-marketing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-safety-flows",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-server-boost-copy-1440p",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-topical-navigation-staff-control",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-user-profile-performance-analytics",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-video-hook-dx12",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-voice-gateway-protocol-version",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-04-wetf-parser",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-age-restricted-application-commands",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-app-store-overlay-feature-gate",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-av1-bitrate-tuning",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-badge-discovery-milestone-2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-block-user-feedback",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-bounties-stage-1",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-bounty-stale-refresh-quest-home",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-clips-media-comments",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-clips-scrub-preview-frontend",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-collectibles-collection-page",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-device-form-factor-indicators",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-dice-roll-slash-command",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-disable-camera-simulcast",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-distributed-clips",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-electron-multilang-spellcheck",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-global-soundboard-wheel-popout",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-ignore-user-feedback",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-ios-video-stabilization",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-mana-type-consolidation",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-quest-home-tile-redesign",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-server-theme-user",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-spatial-audio-for-voice",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-05-use-ad-analytics-interface",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06_guild_rooms",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        },
+        {
+          "id": 2,
+          "label": null
+        },
+        {
+          "id": 3,
+          "label": null
+        },
+        {
+          "id": 4,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06_guild_spaces",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 1,
+          "label": null
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-age-verification-incode",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-android-two-week-trials",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ReverseTrialUpsellModal"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-06-av1-encode-linux",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-battlenet-social-sdk-migration",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-chat-bar-customization",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-clickstream-analytics",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-clips-league-events",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-clips-secondary-entrypoints",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-content-classification-embedded-activity-filter",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-desktop-tti-http-cdt",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-desktop-tti-splash-asset",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-dont-badge-muted-vcs",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-family-center-connection-prereq",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-game-server-hosting-in-shop",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-gifting-badge-desktop",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-gummy-bears",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-gummy-viewers",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-ios-ota-streaming",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-magic-scoring",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-minimal-detectable",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-ml-offer-creation-ui-upgrade",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-mobile-server-tag",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-monthly-to-yearly-upsells",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-quest-fetch-reconnect-jitter",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-quest-home-layout-visual-tweaks",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-server-ladder",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-server-theme-apex-shadow",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": true,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-soundboard-frequently-used",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-topical-navigation-guild",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-upscale-small-captured-frames",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-use-new-badge-image-source",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-web-translate-dom-guard",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-web-vitals-monitoring",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-06-wmf-cpu-encode-intel",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-ad-recheck-interval-experiment",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-attachment-image-ladder",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-autoclipping-default-override",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-autoclipping-marketing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-aws-gateway",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-bounties-vertical-scroll",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-call-of-duty-3pp-expired",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-call-of-duty-3pp-marketing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-clips-game-events-on-player",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-cod-3pp",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-create-gdm-title",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-07-custom-app-store-overlay",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-desktop-channel-tabs",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-desktop-tti-update-backoff-algo",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-expressive-modal-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-game-mentions-v2-mobile",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-gsimagic",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-hotwheels-clickable-game-icon",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-krisp-cpu-disablement",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-manual-age-assurance-fallback",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-message-bookmarks-v2",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-nvenc-reconstructed-frames",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-parental-consent-warning-fetch",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-past-due-checkout",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-personal-widget",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-premium-group-announcement-modal",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-premium-group-expansion-announcement",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-quest-bar-secondary-cta",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-quest-home-default-banner-removal",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-reject-with-error-kill-switch",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-renewable-end-date-sort",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-rtc-panel-game-card",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ActivityPanelGameCard"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-07-tr-offer-1-campaign",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-typing-users-css-dots",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-07-unobtrusive-device-suggestions",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": [
         "DeviceDetectedPanel"
       ]
     },
     {
       "id": "2026-07-vibegrations-guild",
+      "kind": "guild",
       "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ConfirmModal"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-08-android-rn-reparenting-flag",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-audio-fidelity",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-bounties-mobile-quest-bar",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-call-of-duty-3pp-nagbar",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-dont-close-chat",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-favorites-server",
-      "type": "user",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-gsh-subs-activity-bar",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "ContextMenu",
-        "ClipsPanelButton"
-      ]
-    },
-    {
-      "id": "2026-08-guilds-bar-media-state-store",
-      "type": "guild",
-      "isApex": false,
+      "aaMode": false,
       "relatedUI": [
         "ContextMenu"
       ]
     },
     {
-      "id": "2026-08-kestrel-ga",
-      "type": "user",
+      "id": "2026-08-guilds-bar-media-state-store",
+      "kind": "guild",
+      "type": "guild",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
+      "relatedUI": []
+    },
+    {
+      "id": "2026-08-kestrel-ga",
+      "kind": "user",
+      "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
+      "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-premium-gifting-gogo-promotion",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-profile-embed-rendering",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-rich-presence-invite-banner",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-scheduled-messages",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-user-bio-max-length",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     },
     {
       "id": "2026-08-video-guard",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
-      "relatedUI": [
-        "MenuItem",
-        "MenuRadioItem",
-        "VideoGuardBanner"
-      ]
+      "aaMode": false,
+      "relatedUI": []
     },
     {
       "id": "2026-08-vq-remaining-time-truncation",
+      "kind": "user",
       "type": "user",
+      "treatments": [
+        {
+          "id": 0
+        },
+        {
+          "id": 1
+        }
+      ],
       "isApex": false,
+      "aaMode": false,
       "relatedUI": []
     }
   ],
@@ -2204,50 +4938,28 @@
   },
   "ui": [
     {
-      "name": "AccountCoachmark",
-      "kind": "notice",
+      "name": "ActivityAgeGateModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
-      "name": "ActivityPanelGameCard",
-      "kind": "panel",
-      "relatedExperiments": [
-        "2026-07-rtc-panel-game-card"
-      ]
-    },
-    {
-      "name": "AddFriendInput",
-      "kind": "component",
+      "name": "ActivityCardContextMenu",
+      "kind": "menu",
       "relatedExperiments": []
     },
     {
       "name": "AdoptedStyleSheet",
-      "kind": "panel",
+      "kind": "sheet",
       "relatedExperiments": []
     },
     {
-      "name": "AnnouncementsItem",
-      "kind": "component",
+      "name": "ApplicationCommandShareModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "ApplicationLibraryPage",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "AppOverlay",
-      "kind": "overlay",
-      "relatedExperiments": []
-    },
-    {
-      "name": "AppView",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "AudioBassBoostToggle",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2256,47 +4968,38 @@
       "relatedExperiments": []
     },
     {
-      "name": "AudioTrackList",
-      "kind": "component",
+      "name": "BillingSettingsBanner",
+      "kind": "notice",
       "relatedExperiments": []
     },
     {
-      "name": "AutoclippingAccountPanelCoachmark",
-      "kind": "panel",
+      "name": "BillingSettingsNitroGiftBanner",
+      "kind": "notice",
       "relatedExperiments": []
     },
     {
       "name": "ChannelPremiumGiftButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
       "name": "ChannelsAndRolesPage",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "ChannelTabBar",
-      "kind": "nav",
-      "relatedExperiments": []
-    },
-    {
-      "name": "ChannelTextAreaContainer",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "ClipsPanelButton",
-      "kind": "panel",
-      "relatedExperiments": [
-        "2025-11-rtc-panel-entry-point-new-copy",
-        "2026-08-gsh-subs-activity-bar",
-        "2026-02-gsh-game-detection-upsell"
-      ]
+      "kind": "button",
+      "relatedExperiments": []
     },
     {
       "name": "ClipsPopout",
-      "kind": "overlay",
+      "kind": "popout",
+      "relatedExperiments": []
+    },
+    {
+      "name": "CloseButton",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
@@ -2312,37 +5015,33 @@
     {
       "name": "ConfirmModal",
       "kind": "modal",
-      "relatedExperiments": [
-        "2026-07-vibegrations-guild"
-      ]
+      "relatedExperiments": []
     },
     {
       "name": "ContentPopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
       "name": "ContentPopoutContextMenu",
-      "kind": "overlay",
+      "kind": "menu",
       "relatedExperiments": []
     },
     {
       "name": "ContextMenu",
       "kind": "menu",
       "relatedExperiments": [
-        "2026-08-guilds-bar-media-state-store",
-        "2026-02_hangout_window",
-        "2026-07-create-gdm-title",
-        "2026-03-image-load-metrics",
-        "2026-02-lazy-load-all-images",
-        "2025-11-rtc-panel-entry-point-new-copy",
-        "2026-08-gsh-subs-activity-bar",
-        "2026-02-gsh-game-detection-upsell"
+        "2026-08-gsh-subs-activity-bar"
       ]
     },
     {
-      "name": "DataView",
-      "kind": "component",
+      "name": "CSSStyleSheet",
+      "kind": "sheet",
+      "relatedExperiments": []
+    },
+    {
+      "name": "CTAButton",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
@@ -2353,38 +5052,18 @@
       ]
     },
     {
-      "name": "DiscordCollectiblesShopItem",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
       "name": "DismissButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
-      "name": "DisplayNameStylesFlywheelCoachmark",
-      "kind": "notice",
-      "relatedExperiments": []
-    },
-    {
-      "name": "DiversityPerRow",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "DOMTokenList",
-      "kind": "component",
+      "name": "EmojiStudioModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "EmptyNotificationsPage",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "FavoritesGuildChannelList",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2393,23 +5072,33 @@
       "relatedExperiments": []
     },
     {
-      "name": "FolderItem",
-      "kind": "component",
+      "name": "ForwardFailedAlertModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
-      "name": "FramePanelFocusedView",
-      "kind": "panel",
+      "name": "ForwardModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "GameServerPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
-      "name": "GameShopItem",
-      "kind": "component",
+      "name": "GameSheet",
+      "kind": "sheet",
+      "relatedExperiments": []
+    },
+    {
+      "name": "GiftCustomizationBanner",
+      "kind": "notice",
+      "relatedExperiments": []
+    },
+    {
+      "name": "GiftPlanSelectionCardBanner",
+      "kind": "notice",
       "relatedExperiments": []
     },
     {
@@ -2419,52 +5108,47 @@
     },
     {
       "name": "GuildHomePage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildOfficialMessagesPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildOnboardingBlockedPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildOnboardingPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildPowerupsPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildShopPage",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "GuildSidebar",
-      "kind": "panel",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "GuildSpacePage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
-      "name": "GuildTagAvailableCoachmark",
-      "kind": "notice",
+      "name": "ICYMIButton",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
       "name": "ICYMIPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2478,20 +5162,8 @@
       "relatedExperiments": []
     },
     {
-      "name": "LanguageSelect",
-      "kind": "menu",
-      "relatedExperiments": []
-    },
-    {
-      "name": "ListItem",
-      "kind": "component",
-      "relatedExperiments": [
-        "2026-02_hangout_window"
-      ]
-    },
-    {
       "name": "ManageStreamsButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
@@ -2500,8 +5172,18 @@
       "relatedExperiments": []
     },
     {
+      "name": "MarketingPageBanner",
+      "kind": "notice",
+      "relatedExperiments": []
+    },
+    {
+      "name": "MemberListContentSettingsMenu",
+      "kind": "menu",
+      "relatedExperiments": []
+    },
+    {
       "name": "MemberSafetyPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2510,94 +5192,63 @@
       "relatedExperiments": []
     },
     {
-      "name": "MenuCheckboxItem",
-      "kind": "menu",
-      "relatedExperiments": []
-    },
-    {
-      "name": "MenuItem",
-      "kind": "menu",
-      "relatedExperiments": [
-        "2026-08-video-guard"
-      ]
-    },
-    {
-      "name": "MenuRadioItem",
-      "kind": "menu",
-      "relatedExperiments": [
-        "2026-08-video-guard"
-      ]
-    },
-    {
-      "name": "MenuSubmenuItem",
-      "kind": "menu",
-      "relatedExperiments": []
-    },
-    {
       "name": "MessageRequestPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "MicrophoneButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
-      "name": "NewBadgeCoachmark",
-      "kind": "notice",
+      "name": "MobileBottomSheet",
+      "kind": "sheet",
       "relatedExperiments": []
     },
     {
       "name": "NitroTabButton",
-      "kind": "nav",
-      "relatedExperiments": []
-    },
-    {
-      "name": "NodeList",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "NonDiversityPerRow",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
       "name": "NotificationsInboxButton",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "NotificationsInboxSidebar",
-      "kind": "panel",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
       "name": "NotificationsInboxTitleBarButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     },
     {
-      "name": "NowPlayingHeader",
-      "kind": "component",
+      "name": "OAuth2AuthorizeModal",
+      "kind": "modal",
+      "relatedExperiments": []
+    },
+    {
+      "name": "OAuth2AuthorizePage",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "ParentalConsentWarningModal",
       "kind": "modal",
-      "relatedExperiments": [
-        "2026-03-croissant"
-      ]
-    },
-    {
-      "name": "PickerPerRow",
-      "kind": "menu",
       "relatedExperiments": []
     },
     {
-      "name": "PopoutWindowCallTile",
-      "kind": "overlay",
+      "name": "PaymentModalBanner",
+      "kind": "notice",
+      "relatedExperiments": []
+    },
+    {
+      "name": "PlanSelectCardBanner",
+      "kind": "notice",
+      "relatedExperiments": []
+    },
+    {
+      "name": "PremiumBrandRefreshSubscriptionCancellationModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
@@ -2607,37 +5258,37 @@
     },
     {
       "name": "PrivateChannelRecipientsInvitePopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
-      "name": "QuestActivityHeader",
-      "kind": "component",
-      "relatedExperiments": []
-    },
-    {
-      "name": "QuestActivityPanelItem",
+      "name": "QuestActivityPanel",
       "kind": "panel",
       "relatedExperiments": []
     },
     {
       "name": "QuestHomePage",
-      "kind": "component",
+      "kind": "page",
+      "relatedExperiments": []
+    },
+    {
+      "name": "QuestInGameModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "QuestMembersListPopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
       "name": "QuestPreviewLandingPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
       "name": "QuestsLandingPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2647,19 +5298,17 @@
     },
     {
       "name": "RecentsPopout",
-      "kind": "overlay",
+      "kind": "popout",
+      "relatedExperiments": []
+    },
+    {
+      "name": "RegisterWebAuthnCredentialModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "ReverseTrialUpsellModal",
       "kind": "modal",
-      "relatedExperiments": [
-        "2026-06-android-two-week-trials"
-      ]
-    },
-    {
-      "name": "RPCCommandsOverlay",
-      "kind": "overlay",
       "relatedExperiments": []
     },
     {
@@ -2668,28 +5317,28 @@
       "relatedExperiments": []
     },
     {
-      "name": "RunningGameCard",
-      "kind": "component",
+      "name": "RtcPanel",
+      "kind": "panel",
       "relatedExperiments": []
     },
     {
       "name": "ScanQRCodeButton",
-      "kind": "component",
+      "kind": "button",
+      "relatedExperiments": []
+    },
+    {
+      "name": "ServerDriveAnnouncementModal",
+      "kind": "modal",
       "relatedExperiments": []
     },
     {
       "name": "SharingPrivacyPopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
       "name": "ShowQRCodeModal",
       "kind": "modal",
-      "relatedExperiments": []
-    },
-    {
-      "name": "SocialLayerStorefrontApplicationWrapper",
-      "kind": "component",
       "relatedExperiments": []
     },
     {
@@ -2703,23 +5352,13 @@
       "relatedExperiments": []
     },
     {
-      "name": "StandingTab",
-      "kind": "nav",
-      "relatedExperiments": []
-    },
-    {
-      "name": "StickerPicker",
-      "kind": "menu",
-      "relatedExperiments": []
-    },
-    {
       "name": "SuspendedUserSafetyHubPage",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
-      "name": "TextTrackList",
-      "kind": "component",
+      "name": "TextStyleSheet",
+      "kind": "sheet",
       "relatedExperiments": []
     },
     {
@@ -2729,12 +5368,7 @@
     },
     {
       "name": "UserProfileAccountPopout",
-      "kind": "overlay",
-      "relatedExperiments": []
-    },
-    {
-      "name": "UserProfileActivityCard",
-      "kind": "component",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
@@ -2743,8 +5377,8 @@
       "relatedExperiments": []
     },
     {
-      "name": "UserProfileBadgeList",
-      "kind": "component",
+      "name": "UserProfileCardContextMenu",
+      "kind": "menu",
       "relatedExperiments": []
     },
     {
@@ -2754,12 +5388,12 @@
     },
     {
       "name": "UserProfileReactPopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
       "name": "UserProfileReplyPopout",
-      "kind": "overlay",
+      "kind": "popout",
       "relatedExperiments": []
     },
     {
@@ -2769,7 +5403,7 @@
     },
     {
       "name": "VibegrationsScreen",
-      "kind": "component",
+      "kind": "page",
       "relatedExperiments": []
     },
     {
@@ -2780,10 +5414,7 @@
     {
       "name": "VideoGuardBanner",
       "kind": "notice",
-      "relatedExperiments": [
-        "2026-02-silence-warning-aggression",
-        "2026-08-video-guard"
-      ]
+      "relatedExperiments": []
     },
     {
       "name": "VoiceChannelStatusModal",
@@ -2792,9 +5423,9 @@
     },
     {
       "name": "VoiceDareTitleBarButton",
-      "kind": "component",
+      "kind": "button",
       "relatedExperiments": []
     }
   ],
-  "scrapedAt": "2026-08-23T02:57:00.889Z"
+  "scrapedAt": "2026-08-23T04:36:32.802Z"
 }

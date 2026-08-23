@@ -115,3 +115,14 @@
 [2026-08-23T02:57:00.895Z] [INFO] scrape summary {"isNewBuild":false,"linesAdded":0,"linesRemoved":0,"stringsAdded":0,"stringsRemoved":0,"routesAdded":0,"routesRemoved":0}
 [2026-08-23T02:57:00.896Z] [INFO] No notify (same build, no content delta)
 [2026-08-23T02:57:00.896Z] [INFO] scrape done
+[2026-08-23T04:18:43.980Z] [INFO] watch_build start
+[2026-08-23T04:18:44.167Z] [INFO] Build 599529 {"isNew":false,"prev":"599529","ms":187}
+[2026-08-23T04:18:44.168Z] [INFO] watch_build skip (same build)
+[2026-08-23T04:18:44.352Z] [INFO] scrape start
+[2026-08-23T04:18:44.503Z] [INFO] build detected {"buildNumber":"599529"}
+[2026-08-23T04:18:48.044Z] [INFO] Lines skipped (same build)
+[2026-08-23T04:36:32.806Z] [INFO] scrape summary {"isNewBuild":false,"linesAdded":0,"linesRemoved":0,"stringsAdded":0,"stringsRemoved":0,"routesAdded":0,"routesRemoved":0}
+[2026-08-23T04:36:33.289Z] [INFO] Webhook sent {"dedupeKey":"build-card:599529","status":204}
+[2026-08-23T04:36:33.760Z] [INFO] Webhook sent {"dedupeKey":"strings:599529:a985f4231c9a77f0af9c","status":204}
+[2026-08-23T04:36:34.193Z] [INFO] Webhook sent {"dedupeKey":"ui:599529:60ee51d36842594f862b","status":204}
+[2026-08-23T04:36:34.444Z] [INFO] scrape done
