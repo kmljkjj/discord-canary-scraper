@@ -2,7 +2,8 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    # Every 15 minutes — less noise, less overlap
+    - cron: '*/15 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -35,12 +36,16 @@ jobs:
       - name: Watch build (instant webhook)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MAX_WEBHOOKS_PER_RUN: '8'
         run: node src/watch_build.js
 
       - name: Full scrape
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           FAST_MODE: '1'
+          MAX_WEBHOOKS_PER_RUN: '8'
+          # UI notifications are noisy — keep off unless you set secret UI_NOTIFY=1
+          UI_NOTIFY: ${{ secrets.UI_NOTIFY }}
         run: node src/scrape.js
 
       - name: Quests
@@ -51,29 +56,22 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node src/quests.js
 
-      - name: Commit & push state (force-add data)
+      - name: Commit & push state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # CRITICAL: these files must be tracked or every run re-spams webhooks
-          git add -f data/build.json data/notify_state.json data/asset_stats.json \
-            data/strings.json data/routes.json data/endpoints.json \
-            data/findings.json data/quests.json data/mobile_versions.json \
-            data/mobile_experiments.json 2>/dev/null || true
+          git add -f data/build.json data/notify_state.json data/seen.json \
+            data/asset_stats.json data/strings.json data/routes.json \
+            data/endpoints.json data/findings.json data/quests.json \
+            data/mobile_versions.json data/mobile_experiments.json 2>/dev/null || true
           git add -f data/ || true
           if git diff --staged --quiet; then
-            echo "No data changes to commit"
+            echo "No data changes"
             exit 0
           fi
-          git status --short
           git commit -m "🔄 Canary scrape $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
           for i in 1 2 3 4 5; do
-            if git pull --rebase origin main && git push origin HEAD:main; then
-              echo "Push OK"
-              exit 0
-            fi
-            echo "push retry $i"
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
             sleep 2
           done
-          echo "Push failed after retries"
           exit 1

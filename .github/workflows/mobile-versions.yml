@@ -2,13 +2,17 @@ name: Mobile Versions + Files
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '0 */2 * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-mobile-versions]
 
 permissions:
   contents: write
+
+concurrency:
+  group: mobile-scrape
+  cancel-in-progress: false
 
 jobs:
   mobile:
@@ -18,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,28 +30,30 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Mobile versions (store / OTA)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MAX_WEBHOOKS_PER_RUN: '6'
         run: node src/mobile_versions.js
 
       - name: Mobile experiments from real files
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           MOBILE_DATAMINE_REPO: https://github.com/Wumpus-Central/discord-mobile-datamining.git
+          MAX_WEBHOOKS_PER_RUN: '6'
         run: node src/mobile_from_files.js
 
-      - name: Commit state if changed
+      - name: Commit state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/mobile_versions.json data/mobile_experiments.json || true
+          git add -f data/mobile_versions.json data/mobile_experiments.json data/notify_state.json data/seen.json || true
           if git diff --staged --quiet; then
             echo "No mobile state changes"
             exit 0
           fi
-          git commit -m "📱 Mobile versions + experiments from files"
-          git pull --rebase origin main || git pull --rebase --autostash origin main
-          git push origin HEAD:main
+          git commit -m "📱 Mobile state" || exit 0
+          git pull --rebase origin main || true
+          git push origin HEAD:main || true
