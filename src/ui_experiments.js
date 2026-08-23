@@ -1,58 +1,68 @@
 /**
- * Link UI component names to nearby experiment IDs in Discord client JS.
- * Static analysis only — cannot know if a user has the experiment activated.
+ * Extract UI symbols + experiments from Discord asset JS.
  */
 
-const UI_SUFFIX =
-  'Modal|Panel|Popout|Drawer|Sheet|Sidebar|Overlay|TabBar|Tooltip|Banner|Card|Dialog|Menu|Picker|Coachmark|Nudge|Pill|Chip|Badge|Tray|Spotlight|Notice|Toast|Row|Header|Footer|Button|View|Screen|Page|Section|Container|Wrapper|List|Item|Tile|Grid|Stack|Form|Field|Input|Select|Toggle|Switch|Slider|Stepper|Tabs|Tab|Nav|Navbar|SidebarItem';
-
 function kindFromName(name) {
-  if (/Modal|Dialog/i.test(name)) return 'modal';
-  if (/Panel|Sidebar|Drawer|Sheet|Tray/i.test(name)) return 'panel';
-  if (/Popout|Overlay|Tooltip|Spotlight/i.test(name)) return 'overlay';
-  if (/Banner|Notice|Toast|Nudge|Coachmark/i.test(name)) return 'notice';
-  if (/Menu|Picker|Select/i.test(name)) return 'menu';
-  if (/Tab|Nav/i.test(name)) return 'nav';
+  const n = String(name || '');
+  if (/Modal$/i.test(n)) return 'modal';
+  if (/Popout$/i.test(n)) return 'popout';
+  if (/(Sheet|BottomSheet)$/i.test(n)) return 'sheet';
+  if (/(Page|Screen)$/i.test(n)) return 'page';
+  if (/(Panel|Sidebar)$/i.test(n)) return 'panel';
+  if (/(Button|Btn)$/i.test(n)) return 'button';
+  if (/(Menu|ContextMenu)$/i.test(n)) return 'menu';
+  if (/(Banner|Notice|Toast)$/i.test(n)) return 'notice';
   return 'component';
 }
 
-function isExpId(id) {
-  if (!/^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id)) return false;
-  if (/^20\d{2}-\d{2}$/.test(id)) return false;
-  return true;
-}
-
-/**
- * Extract UI components + experiments and link them when they appear close in source.
- */
 function extractUiAndExperiments(content) {
   const experiments = new Map();
   const ui = new Map();
 
-  const idRe = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80})["']/gi;
+  // experiment ids like 2026-07-desktop-channel-tabs
+  const expRe =
+    /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,80})["']/gi;
   let m;
-  while ((m = idRe.exec(content)) !== null) {
-    const id = m[1].toLowerCase();
-    if (!isExpId(id)) continue;
+  while ((m = expRe.exec(content)) !== null) {
+    const id = m[1];
+    if (/^20\d{2}-\d{2}$/.test(id)) continue;
     if (!experiments.has(id)) {
       experiments.set(id, {
         id,
-        type: /guild/i.test(id) ? 'guild' : 'user',
-        isApex: /apex|_aa_|-aa-/i.test(id),
+        kind: /guild|server/i.test(id) ? 'guild' : 'user',
+        type: /guild|server/i.test(id) ? 'guild' : 'user',
+        treatments: [{ id: 0 }, { id: 1 }],
+        isApex: /apex|_aa_|-aa-|holdout/i.test(id),
+        aaMode: /_aa_|-aa-|holdout/i.test(id),
         relatedUI: [],
       });
     }
   }
 
-  const uiRe = new RegExp(
-    `["']([A-Z][A-Za-z0-9]*(?:${UI_SUFFIX}))["']`,
-    'g',
-  );
+  // treatment / variation counts near experiment definitions
+  const treatBlock =
+    /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80})["'][\s\S]{0,400}?treatments\s*:\s*\[([\s\S]{0,800}?)\]/gi;
+  while ((m = treatBlock.exec(content)) !== null) {
+    const id = m[1];
+    if (!experiments.has(id)) continue;
+    const body = m[2] || '';
+    const ids = [...body.matchAll(/["']?id["']?\s*:\s*(\d+)/g)].map((x) => Number(x[1]));
+    const labels = [...body.matchAll(/["']label["']\s*:\s*["']([^"']+)["']/g)].map((x) => x[1]);
+    if (ids.length) {
+      const exp = experiments.get(id);
+      exp.treatments = ids.map((tid, i) => ({
+        id: tid,
+        label: labels[i] || null,
+      }));
+    }
+  }
+
+  // UI-ish PascalCase component names
+  const uiRe =
+    /\b([A-Z][a-zA-Z0-9]{2,}(?:Modal|Popout|Sheet|Panel|Page|Screen|Banner|Notice|Toast|Menu|Button))\b/g;
   while ((m = uiRe.exec(content)) !== null) {
     const name = m[1];
-    if (name.length < 5 || name.length > 80) continue;
-    // skip noise
-    if (/^(HTML|SVG|CSS|XML|JSON|URL|API|ID)/.test(name)) continue;
+    if (name.length > 60) continue;
     if (!ui.has(name)) {
       ui.set(name, {
         name,
@@ -62,25 +72,19 @@ function extractUiAndExperiments(content) {
     }
   }
 
-  // Link: experiment ID window ↔ UI names
+  // link experiments ↔ nearby UI names (window of text)
   const uiList = [...ui.keys()];
   for (const exp of experiments.values()) {
+    const related = new Set();
     const re = new RegExp(
-      exp.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      `.{0,200}${exp.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}.{0,200}`,
       'gi',
     );
-    const related = new Set();
-    let hit;
-    let guards = 0;
-    while ((hit = re.exec(content)) !== null && guards < 30) {
-      guards++;
-      const start = Math.max(0, hit.index - 1800);
-      const end = Math.min(content.length, hit.index + exp.id.length + 1800);
-      const win = content.slice(start, end);
+    let wm;
+    while ((wm = re.exec(content)) !== null) {
+      const win = wm[0];
       for (const name of uiList) {
-        if (win.includes(`"${name}"`) || win.includes(`'${name}'`) || win.includes(name)) {
-          related.add(name);
-        }
+        if (win.includes(name)) related.add(name);
       }
     }
     exp.relatedUI = [...related].slice(0, 10);
@@ -102,7 +106,6 @@ function extractUiAndExperiments(content) {
 
 function formatNewUiDescription(newUI, buildNumber) {
   const lines = [];
-  // Prioritize UI linked to experiments
   const sorted = [...newUI].sort((a, b) => {
     const ae = (a.relatedExperiments || []).length;
     const be = (b.relatedExperiments || []).length;
@@ -122,26 +125,40 @@ function formatNewUiDescription(newUI, buildNumber) {
   return lines.join('\n');
 }
 
+/**
+ * Discord embed for a newly detected experiment.
+ * Matches the channel style the user requested.
+ */
 function formatExperimentWithUi(exp, buildNumber) {
-  const isApex = exp.isApex || exp.aaMode;
+  const isApex = !!(exp.isApex || exp.aaMode);
   const type = exp.kind || exp.type || 'user';
-  const variants = (exp.treatments || []).length
-    ? exp.treatments.map((t) => `* Variant ${t.id}${t.label ? ` — ${t.label}` : ''}`)
-    : ['* Variant 0', '* Variant 1'];
+  const treatments = exp.treatments && exp.treatments.length
+    ? exp.treatments
+    : [{ id: 0 }, { id: 1 }];
+
   const lines = [
-    `+ \`${exp.id}\` (**${type}**)`,
-    ...variants.slice(0, 8),
-    `Type: **${type}**`,
-    `Build: **${buildNumber}**`,
+    '**Name**',
+    String(exp.id),
+    '**Type** ' + type,
+    '**Variations**',
   ];
-  if ((exp.relatedUI || []).length) {
-    lines.push(`UI: ${exp.relatedUI.slice(0, 6).map((n) => `\`${n}\``).join(', ')}`);
+  for (const t of treatments.slice(0, 12)) {
+    const label = t.label ? ` — ${t.label}` : '';
+    lines.push(`Variation ${t.id}${label}`);
   }
+  lines.push(`**Build:** ${buildNumber}`);
+  if ((exp.relatedUI || []).length) {
+    lines.push(
+      '**UI:** ' + exp.relatedUI.slice(0, 6).map((n) => '`' + n + '`').join(', '),
+    );
+  }
+
   return {
     title: isApex ? 'New Apex Experiment' : 'New Experiment',
     description: lines.join('\n'),
     color: isApex ? 0xfee75c : 0xeb459e,
     timestamp: new Date().toISOString(),
+    footer: { text: 'Canary · experiments' },
   };
 }
 
