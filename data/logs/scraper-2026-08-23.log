@@ -126,3 +126,12 @@
 [2026-08-23T04:36:33.760Z] [INFO] Webhook sent {"dedupeKey":"strings:599529:a985f4231c9a77f0af9c","status":204}
 [2026-08-23T04:36:34.193Z] [INFO] Webhook sent {"dedupeKey":"ui:599529:60ee51d36842594f862b","status":204}
 [2026-08-23T04:36:34.444Z] [INFO] scrape done
+[2026-08-23T17:28:49.560Z] [INFO] watch_build start
+[2026-08-23T17:28:49.689Z] [INFO] Build 599639 {"isNew":true,"prev":"599529","ms":129}
+[2026-08-23T17:28:50.159Z] [INFO] Early webhook 204 {"buildNumber":"599639","ms":599,"body":""}
+[2026-08-23T17:28:50.415Z] [INFO] scrape start
+[2026-08-23T17:28:50.671Z] [INFO] build detected {"buildNumber":"599639"}
+[2026-08-23T17:28:55.027Z] [INFO] Lines skipped (same build)
+[2026-08-23T17:46:38.767Z] [INFO] scrape summary {"isNewBuild":false,"linesAdded":0,"linesRemoved":0,"stringsAdded":0,"routesAdded":0}
+[2026-08-23T17:46:38.769Z] [INFO] No notify (same build, no content delta)
+[2026-08-23T17:46:38.769Z] [INFO] scrape done
