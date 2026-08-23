@@ -234,16 +234,29 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
     return;
   }
 
-  const showLines = isNewBuild && lineDiff && !lineDiff.skipped;
+  // Only show lines when the delta is meaningful (not wholesale asset rename +69545/−69544)
+  const showLines =
+    isNewBuild &&
+    lineDiff &&
+    !lineDiff.skipped &&
+    lineDiff.meaningful !== false &&
+    ((lineDiff.added || 0) + (lineDiff.removed || 0) > 0) &&
+    !lineDiff.wholesale;
   const added = showLines ? lineDiff.added : 0;
   const removed = showLines ? lineDiff.removed : 0;
   const alreadyAnnounced = isNewBuild && (await wasBuildAnnounced(build.buildNumber));
 
-  if (
+  // One build card max per build — never spam empty "Canary Build Details"
+  const shouldBuildCard =
     (isNewBuild && !alreadyAnnounced) ||
     (!isNewBuild && hasContent) ||
-    (isNewBuild && alreadyAnnounced && (hasContent || showLines))
-  ) {
+    (isNewBuild && alreadyAnnounced && hasContent);
+
+  if (isNewBuild && alreadyAnnounced && !hasContent) {
+    await log.info('Skip empty build details (already announced)', {
+      build: build.buildNumber,
+    });
+  } else if (shouldBuildCard) {
     const deltaParts = [
       hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
       hasStrings
@@ -253,6 +266,7 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
         ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}/~${countKeys(endpointDiff.modified || {})}`
         : null,
       hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
+      showLines ? `Lines +${added}/−${removed}` : null,
     ].filter(Boolean);
 
     const title = isNewBuild
@@ -261,36 +275,38 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
         : 'New Discord Canary Build'
       : 'Canary Changes';
 
-    if (isNewBuild && alreadyAnnounced && !hasContent && !showLines) {
-      await log.info('Skip build card (early announce only)', { build: build.buildNumber });
-    } else {
-      await postWebhook(
-        {
-          username: 'Canary Scraper',
-          embeds: [
-            {
-              title,
-              color: hasNewExp ? 0xed4245 : 0x57f287,
-              fields: [
-                { name: 'Build', value: String(build.buildNumber), inline: true },
-                { name: 'Channel', value: 'canary', inline: true },
-                {
-                  name: 'Lines',
-                  value: showLines ? `+${added} · −${removed}` : isNewBuild ? 'baseline' : '—',
-                  inline: true,
-                },
-                {
-                  name: 'Delta',
-                  value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
-                },
-              ],
-              timestamp: new Date().toISOString(),
-            },
-          ],
-        },
-        `build-card:${build.buildNumber}:${title}`,
-      );
-    }
+    await postWebhook(
+      {
+        username: 'Canary Scraper',
+        embeds: [
+          {
+            title,
+            color: hasNewExp ? 0xed4245 : 0x57f287,
+            fields: [
+              { name: 'Build', value: String(build.buildNumber), inline: true },
+              { name: 'Channel', value: 'canary', inline: true },
+              {
+                name: 'Lines',
+                value: showLines
+                  ? `+${added} · −${removed}`
+                  : isNewBuild
+                    ? lineDiff && lineDiff.wholesale
+                      ? 'assets refreshed'
+                      : '—'
+                    : '—',
+                inline: true,
+              },
+              {
+                name: 'Delta',
+                value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
+              },
+            ],
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      },
+      `build-card:${build.buildNumber}`,
+    );
   }
 
   if (hasStrings) {
@@ -360,6 +376,19 @@ async function main() {
   } catch {}
   const isNewBuild = !previousBuild || previousBuild.buildNumber !== buildNumber;
 
+  // Persist build number ASAP so the next run does not re-announce
+  await fs.writeJson(
+    BUILD_FILE,
+    {
+      buildNumber,
+      versionHash: env.VERSION_HASH || null,
+      releaseChannel: env.RELEASE_CHANNEL || 'canary',
+      scrapedAt: new Date().toISOString(),
+      _partial: true,
+    },
+    { spaces: 2 },
+  ); // early-write-build
+
   try {
     await httpGet(EXPERIMENTS_API, false);
   } catch (e) {
@@ -421,7 +450,6 @@ async function main() {
     }
   }
 
-  // Seed only when we have almost no local baseline (avoid re-merge every run)
   let diskStringCount = 0;
   try {
     if (await fs.pathExists(STRINGS_FILE)) {
@@ -481,7 +509,6 @@ async function main() {
   const cleanedPrev = sanitizeStringsMap(prevStrings);
   const extracted = sanitizeStringsMap(findings.strings);
 
-  // Incomplete local scan must NOT wipe the baseline (would spam −thousands of strings)
   const mergedStrings = { ...cleanedPrev, ...extracted };
   findings.strings = mergedStrings;
 
@@ -548,6 +575,7 @@ async function main() {
       added: lineDiff.added || 0,
       removed: lineDiff.removed || 0,
       skipped: !!lineDiff.skipped,
+      wholesale: !!lineDiff.wholesale,
     },
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
