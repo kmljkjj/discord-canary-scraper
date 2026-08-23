@@ -1,5 +1,6 @@
 /**
- * FAST path: detect new BUILD_NUMBER and announce immediately.
+ * FAST path: detect new BUILD_NUMBER and announce once.
+ * Writes build.json immediately so the next run never re-announces.
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -51,6 +52,20 @@ async function main() {
     prev: prev && prev.buildNumber,
     ms: Date.now() - t0,
   });
+
+  // Always persist current build number first (even if same)
+  // so failed later steps cannot leave us stuck on an old build forever.
+  await fs.writeJson(
+    BUILD_FILE,
+    {
+      buildNumber: String(buildNumber),
+      versionHash: versionHash || (prev && prev.versionHash) || null,
+      releaseChannel: 'canary',
+      scrapedAt: new Date().toISOString(),
+      source: 'watch_build',
+    },
+    { spaces: 2 },
+  );
 
   if (!isNew) {
     await log.info('watch_build skip (same build)');
