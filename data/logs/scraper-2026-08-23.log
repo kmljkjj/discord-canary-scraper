@@ -52,3 +52,12 @@
 [2026-08-23T02:53:23.178Z] [INFO] scrape summary {"isNewBuild":false,"linesAdded":0,"linesRemoved":0,"stringsAdded":0,"stringsRemoved":0,"routesAdded":0,"routesRemoved":0}
 [2026-08-23T02:53:23.179Z] [INFO] No notify (same build, no content delta)
 [2026-08-23T02:53:23.180Z] [INFO] scrape done
+[2026-08-23T02:53:49.132Z] [INFO] watch_build start
+[2026-08-23T02:53:49.195Z] [INFO] Build 599529 {"isNew":false,"prev":"599529","ms":63}
+[2026-08-23T02:53:49.196Z] [INFO] watch_build skip (same build)
+[2026-08-23T02:53:49.408Z] [INFO] scrape start
+[2026-08-23T02:53:49.532Z] [INFO] build detected {"buildNumber":"599529"}
+[2026-08-23T02:53:51.827Z] [INFO] Lines skipped (same build)
+[2026-08-23T02:53:52.842Z] [INFO] scrape summary {"isNewBuild":false,"linesAdded":0,"linesRemoved":0,"stringsAdded":0,"stringsRemoved":0,"routesAdded":0,"routesRemoved":0}
+[2026-08-23T02:53:52.842Z] [INFO] No notify (same build, no content delta)
+[2026-08-23T02:53:52.843Z] [INFO] scrape done
