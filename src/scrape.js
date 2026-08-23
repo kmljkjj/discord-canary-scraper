@@ -1,9 +1,5 @@
 /**
- * Discord Canary scraper
- * Strings: strict Wumpus-style i18n (merge partial scans)
- * Routes: Wumpus data/routes.json style
- * Lines: persistent stats in data/asset_stats.json
- * Notify: deduped via notify_guard
+ * Discord Canary scraper — anti-spam notify (seen registry + budget)
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
@@ -29,7 +25,14 @@ const {
   saveStats,
 } = require('./line_diff');
 const { log } = require('./logger');
-const { claim, wasBuildAnnounced, hashPayload } = require('./notify_guard');
+const {
+  claim,
+  wasBuildAnnounced,
+  hashPayload,
+  takeNew,
+  canSend,
+  resetRunBudget,
+} = require('./notify_guard');
 const {
   extractEndpointsFromContent,
   sanitizeRoutesMap,
@@ -191,6 +194,10 @@ async function postWebhook(payload, dedupeKey) {
       return false;
     }
   }
+  if (!canSend()) {
+    await log.info('Webhook skipped (run budget)', { dedupeKey: dedupeKey || null });
+    return false;
+  }
   const res = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -234,7 +241,6 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
     return;
   }
 
-  // Only show lines when the delta is meaningful (not wholesale asset rename +69545/−69544)
   const showLines =
     isNewBuild &&
     lineDiff &&
@@ -246,7 +252,6 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
   const removed = showLines ? lineDiff.removed : 0;
   const alreadyAnnounced = isNewBuild && (await wasBuildAnnounced(build.buildNumber));
 
-  // One build card max per build — never spam empty "Canary Build Details"
   const shouldBuildCard =
     (isNewBuild && !alreadyAnnounced) ||
     (!isNewBuild && hasContent) ||
@@ -309,55 +314,91 @@ async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineD
     );
   }
 
-  if (hasStrings) {
-    const emb = formatStringsEmbed(stringDiff, build.buildNumber);
+  // Strings — only never-seen keys
+  const addedStrKeys = Object.keys(stringDiff.added || {});
+  const freshStrKeys = await takeNew('stringKeys', addedStrKeys);
+  if (freshStrKeys.length) {
+    const filtered = {
+      added: Object.fromEntries(
+        freshStrKeys.map((k) => [k, stringDiff.added[k]]).filter(([, v]) => v != null),
+      ),
+      removed: {},
+      modified: {},
+    };
+    const emb = formatStringsEmbed(filtered, build.buildNumber);
     if (emb) {
       await postWebhook(
         { username: 'Canary Scraper', embeds: [emb] },
-        `strings:${build.buildNumber}:${hashPayload(stringDiff)}`,
+        `strings:${build.buildNumber}:${hashPayload(freshStrKeys.sort())}`,
+      );
+    }
+  } else if (hasStrings) {
+    await log.info('Strings skipped (all keys already seen)');
+  }
+
+  // Endpoints — only never-seen
+  const addedEp = Object.keys(endpointDiff.added || {});
+  const freshEp = await takeNew('endpoints', addedEp);
+  if (freshEp.length) {
+    const filtered = {
+      added: Object.fromEntries(freshEp.map((k) => [k, endpointDiff.added[k]])),
+      removed: {},
+      modified: {},
+    };
+    const emb = formatEndpointsEmbed(filtered, build.buildNumber);
+    if (emb) {
+      await postWebhook(
+        { username: 'Canary Scraper', embeds: [emb] },
+        `endpoints:${build.buildNumber}:${hashPayload(freshEp.sort())}`,
       );
     }
   }
 
-  if (hasEndpoints) {
-    const emb = formatEndpointsEmbed(endpointDiff, build.buildNumber);
-    if (emb) {
-      await postWebhook(
-        { username: 'Canary Scraper', embeds: [emb] },
-        `endpoints:${build.buildNumber}:${hashPayload(endpointDiff)}`,
-      );
-    }
-  }
-
-  for (const exp of (diff.newClientExperiments || []).slice(0, 10)) {
+  // Experiments — only never-seen ids (max 5)
+  const candExps = diff.newClientExperiments || [];
+  const freshExpIds = await takeNew(
+    'experiments',
+    candExps.map((e) => e.id),
+  );
+  const freshExps = candExps.filter((e) => freshExpIds.includes(e.id));
+  for (const exp of freshExps.slice(0, 5)) {
     await postWebhook(
       {
         username: 'Canary Scraper',
         embeds: [formatExperimentWithUi(exp, build.buildNumber)],
       },
-      `exp:${build.buildNumber}:${exp.id}`,
+      `exp:${exp.id}`,
     );
   }
 
-  if (hasNewUI) {
-    await postWebhook(
-      {
-        username: 'Canary Scraper',
-        embeds: [
-          {
-            title: 'New UI',
-            color: 0xf47b67,
-            description: formatNewUiDescription(diff.newUI, build.buildNumber),
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      },
-      `ui:${build.buildNumber}:${hashPayload(diff.newUI)}`,
+  // UI off unless UI_NOTIFY=1
+  if (process.env.UI_NOTIFY === '1' && hasNewUI) {
+    const freshUi = await takeNew(
+      'ui',
+      (diff.newUI || []).map((u) => u.name),
     );
+    const uiItems = (diff.newUI || []).filter((u) => freshUi.includes(u.name));
+    if (uiItems.length) {
+      await postWebhook(
+        {
+          username: 'Canary Scraper',
+          embeds: [
+            {
+              title: 'New UI',
+              color: 0xf47b67,
+              description: formatNewUiDescription(uiItems, build.buildNumber),
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        },
+        `ui:${build.buildNumber}:${hashPayload(freshUi.sort())}`,
+      );
+    }
   }
 }
 
 async function main() {
+  resetRunBudget();
   await log.info('scrape start');
   console.log('🔍 Canary scrape\n');
   await fs.ensureDir(DATA_DIR);
@@ -376,7 +417,6 @@ async function main() {
   } catch {}
   const isNewBuild = !previousBuild || previousBuild.buildNumber !== buildNumber;
 
-  // Persist build number ASAP so the next run does not re-announce
   await fs.writeJson(
     BUILD_FILE,
     {
@@ -387,7 +427,7 @@ async function main() {
       _partial: true,
     },
     { spaces: 2 },
-  ); // early-write-build
+  );
 
   try {
     await httpGet(EXPERIMENTS_API, false);
@@ -396,7 +436,6 @@ async function main() {
   }
 
   const prevAssetStats = await loadStats(ASSET_STATS_FILE);
-
   const webUrl = assetUrls.find((u) => /\/web\.[a-f0-9]+\.js/i.test(u));
   const webName = webUrl ? path.basename(webUrl.split('?')[0]) : null;
   let webOk = false;
@@ -418,7 +457,6 @@ async function main() {
   } else {
     await log.info('Lines skipped (same build)');
   }
-
   await saveStats(ASSET_STATS_FILE, currAssetStats, buildNumber);
 
   const findings = await analyzeAssets();
@@ -432,21 +470,12 @@ async function main() {
     }
   } catch {}
   if (diskRouteCount < 50 && Object.keys(findings.endpoints).length < 50) {
-    await log.info('Seeding routes from Wumpus routes.json…');
     const wr = await fetchWumpusRoutes(fetch);
     if (wr) {
-      let merged = 0;
       for (const [k, v] of Object.entries(wr)) {
-        if (!(k in findings.endpoints)) {
-          findings.endpoints[k] = v;
-          merged++;
-        }
+        if (!(k in findings.endpoints)) findings.endpoints[k] = v;
       }
       findings.endpoints = sanitizeRoutesMap(findings.endpoints);
-      await log.info('Merged Wumpus routes (one-time seed)', {
-        merged,
-        total: Object.keys(findings.endpoints).length,
-      });
     }
   }
 
@@ -459,31 +488,12 @@ async function main() {
   if (SEED_WUMPUS && diskStringCount < 100 && Object.keys(findings.strings).length < 500) {
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
-      let merged = 0;
       for (const [k, v] of Object.entries(wumpus)) {
-        if (!(k in findings.strings)) {
-          findings.strings[k] = v;
-          merged++;
-        }
+        if (!(k in findings.strings)) findings.strings[k] = v;
       }
       findings.strings = sanitizeStringsMap(findings.strings);
-      await log.info('Merged Wumpus strings (one-time seed)', {
-        merged,
-        total: Object.keys(findings.strings).length,
-      });
     }
   }
-
-  console.log(
-    'Experiments',
-    findings.experiments.length,
-    'UI',
-    findings.ui.length,
-    'Strings',
-    Object.keys(findings.strings).length,
-    'Routes',
-    Object.keys(findings.endpoints).length,
-  );
 
   let previous = null;
   try {
@@ -508,27 +518,15 @@ async function main() {
   } catch {}
   const cleanedPrev = sanitizeStringsMap(prevStrings);
   const extracted = sanitizeStringsMap(findings.strings);
-
   const mergedStrings = { ...cleanedPrev, ...extracted };
   findings.strings = mergedStrings;
-
   const stringDiff = diffStrings(cleanedPrev, mergedStrings);
-  if (Object.keys(extracted).length < 500) {
-    if (countKeys(stringDiff.removed) > 0) {
-      await log.info('Strings: ignore removals (partial scan)', {
-        extracted: Object.keys(extracted).length,
-        removedIgnored: countKeys(stringDiff.removed),
-      });
-    }
-    stringDiff.removed = {};
-  }
+  if (Object.keys(extracted).length < 500) stringDiff.removed = {};
   if (countKeys(stringDiff.added) > 500 && Object.keys(cleanedPrev).length < 100) {
-    await log.info('Strings baseline seed — skip notify flood');
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
   }
-
   await fs.writeJson(STRINGS_FILE, findings.strings, { spaces: 2 });
 
   let prevEndpoints = {};
@@ -540,26 +538,13 @@ async function main() {
   const extractedRoutes = sanitizeRoutesMap(findings.endpoints);
   const mergedRoutes = { ...prevEndpoints, ...extractedRoutes };
   findings.endpoints = mergedRoutes;
-
   const endpointDiff = diffRoutes(prevEndpoints, mergedRoutes);
-  if (Object.keys(extractedRoutes).length < 30) {
-    if (countKeys(endpointDiff.removed) > 0) {
-      await log.info('Routes: ignore removals (partial scan)', {
-        extracted: Object.keys(extractedRoutes).length,
-      });
-    }
-    endpointDiff.removed = {};
-  }
-  if (
-    Object.keys(prevEndpoints).length < 50 ||
-    (countKeys(endpointDiff.added) > 200 && Object.keys(prevEndpoints).length < 50)
-  ) {
-    await log.info('Routes baseline — skip endpoint notify flood');
+  if (Object.keys(extractedRoutes).length < 30) endpointDiff.removed = {};
+  if (Object.keys(prevEndpoints).length < 50) {
     endpointDiff.added = {};
     endpointDiff.removed = {};
     endpointDiff.modified = {};
   }
-
   await fs.writeJson(ROUTES_FILE, findings.endpoints, { spaces: 2 });
   await fs.writeJson(ENDPOINTS_FILE, findings.endpoints, { spaces: 2 });
 
@@ -595,9 +580,7 @@ async function main() {
     linesAdded: lineDiff.added || 0,
     linesRemoved: lineDiff.removed || 0,
     stringsAdded: countKeys(stringDiff.added),
-    stringsRemoved: countKeys(stringDiff.removed),
     routesAdded: countKeys(endpointDiff.added),
-    routesRemoved: countKeys(endpointDiff.removed),
   });
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   await log.info('scrape done');
