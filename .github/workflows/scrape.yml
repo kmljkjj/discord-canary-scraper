@@ -19,53 +19,33 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
+      - run: npm install --no-audit --no-fund
 
-      - name: Watch build (instant announce once)
+      - name: Run scraper
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: node src/watch_build.js
+        run: node src/index.js
 
-      - name: Full scrape + experiments / strings / endpoints
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          FAST_MODE: '1'
-          MAX_WEBHOOKS_PER_RUN: '20'
-          UI_NOTIFY: '0'
-        run: node src/scrape.js
-
-      - name: Quests
-        continue-on-error: true
-        env:
-          QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        run: node src/quests.js
-
-      - name: Commit & push state
+      - name: Commit state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/ || true
           if git diff --staged --quiet; then
-            echo "No data changes"
+            echo "No changes"
             exit 0
           fi
-          git commit -m "🔄 Canary scrape $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
+          git commit -m "🔄 canary $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 3
+            sleep 2
           done
-          echo "push failed after retries"
           exit 0

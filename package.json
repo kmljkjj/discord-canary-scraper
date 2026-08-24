@@ -1,24 +1,16 @@
 {
   "name": "discord-canary-scraper",
-  "version": "1.5.0",
-  "description": "Discord Canary + mobile + quests datamining scraper",
-  "main": "src/scrape.js",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Wumpus-style Canary scraper + Discord Previews-style notifications",
+  "main": "src/index.js",
   "scripts": {
-    "scrape": "node src/scrape.js",
-    "start": "node src/scrape.js",
-    "quests": "node src/quests.js",
-    "mobile": "node src/mobile_versions.js",
-    "mobile-files": "node src/mobile_from_files.js"
+    "start": "node src/index.js",
+    "scrape": "node src/index.js"
   },
-  "keywords": ["discord", "canary", "quests", "datamining"],
-  "author": "kmljkjj",
-  "license": "MIT",
   "dependencies": {
-    "node-fetch": "^2.7.0",
-    "cheerio": "^1.0.0-rc.12",
-    "fs-extra": "^11.2.0"
-  },
-  "engines": {
-    "node": ">=18"
+    "cheerio": "^1.0.0",
+    "fs-extra": "^11.2.0",
+    "node-fetch": "^2.7.0"
   }
 }
