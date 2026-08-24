@@ -1,6 +1,6 @@
 /**
- * Anti-spam for Discord webhooks.
- * claim(key) + seen registry + run budget + global cooldown
+ * Anti-spam: claim keys + permanent seen registry + per-run budget.
+ * NO per-message cooldown (that blocked experiments after watch_build).
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -8,9 +8,8 @@ const crypto = require('crypto');
 
 const STATE_FILE = path.join(__dirname, '..', 'data', 'notify_state.json');
 const SEEN_FILE = path.join(__dirname, '..', 'data', 'seen.json');
-const MAX_KEYS = 800;
-const MAX_WEBHOOKS_PER_RUN = Number(process.env.MAX_WEBHOOKS_PER_RUN || 6);
-const GLOBAL_COOLDOWN_MS = Number(process.env.WEBHOOK_COOLDOWN_MS || 45_000);
+const MAX_KEYS = 1000;
+const MAX_WEBHOOKS_PER_RUN = Number(process.env.MAX_WEBHOOKS_PER_RUN || 20);
 
 let runCount = 0;
 
@@ -18,7 +17,7 @@ async function loadState() {
   try {
     if (await fs.pathExists(STATE_FILE)) return await fs.readJson(STATE_FILE);
   } catch {}
-  return { keys: {}, lastBuildAnnounced: null, lastWebhookAt: 0 };
+  return { keys: {}, lastBuildAnnounced: null };
 }
 
 async function saveState(state) {
@@ -56,10 +55,14 @@ async function saveSeen(seen) {
 }
 
 function hashPayload(obj) {
-  return crypto.createHash('sha256').update(JSON.stringify(obj)).digest('hex').slice(0, 20);
+  return crypto
+    .createHash('sha256')
+    .update(JSON.stringify(obj))
+    .digest('hex')
+    .slice(0, 20);
 }
 
-/** true = first time (allowed) */
+/** true = first time */
 async function claim(key) {
   const state = await loadState();
   if (!state.keys) state.keys = {};
@@ -86,7 +89,7 @@ async function wasBuildAnnounced(buildNumber) {
   return wasClaimed('build-announce:' + buildNumber);
 }
 
-/** Return only ids never seen; mark them seen permanently */
+/** Never-seen ids only; marks them seen */
 async function takeNew(bucket, ids) {
   const seen = await loadSeen();
   const set = new Set((seen[bucket] || []).map(String));
@@ -97,22 +100,18 @@ async function takeNew(bucket, ids) {
     set.add(k);
     fresh.push(k);
   }
-  seen[bucket] = [...set];
-  await saveSeen(seen);
+  if (fresh.length) {
+    seen[bucket] = [...set];
+    await saveSeen(seen);
+  }
   return fresh;
 }
 
-/** Global cooldown across runs (persisted) */
-async function passCooldown() {
-  const state = await loadState();
-  const now = Date.now();
-  const last = Number(state.lastWebhookAt || 0);
-  if (last && now - last < GLOBAL_COOLDOWN_MS) {
-    return false;
-  }
-  state.lastWebhookAt = now;
-  await saveState(state);
-  return true;
+/** Peek without marking */
+async function peekNew(bucket, ids) {
+  const seen = await loadSeen();
+  const set = new Set((seen[bucket] || []).map(String));
+  return (ids || []).map(String).filter((k) => k && !set.has(k));
 }
 
 function canSend() {
@@ -132,8 +131,8 @@ module.exports = {
   wasBuildAnnounced,
   hashPayload,
   takeNew,
+  peekNew,
   canSend,
-  passCooldown,
   resetRunBudget,
   loadSeen,
   STATE_FILE,

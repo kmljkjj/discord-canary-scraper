@@ -2,8 +2,7 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Every 20 minutes — less spam risk
-    - cron: '*/20 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -13,13 +12,12 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  # Cancel overlapping runs (e.g. bot every 60s) — only newest matters
   cancel-in-progress: true
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,19 +32,16 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Watch build (instant webhook once)
+      - name: Watch build (instant announce once)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          MAX_WEBHOOKS_PER_RUN: '4'
-          WEBHOOK_COOLDOWN_MS: '60000'
         run: node src/watch_build.js
 
-      - name: Full scrape
+      - name: Full scrape + experiments / strings / endpoints
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           FAST_MODE: '1'
-          MAX_WEBHOOKS_PER_RUN: '6'
-          WEBHOOK_COOLDOWN_MS: '60000'
+          MAX_WEBHOOKS_PER_RUN: '20'
           UI_NOTIFY: '0'
         run: node src/scrape.js
 
@@ -62,10 +57,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/build.json data/notify_state.json data/seen.json \
-            data/asset_stats.json data/strings.json data/routes.json \
-            data/endpoints.json data/findings.json data/quests.json \
-            data/mobile_versions.json data/mobile_experiments.json 2>/dev/null || true
           git add -f data/ || true
           if git diff --staged --quiet; then
             echo "No data changes"
@@ -76,4 +67,5 @@ jobs:
             git pull --rebase origin main && git push origin HEAD:main && exit 0
             sleep 3
           done
-          exit 1
+          echo "push failed after retries"
+          exit 0

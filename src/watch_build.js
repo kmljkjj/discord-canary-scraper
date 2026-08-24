@@ -1,6 +1,6 @@
 /**
- * FAST path: detect new BUILD_NUMBER and announce once.
- * Writes build.json immediately so the next run never re-announces.
+ * FAST path: announce new BUILD_NUMBER once.
+ * Does NOT write data/processed_build.json — scrape owns that for isNewBuild.
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -10,7 +10,7 @@ const { claim, markBuildAnnounced } = require('./notify_guard');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const DATA_DIR = path.join(__dirname, '..', 'data');
-const BUILD_FILE = path.join(DATA_DIR, 'build.json');
+const LAST_SEEN_FILE = path.join(DATA_DIR, 'watch_last_build.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -19,10 +19,6 @@ async function main() {
   const t0 = Date.now();
   await log.info('watch_build start');
   await fs.ensureDir(DATA_DIR);
-
-  if (!WEBHOOK_URL) {
-    await log.warn('DISCORD_WEBHOOK_URL missing — cannot notify');
-  }
 
   const res = await fetch(CANARY_APP, {
     headers: { 'User-Agent': UA, Accept: 'text/html' },
@@ -38,13 +34,14 @@ async function main() {
 
   if (!buildNumber) {
     await log.warn('No BUILD_NUMBER found');
-    process.exit(0);
+    return;
   }
 
   let prev = null;
   try {
-    if (await fs.pathExists(BUILD_FILE)) prev = await fs.readJson(BUILD_FILE);
-  } catch (e) {}
+    if (await fs.pathExists(LAST_SEEN_FILE))
+      prev = await fs.readJson(LAST_SEEN_FILE);
+  } catch {}
 
   const isNew = !prev || String(prev.buildNumber) !== String(buildNumber);
   await log.info('Build ' + buildNumber, {
@@ -53,35 +50,31 @@ async function main() {
     ms: Date.now() - t0,
   });
 
-  // Always persist current build number first (even if same)
-  // so failed later steps cannot leave us stuck on an old build forever.
   await fs.writeJson(
-    BUILD_FILE,
+    LAST_SEEN_FILE,
     {
       buildNumber: String(buildNumber),
-      versionHash: versionHash || (prev && prev.versionHash) || null,
-      releaseChannel: 'canary',
+      versionHash: versionHash || null,
       scrapedAt: new Date().toISOString(),
-      source: 'watch_build',
     },
     { spaces: 2 },
   );
 
   if (!isNew) {
     await log.info('watch_build skip (same build)');
-    process.exit(0);
+    return;
   }
 
   if (!WEBHOOK_URL) {
     await log.info('watch_build skip (no webhook)');
-    process.exit(0);
+    return;
   }
 
   const key = 'build-announce:' + buildNumber;
   const ok = await claim(key);
   if (!ok) {
     await log.info('watch_build skip — already claimed', { buildNumber });
-    process.exit(0);
+    return;
   }
 
   const body = {
@@ -98,7 +91,11 @@ async function main() {
             value: versionHash ? '`' + versionHash.slice(0, 12) + '`' : '—',
             inline: true,
           },
-          { name: 'Status', value: 'Detected — full scan running…', inline: false },
+          {
+            name: 'Status',
+            value: 'Detected — full scan running…',
+            inline: false,
+          },
         ],
         timestamp: new Date().toISOString(),
       },
@@ -110,17 +107,11 @@ async function main() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  const txt = await wr.text().catch(() => '');
   await markBuildAnnounced(buildNumber);
   await log.info('Early webhook ' + wr.status, {
     buildNumber,
     ms: Date.now() - t0,
-    body: txt.slice(0, 120),
   });
-
-  if (!wr.ok) {
-    await log.warn('Webhook POST failed — check DISCORD_WEBHOOK_URL secret');
-  }
 }
 
 if (require.main === module) {
