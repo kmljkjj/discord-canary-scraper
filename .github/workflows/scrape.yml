@@ -2,8 +2,7 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Filet de sécurité si l'hébergement est down
-    - cron: '*/20 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -13,14 +12,13 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  # true = si ton hébergement spam des triggers, seul le dernier compte
-  # les FAST SKIP finissent en ~10s donc peu de perte
-  cancel-in-progress: true
+  # IMPORTANT: ne jamais tuer un full scrape (sinon bootstrap/extract jamais fini)
+  cancel-in-progress: false
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,7 +36,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/index.js
 
-      - name: Commit state (only if changed)
+      - name: Commit state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -48,8 +46,9 @@ jobs:
             exit 0
           fi
           git commit -m "🔄 canary $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
-          for i in 1 2 3 4 5; do
+          for i in 1 2 3 4 5 6; do
             git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 2
+            sleep 3
           done
+          echo "push failed"
           exit 0
