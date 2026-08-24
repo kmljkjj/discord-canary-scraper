@@ -31,6 +31,7 @@ const {
   hashPayload,
   takeNew,
   canSend,
+  passCooldown,
   resetRunBudget,
 } = require('./notify_guard');
 const {
@@ -185,217 +186,7 @@ async function analyzeAssets() {
   };
 }
 
-async function postWebhook(payload, dedupeKey) {
-  if (!WEBHOOK_URL) return false;
-  if (dedupeKey) {
-    const ok = await claim(dedupeKey);
-    if (!ok) {
-      await log.info('Webhook skipped (duplicate)', { dedupeKey });
-      return false;
-    }
-  }
-  if (!canSend()) {
-    await log.info('Webhook skipped (run budget)', { dedupeKey: dedupeKey || null });
-    return false;
-  }
-  const res = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    await log.warn('Webhook failed', { status: res.status, text: text.slice(0, 200) });
-  } else {
-    await log.info('Webhook sent', { dedupeKey: dedupeKey || null, status: res.status });
-  }
-  await new Promise((r) => setTimeout(r, 250));
-  return res.ok;
-}
-
-function countKeys(obj) {
-  return Object.keys(obj || {}).length;
-}
-
-async function notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff }) {
-  if (!WEBHOOK_URL) return;
-
-  const hasNewUI = (diff.newUI || []).length > 0;
-  const hasNewExp =
-    (diff.newClientExperiments || []).length + (diff.newGuild || []).length > 0;
-  const hasStrings =
-    countKeys(stringDiff.added) +
-      countKeys(stringDiff.removed) +
-      countKeys(stringDiff.modified) >
-    0;
-  const hasEndpoints =
-    countKeys(endpointDiff.added) +
-      countKeys(endpointDiff.removed) +
-      countKeys(endpointDiff.modified || {}) >
-    0;
-
-  const hasContent = hasNewExp || hasNewUI || hasStrings || hasEndpoints;
-
-  if (!isNewBuild && !hasContent) {
-    await log.info('No notify (same build, no content delta)');
-    return;
-  }
-
-  const showLines =
-    isNewBuild &&
-    lineDiff &&
-    !lineDiff.skipped &&
-    lineDiff.meaningful !== false &&
-    ((lineDiff.added || 0) + (lineDiff.removed || 0) > 0) &&
-    !lineDiff.wholesale;
-  const added = showLines ? lineDiff.added : 0;
-  const removed = showLines ? lineDiff.removed : 0;
-  const alreadyAnnounced = isNewBuild && (await wasBuildAnnounced(build.buildNumber));
-
-  const shouldBuildCard =
-    (isNewBuild && !alreadyAnnounced) ||
-    (!isNewBuild && hasContent) ||
-    (isNewBuild && alreadyAnnounced && hasContent);
-
-  if (isNewBuild && alreadyAnnounced && !hasContent) {
-    await log.info('Skip empty build details (already announced)', {
-      build: build.buildNumber,
-    });
-  } else if (shouldBuildCard) {
-    const deltaParts = [
-      hasNewExp ? `Experiments +${(diff.newClientExperiments || []).length}` : null,
-      hasStrings
-        ? `Strings +${countKeys(stringDiff.added)}/−${countKeys(stringDiff.removed)}/~${countKeys(stringDiff.modified)}`
-        : null,
-      hasEndpoints
-        ? `Endpoints +${countKeys(endpointDiff.added)}/−${countKeys(endpointDiff.removed)}/~${countKeys(endpointDiff.modified || {})}`
-        : null,
-      hasNewUI ? `UI +${(diff.newUI || []).length}` : null,
-      showLines ? `Lines +${added}/−${removed}` : null,
-    ].filter(Boolean);
-
-    const title = isNewBuild
-      ? alreadyAnnounced
-        ? 'Canary Build Details'
-        : 'New Discord Canary Build'
-      : 'Canary Changes';
-
-    await postWebhook(
-      {
-        username: 'Canary Scraper',
-        embeds: [
-          {
-            title,
-            color: hasNewExp ? 0xed4245 : 0x57f287,
-            fields: [
-              { name: 'Build', value: String(build.buildNumber), inline: true },
-              { name: 'Channel', value: 'canary', inline: true },
-              {
-                name: 'Lines',
-                value: showLines
-                  ? `+${added} · −${removed}`
-                  : isNewBuild
-                    ? lineDiff && lineDiff.wholesale
-                      ? 'assets refreshed'
-                      : '—'
-                    : '—',
-                inline: true,
-              },
-              {
-                name: 'Delta',
-                value: deltaParts.join('\n') || (isNewBuild ? 'Build bump' : '—'),
-              },
-            ],
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      },
-      `build-card:${build.buildNumber}`,
-    );
-  }
-
-  // Strings — only never-seen keys
-  const addedStrKeys = Object.keys(stringDiff.added || {});
-  const freshStrKeys = await takeNew('stringKeys', addedStrKeys);
-  if (freshStrKeys.length) {
-    const filtered = {
-      added: Object.fromEntries(
-        freshStrKeys.map((k) => [k, stringDiff.added[k]]).filter(([, v]) => v != null),
-      ),
-      removed: {},
-      modified: {},
-    };
-    const emb = formatStringsEmbed(filtered, build.buildNumber);
-    if (emb) {
-      await postWebhook(
-        { username: 'Canary Scraper', embeds: [emb] },
-        `strings:${build.buildNumber}:${hashPayload(freshStrKeys.sort())}`,
-      );
-    }
-  } else if (hasStrings) {
-    await log.info('Strings skipped (all keys already seen)');
-  }
-
-  // Endpoints — only never-seen
-  const addedEp = Object.keys(endpointDiff.added || {});
-  const freshEp = await takeNew('endpoints', addedEp);
-  if (freshEp.length) {
-    const filtered = {
-      added: Object.fromEntries(freshEp.map((k) => [k, endpointDiff.added[k]])),
-      removed: {},
-      modified: {},
-    };
-    const emb = formatEndpointsEmbed(filtered, build.buildNumber);
-    if (emb) {
-      await postWebhook(
-        { username: 'Canary Scraper', embeds: [emb] },
-        `endpoints:${build.buildNumber}:${hashPayload(freshEp.sort())}`,
-      );
-    }
-  }
-
-  // Experiments — only never-seen ids (max 5)
-  const candExps = diff.newClientExperiments || [];
-  const freshExpIds = await takeNew(
-    'experiments',
-    candExps.map((e) => e.id),
-  );
-  const freshExps = candExps.filter((e) => freshExpIds.includes(e.id));
-  for (const exp of freshExps.slice(0, 5)) {
-    await postWebhook(
-      {
-        username: 'Canary Scraper',
-        embeds: [formatExperimentWithUi(exp, build.buildNumber)],
-      },
-      `exp:${exp.id}`,
-    );
-  }
-
-  // UI off unless UI_NOTIFY=1
-  if (process.env.UI_NOTIFY === '1' && hasNewUI) {
-    const freshUi = await takeNew(
-      'ui',
-      (diff.newUI || []).map((u) => u.name),
-    );
-    const uiItems = (diff.newUI || []).filter((u) => freshUi.includes(u.name));
-    if (uiItems.length) {
-      await postWebhook(
-        {
-          username: 'Canary Scraper',
-          embeds: [
-            {
-              title: 'New UI',
-              color: 0xf47b67,
-              description: formatNewUiDescription(uiItems, build.buildNumber),
-              timestamp: new Date().toISOString(),
-            },
-          ],
-        },
-        `ui:${build.buildNumber}:${hashPayload(freshUi.sort())}`,
-      );
-    }
-  }
-}
+const { notify } = require('./notify_dispatch');
 
 async function main() {
   resetRunBudget();
@@ -522,7 +313,7 @@ async function main() {
   findings.strings = mergedStrings;
   const stringDiff = diffStrings(cleanedPrev, mergedStrings);
   if (Object.keys(extracted).length < 500) stringDiff.removed = {};
-  if (countKeys(stringDiff.added) > 500 && Object.keys(cleanedPrev).length < 100) {
+  if (Object.keys(stringDiff.added || {}).length > 500 && Object.keys(cleanedPrev).length < 100) {
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
@@ -575,12 +366,36 @@ async function main() {
     { spaces: 2 },
   );
 
+  // Bootstrap seen registry once so first run after deploy does not flood
+  try {
+    const { loadSeen } = require('./notify_guard');
+    const seen = await loadSeen();
+    const empty =
+      !(seen.experiments && seen.experiments.length) &&
+      !(seen.stringKeys && seen.stringKeys.length);
+    if (empty) {
+      await takeNew(
+        'experiments',
+        findings.experiments.map((e) => e.id),
+      );
+      await takeNew('stringKeys', Object.keys(findings.strings || {}));
+      await takeNew('endpoints', Object.keys(findings.endpoints || {}));
+      await takeNew(
+        'ui',
+        (findings.ui || []).map((u) => u.name),
+      );
+      await log.info('Bootstrapped seen registry (no flood)');
+    }
+  } catch (e) {
+    await log.warn('seen bootstrap failed', { err: String(e.message || e) });
+  }
+
   await log.info('scrape summary', {
     isNewBuild,
     linesAdded: lineDiff.added || 0,
     linesRemoved: lineDiff.removed || 0,
-    stringsAdded: countKeys(stringDiff.added),
-    routesAdded: countKeys(endpointDiff.added),
+    stringsAdded: Object.keys(stringDiff.added || {}).length,
+    routesAdded: Object.keys(endpointDiff.added || {}).length,
   });
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   await log.info('scrape done');
