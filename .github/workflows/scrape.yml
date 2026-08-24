@@ -12,7 +12,8 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  cancel-in-progress: true
+  # false = ne pas tuer un scrape en cours ; les runs s'alignent en file
+  cancel-in-progress: false
 
 jobs:
   scrape:
