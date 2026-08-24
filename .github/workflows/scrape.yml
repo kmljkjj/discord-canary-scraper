@@ -2,8 +2,8 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Every 15 minutes — less noise, less overlap
-    - cron: '*/15 * * * *'
+    # Every 20 minutes — less spam risk
+    - cron: '*/20 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -13,7 +13,8 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  cancel-in-progress: false
+  # Cancel overlapping runs (e.g. bot every 60s) — only newest matters
+  cancel-in-progress: true
 
 jobs:
   scrape:
@@ -33,19 +34,20 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Watch build (instant webhook)
+      - name: Watch build (instant webhook once)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          MAX_WEBHOOKS_PER_RUN: '8'
+          MAX_WEBHOOKS_PER_RUN: '4'
+          WEBHOOK_COOLDOWN_MS: '60000'
         run: node src/watch_build.js
 
       - name: Full scrape
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           FAST_MODE: '1'
-          MAX_WEBHOOKS_PER_RUN: '8'
-          # UI notifications are noisy — keep off unless you set secret UI_NOTIFY=1
-          UI_NOTIFY: ${{ secrets.UI_NOTIFY }}
+          MAX_WEBHOOKS_PER_RUN: '6'
+          WEBHOOK_COOLDOWN_MS: '60000'
+          UI_NOTIFY: '0'
         run: node src/scrape.js
 
       - name: Quests
@@ -72,6 +74,6 @@ jobs:
           git commit -m "🔄 Canary scrape $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
           for i in 1 2 3 4 5; do
             git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 2
+            sleep 3
           done
           exit 1

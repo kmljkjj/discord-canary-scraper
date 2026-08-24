@@ -1,9 +1,6 @@
 /**
  * Anti-spam for Discord webhooks.
- *
- * 1) claim(key) — one-shot keys (build-announce:123, ...)
- * 2) seen registry — experiment / string / UI / endpoint ids never re-notified
- * 3) run budget — max webhooks per process
+ * claim(key) + seen registry + run budget + global cooldown
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -11,8 +8,9 @@ const crypto = require('crypto');
 
 const STATE_FILE = path.join(__dirname, '..', 'data', 'notify_state.json');
 const SEEN_FILE = path.join(__dirname, '..', 'data', 'seen.json');
-const MAX_KEYS = 500;
-const MAX_WEBHOOKS_PER_RUN = Number(process.env.MAX_WEBHOOKS_PER_RUN || 8);
+const MAX_KEYS = 800;
+const MAX_WEBHOOKS_PER_RUN = Number(process.env.MAX_WEBHOOKS_PER_RUN || 6);
+const GLOBAL_COOLDOWN_MS = Number(process.env.WEBHOOK_COOLDOWN_MS || 45_000);
 
 let runCount = 0;
 
@@ -20,7 +18,7 @@ async function loadState() {
   try {
     if (await fs.pathExists(STATE_FILE)) return await fs.readJson(STATE_FILE);
   } catch {}
-  return { keys: {}, lastBuildAnnounced: null };
+  return { keys: {}, lastBuildAnnounced: null, lastWebhookAt: 0 };
 }
 
 async function saveState(state) {
@@ -47,12 +45,11 @@ async function loadSeen() {
 }
 
 async function saveSeen(seen) {
-  // hard caps to keep file small
-  const cap = (arr, n) => [...new Set(arr || [])].slice(-n);
-  seen.experiments = cap(seen.experiments, 5000);
-  seen.stringKeys = cap(seen.stringKeys, 20000);
-  seen.ui = cap(seen.ui, 5000);
-  seen.endpoints = cap(seen.endpoints, 5000);
+  const cap = (arr, n) => [...new Set((arr || []).map(String))].slice(-n);
+  seen.experiments = cap(seen.experiments, 8000);
+  seen.stringKeys = cap(seen.stringKeys, 25000);
+  seen.ui = cap(seen.ui, 8000);
+  seen.endpoints = cap(seen.endpoints, 8000);
   seen.mobileVersions = cap(seen.mobileVersions, 500);
   await fs.ensureDir(path.dirname(SEEN_FILE));
   await fs.writeJson(SEEN_FILE, seen, { spaces: 2 });
@@ -62,7 +59,7 @@ function hashPayload(obj) {
   return crypto.createHash('sha256').update(JSON.stringify(obj)).digest('hex').slice(0, 20);
 }
 
-/** true = first time (allowed). false = already sent */
+/** true = first time (allowed) */
 async function claim(key) {
   const state = await loadState();
   if (!state.keys) state.keys = {};
@@ -89,12 +86,12 @@ async function wasBuildAnnounced(buildNumber) {
   return wasClaimed('build-announce:' + buildNumber);
 }
 
-/** Filter list of ids against seen[bucket], mark them seen, return only new */
+/** Return only ids never seen; mark them seen permanently */
 async function takeNew(bucket, ids) {
   const seen = await loadSeen();
-  const set = new Set(seen[bucket] || []);
+  const set = new Set((seen[bucket] || []).map(String));
   const fresh = [];
-  for (const id of ids) {
+  for (const id of ids || []) {
     const k = String(id);
     if (!k || set.has(k)) continue;
     set.add(k);
@@ -105,7 +102,19 @@ async function takeNew(bucket, ids) {
   return fresh;
 }
 
-/** Budget: returns false when this run already sent too many webhooks */
+/** Global cooldown across runs (persisted) */
+async function passCooldown() {
+  const state = await loadState();
+  const now = Date.now();
+  const last = Number(state.lastWebhookAt || 0);
+  if (last && now - last < GLOBAL_COOLDOWN_MS) {
+    return false;
+  }
+  state.lastWebhookAt = now;
+  await saveState(state);
+  return true;
+}
+
 function canSend() {
   if (runCount >= MAX_WEBHOOKS_PER_RUN) return false;
   runCount += 1;
@@ -124,6 +133,7 @@ module.exports = {
   hashPayload,
   takeNew,
   canSend,
+  passCooldown,
   resetRunBudget,
   loadSeen,
   STATE_FILE,
