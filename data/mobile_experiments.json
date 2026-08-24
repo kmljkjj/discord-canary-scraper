@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-24T10:37:24.638Z",
+  "scrapedAt": "2026-08-24T12:49:54.936Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "0abeb40d",
-  "experimentCount": 283,
+  "sourceCommit": "c37b7ec7",
+  "experimentCount": 293,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 13,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -215,6 +215,14 @@
       ]
     },
     {
+      "id": "2025-10-go-live-auto-quality",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/go_live/GoLiveAutoQualityExperiment.tsx"
+      ]
+    },
+    {
       "id": "2025-10-low-latency-rate-control",
       "type": "user",
       "isApex": false,
@@ -311,6 +319,14 @@
       ]
     },
     {
+      "id": "2025-12-09-ptt-education",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/voice_calls/PTTEducationExperiment.tsx"
+      ]
+    },
+    {
       "id": "2025-12-connection-indicator",
       "type": "user",
       "isApex": false,
@@ -364,6 +380,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/memory/MemoryExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2025-12-windows-audio-effects",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/noise_cancellation/WindowsEffectsExperiment.tsx"
       ]
     },
     {
@@ -607,6 +631,14 @@
       ]
     },
     {
+      "id": "2026-02-go-live-video-preset-resolution",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/go_live/GoLiveVideoPresetResolutionExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-02-mana-playground-access",
       "type": "user",
       "isApex": false,
@@ -695,6 +727,14 @@
       ]
     },
     {
+      "id": "2026-02-silence-warning-aggression",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/SilenceWarningExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-02-wgc-dirty-regions",
       "type": "user",
       "isApex": false,
@@ -756,6 +796,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/age_assurance/GoogleWalletExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-03-audio-effects-probe",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/AudioEffectsExperiment.tsx"
       ]
     },
     {
@@ -917,14 +965,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/saved_messages/ForLaterExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-03-mobile-accessibility-label-optimization",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/a11y/native/AccessibilityLabelOptimizationExperiment.tsx"
       ]
     },
     {
@@ -1328,14 +1368,6 @@
       ]
     },
     {
-      "id": "2026-04-social-layer-storefront-mobile-purchasing",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/slayer_storefront/experiments/SocialLayerStorefrontMobilePurchasingExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-04-topical-navigation-staff-control",
       "type": "user",
       "isApex": false,
@@ -1534,6 +1566,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/quests/experiments/AdAnalyticsInterfaceExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-05-you-bar-activity-status",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/main_tabs_v2/native/you_bar/YouBarActivityStatusExperiment.tsx"
       ]
     },
     {
@@ -1745,6 +1785,14 @@
       ]
     },
     {
+      "id": "2026-06-quest-fetch-reconnect-jitter",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/QuestFetchReconnectJitterExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-06-quest-home-layout-visual-tweaks",
       "type": "user",
       "isApex": false,
@@ -1913,6 +1961,14 @@
       ]
     },
     {
+      "id": "2026-07-desktop-channel-tabs",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/tabs/TabsExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-07-expressive-modal-v2",
       "type": "user",
       "isApex": false,
@@ -1945,6 +2001,14 @@
       ]
     },
     {
+      "id": "2026-07-manual-age-assurance-fallback",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/ManualAgeAssuranceFallbackExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-07-message-bookmarks-v2",
       "type": "user",
       "isApex": false,
@@ -1958,14 +2022,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/message_request/MessageRequestPushNotificationExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-07-mkl-zen-cpu-dispatch-override",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/media_engine/MklZenOverrideExperiment.tsx"
       ]
     },
     {
@@ -2177,6 +2233,14 @@
       ]
     },
     {
+      "id": "2026-08-custom-typing-indicator-viewer",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/custom_typing_indicator/CustomTypingIndicatorViewerExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-fake-play-age-signals",
       "type": "user",
       "isApex": false,
@@ -2209,6 +2273,14 @@
       ]
     },
     {
+      "id": "2026-08-guilds-bar-media-state-store",
+      "type": "guild",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guilds_bar/GuildMediaStateStoreExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-kestrel-ga",
       "type": "user",
       "isApex": false,
@@ -2238,6 +2310,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/user_profile/experiments/UserProfileEmbedRenderingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-scheduled-messages",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/scheduled_messages/ScheduledMessageUtils.tsx"
       ]
     },
     {
@@ -2280,6 +2360,6 @@
     "relative": "absolute",
     "right": "left",
     "start": " + youtubeVideoIdFromURI.start + ",
-    "Window": " + String(source) + "
+    "Window": " + String(style) + "
   }
 }
