@@ -1,20 +1,15 @@
 /**
- * Discord Canary scraper — anti-spam notify (seen registry + budget)
+ * Discord Canary scraper
  */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
-const {
-  extractUiAndExperiments,
-  formatNewUiDescription,
-  formatExperimentWithUi,
-} = require('./ui_experiments');
+const { extractUiAndExperiments } = require('./ui_experiments');
 const {
   extractStringsFromContent,
   diffStrings,
-  formatStringsEmbed,
   fetchWumpusStrings,
   sanitizeStringsMap,
 } = require('./strings_extract');
@@ -25,22 +20,14 @@ const {
   saveStats,
 } = require('./line_diff');
 const { log } = require('./logger');
-const {
-  claim,
-  wasBuildAnnounced,
-  hashPayload,
-  takeNew,
-  canSend,
-  passCooldown,
-  resetRunBudget,
-} = require('./notify_guard');
+const { takeNew, resetRunBudget } = require('./notify_guard');
 const {
   extractEndpointsFromContent,
   sanitizeRoutesMap,
   diffRoutes,
-  formatEndpointsEmbed,
   fetchWumpusRoutes,
 } = require('./endpoints_extract');
+const { notify } = require('./notify_dispatch');
 
 const CANARY_APP = 'https://canary.discord.com/app';
 const EXPERIMENTS_API =
@@ -49,12 +36,12 @@ const EXPERIMENTS_API =
 const ASSETS_DIR = path.join(__dirname, '..', 'assets');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const BUILD_FILE = path.join(DATA_DIR, 'build.json');
+const PROCESSED_FILE = path.join(DATA_DIR, 'processed_build.json');
 const FINDINGS_FILE = path.join(DATA_DIR, 'findings.json');
 const STRINGS_FILE = path.join(DATA_DIR, 'strings.json');
 const ENDPOINTS_FILE = path.join(DATA_DIR, 'endpoints.json');
 const ROUTES_FILE = path.join(DATA_DIR, 'routes.json');
 const ASSET_STATS_FILE = path.join(DATA_DIR, 'asset_stats.json');
-const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 const SEED_WUMPUS = process.env.SEED_WUMPUS_STRINGS !== '0';
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -77,7 +64,6 @@ function parseGlobalEnv(html) {
   return {
     BUILD_NUMBER: grab('BUILD_NUMBER'),
     VERSION_HASH: grab('VERSION_HASH'),
-    BUILT_AT: grab('BUILT_AT'),
     RELEASE_CHANNEL: grab('RELEASE_CHANNEL') || 'canary',
   };
 }
@@ -109,7 +95,9 @@ async function downloadFile(url) {
 async function downloadPriorityAssets(assetUrls) {
   await fs.ensureDir(ASSETS_DIR);
   const web = assetUrls.filter((u) => /\/assets\/web\.[a-f0-9]+\.js/i.test(u));
-  const otherJs = assetUrls.filter((u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u));
+  const otherJs = assetUrls.filter(
+    (u) => u.endsWith('.js') && !/\/assets\/web\./i.test(u),
+  );
   const toFetch = [...web, ...otherJs.slice(0, 100)];
   for (const url of toFetch) {
     const name = path.basename(url.split('?')[0]);
@@ -129,7 +117,10 @@ async function downloadPriorityAssets(assetUrls) {
 }
 
 function isExpId(id) {
-  return /^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id) && !/^20\d{2}-\d{2}$/.test(id);
+  return (
+    /^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id) &&
+    !/^20\d{2}-\d{2}$/.test(id)
+  );
 }
 
 async function analyzeAssets() {
@@ -137,7 +128,9 @@ async function analyzeAssets() {
     return { experiments: [], endpoints: {}, ui: [], strings: {} };
   }
   const files = (await fs.readdir(ASSETS_DIR)).filter((f) => f.endsWith('.js'));
-  files.sort((a, b) => (/^web\./i.test(a) ? 0 : 1) - (/^web\./i.test(b) ? 0 : 1));
+  files.sort(
+    (a, b) => (/^web\./i.test(a) ? 0 : 1) - (/^web\./i.test(b) ? 0 : 1),
+  );
   const expMap = new Map();
   const endpointMap = new Map();
   const uiMap = new Map();
@@ -147,7 +140,8 @@ async function analyzeAssets() {
       const full = path.join(ASSETS_DIR, file);
       const st = await fs.stat(full);
       let content = await fs.readFile(full, 'utf8');
-      if (st.size > 15_000_000 && !/^web\./i.test(file)) content = content.slice(0, 8_000_000);
+      if (st.size > 15_000_000 && !/^web\./i.test(file))
+        content = content.slice(0, 8_000_000);
       console.log(`  scan ${file}`);
       const linked = extractUiAndExperiments(content);
       extractEndpointsFromContent(content, endpointMap);
@@ -186,8 +180,6 @@ async function analyzeAssets() {
   };
 }
 
-const { notify } = require('./notify_dispatch');
-
 async function main() {
   resetRunBudget();
   await log.info('scrape start');
@@ -202,23 +194,20 @@ async function main() {
   console.log('Build', buildNumber);
   await log.info('build detected', { buildNumber });
 
-  let previousBuild = null;
+  let previousProcessed = null;
   try {
-    if (await fs.pathExists(BUILD_FILE)) previousBuild = await fs.readJson(BUILD_FILE);
+    if (await fs.pathExists(PROCESSED_FILE))
+      previousProcessed = await fs.readJson(PROCESSED_FILE);
   } catch {}
-  const isNewBuild = !previousBuild || previousBuild.buildNumber !== buildNumber;
+  const isNewBuild =
+    !previousProcessed ||
+    String(previousProcessed.buildNumber) !== String(buildNumber);
 
-  await fs.writeJson(
-    BUILD_FILE,
-    {
-      buildNumber,
-      versionHash: env.VERSION_HASH || null,
-      releaseChannel: env.RELEASE_CHANNEL || 'canary',
-      scrapedAt: new Date().toISOString(),
-      _partial: true,
-    },
-    { spaces: 2 },
-  );
+  await log.info('isNewBuild check', {
+    isNewBuild,
+    remote: buildNumber,
+    processed: previousProcessed && previousProcessed.buildNumber,
+  });
 
   try {
     await httpGet(EXPERIMENTS_API, false);
@@ -232,11 +221,14 @@ async function main() {
   let webOk = false;
   if (webName) {
     const webPath = path.join(ASSETS_DIR, webName);
-    if (await fs.pathExists(webPath)) webOk = (await fs.stat(webPath)).size > 2_000_000;
+    if (await fs.pathExists(webPath))
+      webOk = (await fs.stat(webPath)).size > 2_000_000;
   }
 
-  if (isNewBuild || !webOk) {
-    if (isNewBuild) await fs.emptyDir(ASSETS_DIR);
+  if (isNewBuild) {
+    await fs.emptyDir(ASSETS_DIR);
+    await downloadPriorityAssets(assetUrls);
+  } else if (!webOk) {
     await downloadPriorityAssets(assetUrls);
   }
 
@@ -256,9 +248,8 @@ async function main() {
 
   let diskRouteCount = 0;
   try {
-    if (await fs.pathExists(ROUTES_FILE)) {
+    if (await fs.pathExists(ROUTES_FILE))
       diskRouteCount = Object.keys(await fs.readJson(ROUTES_FILE)).length;
-    }
   } catch {}
   if (diskRouteCount < 50 && Object.keys(findings.endpoints).length < 50) {
     const wr = await fetchWumpusRoutes(fetch);
@@ -272,11 +263,14 @@ async function main() {
 
   let diskStringCount = 0;
   try {
-    if (await fs.pathExists(STRINGS_FILE)) {
+    if (await fs.pathExists(STRINGS_FILE))
       diskStringCount = Object.keys(await fs.readJson(STRINGS_FILE)).length;
-    }
   } catch {}
-  if (SEED_WUMPUS && diskStringCount < 100 && Object.keys(findings.strings).length < 500) {
+  if (
+    SEED_WUMPUS &&
+    diskStringCount < 100 &&
+    Object.keys(findings.strings).length < 500
+  ) {
     const wumpus = await fetchWumpusStrings(fetch);
     if (wumpus) {
       for (const [k, v] of Object.entries(wumpus)) {
@@ -292,14 +286,10 @@ async function main() {
   } catch {}
   const prevExpIds = new Set((previous?.experiments || []).map((e) => e.id));
   const prevUI = new Set((previous?.ui || []).map((u) => u.name));
-  const currExpIds = new Set(findings.experiments.map((e) => e.id));
-  const currUI = new Set(findings.ui.map((u) => u.name));
 
   const diff = {
     newClientExperiments: findings.experiments.filter((e) => !prevExpIds.has(e.id)),
-    removedExperiments: (previous?.experiments || []).filter((e) => !currExpIds.has(e.id)),
     newUI: findings.ui.filter((u) => !prevUI.has(u.name)),
-    removedUI: (previous?.ui || []).filter((u) => !currUI.has(u.name)),
     newGuild: [],
   };
 
@@ -313,7 +303,10 @@ async function main() {
   findings.strings = mergedStrings;
   const stringDiff = diffStrings(cleanedPrev, mergedStrings);
   if (Object.keys(extracted).length < 500) stringDiff.removed = {};
-  if (Object.keys(stringDiff.added || {}).length > 500 && Object.keys(cleanedPrev).length < 100) {
+  if (
+    Object.keys(stringDiff.added || {}).length > 500 &&
+    Object.keys(cleanedPrev).length < 100
+  ) {
     stringDiff.added = {};
     stringDiff.removed = {};
     stringDiff.modified = {};
@@ -323,7 +316,8 @@ async function main() {
   let prevEndpoints = {};
   try {
     if (await fs.pathExists(ROUTES_FILE)) prevEndpoints = await fs.readJson(ROUTES_FILE);
-    else if (await fs.pathExists(ENDPOINTS_FILE)) prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
+    else if (await fs.pathExists(ENDPOINTS_FILE))
+      prevEndpoints = await fs.readJson(ENDPOINTS_FILE);
   } catch {}
   prevEndpoints = sanitizeRoutesMap(prevEndpoints);
   const extractedRoutes = sanitizeRoutesMap(findings.endpoints);
@@ -356,6 +350,15 @@ async function main() {
   };
   await fs.writeJson(BUILD_FILE, build, { spaces: 2 });
   await fs.writeJson(
+    PROCESSED_FILE,
+    {
+      buildNumber: String(buildNumber),
+      versionHash: env.VERSION_HASH || null,
+      scrapedAt: build.scrapedAt,
+    },
+    { spaces: 2 },
+  );
+  await fs.writeJson(
     FINDINGS_FILE,
     {
       experiments: findings.experiments,
@@ -366,7 +369,7 @@ async function main() {
     { spaces: 2 },
   );
 
-  // Bootstrap seen registry once so first run after deploy does not flood
+  // Bootstrap seen once — prevents flood of existing items
   try {
     const { loadSeen } = require('./notify_guard');
     const seen = await loadSeen();
@@ -392,11 +395,11 @@ async function main() {
 
   await log.info('scrape summary', {
     isNewBuild,
-    linesAdded: lineDiff.added || 0,
-    linesRemoved: lineDiff.removed || 0,
+    newExperiments: (diff.newClientExperiments || []).length,
     stringsAdded: Object.keys(stringDiff.added || {}).length,
     routesAdded: Object.keys(endpointDiff.added || {}).length,
   });
+
   await notify({ build, isNewBuild, diff, stringDiff, endpointDiff, lineDiff });
   await log.info('scrape done');
   console.log('✅ Done');
