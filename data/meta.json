@@ -1,24 +1,4 @@
 {
-  "globalEnv": {
-    "BUILD_NUMBER": "593712",
-    "VERSION_HASH": "f0f09380c3f3b82f006329831f9953f01f6cc019",
-    "BUILT_AT": "1786741022518",
-    "RELEASE_CHANNEL": "canary",
-    "PROJECT_ENV": "production",
-    "API_ENDPOINT": "//canary.discord.com/api",
-    "API_VERSION": "9",
-    "GATEWAY_ENDPOINT": "wss://gateway.discord.gg",
-    "GATEWAY_ALT_ENDPOINT": "wss://gateway-aws.discord.gg",
-    "ASSET_ENDPOINT": "//canary.discord.com",
-    "CDN_HOST": "cdn.discordapp.com",
-    "MEDIA_PROXY_ENDPOINT": "//media.discordapp.net",
-    "WEBAPP_ENDPOINT": "//canary.discord.com",
-    "REMOTE_AUTH_ENDPOINT": "wss://remote-auth-gateway.discord.gg",
-    "PUBLIC_PATH": "/assets/",
-    "SENTRY_RELEASE": "discord_web-f0f09380c3f3b82f006329831f9953f01f6cc019",
-    "PRIMARY_DOMAIN": "discord.com"
-  },
-  "scrapedAt": "2026-08-14T21:14:35.706Z",
-  "buildNumber": "593712",
-  "versionHash": "f0f09380c3f3b82f006329831f9953f01f6cc019"
+  "initialized": false,
+  "note": "Next scrape will bootstrap without flooding the channel"
 }
