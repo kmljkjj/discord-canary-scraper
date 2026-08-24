@@ -7,14 +7,26 @@ const UA =
 
 async function fetchBuild() {
   const res = await fetch(CANARY_APP, {
-    headers: { 'User-Agent': UA, Accept: 'text/html' },
-    timeout: 20000,
+    headers: {
+      'User-Agent': UA,
+      Accept: 'text/html,application/xhtml+xml',
+    },
+    timeout: 25000,
   });
-  if (!res.ok) throw new Error('canary app ' + res.status);
+  if (!res.ok) throw new Error('canary app HTTP ' + res.status);
   const html = await res.text();
+  console.log('HTML length:', html.length);
 
   const env = parseGlobalEnv(html);
   const assets = extractAssetUrls(html);
+  console.log('BUILD_NUMBER:', env.BUILD_NUMBER, '| assets:', assets.length);
+
+  if (!env.BUILD_NUMBER) {
+    console.warn('WARNING: BUILD_NUMBER not found in HTML');
+  }
+  if (assets.length === 0) {
+    console.warn('WARNING: no /assets/ JS URLs found');
+  }
 
   return {
     buildNumber: env.BUILD_NUMBER || 'unknown',
@@ -26,27 +38,13 @@ async function fetchBuild() {
 }
 
 function parseGlobalEnv(html) {
-  const m = html.match(/window\.GLOBAL_ENV\s*=\s*(\{[\s\S]*?\});/);
-  if (!m) {
-    // fallback BUILD_NUMBER
-    const bn = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d+)"?/);
-    const vh = html.match(/"VERSION_HASH"\s*:\s*"([a-f0-9]+)"/i);
-    return {
-      BUILD_NUMBER: bn ? bn[1] : null,
-      VERSION_HASH: vh ? vh[1] : null,
-      RELEASE_CHANNEL: 'canary',
-    };
-  }
-  const block = m[1];
-  const grab = (key) => {
-    const re = new RegExp(`"${key}"\\s*:\\s*"?([^,"}]+)"?`);
-    const mm = block.match(re);
-    return mm ? mm[1].replace(/^"|"$/g, '').trim() : null;
-  };
+  const bn = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d+)"?/);
+  const vh = html.match(/"VERSION_HASH"\s*:\s*"([a-f0-9]+)"/i);
+  const rc = html.match(/"RELEASE_CHANNEL"\s*:\s*"([a-z]+)"/i);
   return {
-    BUILD_NUMBER: grab('BUILD_NUMBER'),
-    VERSION_HASH: grab('VERSION_HASH'),
-    RELEASE_CHANNEL: grab('RELEASE_CHANNEL') || 'canary',
+    BUILD_NUMBER: bn ? bn[1] : null,
+    VERSION_HASH: vh ? vh[1] : null,
+    RELEASE_CHANNEL: rc ? rc[1] : 'canary',
   };
 }
 
@@ -55,9 +53,11 @@ function extractAssetUrls(html) {
   const urls = new Set();
   const add = (href) => {
     if (!href || !href.includes('/assets/')) return;
+    if (!href.endsWith('.js') && !href.includes('.js?')) return;
     urls.add(href.startsWith('http') ? href : `https://canary.discord.com${href}`);
   };
   $('script[src]').each((_, el) => add($(el).attr('src')));
+  // Also from inline references
   const re = /\/assets\/([a-zA-Z0-9._-]+\.js)/g;
   let m;
   while ((m = re.exec(html)) !== null) add(`/assets/${m[1]}`);
