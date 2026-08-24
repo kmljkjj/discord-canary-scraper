@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-24T18:39:34.780Z",
+  "scrapedAt": "2026-08-24T20:29:47.315Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,19 +11,19 @@
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-08-24T18:39:34.780Z"
+      "checkedAt": "2026-08-24T20:29:47.315Z"
     },
     {
       "platform": "ios",
-      "channel": "ota_latest",
-      "version": "341.0",
-      "build": "108542",
-      "commit": "4ca46b0834179ec7861753153cadbe597eb8da9d",
+      "channel": "beta",
+      "version": "342.0",
+      "build": "109353",
+      "commit": "6c408b6b9c4aeed99ec18999b3598cc7b1395c5e",
       "source": "discord_ota_manifest",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
-      "note": "OTA in line with or behind App Store stable",
-      "checkedAt": "2026-08-24T18:39:34.780Z"
+      "note": "OTA newer than App Store — likely TestFlight / beta",
+      "checkedAt": "2026-08-24T20:29:47.315Z"
     },
     {
       "platform": "android",
@@ -33,16 +33,7 @@
       "source": "apkcombo",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-08-24T18:39:34.780Z"
-    },
-    {
-      "platform": "ios",
-      "channel": "beta",
-      "version": null,
-      "build": null,
-      "available": false,
-      "note": "Filled when OTA build is newer than App Store stable.",
-      "checkedAt": "2026-08-24T18:39:34.780Z"
+      "checkedAt": "2026-08-24T20:29:47.315Z"
     },
     {
       "platform": "android",
@@ -51,7 +42,7 @@
       "build": null,
       "available": false,
       "note": "Play beta is not public without Google auth. No public OTA path found currently.",
-      "checkedAt": "2026-08-24T18:39:34.780Z"
+      "checkedAt": "2026-08-24T20:29:47.315Z"
     },
     {
       "platform": "android",
@@ -60,11 +51,16 @@
       "build": null,
       "available": false,
       "note": "Play alpha is not public. No public OTA path found currently.",
-      "checkedAt": "2026-08-24T18:39:34.780Z"
+      "checkedAt": "2026-08-24T20:29:47.315Z"
     }
   ],
   "otaIndex": {
     "ios": [
+      {
+        "version": "342.0",
+        "build": "109353",
+        "commit": "6c408b6b9c4aeed99ec18999b3598cc7b1395c5e"
+      },
       {
         "version": "341.0",
         "build": "108542",
@@ -118,6 +114,14 @@
     ],
     "android": []
   },
-  "previousScrapedAt": "2026-08-24T16:37:05.747Z",
-  "changes": []
+  "previousScrapedAt": "2026-08-24T18:39:34.780Z",
+  "changes": [
+    {
+      "type": "new",
+      "key": "ios:beta",
+      "from": null,
+      "to": "342.0",
+      "build": "109353"
+    }
+  ]
 }
