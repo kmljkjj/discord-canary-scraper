@@ -1,5 +1,8 @@
 /**
- * Discord Canary Scraper — Wumpus + Discord Previews style
+ * Canary scraper — optimisé hébergement (dispatch fréquent)
+ *
+ * - Même build  → sortie en quelques secondes (pas de download)
+ * - Nouveau build → download + extract + notify + save
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -13,32 +16,51 @@ const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
 
 async function main() {
+  const t0 = Date.now();
   console.log('=== Canary Scraper ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
   const prev = await loadState(DATA);
   const build = await fetchBuild();
-  console.log('Remote build:', build.buildNumber, (build.versionHash || '').slice(0, 12));
-  console.log('Assets listed:', (build.assets || []).length);
+  console.log(
+    'Remote build:',
+    build.buildNumber,
+    (build.versionHash || '').slice(0, 12),
+    '| assets:',
+    (build.assets || []).length,
+  );
 
   const isNewBuild =
     !prev.build ||
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  // CRITICAL: GitHub Actions disk is empty every run → always download if no JS cached
-  let hasLocalJs = false;
-  try {
-    const files = (await fs.readdir(ASSETS)).filter((f) => f.endsWith('.js'));
-    hasLocalJs = files.length > 0;
-  } catch {}
+  console.log(
+    'isNewBuild:',
+    isNewBuild,
+    '| initialized:',
+    !!prev.initialized,
+    '| prevExp:',
+    (prev.experiments || []).length,
+  );
 
-  const forceRefresh = isNewBuild || !hasLocalJs;
-  console.log('isNewBuild:', isNewBuild, '| forceRefresh:', forceRefresh, '| hasLocalJs:', hasLocalJs);
+  // ── FAST PATH: même build + déjà initialisé → rien à faire ──
+  if (!isNewBuild && prev.initialized && (prev.experiments || []).length > 0) {
+    console.log(
+      'FAST SKIP (same build',
+      build.buildNumber,
+      ') in',
+      Date.now() - t0,
+      'ms',
+    );
+    process.exit(0);
+  }
 
+  // ── FULL PATH: nouveau build ou premier run ──
+  console.log('FULL SCRAPE…');
   const findings = await analyzeAssets(build, {
-    forceRefresh,
+    forceRefresh: true, // toujours frais sur full path
     assetsDir: ASSETS,
   });
 
@@ -48,17 +70,19 @@ async function main() {
     routes: Object.keys(findings.routes).length,
   });
 
-  if (findings.experiments.length === 0 && Object.keys(findings.strings).length === 0) {
-    console.error('ERROR: extraction empty — assets may have failed to download');
-    // still save build so we do not loop bootstrap forever with empty data
+  if (
+    findings.experiments.length === 0 &&
+    Object.keys(findings.strings).length < 50
+  ) {
+    console.error('Extraction quasi vide — réseau ou HTML canary ?');
   }
 
-  // Bootstrap once when no prior baseline (or previous baseline was empty)
+  // Bootstrap : pose la baseline sans spammer le salon
   const needBootstrap =
     !prev.initialized ||
     ((prev.experiments || []).length === 0 && findings.experiments.length > 0);
 
-  if (needBootstrap && findings.experiments.length + Object.keys(findings.strings).length > 0) {
+  if (needBootstrap) {
     await bootstrapSeen(DATA, findings);
     await saveState(DATA, {
       initialized: true,
@@ -67,22 +91,23 @@ async function main() {
       strings: findings.strings,
       routes: findings.routes,
     });
-    console.log('Bootstrapped baseline (', findings.experiments.length, 'experiments ). No flood.');
-    // Optional: still announce new build if it is the first time we see this number
+    console.log(
+      'Bootstrap OK —',
+      findings.experiments.length,
+      'experiments enregistrés',
+    );
+
+    // Annoncer le build si vraiment nouveau (premier passage)
     if (isNewBuild && process.env.DISCORD_WEBHOOK_URL) {
       await notifyAll({
         build,
         isNewBuild: true,
-        diff: {
-          newExperiments: [],
-          strings: { added: {}, removed: {}, modified: {} },
-          routes: { added: {}, removed: {}, modified: {} },
-        },
+        diff: emptyDiff(),
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
         stateDir: DATA,
       });
     }
-    console.log('=== Done (bootstrap) ===');
+    console.log('=== Done (bootstrap)', Date.now() - t0, 'ms ===');
     return;
   }
 
@@ -102,19 +127,18 @@ async function main() {
     stateDir: DATA,
   });
 
-  // Merge strings/routes so we never shrink baseline from a partial download
+  const mergedExps = mergeExperiments(
+    prev.experiments || [],
+    findings.experiments,
+  );
   const mergedStrings =
-    Object.keys(findings.strings).length > 100
+    Object.keys(findings.strings).length > 50
       ? { ...(prev.strings || {}), ...findings.strings }
       : prev.strings || findings.strings;
   const mergedRoutes =
-    Object.keys(findings.routes).length > 20
+    Object.keys(findings.routes).length > 10
       ? { ...(prev.routes || {}), ...findings.routes }
       : prev.routes || findings.routes;
-  const mergedExps =
-    findings.experiments.length >= (prev.experiments || []).length
-      ? findings.experiments
-      : mergeExperiments(prev.experiments || [], findings.experiments);
 
   await saveState(DATA, {
     initialized: true,
@@ -124,14 +148,27 @@ async function main() {
     routes: mergedRoutes,
   });
 
-  console.log('=== Done ===');
+  console.log('=== Done', Date.now() - t0, 'ms ===');
+}
+
+function emptyDiff() {
+  return {
+    newExperiments: [],
+    strings: { added: {}, removed: {}, modified: {} },
+    routes: { added: {}, removed: {}, modified: {} },
+  };
 }
 
 function mergeExperiments(prev, next) {
   const map = new Map();
-  for (const e of prev) map.set(e.id || e, typeof e === 'string' ? { id: e } : e);
+  for (const e of prev) {
+    const id = e.id || e;
+    map.set(id, typeof e === 'string' ? { id: e, type: 'user', kind: 'apex' } : e);
+  }
   for (const e of next) map.set(e.id, e);
-  return [...map.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  return [...map.values()].sort((a, b) =>
+    String(a.id).localeCompare(String(b.id)),
+  );
 }
 
 main().catch((e) => {

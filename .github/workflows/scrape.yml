@@ -2,7 +2,8 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Filet de sécurité si l'hébergement est down
+    - cron: '*/20 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -12,8 +13,9 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  # false = ne pas tuer un scrape en cours ; les runs s'alignent en file
-  cancel-in-progress: false
+  # true = si ton hébergement spam des triggers, seul le dernier compte
+  # les FAST SKIP finissent en ~10s donc peu de perte
+  cancel-in-progress: true
 
 jobs:
   scrape:
@@ -28,20 +30,21 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm install --no-audit --no-fund
+      - name: Install
+        run: npm install --no-audit --no-fund
 
-      - name: Run scraper
+      - name: Scrape
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/index.js
 
-      - name: Commit state
+      - name: Commit state (only if changed)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/ || true
           if git diff --staged --quiet; then
-            echo "No changes"
+            echo "No data changes"
             exit 0
           fi
           git commit -m "🔄 canary $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
