@@ -1,8 +1,5 @@
 /**
- * Canary scraper — compatible hébergement 50s
- *
- * Même build + baseline OK → exit rapide (~10s)
- * Sinon → full download + extract + notify (ne doit PAS être cancel)
+ * Canary scraper — notifs Build / Experiments / Strings / Endpoints
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -27,17 +24,16 @@ async function main() {
   console.log(
     JSON.stringify({
       remote: build.buildNumber,
-      hash: (build.versionHash || '').slice(0, 12),
+      prev: prev.build && prev.build.buildNumber,
+      initialized: prev.initialized,
+      prevExp: prev.experiments.length,
+      prevStr: Object.keys(prev.strings).length,
       assets: (build.assets || []).length,
-      prevBuild: prev.build && prev.build.buildNumber,
-      initialized: !!prev.initialized,
-      prevExp: (prev.experiments || []).length,
-      prevStr: Object.keys(prev.strings || {}).length,
     }),
   );
 
   if (!build.buildNumber || build.buildNumber === 'unknown') {
-    console.error('FATAL: no BUILD_NUMBER');
+    console.error('No BUILD_NUMBER');
     process.exit(1);
   }
 
@@ -46,17 +42,13 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  const hasBaseline =
-    !!prev.initialized &&
-    ((prev.experiments || []).length > 0 || Object.keys(prev.strings || {}).length > 100);
-
-  // FAST PATH
-  if (!isNewBuild && hasBaseline) {
+  // Même build + baseline OK → skip (hébergement 50s)
+  if (!isNewBuild && prev.initialized && prev.experiments.length > 20) {
     console.log('FAST SKIP same build', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
 
-  console.log('FULL SCRAPE isNewBuild=' + isNewBuild + ' hasBaseline=' + hasBaseline);
+  console.log('FULL SCRAPE isNewBuild=' + isNewBuild);
 
   const findings = await analyzeAssets(build, {
     forceRefresh: true,
@@ -72,13 +64,17 @@ async function main() {
     }),
   );
 
-  if (findings.experiments.length === 0 && Object.keys(findings.strings).length < 30) {
-    console.error('Extraction empty — abort save to avoid wiping baseline');
+  // Si extract vide : garder l'ancienne baseline, ne pas bootstrap
+  if (
+    findings.experiments.length < 5 &&
+    Object.keys(findings.strings).length < 30
+  ) {
+    console.error('Extract too empty — keep previous state, no notify wipe');
     process.exit(1);
   }
 
-  // Bootstrap
-  if (!hasBaseline) {
+  // Premier vrai bootstrap uniquement si vraiment aucune baseline
+  if (!prev.initialized || prev.experiments.length < 5) {
     await bootstrapSeen(DATA, findings);
     await saveState(DATA, {
       initialized: true,
@@ -87,8 +83,9 @@ async function main() {
       strings: findings.strings,
       routes: findings.routes,
     });
-    console.log('BOOTSTRAP saved', findings.experiments.length, 'experiments');
+    console.log('BOOTSTRAP', findings.experiments.length, 'experiments');
 
+    // Annoncer le build au moins une fois
     if (process.env.DISCORD_WEBHOOK_URL) {
       await notifyAll({
         build,
@@ -110,20 +107,37 @@ async function main() {
   console.log(
     'Diff',
     JSON.stringify({
-      newExp: diff.newExperiments.length,
+      newExp: diff.newExperiments.map((e) => e.id).slice(0, 30),
+      newExpCount: diff.newExperiments.length,
       addStr: Object.keys(diff.strings.added).length,
       modStr: Object.keys(diff.strings.modified).length,
       addRt: Object.keys(diff.routes.added).length,
     }),
   );
 
-  await notifyAll({
-    build,
-    isNewBuild,
-    diff,
-    webhookUrl: process.env.DISCORD_WEBHOOK_URL || null,
-    stateDir: DATA,
-  });
+  // Toujours notifier si nouveau build OU nouveaux findings
+  const shouldNotify =
+    isNewBuild ||
+    diff.newExperiments.length > 0 ||
+    Object.keys(diff.strings.added).length > 0 ||
+    Object.keys(diff.strings.modified).length > 0 ||
+    Object.keys(diff.routes.added).length > 0;
+
+  if (shouldNotify) {
+    if (!process.env.DISCORD_WEBHOOK_URL) {
+      console.error('DISCORD_WEBHOOK_URL manquant — rien envoyé');
+    } else {
+      await notifyAll({
+        build,
+        isNewBuild,
+        diff,
+        webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+        stateDir: DATA,
+      });
+    }
+  } else {
+    console.log('Nothing to notify');
+  }
 
   await saveState(DATA, {
     initialized: true,
@@ -144,10 +158,7 @@ async function main() {
 
 function mergeExp(prev, next) {
   const map = new Map();
-  for (const e of prev || []) {
-    const id = e.id || e;
-    map.set(id, typeof e === 'string' ? { id: e, type: 'user', kind: 'apex' } : e);
-  }
+  for (const e of prev || []) map.set(e.id, e);
   for (const e of next || []) map.set(e.id, e);
   return [...map.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
 }

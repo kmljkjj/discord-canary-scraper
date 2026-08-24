@@ -1,5 +1,9 @@
 /**
- * Discord Previews-style embeds + Wumpus-style content
+ * Messages Discord Previews style:
+ * - New Discord Canary Build
+ * - Strings
+ * - Endpoints
+ * - New Apex Experiment / New Experiment
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -7,53 +11,28 @@ const fetch = require('node-fetch');
 
 async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
   if (!webhookUrl) {
-    console.log('No DISCORD_WEBHOOK_URL — skip notify');
+    console.log('No webhook');
     return;
   }
 
-  const seenPath = path.join(stateDir, 'seen.json');
-  const claimPath = path.join(stateDir, 'claims.json');
-  let seen = { experiments: [], stringKeys: [], routes: [] };
-  let claims = {};
+  const sentPath = path.join(stateDir, 'sent.json');
+  let sent = { builds: [], experiments: [], strings: [], routes: [] };
   try {
-    if (await fs.pathExists(seenPath)) seen = await fs.readJson(seenPath);
-  } catch {}
-  try {
-    if (await fs.pathExists(claimPath)) claims = await fs.readJson(claimPath);
+    if (await fs.pathExists(sentPath)) sent = await fs.readJson(sentPath);
   } catch {}
 
-  const seenExp = new Set(seen.experiments || []);
-  const seenStr = new Set(seen.stringKeys || []);
-  const seenRt = new Set(seen.routes || []);
+  const sentBuilds = new Set(sent.builds || []);
+  const sentExp = new Set(sent.experiments || []);
+  const sentStr = new Set(sent.strings || []);
+  const sentRt = new Set(sent.routes || []);
 
-  const freshExps = (diff.newExperiments || []).filter((e) => !seenExp.has(e.id));
-  const freshStr = {};
-  for (const [k, v] of Object.entries(diff.strings.added || {})) {
-    if (!seenStr.has(k)) freshStr[k] = v;
-  }
-  const freshRt = {};
-  for (const [k, v] of Object.entries(diff.routes.added || {})) {
-    if (!seenRt.has(k)) freshRt[k] = v;
-  }
-
-  const hasFresh =
-    freshExps.length > 0 ||
-    Object.keys(freshStr).length > 0 ||
-    Object.keys(freshRt).length > 0 ||
-    Object.keys(diff.strings.modified || {}).length > 0;
-
-  console.log('Notify fresh:', {
-    exp: freshExps.length,
-    str: Object.keys(freshStr).length,
-    routes: Object.keys(freshRt).length,
-    isNewBuild,
-  });
-
-  // New build announce (once)
+  // 1) Nouveau build
   if (isNewBuild) {
-    const key = 'build:' + build.buildNumber;
-    if (!claims[key]) {
-      claims[key] = Date.now();
+    const key = String(build.buildNumber);
+    if (!sentBuilds.has(key)) {
+      const nExp = (diff.newExperiments || []).length;
+      const nStr = Object.keys((diff.strings && diff.strings.added) || {}).length;
+      const nRt = Object.keys((diff.routes && diff.routes.added) || {}).length;
       await post(webhookUrl, {
         username: 'Canary Scraper',
         embeds: [
@@ -66,160 +45,150 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
               {
                 name: 'Hash',
                 value: build.versionHash
-                  ? '`' + build.versionHash.slice(0, 12) + '`'
+                  ? '`' + String(build.versionHash).slice(0, 12) + '`'
                   : '—',
                 inline: true,
               },
               {
                 name: 'Delta',
-                value: [
-                  freshExps.length ? `Experiments +${freshExps.length}` : null,
-                  Object.keys(freshStr).length
-                    ? `Strings +${Object.keys(freshStr).length}`
-                    : null,
-                  Object.keys(freshRt).length
-                    ? `Endpoints +${Object.keys(freshRt).length}`
-                    : null,
-                ]
-                  .filter(Boolean)
-                  .join('\n') || 'Build bump',
+                value:
+                  [
+                    nExp ? `Experiments +${nExp}` : null,
+                    nStr ? `Strings +${nStr}` : null,
+                    nRt ? `Endpoints +${nRt}` : null,
+                  ]
+                    .filter(Boolean)
+                    .join('\n') || 'Build bump',
               },
             ],
             timestamp: new Date().toISOString(),
           },
         ],
       });
+      sentBuilds.add(key);
+      console.log('Sent: New Discord Canary Build', key);
     }
   }
 
-  // Strings — Discord Previews / Wumpus style
-  if (
-    Object.keys(freshStr).length ||
-    Object.keys(diff.strings.removed || {}).length ||
-    Object.keys(diff.strings.modified || {}).length
-  ) {
-    const key =
-      'strings:' +
-      build.buildNumber +
-      ':' +
-      Object.keys(freshStr).sort().slice(0, 20).join(',');
-    if (!claims[key] && (Object.keys(freshStr).length || Object.keys(diff.strings.modified || {}).length)) {
-      claims[key] = Date.now();
-      const lines = [];
-      for (const [k, v] of Object.entries(freshStr).slice(0, 40))
-        lines.push(`+ ${k}: ${String(v).slice(0, 120)}`);
-      for (const [k, o] of Object.entries(diff.strings.modified || {}).slice(0, 15))
-        lines.push(`~ ${k}: ${String(o.to).slice(0, 100)}`);
-      for (const [k] of Object.entries(diff.strings.removed || {}).slice(0, 10))
-        lines.push(`- ${k}`);
-
-      if (lines.length) {
-        await post(webhookUrl, {
-          username: 'Canary Scraper',
-          embeds: [
-            {
-              title: 'Strings',
-              description:
-                'Added · removed · modified\n```\n' +
-                lines.join('\n').slice(0, 3800) +
-                '\n```',
-              color: 0x57f287,
-              footer: { text: `Build Id - ${build.buildNumber}` },
-              timestamp: new Date().toISOString(),
-            },
-          ],
-        });
-      }
-    }
+  // 2) Strings
+  const addedStr = (diff.strings && diff.strings.added) || {};
+  const modStr = (diff.strings && diff.strings.modified) || {};
+  const remStr = (diff.strings && diff.strings.removed) || {};
+  const strLines = [];
+  for (const [k, v] of Object.entries(addedStr)) {
+    if (sentStr.has(k)) continue;
+    strLines.push(`+ ${k}: ${String(v).slice(0, 120)}`);
+    sentStr.add(k);
+  }
+  for (const [k, o] of Object.entries(modStr)) {
+    strLines.push(`~ ${k}: ${String(o.to || o).slice(0, 100)}`);
+  }
+  for (const [k] of Object.entries(remStr).slice(0, 15)) {
+    strLines.push(`- ${k}`);
+  }
+  if (strLines.length) {
+    await post(webhookUrl, {
+      username: 'Canary Scraper',
+      embeds: [
+        {
+          title: 'Strings',
+          description:
+            'Added · removed · modified\n```\n' +
+            strLines.slice(0, 45).join('\n').slice(0, 3800) +
+            '\n```',
+          color: 0x57f287,
+          footer: { text: `Build Id - ${build.buildNumber}` },
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    });
+    console.log('Sent: Strings', strLines.length);
   }
 
-  // Endpoints
-  if (Object.keys(freshRt).length) {
-    const key =
-      'routes:' + build.buildNumber + ':' + Object.keys(freshRt).sort().join(',');
-    if (!claims[key]) {
-      claims[key] = Date.now();
-      const lines = Object.entries(freshRt)
-        .slice(0, 40)
-        .map(([k, v]) => `+ ${k}: ${v}`);
-      await post(webhookUrl, {
-        username: 'Canary Scraper',
-        embeds: [
-          {
-            title: 'Endpoints',
-            description:
-              'Added\n```\n' + lines.join('\n').slice(0, 3800) + '\n```',
-            color: 0x5865f2,
-            footer: { text: `Build Id - ${build.buildNumber}` },
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      });
-    }
+  // 3) Endpoints
+  const addedRt = (diff.routes && diff.routes.added) || {};
+  const rtLines = [];
+  for (const [k, v] of Object.entries(addedRt)) {
+    if (sentRt.has(k)) continue;
+    rtLines.push(`+ ${k}: ${v}`);
+    sentRt.add(k);
+  }
+  if (rtLines.length) {
+    await post(webhookUrl, {
+      username: 'Canary Scraper',
+      embeds: [
+        {
+          title: 'Endpoints',
+          description:
+            'Added\n```\n' + rtLines.slice(0, 40).join('\n').slice(0, 3800) + '\n```',
+          color: 0x5865f2,
+          footer: { text: `Build Id - ${build.buildNumber}` },
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    });
+    console.log('Sent: Endpoints', rtLines.length);
   }
 
-  // Experiments — New Apex / New Experiment style
-  for (const exp of freshExps.slice(0, 15)) {
-    const key = 'exp:' + exp.id;
-    if (claims[key]) continue;
-    claims[key] = Date.now();
-    const isApex = exp.kind === 'apex' || !String(exp.id).includes('_');
+  // 4) Experiments — un message par experiment (style Discord Previews)
+  const exps = diff.newExperiments || [];
+  let sentCount = 0;
+  for (const exp of exps) {
+    const id = exp.id || exp;
+    if (sentExp.has(id)) continue;
+    const isApex = exp.kind === 'apex' || !String(id).includes('_');
     const title = isApex ? 'New Apex Experiment' : 'New Experiment';
-    const lines = [
-      `+ **${exp.id}** (${exp.type || 'user'})`,
-      `* Type **${exp.type || 'user'}**`,
-      `Build: **${build.buildNumber}**`,
-    ];
+    const type = exp.type || (/guild|server/i.test(id) ? 'guild' : 'user');
     await post(webhookUrl, {
       username: 'Canary Scraper',
       embeds: [
         {
           title,
-          description: lines.join('\n'),
+          description: [
+            `+ **${id}** (${type})`,
+            `* Type **${type}**`,
+            `Build: **${build.buildNumber}**`,
+          ].join('\n'),
           color: isApex ? 0xfaa61a : 0xed4245,
           timestamp: new Date().toISOString(),
         },
       ],
     });
-    seenExp.add(exp.id);
+    sentExp.add(id);
+    sentCount++;
+    if (sentCount >= 20) break; // anti flood d'un coup
   }
-
-  // Update permanent seen
-  for (const k of Object.keys(freshStr)) seenStr.add(k);
-  for (const k of Object.keys(freshRt)) seenRt.add(k);
-  for (const e of freshExps) seenExp.add(e.id);
+  if (sentCount) console.log('Sent: Experiments', sentCount);
 
   await fs.writeJson(
-    seenPath,
+    sentPath,
     {
-      experiments: [...seenExp].slice(-8000),
-      stringKeys: [...seenStr].slice(-25000),
-      routes: [...seenRt].slice(-5000),
+      builds: [...sentBuilds].slice(-200),
+      experiments: [...sentExp].slice(-8000),
+      strings: [...sentStr].slice(-20000),
+      routes: [...sentRt].slice(-5000),
     },
     { spaces: 2 },
   );
-
-  // prune claims
-  const entries = Object.entries(claims);
-  if (entries.length > 500) {
-    entries.sort((a, b) => a[1] - b[1]);
-    claims = Object.fromEntries(entries.slice(-400));
-  }
-  await fs.writeJson(claimPath, claims, { spaces: 2 });
 }
 
 async function post(url, body) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  console.log('webhook', res.status, body.embeds?.[0]?.title || '');
-  if (!res.ok) {
-    const t = await res.text();
-    console.warn('webhook fail', t.slice(0, 200));
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const title = body.embeds && body.embeds[0] && body.embeds[0].title;
+    console.log('webhook', res.status, title || '');
+    if (!res.ok) {
+      const t = await res.text();
+      console.warn('webhook fail', t.slice(0, 250));
+    }
+  } catch (e) {
+    console.warn('webhook error', e.message);
   }
-  await new Promise((r) => setTimeout(r, 350));
+  await new Promise((r) => setTimeout(r, 400));
 }
 
 module.exports = { notifyAll };
