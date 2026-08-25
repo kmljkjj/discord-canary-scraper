@@ -1,5 +1,5 @@
 /**
- * Canary scraper — notifs Build / Experiments / Strings / Endpoints
+ * Canary scraper — notifs fiables
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -14,7 +14,7 @@ const ASSETS = path.join(__dirname, '..', 'assets');
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Scraper ===');
+  console.log('=== Canary Scraper v3 ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -22,18 +22,19 @@ async function main() {
   const build = await fetchBuild();
 
   console.log(
+    'STATE',
     JSON.stringify({
       remote: build.buildNumber,
-      prev: prev.build && prev.build.buildNumber,
+      prevBuild: prev.build && prev.build.buildNumber,
       initialized: prev.initialized,
-      prevExp: prev.experiments.length,
-      prevStr: Object.keys(prev.strings).length,
-      assets: (build.assets || []).length,
+      baselineExp: prev.experiments.length,
+      baselineStr: Object.keys(prev.strings).length,
+      assetsListed: (build.assets || []).length,
     }),
   );
 
   if (!build.buildNumber || build.buildNumber === 'unknown') {
-    console.error('No BUILD_NUMBER');
+    console.error('FATAL no BUILD_NUMBER');
     process.exit(1);
   }
 
@@ -42,38 +43,34 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  // Même build + baseline OK → skip (hébergement 50s)
+  // FAST SKIP seulement si même build ET baseline OK
   if (!isNewBuild && prev.initialized && prev.experiments.length > 20) {
     console.log('FAST SKIP same build', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
 
-  console.log('FULL SCRAPE isNewBuild=' + isNewBuild);
-
+  console.log('FULL SCRAPE…');
   const findings = await analyzeAssets(build, {
     forceRefresh: true,
     assetsDir: ASSETS,
   });
 
   console.log(
-    'Extracted',
+    'EXTRACT',
     JSON.stringify({
       experiments: findings.experiments.length,
       strings: Object.keys(findings.strings).length,
       routes: Object.keys(findings.routes).length,
+      sampleExp: findings.experiments.slice(0, 5).map((e) => e.id),
     }),
   );
 
-  // Si extract vide : garder l'ancienne baseline, ne pas bootstrap
-  if (
-    findings.experiments.length < 5 &&
-    Object.keys(findings.strings).length < 30
-  ) {
-    console.error('Extract too empty — keep previous state, no notify wipe');
+  if (findings.experiments.length < 5 && Object.keys(findings.strings).length < 20) {
+    console.error('Extract too empty — abort');
     process.exit(1);
   }
 
-  // Premier vrai bootstrap uniquement si vraiment aucune baseline
+  // Bootstrap réel (première fois)
   if (!prev.initialized || prev.experiments.length < 5) {
     await bootstrapSeen(DATA, findings);
     await saveState(DATA, {
@@ -83,21 +80,17 @@ async function main() {
       strings: findings.strings,
       routes: findings.routes,
     });
-    console.log('BOOTSTRAP', findings.experiments.length, 'experiments');
-
-    // Annoncer le build au moins une fois
+    console.log('BOOTSTRAP saved', findings.experiments.length);
     if (process.env.DISCORD_WEBHOOK_URL) {
       await notifyAll({
         build,
         isNewBuild: true,
-        diff: {
-          newExperiments: [],
-          strings: { added: {}, removed: {}, modified: {} },
-          routes: { added: {}, removed: {}, modified: {} },
-        },
+        diff: emptyDiff(),
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
         stateDir: DATA,
       });
+    } else {
+      console.error('NO DISCORD_WEBHOOK_URL secret');
     }
     console.log('=== Done bootstrap', Date.now() - t0 + 'ms ===');
     return;
@@ -105,38 +98,26 @@ async function main() {
 
   const diff = computeDiff(prev, findings);
   console.log(
-    'Diff',
+    'DIFF',
     JSON.stringify({
-      newExp: diff.newExperiments.map((e) => e.id).slice(0, 30),
       newExpCount: diff.newExperiments.length,
+      newExpIds: diff.newExperiments.slice(0, 25).map((e) => e.id),
       addStr: Object.keys(diff.strings.added).length,
       modStr: Object.keys(diff.strings.modified).length,
       addRt: Object.keys(diff.routes.added).length,
     }),
   );
 
-  // Toujours notifier si nouveau build OU nouveaux findings
-  const shouldNotify =
-    isNewBuild ||
-    diff.newExperiments.length > 0 ||
-    Object.keys(diff.strings.added).length > 0 ||
-    Object.keys(diff.strings.modified).length > 0 ||
-    Object.keys(diff.routes.added).length > 0;
-
-  if (shouldNotify) {
-    if (!process.env.DISCORD_WEBHOOK_URL) {
-      console.error('DISCORD_WEBHOOK_URL manquant — rien envoyé');
-    } else {
-      await notifyAll({
-        build,
-        isNewBuild,
-        diff,
-        webhookUrl: process.env.DISCORD_WEBHOOK_URL,
-        stateDir: DATA,
-      });
-    }
+  if (!process.env.DISCORD_WEBHOOK_URL) {
+    console.error('NO DISCORD_WEBHOOK_URL — cannot notify');
   } else {
-    console.log('Nothing to notify');
+    await notifyAll({
+      build,
+      isNewBuild,
+      diff,
+      webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+      stateDir: DATA,
+    });
   }
 
   await saveState(DATA, {
@@ -144,16 +125,24 @@ async function main() {
     build,
     experiments: mergeExp(prev.experiments, findings.experiments),
     strings:
-      Object.keys(findings.strings).length > 50
+      Object.keys(findings.strings).length > 30
         ? { ...prev.strings, ...findings.strings }
         : prev.strings,
     routes:
-      Object.keys(findings.routes).length > 10
+      Object.keys(findings.routes).length > 5
         ? { ...prev.routes, ...findings.routes }
         : prev.routes,
   });
 
   console.log('=== Done', Date.now() - t0 + 'ms ===');
+}
+
+function emptyDiff() {
+  return {
+    newExperiments: [],
+    strings: { added: {}, removed: {}, modified: {} },
+    routes: { added: {}, removed: {}, modified: {} },
+  };
 }
 
 function mergeExp(prev, next) {

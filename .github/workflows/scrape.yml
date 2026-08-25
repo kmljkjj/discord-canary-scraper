@@ -12,7 +12,6 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  # IMPORTANT: ne jamais tuer un full scrape (sinon bootstrap/extract jamais fini)
   cancel-in-progress: false
 
 jobs:
@@ -28,15 +27,14 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install
-        run: npm install --no-audit --no-fund
+      - run: npm install --no-audit --no-fund
 
-      - name: Scrape
+      - name: Scrape + notify
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/index.js
 
-      - name: Commit state
+      - name: Commit data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -50,5 +48,4 @@ jobs:
             git pull --rebase origin main && git push origin HEAD:main && exit 0
             sleep 3
           done
-          echo "push failed"
           exit 0

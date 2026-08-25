@@ -1,9 +1,48 @@
 const fs = require('fs-extra');
 const path = require('path');
 
+/**
+ * experiments.json peut être:
+ *  A) [ {id}, ... ]
+ *  B) { experiments: [ {id}, ... ], totals, ... }  ← format actuel du repo
+ */
+function normalizeExperiments(raw) {
+  if (!raw) return [];
+
+  let list = null;
+  if (Array.isArray(raw)) list = raw;
+  else if (raw && Array.isArray(raw.experiments)) list = raw.experiments;
+  else if (raw && typeof raw === 'object') {
+    // map id -> obj (sans prendre scrapedAt/totals)
+    list = Object.entries(raw)
+      .filter(([k, v]) => k.includes('-') || k.includes('_') || (v && v.id))
+      .map(([k, v]) => (v && typeof v === 'object' ? { id: v.id || k, ...v } : { id: k }));
+  }
+  if (!list) return [];
+
+  return list
+    .map((e) => {
+      if (typeof e === 'string') {
+        return {
+          id: e,
+          type: /guild|server/i.test(e) ? 'guild' : 'user',
+          kind: e.includes('_') ? 'legacy' : 'apex',
+        };
+      }
+      if (!e || !e.id) return null;
+      return {
+        id: String(e.id),
+        type: e.kind || e.type || (/guild|server/i.test(e.id) ? 'guild' : 'user'),
+        kind: e.isApex === false || String(e.id).includes('_') ? 'legacy' : 'apex',
+        label: e.label || null,
+      };
+    })
+    .filter(Boolean);
+}
+
 async function loadState(dataDir) {
   const build = await readJson(path.join(dataDir, 'build.json'));
-  const experiments = await readJson(path.join(dataDir, 'experiments.json'), []);
+  const experimentsRaw = await readJson(path.join(dataDir, 'experiments.json'), null);
   const strings = await readJson(path.join(dataDir, 'strings.json'), {});
   const routes =
     (await readJson(path.join(dataDir, 'routes.json'), null)) ||
@@ -11,56 +50,45 @@ async function loadState(dataDir) {
     {};
   const meta = await readJson(path.join(dataDir, 'meta.json'), {});
 
-  const expList = normalizeExperiments(experiments);
-  // Baseline = meta flag OU données déjà présentes (évite bootstrap infini)
+  const experiments = normalizeExperiments(experimentsRaw);
+  console.log('Loaded baseline experiments:', experiments.length);
+
   const initialized =
     !!meta.initialized ||
-    expList.length > 20 ||
-    Object.keys(strings || {}).length > 100 ||
+    experiments.length > 10 ||
+    Object.keys(strings || {}).length > 50 ||
     !!(build && build.buildNumber);
 
   return {
     initialized,
     build: build || null,
-    experiments: expList,
-    strings: strings || {},
-    routes: routes || {},
+    experiments,
+    strings: typeof strings === 'object' && !Array.isArray(strings) ? strings : {},
+    routes: typeof routes === 'object' && !Array.isArray(routes) ? routes : {},
+    experimentsRawFormat: experimentsRaw && experimentsRaw.experiments ? 'wrapped' : 'array',
   };
-}
-
-function normalizeExperiments(raw) {
-  if (!raw) return [];
-  if (Array.isArray(raw)) {
-    return raw
-      .map((e) => {
-        if (typeof e === 'string') return { id: e, type: 'user', kind: 'apex' };
-        if (e && e.id) return e;
-        if (e && e.name) return { id: e.name, type: e.type || 'user', kind: e.kind || 'apex' };
-        return null;
-      })
-      .filter(Boolean);
-  }
-  // object map id -> info
-  if (typeof raw === 'object') {
-    return Object.keys(raw).map((id) => {
-      const v = raw[id];
-      if (v && typeof v === 'object') return { id, ...v };
-      return { id, type: 'user', kind: 'apex' };
-    });
-  }
-  return [];
 }
 
 async function saveState(dataDir, state) {
   await fs.ensureDir(dataDir);
   await fs.writeJson(path.join(dataDir, 'build.json'), state.build, { spaces: 2 });
-  await fs.writeJson(path.join(dataDir, 'experiments.json'), state.experiments, {
+
+  // Toujours format clair : { experiments: [...] }
+  await fs.writeJson(
+    path.join(dataDir, 'experiments.json'),
+    {
+      scrapedAt: new Date().toISOString(),
+      buildNumber: state.build && state.build.buildNumber,
+      totals: { all: (state.experiments || []).length },
+      experiments: state.experiments || [],
+    },
+    { spaces: 2 },
+  );
+
+  await fs.writeJson(path.join(dataDir, 'strings.json'), state.strings || {}, {
     spaces: 2,
   });
-  await fs.writeJson(path.join(dataDir, 'strings.json'), state.strings, {
-    spaces: 2,
-  });
-  await fs.writeJson(path.join(dataDir, 'routes.json'), state.routes, {
+  await fs.writeJson(path.join(dataDir, 'routes.json'), state.routes || {}, {
     spaces: 2,
   });
   await fs.writeJson(
@@ -82,8 +110,8 @@ async function bootstrapSeen(dataDir, findings) {
     path.join(dataDir, 'seen.json'),
     {
       experiments: findings.experiments.map((e) => e.id),
-      stringKeys: Object.keys(findings.strings),
-      routes: Object.keys(findings.routes),
+      stringKeys: Object.keys(findings.strings || {}),
+      routes: Object.keys(findings.routes || {}),
     },
     { spaces: 2 },
   );
@@ -92,7 +120,9 @@ async function bootstrapSeen(dataDir, findings) {
 async function readJson(p, fallback = null) {
   try {
     if (await fs.pathExists(p)) return await fs.readJson(p);
-  } catch {}
+  } catch (e) {
+    console.warn('readJson fail', p, e.message);
+  }
   return fallback;
 }
 
