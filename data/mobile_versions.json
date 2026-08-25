@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-25T16:36:51.832Z",
+  "scrapedAt": "2026-08-25T18:38:59.631Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,19 +11,19 @@
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     },
     {
       "platform": "ios",
       "channel": "ota_latest",
       "version": "342.0",
-      "build": "109353",
-      "commit": "6c408b6b9c4aeed99ec18999b3598cc7b1395c5e",
+      "build": "109452",
+      "commit": "0c23c3bdd4ed160da40e364cc7c7c4aaab90673e",
       "source": "discord_ota_manifest",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
       "note": "OTA in line with or behind App Store stable",
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     },
     {
       "platform": "android",
@@ -33,7 +33,7 @@
       "source": "apkcombo",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     },
     {
       "platform": "ios",
@@ -42,7 +42,7 @@
       "build": null,
       "available": false,
       "note": "Filled when OTA build is newer than App Store stable.",
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     },
     {
       "platform": "android",
@@ -51,7 +51,7 @@
       "build": null,
       "available": false,
       "note": "Play beta is not public without Google auth. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     },
     {
       "platform": "android",
@@ -60,20 +60,20 @@
       "build": null,
       "available": false,
       "note": "Play alpha is not public. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T16:36:51.832Z"
+      "checkedAt": "2026-08-25T18:38:59.631Z"
     }
   ],
   "otaIndex": {
     "ios": [
       {
         "version": "342.0",
-        "build": "109353",
-        "commit": "6c408b6b9c4aeed99ec18999b3598cc7b1395c5e"
+        "build": "109452",
+        "commit": "0c23c3bdd4ed160da40e364cc7c7c4aaab90673e"
       },
       {
         "version": "341.0",
-        "build": "108542",
-        "commit": "4ca46b0834179ec7861753153cadbe597eb8da9d"
+        "build": "109453",
+        "commit": "d564b40ffda458284aeb0a45a1478c4e47b8d9f5"
       },
       {
         "version": "340.0",
@@ -113,6 +113,14 @@
     ],
     "android": []
   },
-  "previousScrapedAt": "2026-08-25T14:44:27.896Z",
-  "changes": []
+  "previousScrapedAt": "2026-08-25T16:36:51.832Z",
+  "changes": [
+    {
+      "type": "updated",
+      "key": "ios:ota_latest",
+      "from": "342.0",
+      "to": "342.0",
+      "build": "109452"
+    }
+  ]
 }
