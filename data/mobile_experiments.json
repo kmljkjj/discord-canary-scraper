@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-25T08:41:57.301Z",
+  "scrapedAt": "2026-08-25T10:32:45.056Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "c37b7ec7",
-  "experimentCount": 293,
+  "sourceCommit": "ac44321e",
+  "experimentCount": 292,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 3,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -1833,22 +1833,6 @@
       ]
     },
     {
-      "id": "2026-06-similar-games-desktop",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/game_profile/SimilarGamesExperiments.tsx"
-      ]
-    },
-    {
-      "id": "2026-06-similar-games-mobile",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/game_profile/SimilarGamesExperiments.tsx"
-      ]
-    },
-    {
       "id": "2026-06-soundboard-frequently-used",
       "type": "user",
       "isApex": false,
@@ -2161,14 +2145,6 @@
       ]
     },
     {
-      "id": "2026-07-smag-wishlist-recommendations-dismiss-threshold",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/user_profile/hooks/useWishlistSuggestionsDismissibleContent.tsx"
-      ]
-    },
-    {
       "id": "2026-07-tr-offer-1-campaign",
       "type": "user",
       "isApex": false,
@@ -2233,14 +2209,6 @@
       ]
     },
     {
-      "id": "2026-08-custom-typing-indicator-viewer",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/custom_typing_indicator/CustomTypingIndicatorViewerExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-08-fake-play-age-signals",
       "type": "user",
       "isApex": false,
@@ -2254,6 +2222,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/favorites/FavoritesGuildExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-find-coded-links-regex",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/coded_links/FindCodedLinksExperiment.tsx"
       ]
     },
     {
@@ -2281,11 +2257,27 @@
       ]
     },
     {
+      "id": "2026-08-heic-upload-conversion",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_uploads/experiments/HeicUploadConversionExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-kestrel-ga",
       "type": "user",
       "isApex": false,
       "sources": [
         "discord_app/modules/media_uploads/experiments/KestrelExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-mark-channel-unread",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/channel/MarkChannelUnreadExperiment.tsx"
       ]
     },
     {
