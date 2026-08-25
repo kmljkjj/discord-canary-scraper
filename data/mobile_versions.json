@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-25T01:14:18.287Z",
+  "scrapedAt": "2026-08-25T02:58:08.799Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-08-25T01:14:18.287Z"
+      "checkedAt": "2026-08-25T02:58:08.799Z"
     },
     {
       "platform": "ios",
@@ -23,17 +23,17 @@
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
       "note": "OTA newer than App Store — likely TestFlight / beta",
-      "checkedAt": "2026-08-25T01:14:18.287Z"
+      "checkedAt": "2026-08-25T02:58:08.799Z"
     },
     {
       "platform": "android",
       "channel": "stable",
-      "version": "341.13",
+      "version": "342.16",
       "build": null,
       "source": "apkcombo",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-08-25T01:14:18.287Z"
+      "checkedAt": "2026-08-25T02:58:08.799Z"
     },
     {
       "platform": "android",
@@ -42,7 +42,7 @@
       "build": null,
       "available": false,
       "note": "Play beta is not public without Google auth. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T01:14:18.287Z"
+      "checkedAt": "2026-08-25T02:58:08.799Z"
     },
     {
       "platform": "android",
@@ -51,7 +51,7 @@
       "build": null,
       "available": false,
       "note": "Play alpha is not public. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T01:14:18.287Z"
+      "checkedAt": "2026-08-25T02:58:08.799Z"
     }
   ],
   "otaIndex": {
@@ -114,6 +114,14 @@
     ],
     "android": []
   },
-  "previousScrapedAt": "2026-08-24T22:25:53.633Z",
-  "changes": []
+  "previousScrapedAt": "2026-08-25T01:14:18.287Z",
+  "changes": [
+    {
+      "type": "updated",
+      "key": "android:stable",
+      "from": "341.13",
+      "to": "342.16",
+      "build": null
+    }
+  ]
 }
