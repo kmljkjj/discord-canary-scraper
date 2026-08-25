@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-08-25T14:44:27.896Z",
+  "scrapedAt": "2026-08-25T16:36:51.832Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     },
     {
       "platform": "ios",
@@ -23,7 +23,7 @@
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
       "note": "OTA in line with or behind App Store stable",
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     },
     {
       "platform": "android",
@@ -33,7 +33,7 @@
       "source": "apkcombo",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     },
     {
       "platform": "ios",
@@ -42,7 +42,7 @@
       "build": null,
       "available": false,
       "note": "Filled when OTA build is newer than App Store stable.",
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     },
     {
       "platform": "android",
@@ -51,7 +51,7 @@
       "build": null,
       "available": false,
       "note": "Play beta is not public without Google auth. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     },
     {
       "platform": "android",
@@ -60,7 +60,7 @@
       "build": null,
       "available": false,
       "note": "Play alpha is not public. No public OTA path found currently.",
-      "checkedAt": "2026-08-25T14:44:27.896Z"
+      "checkedAt": "2026-08-25T16:36:51.832Z"
     }
   ],
   "otaIndex": {
@@ -113,21 +113,6 @@
     ],
     "android": []
   },
-  "previousScrapedAt": "2026-08-25T12:46:32.431Z",
-  "changes": [
-    {
-      "type": "updated",
-      "key": "ios:stable",
-      "from": "341.0",
-      "to": "342.0",
-      "build": null
-    },
-    {
-      "type": "new",
-      "key": "ios:ota_latest",
-      "from": null,
-      "to": "342.0",
-      "build": "109353"
-    }
-  ]
+  "previousScrapedAt": "2026-08-25T14:44:27.896Z",
+  "changes": []
 }
