@@ -1,18 +1,16 @@
 /**
- * Messages Discord Previews style:
- * - New Discord Canary Build
- * - Strings
- * - Endpoints
- * - New Apex Experiment / New Experiment
+ * Notifs — un experiment / string / route ne part qu'UNE fois.
+ * La baseline (prev.experiments) est la source de vérité.
+ * Pas de renvoi du retard à chaque nouveau build.
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
 
-async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
+async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir, baselineIds }) {
   if (!webhookUrl) {
     console.log('No webhook');
-    return;
+    return { notifiedExpIds: [] };
   }
 
   const sentPath = path.join(stateDir, 'sent.json');
@@ -21,70 +19,106 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
     if (await fs.pathExists(sentPath)) sent = await fs.readJson(sentPath);
   } catch {}
 
-  const sentBuilds = new Set(sent.builds || []);
-  const sentExp = new Set(sent.experiments || []);
-  const sentStr = new Set(sent.strings || []);
-  const sentRt = new Set(sent.routes || []);
+  // Union : déjà en baseline + déjà envoyés
+  const knownExp = new Set([
+    ...(baselineIds || []),
+    ...(sent.experiments || []),
+  ]);
+  const knownStr = new Set(sent.strings || []);
+  const knownRt = new Set(sent.routes || []);
+  const knownBuilds = new Set((sent.builds || []).map(String));
 
-  // 1) Nouveau build
-  if (isNewBuild) {
-    const key = String(build.buildNumber);
-    if (!sentBuilds.has(key)) {
-      const nExp = (diff.newExperiments || []).length;
-      const nStr = Object.keys((diff.strings && diff.strings.added) || {}).length;
-      const nRt = Object.keys((diff.routes && diff.routes.added) || {}).length;
-      await post(webhookUrl, {
-        username: 'Canary Scraper',
-        embeds: [
-          {
-            title: 'New Discord Canary Build',
-            color: 0xed4245,
-            fields: [
-              { name: 'Build', value: String(build.buildNumber), inline: true },
-              { name: 'Channel', value: 'canary', inline: true },
-              {
-                name: 'Hash',
-                value: build.versionHash
-                  ? '`' + String(build.versionHash).slice(0, 12) + '`'
-                  : '—',
-                inline: true,
-              },
-              {
-                name: 'Delta',
-                value:
-                  [
-                    nExp ? `Experiments +${nExp}` : null,
-                    nStr ? `Strings +${nStr}` : null,
-                    nRt ? `Endpoints +${nRt}` : null,
-                  ]
-                    .filter(Boolean)
-                    .join('\n') || 'Build bump',
-              },
-            ],
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      });
-      sentBuilds.add(key);
-      console.log('Sent: New Discord Canary Build', key);
-    }
+  // Uniquement ce qui n'est PAS déjà connu
+  let freshExps = (diff.newExperiments || []).filter((e) => e && e.id && !knownExp.has(e.id));
+  const freshStr = {};
+  for (const [k, v] of Object.entries((diff.strings && diff.strings.added) || {})) {
+    if (!knownStr.has(k)) freshStr[k] = v;
+  }
+  const freshRt = {};
+  for (const [k, v] of Object.entries((diff.routes && diff.routes.added) || {})) {
+    if (!knownRt.has(k)) freshRt[k] = v;
   }
 
-  // 2) Strings
-  const addedStr = (diff.strings && diff.strings.added) || {};
-  const modStr = (diff.strings && diff.strings.modified) || {};
-  const remStr = (diff.strings && diff.strings.removed) || {};
+  // Catch-up massif (retard) : on n'envoie pas 100 messages d'un coup,
+  // on enregistre tout et on n'affiche que les plus récents
+  const BACKLOG_LIMIT = 12;
+  let backlogMode = false;
+  if (freshExps.length > BACKLOG_LIMIT) {
+    backlogMode = true;
+    console.log(
+      'BACKLOG',
+      freshExps.length,
+      'experiments — notify only last',
+      BACKLOG_LIMIT,
+      '(rest marked sent, no re-send later)',
+    );
+    // Marquer TOUT comme connu pour ne jamais renvoyer
+    for (const e of freshExps) knownExp.add(e.id);
+    // Trier par id (dates 2026-08… en dernier souvent) et n'afficher qu'une partie
+    freshExps = [...freshExps]
+      .sort((a, b) => String(a.id).localeCompare(String(b.id)))
+      .slice(-BACKLOG_LIMIT);
+  }
+
+  console.log('Notify:', {
+    isNewBuild,
+    exp: freshExps.length,
+    str: Object.keys(freshStr).length,
+    routes: Object.keys(freshRt).length,
+    backlogMode,
+  });
+
+  // 1) Build (une fois par numéro)
+  if (isNewBuild && !knownBuilds.has(String(build.buildNumber))) {
+    await post(webhookUrl, {
+      username: 'Canary Scraper',
+      embeds: [
+        {
+          title: 'New Discord Canary Build',
+          color: 0xed4245,
+          fields: [
+            { name: 'Build', value: String(build.buildNumber), inline: true },
+            { name: 'Channel', value: 'canary', inline: true },
+            {
+              name: 'Hash',
+              value: build.versionHash
+                ? '`' + String(build.versionHash).slice(0, 12) + '`'
+                : '—',
+              inline: true,
+            },
+            {
+              name: 'Delta',
+              value:
+                [
+                  freshExps.length ? `Experiments +${freshExps.length}` : null,
+                  Object.keys(freshStr).length
+                    ? `Strings +${Object.keys(freshStr).length}`
+                    : null,
+                  Object.keys(freshRt).length
+                    ? `Endpoints +${Object.keys(freshRt).length}`
+                    : null,
+                  backlogMode ? '_catch-up (limited)_' : null,
+                ]
+                  .filter(Boolean)
+                  .join('\n') || 'Build bump',
+            },
+          ],
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    });
+    knownBuilds.add(String(build.buildNumber));
+    console.log('Sent build', build.buildNumber);
+  }
+
+  // 2) Strings (max 1 message)
   const strLines = [];
-  for (const [k, v] of Object.entries(addedStr)) {
-    if (sentStr.has(k)) continue;
+  for (const [k, v] of Object.entries(freshStr).slice(0, 40)) {
     strLines.push(`+ ${k}: ${String(v).slice(0, 120)}`);
-    sentStr.add(k);
+    knownStr.add(k);
   }
-  for (const [k, o] of Object.entries(modStr)) {
+  for (const [k, o] of Object.entries((diff.strings && diff.strings.modified) || {}).slice(0, 10)) {
     strLines.push(`~ ${k}: ${String(o.to || o).slice(0, 100)}`);
-  }
-  for (const [k] of Object.entries(remStr).slice(0, 15)) {
-    strLines.push(`- ${k}`);
   }
   if (strLines.length) {
     await post(webhookUrl, {
@@ -94,7 +128,7 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
           title: 'Strings',
           description:
             'Added · removed · modified\n```\n' +
-            strLines.slice(0, 45).join('\n').slice(0, 3800) +
+            strLines.join('\n').slice(0, 3800) +
             '\n```',
           color: 0x57f287,
           footer: { text: `Build Id - ${build.buildNumber}` },
@@ -102,16 +136,14 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
         },
       ],
     });
-    console.log('Sent: Strings', strLines.length);
+    console.log('Sent strings', strLines.length);
   }
 
   // 3) Endpoints
-  const addedRt = (diff.routes && diff.routes.added) || {};
   const rtLines = [];
-  for (const [k, v] of Object.entries(addedRt)) {
-    if (sentRt.has(k)) continue;
+  for (const [k, v] of Object.entries(freshRt).slice(0, 40)) {
     rtLines.push(`+ ${k}: ${v}`);
-    sentRt.add(k);
+    knownRt.add(k);
   }
   if (rtLines.length) {
     await post(webhookUrl, {
@@ -120,30 +152,28 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
         {
           title: 'Endpoints',
           description:
-            'Added\n```\n' + rtLines.slice(0, 40).join('\n').slice(0, 3800) + '\n```',
+            'Added\n```\n' + rtLines.join('\n').slice(0, 3800) + '\n```',
           color: 0x5865f2,
           footer: { text: `Build Id - ${build.buildNumber}` },
           timestamp: new Date().toISOString(),
         },
       ],
     });
-    console.log('Sent: Endpoints', rtLines.length);
+    console.log('Sent endpoints', rtLines.length);
   }
 
-  // 4) Experiments — un message par experiment (style Discord Previews)
-  const exps = diff.newExperiments || [];
-  let sentCount = 0;
-  for (const exp of exps) {
-    const id = exp.id || exp;
-    if (sentExp.has(id)) continue;
+  // 4) Experiments — une fois seulement
+  const notifiedExpIds = [];
+  for (const exp of freshExps) {
+    const id = exp.id;
+    if (knownExp.has(id) && notifiedExpIds.includes(id)) continue;
     const isApex = exp.kind === 'apex' || !String(id).includes('_');
-    const title = isApex ? 'New Apex Experiment' : 'New Experiment';
     const type = exp.type || (/guild|server/i.test(id) ? 'guild' : 'user');
     await post(webhookUrl, {
       username: 'Canary Scraper',
       embeds: [
         {
-          title,
+          title: isApex ? 'New Apex Experiment' : 'New Experiment',
           description: [
             `+ **${id}** (${type})`,
             `* Type **${type}**`,
@@ -154,22 +184,25 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir }) {
         },
       ],
     });
-    sentExp.add(id);
-    sentCount++;
-    if (sentCount >= 20) break; // anti flood d'un coup
+    knownExp.add(id);
+    notifiedExpIds.push(id);
   }
-  if (sentCount) console.log('Sent: Experiments', sentCount);
+  if (notifiedExpIds.length) console.log('Sent experiments', notifiedExpIds.length);
 
+  // Persister : tout le backlog est marqué envoyé → plus de renvoi
   await fs.writeJson(
     sentPath,
     {
-      builds: [...sentBuilds].slice(-200),
-      experiments: [...sentExp].slice(-8000),
-      strings: [...sentStr].slice(-20000),
-      routes: [...sentRt].slice(-5000),
+      builds: [...knownBuilds].slice(-300),
+      experiments: [...knownExp].slice(-10000),
+      strings: [...knownStr].slice(-25000),
+      routes: [...knownRt].slice(-5000),
+      updatedAt: new Date().toISOString(),
     },
     { spaces: 2 },
   );
+
+  return { notifiedExpIds };
 }
 
 async function post(url, body) {
@@ -179,12 +212,8 @@ async function post(url, body) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
-    const title = body.embeds && body.embeds[0] && body.embeds[0].title;
-    console.log('webhook', res.status, title || '');
-    if (!res.ok) {
-      const t = await res.text();
-      console.warn('webhook fail', t.slice(0, 250));
-    }
+    console.log('webhook', res.status, body.embeds?.[0]?.title || '');
+    if (!res.ok) console.warn('webhook fail', (await res.text()).slice(0, 200));
   } catch (e) {
     console.warn('webhook error', e.message);
   }
