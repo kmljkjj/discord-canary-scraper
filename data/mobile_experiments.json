@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-26T10:34:51.799Z",
+  "scrapedAt": "2026-08-26T12:51:57.466Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "ac44321e",
+  "sourceCommit": "3326cd92",
   "experimentCount": 292,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 2,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -1969,14 +1969,6 @@
       ]
     },
     {
-      "id": "2026-07-hotwheels-clickable-game-icon",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/content_inventory/ContentInventoryExperiments.tsx"
-      ]
-    },
-    {
       "id": "2026-07-krisp-cpu-disablement",
       "type": "user",
       "isApex": false,
@@ -2121,14 +2113,6 @@
       ]
     },
     {
-      "id": "2026-07-server-tag-game-profiles-mobile",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/guild_profile/GuildProfileGameProfilesExperiment.native.tsx"
-      ]
-    },
-    {
       "id": "2026-07-shop-this-look-mobile",
       "type": "user",
       "isApex": false,
@@ -2241,6 +2225,14 @@
       ]
     },
     {
+      "id": "2026-08-game-tag-on-mobile-voice-call-tiles",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/game_profile/GameTagOnVoiceTileExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-guild-members-in-mobile-vc-invites",
       "type": "guild",
       "isApex": false,
@@ -2318,6 +2310,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/collectibles/experiments/ShopStandalonePdpMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-top-soundboard-sounds",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/soundboard/top_sounds/TopSoundboardSoundsExperiment.tsx"
       ]
     },
     {
