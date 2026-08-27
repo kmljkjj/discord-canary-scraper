@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-27T07:49:23.341Z",
+  "scrapedAt": "2026-08-27T18:53:41.339Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "3326cd92",
+  "sourceCommit": "35673c29",
   "experimentCount": 292,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 4,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -647,14 +647,6 @@
       ]
     },
     {
-      "id": "2026-02-mobile-account-linking",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/application_account_linking/experiments/mobileAccountLinkingExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-02-mobile-mute-indicator",
       "type": "user",
       "isApex": false,
@@ -917,14 +909,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/premium/powerups/experiments/FileUploadPowerupHoldoutExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-03-friend-is-online-v3",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/notifications/friend_online/FriendOnlineNotificationExperiment.tsx"
       ]
     },
     {
@@ -1325,14 +1309,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/nuf/native/PostReactionPermissionNudgeExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-04-profile-frames-ea-marketing",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/collectibles/experiments/CollectiblesProfileFramesEAMarketingExperiment.tsx"
       ]
     },
     {
@@ -1761,6 +1737,14 @@
       ]
     },
     {
+      "id": "2026-06-nitro-gdm-cap-increase",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/group_dm/GroupDMNitroCapExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-06-non-friend-messages-requests-in-uk",
       "type": "user",
       "isApex": false,
@@ -1958,14 +1942,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/age_assurance/ExpressiveModalV2Experiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-07-game-mentions-v2-mobile",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/game_mentions/GameMentionsMobileExperiment.tsx"
       ]
     },
     {
@@ -2273,6 +2249,14 @@
       ]
     },
     {
+      "id": "2026-08-mobile-soundboard-sound-preview-menu",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/soundboard/experiments/SoundboardSoundPreviewMenuExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-mobile-voice-channel-games",
       "type": "user",
       "isApex": false,
@@ -2321,6 +2305,14 @@
       ]
     },
     {
+      "id": "2026-08-top-soundboard-sounds-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/soundboard/top_sounds/TopSoundboardSoundsExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-user-bio-max-length",
       "type": "user",
       "isApex": false,
@@ -2334,6 +2326,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/media_engine/VideoGuardExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-virtual-backgrounds-ios",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/video_backgrounds/VirtualBackgroundsIosExperiment.tsx"
       ]
     },
     {
