@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-28T04:04:19.106Z",
+  "scrapedAt": "2026-08-28T18:15:57.254Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "35673c29",
-  "experimentCount": 292,
+  "sourceCommit": "1cca6fde",
+  "experimentCount": 291,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 2,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -1072,27 +1072,11 @@
       ]
     },
     {
-      "id": "2026-03-video-quest-player-refactor",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/quests/experiments/index.tsx"
-      ]
-    },
-    {
       "id": "2026-03-video-stutter-mitigation",
       "type": "user",
       "isApex": false,
       "sources": [
         "discord_app/modules/media_engine/VideoStutterMitigationExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-03-wishlisting-nitro",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/wishlists/experiments/WishlistingNitroExperiment.tsx"
       ]
     },
     {
@@ -1689,14 +1673,6 @@
       ]
     },
     {
-      "id": "2026-06-ios-ota-streaming",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
-      ]
-    },
-    {
       "id": "2026-06-macaron",
       "type": "user",
       "isApex": false,
@@ -2265,6 +2241,14 @@
       ]
     },
     {
+      "id": "2026-08-nitro-tenure-badge-withheld-state",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/TenureBadgeWithheldStateExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-premium-gifting-gogo-promotion",
       "type": "user",
       "isApex": false,
@@ -2294,6 +2278,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/collectibles/experiments/ShopStandalonePdpMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-show-expressive-modal-subtitle-alt",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/age_assurance/ShowExpressiveModalSubtitleAltFlag.tsx"
       ]
     },
     {
