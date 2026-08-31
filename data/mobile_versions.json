@@ -1,17 +1,17 @@
 {
-  "scrapedAt": "2026-08-31T12:52:03.623Z",
+  "scrapedAt": "2026-08-31T19:50:44.280Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
-      "version": "342.0",
+      "version": "343.0",
       "build": null,
-      "releaseDate": "2026-08-24T18:41:40Z",
-      "releaseNotes": "Voice calls now show up as a Live Activity, letting you see your friends’ beautiful avatars and the icon for the server or Group DM you’re in. You can also access Discord’s Mute and Deafen buttons directly from your Lock Screen and Dynamic Island. \n\nThere are a LOT of small-but-meaningful fixes across iOS this month, such as VoiceOver improvements, smoother Forum channels, and less chunky scrolling. Grab a warm cup of coffee/tea/whatever tasty drink you prefer, open up dis.gd/PatchNotes, and spe",
+      "releaseDate": "2026-08-31T17:16:20Z",
+      "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     },
     {
       "platform": "ios",
@@ -23,7 +23,7 @@
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
       "note": "OTA in line with or behind App Store stable",
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     },
     {
       "platform": "android",
@@ -33,7 +33,7 @@
       "source": "apkcombo",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     },
     {
       "platform": "ios",
@@ -42,7 +42,7 @@
       "build": null,
       "available": false,
       "note": "Filled when OTA build is newer than App Store stable.",
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     },
     {
       "platform": "android",
@@ -51,7 +51,7 @@
       "build": null,
       "available": false,
       "note": "Play beta is not public without Google auth. No public OTA path found currently.",
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     },
     {
       "platform": "android",
@@ -60,7 +60,7 @@
       "build": null,
       "available": false,
       "note": "Play alpha is not public. No public OTA path found currently.",
-      "checkedAt": "2026-08-31T12:52:03.623Z"
+      "checkedAt": "2026-08-31T19:50:44.280Z"
     }
   ],
   "otaIndex": {
@@ -104,15 +104,18 @@
         "version": "335.0",
         "build": "106116",
         "commit": "bf7e9471b96871f7b7438679a8943c23d5140ab5"
-      },
-      {
-        "version": "334.0",
-        "build": "105137",
-        "commit": "e3330747ba5682792c3f688c7a115364e67aa678"
       }
     ],
     "android": []
   },
-  "previousScrapedAt": "2026-08-31T04:00:15.229Z",
-  "changes": []
+  "previousScrapedAt": "2026-08-31T12:52:03.623Z",
+  "changes": [
+    {
+      "type": "updated",
+      "key": "ios:stable",
+      "from": "342.0",
+      "to": "343.0",
+      "build": null
+    }
+  ]
 }
