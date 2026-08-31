@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-08-31T04:00:41.852Z",
+  "scrapedAt": "2026-08-31T12:52:36.337Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "1cca6fde",
-  "experimentCount": 291,
+  "sourceCommit": "bf7bb321",
+  "experimentCount": 293,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 3,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -883,7 +883,7 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "discord_app/modules/croissant/crepe/CrepeExperiment.tsx"
+        "discord_app/modules/partner_perks/xbox/game_pass_perks/XboxGamePassPerksExperiment.tsx"
       ]
     },
     {
@@ -1793,14 +1793,6 @@
       ]
     },
     {
-      "id": "2026-06-soundboard-frequently-used",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/soundboard/SoundboardFrequentlyUsedExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
       "type": "user",
       "isApex": false,
@@ -1918,6 +1910,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/age_assurance/ExpressiveModalV2Experiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-ios-attribution",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
       ]
     },
     {
@@ -2142,6 +2142,22 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/quests/experiments/BountiesMobileQuestBarExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-compress-logs",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/debug/CompressLogsExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-dcf-new-user-cooldown",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/dismissible_content/DcfNewUserCooldownExperiment.tsx"
       ]
     },
     {
