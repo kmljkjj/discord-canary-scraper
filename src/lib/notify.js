@@ -1,124 +1,227 @@
 /**
- * Notifs — un experiment / string / route ne part qu'UNE fois.
- * La baseline (prev.experiments) est la source de vérité.
- * Pas de renvoi du retard à chaque nouveau build.
+ * Notifs — un experiment n'est envoyé QU'UNE fois dans toute la vie du repo.
+ * Fichier permanent: data/notified_experiments.json
+ * Un seul embed groupé (pas 12 messages spam).
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
 
-async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir, baselineIds }) {
+const NOTIFIED_FILE = 'notified_experiments.json';
+const SENT_FILE = 'sent.json';
+
+async function loadNotified(stateDir) {
+  const p = path.join(stateDir, NOTIFIED_FILE);
+  try {
+    if (await fs.pathExists(p)) {
+      const data = await fs.readJson(p);
+      const ids = data.ids || data.experiments || [];
+      return new Set(ids.map(String));
+    }
+  } catch {}
+  // migrate depuis sent.json si présent
+  try {
+    const sp = path.join(stateDir, SENT_FILE);
+    if (await fs.pathExists(sp)) {
+      const s = await fs.readJson(sp);
+      return new Set((s.experiments || []).map(String));
+    }
+  } catch {}
+  return new Set();
+}
+
+async function saveNotified(stateDir, set) {
+  const ids = [...set].sort();
+  await fs.writeJson(
+    path.join(stateDir, NOTIFIED_FILE),
+    {
+      updatedAt: new Date().toISOString(),
+      count: ids.length,
+      ids,
+    },
+    { spaces: 2 },
+  );
+}
+
+async function notifyAll({
+  build,
+  isNewBuild,
+  diff,
+  webhookUrl,
+  stateDir,
+  baselineIds,
+  allCurrentIds,
+}) {
   if (!webhookUrl) {
     console.log('No webhook');
     return { notifiedExpIds: [] };
   }
 
-  const sentPath = path.join(stateDir, 'sent.json');
-  let sent = { builds: [], experiments: [], strings: [], routes: [] };
-  try {
-    if (await fs.pathExists(sentPath)) sent = await fs.readJson(sentPath);
-  } catch {}
+  const notified = await loadNotified(stateDir);
 
-  // Union : déjà en baseline + déjà envoyés
-  const knownExp = new Set([
-    ...(baselineIds || []),
-    ...(sent.experiments || []),
-  ]);
-  const knownStr = new Set(sent.strings || []);
-  const knownRt = new Set(sent.routes || []);
-  const knownBuilds = new Set((sent.builds || []).map(String));
+  // Baseline = déjà connus dans experiments.json + déjà notifiés
+  for (const id of baselineIds || []) notified.add(String(id));
 
-  // Uniquement ce qui n'est PAS déjà connu
-  let freshExps = (diff.newExperiments || []).filter((e) => e && e.id && !knownExp.has(e.id));
-  const freshStr = {};
-  for (const [k, v] of Object.entries((diff.strings && diff.strings.added) || {})) {
-    if (!knownStr.has(k)) freshStr[k] = v;
-  }
-  const freshRt = {};
-  for (const [k, v] of Object.entries((diff.routes && diff.routes.added) || {})) {
-    if (!knownRt.has(k)) freshRt[k] = v;
-  }
+  // Candidats = vraiment jamais vus
+  let freshExps = (diff.newExperiments || []).filter(
+    (e) => e && e.id && !notified.has(String(e.id)),
+  );
 
-  // Catch-up massif (retard) : on n'envoie pas 100 messages d'un coup,
-  // on enregistre tout et on n'affiche que les plus récents
-  const BACKLOG_LIMIT = 12;
-  let backlogMode = false;
-  if (freshExps.length > BACKLOG_LIMIT) {
-    backlogMode = true;
-    console.log(
-      'BACKLOG',
-      freshExps.length,
-      'experiments — notify only last',
-      BACKLOG_LIMIT,
-      '(rest marked sent, no re-send later)',
-    );
-    // Marquer TOUT comme connu pour ne jamais renvoyer
-    for (const e of freshExps) knownExp.add(e.id);
-    // Trier par id (dates 2026-08… en dernier souvent) et n'afficher qu'une partie
-    freshExps = [...freshExps]
-      .sort((a, b) => String(a.id).localeCompare(String(b.id)))
-      .slice(-BACKLOG_LIMIT);
-  }
+  // Si extraction partielle a raté des vieux IDs, allCurrentIds aide
+  // mais on ne notifie QUE les freshExps (nouveaux vs baseline de ce run)
 
-  console.log('Notify:', {
+  console.log('Notify candidates:', {
     isNewBuild,
-    exp: freshExps.length,
-    str: Object.keys(freshStr).length,
-    routes: Object.keys(freshRt).length,
-    backlogMode,
+    fresh: freshExps.length,
+    sample: freshExps.slice(0, 8).map((e) => e.id),
+    notifiedSize: notified.size,
   });
 
-  // 1) Build (une fois par numéro)
-  if (isNewBuild && !knownBuilds.has(String(build.buildNumber))) {
-    await post(webhookUrl, {
-      username: 'Canary Scraper',
-      embeds: [
-        {
-          title: 'New Discord Canary Build',
-          color: 0xed4245,
-          fields: [
-            { name: 'Build', value: String(build.buildNumber), inline: true },
-            { name: 'Channel', value: 'canary', inline: true },
-            {
-              name: 'Hash',
-              value: build.versionHash
-                ? '`' + String(build.versionHash).slice(0, 12) + '`'
-                : '—',
-              inline: true,
-            },
-            {
-              name: 'Delta',
-              value:
-                [
-                  freshExps.length ? `Experiments +${freshExps.length}` : null,
-                  Object.keys(freshStr).length
-                    ? `Strings +${Object.keys(freshStr).length}`
-                    : null,
-                  Object.keys(freshRt).length
-                    ? `Endpoints +${Object.keys(freshRt).length}`
-                    : null,
-                  backlogMode ? '_catch-up (limited)_' : null,
-                ]
-                  .filter(Boolean)
-                  .join('\n') || 'Build bump',
-            },
-          ],
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
-    knownBuilds.add(String(build.buildNumber));
-    console.log('Sent build', build.buildNumber);
+  // Marquer TOUT de suite (même si webhook échoue plus tard → pas de re-spam)
+  for (const e of freshExps) notified.add(String(e.id));
+  // Synchroniser aussi tous les IDs actuels pour ne jamais rejouer un backlog
+  for (const id of allCurrentIds || []) notified.add(String(id));
+  for (const id of baselineIds || []) notified.add(String(id));
+  await saveNotified(stateDir, notified);
+
+  const notifiedExpIds = freshExps.map((e) => String(e.id));
+
+  // 1) Build card — une fois
+  if (isNewBuild) {
+    const sentPath = path.join(stateDir, SENT_FILE);
+    let sent = { builds: [] };
+    try {
+      if (await fs.pathExists(sentPath)) sent = await fs.readJson(sentPath);
+    } catch {}
+    const knownBuilds = new Set((sent.builds || []).map(String));
+    if (!knownBuilds.has(String(build.buildNumber))) {
+      await post(webhookUrl, {
+        username: 'Canary Scraper',
+        embeds: [
+          {
+            title: 'New Discord Canary Build',
+            color: 0xed4245,
+            fields: [
+              { name: 'Build', value: String(build.buildNumber), inline: true },
+              { name: 'Channel', value: 'canary', inline: true },
+              {
+                name: 'Hash',
+                value: build.versionHash
+                  ? '`' + String(build.versionHash).slice(0, 12) + '`'
+                  : '—',
+                inline: true,
+              },
+              {
+                name: 'Delta',
+                value:
+                  [
+                    freshExps.length
+                      ? `Experiments +${freshExps.length}`
+                      : null,
+                    Object.keys((diff.strings && diff.strings.added) || {}).length
+                      ? `Strings +${Object.keys(diff.strings.added).length}`
+                      : null,
+                    Object.keys((diff.routes && diff.routes.added) || {}).length
+                      ? `Endpoints +${Object.keys(diff.routes.added).length}`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join('\n') || 'Build bump',
+              },
+            ],
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      });
+      knownBuilds.add(String(build.buildNumber));
+      sent.builds = [...knownBuilds].slice(-300);
+      sent.updatedAt = new Date().toISOString();
+      await fs.writeJson(sentPath, sent, { spaces: 2 });
+      console.log('Sent build', build.buildNumber);
+    }
   }
 
-  // 2) Strings (max 1 message)
-  const strLines = [];
-  for (const [k, v] of Object.entries(freshStr).slice(0, 40)) {
-    strLines.push(`+ ${k}: ${String(v).slice(0, 120)}`);
-    knownStr.add(k);
+  // 2) Experiments — UN seul message groupé, UNIQUEMENT s'il y a du nouveau
+  if (freshExps.length > 0) {
+    const apex = [];
+    const normal = [];
+    for (const exp of freshExps) {
+      const id = String(exp.id);
+      const type =
+        exp.type || exp.kind || (/guild|server/i.test(id) ? 'guild' : 'user');
+      const isApex = exp.kind === 'apex' || !id.includes('_');
+      const line = `+ **${id}** (${type})`;
+      if (isApex) apex.push(line);
+      else normal.push(line);
+    }
+
+    const chunks = [];
+    if (apex.length) {
+      chunks.push({
+        title: 'New Apex Experiments',
+        color: 0xfaa61a,
+        lines: apex,
+      });
+    }
+    if (normal.length) {
+      chunks.push({
+        title: 'New Experiments',
+        color: 0xed4245,
+        lines: normal,
+      });
+    }
+
+    for (const chunk of chunks) {
+      const body = chunk.lines.slice(0, 40).join('\n');
+      const more =
+        chunk.lines.length > 40
+          ? `\n… +${chunk.lines.length - 40} more`
+          : '';
+      await post(webhookUrl, {
+        username: 'Canary Scraper',
+        embeds: [
+          {
+            title: chunk.title,
+            description:
+              body +
+              more +
+              `\n\n**Build:** ${build.buildNumber}`,
+            color: chunk.color,
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      });
+    }
+    console.log('Sent experiments batched', notifiedExpIds.length);
+  } else {
+    console.log('No new experiments to notify');
   }
-  for (const [k, o] of Object.entries((diff.strings && diff.strings.modified) || {}).slice(0, 10)) {
-    strLines.push(`~ ${k}: ${String(o.to || o).slice(0, 100)}`);
+
+  // 3) Strings — seulement clés vraiment nouvelles (optionnel, max 1 msg)
+  const freshStr = {};
+  const strAdded = (diff.strings && diff.strings.added) || {};
+  const sentPath = path.join(stateDir, SENT_FILE);
+  let sentStr = { strings: [] };
+  try {
+    if (await fs.pathExists(sentPath)) sentStr = await fs.readJson(sentPath);
+  } catch {}
+  const knownStr = new Set((sentStr.strings || []).map(String));
+  for (const [k, v] of Object.entries(strAdded)) {
+    if (!knownStr.has(k)) {
+      freshStr[k] = v;
+      knownStr.add(k);
+    }
+  }
+  // filtre anti-bruit simple
+  const strLines = [];
+  for (const [k, v] of Object.entries(freshStr)) {
+    if (!/^[A-Za-z0-9+/_-]{6}$/.test(k)) continue;
+    if (/^[a-z]{6}$/.test(k)) continue; // height, string, number…
+    const val = String(v).replace(/\s+/g, ' ').trim();
+    if (val.length < 3 || val.length > 200) continue;
+    if (/^[a-z]+$/.test(val) && val.length < 12) continue;
+    strLines.push(`+ ${k}: ${val.slice(0, 120)}`);
+    if (strLines.length >= 35) break;
   }
   if (strLines.length) {
     await post(webhookUrl, {
@@ -128,7 +231,7 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir, baseli
           title: 'Strings',
           description:
             'Added · removed · modified\n```\n' +
-            strLines.join('\n').slice(0, 3800) +
+            strLines.join('\n') +
             '\n```',
           color: 0x57f287,
           footer: { text: `Build Id - ${build.buildNumber}` },
@@ -136,71 +239,10 @@ async function notifyAll({ build, isNewBuild, diff, webhookUrl, stateDir, baseli
         },
       ],
     });
+    sentStr.strings = [...knownStr].slice(-25000);
+    await fs.writeJson(sentPath, sentStr, { spaces: 2 });
     console.log('Sent strings', strLines.length);
   }
-
-  // 3) Endpoints
-  const rtLines = [];
-  for (const [k, v] of Object.entries(freshRt).slice(0, 40)) {
-    rtLines.push(`+ ${k}: ${v}`);
-    knownRt.add(k);
-  }
-  if (rtLines.length) {
-    await post(webhookUrl, {
-      username: 'Canary Scraper',
-      embeds: [
-        {
-          title: 'Endpoints',
-          description:
-            'Added\n```\n' + rtLines.join('\n').slice(0, 3800) + '\n```',
-          color: 0x5865f2,
-          footer: { text: `Build Id - ${build.buildNumber}` },
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
-    console.log('Sent endpoints', rtLines.length);
-  }
-
-  // 4) Experiments — une fois seulement
-  const notifiedExpIds = [];
-  for (const exp of freshExps) {
-    const id = exp.id;
-    if (knownExp.has(id) && notifiedExpIds.includes(id)) continue;
-    const isApex = exp.kind === 'apex' || !String(id).includes('_');
-    const type = exp.type || (/guild|server/i.test(id) ? 'guild' : 'user');
-    await post(webhookUrl, {
-      username: 'Canary Scraper',
-      embeds: [
-        {
-          title: isApex ? 'New Apex Experiment' : 'New Experiment',
-          description: [
-            `+ **${id}** (${type})`,
-            `* Type **${type}**`,
-            `Build: **${build.buildNumber}**`,
-          ].join('\n'),
-          color: isApex ? 0xfaa61a : 0xed4245,
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
-    knownExp.add(id);
-    notifiedExpIds.push(id);
-  }
-  if (notifiedExpIds.length) console.log('Sent experiments', notifiedExpIds.length);
-
-  // Persister : tout le backlog est marqué envoyé → plus de renvoi
-  await fs.writeJson(
-    sentPath,
-    {
-      builds: [...knownBuilds].slice(-300),
-      experiments: [...knownExp].slice(-10000),
-      strings: [...knownStr].slice(-25000),
-      routes: [...knownRt].slice(-5000),
-      updatedAt: new Date().toISOString(),
-    },
-    { spaces: 2 },
-  );
 
   return { notifiedExpIds };
 }
@@ -217,7 +259,7 @@ async function post(url, body) {
   } catch (e) {
     console.warn('webhook error', e.message);
   }
-  await new Promise((r) => setTimeout(r, 400));
+  await new Promise((r) => setTimeout(r, 350));
 }
 
-module.exports = { notifyAll };
+module.exports = { notifyAll, loadNotified, saveNotified };

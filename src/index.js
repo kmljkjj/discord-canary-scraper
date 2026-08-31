@@ -1,5 +1,5 @@
 /**
- * Canary scraper v4 — pas de renvoi du retard à chaque build
+ * Canary scraper — experiments notifiés UNE seule fois, jamais rejoués.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -7,14 +7,14 @@ const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, saveState, bootstrapSeen } = require('./lib/state');
 const { computeDiff } = require('./lib/diff');
-const { notifyAll } = require('./lib/notify');
+const { notifyAll, loadNotified, saveNotified } = require('./lib/notify');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Scraper v4 ===');
+  console.log('=== Canary Scraper v5 (no re-notify) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -61,12 +61,14 @@ async function main() {
     }),
   );
 
-  if (findings.experiments.length < 5 && Object.keys(findings.strings).length < 20) {
+  if (
+    findings.experiments.length < 5 &&
+    Object.keys(findings.strings).length < 20
+  ) {
     console.error('Extract empty — abort');
     process.exit(1);
   }
 
-  // Merge d'abord en mémoire pour baseline complète
   const mergedExps = mergeExp(prev.experiments, findings.experiments);
   const mergedStrings =
     Object.keys(findings.strings).length > 30
@@ -77,9 +79,14 @@ async function main() {
       ? { ...prev.routes, ...findings.routes }
       : prev.routes;
 
+  const allCurrentIds = mergedExps.map((e) => e.id);
+  const baselineIds = prev.experiments.map((e) => e.id);
+
+  // Bootstrap : première fois → mémoriser TOUT, aucun flood
   if (!prev.initialized || prev.experiments.length < 5) {
     await bootstrapSeen(DATA, findings);
-    // Marquer TOUT comme déjà "vu" pour ne pas flood après bootstrap
+    const notified = new Set(findings.experiments.map((e) => String(e.id)));
+    await saveNotified(DATA, notified);
     await fs.writeJson(
       path.join(DATA, 'sent.json'),
       {
@@ -107,13 +114,33 @@ async function main() {
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
         stateDir: DATA,
         baselineIds: findings.experiments.map((e) => e.id),
+        allCurrentIds: findings.experiments.map((e) => e.id),
       });
     }
     console.log('=== Done bootstrap', Date.now() - t0 + 'ms ===');
     return;
   }
 
+  // Sync notified set with full baseline (repair after partial runs)
+  const notified = await loadNotified(DATA);
+  let repaired = 0;
+  for (const id of baselineIds) {
+    if (!notified.has(String(id))) {
+      notified.add(String(id));
+      repaired++;
+    }
+  }
+  if (repaired) {
+    await saveNotified(DATA, notified);
+    console.log('Repaired notified set +', repaired, 'from baseline');
+  }
+
   const diff = computeDiff(prev, findings);
+  // Double filtre : pas dans baseline ET pas déjà notifié
+  diff.newExperiments = (diff.newExperiments || []).filter(
+    (e) => e && e.id && !notified.has(String(e.id)),
+  );
+
   console.log(
     'DIFF',
     JSON.stringify({
@@ -131,13 +158,13 @@ async function main() {
       diff,
       webhookUrl: process.env.DISCORD_WEBHOOK_URL,
       stateDir: DATA,
-      baselineIds: prev.experiments.map((e) => e.id),
+      baselineIds,
+      allCurrentIds,
     });
   } else {
     console.error('NO DISCORD_WEBHOOK_URL');
   }
 
-  // Sauvegarder APRÈS notify : le prochain build ne reverra pas le retard
   await saveState(DATA, {
     initialized: true,
     build,
@@ -161,7 +188,9 @@ function mergeExp(prev, next) {
   const map = new Map();
   for (const e of prev || []) map.set(e.id, e);
   for (const e of next || []) map.set(e.id, e);
-  return [...map.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  return [...map.values()].sort((a, b) =>
+    String(a.id).localeCompare(String(b.id)),
+  );
 }
 
 main().catch((e) => {
