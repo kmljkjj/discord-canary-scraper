@@ -1,5 +1,5 @@
 /**
- * Canary scraper — experiments notifiés UNE seule fois, jamais rejoués.
+ * Canary scraper — experiments + strings notifiés UNE seule fois.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -7,14 +7,20 @@ const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, saveState, bootstrapSeen } = require('./lib/state');
 const { computeDiff } = require('./lib/diff');
-const { notifyAll, loadNotified, saveNotified } = require('./lib/notify');
+const {
+  notifyAll,
+  loadNotified,
+  saveNotified,
+  loadNotifiedStrings,
+  saveNotifiedStrings,
+} = require('./lib/notify');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Scraper v5 (no re-notify) ===');
+  console.log('=== Canary Scraper v5 (no re-notify exp+str) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -27,6 +33,7 @@ async function main() {
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
       baselineExp: prev.experiments.length,
+      baselineStr: Object.keys(prev.strings || {}).length,
       assets: (build.assets || []).length,
     }),
   );
@@ -81,12 +88,20 @@ async function main() {
 
   const allCurrentIds = mergedExps.map((e) => e.id);
   const baselineIds = prev.experiments.map((e) => e.id);
+  const baselineStringKeys = Object.keys(prev.strings || {});
+  const allCurrentStringKeys = Object.keys(mergedStrings || {});
 
-  // Bootstrap : première fois → mémoriser TOUT, aucun flood
+  // Bootstrap
   if (!prev.initialized || prev.experiments.length < 5) {
     await bootstrapSeen(DATA, findings);
-    const notified = new Set(findings.experiments.map((e) => String(e.id)));
-    await saveNotified(DATA, notified);
+    await saveNotified(
+      DATA,
+      new Set(findings.experiments.map((e) => String(e.id))),
+    );
+    await saveNotifiedStrings(
+      DATA,
+      new Set(Object.keys(findings.strings || {})),
+    );
     await fs.writeJson(
       path.join(DATA, 'sent.json'),
       {
@@ -105,7 +120,7 @@ async function main() {
       strings: findings.strings,
       routes: findings.routes,
     });
-    console.log('BOOTSTRAP — baseline only, no experiment flood');
+    console.log('BOOTSTRAP — baseline only, no flood');
     if (process.env.DISCORD_WEBHOOK_URL) {
       await notifyAll({
         build,
@@ -115,31 +130,53 @@ async function main() {
         stateDir: DATA,
         baselineIds: findings.experiments.map((e) => e.id),
         allCurrentIds: findings.experiments.map((e) => e.id),
+        baselineStringKeys: Object.keys(findings.strings || {}),
+        allCurrentStringKeys: Object.keys(findings.strings || {}),
       });
     }
     console.log('=== Done bootstrap', Date.now() - t0 + 'ms ===');
     return;
   }
 
-  // Sync notified set with full baseline (repair after partial runs)
+  // Repair notified sets from baseline
   const notified = await loadNotified(DATA);
-  let repaired = 0;
+  let repairedExp = 0;
   for (const id of baselineIds) {
     if (!notified.has(String(id))) {
       notified.add(String(id));
-      repaired++;
+      repairedExp++;
     }
   }
-  if (repaired) {
+  if (repairedExp) {
     await saveNotified(DATA, notified);
-    console.log('Repaired notified set +', repaired, 'from baseline');
+    console.log('Repaired notified experiments +', repairedExp);
+  }
+
+  const notifiedStr = await loadNotifiedStrings(DATA);
+  let repairedStr = 0;
+  for (const k of baselineStringKeys) {
+    if (!notifiedStr.has(String(k))) {
+      notifiedStr.add(String(k));
+      repairedStr++;
+    }
+  }
+  if (repairedStr) {
+    await saveNotifiedStrings(DATA, notifiedStr);
+    console.log('Repaired notified strings +', repairedStr);
   }
 
   const diff = computeDiff(prev, findings);
-  // Double filtre : pas dans baseline ET pas déjà notifié
   diff.newExperiments = (diff.newExperiments || []).filter(
     (e) => e && e.id && !notified.has(String(e.id)),
   );
+  // Strings: only keys not already notified
+  if (diff.strings && diff.strings.added) {
+    const cleaned = {};
+    for (const [k, v] of Object.entries(diff.strings.added)) {
+      if (!notifiedStr.has(String(k))) cleaned[k] = v;
+    }
+    diff.strings.added = cleaned;
+  }
 
   console.log(
     'DIFF',
@@ -160,6 +197,8 @@ async function main() {
       stateDir: DATA,
       baselineIds,
       allCurrentIds,
+      baselineStringKeys,
+      allCurrentStringKeys,
     });
   } else {
     console.error('NO DISCORD_WEBHOOK_URL');
