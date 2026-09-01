@@ -2,7 +2,8 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Toutes les 5 min = détection rapide (GitHub cron ~±2–5 min de jitter)
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-scraping]
@@ -10,6 +11,7 @@ on:
 permissions:
   contents: write
 
+# Ne pas annuler un scrape en cours (évite baseline incomplète)
 concurrency:
   group: canary-scrape
   cancel-in-progress: false
@@ -17,12 +19,11 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
 
       - uses: actions/setup-node@v4
         with:
@@ -30,10 +31,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --no-audit --no-fund
-          # package-lock généré ne doit pas bloquer le push
+          npm install --no-audit --no-fund --no-package-lock
           rm -f package-lock.json
-          git checkout -- package-lock.json 2>/dev/null || true
 
       - name: Scrape + notify
         env:
@@ -46,14 +45,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Ignorer le bruit npm / assets
           rm -f package-lock.json
           git checkout -- package.json 2>/dev/null || true
-          git clean -fd package-lock.json 2>/dev/null || true
 
           git add -f \
             data/known_experiment_ids.json \
             data/known_string_keys.json \
+            data/known_route_keys.json \
             data/announced_builds.json \
             data/build.json \
             data/experiments.json \
@@ -69,16 +67,14 @@ jobs:
 
           git commit -m "🔄 canary baseline $(date -u +%Y-%m-%dT%H:%MZ)" || true
 
-          # autostash = OK même s'il reste des fichiers unstaged
-          for i in 1 2 3 4 5 6 7 8; do
+          for i in 1 2 3 4 5 6; do
             if git pull --rebase --autostash origin main && git push origin HEAD:main; then
               echo "Pushed baseline OK"
               exit 0
             fi
             echo "Push retry $i..."
-            # jeter le bruit local qui bloque rebase
             git stash push -u -m "noise-$i" || true
-            sleep 3
+            sleep 2
           done
 
           echo "::warning::Could not push baseline"

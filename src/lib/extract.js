@@ -8,6 +8,9 @@ const UA =
 const WUMPUS_ROUTES_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/routes.json';
 
+// Parallel downloads — speed without hammering Discord
+const DOWNLOAD_CONCURRENCY = 12;
+
 async function analyzeAssets(build, { forceRefresh, assetsDir }) {
   await fs.ensureDir(assetsDir);
   if (forceRefresh) await fs.emptyDir(assetsDir);
@@ -19,7 +22,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
   const more = await discoverChunks(assetsDir);
   const extra = more.filter((u) => !assets.includes(u));
   console.log('Discovered extra chunks:', extra.length);
-  await downloadList(extra.slice(0, 200), assetsDir, true);
+  await downloadList(extra.slice(0, 180), assetsDir, true);
 
   const files = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
   console.log('Scanning', files.length, 'JS files');
@@ -57,7 +60,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: expSet.size,
   });
 
-  // If routes empty, try Wumpus seed (baseline only — not for spam diffs)
   if (Object.keys(routes).length < 20) {
     try {
       const wr = await fetchWumpusRoutes();
@@ -80,7 +82,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
-    // Flag: true routes came mostly from live extract (not only seed)
     routesFromExtract: Object.keys(routes).length > 0,
   };
 }
@@ -94,32 +95,48 @@ function scoreAsset(url) {
   return s;
 }
 
+/** Parallel download pool */
 async function downloadList(urls, assetsDir, force) {
-  let n = 0;
+  const jobs = [];
   for (const url of urls) {
     if (!url || !url.includes('/assets/')) continue;
     const name = path.basename(url.split('?')[0]);
     if (!name.endsWith('.js')) continue;
-    const dest = path.join(assetsDir, name);
-    try {
-      if (!force && (await fs.pathExists(dest))) {
-        const st = await fs.stat(dest);
-        if (st.size > 30_000) continue;
+    jobs.push({ url, name });
+  }
+
+  let n = 0;
+  let i = 0;
+
+  async function worker() {
+    while (i < jobs.length) {
+      const job = jobs[i++];
+      if (!job) break;
+      const dest = path.join(assetsDir, job.name);
+      try {
+        if (!force && (await fs.pathExists(dest))) {
+          const st = await fs.stat(dest);
+          if (st.size > 30_000) continue;
+        }
+        const res = await fetch(job.url, {
+          headers: { 'User-Agent': UA },
+          timeout: 45000,
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const buf = await res.buffer();
+        await fs.writeFile(dest, buf);
+        n++;
+        if (n <= 12 || n % 30 === 0)
+          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
+      } catch (e) {
+        console.warn('✗', job.name, e.message);
       }
-      const res = await fetch(url, {
-        headers: { 'User-Agent': UA },
-        timeout: 60000,
-      });
-      if (!res.ok) throw new Error(String(res.status));
-      const buf = await res.buffer();
-      await fs.writeFile(dest, buf);
-      n++;
-      if (n <= 15 || n % 25 === 0)
-        console.log('✓', name, Math.round(buf.length / 1024) + 'KB');
-    } catch (e) {
-      console.warn('✗', name, e.message);
     }
   }
+
+  const workers = [];
+  for (let w = 0; w < DOWNLOAD_CONCURRENCY; w++) workers.push(worker());
+  await Promise.all(workers);
   console.log('Downloaded batch', n);
 }
 
@@ -204,9 +221,7 @@ function normalizePath(raw) {
   return p;
 }
 
-/** Wumpus-style route extraction — multiple patterns */
 function extractRoutes(content, out) {
-  // KEY: "/path" or KEY: `/path`
   const reColon =
     /\b([A-Z][A-Z0-9_]{2,120})\s*:\s*["'`](\/[^"'`]{1,300})["'`]/g;
   let m;
@@ -214,24 +229,18 @@ function extractRoutes(content, out) {
     const path = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
   }
-
-  // "KEY": "/path"
   const reQuoted =
     /["']([A-Z][A-Z0-9_]{2,120})["']\s*:\s*["'](\/[^"']{1,300})["']/g;
   while ((m = reQuoted.exec(content)) !== null) {
     const path = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
   }
-
-  // KEY = "/path"
   const reAssign =
     /\b([A-Z][A-Z0-9_]{2,120})\s*=\s*["'`](\/[^"'`]{1,300})["'`]/g;
   while ((m = reAssign.exec(content)) !== null) {
     const path = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
   }
-
-  // url("/users/@me/...") near SCREAMING keys — loose
   const reUrl =
     /["']([A-Z][A-Z0-9_]{3,80})["']\s*,\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
   while ((m = reUrl.exec(content)) !== null) {
@@ -258,7 +267,7 @@ function extractExperiments(content, map) {
 async function fetchWumpusRoutes() {
   const res = await fetch(WUMPUS_ROUTES_URL, {
     headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
-    timeout: 30000,
+    timeout: 25000,
   });
   if (!res.ok) return null;
   return await res.json();
