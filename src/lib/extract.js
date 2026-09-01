@@ -10,10 +10,8 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
   if (forceRefresh) await fs.emptyDir(assetsDir);
 
   let assets = [...(build.assets || [])];
-  // Download listed assets first
   await downloadList(assets, assetsDir, forceRefresh);
 
-  // Discover more chunks from downloaded JS (webpack)
   const more = await discoverChunks(assetsDir);
   const extra = more.filter((u) => !assets.includes(u));
   console.log('Discovered extra chunks:', extra.length);
@@ -47,28 +45,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: expSet.size,
   });
 
-  if (Object.keys(strings).length < 200) {
-    try {
-      const w = await fetch(
-        'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/strings.json',
-        { timeout: 30000 },
-      );
-      if (w.ok) {
-        const j = await w.json();
-        let n = 0;
-        for (const [k, v] of Object.entries(j)) {
-          if (isGoodStringKey(k) && isGoodStringVal(v) && !(k in strings)) {
-            strings[k] = v;
-            n++;
-          }
-        }
-        console.log('Wumpus string seed', n);
-      }
-    } catch (e) {
-      console.warn('wumpus seed', e.message);
-    }
-  }
-
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
@@ -88,12 +64,16 @@ async function downloadList(urls, assetsDir, force) {
         const st = await fs.stat(dest);
         if (st.size > 30_000) continue;
       }
-      const res = await fetch(url, { headers: { 'User-Agent': UA }, timeout: 60000 });
+      const res = await fetch(url, {
+        headers: { 'User-Agent': UA },
+        timeout: 60000,
+      });
       if (!res.ok) throw new Error(String(res.status));
       const buf = await res.buffer();
       await fs.writeFile(dest, buf);
       n++;
-      if (n <= 15 || n % 20 === 0) console.log('✓', name, Math.round(buf.length / 1024) + 'KB');
+      if (n <= 15 || n % 20 === 0)
+        console.log('✓', name, Math.round(buf.length / 1024) + 'KB');
     } catch (e) {
       console.warn('✗', name, e.message);
     }
@@ -108,7 +88,8 @@ async function discoverChunks(assetsDir) {
   for (const file of files.slice(0, 30)) {
     try {
       const content = await fs.readFile(path.join(assetsDir, file), 'utf8');
-      const slice = content.length > 5_000_000 ? content.slice(0, 5_000_000) : content;
+      const slice =
+        content.length > 5_000_000 ? content.slice(0, 5_000_000) : content;
       let m;
       while ((m = re.exec(slice)) !== null) {
         urls.add('https://canary.discord.com/assets/' + m[1]);
@@ -118,13 +99,32 @@ async function discoverChunks(assetsDir) {
   return [...urls];
 }
 
+/** Wumpus-style: 6-char keys with hash character, not pure English words */
 function isGoodStringKey(k) {
-  return typeof k === 'string' && /^[A-Za-z0-9+/]{6}$/.test(k) && /[A-Za-z]/.test(k);
+  if (typeof k !== 'string' || k.length !== 6) return false;
+  if (!/^[A-Za-z0-9+/]+$/.test(k)) return false;
+  if (!/[A-Za-z]/.test(k)) return false;
+  // reject pure lowercase dictionary noise (height, string, number…)
+  if (/^[a-z]{6}$/.test(k)) return false;
+  // need digit, upper, or +
+  if (!/[0-9A-Z+]/.test(k)) return false;
+  return true;
 }
+
 function isGoodStringVal(v) {
   if (typeof v !== 'string') return false;
-  if (v.length < 2 || v.length > 400) return false;
-  if (/^[a-f0-9]{16,}$/i.test(v) || /^\d+$/.test(v)) return false;
+  const s = v.trim();
+  if (s.length < 2 || s.length > 400) return false;
+  if (/^[a-f0-9]{16,}$/i.test(s) || /^\d+$/.test(s)) return false;
+  if (/^discord_web-/i.test(s) || /^release:/i.test(s)) return false;
+  if (
+    /^(width|height|string|number|boolean|object|symbol|unknown|past|future|month|months|short|long|add|delete|update|start|locale|format|author|rive)$/i.test(
+      s,
+    )
+  )
+    return false;
+  const letters = s.match(/[A-Za-zÀ-ÿ]/g);
+  if (!letters || letters.length < 2) return false;
   return true;
 }
 
@@ -149,7 +149,6 @@ function extractRoutes(content, out) {
 }
 
 function extractExperiments(content, map) {
-  // 2026-08-foo-bar OR 2026-08_foo_bar
   const re = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   let m;
   while ((m = re.exec(content)) !== null) {
@@ -164,4 +163,4 @@ function extractExperiments(content, map) {
   }
 }
 
-module.exports = { analyzeAssets };
+module.exports = { analyzeAssets, isGoodStringKey, isGoodStringVal };
