@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-09-01T03:51:32.408Z",
+  "scrapedAt": "2026-09-01T09:13:11.068Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "bf7bb321",
-  "experimentCount": 293,
+  "sourceCommit": "4d8dd8fc",
+  "experimentCount": 292,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 1,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -1024,14 +1024,6 @@
       ]
     },
     {
-      "id": "2026-03-quest-reload-video-on-obscured",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/quests/experiments/index.tsx"
-      ]
-    },
-    {
       "id": "2026-03-soundmoji-rendering",
       "type": "user",
       "isApex": false,
@@ -1558,14 +1550,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/age_assurance/AgeVerificationIncodeExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-06-android-shop-orders",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/billing/experiments/AndroidShopOrdersExperiment.tsx"
       ]
     },
     {
@@ -2238,6 +2222,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/channel/MarkChannelUnreadExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-mobile-emoji-picker-upsell-restyle",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/MobileEmojiPickerUpsellRestyleExperiment.tsx"
       ]
     },
     {
