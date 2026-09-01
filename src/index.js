@@ -1,9 +1,7 @@
 /**
- * Canary scraper — Wumpus-style:
- * - experiments.json + strings.json = baseline (source of truth)
- * - notify ONLY ids/keys present in extract but absent from baseline
- * - always merge + save baseline after (never re-notify next run)
- * - if "new" count is absurd → silent merge (extract noise / catch-up)
+ * Canary Pulse scraper
+ * Baseline = experiments.json + strings.json + routes.json
+ * Notify only true diffs; never re-send known items.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -15,13 +13,13 @@ const { notifyAll } = require('./lib/notify');
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
 
-// Above these thresholds = catch-up / noise → merge without webhook flood
 const MAX_NOTIFY_EXP = 25;
 const MAX_NOTIFY_STR = 80;
+const MAX_NOTIFY_RT = 40;
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Scraper (Wumpus baseline diff) ===');
+  console.log('=== Canary Pulse ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -33,8 +31,9 @@ async function main() {
     JSON.stringify({
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
-      baselineExp: prev.experiments.length,
+      baselineExp: (prev.experiments || []).length,
       baselineStr: Object.keys(prev.strings || {}).length,
+      baselineRt: Object.keys(prev.routes || {}).length,
     }),
   );
 
@@ -48,8 +47,7 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  // Same build + solid baseline → skip
-  if (!isNewBuild && prev.initialized && prev.experiments.length > 20) {
+  if (!isNewBuild && prev.initialized && (prev.experiments || []).length > 20) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
@@ -73,17 +71,16 @@ async function main() {
     findings.experiments.length < 3 &&
     Object.keys(findings.strings).length < 10
   ) {
-    console.error('Extract empty — abort (keep baseline)');
+    console.error('Extract empty — abort');
     process.exit(1);
   }
 
-  // ── Baseline sets (source of truth) ───────────────────
   const prevExpIds = new Set(
     (prev.experiments || []).map((e) => String(e.id || e)),
   );
   const prevStrKeys = new Set(Object.keys(prev.strings || {}));
+  const prevRtKeys = new Set(Object.keys(prev.routes || {}));
 
-  // ── True diffs only ───────────────────────────────────
   let freshExps = (findings.experiments || []).filter(
     (e) => e && e.id && !prevExpIds.has(String(e.id)),
   );
@@ -91,19 +88,25 @@ async function main() {
   for (const [k, v] of Object.entries(findings.strings || {})) {
     if (!prevStrKeys.has(k)) freshStrings[k] = v;
   }
+  let freshRoutes = {};
+  for (const [k, v] of Object.entries(findings.routes || {})) {
+    if (!prevRtKeys.has(k)) freshRoutes[k] = v;
+  }
 
   console.log('TRUE DIFF', {
     newExp: freshExps.length,
     newStr: Object.keys(freshStrings).length,
-    sampleExp: freshExps.slice(0, 10).map((e) => e.id),
+    newRt: Object.keys(freshRoutes).length,
+    sampleExp: freshExps.slice(0, 8).map((e) => e.id),
   });
 
-  // First run / empty baseline → seed only, no flood
   const bootstrapping =
-    !prev.initialized || prev.experiments.length < 5 || prevStrKeys.size < 50;
+    !prev.initialized ||
+    (prev.experiments || []).length < 5 ||
+    prevStrKeys.size < 50;
 
   if (bootstrapping) {
-    console.log('BOOTSTRAP — save baseline, notify build card only');
+    console.log('BOOTSTRAP — baseline only');
     await saveState(DATA, {
       initialized: true,
       build,
@@ -111,7 +114,6 @@ async function main() {
       strings: findings.strings || {},
       routes: findings.routes || {},
     });
-    // remember announced build
     await markBuild(DATA, build.buildNumber);
     if (process.env.DISCORD_WEBHOOK_URL && isNewBuild) {
       await notifyAll({
@@ -119,6 +121,7 @@ async function main() {
         isNewBuild: true,
         freshExps: [],
         freshStrings: {},
+        freshRoutes: {},
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
       });
     }
@@ -126,23 +129,18 @@ async function main() {
     return;
   }
 
-  // Absurd catch-up → silent merge (prevents spam)
   let silent = false;
   if (freshExps.length > MAX_NOTIFY_EXP) {
-    console.log(
-      'SILENT merge experiments',
-      freshExps.length,
-      '(>' + MAX_NOTIFY_EXP + ')',
-    );
+    console.log('SILENT exp', freshExps.length);
     silent = true;
   }
   if (Object.keys(freshStrings).length > MAX_NOTIFY_STR) {
-    console.log(
-      'SILENT merge strings',
-      Object.keys(freshStrings).length,
-      '(>' + MAX_NOTIFY_STR + ')',
-    );
+    console.log('SILENT str', Object.keys(freshStrings).length);
     silent = true;
+  }
+  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) {
+    console.log('SILENT routes', Object.keys(freshRoutes).length);
+    // routes alone don't force full silent for exp/str
   }
 
   const alreadyBuild = await wasBuildAnnounced(DATA, build.buildNumber);
@@ -150,23 +148,26 @@ async function main() {
 
   if (process.env.DISCORD_WEBHOOK_URL) {
     if (silent) {
-      // build card only if new build, no exp/str spam
       if (shouldAnnounceBuild) {
         await notifyAll({
           build,
           isNewBuild: true,
           freshExps: [],
           freshStrings: {},
+          freshRoutes: {},
           webhookUrl: process.env.DISCORD_WEBHOOK_URL,
         });
         await markBuild(DATA, build.buildNumber);
       }
     } else {
+      const rt =
+        Object.keys(freshRoutes).length > MAX_NOTIFY_RT ? {} : freshRoutes;
       await notifyAll({
         build,
         isNewBuild: shouldAnnounceBuild,
         freshExps,
         freshStrings,
+        freshRoutes: rt,
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
       });
       if (shouldAnnounceBuild) await markBuild(DATA, build.buildNumber);
@@ -175,26 +176,17 @@ async function main() {
     console.error('NO DISCORD_WEBHOOK_URL');
   }
 
-  // ALWAYS union baseline — next run cannot re-see these as new
-  const mergedExps = mergeExp(prev.experiments, findings.experiments);
-  const mergedStrings = { ...(prev.strings || {}), ...(findings.strings || {}) };
-  const mergedRoutes =
-    Object.keys(findings.routes || {}).length > 5
-      ? { ...(prev.routes || {}), ...(findings.routes || {}) }
-      : prev.routes || {};
-
   await saveState(DATA, {
     initialized: true,
     build,
-    experiments: mergedExps,
-    strings: mergedStrings,
-    routes: mergedRoutes,
+    experiments: mergeExp(prev.experiments, findings.experiments),
+    strings: { ...(prev.strings || {}), ...(findings.strings || {}) },
+    routes:
+      Object.keys(findings.routes || {}).length > 5
+        ? { ...(prev.routes || {}), ...(findings.routes || {}) }
+        : prev.routes || {},
   });
 
-  console.log('Saved baseline', {
-    experiments: mergedExps.length,
-    strings: Object.keys(mergedStrings).length,
-  });
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 
