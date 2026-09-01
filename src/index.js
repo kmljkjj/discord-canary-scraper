@@ -1,7 +1,6 @@
 /**
  * Canary Pulse — anti re-spam
- * known_experiment_ids.json = liste PERMANENTE (jamais re-notifier)
- * Commitée à chaque run → plus de flood à chaque build
+ * known_experiment_ids.json + already_notified.js + experiments.json
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -9,6 +8,7 @@ const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, saveState } = require('./lib/state');
 const { notifyAll } = require('./lib/notify');
+const ALREADY_NOTIFIED = require('./lib/already_notified');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
@@ -21,55 +21,51 @@ const MAX_NOTIFY_STR = 60;
 const MAX_NOTIFY_RT = 30;
 
 async function loadKnownExp() {
+  const set = new Set();
+  for (const id of ALREADY_NOTIFIED) set.add(String(id));
   try {
     if (await fs.pathExists(KNOWN_EXP)) {
       const d = await fs.readJson(KNOWN_EXP);
-      return new Set((d.ids || []).map(String));
+      for (const id of d.ids || []) set.add(String(id));
     }
   } catch {}
-  return new Set();
+  return set;
 }
 
 async function saveKnownExp(set) {
-  const ids = [...set].filter((id) => id && !String(id).startsWith('hash:')).sort();
+  const ids = [...set]
+    .filter((id) => id && !String(id).startsWith('hash:'))
+    .sort();
   await fs.writeJson(
     KNOWN_EXP,
-    {
-      updatedAt: new Date().toISOString(),
-      count: ids.length,
-      ids,
-    },
+    { updatedAt: new Date().toISOString(), count: ids.length, ids },
     { spaces: 2 },
   );
 }
 
 async function loadKnownStr() {
+  const set = new Set();
   try {
     if (await fs.pathExists(KNOWN_STR)) {
       const d = await fs.readJson(KNOWN_STR);
-      return new Set((d.keys || d.ids || []).map(String));
+      for (const k of d.keys || d.ids || []) set.add(String(k));
     }
   } catch {}
-  return new Set();
+  return set;
 }
 
 async function saveKnownStr(set) {
-  // Cap to keep git diffs reasonable
   const keys = [...set].sort().slice(-40000);
   await fs.writeJson(
     KNOWN_STR,
-    {
-      updatedAt: new Date().toISOString(),
-      count: keys.length,
-      keys,
-    },
+    { updatedAt: new Date().toISOString(), count: keys.length, keys },
     { spaces: 2 },
   );
 }
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v6 (permanent known ids) ===');
+  console.log('=== Canary Pulse v6b ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -77,23 +73,14 @@ async function main() {
   const knownExp = await loadKnownExp();
   const knownStr = await loadKnownStr();
 
-  // Seed known from baseline if empty
-  if (knownExp.size < 10) {
-    for (const e of prev.experiments || []) {
-      if (e && e.id) knownExp.add(String(e.id));
-    }
-    if (knownExp.size) {
-      await saveKnownExp(knownExp);
-      console.log('Seeded knownExp from baseline:', knownExp.size);
-    }
+  for (const e of prev.experiments || []) {
+    if (e && e.id) knownExp.add(String(e.id));
   }
   if (knownStr.size < 50) {
     for (const k of Object.keys(prev.strings || {})) knownStr.add(k);
-    if (knownStr.size) {
-      await saveKnownStr(knownStr);
-      console.log('Seeded knownStr from baseline:', knownStr.size);
-    }
   }
+
+  console.log('Known sets', { exp: knownExp.size, str: knownStr.size });
 
   const build = await fetchBuild();
   console.log(
@@ -102,7 +89,6 @@ async function main() {
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
       knownExp: knownExp.size,
-      knownStr: knownStr.size,
       baselineExp: (prev.experiments || []).length,
     }),
   );
@@ -117,7 +103,7 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  if (!isNewBuild && prev.initialized && knownExp.size > 20) {
+  if (!isNewBuild && prev.initialized && knownExp.size > 50) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
@@ -145,19 +131,11 @@ async function main() {
     process.exit(1);
   }
 
-  // True new = not in PERMANENT known set AND not in baseline
-  const prevExpIds = new Set(
-    (prev.experiments || []).map((e) => String(e.id || e)),
-  );
-  for (const id of prevExpIds) knownExp.add(id);
-
   let freshExps = (findings.experiments || []).filter((e) => {
     if (!e || !e.id) return false;
     const id = String(e.id);
     if (id.startsWith('hash:')) return false;
-    if (knownExp.has(id)) return false;
-    if (prevExpIds.has(id)) return false;
-    return true;
+    return !knownExp.has(id);
   });
 
   let freshStrings = {};
@@ -180,23 +158,25 @@ async function main() {
     sampleExp: freshExps.slice(0, 10).map((e) => e.id),
   });
 
+  // Mark EVERYTHING extracted as known BEFORE notify
+  for (const e of findings.experiments || []) {
+    if (e && e.id) knownExp.add(String(e.id));
+  }
+  for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  await saveKnownExp(knownExp);
+  await saveKnownStr(knownStr);
+
   const bootstrapping =
-    !prev.initialized || knownExp.size < 10 || (prev.experiments || []).length < 5;
+    !prev.initialized || (prev.experiments || []).length < 5;
 
   if (bootstrapping) {
-    console.log('BOOTSTRAP — mark everything known, no flood');
-    for (const e of findings.experiments || []) {
-      if (e && e.id) knownExp.add(String(e.id));
-    }
-    for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
-    await saveKnownExp(knownExp);
-    await saveKnownStr(knownStr);
+    console.log('BOOTSTRAP');
     await saveState(DATA, {
       initialized: true,
       build,
-      experiments: mergeExp(prev.experiments, findings.experiments),
-      strings: { ...(prev.strings || {}), ...(findings.strings || {}) },
-      routes: { ...(prev.routes || {}), ...(findings.routes || {}) },
+      experiments: mergeExp([], findings.experiments),
+      strings: findings.strings || {},
+      routes: findings.routes || {},
     });
     await markBuild(build.buildNumber);
     if (process.env.DISCORD_WEBHOOK_URL && isNewBuild) {
@@ -213,22 +193,11 @@ async function main() {
     return;
   }
 
-  // Mark ALL extracted IDs known BEFORE notify (even if we silent)
-  // so a failed webhook never causes re-spam next run
-  for (const e of findings.experiments || []) {
-    if (e && e.id) knownExp.add(String(e.id));
-  }
-  for (const e of freshExps) knownExp.add(String(e.id));
-  for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
-  await saveKnownExp(knownExp);
-  await saveKnownStr(knownStr);
-
-  let silent =
+  if (
     freshExps.length > MAX_NOTIFY_EXP ||
-    Object.keys(freshStrings).length > MAX_NOTIFY_STR;
-
-  if (silent) {
-    console.log('SILENT merge (catch-up / noise)', {
+    Object.keys(freshStrings).length > MAX_NOTIFY_STR
+  ) {
+    console.log('SILENT', {
       exp: freshExps.length,
       str: Object.keys(freshStrings).length,
     });
@@ -236,10 +205,7 @@ async function main() {
     freshStrings = {};
     freshRoutes = {};
   }
-
-  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) {
-    freshRoutes = {};
-  }
+  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) freshRoutes = {};
 
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild;
@@ -254,8 +220,6 @@ async function main() {
       webhookUrl: process.env.DISCORD_WEBHOOK_URL,
     });
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
-  } else {
-    console.error('NO DISCORD_WEBHOOK_URL');
   }
 
   await saveState(DATA, {
@@ -269,7 +233,7 @@ async function main() {
         : prev.routes || {},
   });
 
-  console.log('Saved knownExp', knownExp.size, 'knownStr', knownStr.size);
+  console.log('Saved knownExp', knownExp.size);
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 
