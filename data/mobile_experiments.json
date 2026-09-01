@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-01T14:33:40.364Z",
+  "scrapedAt": "2026-09-01T19:14:24.959Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "4d8dd8fc",
+  "sourceCommit": "65181e40",
   "experimentCount": 292,
   "stringCount": 7,
   "newExperimentCount": 0,
@@ -2348,10 +2348,10 @@
   "strings": {
     "180deg": "0deg",
     "45deg": "0deg",
-    "pageType": " + closure_5 + ",
+    "pageType": " +\n      closure_5 +\n      ",
     "relative": "absolute",
     "right": "left",
     "start": " + youtubeVideoIdFromURI.start + ",
-    "Window": " + String(style) + "
+    "Window": " +\n                                  String(style) +\n                                  "
   }
 }
