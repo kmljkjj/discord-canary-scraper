@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-01T04:24:56.491Z",
-  "buildNumber": "605113",
+  "scrapedAt": "2026-09-01T07:05:15.639Z",
+  "buildNumber": "605142",
   "totals": {
-    "all": 296
+    "all": 280
   },
   "experiments": [
     {
@@ -21,21 +21,9 @@
       "kind": "legacy"
     },
     {
-      "id": "2022-11_default_disable_mass_mention",
-      "type": "legacy",
-      "kind": "legacy",
-      "label": "Disable mass mentions for communities by default"
-    },
-    {
       "id": "2022-12_mention_raid_limit",
       "type": "user",
       "kind": "legacy"
-    },
-    {
-      "id": "2023-02_guest_voice_invites",
-      "type": "legacy",
-      "kind": "legacy",
-      "label": "Guest Voice Invites"
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
@@ -358,12 +346,6 @@
       "kind": "apex"
     },
     {
-      "id": "2026-02-mobile-visual-refresh",
-      "type": "legacy",
-      "kind": "apex",
-      "label": null
-    },
-    {
       "id": "2026-02-mobile-volume-output-slider-removal",
       "type": "user",
       "kind": "apex"
@@ -614,12 +596,6 @@
       "kind": "apex"
     },
     {
-      "id": "2026-03-quest-reload-video-on-obscured",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "quest reload video on obscured"
-    },
-    {
       "id": "2026-03-requiremodule-caching-redux",
       "type": "user",
       "kind": "apex"
@@ -648,18 +624,6 @@
       "id": "2026-03-video-capture-device-no-reuse",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "2026-03-video-quest-player-refactor",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "video quest player refactor"
-    },
-    {
-      "id": "2026-03-wishlisting-nitro",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "wishlisting nitro"
     },
     {
       "id": "2026-03-wysiwyg-user-profile-editing",
@@ -790,12 +754,6 @@
       "id": "2026-04-premium-group-primary-reminder-nagbar",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "2026-04-profile-frames-ea-marketing",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "profile frames ea marketing"
     },
     {
       "id": "2026-04-quests-premium-orb-multiplier-marketing",
@@ -968,12 +926,6 @@
       "kind": "apex"
     },
     {
-      "id": "2026-06-android-two-week-trials",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "android two week trials"
-    },
-    {
       "id": "2026-06-av1-encode-linux",
       "type": "user",
       "kind": "apex"
@@ -1049,12 +1001,6 @@
       "kind": "apex"
     },
     {
-      "id": "2026-06-ios-ota-streaming",
-      "type": "legacy",
-      "kind": "apex",
-      "label": null
-    },
-    {
       "id": "2026-06-magic-scoring",
       "type": "user",
       "kind": "apex"
@@ -1103,12 +1049,6 @@
       "id": "2026-06-server-theme-apex-shadow",
       "type": "guild",
       "kind": "apex"
-    },
-    {
-      "id": "2026-06-soundboard-frequently-used",
-      "type": "legacy",
-      "kind": "apex",
-      "label": null
     },
     {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
@@ -1236,21 +1176,9 @@
       "kind": "apex"
     },
     {
-      "id": "2026-07-game-mentions-v2-mobile",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "game mentions v2 mobile"
-    },
-    {
       "id": "2026-07-gsimagic",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "2026-07-hotwheels-clickable-game-icon",
-      "type": "legacy",
-      "kind": "apex",
-      "label": "hotwheels clickable game icon"
     },
     {
       "id": "2026-07-ios-attribution",
@@ -1281,12 +1209,6 @@
       "id": "2026-07-parental-consent-warning-fetch",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "2026-07-past-due-checkout",
-      "type": "legacy",
-      "kind": "apex",
-      "label": null
     },
     {
       "id": "2026-07-personal-widget",
@@ -1322,12 +1244,6 @@
       "id": "2026-07-renewable-end-date-sort",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "2026-07-rtc-panel-game-card",
-      "type": "legacy",
-      "kind": "apex",
-      "label": null
     },
     {
       "id": "2026-07-tr-offer-1-campaign",
@@ -1488,18 +1404,6 @@
       "id": "2026-09-soundboard-quick-action",
       "type": "user",
       "kind": "apex"
-    },
-    {
-      "id": "hash:2453702596",
-      "type": "apex",
-      "kind": "apex",
-      "label": null
-    },
-    {
-      "id": "hash:3633668656",
-      "type": "apex",
-      "kind": "apex",
-      "label": null
     }
   ]
 }
