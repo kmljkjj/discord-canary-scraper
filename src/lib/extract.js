@@ -5,12 +5,14 @@ const fetch = require('node-fetch');
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
+const WUMPUS_ROUTES_URL =
+  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/routes.json';
+
 async function analyzeAssets(build, { forceRefresh, assetsDir }) {
   await fs.ensureDir(assetsDir);
   if (forceRefresh) await fs.emptyDir(assetsDir);
 
   let assets = [...(build.assets || [])];
-  // Prefer likely i18n / main bundles first
   assets.sort((a, b) => scoreAsset(b) - scoreAsset(a));
   await downloadList(assets, assetsDir, forceRefresh);
 
@@ -21,7 +23,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
 
   const files = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
   console.log('Scanning', files.length, 'JS files');
-  // Scan largest files first (string tables live in big chunks)
   const withSize = [];
   for (const f of files) {
     try {
@@ -56,10 +57,31 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: expSet.size,
   });
 
+  // If routes empty, try Wumpus seed (baseline only — not for spam diffs)
+  if (Object.keys(routes).length < 20) {
+    try {
+      const wr = await fetchWumpusRoutes();
+      if (wr) {
+        let n = 0;
+        for (const [k, v] of Object.entries(wr)) {
+          if (!(k in routes) && isValidRouteKey(k) && normalizePath(v)) {
+            routes[k] = normalizePath(v);
+            n++;
+          }
+        }
+        console.log('Wumpus routes seed +', n, 'total', Object.keys(routes).length);
+      }
+    } catch (e) {
+      console.warn('wumpus routes', e.message);
+    }
+  }
+
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
+    // Flag: true routes came mostly from live extract (not only seed)
+    routesFromExtract: Object.keys(routes).length > 0,
   };
 }
 
@@ -67,7 +89,7 @@ function scoreAsset(url) {
   const n = path.basename(String(url)).toLowerCase();
   let s = 0;
   if (/^web\./.test(n)) s += 100;
-  if (/i18n|locale|intl|lang|string|message/.test(n)) s += 50;
+  if (/i18n|locale|intl|lang|string|message|route|api|endpoint/.test(n)) s += 50;
   if (/vendor|chunk/.test(n)) s += 5;
   return s;
 }
@@ -119,12 +141,11 @@ async function discoverChunks(assetsDir) {
   return [...urls];
 }
 
-/** Discord i18n keys: 6 chars, not pure English words */
 function isGoodStringKey(k) {
   if (typeof k !== 'string' || k.length !== 6) return false;
   if (!/^[A-Za-z0-9+/_-]+$/.test(k)) return false;
-  if (/^[a-z]{6}$/.test(k)) return false; // height, string, number…
-  if (/^[0-9]{6}$/.test(k)) return true; // Wumpus also has numeric-ish keys
+  if (/^[a-z]{6}$/.test(k)) return false;
+  if (/^[0-9]{6}$/.test(k)) return true;
   if (!/[A-Za-z]/.test(k)) return false;
   return true;
 }
@@ -141,13 +162,11 @@ function isGoodStringVal(v) {
     )
   )
     return false;
-  // need some human text
   if (!/[A-Za-zÀ-ÿ{]/.test(s)) return false;
   return true;
 }
 
 function extractStrings(content, out) {
-  // "KEY": "value"
   const re1 =
     /["']([A-Za-z0-9+/_-]{6})["']\s*:\s*["']([^"'\\]*(?:\\.[^"'\\]*)*)["']/g;
   let m;
@@ -158,7 +177,6 @@ function extractStrings(content, out) {
     } catch {}
     if (isGoodStringKey(m[1]) && isGoodStringVal(val)) out[m[1]] = val;
   }
-  // KEY:"value" without quotes on key sometimes in minified maps
   const re2 =
     /([A-Za-z0-9+/_-]{6})\s*:\s*["']([^"'\\]{2,400})["']/g;
   while ((m = re2.exec(content)) !== null) {
@@ -167,11 +185,59 @@ function extractStrings(content, out) {
   }
 }
 
+function isValidRouteKey(key) {
+  if (typeof key !== 'string') return false;
+  if (!/^[A-Z][A-Z0-9_]{2,120}$/.test(key)) return false;
+  if (/^(GET|PUT|POST|PATCH|DELETE|HEAD|OPTIONS|TRUE|FALSE|NULL)$/.test(key))
+    return false;
+  return true;
+}
+
+function normalizePath(raw) {
+  if (typeof raw !== 'string') return null;
+  let p = raw.trim();
+  if (!p.startsWith('/')) return null;
+  if (p.length < 2 || p.length > 300) return null;
+  p = p.replace(/\$\{[^}]+\}/g, ':param');
+  if (/\.(js|css|map|png|jpg|webp|svg|woff2?)$/i.test(p)) return null;
+  if (p.startsWith('/assets/')) return null;
+  return p;
+}
+
+/** Wumpus-style route extraction — multiple patterns */
 function extractRoutes(content, out) {
-  const re =
-    /["']([A-Z][A-Z0-9_]{3,80})["']\s*:\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
+  // KEY: "/path" or KEY: `/path`
+  const reColon =
+    /\b([A-Z][A-Z0-9_]{2,120})\s*:\s*["'`](\/[^"'`]{1,300})["'`]/g;
   let m;
-  while ((m = re.exec(content)) !== null) out[m[1]] = m[2];
+  while ((m = reColon.exec(content)) !== null) {
+    const path = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
+  }
+
+  // "KEY": "/path"
+  const reQuoted =
+    /["']([A-Z][A-Z0-9_]{2,120})["']\s*:\s*["'](\/[^"']{1,300})["']/g;
+  while ((m = reQuoted.exec(content)) !== null) {
+    const path = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
+  }
+
+  // KEY = "/path"
+  const reAssign =
+    /\b([A-Z][A-Z0-9_]{2,120})\s*=\s*["'`](\/[^"'`]{1,300})["'`]/g;
+  while ((m = reAssign.exec(content)) !== null) {
+    const path = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
+  }
+
+  // url("/users/@me/...") near SCREAMING keys — loose
+  const reUrl =
+    /["']([A-Z][A-Z0-9_]{3,80})["']\s*,\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
+  while ((m = reUrl.exec(content)) !== null) {
+    const path = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && path && !(m[1] in out)) out[m[1]] = path;
+  }
 }
 
 function extractExperiments(content, map) {
@@ -189,4 +255,20 @@ function extractExperiments(content, map) {
   }
 }
 
-module.exports = { analyzeAssets, isGoodStringKey, isGoodStringVal };
+async function fetchWumpusRoutes() {
+  const res = await fetch(WUMPUS_ROUTES_URL, {
+    headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
+    timeout: 30000,
+  });
+  if (!res.ok) return null;
+  return await res.json();
+}
+
+module.exports = {
+  analyzeAssets,
+  isGoodStringKey,
+  isGoodStringVal,
+  extractRoutes,
+  isValidRouteKey,
+  normalizePath,
+};

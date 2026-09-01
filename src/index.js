@@ -1,5 +1,5 @@
 /**
- * Canary Pulse — experiments + strings anti re-spam
+ * Canary Pulse — experiments + strings + routes anti re-spam
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -13,13 +13,14 @@ const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
 const KNOWN_EXP = path.join(DATA, 'known_experiment_ids.json');
 const KNOWN_STR = path.join(DATA, 'known_string_keys.json');
+const KNOWN_RT = path.join(DATA, 'known_route_keys.json');
 const ANNOUNCED = path.join(DATA, 'announced_builds.json');
 
 const MAX_NOTIFY_EXP = 20;
 const MAX_NOTIFY_STR = 60;
 const MAX_NOTIFY_RT = 30;
-// Below this, string extract is incomplete → never notify string diffs
 const MIN_STRINGS_FOR_DIFF = 500;
+const MIN_ROUTES_FOR_DIFF = 50;
 
 async function loadKnownExp() {
   const set = new Set();
@@ -64,23 +65,48 @@ async function saveKnownStr(set) {
   );
 }
 
+async function loadKnownRt() {
+  const set = new Set();
+  try {
+    if (await fs.pathExists(KNOWN_RT)) {
+      const d = await fs.readJson(KNOWN_RT);
+      for (const k of d.keys || d.ids || []) set.add(String(k));
+    }
+  } catch {}
+  return set;
+}
+
+async function saveKnownRt(set) {
+  const keys = [...set].sort().slice(-10000);
+  await fs.writeJson(
+    KNOWN_RT,
+    { updatedAt: new Date().toISOString(), count: keys.length, keys },
+    { spaces: 2 },
+  );
+}
+
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v7 (strings guard) ===');
+  console.log('=== Canary Pulse v7b (routes guard) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
   const prev = await loadState(DATA);
   const knownExp = await loadKnownExp();
   const knownStr = await loadKnownStr();
+  const knownRt = await loadKnownRt();
 
   for (const e of prev.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
-  // Always seed known strings from committed baseline
   for (const k of Object.keys(prev.strings || {})) knownStr.add(k);
+  for (const k of Object.keys(prev.routes || {})) knownRt.add(k);
 
-  console.log('Known sets', { exp: knownExp.size, str: knownStr.size });
+  console.log('Known sets', {
+    exp: knownExp.size,
+    str: knownStr.size,
+    rt: knownRt.size,
+  });
 
   const build = await fetchBuild();
   console.log(
@@ -90,8 +116,8 @@ async function main() {
       prevBuild: prev.build && prev.build.buildNumber,
       knownExp: knownExp.size,
       knownStr: knownStr.size,
-      baselineExp: (prev.experiments || []).length,
-      baselineStr: Object.keys(prev.strings || {}).length,
+      knownRt: knownRt.size,
+      baselineRt: Object.keys(prev.routes || {}).length,
     }),
   );
 
@@ -117,19 +143,18 @@ async function main() {
   });
 
   const extractedStrCount = Object.keys(findings.strings || {}).length;
+  const extractedRtCount = Object.keys(findings.routes || {}).length;
+
   console.log(
     'EXTRACT',
     JSON.stringify({
       experiments: findings.experiments.length,
       strings: extractedStrCount,
-      routes: Object.keys(findings.routes).length,
+      routes: extractedRtCount,
     }),
   );
 
-  if (
-    findings.experiments.length < 3 &&
-    extractedStrCount < 10
-  ) {
+  if (findings.experiments.length < 3 && extractedStrCount < 10) {
     console.error('Extract empty — abort');
     process.exit(1);
   }
@@ -141,17 +166,11 @@ async function main() {
     return !knownExp.has(id);
   });
 
-  // ── Strings: only diff if extract is solid ────────────
   let freshStrings = {};
   if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
     console.log(
-      'Strings extract weak (' +
-        extractedStrCount +
-        ' < ' +
-        MIN_STRINGS_FOR_DIFF +
-        ') — skip string notify (keep baseline)',
+      'Strings weak (' + extractedStrCount + ') — skip string notify',
     );
-    // Still mark the few keys found so they never spam
     for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
   } else {
     for (const [k, v] of Object.entries(findings.strings || {})) {
@@ -161,28 +180,37 @@ async function main() {
     }
   }
 
-  const prevRt = prev.routes || {};
+  // Routes: only notify if extract is solid
   let freshRoutes = {};
-  for (const [k, v] of Object.entries(findings.routes || {})) {
-    if (!(k in prevRt)) freshRoutes[k] = v;
+  if (extractedRtCount < MIN_ROUTES_FOR_DIFF) {
+    console.log(
+      'Routes weak (' + extractedRtCount + ' < ' + MIN_ROUTES_FOR_DIFF + ') — skip route notify, keep baseline',
+    );
+    for (const k of Object.keys(findings.routes || {})) knownRt.add(k);
+  } else {
+    for (const [k, v] of Object.entries(findings.routes || {})) {
+      if (knownRt.has(k)) continue;
+      if (k in (prev.routes || {})) continue;
+      freshRoutes[k] = v;
+    }
   }
 
   console.log('TRUE DIFF', {
     newExp: freshExps.length,
     newStr: Object.keys(freshStrings).length,
     newRt: Object.keys(freshRoutes).length,
-    sampleExp: freshExps.slice(0, 10).map((e) => e.id),
-    sampleStr: Object.keys(freshStrings).slice(0, 5),
+    sampleExp: freshExps.slice(0, 8).map((e) => e.id),
+    sampleRt: Object.keys(freshRoutes).slice(0, 5),
   });
 
-  // Mark known BEFORE notify
   for (const e of findings.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
   for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
-  for (const k of Object.keys(freshStrings)) knownStr.add(k);
+  for (const k of Object.keys(findings.routes || {})) knownRt.add(k);
   await saveKnownExp(knownExp);
   await saveKnownStr(knownStr);
+  await saveKnownRt(knownRt);
 
   const bootstrapping =
     !prev.initialized || (prev.experiments || []).length < 5;
@@ -195,11 +223,12 @@ async function main() {
       experiments: mergeExp([], findings.experiments),
       strings: {
         ...(prev.strings || {}),
-        ...(extractedStrCount >= MIN_STRINGS_FOR_DIFF
-          ? findings.strings
-          : {}),
+        ...(extractedStrCount >= MIN_STRINGS_FOR_DIFF ? findings.strings : {}),
       },
-      routes: findings.routes || {},
+      routes: {
+        ...(prev.routes || {}),
+        ...(extractedRtCount >= MIN_ROUTES_FOR_DIFF ? findings.routes : {}),
+      },
     });
     await markBuild(build.buildNumber);
     if (process.env.DISCORD_WEBHOOK_URL && isNewBuild) {
@@ -245,24 +274,25 @@ async function main() {
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   }
 
-  // Merge strings only when extract is solid (don't wipe baseline with 8 keys)
   const mergedStrings =
     extractedStrCount >= MIN_STRINGS_FOR_DIFF
       ? { ...(prev.strings || {}), ...(findings.strings || {}) }
       : prev.strings || {};
+
+  const mergedRoutes =
+    extractedRtCount >= MIN_ROUTES_FOR_DIFF
+      ? { ...(prev.routes || {}), ...(findings.routes || {}) }
+      : prev.routes || {};
 
   await saveState(DATA, {
     initialized: true,
     build,
     experiments: mergeExp(prev.experiments, findings.experiments),
     strings: mergedStrings,
-    routes:
-      Object.keys(findings.routes || {}).length > 5
-        ? { ...(prev.routes || {}), ...(findings.routes || {}) }
-        : prev.routes || {},
+    routes: mergedRoutes,
   });
 
-  console.log('Saved knownExp', knownExp.size, 'knownStr', knownStr.size);
+  console.log('Saved knownExp', knownExp.size, 'rt', knownRt.size);
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 
