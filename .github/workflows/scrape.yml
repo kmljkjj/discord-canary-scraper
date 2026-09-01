@@ -21,35 +21,51 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install dependencies
-        run: |
-          rm -f package-lock.json
-          rm -rf node_modules
-          npm install --no-audit --no-fund --prefer-online
+        run: npm install --no-audit --no-fund
 
       - name: Scrape + notify
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/index.js
 
-      - name: Commit data
+      - name: Commit baseline (anti-spam memory)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/ || true
+
+          # Toujours tenter de committer la mémoire anti-spam
+          git add -f \
+            data/known_experiment_ids.json \
+            data/known_string_keys.json \
+            data/announced_builds.json \
+            data/build.json \
+            data/experiments.json \
+            data/strings.json \
+            data/routes.json \
+            data/meta.json \
+            data/ || true
+
           if git diff --staged --quiet; then
-            echo "No data changes"
+            echo "No data changes to commit"
             exit 0
           fi
-          git commit -m "🔄 canary $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
-          for i in 1 2 3 4 5 6; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 3
+
+          git commit -m "🔄 canary baseline $(date -u +%Y-%m-%dT%H:%MZ)" || exit 0
+
+          for i in 1 2 3 4 5 6 7 8; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "Pushed baseline OK"
+              exit 0
+            fi
+            echo "Push retry $i..."
+            sleep 4
           done
+          echo "::warning::Could not push baseline — next run may re-diff"
           exit 0

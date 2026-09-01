@@ -1,7 +1,7 @@
 /**
- * Canary Pulse scraper
- * Baseline = experiments.json + strings.json + routes.json
- * Notify only true diffs; never re-send known items.
+ * Canary Pulse — anti re-spam
+ * known_experiment_ids.json = liste PERMANENTE (jamais re-notifier)
+ * Commitée à chaque run → plus de flood à chaque build
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -12,28 +12,98 @@ const { notifyAll } = require('./lib/notify');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
+const KNOWN_EXP = path.join(DATA, 'known_experiment_ids.json');
+const KNOWN_STR = path.join(DATA, 'known_string_keys.json');
+const ANNOUNCED = path.join(DATA, 'announced_builds.json');
 
-const MAX_NOTIFY_EXP = 25;
-const MAX_NOTIFY_STR = 80;
-const MAX_NOTIFY_RT = 40;
+const MAX_NOTIFY_EXP = 20;
+const MAX_NOTIFY_STR = 60;
+const MAX_NOTIFY_RT = 30;
+
+async function loadKnownExp() {
+  try {
+    if (await fs.pathExists(KNOWN_EXP)) {
+      const d = await fs.readJson(KNOWN_EXP);
+      return new Set((d.ids || []).map(String));
+    }
+  } catch {}
+  return new Set();
+}
+
+async function saveKnownExp(set) {
+  const ids = [...set].filter((id) => id && !String(id).startsWith('hash:')).sort();
+  await fs.writeJson(
+    KNOWN_EXP,
+    {
+      updatedAt: new Date().toISOString(),
+      count: ids.length,
+      ids,
+    },
+    { spaces: 2 },
+  );
+}
+
+async function loadKnownStr() {
+  try {
+    if (await fs.pathExists(KNOWN_STR)) {
+      const d = await fs.readJson(KNOWN_STR);
+      return new Set((d.keys || d.ids || []).map(String));
+    }
+  } catch {}
+  return new Set();
+}
+
+async function saveKnownStr(set) {
+  // Cap to keep git diffs reasonable
+  const keys = [...set].sort().slice(-40000);
+  await fs.writeJson(
+    KNOWN_STR,
+    {
+      updatedAt: new Date().toISOString(),
+      count: keys.length,
+      keys,
+    },
+    { spaces: 2 },
+  );
+}
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse ===');
+  console.log('=== Canary Pulse v6 (permanent known ids) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
   const prev = await loadState(DATA);
-  const build = await fetchBuild();
+  const knownExp = await loadKnownExp();
+  const knownStr = await loadKnownStr();
 
+  // Seed known from baseline if empty
+  if (knownExp.size < 10) {
+    for (const e of prev.experiments || []) {
+      if (e && e.id) knownExp.add(String(e.id));
+    }
+    if (knownExp.size) {
+      await saveKnownExp(knownExp);
+      console.log('Seeded knownExp from baseline:', knownExp.size);
+    }
+  }
+  if (knownStr.size < 50) {
+    for (const k of Object.keys(prev.strings || {})) knownStr.add(k);
+    if (knownStr.size) {
+      await saveKnownStr(knownStr);
+      console.log('Seeded knownStr from baseline:', knownStr.size);
+    }
+  }
+
+  const build = await fetchBuild();
   console.log(
     'STATE',
     JSON.stringify({
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
+      knownExp: knownExp.size,
+      knownStr: knownStr.size,
       baselineExp: (prev.experiments || []).length,
-      baselineStr: Object.keys(prev.strings || {}).length,
-      baselineRt: Object.keys(prev.routes || {}).length,
     }),
   );
 
@@ -47,7 +117,7 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  if (!isNewBuild && prev.initialized && (prev.experiments || []).length > 20) {
+  if (!isNewBuild && prev.initialized && knownExp.size > 20) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
@@ -75,46 +145,60 @@ async function main() {
     process.exit(1);
   }
 
+  // True new = not in PERMANENT known set AND not in baseline
   const prevExpIds = new Set(
     (prev.experiments || []).map((e) => String(e.id || e)),
   );
-  const prevStrKeys = new Set(Object.keys(prev.strings || {}));
-  const prevRtKeys = new Set(Object.keys(prev.routes || {}));
+  for (const id of prevExpIds) knownExp.add(id);
 
-  let freshExps = (findings.experiments || []).filter(
-    (e) => e && e.id && !prevExpIds.has(String(e.id)),
-  );
+  let freshExps = (findings.experiments || []).filter((e) => {
+    if (!e || !e.id) return false;
+    const id = String(e.id);
+    if (id.startsWith('hash:')) return false;
+    if (knownExp.has(id)) return false;
+    if (prevExpIds.has(id)) return false;
+    return true;
+  });
+
   let freshStrings = {};
   for (const [k, v] of Object.entries(findings.strings || {})) {
-    if (!prevStrKeys.has(k)) freshStrings[k] = v;
+    if (knownStr.has(k)) continue;
+    if (k in (prev.strings || {})) continue;
+    freshStrings[k] = v;
   }
+
+  const prevRt = prev.routes || {};
   let freshRoutes = {};
   for (const [k, v] of Object.entries(findings.routes || {})) {
-    if (!prevRtKeys.has(k)) freshRoutes[k] = v;
+    if (!(k in prevRt)) freshRoutes[k] = v;
   }
 
   console.log('TRUE DIFF', {
     newExp: freshExps.length,
     newStr: Object.keys(freshStrings).length,
     newRt: Object.keys(freshRoutes).length,
-    sampleExp: freshExps.slice(0, 8).map((e) => e.id),
+    sampleExp: freshExps.slice(0, 10).map((e) => e.id),
   });
 
   const bootstrapping =
-    !prev.initialized ||
-    (prev.experiments || []).length < 5 ||
-    prevStrKeys.size < 50;
+    !prev.initialized || knownExp.size < 10 || (prev.experiments || []).length < 5;
 
   if (bootstrapping) {
-    console.log('BOOTSTRAP — baseline only');
+    console.log('BOOTSTRAP — mark everything known, no flood');
+    for (const e of findings.experiments || []) {
+      if (e && e.id) knownExp.add(String(e.id));
+    }
+    for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+    await saveKnownExp(knownExp);
+    await saveKnownStr(knownStr);
     await saveState(DATA, {
       initialized: true,
       build,
-      experiments: mergeExp([], findings.experiments),
-      strings: findings.strings || {},
-      routes: findings.routes || {},
+      experiments: mergeExp(prev.experiments, findings.experiments),
+      strings: { ...(prev.strings || {}), ...(findings.strings || {}) },
+      routes: { ...(prev.routes || {}), ...(findings.routes || {}) },
     });
-    await markBuild(DATA, build.buildNumber);
+    await markBuild(build.buildNumber);
     if (process.env.DISCORD_WEBHOOK_URL && isNewBuild) {
       await notifyAll({
         build,
@@ -129,49 +213,47 @@ async function main() {
     return;
   }
 
-  let silent = false;
-  if (freshExps.length > MAX_NOTIFY_EXP) {
-    console.log('SILENT exp', freshExps.length);
-    silent = true;
+  // Mark ALL extracted IDs known BEFORE notify (even if we silent)
+  // so a failed webhook never causes re-spam next run
+  for (const e of findings.experiments || []) {
+    if (e && e.id) knownExp.add(String(e.id));
   }
-  if (Object.keys(freshStrings).length > MAX_NOTIFY_STR) {
-    console.log('SILENT str', Object.keys(freshStrings).length);
-    silent = true;
-  }
-  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) {
-    console.log('SILENT routes', Object.keys(freshRoutes).length);
-    // routes alone don't force full silent for exp/str
+  for (const e of freshExps) knownExp.add(String(e.id));
+  for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  await saveKnownExp(knownExp);
+  await saveKnownStr(knownStr);
+
+  let silent =
+    freshExps.length > MAX_NOTIFY_EXP ||
+    Object.keys(freshStrings).length > MAX_NOTIFY_STR;
+
+  if (silent) {
+    console.log('SILENT merge (catch-up / noise)', {
+      exp: freshExps.length,
+      str: Object.keys(freshStrings).length,
+    });
+    freshExps = [];
+    freshStrings = {};
+    freshRoutes = {};
   }
 
-  const alreadyBuild = await wasBuildAnnounced(DATA, build.buildNumber);
+  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) {
+    freshRoutes = {};
+  }
+
+  const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild;
 
   if (process.env.DISCORD_WEBHOOK_URL) {
-    if (silent) {
-      if (shouldAnnounceBuild) {
-        await notifyAll({
-          build,
-          isNewBuild: true,
-          freshExps: [],
-          freshStrings: {},
-          freshRoutes: {},
-          webhookUrl: process.env.DISCORD_WEBHOOK_URL,
-        });
-        await markBuild(DATA, build.buildNumber);
-      }
-    } else {
-      const rt =
-        Object.keys(freshRoutes).length > MAX_NOTIFY_RT ? {} : freshRoutes;
-      await notifyAll({
-        build,
-        isNewBuild: shouldAnnounceBuild,
-        freshExps,
-        freshStrings,
-        freshRoutes: rt,
-        webhookUrl: process.env.DISCORD_WEBHOOK_URL,
-      });
-      if (shouldAnnounceBuild) await markBuild(DATA, build.buildNumber);
-    }
+    await notifyAll({
+      build,
+      isNewBuild: shouldAnnounceBuild,
+      freshExps,
+      freshStrings,
+      freshRoutes,
+      webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+    });
+    if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   } else {
     console.error('NO DISCORD_WEBHOOK_URL');
   }
@@ -187,6 +269,7 @@ async function main() {
         : prev.routes || {},
   });
 
+  console.log('Saved knownExp', knownExp.size, 'knownStr', knownStr.size);
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 
@@ -204,26 +287,24 @@ function mergeExp(prev, next) {
   );
 }
 
-async function markBuild(dataDir, buildNumber) {
-  const p = path.join(dataDir, 'announced_builds.json');
+async function markBuild(buildNumber) {
   let data = { builds: [] };
   try {
-    if (await fs.pathExists(p)) data = await fs.readJson(p);
+    if (await fs.pathExists(ANNOUNCED)) data = await fs.readJson(ANNOUNCED);
   } catch {}
   const set = new Set((data.builds || []).map(String));
   set.add(String(buildNumber));
   await fs.writeJson(
-    p,
-    { builds: [...set].slice(-200), updatedAt: new Date().toISOString() },
+    ANNOUNCED,
+    { builds: [...set].slice(-300), updatedAt: new Date().toISOString() },
     { spaces: 2 },
   );
 }
 
-async function wasBuildAnnounced(dataDir, buildNumber) {
-  const p = path.join(dataDir, 'announced_builds.json');
+async function wasBuildAnnounced(buildNumber) {
   try {
-    if (!(await fs.pathExists(p))) return false;
-    const data = await fs.readJson(p);
+    if (!(await fs.pathExists(ANNOUNCED))) return false;
+    const data = await fs.readJson(ANNOUNCED);
     return (data.builds || []).map(String).includes(String(buildNumber));
   } catch {
     return false;
