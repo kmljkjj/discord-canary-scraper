@@ -2,7 +2,7 @@ name: Discord Quests
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/20 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -20,34 +20,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # IMPORTANT: do NOT set cache: npm — needs package-lock.json
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Node 22 (no dependency cache)
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
+          # Ne PAS mettre cache: 'npm' ici — sinon erreur sans package-lock.json
 
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
+      - name: Install npm packages
+        run: |
+          npm install --no-audit --no-fund --no-package-lock
+          # node-fetch + fs-extra only needed; avoid lockfile entirely
 
-      - name: Run quests tracker
+      - name: Track Discord quests
         env:
           QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node src/quests.js
 
-      - name: Commit state
+      - name: Save quest state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm -f package-lock.json
           git add data/quests.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No quest state changes"
             exit 0
           fi
           git commit -m "🎮 Quests state" || exit 0
-          for i in 1 2 3; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
-            sleep 2
-          done
-          exit 0
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true
