@@ -1,6 +1,5 @@
 /**
- * Canary Pulse — anti re-spam
- * known_experiment_ids.json + already_notified.js + experiments.json
+ * Canary Pulse — experiments + strings anti re-spam
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -19,6 +18,8 @@ const ANNOUNCED = path.join(DATA, 'announced_builds.json');
 const MAX_NOTIFY_EXP = 20;
 const MAX_NOTIFY_STR = 60;
 const MAX_NOTIFY_RT = 30;
+// Below this, string extract is incomplete → never notify string diffs
+const MIN_STRINGS_FOR_DIFF = 500;
 
 async function loadKnownExp() {
   const set = new Set();
@@ -55,7 +56,7 @@ async function loadKnownStr() {
 }
 
 async function saveKnownStr(set) {
-  const keys = [...set].sort().slice(-40000);
+  const keys = [...set].sort().slice(-50000);
   await fs.writeJson(
     KNOWN_STR,
     { updatedAt: new Date().toISOString(), count: keys.length, keys },
@@ -65,7 +66,7 @@ async function saveKnownStr(set) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v6b ===');
+  console.log('=== Canary Pulse v7 (strings guard) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -76,9 +77,8 @@ async function main() {
   for (const e of prev.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
-  if (knownStr.size < 50) {
-    for (const k of Object.keys(prev.strings || {})) knownStr.add(k);
-  }
+  // Always seed known strings from committed baseline
+  for (const k of Object.keys(prev.strings || {})) knownStr.add(k);
 
   console.log('Known sets', { exp: knownExp.size, str: knownStr.size });
 
@@ -89,7 +89,9 @@ async function main() {
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
       knownExp: knownExp.size,
+      knownStr: knownStr.size,
       baselineExp: (prev.experiments || []).length,
+      baselineStr: Object.keys(prev.strings || {}).length,
     }),
   );
 
@@ -114,18 +116,19 @@ async function main() {
     assetsDir: ASSETS,
   });
 
+  const extractedStrCount = Object.keys(findings.strings || {}).length;
   console.log(
     'EXTRACT',
     JSON.stringify({
       experiments: findings.experiments.length,
-      strings: Object.keys(findings.strings).length,
+      strings: extractedStrCount,
       routes: Object.keys(findings.routes).length,
     }),
   );
 
   if (
     findings.experiments.length < 3 &&
-    Object.keys(findings.strings).length < 10
+    extractedStrCount < 10
   ) {
     console.error('Extract empty — abort');
     process.exit(1);
@@ -138,11 +141,24 @@ async function main() {
     return !knownExp.has(id);
   });
 
+  // ── Strings: only diff if extract is solid ────────────
   let freshStrings = {};
-  for (const [k, v] of Object.entries(findings.strings || {})) {
-    if (knownStr.has(k)) continue;
-    if (k in (prev.strings || {})) continue;
-    freshStrings[k] = v;
+  if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
+    console.log(
+      'Strings extract weak (' +
+        extractedStrCount +
+        ' < ' +
+        MIN_STRINGS_FOR_DIFF +
+        ') — skip string notify (keep baseline)',
+    );
+    // Still mark the few keys found so they never spam
+    for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  } else {
+    for (const [k, v] of Object.entries(findings.strings || {})) {
+      if (knownStr.has(k)) continue;
+      if (k in (prev.strings || {})) continue;
+      freshStrings[k] = v;
+    }
   }
 
   const prevRt = prev.routes || {};
@@ -156,13 +172,15 @@ async function main() {
     newStr: Object.keys(freshStrings).length,
     newRt: Object.keys(freshRoutes).length,
     sampleExp: freshExps.slice(0, 10).map((e) => e.id),
+    sampleStr: Object.keys(freshStrings).slice(0, 5),
   });
 
-  // Mark EVERYTHING extracted as known BEFORE notify
+  // Mark known BEFORE notify
   for (const e of findings.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
   for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  for (const k of Object.keys(freshStrings)) knownStr.add(k);
   await saveKnownExp(knownExp);
   await saveKnownStr(knownStr);
 
@@ -175,7 +193,12 @@ async function main() {
       initialized: true,
       build,
       experiments: mergeExp([], findings.experiments),
-      strings: findings.strings || {},
+      strings: {
+        ...(prev.strings || {}),
+        ...(extractedStrCount >= MIN_STRINGS_FOR_DIFF
+          ? findings.strings
+          : {}),
+      },
       routes: findings.routes || {},
     });
     await markBuild(build.buildNumber);
@@ -222,18 +245,24 @@ async function main() {
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   }
 
+  // Merge strings only when extract is solid (don't wipe baseline with 8 keys)
+  const mergedStrings =
+    extractedStrCount >= MIN_STRINGS_FOR_DIFF
+      ? { ...(prev.strings || {}), ...(findings.strings || {}) }
+      : prev.strings || {};
+
   await saveState(DATA, {
     initialized: true,
     build,
     experiments: mergeExp(prev.experiments, findings.experiments),
-    strings: { ...(prev.strings || {}), ...(findings.strings || {}) },
+    strings: mergedStrings,
     routes:
       Object.keys(findings.routes || {}).length > 5
         ? { ...(prev.routes || {}), ...(findings.routes || {}) }
         : prev.routes || {},
   });
 
-  console.log('Saved knownExp', knownExp.size);
+  console.log('Saved knownExp', knownExp.size, 'knownStr', knownStr.size);
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 
