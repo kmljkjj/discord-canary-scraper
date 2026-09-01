@@ -22,10 +22,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          # no cache: npm — needs package-lock; we install below
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: |
+          rm -f package-lock.json
+          rm -rf node_modules
+          npm install --no-audit --no-fund --prefer-online
 
       - name: Run quests tracker
         env:

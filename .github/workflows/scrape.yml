@@ -28,19 +28,20 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: |
+          rm -f package-lock.json
+          rm -rf node_modules
+          npm install --no-audit --no-fund --prefer-online
 
       - name: Scrape + notify
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node src/index.js
 
-      - name: Commit data (baseline)
+      - name: Commit data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Baseline anti-spam files must be committed
-          git add -f data/build.json data/experiments.json data/strings.json data/routes.json data/endpoints.json data/meta.json data/announced_builds.json data/processed_build.json data/findings.json data/asset_stats.json 2>/dev/null || true
           git add -f data/ || true
           if git diff --staged --quiet; then
             echo "No data changes"
@@ -51,5 +52,4 @@ jobs:
             git pull --rebase origin main && git push origin HEAD:main && exit 0
             sleep 3
           done
-          echo "Push skipped after retries (will sync next run)"
           exit 0

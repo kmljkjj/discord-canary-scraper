@@ -28,7 +28,10 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: |
+          rm -f package-lock.json
+          rm -rf node_modules
+          npm install --no-audit --no-fund --prefer-online
 
       - name: Mobile versions (store / OTA)
         env:
@@ -49,7 +52,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/mobile_versions.json data/mobile_experiments.json data/notify_state.json data/seen.json 2>/dev/null || true
+          git add -f data/mobile_versions.json data/mobile_experiments.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No mobile state changes"
             exit 0
