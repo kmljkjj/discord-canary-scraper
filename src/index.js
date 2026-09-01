@@ -1,5 +1,6 @@
 /**
- * Canary Pulse — experiments + strings + routes anti re-spam
+ * Canary Pulse — full diffs: added / modified / removed
+ * for experiments, strings, routes
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -16,11 +17,13 @@ const KNOWN_STR = path.join(DATA, 'known_string_keys.json');
 const KNOWN_RT = path.join(DATA, 'known_route_keys.json');
 const ANNOUNCED = path.join(DATA, 'announced_builds.json');
 
-const MAX_NOTIFY_EXP = 20;
-const MAX_NOTIFY_STR = 60;
-const MAX_NOTIFY_RT = 30;
+const MAX_NOTIFY_EXP = 25;
+const MAX_NOTIFY_STR = 80;
+const MAX_NOTIFY_RT = 40;
 const MIN_STRINGS_FOR_DIFF = 500;
 const MIN_ROUTES_FOR_DIFF = 50;
+// For removals: only if extract covers enough of baseline (avoid false deletes)
+const MIN_EXP_COVERAGE = 0.35;
 
 async function loadKnownExp() {
   const set = new Set();
@@ -85,9 +88,19 @@ async function saveKnownRt(set) {
   );
 }
 
+function expFingerprint(e) {
+  if (!e) return '';
+  return [
+    e.type || e.kind || '',
+    e.label || '',
+    Array.isArray(e.treatments) ? e.treatments.length : '',
+    e.hash || '',
+  ].join('|');
+}
+
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v7b (routes guard) ===');
+  console.log('=== Canary Pulse v8 (+ ~ − diffs) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -115,8 +128,8 @@ async function main() {
       remote: build.buildNumber,
       prevBuild: prev.build && prev.build.buildNumber,
       knownExp: knownExp.size,
-      knownStr: knownStr.size,
-      knownRt: knownRt.size,
+      baselineExp: (prev.experiments || []).length,
+      baselineStr: Object.keys(prev.strings || {}).length,
       baselineRt: Object.keys(prev.routes || {}).length,
     }),
   );
@@ -144,70 +157,149 @@ async function main() {
 
   const extractedStrCount = Object.keys(findings.strings || {}).length;
   const extractedRtCount = Object.keys(findings.routes || {}).length;
+  const extractedExpCount = (findings.experiments || []).length;
 
   console.log(
     'EXTRACT',
     JSON.stringify({
-      experiments: findings.experiments.length,
+      experiments: extractedExpCount,
       strings: extractedStrCount,
       routes: extractedRtCount,
     }),
   );
 
-  if (findings.experiments.length < 3 && extractedStrCount < 10) {
+  if (extractedExpCount < 3 && extractedStrCount < 10) {
     console.error('Extract empty — abort');
     process.exit(1);
   }
 
-  let freshExps = (findings.experiments || []).filter((e) => {
-    if (!e || !e.id) return false;
-    const id = String(e.id);
-    if (id.startsWith('hash:')) return false;
-    return !knownExp.has(id);
-  });
+  // ── Experiments diff ──────────────────────────────────
+  const prevExpMap = new Map();
+  for (const e of prev.experiments || []) {
+    if (e && e.id) prevExpMap.set(String(e.id), e);
+  }
+  const nextExpMap = new Map();
+  for (const e of findings.experiments || []) {
+    if (e && e.id && !String(e.id).startsWith('hash:'))
+      nextExpMap.set(String(e.id), e);
+  }
 
-  let freshStrings = {};
-  if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
-    console.log(
-      'Strings weak (' + extractedStrCount + ') — skip string notify',
-    );
-    for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
-  } else {
-    for (const [k, v] of Object.entries(findings.strings || {})) {
-      if (knownStr.has(k)) continue;
-      if (k in (prev.strings || {})) continue;
-      freshStrings[k] = v;
+  const expDiff = { added: [], modified: [], removed: [] };
+
+  for (const [id, e] of nextExpMap) {
+    if (!prevExpMap.has(id) && !knownExp.has(id)) {
+      expDiff.added.push(e);
+    } else if (prevExpMap.has(id)) {
+      const prevFp = expFingerprint(prevExpMap.get(id));
+      const nextFp = expFingerprint(e);
+      if (prevFp && nextFp && prevFp !== nextFp) {
+        expDiff.modified.push(e);
+      }
     }
   }
 
-  // Routes: only notify if extract is solid
-  let freshRoutes = {};
-  if (extractedRtCount < MIN_ROUTES_FOR_DIFF) {
+  // Removals only if coverage is good (avoid false “deleted everything”)
+  const coverage =
+    (prev.experiments || []).length > 0
+      ? extractedExpCount / (prev.experiments || []).length
+      : 0;
+  if (coverage >= MIN_EXP_COVERAGE && (prev.experiments || []).length > 20) {
+    for (const [id] of prevExpMap) {
+      if (!nextExpMap.has(id)) {
+        expDiff.removed.push({ id });
+      }
+    }
+    // Cap false mass-removals
+    if (expDiff.removed.length > 40) {
+      console.log(
+        'Too many exp removals (' +
+          expDiff.removed.length +
+          ') — skip removals (likely incomplete extract)',
+      );
+      expDiff.removed = [];
+    }
+  } else {
     console.log(
-      'Routes weak (' + extractedRtCount + ' < ' + MIN_ROUTES_FOR_DIFF + ') — skip route notify, keep baseline',
+      'Exp coverage ' +
+        coverage.toFixed(2) +
+        ' — skip removals',
     );
+  }
+
+  // ── Strings diff ──────────────────────────────────────
+  const strDiff = { added: {}, modified: {}, removed: {} };
+  if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
+    console.log('Strings weak — skip string diffs');
+    for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  } else {
+    const prevS = prev.strings || {};
+    const nextS = findings.strings || {};
+    for (const [k, v] of Object.entries(nextS)) {
+      if (!(k in prevS) && !knownStr.has(k)) strDiff.added[k] = v;
+      else if (k in prevS && String(prevS[k]) !== String(v)) strDiff.modified[k] = v;
+    }
+    // removals only if next is large enough vs prev
+    if (extractedStrCount >= (Object.keys(prevS).length || 1) * 0.5) {
+      for (const k of Object.keys(prevS)) {
+        if (!(k in nextS)) strDiff.removed[k] = prevS[k];
+      }
+      if (Object.keys(strDiff.removed).length > 100) {
+        console.log('Too many str removals — skip');
+        strDiff.removed = {};
+      }
+    }
+  }
+
+  // ── Routes diff ───────────────────────────────────────
+  const rtDiff = { added: {}, modified: {}, removed: {} };
+  if (extractedRtCount < MIN_ROUTES_FOR_DIFF) {
+    console.log('Routes weak — skip route diffs');
     for (const k of Object.keys(findings.routes || {})) knownRt.add(k);
   } else {
-    for (const [k, v] of Object.entries(findings.routes || {})) {
-      if (knownRt.has(k)) continue;
-      if (k in (prev.routes || {})) continue;
-      freshRoutes[k] = v;
+    const prevR = prev.routes || {};
+    const nextR = findings.routes || {};
+    for (const [k, v] of Object.entries(nextR)) {
+      if (!(k in prevR) && !knownRt.has(k)) rtDiff.added[k] = v;
+      else if (k in prevR && String(prevR[k]) !== String(v)) rtDiff.modified[k] = v;
+    }
+    if (extractedRtCount >= (Object.keys(prevR).length || 1) * 0.5) {
+      for (const k of Object.keys(prevR)) {
+        if (!(k in nextR)) rtDiff.removed[k] = prevR[k];
+      }
+      if (Object.keys(rtDiff.removed).length > 50) {
+        console.log('Too many route removals — skip');
+        rtDiff.removed = {};
+      }
     }
   }
 
   console.log('TRUE DIFF', {
-    newExp: freshExps.length,
-    newStr: Object.keys(freshStrings).length,
-    newRt: Object.keys(freshRoutes).length,
-    sampleExp: freshExps.slice(0, 8).map((e) => e.id),
-    sampleRt: Object.keys(freshRoutes).slice(0, 5),
+    exp: {
+      added: expDiff.added.length,
+      modified: expDiff.modified.length,
+      removed: expDiff.removed.length,
+    },
+    str: {
+      added: Object.keys(strDiff.added).length,
+      modified: Object.keys(strDiff.modified).length,
+      removed: Object.keys(strDiff.removed).length,
+    },
+    rt: {
+      added: Object.keys(rtDiff.added).length,
+      modified: Object.keys(rtDiff.modified).length,
+      removed: Object.keys(rtDiff.removed).length,
+    },
   });
 
+  // Mark known before notify
   for (const e of findings.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
+  for (const e of expDiff.added) knownExp.add(String(e.id || e));
   for (const k of Object.keys(findings.strings || {})) knownStr.add(k);
+  for (const k of Object.keys(strDiff.added)) knownStr.add(k);
   for (const k of Object.keys(findings.routes || {})) knownRt.add(k);
+  for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
   await saveKnownExp(knownExp);
   await saveKnownStr(knownStr);
   await saveKnownRt(knownRt);
@@ -235,9 +327,9 @@ async function main() {
       await notifyAll({
         build,
         isNewBuild: true,
-        freshExps: [],
-        freshStrings: {},
-        freshRoutes: {},
+        expDiff: { added: [], modified: [], removed: [] },
+        strDiff: { added: {}, modified: {}, removed: {} },
+        rtDiff: { added: {}, modified: {}, removed: {} },
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
       });
     }
@@ -245,19 +337,27 @@ async function main() {
     return;
   }
 
+  // Silent if huge catch-up
   if (
-    freshExps.length > MAX_NOTIFY_EXP ||
-    Object.keys(freshStrings).length > MAX_NOTIFY_STR
+    expDiff.added.length > MAX_NOTIFY_EXP ||
+    Object.keys(strDiff.added).length > MAX_NOTIFY_STR
   ) {
-    console.log('SILENT', {
-      exp: freshExps.length,
-      str: Object.keys(freshStrings).length,
-    });
-    freshExps = [];
-    freshStrings = {};
-    freshRoutes = {};
+    console.log('SILENT catch-up');
+    expDiff.added = [];
+    expDiff.modified = [];
+    expDiff.removed = [];
+    strDiff.added = {};
+    strDiff.modified = {};
+    strDiff.removed = {};
+    rtDiff.added = {};
+    rtDiff.modified = {};
+    rtDiff.removed = {};
   }
-  if (Object.keys(freshRoutes).length > MAX_NOTIFY_RT) freshRoutes = {};
+  if (Object.keys(rtDiff.added).length > MAX_NOTIFY_RT) {
+    rtDiff.added = {};
+    rtDiff.modified = {};
+    rtDiff.removed = {};
+  }
 
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild;
@@ -266,33 +366,42 @@ async function main() {
     await notifyAll({
       build,
       isNewBuild: shouldAnnounceBuild,
-      freshExps,
-      freshStrings,
-      freshRoutes,
+      expDiff,
+      strDiff,
+      rtDiff,
       webhookUrl: process.env.DISCORD_WEBHOOK_URL,
     });
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   }
 
-  const mergedStrings =
+  // Save merged baseline
+  // Removals: drop from baseline only when we trusted the removal list
+  let mergedExps = mergeExp(prev.experiments, findings.experiments);
+  if (expDiff.removed.length) {
+    const drop = new Set(expDiff.removed.map((e) => String(e.id || e)));
+    mergedExps = mergedExps.filter((e) => !drop.has(String(e.id)));
+  }
+
+  let mergedStrings =
     extractedStrCount >= MIN_STRINGS_FOR_DIFF
       ? { ...(prev.strings || {}), ...(findings.strings || {}) }
       : prev.strings || {};
+  for (const k of Object.keys(strDiff.removed)) delete mergedStrings[k];
 
-  const mergedRoutes =
+  let mergedRoutes =
     extractedRtCount >= MIN_ROUTES_FOR_DIFF
       ? { ...(prev.routes || {}), ...(findings.routes || {}) }
       : prev.routes || {};
+  for (const k of Object.keys(rtDiff.removed)) delete mergedRoutes[k];
 
   await saveState(DATA, {
     initialized: true,
     build,
-    experiments: mergeExp(prev.experiments, findings.experiments),
+    experiments: mergedExps,
     strings: mergedStrings,
     routes: mergedRoutes,
   });
 
-  console.log('Saved knownExp', knownExp.size, 'rt', knownRt.size);
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }
 

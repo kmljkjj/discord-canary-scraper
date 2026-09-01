@@ -1,22 +1,36 @@
 /**
- * Canary Pulse — notifications for Discord Canary changes.
- * Original embed layout (not a third-party bot clone).
- * Caller must only pass items absent from the committed baseline.
+ * Canary Pulse — notifications
+ * Supports: added (+) · modified (~) · removed (−)
+ * for experiments, strings, routes
  */
 const fetch = require('node-fetch');
 
 const BOT_NAME = 'Canary Pulse';
 const COLORS = {
-  build: 0x5865f2, // blurple
-  apex: 0xf0b232, // gold
-  exp: 0x57f287, // green
-  strings: 0xeb459e, // pink
-  routes: 0x3498db, // blue
+  build: 0x5865f2,
+  exp: 0x57f287,
+  apex: 0xf0b232,
+  strings: 0xeb459e,
+  routes: 0x3498db,
+  mixed: 0x9b59b6,
 };
 
+/**
+ * @param {object} opts
+ * @param {object} opts.build
+ * @param {boolean} opts.isNewBuild
+ * @param {object} opts.expDiff  { added:[], modified:[], removed:[] }
+ * @param {object} opts.strDiff  { added:{}, modified:{}, removed:{} }
+ * @param {object} opts.rtDiff   { added:{}, modified:{}, removed:{} }
+ * @param {string} opts.webhookUrl
+ */
 async function notifyAll({
   build,
   isNewBuild,
+  expDiff,
+  strDiff,
+  rtDiff,
+  // legacy fallbacks
   freshExps,
   freshStrings,
   freshRoutes,
@@ -27,24 +41,57 @@ async function notifyAll({
     return;
   }
 
-  const expList = Array.isArray(freshExps) ? freshExps : [];
-  const strMap =
-    freshStrings && typeof freshStrings === 'object' ? freshStrings : {};
-  const routeMap =
-    freshRoutes && typeof freshRoutes === 'object' ? freshRoutes : {};
-  const strKeys = Object.keys(strMap);
-  const routeKeys = Object.keys(routeMap);
   const bn = String(build.buildNumber || '?');
   const hash = build.versionHash
     ? String(build.versionHash).slice(0, 12)
     : null;
 
-  // ── Build summary ─────────────────────────────────────
+  // Normalize diffs (support old callers)
+  const exp = normalizeExpDiff(expDiff, freshExps);
+  const str = normalizeMapDiff(strDiff, freshStrings);
+  const rt = normalizeMapDiff(rtDiff, freshRoutes);
+
+  const nExp =
+    exp.added.length + exp.modified.length + exp.removed.length;
+  const nStr =
+    Object.keys(str.added).length +
+    Object.keys(str.modified).length +
+    Object.keys(str.removed).length;
+  const nRt =
+    Object.keys(rt.added).length +
+    Object.keys(rt.modified).length +
+    Object.keys(rt.removed).length;
+
+  // ── Build card ────────────────────────────────────────
   if (isNewBuild) {
-    const deltaParts = [];
-    if (expList.length) deltaParts.push('`' + expList.length + '` experiments');
-    if (strKeys.length) deltaParts.push('`' + strKeys.length + '` strings');
-    if (routeKeys.length) deltaParts.push('`' + routeKeys.length + '` routes');
+    const parts = [];
+    if (nExp)
+      parts.push(
+        '`exp` +' +
+          exp.added.length +
+          ' ~' +
+          exp.modified.length +
+          ' −' +
+          exp.removed.length,
+      );
+    if (nStr)
+      parts.push(
+        '`str` +' +
+          Object.keys(str.added).length +
+          ' ~' +
+          Object.keys(str.modified).length +
+          ' −' +
+          Object.keys(str.removed).length,
+      );
+    if (nRt)
+      parts.push(
+        '`rt` +' +
+          Object.keys(rt.added).length +
+          ' ~' +
+          Object.keys(rt.modified).length +
+          ' −' +
+          Object.keys(rt.removed).length,
+      );
 
     await post(webhookUrl, {
       username: BOT_NAME,
@@ -52,9 +99,9 @@ async function notifyAll({
         {
           author: { name: 'Discord Canary' },
           title: 'Build ' + bn,
-          description: deltaParts.length
-            ? deltaParts.join(' · ')
-            : 'Client bump — no tracked catalog changes',
+          description: parts.length
+            ? parts.join(' · ')
+            : 'Client bump — no catalog delta',
           color: COLORS.build,
           fields: [
             { name: 'Channel', value: '`canary`', inline: true },
@@ -77,118 +124,188 @@ async function notifyAll({
     console.log('Sent build', bn);
   }
 
-  // ── Experiments (batched) ─────────────────────────────
-  if (expList.length) {
-    const apex = [];
-    const other = [];
-    for (const e of expList) {
-      const id = String(e.id);
-      const type =
-        e.type || e.kind || (/guild|server/i.test(id) ? 'guild' : 'user');
-      const line =
-        '**' +
-        id +
-        '**\n' +
-        '└ scope `' +
-        type +
-        '`' +
-        (e.label ? ' · ' + String(e.label).slice(0, 60) : '');
-      if (e.kind === 'apex' || !id.includes('_')) apex.push(line);
-      else other.push(line);
-    }
-
-    if (apex.length) {
-      await post(webhookUrl, {
-        username: BOT_NAME,
-        embeds: [
-          {
-            title: 'Apex experiments · ' + apex.length + ' new',
-            description:
-              apex.slice(0, 25).join('\n\n') +
-              (apex.length > 25 ? '\n\n_+' + (apex.length - 25) + ' more_' : '') +
-              '\n\nBuild `' +
-              bn +
-              '`',
-            color: COLORS.apex,
-            footer: { text: 'Canary Pulse · experiments' },
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      });
-    }
-    if (other.length) {
-      await post(webhookUrl, {
-        username: BOT_NAME,
-        embeds: [
-          {
-            title: 'Experiments · ' + other.length + ' new',
-            description:
-              other.slice(0, 25).join('\n\n') +
-              (other.length > 25
-                ? '\n\n_+' + (other.length - 25) + ' more_'
-                : '') +
-              '\n\nBuild `' +
-              bn +
-              '`',
-            color: COLORS.exp,
-            footer: { text: 'Canary Pulse · experiments' },
-            timestamp: new Date().toISOString(),
-          },
-        ],
-      });
-    }
-    console.log('Sent experiments', expList.length);
+  // ── Experiments ───────────────────────────────────────
+  if (nExp) {
+    await sendExpDiff(webhookUrl, bn, exp);
   }
 
   // ── Strings ───────────────────────────────────────────
-  if (strKeys.length) {
-    const lines = [];
-    for (const k of strKeys.slice(0, 35)) {
-      const v = String(strMap[k]).replace(/\s+/g, ' ').trim().slice(0, 110);
-      lines.push('`' + k + '` ' + v);
-    }
-    const more =
-      strKeys.length > 35 ? '\n_+' + (strKeys.length - 35) + ' more_' : '';
-    await post(webhookUrl, {
-      username: BOT_NAME,
-      embeds: [
-        {
-          title: 'Strings · +' + strKeys.length,
-          description: lines.join('\n') + more + '\n\nBuild `' + bn + '`',
-          color: COLORS.strings,
-          footer: { text: 'Canary Pulse · i18n' },
-          timestamp: new Date().toISOString(),
-        },
-      ],
+  if (nStr) {
+    await sendMapDiff(webhookUrl, bn, str, {
+      title: 'Strings',
+      color: COLORS.strings,
+      footer: 'Canary Pulse · i18n',
     });
-    console.log('Sent strings', strKeys.length);
   }
 
-  // ── Routes / endpoints ────────────────────────────────
-  if (routeKeys.length && routeKeys.length <= 40) {
-    const lines = [];
-    for (const k of routeKeys.slice(0, 30)) {
-      const path = String(routeMap[k]).slice(0, 80);
-      lines.push('`' + k + '`\n→ `' + path + '`');
-    }
-    const more =
-      routeKeys.length > 30 ? '\n_+' + (routeKeys.length - 30) + ' more_' : '';
-    await post(webhookUrl, {
-      username: BOT_NAME,
-      embeds: [
-        {
-          title: 'API routes · +' + routeKeys.length,
-          description: lines.join('\n\n') + more + '\n\nBuild `' + bn + '`',
-          color: COLORS.routes,
-          footer: { text: 'Canary Pulse · routes' },
-          timestamp: new Date().toISOString(),
-        },
-      ],
+  // ── Routes ────────────────────────────────────────────
+  if (nRt) {
+    await sendMapDiff(webhookUrl, bn, rt, {
+      title: 'API routes',
+      color: COLORS.routes,
+      footer: 'Canary Pulse · routes',
+      valuePrefix: true,
     });
-    console.log('Sent routes', routeKeys.length);
-  } else if (routeKeys.length > 40) {
-    console.log('Skip routes notify (too many):', routeKeys.length);
   }
+}
+
+function normalizeExpDiff(diff, legacy) {
+  if (diff && (diff.added || diff.modified || diff.removed)) {
+    return {
+      added: Array.isArray(diff.added) ? diff.added : [],
+      modified: Array.isArray(diff.modified) ? diff.modified : [],
+      removed: Array.isArray(diff.removed) ? diff.removed : [],
+    };
+  }
+  return {
+    added: Array.isArray(legacy) ? legacy : [],
+    modified: [],
+    removed: [],
+  };
+}
+
+function normalizeMapDiff(diff, legacy) {
+  if (diff && (diff.added || diff.modified || diff.removed)) {
+    return {
+      added: diff.added && typeof diff.added === 'object' ? diff.added : {},
+      modified:
+        diff.modified && typeof diff.modified === 'object' ? diff.modified : {},
+      removed:
+        diff.removed && typeof diff.removed === 'object' ? diff.removed : {},
+    };
+  }
+  return {
+    added: legacy && typeof legacy === 'object' ? legacy : {},
+    modified: {},
+    removed: {},
+  };
+}
+
+async function sendExpDiff(webhookUrl, bn, exp) {
+  const blocks = [];
+
+  if (exp.added.length) {
+    blocks.push('**Added · ' + exp.added.length + '**');
+    for (const e of exp.added.slice(0, 20)) {
+      const id = typeof e === 'string' ? e : e.id;
+      const type =
+        (e && (e.type || e.kind)) ||
+        (/guild|server/i.test(id) ? 'guild' : 'user');
+      blocks.push('+ **' + id + '** (`' + type + '`)');
+    }
+    if (exp.added.length > 20)
+      blocks.push('_+' + (exp.added.length - 20) + ' more_');
+  }
+
+  if (exp.modified.length) {
+    blocks.push('');
+    blocks.push('**Modified · ' + exp.modified.length + '**');
+    for (const e of exp.modified.slice(0, 15)) {
+      const id = typeof e === 'string' ? e : e.id;
+      blocks.push('~ **' + id + '**');
+    }
+    if (exp.modified.length > 15)
+      blocks.push('_+' + (exp.modified.length - 15) + ' more_');
+  }
+
+  if (exp.removed.length) {
+    blocks.push('');
+    blocks.push('**Removed · ' + exp.removed.length + '**');
+    for (const e of exp.removed.slice(0, 15)) {
+      const id = typeof e === 'string' ? e : e.id;
+      blocks.push('− **' + id + '**');
+    }
+    if (exp.removed.length > 15)
+      blocks.push('_+' + (exp.removed.length - 15) + ' more_');
+  }
+
+  blocks.push('');
+  blocks.push('Build `' + bn + '`');
+
+  const apexHeavy =
+    exp.added.filter((e) => {
+      const id = typeof e === 'string' ? e : e.id;
+      return id && !String(id).includes('_');
+    }).length >=
+    exp.added.length / 2;
+
+  await post(webhookUrl, {
+    username: BOT_NAME,
+    embeds: [
+      {
+        title: 'Experiments',
+        description: blocks.join('\n').slice(0, 3900),
+        color: apexHeavy ? COLORS.apex : COLORS.exp,
+        footer: { text: 'Canary Pulse · experiments · + ~ −' },
+        timestamp: new Date().toISOString(),
+      },
+    ],
+  });
+  console.log('Sent experiments diff', {
+    added: exp.added.length,
+    modified: exp.modified.length,
+    removed: exp.removed.length,
+  });
+}
+
+async function sendMapDiff(webhookUrl, bn, diff, { title, color, footer, valuePrefix }) {
+  const lines = [];
+  const a = Object.keys(diff.added);
+  const m = Object.keys(diff.modified);
+  const r = Object.keys(diff.removed);
+
+  if (a.length) {
+    lines.push('**Added · ' + a.length + '**');
+    for (const k of a.slice(0, 25)) {
+      const v = String(diff.added[k]).replace(/\s+/g, ' ').slice(0, 100);
+      lines.push(
+        valuePrefix
+          ? '+ `' + k + '`\n→ `' + v + '`'
+          : '+ `' + k + '` ' + v,
+      );
+    }
+    if (a.length > 25) lines.push('_+' + (a.length - 25) + ' more_');
+  }
+
+  if (m.length) {
+    lines.push('');
+    lines.push('**Modified · ' + m.length + '**');
+    for (const k of m.slice(0, 20)) {
+      const v = String(diff.modified[k]).replace(/\s+/g, ' ').slice(0, 100);
+      lines.push(
+        valuePrefix
+          ? '~ `' + k + '`\n→ `' + v + '`'
+          : '~ `' + k + '` ' + v,
+      );
+    }
+    if (m.length > 20) lines.push('_+' + (m.length - 20) + ' more_');
+  }
+
+  if (r.length) {
+    lines.push('');
+    lines.push('**Removed · ' + r.length + '**');
+    for (const k of r.slice(0, 20)) {
+      lines.push('− `' + k + '`');
+    }
+    if (r.length > 20) lines.push('_+' + (r.length - 20) + ' more_');
+  }
+
+  lines.push('');
+  lines.push('Build `' + bn + '`');
+
+  await post(webhookUrl, {
+    username: BOT_NAME,
+    embeds: [
+      {
+        title: title,
+        description: lines.join('\n').slice(0, 3900),
+        color,
+        footer: { text: footer + ' · + ~ −' },
+        timestamp: new Date().toISOString(),
+      },
+    ],
+  });
+  console.log('Sent', title, { added: a.length, modified: m.length, removed: r.length });
 }
 
 async function post(url, body) {
