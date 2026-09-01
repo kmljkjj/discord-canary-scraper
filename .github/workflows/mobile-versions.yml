@@ -19,13 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
 
@@ -37,6 +35,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           MAX_WEBHOOKS_PER_RUN: '6'
         run: node src/mobile_versions.js
+        continue-on-error: true
 
       - name: Mobile experiments from real files
         env:
@@ -44,16 +43,20 @@ jobs:
           MOBILE_DATAMINE_REPO: https://github.com/Wumpus-Central/discord-mobile-datamining.git
           MAX_WEBHOOKS_PER_RUN: '6'
         run: node src/mobile_from_files.js
+        continue-on-error: true
 
       - name: Commit state
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/mobile_versions.json data/mobile_experiments.json data/notify_state.json data/seen.json || true
+          git add -f data/mobile_versions.json data/mobile_experiments.json data/notify_state.json data/seen.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No mobile state changes"
             exit 0
           fi
           git commit -m "📱 Mobile state" || exit 0
-          git pull --rebase origin main || true
-          git push origin HEAD:main || true
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 0

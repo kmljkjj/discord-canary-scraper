@@ -2,7 +2,7 @@ name: Discord Quests
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -18,17 +18,22 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-      - run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          # no cache: npm — needs package-lock; we install below
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
       - name: Run quests tracker
         env:
           QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node src/quests.js
+
       - name: Commit state
         run: |
           git config user.name "github-actions[bot]"
@@ -39,5 +44,8 @@ jobs:
             exit 0
           fi
           git commit -m "🎮 Quests state" || exit 0
-          git pull --rebase origin main || true
-          git push origin HEAD:main || true
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 0
