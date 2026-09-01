@@ -17,17 +17,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # IMPORTANT: do NOT set cache: npm — needs package-lock.json
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Install dependencies
-        run: |
-          rm -f package-lock.json
-          rm -rf node_modules
-          npm install --no-audit --no-fund --prefer-online
+        run: npm install --no-audit --no-fund
 
       - name: Run quests tracker
         env:
