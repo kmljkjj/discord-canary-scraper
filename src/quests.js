@@ -1,5 +1,5 @@
 /**
- * Discord Quests tracker
+ * Quest tracker for Discord Canary scraper
  *
  * Source: GET https://api.discordquest.com/api/quests  (public)
  * Optional: GET /api/v10/quests/@me with DISCORD_TOKEN
@@ -7,6 +7,8 @@
  * Webhook (in order):
  *   1) QUEST_WEBHOOK_URL
  *   2) DISCORD_WEBHOOK_URL
+ *
+ * Note: webhook username must NOT contain the word "discord" (API rule).
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -22,11 +24,12 @@ const WEBHOOK =
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN || null;
 const PUBLIC_QUESTS_URL = 'https://api.discordquest.com/api/quests';
 const OFFICIAL_QUESTS_URL = 'https://discord.com/api/v10/quests/@me';
-const USE_COMPONENTS_V2 = process.env.QUEST_COMPONENTS_V2 === '1';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-const IS_COMPONENTS_V2 = 1 << 15;
+
+// Discord API forbids "discord" in webhook usernames
+const BOT_NAME = 'Quest Pulse';
 
 function assetUrl(questId, filename) {
   if (!filename) return null;
@@ -158,7 +161,11 @@ function buildClassicEmbed(quest) {
     .slice(0, 1000);
 
   const fields = [
-    quest.gameTitle && { name: 'Game', value: String(quest.gameTitle).slice(0, 256), inline: true },
+    quest.gameTitle && {
+      name: 'Game',
+      value: String(quest.gameTitle).slice(0, 256),
+      inline: true,
+    },
     quest.publisher && {
       name: 'Publisher',
       value: String(quest.publisher).slice(0, 256),
@@ -190,7 +197,7 @@ function buildClassicEmbed(quest) {
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
     thumbnail: quest.gameTile ? { url: quest.gameTile } : undefined,
     timestamp: new Date().toISOString(),
-    footer: { text: 'Discord Quests' },
+    footer: { text: 'Quest Pulse' },
   };
 }
 
@@ -212,7 +219,7 @@ async function sendQuestWebhook(quest) {
   }
 
   const emb = await postWebhook({
-    username: 'Discord Quests',
+    username: BOT_NAME,
     embeds: [buildClassicEmbed(quest)],
   });
   if (emb.ok) {
@@ -226,7 +233,7 @@ async function sendQuestWebhook(quest) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('🎮 Fetching Discord quests…');
+  console.log('🎮 Fetching quests…');
   console.log(
     'Webhook:',
     WEBHOOK
@@ -249,7 +256,8 @@ async function main() {
     const official = await fetchOfficialQuests();
     if (official.length) {
       const byId = new Map(quests.map((q) => [q.id, q]));
-      for (const q of official) byId.set(q.id, Object.assign({}, byId.get(q.id), q));
+      for (const q of official)
+        byId.set(q.id, Object.assign({}, byId.get(q.id), q));
       quests = Array.from(byId.values());
       console.log('Merged official: ' + quests.length);
     }
@@ -281,8 +289,12 @@ async function main() {
   const prevIds = new Set(previous.ids || []);
   const isFirstRun = prevIds.size === 0;
 
-  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
-  const allIds = Array.from(new Set([].concat(Array.from(prevIds), active.map((q) => q.id))));
+  const newQuests = isFirstRun
+    ? []
+    : active.filter((q) => !prevIds.has(q.id));
+  const allIds = Array.from(
+    new Set([].concat(Array.from(prevIds), active.map((q) => q.id))),
+  );
 
   await fs.writeJson(
     STATE_FILE,
@@ -303,7 +315,6 @@ async function main() {
 
   if (isFirstRun) {
     console.log('First run — seeded ' + active.length + ' quest ids (no flood)');
-    console.log('Next new quest will be posted to the webhook.');
     return;
   }
 
