@@ -1,0 +1,62 @@
+name: X Watch DiscordNEW8r
+
+on:
+  schedule:
+    # Toutes les 10 min
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install deps
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Watch @DiscordNEW8r
+        env:
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
+          DISCORD_X_WEBHOOK_URL: ${{ secrets.DISCORD_X_WEBHOOK_URL }}
+          X_USERNAME: DiscordNEW8r
+        run: node src/x_watch.js
+
+      - name: Save seen ids
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm -f package-lock.json
+
+          git add -f data/x_seen_ids.json data/ || true
+          if git diff --staged --quiet; then
+            echo "No seen-id changes"
+            exit 0
+          fi
+          git commit -m "🐦 x seen ids $(date -u +%Y-%m-%dT%H:%MZ)" || true
+
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed OK"
+              exit 0
+            fi
+            git stash push -u -m "x-noise-$i" || true
+            sleep 2
+          done
+          echo "::warning::could not push x_seen_ids"
+          exit 0
