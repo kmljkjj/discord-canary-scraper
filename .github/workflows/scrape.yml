@@ -2,7 +2,6 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # Toutes les 5 min = détection rapide (GitHub cron ~±2–5 min de jitter)
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -11,7 +10,6 @@ on:
 permissions:
   contents: write
 
-# Ne pas annuler un scrape en cours (évite baseline incomplète)
 concurrency:
   group: canary-scrape
   cancel-in-progress: false
@@ -52,6 +50,8 @@ jobs:
             data/known_experiment_ids.json \
             data/known_string_keys.json \
             data/known_route_keys.json \
+            data/last_extract_strings.json \
+            data/last_extract_routes.json \
             data/announced_builds.json \
             data/build.json \
             data/experiments.json \
