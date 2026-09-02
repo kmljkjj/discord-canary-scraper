@@ -1,6 +1,6 @@
 /**
  * Canary Pulse — diffs added / modified / removed
- * Strings: compare current extract vs last extract (build-to-build)
+ * Strings/routes: extract vs last extract (build-to-build)
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -26,7 +26,7 @@ const WUMPUS_STRINGS_URL =
 const MAX_NOTIFY_EXP = 25;
 const MAX_NOTIFY_STR = 80;
 const MAX_NOTIFY_RT = 40;
-const MIN_STRINGS_FOR_DIFF = 200; // extract-to-extract, not full catalog
+const MIN_STRINGS_FOR_DIFF = 200;
 const MIN_ROUTES_FOR_DIFF = 50;
 const MIN_EXP_COVERAGE = 0.35;
 
@@ -99,7 +99,6 @@ async function loadLastExtract(file) {
       const d = await fs.readJson(file);
       if (d && d.map && typeof d.map === 'object') return d.map;
       if (d && typeof d === 'object' && !Array.isArray(d) && !d.map) {
-        // plain map
         const { buildNumber, updatedAt, count, ...rest } = d;
         if (Object.keys(rest).length) return rest;
       }
@@ -136,26 +135,9 @@ function expFingerprint(e) {
   return parts.join('|');
 }
 
-/** Try enrich extract with Wumpus catalog (optional, never blocks) */
-async function maybeFetchWumpusStrings() {
-  try {
-    const res = await fetch(WUMPUS_STRINGS_URL, {
-      headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
-      timeout: 45000,
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data || typeof data !== 'object') return null;
-    return data;
-  } catch (e) {
-    console.warn('wumpus strings', e.message);
-    return null;
-  }
-}
-
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v8.2 (string extract-to-extract) ===');
+  console.log('=== Canary Pulse v8.3 (seed last_extract even on same build) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -205,14 +187,23 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
-  if (!isNewBuild && prev.initialized && knownExp.size > 50) {
+  const lastStrCount0 = Object.keys(lastStr).length;
+  const lastRtCount0 = Object.keys(lastRt).length;
+  const needsExtractSeed = lastStrCount0 < 50 || lastRtCount0 < 20;
+
+  // Same build → skip ONLY if extract snapshots already seeded
+  if (!isNewBuild && prev.initialized && knownExp.size > 50 && !needsExtractSeed) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
 
-  console.log('FULL SCRAPE isNewBuild=' + isNewBuild);
+  if (needsExtractSeed && !isNewBuild) {
+    console.log('SEED RUN — last_extract empty, full scrape without notify flood');
+  }
+
+  console.log('FULL SCRAPE isNewBuild=' + isNewBuild, 'seed=' + needsExtractSeed);
   const findings = await analyzeAssets(build, {
-    forceRefresh: isNewBuild,
+    forceRefresh: isNewBuild || needsExtractSeed,
     assetsDir: ASSETS,
   });
 
@@ -220,24 +211,6 @@ async function main() {
   let extractedStrCount = Object.keys(extractedStrings).length;
   const extractedRtCount = Object.keys(findings.routes || {}).length;
   const extractedExpCount = (findings.experiments || []).length;
-
-  // Enrich with Wumpus if our extract is thin (catalog reference)
-  if (extractedStrCount < 5000) {
-    const wumpus = await maybeFetchWumpusStrings();
-    if (wumpus) {
-      let added = 0;
-      for (const [k, v] of Object.entries(wumpus)) {
-        if (typeof k === 'string' && k.length === 6 && !(k in extractedStrings)) {
-          if (typeof v === 'string') {
-            extractedStrings[k] = v;
-            added++;
-          }
-        }
-      }
-      extractedStrCount = Object.keys(extractedStrings).length;
-      console.log('Wumpus strings merge +', added, 'total', extractedStrCount);
-    }
-  }
 
   console.log(
     'EXTRACT',
@@ -294,21 +267,17 @@ async function main() {
     console.log('Exp coverage ' + coverage.toFixed(2) + ' — skip removals');
   }
 
-  // ── Strings: EXTRACT vs LAST EXTRACT (build-to-build) ─
+  // ── Strings: EXTRACT vs LAST EXTRACT ──────────────────
   const strDiff = { added: {}, modified: {}, removed: {} };
   const lastStrCount = Object.keys(lastStr).length;
 
   if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
     console.log('Strings weak — skip string diffs');
   } else if (lastStrCount < 50) {
-    // First solid extract: seed last_extract, no flood
     console.log(
-      'Strings seed last_extract (' +
-        extractedStrCount +
-        ') — no notify this run',
+      'Strings seed last_extract (' + extractedStrCount + ') — no notify',
     );
   } else {
-    // Added / modified vs previous extract
     for (const [k, v] of Object.entries(extractedStrings)) {
       if (!(k in lastStr)) {
         if (!knownStr.has(k)) strDiff.added[k] = v;
@@ -316,9 +285,7 @@ async function main() {
         strDiff.modified[k] = v;
       }
     }
-    // Removed: only if both extracts similar size (avoid false mass delete)
-    const ratio =
-      lastStrCount > 0 ? extractedStrCount / lastStrCount : 0;
+    const ratio = lastStrCount > 0 ? extractedStrCount / lastStrCount : 0;
     if (ratio >= 0.6 && ratio <= 1.5) {
       for (const [k, v] of Object.entries(lastStr)) {
         if (!(k in extractedStrings)) strDiff.removed[k] = v;
@@ -329,21 +296,15 @@ async function main() {
       }
     } else {
       console.log(
-        'String extract size shift (' +
+        'String size shift (' +
           lastStrCount +
           ' → ' +
           extractedStrCount +
           ') — skip removals',
       );
     }
-
-    // Cap noise
     if (Object.keys(strDiff.added).length > MAX_NOTIFY_STR) {
-      console.log(
-        'Too many new strings (' +
-          Object.keys(strDiff.added).length +
-          ') — silent add',
-      );
+      console.log('Too many new strings — silent');
       strDiff.added = {};
     }
     if (Object.keys(strDiff.modified).length > MAX_NOTIFY_STR) {
@@ -351,7 +312,7 @@ async function main() {
     }
   }
 
-  // ── Routes: extract vs last extract ───────────────────
+  // ── Routes ────────────────────────────────────────────
   const rtDiff = { added: {}, modified: {}, removed: {} };
   const lastRtCount = Object.keys(lastRt).length;
   const nextRt = findings.routes || {};
@@ -387,6 +348,20 @@ async function main() {
     expDiff.modified = [];
   }
 
+  // Seed run on same build: save last_extract only, no webhook flood
+  if (!isNewBuild && needsExtractSeed) {
+    console.log('Seed-only: clearing diffs (no webhook flood)');
+    expDiff.added = [];
+    expDiff.modified = [];
+    expDiff.removed = [];
+    strDiff.added = {};
+    strDiff.modified = {};
+    strDiff.removed = {};
+    rtDiff.added = {};
+    rtDiff.modified = {};
+    rtDiff.removed = {};
+  }
+
   console.log('TRUE DIFF', {
     exp: {
       added: expDiff.added.length,
@@ -405,7 +380,6 @@ async function main() {
     },
   });
 
-  // Mark known + save last extract BEFORE notify
   for (const e of findings.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
