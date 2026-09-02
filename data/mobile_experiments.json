@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-09-02T08:27:26.692Z",
+  "scrapedAt": "2026-09-02T14:07:58.488Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "65181e40",
-  "experimentCount": 292,
+  "sourceCommit": "9c3baa9a",
+  "experimentCount": 295,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 5,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -1312,14 +1312,6 @@
       ]
     },
     {
-      "id": "2026-04-shop-card-impression-mobile",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/collectibles/experiments/CollectiblesShopCardImpressionMobileExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-04-topical-navigation-staff-control",
       "type": "user",
       "isApex": false,
@@ -1817,6 +1809,14 @@
       ]
     },
     {
+      "id": "2026-07-app-channels",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/app_channels/AppChannelExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-07-attachment-image-ladder",
       "type": "user",
       "isApex": false,
@@ -2121,6 +2121,14 @@
       ]
     },
     {
+      "id": "2026-08-bounties-ctr-experiment-1",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/quests/experiments/index.tsx"
+      ]
+    },
+    {
       "id": "2026-08-bounties-mobile-quest-bar",
       "type": "user",
       "isApex": false,
@@ -2209,6 +2217,14 @@
       ]
     },
     {
+      "id": "2026-08-ios-objc-composed-image-cache",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/libdiscore/libdiscoreExperiments.tsx"
+      ]
+    },
+    {
       "id": "2026-08-kestrel-ga",
       "type": "user",
       "isApex": false,
@@ -2265,14 +2281,6 @@
       ]
     },
     {
-      "id": "2026-08-profile-embed-rendering",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/user_profile/experiments/UserProfileEmbedRenderingExperiment.tsx"
-      ]
-    },
-    {
       "id": "2026-08-scheduled-messages",
       "type": "user",
       "isApex": false,
@@ -2294,6 +2302,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/age_assurance/ShowExpressiveModalSubtitleAltFlag.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-timestamp-autocomplete-mobile",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/timestamp_autocomplete/TimestampAutocompleteMobileExperiment.tsx"
       ]
     },
     {
@@ -2342,6 +2358,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/quests/experiments/VQRemainingTimeTruncationExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-mobile-sticker-picker-upsell-restyle",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/MobileStickerPickerUpsellRestyleExperiment.tsx"
       ]
     }
   ],
