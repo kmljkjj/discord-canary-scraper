@@ -11,24 +11,40 @@ const WUMPUS_EXP_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/experiments.json';
 const WUMPUS_APEX_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/apex_experiments.json';
+const WUMPUS_STRINGS_URL =
+  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/strings.json';
 
 const DOWNLOAD_CONCURRENCY = 12;
+// web.js is ~12MB — must read fully
+const MAX_READ_BYTES = 25_000_000;
 
 async function analyzeAssets(build, { forceRefresh, assetsDir }) {
   await fs.ensureDir(assetsDir);
   if (forceRefresh) await fs.emptyDir(assetsDir);
 
   let assets = [...(build.assets || [])];
+  // web.* first
   assets.sort((a, b) => scoreAsset(b) - scoreAsset(a));
+
+  console.log(
+    'Asset queue: web first →',
+    assets
+      .slice(0, 5)
+      .map((u) => path.basename(u))
+      .join(', '),
+  );
+
   await downloadList(assets, assetsDir, forceRefresh);
+
+  // Verify web.* is present and large
+  await assertWebBundle(assetsDir);
 
   const more = await discoverChunks(assetsDir);
   const extra = more.filter((u) => !assets.includes(u));
   console.log('Discovered extra chunks:', extra.length);
-  await downloadList(extra.slice(0, 180), assetsDir, true);
+  if (extra.length) await downloadList(extra.slice(0, 100), assetsDir, true);
 
   const files = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
-  console.log('Scanning', files.length, 'JS files');
   const withSize = [];
   for (const f of files) {
     try {
@@ -38,7 +54,17 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
       withSize.push({ f, size: 0 });
     }
   }
+  // Largest first (web.js ~12MB)
   withSize.sort((a, b) => b.size - a.size);
+
+  console.log(
+    'Top files by size:',
+    withSize
+      .slice(0, 5)
+      .map((x) => x.f + '=' + Math.round(x.size / 1024) + 'KB')
+      .join(', '),
+  );
+  console.log('Scanning', files.length, 'JS files');
 
   const strings = {};
   const routes = {};
@@ -48,7 +74,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     try {
       const full = path.join(assetsDir, file);
       let content = await fs.readFile(full, 'utf8');
-      if (size > 20_000_000) content = content.slice(0, 16_000_000);
+      if (size > MAX_READ_BYTES) content = content.slice(0, MAX_READ_BYTES);
       extractStrings(content, strings);
       extractRoutes(content, routes);
       extractExperiments(content, expSet);
@@ -57,21 +83,23 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     }
   }
 
-  console.log('Raw counts', {
+  console.log('Raw extract (from Discord JS only)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
   });
 
-  // Enrich experiments with Wumpus metadata (kind, label, treatments)
+  // ── Enrich experiments (Wumpus kind/label/treatments) ─
   try {
     const meta = await fetchWumpusExperimentMeta();
     let enriched = 0;
     for (const [id, e] of expSet) {
       const m = meta.get(id);
       if (m) {
-        if (m.kind) e.type = m.kind;
-        if (m.kind) e.kind = m.kind === 'guild' ? 'guild' : 'user';
+        if (m.kind) {
+          e.type = m.kind;
+          e.kind = m.kind;
+        }
         if (m.label) e.label = m.label;
         if (m.treatments) e.treatments = m.treatments;
         if (m.variations) e.variations = m.variations;
@@ -83,7 +111,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
         e.source = 'extract';
       }
     }
-    // Also add Wumpus-only experiments not found in JS (still useful for catalog)
     for (const [id, m] of meta) {
       if (!expSet.has(id)) {
         expSet.set(id, {
@@ -106,9 +133,10 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     }
   }
 
-  if (Object.keys(routes).length < 20) {
+  // ── Routes fallback Wumpus ────────────────────────────
+  if (Object.keys(routes).length < 50) {
     try {
-      const wr = await fetchWumpusRoutes();
+      const wr = await fetchJson(WUMPUS_ROUTES_URL);
       if (wr) {
         let n = 0;
         for (const [k, v] of Object.entries(wr)) {
@@ -117,18 +145,70 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
             n++;
           }
         }
-        console.log('Wumpus routes seed +', n, 'total', Object.keys(routes).length);
+        console.log('Wumpus routes +', n, 'total', Object.keys(routes).length);
       }
     } catch (e) {
       console.warn('wumpus routes', e.message);
     }
   }
 
+  // ── Strings: Discord JS has almost none (i18n elsewhere).
+  // Always merge Wumpus strings catalog so we can detect real changes.
+  try {
+    const ws = await fetchJson(WUMPUS_STRINGS_URL);
+    if (ws && typeof ws === 'object') {
+      let n = 0;
+      for (const [k, v] of Object.entries(ws)) {
+        if (typeof k === 'string' && k.length === 6 && typeof v === 'string') {
+          if (!(k in strings)) {
+            strings[k] = v;
+            n++;
+          }
+        }
+      }
+      console.log(
+        'Wumpus strings merge +',
+        n,
+        'total',
+        Object.keys(strings).length,
+      );
+    }
+  } catch (e) {
+    console.warn('wumpus strings', e.message);
+  }
+
+  console.log('Final counts', {
+    strings: Object.keys(strings).length,
+    routes: Object.keys(routes).length,
+    experiments: expSet.size,
+  });
+
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
   };
+}
+
+async function assertWebBundle(assetsDir) {
+  const files = (await fs.readdir(assetsDir)).filter((f) =>
+    /^web\./i.test(f),
+  );
+  if (!files.length) {
+    console.warn(
+      '⚠️  No web.*.js downloaded — experiments/routes will be incomplete',
+    );
+    return;
+  }
+  for (const f of files) {
+    const st = await fs.stat(path.join(assetsDir, f));
+    console.log(
+      'web bundle:',
+      f,
+      Math.round(st.size / 1024) + 'KB',
+      st.size < 1_000_000 ? '⚠️ unexpectedly small' : 'OK',
+    );
+  }
 }
 
 function inferType(id, fallback) {
@@ -142,10 +222,9 @@ function inferType(id, fallback) {
 function scoreAsset(url) {
   const n = path.basename(String(url)).toLowerCase();
   let s = 0;
-  if (/^web\./.test(n)) s += 100;
+  if (n.startsWith('web.')) s += 1000;
   if (/i18n|locale|intl|lang|string|message|route|api|endpoint|experiment/.test(n))
     s += 50;
-  if (/vendor|chunk/.test(n)) s += 5;
   return s;
 }
 
@@ -169,18 +248,20 @@ async function downloadList(urls, assetsDir, force) {
       try {
         if (!force && (await fs.pathExists(dest))) {
           const st = await fs.stat(dest);
-          if (st.size > 30_000) continue;
+          // Always re-fetch tiny files; keep large cached
+          if (st.size > 50_000) continue;
         }
         const res = await fetch(job.url, {
           headers: { 'User-Agent': UA },
-          timeout: 45000,
+          timeout: 90000,
         });
         if (!res.ok) throw new Error(String(res.status));
         const buf = await res.buffer();
         await fs.writeFile(dest, buf);
         n++;
-        if (n <= 12 || n % 30 === 0)
-          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
+        const kb = Math.round(buf.length / 1024);
+        if (job.name.startsWith('web.') || n <= 8 || n % 40 === 0)
+          console.log('✓', job.name, kb + 'KB');
       } catch (e) {
         console.warn('✗', job.name, e.message);
       }
@@ -195,15 +276,26 @@ async function downloadList(urls, assetsDir, force) {
 
 async function discoverChunks(assetsDir) {
   const files = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
-  const urls = new Set();
-  const re = /["']\/?assets\/([a-zA-Z0-9._-]+\.js)["']/g;
-  for (const file of files.slice(0, 40)) {
+  // Prefer scanning large files for nested chunk refs
+  const ranked = [];
+  for (const f of files) {
     try {
-      const content = await fs.readFile(path.join(assetsDir, file), 'utf8');
-      const slice =
-        content.length > 6_000_000 ? content.slice(0, 6_000_000) : content;
+      const st = await fs.stat(path.join(assetsDir, f));
+      ranked.push({ f, size: st.size });
+    } catch {}
+  }
+  ranked.sort((a, b) => b.size - a.size);
+
+  const urls = new Set();
+  const re = /["'](?:\/?assets\/)?([a-zA-Z0-9._-]+\.js)["']/g;
+  for (const { f: file, size } of ranked.slice(0, 15)) {
+    if (size < 1000) continue;
+    try {
+      let content = await fs.readFile(path.join(assetsDir, file), 'utf8');
+      if (content.length > 8_000_000) content = content.slice(0, 8_000_000);
       let m;
-      while ((m = re.exec(slice)) !== null) {
+      while ((m = re.exec(content)) !== null) {
+        if (/^web\./i.test(m[1])) continue;
         urls.add('https://canary.discord.com/assets/' + m[1]);
       }
     } catch {}
@@ -247,12 +339,6 @@ function extractStrings(content, out) {
     } catch {}
     if (isGoodStringKey(m[1]) && isGoodStringVal(val)) out[m[1]] = val;
   }
-  const re2 =
-    /([A-Za-z0-9+/_-]{6})\s*:\s*["']([^"'\\]{2,400})["']/g;
-  while ((m = re2.exec(content)) !== null) {
-    if (isGoodStringKey(m[1]) && isGoodStringVal(m[2]) && !(m[1] in out))
-      out[m[1]] = m[2];
-  }
 }
 
 function isValidRouteKey(key) {
@@ -275,31 +361,23 @@ function normalizePath(raw) {
 }
 
 function extractRoutes(content, out) {
-  const reColon =
-    /\b([A-Z][A-Z0-9_]{2,120})\s*:\s*["'`](\/[^"'`]{1,300})["'`]/g;
+  // Proven on live web.js: KEY: "/path" or KEY: `/path` (~447 matches)
+  const re =
+    /\b([A-Z][A-Z0-9_]{2,80})\s*:\s*["'`](\/[a-zA-Z0-9_\-./{}@:]+)["'`]/g;
   let m;
-  while ((m = reColon.exec(content)) !== null) {
-    const path = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
+  while ((m = re.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
-  const reQuoted =
-    /["']([A-Z][A-Z0-9_]{2,120})["']\s*:\s*["'](\/[^"']{1,300})["']/g;
-  while ((m = reQuoted.exec(content)) !== null) {
-    const path = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
-  }
-  const reAssign =
-    /\b([A-Z][A-Z0-9_]{2,120})\s*=\s*["'`](\/[^"'`]{1,300})["'`]/g;
-  while ((m = reAssign.exec(content)) !== null) {
-    const path = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
+  // "KEY": "/path"
+  const re2 =
+    /["']([A-Z][A-Z0-9_]{2,80})["']\s*:\s*["'](\/[^"']{1,200})["']/g;
+  while ((m = re2.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
 }
 
-/**
- * Extract experiment ids + local context for kind (user/guild).
- * Rich metadata filled later from Wumpus.
- */
 function extractExperiments(content, map) {
   const re = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   let m;
@@ -307,33 +385,18 @@ function extractExperiments(content, map) {
     const id = m[1];
     if (/^20\d{2}-\d{2}$/.test(id)) continue;
 
-    // Context window around match for kind:
     const start = Math.max(0, m.index - 120);
     const end = Math.min(content.length, m.index + id.length + 180);
     const ctx = content.slice(start, end);
 
     let type = null;
-    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx) || /"guild"\s*,/.test(ctx))
-      type = 'guild';
-    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx))
-      type = 'user';
+    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
+    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx)) type = 'user';
     else type = inferType(id);
-
-    // Rough treatment count from nearby treatment/variation keys
-    let treatmentCount = null;
-    const tx = ctx.match(/treatments/i);
-    const vr = ctx.match(/variations/i);
-    if (tx || vr) {
-      const nums = ctx.match(/["']?(?:id|variant)["']?\s*:\s*(\d+)/g);
-      if (nums && nums.length) treatmentCount = nums.length;
-    }
 
     if (map.has(id)) {
       const prev = map.get(id);
-      // Prefer guild if any context said guild
       if (type === 'guild') prev.type = 'guild';
-      if (treatmentCount && !prev.treatmentCount)
-        prev.treatmentCount = treatmentCount;
       continue;
     }
 
@@ -341,17 +404,16 @@ function extractExperiments(content, map) {
       id,
       type,
       kind: type,
-      treatmentCount: treatmentCount || null,
       label: null,
       treatments: null,
     });
   }
 }
 
-async function fetchWumpusRoutes() {
-  const res = await fetch(WUMPUS_ROUTES_URL, {
+async function fetchJson(url) {
+  const res = await fetch(url, {
     headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
-    timeout: 25000,
+    timeout: 45000,
   });
   if (!res.ok) return null;
   return await res.json();
@@ -361,20 +423,15 @@ async function fetchWumpusExperimentMeta() {
   const map = new Map();
   for (const url of [WUMPUS_EXP_URL, WUMPUS_APEX_URL]) {
     try {
-      const res = await fetch(url, {
-        headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
-        timeout: 30000,
-      });
-      if (!res.ok) continue;
-      const data = await res.json();
+      const data = await fetchJson(url);
+      if (!data) continue;
       const list = Array.isArray(data) ? data : data.experiments || [];
       for (const e of list) {
         const id = e.id || e.name;
         if (!id) continue;
         const kind = (e.kind || e.type || '').toLowerCase();
         const treatments = e.treatments || null;
-        let variations = e.variations || null;
-        // Normalize variations object → count
+        const variations = e.variations || null;
         const treatmentList = treatments
           ? treatments
           : variations

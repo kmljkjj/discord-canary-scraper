@@ -18,8 +18,19 @@ async function fetchBuild() {
   console.log('HTML length:', html.length);
 
   const env = parseGlobalEnv(html);
-  const assets = extractAssetUrls(html);
-  console.log('BUILD_NUMBER:', env.BUILD_NUMBER, '| assets:', assets.length);
+  let assets = extractAssetUrls(html);
+
+  // web.*.js is the main client bundle (~10–15MB): experiments + routes live there
+  assets = prioritizeAssets(assets);
+
+  console.log(
+    'BUILD_NUMBER:',
+    env.BUILD_NUMBER,
+    '| assets:',
+    assets.length,
+    '| web:',
+    assets.filter((u) => /\/web\./i.test(u)).length,
+  );
 
   if (!env.BUILD_NUMBER) {
     console.warn('WARNING: BUILD_NUMBER not found in HTML');
@@ -53,15 +64,32 @@ function extractAssetUrls(html) {
   const urls = new Set();
   const add = (href) => {
     if (!href || !href.includes('/assets/')) return;
-    if (!href.endsWith('.js') && !href.includes('.js?')) return;
-    urls.add(href.startsWith('http') ? href : `https://canary.discord.com${href}`);
+    const clean = href.split('?')[0];
+    if (!clean.endsWith('.js')) return;
+    urls.add(
+      clean.startsWith('http') ? clean : `https://canary.discord.com${clean}`,
+    );
   };
   $('script[src]').each((_, el) => add($(el).attr('src')));
-  // Also from inline references
+  // Inline /assets/*.js references (main list ~300)
   const re = /\/assets\/([a-zA-Z0-9._-]+\.js)/g;
   let m;
   while ((m = re.exec(html)) !== null) add(`/assets/${m[1]}`);
   return [...urls];
 }
 
-module.exports = { fetchBuild, extractAssetUrls };
+/** web.* first — contains nearly all experiments + routes */
+function prioritizeAssets(assets) {
+  return [...assets].sort((a, b) => score(b) - score(a));
+}
+
+function score(url) {
+  const n = url.split('/').pop().toLowerCase();
+  let s = 0;
+  if (n.startsWith('web.')) s += 1000;
+  if (/i18n|locale|intl|lang|string|message/.test(n)) s += 100;
+  if (/vendor/.test(n)) s += 10;
+  return s;
+}
+
+module.exports = { fetchBuild, extractAssetUrls, prioritizeAssets };
