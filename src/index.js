@@ -133,7 +133,7 @@ function expFingerprint(e) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v9 (fast web-only) ===');
+  console.log('=== Canary Pulse v9.1 (Discord-native strings) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(CACHE);
@@ -253,13 +253,33 @@ async function main() {
 
   const strDiff = { added: {}, modified: {}, removed: {} };
   const lastStrCount = Object.keys(lastStr).length;
-  if (extractedStrCount >= MIN_STRINGS_FOR_DIFF && lastStrCount >= 50) {
+  let strOverlap = 0;
+  if (lastStrCount && extractedStrCount) {
+    for (const k of Object.keys(extractedStrings)) {
+      if (k in lastStr) strOverlap++;
+    }
+  }
+  const strOverlapRatio =
+    extractedStrCount > 0 ? strOverlap / extractedStrCount : 0;
+  if (lastStrCount >= 50 && extractedStrCount >= 50 && strOverlapRatio < 0.3) {
+    console.log(
+      'String source shifted (overlap ' +
+        strOverlapRatio.toFixed(2) +
+        ') — reseed last_extract, no flood',
+    );
+    for (const k of Object.keys(lastStr)) delete lastStr[k];
+  }
+
+  if (
+    extractedStrCount >= MIN_STRINGS_FOR_DIFF &&
+    Object.keys(lastStr).length >= 50
+  ) {
     for (const [k, v] of Object.entries(extractedStrings)) {
       if (!(k in lastStr)) {
         if (!knownStr.has(k)) strDiff.added[k] = v;
       } else if (String(lastStr[k]) !== String(v)) strDiff.modified[k] = v;
     }
-    const ratio = extractedStrCount / lastStrCount;
+    const ratio = extractedStrCount / Math.max(Object.keys(lastStr).length, 1);
     if (ratio >= 0.6 && ratio <= 1.5) {
       for (const [k, v] of Object.entries(lastStr)) {
         if (!(k in extractedStrings)) strDiff.removed[k] = v;
@@ -269,7 +289,7 @@ async function main() {
     if (Object.keys(strDiff.added).length > MAX_NOTIFY_STR) strDiff.added = {};
     if (Object.keys(strDiff.modified).length > MAX_NOTIFY_STR)
       strDiff.modified = {};
-  } else if (lastStrCount < 50) {
+  } else if (Object.keys(lastStr).length < 50) {
     console.log('Strings seed (' + extractedStrCount + ')');
   }
 
