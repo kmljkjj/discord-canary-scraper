@@ -11,12 +11,9 @@ const WUMPUS_EXP_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/experiments.json';
 const WUMPUS_APEX_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/apex_experiments.json';
-const WUMPUS_STRINGS_URL =
-  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/strings.json';
 
 const DOWNLOAD_CONCURRENCY = 16;
 const MAX_READ_BYTES = 25_000_000;
-// Speed: only web.* is needed for exp+routes (other HTML assets are ~0–2KB stubs)
 const WEB_ONLY = process.env.SCRAPE_WEB_ONLY !== '0';
 
 async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
@@ -26,21 +23,17 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   let assets = [...(build.assets || [])];
   assets.sort((a, b) => scoreAsset(b) - scoreAsset(a));
 
-  // Fast path: only web.*.js (+ keep any already-large local files)
   if (WEB_ONLY) {
     const web = assets.filter((u) => /\/web\./i.test(u));
     if (web.length) {
-      console.log('FAST MODE: download web.* only (' + web.length + ' file)');
+      console.log('FAST MODE: web.* + en-US locale chunks');
       assets = web;
     } else {
-      console.warn('No web.* in asset list — fallback full list');
+      console.warn('No web.* — fallback full list');
     }
-  } else {
-    console.log('FULL MODE: all', assets.length, 'assets');
   }
 
   if (forceRefresh) {
-    // Only wipe files we are about to replace (keep unrelated cache)
     for (const url of assets) {
       const name = path.basename(String(url).split('?')[0]);
       try {
@@ -52,55 +45,57 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   await downloadList(assets, assetsDir, true);
   await assertWebBundle(assetsDir);
 
-  const files = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
-  const withSize = [];
-  for (const f of files) {
-    try {
-      const st = await fs.stat(path.join(assetsDir, f));
-      // Skip tiny stubs (< 20KB) — no exp/routes/strings
-      if (st.size < 20_000 && !/^web\./i.test(f)) continue;
-      withSize.push({ f, size: st.size });
-    } catch {}
-  }
-  withSize.sort((a, b) => b.size - a.size);
-
-  console.log(
-    'Scan',
-    withSize.length,
-    'files:',
-    withSize
-      .slice(0, 4)
-      .map((x) => x.f + '=' + Math.round(x.size / 1024) + 'KB')
-      .join(', '),
+  // Read web.js for exp/routes + locale chunk map
+  const webFiles = (await fs.readdir(assetsDir)).filter((f) =>
+    /^web\./i.test(f),
   );
+  let webContent = '';
+  for (const f of webFiles) {
+    webContent += await fs.readFile(path.join(assetsDir, f), 'utf8');
+  }
 
   const strings = {};
   const routes = {};
   const expSet = new Map();
 
-  for (const { f: file, size } of withSize) {
-    try {
-      let content = await fs.readFile(path.join(assetsDir, file), 'utf8');
-      if (size > MAX_READ_BYTES) content = content.slice(0, MAX_READ_BYTES);
-      extractStrings(content, strings);
-      extractRoutes(content, routes);
-      extractExperiments(content, expSet);
-    } catch (e) {
-      console.warn('skip', file, e.message);
-    }
+  if (webContent) {
+    extractRoutes(webContent, routes);
+    extractExperiments(webContent, expSet);
+    extractStrings(webContent, strings); // few plain strings
   }
 
-  console.log('Raw extract (Discord JS)', {
+  // ── REAL strings: en-US locale chunks (hash.js) ───────
+  const localeUrls = resolveEnUsLocaleUrls(webContent);
+  console.log('en-US locale chunks:', localeUrls.length);
+  if (localeUrls.length) {
+    await downloadList(localeUrls, assetsDir, true);
+    let fromLocale = 0;
+    for (const url of localeUrls) {
+      const name = path.basename(url.split('?')[0]);
+      const fp = path.join(assetsDir, name);
+      try {
+        if (!(await fs.pathExists(fp))) continue;
+        const content = await fs.readFile(fp, 'utf8');
+        const before = Object.keys(strings).length;
+        extractLocaleStrings(content, strings);
+        fromLocale += Object.keys(strings).length - before;
+      } catch (e) {
+        console.warn('locale', name, e.message);
+      }
+    }
+    console.log('Strings from en-US locales +', fromLocale, 'total', Object.keys(strings).length);
+  }
+
+  console.log('Raw extract (Discord)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
   });
 
-  // Parallel Wumpus enrichment (cached)
-  const [meta, wRoutes, wStrings] = await Promise.all([
+  // Experiments meta (Wumpus) — kind/label only, not strings
+  const [meta, wRoutes] = await Promise.all([
     fetchWumpusExperimentMeta(cacheDir),
     cachedJson(cacheDir, 'routes.json', WUMPUS_ROUTES_URL, 3600),
-    cachedJson(cacheDir, 'strings.json', WUMPUS_STRINGS_URL, 3600),
   ]);
 
   let enriched = 0;
@@ -148,20 +143,8 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     console.log('Wumpus routes +', n, 'total', Object.keys(routes).length);
   }
 
-  if (wStrings && typeof wStrings === 'object') {
-    let n = 0;
-    for (const [k, v] of Object.entries(wStrings)) {
-      if (typeof k === 'string' && k.length === 6 && typeof v === 'string') {
-        if (!(k in strings)) {
-          strings[k] = v;
-          n++;
-        }
-      }
-    }
-    console.log('Wumpus strings +', n, 'total', Object.keys(strings).length);
-  }
-
-  console.log('Final counts', {
+  // NOTE: do NOT merge Wumpus strings into diff set — that froze diffs at 0
+  console.log('Final counts (Discord-native strings)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
@@ -174,10 +157,56 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   };
 }
 
+/**
+ * From web.js: en-US → n.e("chunkId") + chunkId:"hash" → /assets/{hash}.js
+ */
+function resolveEnUsLocaleUrls(webContent) {
+  if (!webContent) return [];
+  const chunkMap = {};
+  const reMap = /(\d{3,6}):["']([a-f0-9]{16,20})["']/g;
+  let m;
+  while ((m = reMap.exec(webContent)) !== null) {
+    chunkMap[m[1]] = m[2];
+  }
+
+  const chunkIds = new Set();
+  const reEn =
+    /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["'](\d+)["']\)/g;
+  while ((m = reEn.exec(webContent)) !== null) chunkIds.add(m[1]);
+
+  const urls = [];
+  for (const id of chunkIds) {
+    const hash = chunkMap[id];
+    if (!hash) continue;
+    urls.push('https://canary.discord.com/assets/' + hash + '.js');
+  }
+  return urls;
+}
+
+/**
+ * Locale format: "key":["value"] inside JSON.parse('...')
+ */
+function extractLocaleStrings(content, out) {
+  // Primary: "key":["text"]
+  const reArr =
+    /["']([A-Za-z0-9+/_-]{6})["']\s*:\s*\[\s*["']([^"'\\]*(?:\\.[^"'\\]*)*)["']/g;
+  let m;
+  while ((m = reArr.exec(content)) !== null) {
+    let val = m[2];
+    try {
+      val = JSON.parse('"' + val + '"');
+    } catch {}
+    if (isGoodStringKey(m[1]) && isGoodStringVal(val)) out[m[1]] = val;
+  }
+
+  // Fallback plain "key":"value"
+  extractStrings(content, out);
+}
+
 async function assertWebBundle(assetsDir) {
   const files = (await fs.readdir(assetsDir)).filter((f) => /^web\./i.test(f));
   if (!files.length) {
-    console.warn('⚠️  No web.*.js — incomplete extract');
+    console.warn('⚠️  No web.*.js');
     return;
   }
   for (const f of files) {
@@ -235,7 +264,8 @@ async function downloadList(urls, assetsDir, force) {
         const buf = await res.buffer();
         await fs.writeFile(dest, buf);
         n++;
-        console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
+        if (n <= 8 || job.name.startsWith('web.') || n % 20 === 0)
+          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
       } catch (e) {
         console.warn('✗', job.name, e.message);
       }
@@ -250,7 +280,6 @@ async function downloadList(urls, assetsDir, force) {
   console.log('Downloaded', n, 'file(s)');
 }
 
-/** Disk cache for Wumpus JSON — avoids re-download every run */
 async function cachedJson(cacheDir, name, url, ttlSec) {
   if (!cacheDir) return fetchJson(url);
   const fp = path.join(cacheDir, name);
@@ -322,26 +351,19 @@ async function fetchWumpusExperimentMeta(cacheDir) {
 
 function isGoodStringKey(k) {
   if (typeof k !== 'string' || k.length !== 6) return false;
-  if (!/^[A-Za-z0-9+/_-]+$/.test(k)) return false;
+  // Discord keys: base64-ish, may include + / _ -
+  if (!/^[A-Za-z0-9+/_-]{6}$/.test(k)) return false;
+  // reject pure lowercase noise words
   if (/^[a-z]{6}$/.test(k)) return false;
-  if (/^[0-9]{6}$/.test(k)) return true;
-  if (!/[A-Za-z]/.test(k)) return false;
   return true;
 }
 
 function isGoodStringVal(v) {
   if (typeof v !== 'string') return false;
   const s = v.trim();
-  if (s.length < 2 || s.length > 500) return false;
+  if (s.length < 1 || s.length > 500) return false;
   if (/^[a-f0-9]{16,}$/i.test(s) || /^\d+$/.test(s)) return false;
   if (/^discord_web-/i.test(s) || /^release:/i.test(s)) return false;
-  if (
-    /^(width|height|string|number|boolean|object|symbol|unknown|past|future|month|months|short|long|add|delete|update|start|locale|format|author|rive)$/i.test(
-      s,
-    )
-  )
-    return false;
-  if (!/[A-Za-zÀ-ÿ{]/.test(s)) return false;
   return true;
 }
 
@@ -422,4 +444,6 @@ module.exports = {
   isValidRouteKey,
   normalizePath,
   inferType,
+  resolveEnUsLocaleUrls,
+  extractLocaleStrings,
 };
