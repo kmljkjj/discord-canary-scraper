@@ -7,8 +7,11 @@ const UA =
 
 const WUMPUS_ROUTES_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/routes.json';
+const WUMPUS_EXP_URL =
+  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/experiments.json';
+const WUMPUS_APEX_URL =
+  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/apex_experiments.json';
 
-// Parallel downloads — speed without hammering Discord
 const DOWNLOAD_CONCURRENCY = 12;
 
 async function analyzeAssets(build, { forceRefresh, assetsDir }) {
@@ -60,6 +63,49 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: expSet.size,
   });
 
+  // Enrich experiments with Wumpus metadata (kind, label, treatments)
+  try {
+    const meta = await fetchWumpusExperimentMeta();
+    let enriched = 0;
+    for (const [id, e] of expSet) {
+      const m = meta.get(id);
+      if (m) {
+        if (m.kind) e.type = m.kind;
+        if (m.kind) e.kind = m.kind === 'guild' ? 'guild' : 'user';
+        if (m.label) e.label = m.label;
+        if (m.treatments) e.treatments = m.treatments;
+        if (m.variations) e.variations = m.variations;
+        e.source = 'wumpus+extract';
+        enriched++;
+      } else {
+        e.type = inferType(id, e.type);
+        e.kind = e.type;
+        e.source = 'extract';
+      }
+    }
+    // Also add Wumpus-only experiments not found in JS (still useful for catalog)
+    for (const [id, m] of meta) {
+      if (!expSet.has(id)) {
+        expSet.set(id, {
+          id,
+          type: m.kind || inferType(id),
+          kind: m.kind || inferType(id),
+          label: m.label || null,
+          treatments: m.treatments || null,
+          variations: m.variations || null,
+          source: 'wumpus',
+        });
+      }
+    }
+    console.log('Wumpus exp meta enriched', enriched, 'total', expSet.size);
+  } catch (e) {
+    console.warn('wumpus exp meta', e.message);
+    for (const [, e] of expSet) {
+      e.type = inferType(e.id, e.type);
+      e.kind = e.type;
+    }
+  }
+
   if (Object.keys(routes).length < 20) {
     try {
       const wr = await fetchWumpusRoutes();
@@ -82,20 +128,27 @@ async function analyzeAssets(build, { forceRefresh, assetsDir }) {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
-    routesFromExtract: Object.keys(routes).length > 0,
   };
+}
+
+function inferType(id, fallback) {
+  const s = String(id || '').toLowerCase();
+  if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
+    return 'guild';
+  if (fallback === 'guild' || fallback === 'user') return fallback;
+  return 'user';
 }
 
 function scoreAsset(url) {
   const n = path.basename(String(url)).toLowerCase();
   let s = 0;
   if (/^web\./.test(n)) s += 100;
-  if (/i18n|locale|intl|lang|string|message|route|api|endpoint/.test(n)) s += 50;
+  if (/i18n|locale|intl|lang|string|message|route|api|endpoint|experiment/.test(n))
+    s += 50;
   if (/vendor|chunk/.test(n)) s += 5;
   return s;
 }
 
-/** Parallel download pool */
 async function downloadList(urls, assetsDir, force) {
   const jobs = [];
   for (const url of urls) {
@@ -241,25 +294,56 @@ function extractRoutes(content, out) {
     const path = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && path) out[m[1]] = path;
   }
-  const reUrl =
-    /["']([A-Z][A-Z0-9_]{3,80})["']\s*,\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
-  while ((m = reUrl.exec(content)) !== null) {
-    const path = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && path && !(m[1] in out)) out[m[1]] = path;
-  }
 }
 
+/**
+ * Extract experiment ids + local context for kind (user/guild).
+ * Rich metadata filled later from Wumpus.
+ */
 function extractExperiments(content, map) {
   const re = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   let m;
   while ((m = re.exec(content)) !== null) {
     const id = m[1];
     if (/^20\d{2}-\d{2}$/.test(id)) continue;
-    if (map.has(id)) continue;
+
+    // Context window around match for kind:
+    const start = Math.max(0, m.index - 120);
+    const end = Math.min(content.length, m.index + id.length + 180);
+    const ctx = content.slice(start, end);
+
+    let type = null;
+    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx) || /"guild"\s*,/.test(ctx))
+      type = 'guild';
+    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx))
+      type = 'user';
+    else type = inferType(id);
+
+    // Rough treatment count from nearby treatment/variation keys
+    let treatmentCount = null;
+    const tx = ctx.match(/treatments/i);
+    const vr = ctx.match(/variations/i);
+    if (tx || vr) {
+      const nums = ctx.match(/["']?(?:id|variant)["']?\s*:\s*(\d+)/g);
+      if (nums && nums.length) treatmentCount = nums.length;
+    }
+
+    if (map.has(id)) {
+      const prev = map.get(id);
+      // Prefer guild if any context said guild
+      if (type === 'guild') prev.type = 'guild';
+      if (treatmentCount && !prev.treatmentCount)
+        prev.treatmentCount = treatmentCount;
+      continue;
+    }
+
     map.set(id, {
       id,
-      type: /guild|server/i.test(id) ? 'guild' : 'user',
-      kind: id.includes('_') ? 'legacy' : 'apex',
+      type,
+      kind: type,
+      treatmentCount: treatmentCount || null,
+      label: null,
+      treatments: null,
     });
   }
 }
@@ -273,6 +357,47 @@ async function fetchWumpusRoutes() {
   return await res.json();
 }
 
+async function fetchWumpusExperimentMeta() {
+  const map = new Map();
+  for (const url of [WUMPUS_EXP_URL, WUMPUS_APEX_URL]) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
+        timeout: 30000,
+      });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : data.experiments || [];
+      for (const e of list) {
+        const id = e.id || e.name;
+        if (!id) continue;
+        const kind = (e.kind || e.type || '').toLowerCase();
+        const treatments = e.treatments || null;
+        let variations = e.variations || null;
+        // Normalize variations object → count
+        const treatmentList = treatments
+          ? treatments
+          : variations
+            ? Object.keys(variations).map((k) => ({
+                id: k,
+                label: variations[k] && variations[k].label,
+              }))
+            : null;
+        map.set(String(id), {
+          kind: kind === 'guild' || kind === 'user' ? kind : null,
+          label: e.label || null,
+          treatments: treatmentList,
+          variations,
+        });
+      }
+    } catch (e) {
+      console.warn('fetch meta', url, e.message);
+    }
+  }
+  console.log('Wumpus meta loaded', map.size);
+  return map;
+}
+
 module.exports = {
   analyzeAssets,
   isGoodStringKey,
@@ -280,4 +405,5 @@ module.exports = {
   extractRoutes,
   isValidRouteKey,
   normalizePath,
+  inferType,
 };

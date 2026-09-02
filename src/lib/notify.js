@@ -1,7 +1,6 @@
 /**
  * Canary Pulse — notifications
- * Supports: added (+) · modified (~) · removed (−)
- * for experiments, strings, routes
+ * Experiments show: id, type (user/guild), label, treatments count
  */
 const fetch = require('node-fetch');
 
@@ -12,25 +11,14 @@ const COLORS = {
   apex: 0xf0b232,
   strings: 0xeb459e,
   routes: 0x3498db,
-  mixed: 0x9b59b6,
 };
 
-/**
- * @param {object} opts
- * @param {object} opts.build
- * @param {boolean} opts.isNewBuild
- * @param {object} opts.expDiff  { added:[], modified:[], removed:[] }
- * @param {object} opts.strDiff  { added:{}, modified:{}, removed:{} }
- * @param {object} opts.rtDiff   { added:{}, modified:{}, removed:{} }
- * @param {string} opts.webhookUrl
- */
 async function notifyAll({
   build,
   isNewBuild,
   expDiff,
   strDiff,
   rtDiff,
-  // legacy fallbacks
   freshExps,
   freshStrings,
   freshRoutes,
@@ -46,7 +34,6 @@ async function notifyAll({
     ? String(build.versionHash).slice(0, 12)
     : null;
 
-  // Normalize diffs (support old callers)
   const exp = normalizeExpDiff(expDiff, freshExps);
   const str = normalizeMapDiff(strDiff, freshStrings);
   const rt = normalizeMapDiff(rtDiff, freshRoutes);
@@ -62,7 +49,6 @@ async function notifyAll({
     Object.keys(rt.modified).length +
     Object.keys(rt.removed).length;
 
-  // ── Build card ────────────────────────────────────────
   if (isNewBuild) {
     const parts = [];
     if (nExp)
@@ -124,29 +110,20 @@ async function notifyAll({
     console.log('Sent build', bn);
   }
 
-  // ── Experiments ───────────────────────────────────────
-  if (nExp) {
-    await sendExpDiff(webhookUrl, bn, exp);
-  }
-
-  // ── Strings ───────────────────────────────────────────
-  if (nStr) {
+  if (nExp) await sendExpDiff(webhookUrl, bn, exp);
+  if (nStr)
     await sendMapDiff(webhookUrl, bn, str, {
       title: 'Strings',
       color: COLORS.strings,
       footer: 'Canary Pulse · i18n',
     });
-  }
-
-  // ── Routes ────────────────────────────────────────────
-  if (nRt) {
+  if (nRt)
     await sendMapDiff(webhookUrl, bn, rt, {
       title: 'API routes',
       color: COLORS.routes,
       footer: 'Canary Pulse · routes',
       valuePrefix: true,
     });
-  }
 }
 
 function normalizeExpDiff(diff, legacy) {
@@ -181,31 +158,44 @@ function normalizeMapDiff(diff, legacy) {
   };
 }
 
+function formatExpLine(prefix, e) {
+  const id = typeof e === 'string' ? e : e.id;
+  const type = (e && (e.type || e.kind)) || 'user';
+  const label = e && e.label ? String(e.label).slice(0, 80) : null;
+  let tx = null;
+  if (e && Array.isArray(e.treatments) && e.treatments.length) {
+    tx = e.treatments.length + ' treatment(s)';
+  } else if (e && e.variations && typeof e.variations === 'object') {
+    tx = Object.keys(e.variations).length + ' variation(s)';
+  } else if (e && e.treatmentCount) {
+    tx = e.treatmentCount + ' treatment(s)';
+  }
+
+  let line = prefix + ' **' + id + '**';
+  line += '\n└ type `' + type + '`';
+  if (label) line += ' · ' + label;
+  if (tx) line += ' · ' + tx;
+  return line;
+}
+
 async function sendExpDiff(webhookUrl, bn, exp) {
   const blocks = [];
 
   if (exp.added.length) {
     blocks.push('**Added · ' + exp.added.length + '**');
-    for (const e of exp.added.slice(0, 20)) {
-      const id = typeof e === 'string' ? e : e.id;
-      const type =
-        (e && (e.type || e.kind)) ||
-        (/guild|server/i.test(id) ? 'guild' : 'user');
-      blocks.push('+ **' + id + '** (`' + type + '`)');
-    }
-    if (exp.added.length > 20)
-      blocks.push('_+' + (exp.added.length - 20) + ' more_');
+    for (const e of exp.added.slice(0, 18))
+      blocks.push(formatExpLine('+', e));
+    if (exp.added.length > 18)
+      blocks.push('_+' + (exp.added.length - 18) + ' more_');
   }
 
   if (exp.modified.length) {
     blocks.push('');
     blocks.push('**Modified · ' + exp.modified.length + '**');
-    for (const e of exp.modified.slice(0, 15)) {
-      const id = typeof e === 'string' ? e : e.id;
-      blocks.push('~ **' + id + '**');
-    }
-    if (exp.modified.length > 15)
-      blocks.push('_+' + (exp.modified.length - 15) + ' more_');
+    for (const e of exp.modified.slice(0, 12))
+      blocks.push(formatExpLine('~', e));
+    if (exp.modified.length > 12)
+      blocks.push('_+' + (exp.modified.length - 12) + ' more_');
   }
 
   if (exp.removed.length) {
@@ -222,20 +212,13 @@ async function sendExpDiff(webhookUrl, bn, exp) {
   blocks.push('');
   blocks.push('Build `' + bn + '`');
 
-  const apexHeavy =
-    exp.added.filter((e) => {
-      const id = typeof e === 'string' ? e : e.id;
-      return id && !String(id).includes('_');
-    }).length >=
-    exp.added.length / 2;
-
   await post(webhookUrl, {
     username: BOT_NAME,
     embeds: [
       {
         title: 'Experiments',
         description: blocks.join('\n').slice(0, 3900),
-        color: apexHeavy ? COLORS.apex : COLORS.exp,
+        color: COLORS.exp,
         footer: { text: 'Canary Pulse · experiments · + ~ −' },
         timestamp: new Date().toISOString(),
       },
@@ -248,7 +231,12 @@ async function sendExpDiff(webhookUrl, bn, exp) {
   });
 }
 
-async function sendMapDiff(webhookUrl, bn, diff, { title, color, footer, valuePrefix }) {
+async function sendMapDiff(
+  webhookUrl,
+  bn,
+  diff,
+  { title, color, footer, valuePrefix },
+) {
   const lines = [];
   const a = Object.keys(diff.added);
   const m = Object.keys(diff.modified);
@@ -284,9 +272,7 @@ async function sendMapDiff(webhookUrl, bn, diff, { title, color, footer, valuePr
   if (r.length) {
     lines.push('');
     lines.push('**Removed · ' + r.length + '**');
-    for (const k of r.slice(0, 20)) {
-      lines.push('− `' + k + '`');
-    }
+    for (const k of r.slice(0, 20)) lines.push('− `' + k + '`');
     if (r.length > 20) lines.push('_+' + (r.length - 20) + ' more_');
   }
 
@@ -305,7 +291,11 @@ async function sendMapDiff(webhookUrl, bn, diff, { title, color, footer, valuePr
       },
     ],
   });
-  console.log('Sent', title, { added: a.length, modified: m.length, removed: r.length });
+  console.log('Sent', title, {
+    added: a.length,
+    modified: m.length,
+    removed: r.length,
+  });
 }
 
 async function post(url, body) {
