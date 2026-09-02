@@ -1,0 +1,61 @@
+name: X News · DiscordNEW8r
+
+on:
+  schedule:
+    # Toutes les 10 minutes
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: x-news-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Watch @DiscordNEW8r
+        env:
+          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_SCREEN_NAME: DiscordNEW8r
+          X_USER_ID: '2073982489836584960'
+        run: node src/x_news.js
+
+      - name: Save seen ids
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm -f package-lock.json
+          git add -f data/seen_x_posts.json || true
+          if git diff --staged --quiet; then
+            echo "No seen-file changes"
+            exit 0
+          fi
+          git commit -m "📌 x-news seen $(date -u +%Y-%m-%dT%H:%MZ)" || true
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed seen OK"
+              exit 0
+            fi
+            git stash push -u -m "noise-$i" || true
+            sleep 2
+          done
+          echo "::warning::could not push seen file"
+          exit 0
