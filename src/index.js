@@ -22,7 +22,6 @@ const MAX_NOTIFY_STR = 80;
 const MAX_NOTIFY_RT = 40;
 const MIN_STRINGS_FOR_DIFF = 500;
 const MIN_ROUTES_FOR_DIFF = 50;
-// For removals: only if extract covers enough of baseline (avoid false deletes)
 const MIN_EXP_COVERAGE = 0.35;
 
 async function loadKnownExp() {
@@ -89,18 +88,24 @@ async function saveKnownRt(set) {
 }
 
 function expFingerprint(e) {
-  if (!e) return '';
-  return [
-    e.type || e.kind || '',
-    e.label || '',
-    Array.isArray(e.treatments) ? e.treatments.length : '',
-    e.hash || '',
-  ].join('|');
+  // Only real content — type/kind alone causes 279 false "modified" every build
+  if (!e || typeof e !== 'object') return null;
+  const parts = [];
+  if (e.label) parts.push('label:' + String(e.label));
+  if (Array.isArray(e.treatments) && e.treatments.length) {
+    parts.push('tx:' + e.treatments.length);
+    for (const t of e.treatments.slice(0, 8)) {
+      parts.push(String(t && (t.id || t.label || t)));
+    }
+  }
+  if (e.hash) parts.push('hash:' + String(e.hash));
+  if (!parts.length) return null; // id-only extract → never "modified"
+  return parts.join('|');
 }
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v8 (+ ~ − diffs) ===');
+  console.log('=== Canary Pulse v8.1 (no false modified) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
 
@@ -173,7 +178,6 @@ async function main() {
     process.exit(1);
   }
 
-  // ── Experiments diff ──────────────────────────────────
   const prevExpMap = new Map();
   for (const e of prev.experiments || []) {
     if (e && e.id) prevExpMap.set(String(e.id), e);
@@ -192,13 +196,13 @@ async function main() {
     } else if (prevExpMap.has(id)) {
       const prevFp = expFingerprint(prevExpMap.get(id));
       const nextFp = expFingerprint(e);
+      // Both sides must have real fingerprints (label/treatments)
       if (prevFp && nextFp && prevFp !== nextFp) {
         expDiff.modified.push(e);
       }
     }
   }
 
-  // Removals only if coverage is good (avoid false “deleted everything”)
   const coverage =
     (prev.experiments || []).length > 0
       ? extractedExpCount / (prev.experiments || []).length
@@ -209,7 +213,6 @@ async function main() {
         expDiff.removed.push({ id });
       }
     }
-    // Cap false mass-removals
     if (expDiff.removed.length > 40) {
       console.log(
         'Too many exp removals (' +
@@ -219,14 +222,9 @@ async function main() {
       expDiff.removed = [];
     }
   } else {
-    console.log(
-      'Exp coverage ' +
-        coverage.toFixed(2) +
-        ' — skip removals',
-    );
+    console.log('Exp coverage ' + coverage.toFixed(2) + ' — skip removals');
   }
 
-  // ── Strings diff ──────────────────────────────────────
   const strDiff = { added: {}, modified: {}, removed: {} };
   if (extractedStrCount < MIN_STRINGS_FOR_DIFF) {
     console.log('Strings weak — skip string diffs');
@@ -238,7 +236,6 @@ async function main() {
       if (!(k in prevS) && !knownStr.has(k)) strDiff.added[k] = v;
       else if (k in prevS && String(prevS[k]) !== String(v)) strDiff.modified[k] = v;
     }
-    // removals only if next is large enough vs prev
     if (extractedStrCount >= (Object.keys(prevS).length || 1) * 0.5) {
       for (const k of Object.keys(prevS)) {
         if (!(k in nextS)) strDiff.removed[k] = prevS[k];
@@ -250,7 +247,6 @@ async function main() {
     }
   }
 
-  // ── Routes diff ───────────────────────────────────────
   const rtDiff = { added: {}, modified: {}, removed: {} };
   if (extractedRtCount < MIN_ROUTES_FOR_DIFF) {
     console.log('Routes weak — skip route diffs');
@@ -273,6 +269,14 @@ async function main() {
     }
   }
 
+  // Safety: mass "modified" = fingerprint noise, never notify
+  if (expDiff.modified.length > 30) {
+    console.log(
+      'Discard mass exp modified (' + expDiff.modified.length + ') — noise',
+    );
+    expDiff.modified = [];
+  }
+
   console.log('TRUE DIFF', {
     exp: {
       added: expDiff.added.length,
@@ -291,7 +295,6 @@ async function main() {
     },
   });
 
-  // Mark known before notify
   for (const e of findings.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
   }
@@ -337,7 +340,6 @@ async function main() {
     return;
   }
 
-  // Silent if huge catch-up
   if (
     expDiff.added.length > MAX_NOTIFY_EXP ||
     Object.keys(strDiff.added).length > MAX_NOTIFY_STR
@@ -374,8 +376,6 @@ async function main() {
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   }
 
-  // Save merged baseline
-  // Removals: drop from baseline only when we trusted the removal list
   let mergedExps = mergeExp(prev.experiments, findings.experiments);
   if (expDiff.removed.length) {
     const drop = new Set(expDiff.removed.map((e) => String(e.id || e)));
