@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-02T14:45:49.837Z",
-  "buildNumber": "606011",
+  "scrapedAt": "2026-09-02T15:51:07.688Z",
+  "buildNumber": "606036",
   "totals": {
-    "all": 380
+    "all": 381
   },
   "experiments": [
     {
@@ -9875,6 +9875,14 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-09-profile-link-fetch",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-09-soundboard-quick-action",
