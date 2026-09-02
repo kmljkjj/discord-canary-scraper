@@ -17,7 +17,7 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,23 +28,20 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: |
-          npm install --no-audit --no-fund --no-package-lock
-          rm -f package-lock.json
+        run: npm install --no-audit --no-fund --no-package-lock
 
       - name: Scrape + notify
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SCRAPE_WEB_ONLY: '1'
         run: node src/index.js
 
-      - name: Commit baseline (anti-spam memory)
+      - name: Commit baseline
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           rm -f package-lock.json
-          git checkout -- package.json 2>/dev/null || true
 
           git add -f \
             data/known_experiment_ids.json \
@@ -58,10 +55,11 @@ jobs:
             data/strings.json \
             data/routes.json \
             data/meta.json \
+            data/wumpus_cache/ \
             data/ || true
 
           if git diff --staged --quiet; then
-            echo "No data changes to commit"
+            echo "No data changes"
             exit 0
           fi
 
@@ -72,10 +70,8 @@ jobs:
               echo "Pushed baseline OK"
               exit 0
             fi
-            echo "Push retry $i..."
             git stash push -u -m "noise-$i" || true
             sleep 2
           done
-
-          echo "::warning::Could not push baseline"
+          echo "::warning::push failed"
           exit 0
