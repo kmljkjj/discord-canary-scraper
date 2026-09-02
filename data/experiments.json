@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-02T17:24:19.012Z",
-  "buildNumber": "606136",
+  "scrapedAt": "2026-09-02T18:08:31.047Z",
+  "buildNumber": "606188",
   "totals": {
-    "all": 381
+    "all": 382
   },
   "experiments": [
     {
@@ -8585,6 +8585,14 @@
         }
       },
       "source": "wumpus"
+    },
+    {
+      "id": "2026-07-smag-nitro-gifting-lightning-checkout",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-07-social-layer-storefront-spend-orbs-banner-copy",
