@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-02T22:18:49.666Z",
-  "buildNumber": "606514",
+  "scrapedAt": "2026-09-02T23:08:27.083Z",
+  "buildNumber": "606577",
   "totals": {
-    "all": 382
+    "all": 383
   },
   "experiments": [
     {
@@ -9925,6 +9925,14 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-09-stream-zero-vad-leading",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     }
   ]
 }
