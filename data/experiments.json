@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-03T17:10:10.488Z",
-  "buildNumber": "606928",
+  "scrapedAt": "2026-09-03T17:29:42.173Z",
+  "buildNumber": "606959",
   "totals": {
-    "all": 384
+    "all": 387
   },
   "experiments": [
     {
@@ -8961,7 +8961,7 @@
           "variant": 3
         }
       },
-      "source": "wumpus"
+      "source": "wumpus+extract"
     },
     {
       "id": "2026-08-bounties-mobile-quest-bar",
@@ -9421,6 +9421,14 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-08-no-fill-logging",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-08-premium-gifting-gogo-promotion",
@@ -9883,6 +9891,22 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-09-nitro-file-upload-rollout",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
+    },
+    {
+      "id": "2026-09-non-nitro-file-upload-marketing",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-09-profile-link-fetch",
