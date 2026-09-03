@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-03T12:07:11.843Z",
-  "buildNumber": "606770",
+  "scrapedAt": "2026-09-03T13:14:37.516Z",
+  "buildNumber": "606784",
   "totals": {
-    "all": 383
+    "all": 384
   },
   "experiments": [
     {
@@ -8883,6 +8883,14 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-08-automontage",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-08-badge-management",
