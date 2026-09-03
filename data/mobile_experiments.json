@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-09-03T03:12:59.479Z",
+  "scrapedAt": "2026-09-03T08:35:42.657Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "9c3baa9a",
-  "experimentCount": 295,
+  "sourceCommit": "a8d272b2",
+  "experimentCount": 297,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 3,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -500,14 +500,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/go_live/MobileGoLiveEntrypointExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-01-profile-updates-notification",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/notifications/profile_updates/ProfileUpdatesNotificationExperiment.tsx"
       ]
     },
     {
@@ -1945,6 +1937,14 @@
       ]
     },
     {
+      "id": "2026-07-mobile-emoji-suggestions",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/chat_input/experiments/MobileEmojiSuggestionsExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-07-mobile-game-collection",
       "type": "user",
       "isApex": false,
@@ -2014,6 +2014,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/premium/premium_group/PremiumGroupConstants.tsx"
+      ]
+    },
+    {
+      "id": "2026-07-premium-referral-incentives",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/PremiumReferralIncentivesExperiment.tsx"
       ]
     },
     {
@@ -2366,6 +2374,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/premium/experiments/MobileStickerPickerUpsellRestyleExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-stream-zero-vad-leading",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/StreamZeroVadLeadingExperiment.tsx"
       ]
     }
   ],
