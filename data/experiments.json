@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-03T18:12:51.260Z",
-  "buildNumber": "607007",
+  "scrapedAt": "2026-09-03T19:09:51.804Z",
+  "buildNumber": "607075",
   "totals": {
-    "all": 387
+    "all": 388
   },
   "experiments": [
     {
@@ -9960,6 +9960,14 @@
     },
     {
       "id": "2026-09-stream-zero-vad-leading",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
+    },
+    {
+      "id": "2026-09-video-background-profile-fetch",
       "type": "user",
       "kind": "user",
       "label": null,
