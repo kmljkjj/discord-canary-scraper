@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-04T05:12:29.585Z",
-  "buildNumber": "607534",
+  "scrapedAt": "2026-09-04T06:07:09.828Z",
+  "buildNumber": "607547",
   "totals": {
-    "all": 389
+    "all": 390
   },
   "experiments": [
     {
@@ -9899,6 +9899,14 @@
         }
       },
       "source": "wumpus+extract"
+    },
+    {
+      "id": "2026-09-friends-sidebar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "treatments": null,
+      "source": "extract"
     },
     {
       "id": "2026-09-nitro-file-upload-rollout",
