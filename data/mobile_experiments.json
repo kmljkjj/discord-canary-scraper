@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-09-06T08:24:27.319Z",
+  "scrapedAt": "2026-09-06T13:25:47.126Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "a8d272b2",
-  "experimentCount": 297,
+  "sourceCommit": "bd38fe8b",
+  "experimentCount": 305,
   "stringCount": 7,
-  "newExperimentCount": 0,
+  "newExperimentCount": 10,
   "experiments": [
     {
       "id": "2022-03_block_russian_purchases",
@@ -132,14 +132,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/content_inventory/ContentInventoryExperiments.tsx"
-      ]
-    },
-    {
-      "id": "2025-09-agc2-v2",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/media_engine/AGC2Experiment.tsx"
       ]
     },
     {
@@ -908,6 +900,7 @@
       "type": "user",
       "isApex": false,
       "sources": [
+        "_runtime/metro/01282__.js",
         "discord_app/modules/people/FriendRequestMessageExperiment.tsx"
       ]
     },
@@ -1109,14 +1102,6 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/media_engine/BrowserTransceiverPaddingRemovalExperiment.tsx"
-      ]
-    },
-    {
-      "id": "2026-04-clips-v3-runtime",
-      "type": "user",
-      "isApex": false,
-      "sources": [
-        "discord_app/modules/clips/ClipsV3RuntimeExperiment.tsx"
       ]
     },
     {
@@ -1432,6 +1417,14 @@
       ]
     },
     {
+      "id": "2026-05-frontier-tuning",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/go_live/FrontierTuningExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-05-ios-video-stabilization",
       "type": "user",
       "isApex": false,
@@ -1444,7 +1437,9 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "discord_app/modules/design/ManaTypeConsolidationExperiment.tsx"
+        "discord_app/modules/design/ManaTypeConsolidationExperiment.tsx",
+        "discord_app/modules/double_tap_to_react/native/DoubleTapToReactUtils.tsx",
+        "discord_app/modules/unique_usernames/UniqueUsernamesStore.tsx"
       ]
     },
     {
@@ -2057,6 +2052,14 @@
       ]
     },
     {
+      "id": "2026-07-rm-member-verification-route",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/guild_member_verification/native/MemberVerificationRouteExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-07-shop-this-look-mobile",
       "type": "user",
       "isApex": false,
@@ -2273,6 +2276,14 @@
       ]
     },
     {
+      "id": "2026-08-mute-aware-noise-cancellation",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media_engine/MuteAwareNoiseCancellationExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-08-nitro-tenure-badge-withheld-state",
       "type": "user",
       "isApex": false,
@@ -2318,6 +2329,14 @@
       "isApex": false,
       "sources": [
         "discord_app/modules/timestamp_autocomplete/TimestampAutocompleteMobileExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-08-tiny-bronco",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/tiny_bronco/TinyBroncoExperiment.tsx"
       ]
     },
     {
@@ -2369,6 +2388,22 @@
       ]
     },
     {
+      "id": "2026-09-declarative-notification-settings-redesign",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/notifications/DeclarativeNotificationSettingsRedesignExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-friends-sidebar",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/friends/FriendsSidebarExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-09-mobile-sticker-picker-upsell-restyle",
       "type": "user",
       "isApex": false,
@@ -2377,11 +2412,43 @@
       ]
     },
     {
+      "id": "2026-09-nitro-file-upload-rollout",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/NitroFileUploadExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-non-nitro-file-upload-marketing",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/premium/experiments/NitroFileUploadExperiments.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-profile-link-fetch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/user_profile/experiments/UserProfileLinkFetchExperiment.tsx"
+      ]
+    },
+    {
       "id": "2026-09-stream-zero-vad-leading",
       "type": "user",
       "isApex": false,
       "sources": [
         "discord_app/modules/media_engine/StreamZeroVadLeadingExperiment.tsx"
+      ]
+    },
+    {
+      "id": "2026-09-video-background-profile-fetch",
+      "type": "user",
+      "isApex": false,
+      "sources": [
+        "discord_app/modules/media/experiments/VideoBackgroundProfileFetchExperiment.tsx"
       ]
     }
   ],
@@ -2392,6 +2459,6 @@
     "relative": "absolute",
     "right": "left",
     "start": " + youtubeVideoIdFromURI.start + ",
-    "Window": " +\n                                  String(style) +\n                                  "
+    "Window": " +\n                                String(source) +\n                                "
   }
 }
