@@ -310,7 +310,7 @@ async function post(url, body) {
   } catch (e) {
     console.warn('webhook error', e.message);
   }
-  await new Promise((r) => setTimeout(r, 450));
+  await new Promise((r) => setTimeout(r, 200));
 }
 
 module.exports = { notifyAll };
