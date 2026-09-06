@@ -17,16 +17,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
       - name: Cache node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: node_modules
           key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
@@ -43,10 +43,11 @@ jobs:
       - name: Watch @DiscordNEW8r
         env:
           X_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
-          DISCORD_X_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
+          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_USERNAME: DiscordNEW8r
-        # continue-on-error: sources publiques X souvent down
+          X_USER_ID: '2073982489836584960'
+        # Never fail the workflow if X sources are down
         continue-on-error: true
         run: node src/x_watch.js
 
@@ -56,7 +57,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           rm -f package-lock.json
-          git add -f data/seen_x_posts.json data/x_watch_seen.json 2>/dev/null || true
+          git add -f data/x_seen_ids.json data/seen_x_posts.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No seen changes"
             exit 0

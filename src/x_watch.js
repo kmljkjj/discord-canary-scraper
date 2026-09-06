@@ -1,35 +1,37 @@
 /**
- * Watch @DiscordNEW8r on X — post new tweet links to Discord webhook.
+ * Watch @DiscordNEW8r → Discord webhook
  *
- * Secret: X_WEBHOOK_URL or X_NEWS_WEBHOOK_URL
- * State: data/x_seen_ids.json
+ * Secrets:
+ *   X_NEWS_WEBHOOK_URL or X_WEBHOOK_URL
+ *   X_BEARER_TOKEN (recommended — official X API v2)
+ *
+ * Without bearer, public sources often fail (403/404) → soft exit 0.
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
 
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
+const USER_ID = process.env.X_USER_ID || '2073982489836584960';
 const WEBHOOK =
   process.env.X_WEBHOOK_URL ||
   process.env.X_NEWS_WEBHOOK_URL ||
   process.env.DISCORD_X_WEBHOOK_URL ||
   '';
+const BEARER =
+  process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '';
+
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'x_seen_ids.json');
 const MAX_SEEN = 200;
 const MAX_NOTIFY = 5;
-
-const BEARER =
-  'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
-
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 const RSS_SOURCES = [
-  `https://nitter.space/${USERNAME}/rss`,
   `https://nitter.privacyredirect.com/${USERNAME}/rss`,
+  `https://nitter.poast.org/${USERNAME}/rss`,
   `https://rsshub.rssforever.com/twitter/user/${USERNAME}`,
-  `https://api.fxtwitter.com/${USERNAME}`,
 ];
 
 async function main() {
@@ -44,11 +46,17 @@ async function main() {
   console.log('Seen ids:', seen.size);
 
   let posts = [];
-  try {
-    posts = await fetchViaGuestApi();
-    console.log('Guest API posts:', posts.length);
-  } catch (e) {
-    console.warn('Guest API fail:', e.message);
+
+  if (BEARER) {
+    try {
+      console.log('Source: X API v2 (bearer)');
+      posts = await fetchViaOfficialApi(BEARER);
+      console.log('API posts:', posts.length);
+    } catch (e) {
+      console.warn('API fail:', e.message);
+    }
+  } else {
+    console.log('No X_BEARER_TOKEN — public sources only (often blocked)');
   }
 
   if (posts.length < 1) {
@@ -56,17 +64,10 @@ async function main() {
     console.log('RSS posts:', posts.length);
   }
 
-  if (posts.length < 1) {
-    try {
-      posts = await fetchViaHtml();
-      console.log('HTML posts:', posts.length);
-    } catch (e) {
-      console.warn('HTML fail:', e.message);
-    }
-  }
-
   if (!posts.length) {
-    console.warn('No posts fetched (soft) — sources down / rate-limited');
+    console.warn(
+      'No posts fetched (soft) — set secret X_BEARER_TOKEN for reliable watch',
+    );
     process.exit(0);
   }
 
@@ -98,6 +99,136 @@ async function main() {
   console.log('Done. Sent', toSend.length);
 }
 
+async function fetchViaOfficialApi(bearer) {
+  const url =
+    `https://api.twitter.com/2/users/${USER_ID}/tweets` +
+    `?max_results=10` +
+    `&tweet.fields=created_at,text,entities,attachments` +
+    `&expansions=attachments.media_keys` +
+    `&media.fields=url,preview_image_url,type`;
+
+  const res = await fetch(url, {
+    headers: {
+      Authorization: 'Bearer ' + bearer,
+      'User-Agent': 'orbit-x-watch',
+    },
+    timeout: 20000,
+  });
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(res.status + ' ' + t.slice(0, 180));
+  }
+  const data = await res.json();
+  const mediaMap = {};
+  for (const m of (data.includes && data.includes.media) || []) {
+    mediaMap[m.media_key] = m.url || m.preview_image_url || null;
+  }
+  const out = [];
+  for (const t of data.data || []) {
+    let image = null;
+    if (t.attachments && t.attachments.media_keys) {
+      for (const k of t.attachments.media_keys) {
+        if (mediaMap[k]) {
+          image = mediaMap[k];
+          break;
+        }
+      }
+    }
+    out.push({
+      id: String(t.id),
+      text: t.text || '',
+      url: `https://x.com/${USERNAME}/status/${t.id}`,
+      date: t.created_at || null,
+      image,
+    });
+  }
+  return out;
+}
+
+async function fetchViaRss() {
+  const posts = [];
+  for (const src of RSS_SOURCES) {
+    try {
+      const res = await fetch(src, {
+        headers: {
+          'User-Agent': UA,
+          Accept: 'application/rss+xml, application/xml, text/xml, */*',
+        },
+        timeout: 10000,
+      });
+      if (!res.ok) {
+        console.warn('RSS', src, res.status);
+        continue;
+      }
+      const xml = await res.text();
+      if (/whitelist|cloudflare|Attention Required/i.test(xml) && !/<item/i.test(xml))
+        continue;
+      const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
+      for (const m of items) {
+        const block = m[1];
+        const link = pick(block, /<link>([^<]+)<\/link>/i);
+        const title = decodeXml(pick(block, /<title>([^<]+)<\/title>/i) || '');
+        const guid = pick(block, /<guid[^>]*>([^<]+)<\/guid>/i) || link;
+        const date = pick(block, /<pubDate>([^<]+)<\/pubDate>/i);
+        const id = extractStatusId(link || guid || '');
+        if (!id) continue;
+        posts.push({
+          id,
+          url: `https://x.com/${USERNAME}/status/${id}`,
+          text: stripHtml(title).slice(0, 400),
+          date: date ? new Date(date).toISOString() : null,
+        });
+      }
+      if (posts.length) {
+        console.log('RSS ok', src, posts.length);
+        break;
+      }
+    } catch (e) {
+      console.warn('RSS', src, e.message);
+    }
+  }
+  return dedupe(posts);
+}
+
+async function postWebhook(p) {
+  const url = p.url || `https://x.com/${USERNAME}/status/${p.id}`;
+  const text = (p.text || '').replace(/\s+/g, ' ').trim().slice(0, 280);
+  const body = {
+    username: '◈ Orbit · X',
+    avatar_url:
+      'https://ui-avatars.com/api/?name=X&background=1da1f2&color=ffffff&bold=true&size=128&format=png',
+    content: url,
+    embeds: [
+      {
+        author: {
+          name: '@' + USERNAME,
+          url: `https://x.com/${USERNAME}`,
+          icon_url:
+            'https://pbs.twimg.com/profile_images/2088274756466286592/ZU7Jl8B-.jpg',
+        },
+        description: text || undefined,
+        url,
+        color: 0x1da1f2,
+        footer: { text: 'Orbit · X radar' },
+        timestamp: p.date || new Date().toISOString(),
+      },
+    ],
+  };
+  if (p.image) body.embeds[0].image = { url: p.image };
+  try {
+    const res = await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    console.log('webhook', res.status, p.id);
+    if (!res.ok) console.warn(await res.text());
+  } catch (e) {
+    console.warn('webhook error', e.message);
+  }
+  await sleep(250);
+}
+
 async function loadSeen() {
   const set = new Set();
   try {
@@ -118,243 +249,6 @@ async function saveSeen(set) {
   );
 }
 
-async function postWebhook(p) {
-  const url = p.url || `https://x.com/${USERNAME}/status/${p.id}`;
-  const text = (p.text || '').replace(/\s+/g, ' ').trim().slice(0, 280);
-  const body = {
-    username: 'X · DiscordNEW8r',
-    content: url,
-    embeds: [
-      {
-        author: {
-          name: '@' + USERNAME,
-          url: `https://x.com/${USERNAME}`,
-          icon_url:
-            'https://pbs.twimg.com/profile_images/2088274756466286592/ZU7Jl8B-.jpg',
-        },
-        description: text || undefined,
-        url,
-        color: 0x1da1f2,
-        footer: { text: 'X watcher · canary-scraper' },
-        timestamp: p.date || new Date().toISOString(),
-      },
-    ],
-  };
-  if (p.image) body.embeds[0].image = { url: p.image };
-  try {
-    const res = await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    console.log('webhook', res.status, p.id);
-    if (!res.ok) console.warn(await res.text());
-  } catch (e) {
-    console.warn('webhook error', e.message);
-  }
-  await sleep(250);
-}
-
-async function fetchViaRss() {
-  const posts = [];
-  for (const src of RSS_SOURCES) {
-    try {
-      const res = await fetch(src, {
-        headers: {
-          'User-Agent': UA,
-          Accept: 'application/rss+xml, application/xml, text/xml, */*',
-        },
-        timeout: 12000,
-      });
-      if (!res.ok) {
-        console.warn('RSS', src, res.status);
-        continue;
-      }
-      const xml = await res.text();
-      if (/whitelist|cloudflare|Attention Required/i.test(xml) && !/<item/i.test(xml))
-        continue;
-      const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
-      for (const m of items) {
-        const block = m[1];
-        const link = pick(block, /<link>([^<]+)<\/link>/i);
-        const title = decodeXml(pick(block, /<title>([^<]+)<\/title>/i) || '');
-        const desc = decodeXml(
-          pick(block, /<description>([\s\S]*?)<\/description>/i) || '',
-        );
-        const guid = pick(block, /<guid[^>]*>([^<]+)<\/guid>/i) || link;
-        const date = pick(block, /<pubDate>([^<]+)<\/pubDate>/i);
-        const id = extractStatusId(link || guid || '');
-        if (!id) continue;
-        posts.push({
-          id,
-          url: `https://x.com/${USERNAME}/status/${id}`,
-          text: stripHtml(title || desc).slice(0, 400),
-          date: date ? new Date(date).toISOString() : null,
-        });
-      }
-      if (posts.length) {
-        console.log('RSS ok', src, posts.length);
-        break;
-      }
-    } catch (e) {
-      console.warn('RSS', src, e.message);
-    }
-  }
-  return dedupe(posts);
-}
-
-async function fetchViaGuestApi() {
-  const gtRes = await fetch('https://api.twitter.com/1.1/guest/activate.json', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + BEARER, 'User-Agent': UA },
-    timeout: 12000,
-  });
-  if (!gtRes.ok) throw new Error('guest activate ' + gtRes.status);
-  const { guest_token } = await gtRes.json();
-  if (!guest_token) throw new Error('no guest_token');
-
-  const userUrl =
-    'https://api.twitter.com/graphql/G3KFjX99QRVbM1zKs_UNHA/UserByScreenName?' +
-    new URLSearchParams({
-      variables: JSON.stringify({
-        screen_name: USERNAME,
-        withSafetyModeUserFields: true,
-      }),
-      features: JSON.stringify({
-        hidden_profile_subscriptions_enabled: true,
-        rweb_tipjar_consumption_enabled: true,
-        responsive_web_graphql_exclude_directive_enabled: true,
-        verified_phone_label_enabled: false,
-        subscriptions_verification_info_is_identity_verified_enabled: true,
-        subscriptions_verification_info_verified_since_enabled: true,
-        highlights_tweets_tab_ui_enabled: true,
-        responsive_web_twitter_article_notes_tab_enabled: true,
-        subscriptions_feature_can_gift_premium: true,
-        creator_subscriptions_tweet_preview_api_enabled: true,
-        responsive_web_graphql_skip_user_profile_image_extensions_enabled: false,
-        responsive_web_graphql_timeline_navigation_enabled: true,
-      }),
-    });
-
-  const userRes = await fetch(userUrl, {
-    headers: {
-      Authorization: 'Bearer ' + BEARER,
-      'x-guest-token': guest_token,
-      'User-Agent': UA,
-      'x-twitter-active-user': 'yes',
-    },
-    timeout: 12000,
-  });
-  if (!userRes.ok) throw new Error('user ' + userRes.status);
-  const userJson = await userRes.json();
-  const restId =
-    userJson?.data?.user?.result?.rest_id ||
-    userJson?.data?.user?.result?.id;
-  if (!restId) throw new Error('no rest_id');
-
-  const tlUrl =
-    'https://api.twitter.com/graphql/V7H0Ap3_Hh2FyS75OCDO3Q/UserTweets?' +
-    new URLSearchParams({
-      variables: JSON.stringify({
-        userId: restId,
-        count: 20,
-        includePromotedContent: false,
-        withQuickPromoteEligibilityTweetFields: false,
-        withVoice: false,
-        withV2Timeline: true,
-      }),
-      features: JSON.stringify({
-        rweb_tipjar_consumption_enabled: true,
-        responsive_web_graphql_exclude_directive_enabled: true,
-        verified_phone_label_enabled: false,
-        creator_subscriptions_tweet_preview_api_enabled: true,
-        responsive_web_graphql_timeline_navigation_enabled: true,
-        responsive_web_graphql_skip_user_profile_image_extensions_enabled: false,
-        communities_web_enable_tweet_community_results_fetch: true,
-        c9s_tweet_anatomy_moderator_badge_enabled: true,
-        articles_preview_enabled: true,
-        responsive_web_edit_tweet_api_enabled: true,
-        graphql_is_translatable_rweb_tweet_is_translatable_enabled: true,
-        view_counts_everywhere_api_enabled: true,
-        longform_notetweets_consumption_enabled: true,
-        responsive_web_twitter_article_tweet_consumption_enabled: true,
-        tweet_awards_web_tipping_enabled: false,
-        creator_subscriptions_quote_tweet_preview_enabled: false,
-        freedom_of_speech_not_reach_fetch_enabled: true,
-        standardized_nudges_misinfo: true,
-        tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled: true,
-        rweb_video_timestamps_enabled: true,
-        longform_notetweets_rich_text_read_enabled: true,
-        longform_notetweets_inline_media_enabled: true,
-        responsive_web_enhance_cards_enabled: false,
-      }),
-    });
-
-  const tlRes = await fetch(tlUrl, {
-    headers: {
-      Authorization: 'Bearer ' + BEARER,
-      'x-guest-token': guest_token,
-      'User-Agent': UA,
-      'x-twitter-active-user': 'yes',
-    },
-    timeout: 15000,
-  });
-  if (!tlRes.ok) throw new Error('timeline ' + tlRes.status);
-  const tl = await tlRes.json();
-
-  const posts = [];
-  const instructions =
-    tl?.data?.user?.result?.timeline_v2?.timeline?.instructions ||
-    tl?.data?.user?.result?.timeline?.timeline?.instructions ||
-    [];
-
-  for (const inst of instructions) {
-    for (const en of inst.entries || []) {
-      const t =
-        en?.content?.itemContent?.tweet_results?.result ||
-        en?.content?.itemContent?.tweet_results?.result?.tweet;
-      if (!t || !t.rest_id) continue;
-      const legacy = t.legacy || t.tweet?.legacy || {};
-      const text = legacy.full_text || legacy.text || '';
-      let image = null;
-      const media = legacy.entities?.media || legacy.extended_entities?.media;
-      if (media && media[0] && media[0].media_url_https)
-        image = media[0].media_url_https;
-      posts.push({
-        id: String(t.rest_id),
-        url: `https://x.com/${USERNAME}/status/${t.rest_id}`,
-        text,
-        image,
-        date: legacy.created_at
-          ? new Date(legacy.created_at).toISOString()
-          : null,
-      });
-    }
-  }
-  return dedupe(posts);
-}
-
-async function fetchViaHtml() {
-  const res = await fetch(`https://x.com/${USERNAME}`, {
-    headers: { 'User-Agent': UA, Accept: 'text/html' },
-    timeout: 15000,
-  });
-  if (!res.ok) throw new Error('html ' + res.status);
-  const html = await res.text();
-  const ids = new Set();
-  const re = new RegExp(`/(?:${USERNAME}|i)/status/(\\d{5,})`, 'gi');
-  let m;
-  while ((m = re.exec(html)) !== null) ids.add(m[1]);
-  const re2 = /status\/(\d{15,})/g;
-  while ((m = re2.exec(html)) !== null) ids.add(m[1]);
-  return [...ids].map((id) => ({
-    id,
-    url: `https://x.com/${USERNAME}/status/${id}`,
-    text: '',
-    date: null,
-  }));
-}
-
 function extractStatusId(s) {
   const m =
     String(s).match(/status\/(\d{5,})/i) || String(s).match(/(\d{15,})/);
@@ -369,10 +263,10 @@ function pick(block, re) {
 function decodeXml(s) {
   return String(s)
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/&/g, '&')
-    .replace(/"/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
 }
 
