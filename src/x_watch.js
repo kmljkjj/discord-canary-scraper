@@ -1,7 +1,7 @@
 /**
  * Watch @DiscordNEW8r on X — post new tweet links to Discord webhook.
  *
- * Secret: X_WEBHOOK_URL (or DISCORD_X_WEBHOOK_URL)
+ * Secret: X_WEBHOOK_URL or X_NEWS_WEBHOOK_URL
  * State: data/x_seen_ids.json
  */
 const fs = require('fs-extra');
@@ -11,14 +11,14 @@ const fetch = require('node-fetch');
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
 const WEBHOOK =
   process.env.X_WEBHOOK_URL ||
+  process.env.X_NEWS_WEBHOOK_URL ||
   process.env.DISCORD_X_WEBHOOK_URL ||
   '';
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'x_seen_ids.json');
 const MAX_SEEN = 200;
-const MAX_NOTIFY = 5; // per run
+const MAX_NOTIFY = 5;
 
-// Public X bearer used by the web client (not a secret user token)
 const BEARER =
   'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
@@ -28,16 +28,15 @@ const UA =
 const RSS_SOURCES = [
   `https://nitter.space/${USERNAME}/rss`,
   `https://nitter.privacyredirect.com/${USERNAME}/rss`,
-  `https://nitter.1d4.us/${USERNAME}/rss`,
   `https://rsshub.rssforever.com/twitter/user/${USERNAME}`,
-  `https://rsshub.pseudoyu.com/twitter/user/${USERNAME}`,
+  `https://api.fxtwitter.com/${USERNAME}`,
 ];
 
 async function main() {
   console.log('=== X Watch @' + USERNAME + ' ===');
   if (!WEBHOOK) {
-    console.error('Missing X_WEBHOOK_URL secret — abort');
-    process.exit(1);
+    console.warn('Missing X webhook secret — soft skip');
+    process.exit(0);
   }
 
   await fs.ensureDir(DATA);
@@ -45,7 +44,6 @@ async function main() {
   console.log('Seen ids:', seen.size);
 
   let posts = [];
-  // 1) Guest GraphQL (best when it works)
   try {
     posts = await fetchViaGuestApi();
     console.log('Guest API posts:', posts.length);
@@ -53,13 +51,11 @@ async function main() {
     console.warn('Guest API fail:', e.message);
   }
 
-  // 2) RSS mirrors
   if (posts.length < 1) {
     posts = await fetchViaRss();
     console.log('RSS posts:', posts.length);
   }
 
-  // 3) Lightweight HTML scrape of x.com profile (last resort)
   if (posts.length < 1) {
     try {
       posts = await fetchViaHtml();
@@ -70,11 +66,10 @@ async function main() {
   }
 
   if (!posts.length) {
-    console.error('No posts fetched from any source');
-    process.exit(1);
+    console.warn('No posts fetched (soft) — sources down / rate-limited');
+    process.exit(0);
   }
 
-  // Newest first
   posts.sort((a, b) => String(b.id).localeCompare(String(a.id)));
 
   const isFirstRun = seen.size === 0;
@@ -84,10 +79,9 @@ async function main() {
     fresh.push(p);
   }
 
-  console.log('Fresh:', fresh.length, isFirstRun ? '(first run → seed only)' : '');
+  console.log('Fresh:', fresh.length, isFirstRun ? '(seed only)' : '');
 
   if (isFirstRun) {
-    // Seed without flooding the channel
     for (const p of posts) seen.add(String(p.id));
     await saveSeen(seen);
     console.log('Seeded', seen.size, 'ids — no webhook');
@@ -99,7 +93,6 @@ async function main() {
     await postWebhook(p);
     seen.add(String(p.id));
   }
-  // Mark any other fresh as seen so we don't backlog later
   for (const p of fresh) seen.add(String(p.id));
   await saveSeen(seen);
   console.log('Done. Sent', toSend.length);
@@ -142,14 +135,12 @@ async function postWebhook(p) {
         description: text || undefined,
         url,
         color: 0x1da1f2,
-        footer: { text: 'X watcher · discord-canary-scraper' },
+        footer: { text: 'X watcher · canary-scraper' },
         timestamp: p.date || new Date().toISOString(),
       },
     ],
   };
-  if (p.image) {
-    body.embeds[0].image = { url: p.image };
-  }
+  if (p.image) body.embeds[0].image = { url: p.image };
   try {
     const res = await fetch(WEBHOOK, {
       method: 'POST',
@@ -161,18 +152,19 @@ async function postWebhook(p) {
   } catch (e) {
     console.warn('webhook error', e.message);
   }
-  await sleep(500);
+  await sleep(250);
 }
-
-// ── Sources ───────────────────────────────────────────
 
 async function fetchViaRss() {
   const posts = [];
   for (const src of RSS_SOURCES) {
     try {
       const res = await fetch(src, {
-        headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml, text/xml, */*' },
-        timeout: 15000,
+        headers: {
+          'User-Agent': UA,
+          Accept: 'application/rss+xml, application/xml, text/xml, */*',
+        },
+        timeout: 12000,
       });
       if (!res.ok) {
         console.warn('RSS', src, res.status);
@@ -186,7 +178,9 @@ async function fetchViaRss() {
         const block = m[1];
         const link = pick(block, /<link>([^<]+)<\/link>/i);
         const title = decodeXml(pick(block, /<title>([^<]+)<\/title>/i) || '');
-        const desc = decodeXml(pick(block, /<description>([\s\S]*?)<\/description>/i) || '');
+        const desc = decodeXml(
+          pick(block, /<description>([\s\S]*?)<\/description>/i) || '',
+        );
         const guid = pick(block, /<guid[^>]*>([^<]+)<\/guid>/i) || link;
         const date = pick(block, /<pubDate>([^<]+)<\/pubDate>/i);
         const id = extractStatusId(link || guid || '');
@@ -210,20 +204,15 @@ async function fetchViaRss() {
 }
 
 async function fetchViaGuestApi() {
-  // Activate guest
   const gtRes = await fetch('https://api.twitter.com/1.1/guest/activate.json', {
     method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + BEARER,
-      'User-Agent': UA,
-    },
-    timeout: 15000,
+    headers: { Authorization: 'Bearer ' + BEARER, 'User-Agent': UA },
+    timeout: 12000,
   });
   if (!gtRes.ok) throw new Error('guest activate ' + gtRes.status);
   const { guest_token } = await gtRes.json();
   if (!guest_token) throw new Error('no guest_token');
 
-  // User by screen name
   const userUrl =
     'https://api.twitter.com/graphql/G3KFjX99QRVbM1zKs_UNHA/UserByScreenName?' +
     new URLSearchParams({
@@ -253,9 +242,8 @@ async function fetchViaGuestApi() {
       'x-guest-token': guest_token,
       'User-Agent': UA,
       'x-twitter-active-user': 'yes',
-      'x-twitter-client-language': 'en',
     },
-    timeout: 15000,
+    timeout: 12000,
   });
   if (!userRes.ok) throw new Error('user ' + userRes.status);
   const userJson = await userRes.json();
@@ -264,7 +252,6 @@ async function fetchViaGuestApi() {
     userJson?.data?.user?.result?.id;
   if (!restId) throw new Error('no rest_id');
 
-  // User tweets timeline
   const tlUrl =
     'https://api.twitter.com/graphql/V7H0Ap3_Hh2FyS75OCDO3Q/UserTweets?' +
     new URLSearchParams({
@@ -310,7 +297,7 @@ async function fetchViaGuestApi() {
       'User-Agent': UA,
       'x-twitter-active-user': 'yes',
     },
-    timeout: 20000,
+    timeout: 15000,
   });
   if (!tlRes.ok) throw new Error('timeline ' + tlRes.status);
   const tl = await tlRes.json();
@@ -322,8 +309,7 @@ async function fetchViaGuestApi() {
     [];
 
   for (const inst of instructions) {
-    const entries = inst.entries || [];
-    for (const en of entries) {
+    for (const en of inst.entries || []) {
       const t =
         en?.content?.itemContent?.tweet_results?.result ||
         en?.content?.itemContent?.tweet_results?.result?.tweet;
@@ -350,22 +336,15 @@ async function fetchViaGuestApi() {
 
 async function fetchViaHtml() {
   const res = await fetch(`https://x.com/${USERNAME}`, {
-    headers: {
-      'User-Agent': UA,
-      Accept: 'text/html',
-    },
-    timeout: 20000,
+    headers: { 'User-Agent': UA, Accept: 'text/html' },
+    timeout: 15000,
   });
   if (!res.ok) throw new Error('html ' + res.status);
   const html = await res.text();
   const ids = new Set();
-  const re = new RegExp(
-    `/(?:${USERNAME}|i)/status/(\d{5,})`,
-    'gi',
-  );
+  const re = new RegExp(`/(?:${USERNAME}|i)/status/(\\d{5,})`, 'gi');
   let m;
   while ((m = re.exec(html)) !== null) ids.add(m[1]);
-  // also bare status links
   const re2 = /status\/(\d{15,})/g;
   while ((m = re2.exec(html)) !== null) ids.add(m[1]);
   return [...ids].map((id) => ({
@@ -376,10 +355,9 @@ async function fetchViaHtml() {
   }));
 }
 
-// ── helpers ───────────────────────────────────────────
-
 function extractStatusId(s) {
-  const m = String(s).match(/status\/(\d{5,})/i) || String(s).match(/(\d{15,})/);
+  const m =
+    String(s).match(/status\/(\d{5,})/i) || String(s).match(/(\d{15,})/);
   return m ? m[1] : null;
 }
 
@@ -391,10 +369,10 @@ function pick(block, re) {
 function decodeXml(s) {
   return String(s)
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/&/g, '&')
+    .replace(/"/g, '"')
     .replace(/&#39;/g, "'");
 }
 
@@ -415,6 +393,6 @@ function sleep(ms) {
 }
 
 main().catch((e) => {
-  console.error(e);
-  process.exit(1);
+  console.warn('X watch error (soft):', e.message || e);
+  process.exit(0);
 });
