@@ -1,10 +1,17 @@
 /**
  * Orbit — original Discord embeds for Canary findings
- * Custom layout (not shared with other scrapers).
+ * Custom layout + webhook identity (name + avatar).
  */
 const fetch = require('node-fetch');
 
-const BOT = 'Orbit';
+// Webhook identity (override via secrets/env if you want)
+const BOT =
+  process.env.ORBIT_BOT_NAME ||
+  '◈ Orbit';
+const AVATAR =
+  process.env.ORBIT_AVATAR_URL ||
+  'https://ui-avatars.com/api/?name=O&background=7c5cff&color=ffffff&bold=true&size=128&format=png&font-size=0.55';
+
 const PALETTE = {
   neon: 0x7c5cff,
   mint: 0x3dffb5,
@@ -82,6 +89,7 @@ async function notifyAll({
 
     await post(webhookUrl, {
       username: BOT,
+      avatar_url: AVATAR,
       embeds: [
         {
           title: '◈ Canary · ' + bn,
@@ -94,21 +102,13 @@ async function notifyAll({
             rel,
           color: PALETTE.neon,
           fields: [
-            {
-              name: 'channel',
-              value: '`canary`',
-              inline: true,
-            },
+            { name: 'channel', value: '`canary`', inline: true },
             {
               name: 'hash',
               value: hash ? '`' + hash + '`' : '`—`',
               inline: true,
             },
-            {
-              name: 'build',
-              value: '`' + bn + '`',
-              inline: true,
-            },
+            { name: 'build', value: '`' + bn + '`', inline: true },
           ],
           footer: { text: 'Orbit · live canary radar' },
           timestamp: ts,
@@ -214,6 +214,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
   await post(webhookUrl, {
     username: BOT,
+    avatar_url: AVATAR,
     embeds: [
       {
         title: '◈ experiment radar',
@@ -246,11 +247,7 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
     lines.push('**◉ new · ' + a.length + '**');
     for (const k of a.slice(0, 22)) {
       const v = String(diff.added[k]).replace(/\s+/g, ' ').slice(0, 90);
-      lines.push(
-        isRoutes
-          ? '`'+k+'`\n→ `'+v+'`'
-          : '`'+k+'`  ' + v,
-      );
+      lines.push(isRoutes ? '`' + k + '`\n→ `' + v + '`' : '`' + k + '`  ' + v);
     }
     if (a.length > 22) lines.push('_… ' + (a.length - 22) + ' more_');
   }
@@ -260,11 +257,7 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
     lines.push('**◎ rewritten · ' + m.length + '**');
     for (const k of m.slice(0, 18)) {
       const v = String(diff.modified[k]).replace(/\s+/g, ' ').slice(0, 90);
-      lines.push(
-        isRoutes
-          ? '`'+k+'`\n→ `'+v+'`'
-          : '`'+k+'`  ' + v,
-      );
+      lines.push(isRoutes ? '`' + k + '`\n→ `' + v + '`' : '`' + k + '`  ' + v);
     }
     if (m.length > 18) lines.push('_… ' + (m.length - 18) + ' more_');
   }
@@ -281,6 +274,7 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
 
   await post(webhookUrl, {
     username: BOT,
+    avatar_url: AVATAR,
     embeds: [
       {
         title,
@@ -299,6 +293,9 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
 }
 
 async function post(url, body) {
+  // Always stamp identity on every payload
+  body.username = body.username || BOT;
+  body.avatar_url = body.avatar_url || AVATAR;
   try {
     const res = await fetch(url, {
       method: 'POST',
