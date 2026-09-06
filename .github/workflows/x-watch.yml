@@ -42,16 +42,18 @@ jobs:
 
       - name: Watch @DiscordNEW8r
         env:
-          X_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
-          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
+          # Accept either secret name
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL || secrets.X_NEWS_WEBHOOK_URL }}
+          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL || secrets.X_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_USERNAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
-        # Never fail the workflow if X sources are down
+        # Public X sources often fail — never red the workflow
         continue-on-error: true
         run: node src/x_watch.js
 
       - name: Save seen ids
+        if: always()
         run: |
           set -e
           git config user.name "github-actions[bot]"
