@@ -2,7 +2,6 @@ name: X News · DiscordNEW8r
 
 on:
   schedule:
-    # Toutes les 10 minutes
     - cron: '*/10 * * * *'
   workflow_dispatch:
 
@@ -26,8 +25,20 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
+          restore-keys: |
+            nm-${{ runner.os }}-node22-
+
       - name: Install dependencies
-        run: npm install --no-audit --no-fund --no-package-lock
+        run: |
+          if [ ! -d node_modules/node-fetch ]; then
+            npm install --no-audit --no-fund --no-package-lock
+          fi
+          rm -f package-lock.json
 
       - name: Watch @DiscordNEW8r
         env:
@@ -35,6 +46,7 @@ jobs:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_SCREEN_NAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
+        continue-on-error: true
         run: node src/x_news.js
 
       - name: Save seen ids
@@ -57,5 +69,4 @@ jobs:
             git stash push -u -m "noise-$i" || true
             sleep 2
           done
-          echo "::warning::could not push seen file"
           exit 0

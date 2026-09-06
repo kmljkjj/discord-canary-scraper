@@ -2,7 +2,7 @@ name: Discord Quests
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -17,25 +17,35 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
-      - name: Setup Node 22 (no dependency cache)
-        uses: actions/setup-node@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
-          # Ne PAS mettre cache: 'npm' ici — sinon erreur sans package-lock.json
+
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
+          restore-keys: |
+            nm-${{ runner.os }}-node22-
 
       - name: Install npm packages
         run: |
-          npm install --no-audit --no-fund --no-package-lock
-          # node-fetch + fs-extra only needed; avoid lockfile entirely
+          if [ ! -d node_modules/node-fetch ]; then
+            npm install --no-audit --no-fund --no-package-lock
+          fi
+          rm -f package-lock.json
 
       - name: Track Discord quests
         env:
           QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        continue-on-error: true
         run: node src/quests.js
 
       - name: Save quest state
