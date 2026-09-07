@@ -1,23 +1,19 @@
 /**
- * Orbit — original Discord embeds for Canary findings
- * Custom layout + webhook identity (name + avatar).
+ * Orbit webhook embeds — clean identity, fast delivery
  */
 const fetch = require('node-fetch');
 
-// Webhook identity (override via secrets/env if you want)
-const BOT =
-  process.env.ORBIT_BOT_NAME ||
-  '◈ Orbit';
+const BOT = process.env.ORBIT_BOT_NAME || 'Orbit';
+// Clean indigo mark (Discord-adjacent palette)
 const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
-  'https://ui-avatars.com/api/?name=O&background=7c5cff&color=ffffff&bold=true&size=128&format=png&font-size=0.55';
+  'https://api.dicebear.com/9.x/shapes/png?seed=orbit-canary&backgroundColor=5865f2&shape1Color=ffffff&shape2Color=eb459e&shape3Color=57f287&size=128';
 
-const PALETTE = {
-  neon: 0x7c5cff,
-  mint: 0x3dffb5,
-  coral: 0xff6b8a,
-  sky: 0x4fc3f7,
-  ink: 0x1a1a2e,
+const C = {
+  build: 0x5865f2,
+  exp: 0x57f287,
+  str: 0xeb459e,
+  route: 0xfee75c,
 };
 
 async function notifyAll({
@@ -26,9 +22,6 @@ async function notifyAll({
   expDiff,
   strDiff,
   rtDiff,
-  freshExps,
-  freshStrings,
-  freshRoutes,
   webhookUrl,
 }) {
   if (!webhookUrl) {
@@ -41,11 +34,10 @@ async function notifyAll({
     ? String(build.versionHash).slice(0, 12)
     : null;
   const ts = new Date().toISOString();
-  const rel = '<t:' + Math.floor(Date.now() / 1000) + ':R>';
 
-  const exp = normalizeExpDiff(expDiff, freshExps);
-  const str = normalizeMapDiff(strDiff, freshStrings);
-  const rt = normalizeMapDiff(rtDiff, freshRoutes);
+  const exp = normalizeExpDiff(expDiff);
+  const str = normalizeMapDiff(strDiff);
+  const rt = normalizeMapDiff(rtDiff);
 
   const nExp =
     exp.added.length + exp.modified.length + exp.removed.length;
@@ -59,63 +51,47 @@ async function notifyAll({
     Object.keys(rt.removed).length;
 
   if (isNewBuild) {
-    const chips = [];
+    const parts = [];
     if (nExp)
-      chips.push(
-        'experiments **' +
-          signed(exp.added.length, exp.modified.length, exp.removed.length) +
-          '**',
+      parts.push(
+        'Experiments ' +
+          signed(exp.added.length, exp.modified.length, exp.removed.length),
       );
     if (nStr)
-      chips.push(
-        'strings **' +
+      parts.push(
+        'Strings ' +
           signed(
             Object.keys(str.added).length,
             Object.keys(str.modified).length,
             Object.keys(str.removed).length,
-          ) +
-          '**',
+          ),
       );
     if (nRt)
-      chips.push(
-        'routes **' +
+      parts.push(
+        'Routes ' +
           signed(
             Object.keys(rt.added).length,
             Object.keys(rt.modified).length,
             Object.keys(rt.removed).length,
-          ) +
-          '**',
+          ),
       );
 
     await post(webhookUrl, {
-      username: BOT,
-      avatar_url: AVATAR,
       embeds: [
         {
-          title: '◈ Canary · ' + bn,
+          author: { name: 'Discord Canary', icon_url: AVATAR },
+          title: 'Build ' + bn,
           description:
-            (chips.length
-              ? chips.map((c) => '› ' + c).join('\n')
-              : '› client bump — catalogs unchanged') +
-            '\n\n' +
-            'spotted ' +
-            rel,
-          color: PALETTE.neon,
-          fields: [
-            { name: 'channel', value: '`canary`', inline: true },
-            {
-              name: 'hash',
-              value: hash ? '`' + hash + '`' : '`—`',
-              inline: true,
-            },
-            { name: 'build', value: '`' + bn + '`', inline: true },
-          ],
-          footer: { text: 'Orbit · live canary radar' },
+            (parts.length
+              ? parts.map((p) => '• ' + p).join('\n')
+              : '• Client bump — no catalog changes') +
+            (hash ? '\n• Hash `' + hash + '`' : ''),
+          color: C.build,
+          footer: { text: 'Orbit' },
           timestamp: ts,
         },
       ],
     });
-    console.log('Sent build', bn);
   }
 
   if (nExp) await sendExperiments(webhookUrl, bn, exp, ts);
@@ -127,11 +103,11 @@ function signed(a, m, r) {
   const bits = [];
   if (a) bits.push('+' + a);
   if (m) bits.push('~' + m);
-  if (r) bits.push('−' + r);
+  if (r) bits.push('-' + r);
   return bits.join(' ') || '0';
 }
 
-function normalizeExpDiff(diff, legacy) {
+function normalizeExpDiff(diff) {
   if (diff && (diff.added || diff.modified || diff.removed)) {
     return {
       added: Array.isArray(diff.added) ? diff.added : [],
@@ -139,14 +115,10 @@ function normalizeExpDiff(diff, legacy) {
       removed: Array.isArray(diff.removed) ? diff.removed : [],
     };
   }
-  return {
-    added: Array.isArray(legacy) ? legacy : [],
-    modified: [],
-    removed: [],
-  };
+  return { added: [], modified: [], removed: [] };
 }
 
-function normalizeMapDiff(diff, legacy) {
+function normalizeMapDiff(diff) {
   if (diff && (diff.added || diff.modified || diff.removed)) {
     return {
       added: diff.added && typeof diff.added === 'object' ? diff.added : {},
@@ -156,17 +128,13 @@ function normalizeMapDiff(diff, legacy) {
         diff.removed && typeof diff.removed === 'object' ? diff.removed : {},
     };
   }
-  return {
-    added: legacy && typeof legacy === 'object' ? legacy : {},
-    modified: {},
-    removed: {},
-  };
+  return { added: {}, modified: {}, removed: {} };
 }
 
-function expCard(e) {
+function expLine(e) {
   const id = typeof e === 'string' ? e : e.id;
   const kind = (e && (e.type || e.kind)) || 'user';
-  const label = e && e.label ? String(e.label).slice(0, 72) : null;
+  const label = e && e.label ? String(e.label).slice(0, 64) : null;
   let depth = null;
   if (e && Array.isArray(e.treatments) && e.treatments.length)
     depth = e.treatments.length + ' treatments';
@@ -174,53 +142,48 @@ function expCard(e) {
     depth = Object.keys(e.variations).length + ' variations';
   else if (e && e.treatmentCount) depth = e.treatmentCount + ' treatments';
 
-  let body = '**`' + id + '`** · `' + kind + '`';
-  if (label) body += '\n' + label;
-  if (depth) body += '\n_' + depth + '_';
-  return body;
+  let line = '`+' + id + '` · ' + kind;
+  if (label) line += '\n' + label;
+  if (depth) line += ' · _' + depth + '_';
+  return line;
 }
 
 async function sendExperiments(webhookUrl, bn, exp, ts) {
-  const sections = [];
-
+  const lines = [];
   if (exp.added.length) {
-    sections.push('**◉ arrived · ' + exp.added.length + '**');
-    for (const e of exp.added.slice(0, 16)) sections.push(expCard(e));
+    lines.push('**Added · ' + exp.added.length + '**');
+    for (const e of exp.added.slice(0, 16)) lines.push(expLine(e));
     if (exp.added.length > 16)
-      sections.push('_… ' + (exp.added.length - 16) + ' more_');
+      lines.push('_… +' + (exp.added.length - 16) + ' more_');
   }
-
   if (exp.modified.length) {
-    sections.push('');
-    sections.push('**◎ shifted · ' + exp.modified.length + '**');
-    for (const e of exp.modified.slice(0, 10)) sections.push(expCard(e));
+    if (lines.length) lines.push('');
+    lines.push('**Updated · ' + exp.modified.length + '**');
+    for (const e of exp.modified.slice(0, 10)) lines.push(expLine(e));
     if (exp.modified.length > 10)
-      sections.push('_… ' + (exp.modified.length - 10) + ' more_');
+      lines.push('_… +' + (exp.modified.length - 10) + ' more_');
   }
-
   if (exp.removed.length) {
-    sections.push('');
-    sections.push('**◌ gone · ' + exp.removed.length + '**');
+    if (lines.length) lines.push('');
+    lines.push('**Removed · ' + exp.removed.length + '**');
     for (const e of exp.removed.slice(0, 12)) {
       const id = typeof e === 'string' ? e : e.id;
-      sections.push('`' + id + '`');
+      lines.push('`- ' + id + '`');
     }
     if (exp.removed.length > 12)
-      sections.push('_… ' + (exp.removed.length - 12) + ' more_');
+      lines.push('_… +' + (exp.removed.length - 12) + ' more_');
   }
-
-  sections.push('');
-  sections.push('build `' + bn + '`');
+  lines.push('');
+  lines.push('Build `' + bn + '`');
 
   await post(webhookUrl, {
-    username: BOT,
-    avatar_url: AVATAR,
     embeds: [
       {
-        title: '◈ experiment radar',
-        description: sections.join('\n').slice(0, 3900),
-        color: PALETTE.mint,
-        footer: { text: 'Orbit · experiment radar' },
+        author: { name: 'Experiments', icon_url: AVATAR },
+        title: 'Canary experiments',
+        description: lines.join('\n').slice(0, 3900),
+        color: C.exp,
+        footer: { text: 'Orbit' },
         timestamp: ts,
       },
     ],
@@ -234,53 +197,52 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
 async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
   const isRoutes = kind === 'routes';
-  const title = isRoutes ? '◈ route map' : '◈ string lattice';
-  const color = isRoutes ? PALETTE.sky : PALETTE.coral;
-  const foot = isRoutes ? 'Orbit · route map' : 'Orbit · string lattice';
-
-  const lines = [];
   const a = Object.keys(diff.added);
   const m = Object.keys(diff.modified);
   const r = Object.keys(diff.removed);
+  const lines = [];
 
   if (a.length) {
-    lines.push('**◉ new · ' + a.length + '**');
+    lines.push('**Added · ' + a.length + '**');
     for (const k of a.slice(0, 22)) {
       const v = String(diff.added[k]).replace(/\s+/g, ' ').slice(0, 90);
-      lines.push(isRoutes ? '`' + k + '`\n→ `' + v + '`' : '`' + k + '`  ' + v);
+      lines.push(
+        isRoutes ? '`' + k + '` → `' + v + '`' : '`+' + k + '`  ' + v,
+      );
     }
-    if (a.length > 22) lines.push('_… ' + (a.length - 22) + ' more_');
+    if (a.length > 22) lines.push('_… +' + (a.length - 22) + ' more_');
   }
-
   if (m.length) {
-    lines.push('');
-    lines.push('**◎ rewritten · ' + m.length + '**');
+    if (lines.length) lines.push('');
+    lines.push('**Updated · ' + m.length + '**');
     for (const k of m.slice(0, 18)) {
       const v = String(diff.modified[k]).replace(/\s+/g, ' ').slice(0, 90);
-      lines.push(isRoutes ? '`' + k + '`\n→ `' + v + '`' : '`' + k + '`  ' + v);
+      lines.push(
+        isRoutes ? '`' + k + '` → `' + v + '`' : '`~' + k + '`  ' + v,
+      );
     }
-    if (m.length > 18) lines.push('_… ' + (m.length - 18) + ' more_');
+    if (m.length > 18) lines.push('_… +' + (m.length - 18) + ' more_');
   }
-
   if (r.length) {
-    lines.push('');
-    lines.push('**◌ dropped · ' + r.length + '**');
-    for (const k of r.slice(0, 18)) lines.push('`' + k + '`');
-    if (r.length > 18) lines.push('_… ' + (r.length - 18) + ' more_');
+    if (lines.length) lines.push('');
+    lines.push('**Removed · ' + r.length + '**');
+    for (const k of r.slice(0, 18)) lines.push('`- ' + k + '`' );
+    if (r.length > 18) lines.push('_… +' + (r.length - 18) + ' more_');
   }
-
   lines.push('');
-  lines.push('build `' + bn + '`');
+  lines.push('Build `' + bn + '`');
 
   await post(webhookUrl, {
-    username: BOT,
-    avatar_url: AVATAR,
     embeds: [
       {
-        title,
+        author: {
+          name: isRoutes ? 'API routes' : 'Strings',
+          icon_url: AVATAR,
+        },
+        title: isRoutes ? 'Canary routes' : 'Canary strings',
         description: lines.join('\n').slice(0, 3900),
-        color,
-        footer: { text: foot },
+        color: isRoutes ? C.route : C.str,
+        footer: { text: 'Orbit' },
         timestamp: ts,
       },
     ],
@@ -293,9 +255,8 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
 }
 
 async function post(url, body) {
-  // Always stamp identity on every payload
-  body.username = body.username || BOT;
-  body.avatar_url = body.avatar_url || AVATAR;
+  body.username = BOT;
+  body.avatar_url = AVATAR;
   try {
     const res = await fetch(url, {
       method: 'POST',
@@ -307,7 +268,7 @@ async function post(url, body) {
   } catch (e) {
     console.warn('webhook error', e.message);
   }
-  await new Promise((r) => setTimeout(r, 200));
+  await new Promise((r) => setTimeout(r, 80));
 }
 
 module.exports = { notifyAll };

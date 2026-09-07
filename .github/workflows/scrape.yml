@@ -2,6 +2,7 @@ name: Scrape Discord Canary
 
 on:
   schedule:
+    # GitHub cron is often delayed; pair with bot dispatch for real speed
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -12,12 +13,13 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  cancel-in-progress: false
+  # Cancel stuck/queued runs so a fresh build is not blocked
+  cancel-in-progress: true
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
         with:
@@ -48,6 +50,7 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
+          ORBIT_BOT_NAME: Orbit
         run: node src/index.js
 
       - name: Commit baseline
@@ -85,7 +88,7 @@ jobs:
               exit 0
             fi
             git stash push -u -m "noise-$i" || true
-            sleep 2
+            sleep 1
           done
           echo "::warning::push failed"
           exit 0
