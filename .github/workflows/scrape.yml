@@ -2,7 +2,7 @@ name: Scrape Discord Canary
 
 on:
   schedule:
-    # GitHub cron is often delayed; pair with bot dispatch for real speed
+    # Backup only — real speed comes from repository_dispatch (bot / script)
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -13,13 +13,13 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  # Cancel stuck/queued runs so a fresh build is not blocked
+  # New build must not wait behind an old run
   cancel-in-progress: true
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v5
         with:
@@ -42,11 +42,11 @@ jobs:
           if [ ! -d node_modules/node-fetch ]; then
             npm install --no-audit --no-fund --no-package-lock
           else
-            echo "node_modules cache hit"
+            echo "cache hit"
           fi
           rm -f package-lock.json
 
-      - name: Scrape + notify
+      - name: Scrape + notify (priority)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
