@@ -133,7 +133,7 @@ function expFingerprint(e) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v9.1 (Discord-native strings) ===');
+  console.log('=== Canary Pulse v9.2 (notify-first) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(CACHE);
@@ -360,18 +360,13 @@ async function main() {
   for (const k of Object.keys(nextRt)) knownRt.add(k);
   for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
 
-  await saveKnownExp(knownExp);
-  await saveKnownStr(knownStr);
-  await saveKnownRt(knownRt);
-  await saveLastExtract(LAST_EXTRACT_STR, extractedStrings, build.buildNumber);
-  await saveLastExtract(LAST_EXTRACT_RT, nextRt, build.buildNumber);
-
   if (expDiff.added.length > MAX_NOTIFY_EXP) {
     expDiff.added = [];
     expDiff.modified = [];
     expDiff.removed = [];
   }
 
+  // Notify FIRST — before heavy disk writes
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild;
 
@@ -386,6 +381,14 @@ async function main() {
     });
     if (shouldAnnounceBuild) await markBuild(build.buildNumber);
   }
+
+  await Promise.all([
+    saveKnownExp(knownExp),
+    saveKnownStr(knownStr),
+    saveKnownRt(knownRt),
+    saveLastExtract(LAST_EXTRACT_STR, extractedStrings, build.buildNumber),
+    saveLastExtract(LAST_EXTRACT_RT, nextRt, build.buildNumber),
+  ]);
 
   let mergedExps = mergeExp(prev.experiments, findings.experiments);
   if (expDiff.removed.length) {
