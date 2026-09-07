@@ -5,7 +5,6 @@ cogs/canary_trigger.py
   await bot.load_extension("cogs.canary_trigger")
 
 Colle ton PAT classic (repo + workflow) dans GITHUB_TOKEN.
-Laisse le bot tourner 24/7 pour rivaliser avec Wumpus.
 """
 
 from __future__ import annotations
@@ -14,6 +13,7 @@ import asyncio
 import json
 import re
 import socket
+import ssl
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -24,60 +24,94 @@ from discord.ext import commands, tasks
 # ═══════════════════════════════════════════════════════
 # CONFIG
 # ═══════════════════════════════════════════════════════
-GITHUB_TOKEN = "GITHUB_TOKEN"  # PAT classic : repo + workflow
+GITHUB_TOKEN = "ghp_COLLLE_TON_TOKEN_ICI"  # PAT classic : repo + workflow
 GITHUB_REPO = "kmljkjj/discord-canary-scraper"
 DISPATCH_EVENT = "trigger-scraping"
-INTERVAL_SECONDS = 20  # 15–25s idéal ; sous 15 = risque rate-limit inutile
+INTERVAL_SECONDS = 20
 STATE_FILE = Path(__file__).resolve().parent / "last_canary_build.txt"
 # ═══════════════════════════════════════════════════════
 
-CANARY_URL = "https://canary.discord.com/app"
-UA = "Mozilla/5.0 (compatible; Datamining-cog/3.1)"
+# Plusieurs URLs : si /app renvoie 400, /login a souvent le même BUILD_NUMBER
+CANARY_URLS = (
+    "https://canary.discord.com/app",
+    "https://canary.discord.com/login",
+    "https://canary.discord.com/channels/@me",
+)
+
+# UA navigateur réel (les UA "bot" se font parfois 400 / Cloudflare)
+UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/131.0.0.0 Safari/537.36"
+)
 _BUILD_RE = re.compile(r'"BUILD_NUMBER"\s*:\s*"?(\d+)"?')
 _HASH_RE = re.compile(r'"VERSION_HASH"\s*:\s*"([a-f0-9]{8,})"', re.I)
 
-HTTP_TIMEOUT = 12
+HTTP_TIMEOUT = 15
 DISPATCH_TIMEOUT = 15
 
-_OPENER = urllib.request.build_opener()
+_CTX = ssl.create_default_context()
 
 
-def _read_build_fast(url: str) -> tuple[str | None, str | None]:
-    """Stream le HTML et stop dès BUILD_NUMBER (pas toute la page)."""
-    req = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": UA,
-            "Accept": "text/html",
-            "Accept-Encoding": "identity",
-            "Connection": "close",
-        },
-        method="GET",
-    )
+def _headers() -> dict:
+    return {
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+    }
+
+
+def _read_build_from_url(url: str) -> tuple[str | None, str | None]:
+    req = urllib.request.Request(url, headers=_headers(), method="GET")
     try:
-        with _OPENER.open(req, timeout=HTTP_TIMEOUT) as res:
-            buf = ""
-            while True:
-                chunk = res.read(4096)
+        with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT, context=_CTX) as res:
+            # Pas besoin de toute la page : BUILD_NUMBER est en début de HTML
+            buf = b""
+            while len(buf) < 65536:
+                chunk = res.read(8192)
                 if not chunk:
                     break
-                buf += chunk.decode("utf-8", errors="replace")
-                m = _BUILD_RE.search(buf)
+                buf += chunk
+                text = buf.decode("utf-8", errors="replace")
+                m = _BUILD_RE.search(text)
                 if m:
-                    build = m.group(1)
-                    h = _HASH_RE.search(buf)
-                    if not h and len(buf) < 20000:
-                        extra = res.read(8192)
-                        if extra:
-                            buf += extra.decode("utf-8", errors="replace")
-                            h = _HASH_RE.search(buf)
-                    return build, (h.group(1)[:12] if h else None)
-            m = _BUILD_RE.search(buf)
+                    h = _HASH_RE.search(text)
+                    return m.group(1), (h.group(1)[:12] if h else None)
+            text = buf.decode("utf-8", errors="replace")
+            m = _BUILD_RE.search(text)
             if m:
-                h = _HASH_RE.search(buf)
+                h = _HASH_RE.search(text)
                 return m.group(1), (h.group(1)[:12] if h else None)
+    except urllib.error.HTTPError as e:
+        print(f"[canary-cog] HTTP {e.code} {url}", flush=True)
+        raise
     except Exception as e:
-        print(f"[canary-cog] fetch fail: {e}", flush=True)
+        print(f"[canary-cog] fetch fail {url}: {e}", flush=True)
+        raise
+    return None, None
+
+
+def _read_build_fast() -> tuple[str | None, str | None]:
+    """Essaie plusieurs URLs + 1 retry."""
+    last_err = None
+    for attempt in range(2):
+        for url in CANARY_URLS:
+            try:
+                build, h = _read_build_from_url(url)
+                if build:
+                    return build, h
+            except Exception as e:
+                last_err = e
+                continue
+        if attempt == 0:
+            # petite pause avant retry
+            import time
+
+            time.sleep(1.2)
+    if last_err:
+        print(f"[canary-cog] all URLs failed: {last_err}", flush=True)
     return None, None
 
 
@@ -105,17 +139,8 @@ def _state_token(build: str, version_hash: str | None) -> str:
 
 def _dispatch() -> tuple[bool, str]:
     tok = (GITHUB_TOKEN or "").strip()
-    if (
-        not tok
-        or len(tok) < 20
-        or tok == "GITHUB_TOKEN"
-        or "REMPLACE" in tok
-        or tok.startswith("ghp_") is False
-        and not tok.startswith("github_pat_")
-    ):
-        # accepte ghp_ (classic) et github_pat_ (fine-grained)
-        if not tok or tok == "GITHUB_TOKEN" or len(tok) < 20:
-            return False, "GITHUB_TOKEN manquant / invalide"
+    if not tok or len(tok) < 20 or "COLLLE" in tok or tok == "GITHUB_TOKEN":
+        return False, "GITHUB_TOKEN manquant / invalide"
 
     url = f"https://api.github.com/repos/{GITHUB_REPO}/dispatches"
     body = json.dumps({"event_type": DISPATCH_EVENT}).encode("utf-8")
@@ -142,9 +167,9 @@ def _dispatch() -> tuple[bool, str]:
 
 
 def _tick_sync() -> str:
-    build, vhash = _read_build_fast(CANARY_URL)
+    build, vhash = _read_build_fast()
     if not build:
-        return "pas de BUILD_NUMBER"
+        return "pas de BUILD_NUMBER (fetch 400/blocked — retry next tick)"
     token = _state_token(build, vhash)
     last = _read_last()
     if last == token:
@@ -157,8 +182,6 @@ def _tick_sync() -> str:
 
 
 class CanaryTrigger(commands.Cog):
-    """Check Canary toutes les N secondes → dispatch GitHub si nouveau build."""
-
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self._lock = asyncio.Lock()
@@ -190,7 +213,6 @@ class CanaryTrigger(commands.Cog):
     @commands.command(name="canary_check")
     @commands.is_owner()
     async def canary_check(self, ctx: commands.Context):
-        """Vérif manuelle (dispatch seulement si nouveau)."""
         await ctx.send("Check Canary…")
         result = await asyncio.to_thread(_tick_sync)
         await ctx.send(f"```\n{result}\n```")
@@ -198,7 +220,6 @@ class CanaryTrigger(commands.Cog):
     @commands.command(name="canary_force")
     @commands.is_owner()
     async def canary_force(self, ctx: commands.Context):
-        """Force un dispatch même si build identique."""
         ok, msg = await asyncio.to_thread(_dispatch)
         await ctx.send(f"{'✅' if ok else '❌'} `{msg}`")
 
