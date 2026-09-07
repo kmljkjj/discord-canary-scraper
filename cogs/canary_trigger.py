@@ -1,21 +1,19 @@
 """
-Cog Discord.py — trigger Canary ultra-réactif
+Cog Discord.py — trigger Canary ultra-rapide
+cogs/canary_trigger.py
 
-Place dans: cogs/canary_trigger.py
-Load: await bot.load_extension("cogs.canary_trigger")
+  await bot.load_extension("cogs.canary_trigger")
 
-IMPORTANT vitesse:
-  - INTERVAL_SECONDS = 20  → détection ~20s max après un build
-  - GitHub Actions démarre en ~30–90s après le dispatch
-  - Total réaliste: ~1–2 min derrière le build (souvent mieux que le seul cron)
-
-Remplis GITHUB_TOKEN ci-dessous (classic PAT: repo + workflow).
+Colle ton PAT classic (repo + workflow) dans GITHUB_TOKEN.
+Laisse le bot tourner 24/7 pour rivaliser avec Wumpus.
 """
+
 from __future__ import annotations
 
 import asyncio
 import json
 import re
+import socket
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -26,55 +24,99 @@ from discord.ext import commands, tasks
 # ═══════════════════════════════════════════════════════
 # CONFIG
 # ═══════════════════════════════════════════════════════
-GITHUB_TOKEN = "GITHUB_TOKEN"  # ← colle ton PAT classic ici (repo + workflow)
+GITHUB_TOKEN = "GITHUB_TOKEN"  # PAT classic : repo + workflow
 GITHUB_REPO = "kmljkjj/discord-canary-scraper"
 DISPATCH_EVENT = "trigger-scraping"
-INTERVAL_SECONDS = 20  # 15–25s = proche de Wumpus ; ne pas descendre sous 15
+INTERVAL_SECONDS = 20  # 15–25s idéal ; sous 15 = risque rate-limit inutile
 STATE_FILE = Path(__file__).resolve().parent / "last_canary_build.txt"
 # ═══════════════════════════════════════════════════════
 
 CANARY_URL = "https://canary.discord.com/app"
-UA = "Mozilla/5.0 (compatible; Datamining-cog/3.0)"
+UA = "Mozilla/5.0 (compatible; Datamining-cog/3.1)"
+_BUILD_RE = re.compile(r'"BUILD_NUMBER"\s*:\s*"?(\d+)"?')
+_HASH_RE = re.compile(r'"VERSION_HASH"\s*:\s*"([a-f0-9]{8,})"', re.I)
+
+HTTP_TIMEOUT = 12
+DISPATCH_TIMEOUT = 15
+
+_OPENER = urllib.request.build_opener()
 
 
-def _http_get(url: str, timeout: int = 18) -> str:
+def _read_build_fast(url: str) -> tuple[str | None, str | None]:
+    """Stream le HTML et stop dès BUILD_NUMBER (pas toute la page)."""
     req = urllib.request.Request(
-        url, headers={"User-Agent": UA, "Accept": "text/html"}
+        url,
+        headers={
+            "User-Agent": UA,
+            "Accept": "text/html",
+            "Accept-Encoding": "identity",
+            "Connection": "close",
+        },
+        method="GET",
     )
-    with urllib.request.urlopen(req, timeout=timeout) as res:
-        return res.read().decode("utf-8", errors="replace")
-
-
-def _get_build() -> str | None:
     try:
-        html = _http_get(CANARY_URL)
+        with _OPENER.open(req, timeout=HTTP_TIMEOUT) as res:
+            buf = ""
+            while True:
+                chunk = res.read(4096)
+                if not chunk:
+                    break
+                buf += chunk.decode("utf-8", errors="replace")
+                m = _BUILD_RE.search(buf)
+                if m:
+                    build = m.group(1)
+                    h = _HASH_RE.search(buf)
+                    if not h and len(buf) < 20000:
+                        extra = res.read(8192)
+                        if extra:
+                            buf += extra.decode("utf-8", errors="replace")
+                            h = _HASH_RE.search(buf)
+                    return build, (h.group(1)[:12] if h else None)
+            m = _BUILD_RE.search(buf)
+            if m:
+                h = _HASH_RE.search(buf)
+                return m.group(1), (h.group(1)[:12] if h else None)
     except Exception as e:
         print(f"[canary-cog] fetch fail: {e}", flush=True)
-        return None
-    m = re.search(r'"BUILD_NUMBER"\s*:\s*"?(\d+)"?', html)
-    return m.group(1) if m else None
+    return None, None
 
 
-def _load_last() -> str | None:
+def _read_last() -> str | None:
     try:
-        if STATE_FILE.exists():
+        if STATE_FILE.is_file():
             return STATE_FILE.read_text(encoding="utf-8").strip() or None
     except Exception:
         pass
     return None
 
 
-def _save_last(bn: str) -> None:
+def _write_last(token: str) -> None:
     try:
-        STATE_FILE.write_text(bn + "\n", encoding="utf-8")
+        STATE_FILE.write_text(token, encoding="utf-8")
     except Exception as e:
-        print(f"[canary-cog] save fail: {e}", flush=True)
+        print(f"[canary-cog] state write fail: {e}", flush=True)
+
+
+def _state_token(build: str, version_hash: str | None) -> str:
+    if version_hash:
+        return f"{build}:{version_hash}"
+    return build
 
 
 def _dispatch() -> tuple[bool, str]:
-    token = GITHUB_TOKEN.strip()
-    if not token or token == "GITHUB_TOKEN":
-        return False, "colle ton PAT dans GITHUB_TOKEN du cog"
+    tok = (GITHUB_TOKEN or "").strip()
+    if (
+        not tok
+        or len(tok) < 20
+        or tok == "GITHUB_TOKEN"
+        or "REMPLACE" in tok
+        or tok.startswith("ghp_") is False
+        and not tok.startswith("github_pat_")
+    ):
+        # accepte ghp_ (classic) et github_pat_ (fine-grained)
+        if not tok or tok == "GITHUB_TOKEN" or len(tok) < 20:
+            return False, "GITHUB_TOKEN manquant / invalide"
+
     url = f"https://api.github.com/repos/{GITHUB_REPO}/dispatches"
     body = json.dumps({"event_type": DISPATCH_EVENT}).encode("utf-8")
     req = urllib.request.Request(
@@ -83,15 +125,15 @@ def _dispatch() -> tuple[bool, str]:
         method="POST",
         headers={
             "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {token}",
+            "Authorization": f"Bearer {tok}",
             "X-GitHub-Api-Version": "2022-11-28",
             "Content-Type": "application/json",
-            "User-Agent": "datamining-cog",
+            "User-Agent": "datamining-cog-trigger",
         },
     )
     try:
-        with urllib.request.urlopen(req, timeout=25) as res:
-            return True, f"OK {res.status}"
+        with urllib.request.urlopen(req, timeout=DISPATCH_TIMEOUT) as res:
+            return True, f"OK {res.status} → {GITHUB_REPO}"
     except urllib.error.HTTPError as e:
         err = e.read().decode("utf-8", errors="replace")
         return False, f"HTTP {e.code}: {err[:200]}"
@@ -100,22 +142,26 @@ def _dispatch() -> tuple[bool, str]:
 
 
 def _tick_sync() -> str:
-    bn = _get_build()
-    if not bn:
-        return "build=? fetch fail"
-    last = _load_last()
-    if last == bn:
-        return f"build={bn} same"
+    build, vhash = _read_build_fast(CANARY_URL)
+    if not build:
+        return "pas de BUILD_NUMBER"
+    token = _state_token(build, vhash)
+    last = _read_last()
+    if last == token:
+        return f"build {build} inchangé — skip"
     ok, msg = _dispatch()
     if ok:
-        _save_last(bn)
-        return f"NEW build={bn} (was {last}) dispatched {msg}"
-    return f"NEW build={bn} dispatch FAIL {msg}"
+        _write_last(token)
+        return f"NOUVEAU {last} → {token} | {msg}"
+    return f"NOUVEAU {last} → {token} mais dispatch fail: {msg}"
 
 
 class CanaryTrigger(commands.Cog):
+    """Check Canary toutes les N secondes → dispatch GitHub si nouveau build."""
+
     def __init__(self, bot: commands.Bot):
         self.bot = bot
+        self._lock = asyncio.Lock()
         self.auto_check.start()
 
     def cog_unload(self):
@@ -123,33 +169,37 @@ class CanaryTrigger(commands.Cog):
 
     @tasks.loop(seconds=INTERVAL_SECONDS)
     async def auto_check(self):
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, _tick_sync)
-        print(f"[canary-cog] {result}", flush=True)
+        if self._lock.locked():
+            return
+        async with self._lock:
+            result = await asyncio.to_thread(_tick_sync)
+            print(f"[canary-cog] {result}", flush=True)
 
     @auto_check.before_loop
     async def before_auto(self):
         await self.bot.wait_until_ready()
+        try:
+            await asyncio.to_thread(socket.getaddrinfo, "canary.discord.com", 443)
+        except Exception:
+            pass
         print(
-            f"[canary-cog] start — check toutes les {INTERVAL_SECONDS}s → {GITHUB_REPO}",
+            f"[canary-cog] ready — every {INTERVAL_SECONDS}s → {GITHUB_REPO}",
             flush=True,
         )
 
     @commands.command(name="canary_check")
     @commands.is_owner()
     async def canary_check(self, ctx: commands.Context):
-        """Vérif Canary + dispatch si nouveau build."""
+        """Vérif manuelle (dispatch seulement si nouveau)."""
         await ctx.send("Check Canary…")
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, _tick_sync)
+        result = await asyncio.to_thread(_tick_sync)
         await ctx.send(f"```\n{result}\n```")
 
     @commands.command(name="canary_force")
     @commands.is_owner()
     async def canary_force(self, ctx: commands.Context):
-        """Force un dispatch même si le build n'a pas changé."""
-        loop = asyncio.get_event_loop()
-        ok, msg = await loop.run_in_executor(None, _dispatch)
+        """Force un dispatch même si build identique."""
+        ok, msg = await asyncio.to_thread(_dispatch)
         await ctx.send(f"{'✅' if ok else '❌'} `{msg}`")
 
 
