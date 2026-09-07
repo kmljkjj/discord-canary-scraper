@@ -1,14 +1,13 @@
 /**
- * Quest tracker for Discord Canary scraper
+ * Suivi des quêtes Discord — embeds FR
  *
- * Source: GET https://api.discordquest.com/api/quests  (public)
- * Optional: GET /api/v10/quests/@me with DISCORD_TOKEN
+ * Source: https://api.discordquest.com/api/quests
+ * Optionnel: /api/v10/quests/@me avec DISCORD_TOKEN
  *
- * Webhook (in order):
- *   1) QUEST_WEBHOOK_URL
- *   2) DISCORD_WEBHOOK_URL
+ * Webhook:
+ *   QUEST_WEBHOOK_URL (prioritaire) ou DISCORD_WEBHOOK_URL
  *
- * Note: webhook username must NOT contain the word "discord" (API rule).
+ * Username webhook: pas le mot "discord" (règle API).
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -28,8 +27,12 @@ const OFFICIAL_QUESTS_URL = 'https://discord.com/api/v10/quests/@me';
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
-// Discord API forbids "discord" in webhook usernames
-const BOT_NAME = 'Quest Pulse';
+const BOT_NAME =
+  process.env.ORBIT_BOT_NAME || process.env.WEBHOOK_BOT_NAME || 'Datamining';
+const AVATAR =
+  process.env.ORBIT_AVATAR_URL ||
+  process.env.WEBHOOK_AVATAR_URL ||
+  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 function assetUrl(questId, filename) {
   if (!filename) return null;
@@ -37,28 +40,125 @@ function assetUrl(questId, filename) {
   return 'https://cdn.discordapp.com/quests/' + questId + '/' + filename;
 }
 
-function rewardTypeLabel(type) {
+function rewardTypeFr(type) {
   const map = {
-    1: 'In-game reward',
+    1: 'Récompense en jeu',
     2: 'Collectible',
-    3: 'Virtual currency',
-    4: 'Orbs',
-    5: 'Fraction of Orbs',
+    3: 'Monnaie virtuelle',
+    4: 'Orbes',
+    5: 'Fraction d’orbes',
   };
   return map[type] || 'Type ' + type;
 }
 
-function taskSummary(config) {
+function taskLabelFr(key, val) {
+  const raw = String(
+    (val && (val.type || val.event_name || val.task_name)) || key || '',
+  ).toUpperCase();
+  const target =
+    val && (val.target != null ? val.target : val.target_seconds);
+  const seconds =
+    target != null && Number(target) > 0 && Number(target) < 100000
+      ? Number(target)
+      : null;
+
+  const labels = {
+    WATCH_VIDEO: 'Regarder la vidéo',
+    WATCH_VIDEO_ON_MOBILE: 'Regarder la vidéo sur mobile',
+    WATCH_VIDEO_ON_DESKTOP: 'Regarder la vidéo sur bureau',
+    PLAY_ON_DESKTOP: 'Jouer sur bureau',
+    PLAY_ON_XBOX: 'Jouer sur Xbox',
+    PLAY_ON_PLAYSTATION: 'Jouer sur PlayStation',
+    PLAY_ACTIVITY: 'Jouer à l’activité',
+    STREAM_ON_DESKTOP: 'Streamer sur bureau',
+    STREAM_ON_XBOX: 'Streamer sur Xbox',
+    STREAM_ON_PLAYSTATION: 'Streamer sur PlayStation',
+    ACHIEVEMENT: 'Débloquer un succès',
+  };
+
+  let label = labels[raw] || null;
+  if (!label) {
+    if (/WATCH.*VIDEO.*MOBILE/i.test(raw)) label = 'Regarder la vidéo sur mobile';
+    else if (/WATCH.*VIDEO/i.test(raw)) label = 'Regarder la vidéo';
+    else if (/STREAM/i.test(raw)) label = 'Streamer';
+    else if (/PLAY/i.test(raw)) label = 'Jouer';
+    else label = String(key).replace(/_/g, ' ').toLowerCase();
+  }
+
+  if (seconds != null) label += ' (' + seconds + ' s)';
+  else if (target != null) label += ' (objectif ' + target + ')';
+  return label;
+}
+
+function formatTasks(config) {
   const tc = config.task_config_v2 || config.task_config || {};
   const tasks = tc.tasks || {};
   const lines = [];
   for (const [key, val] of Object.entries(tasks)) {
-    const target = val && (val.target != null ? val.target : val.target_seconds);
-    const t = target != null ? target : '?';
-    const type = (val && (val.type || val.event_name)) || key;
-    lines.push('• **' + type + '** — target `' + t + '`');
+    lines.push('• ' + taskLabelFr(key, val));
   }
-  return lines.length ? lines.join('\n') : '_No task info_';
+  if (!lines.length) return null;
+  const join =
+    tc.join_operator === 'OR' || tc.operator === 'OR'
+      ? '_Une seule tâche suffit_'
+      : '_Toutes les tâches listées_';
+  return join + '\n' + lines.join('\n');
+}
+
+function formatDateFr(iso) {
+  if (!iso) return null;
+  try {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return String(iso).slice(0, 19);
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const yyyy = d.getUTCFullYear();
+    return dd + '/' + mm + '/' + yyyy;
+  } catch {
+    return String(iso).slice(0, 19);
+  }
+}
+
+function platformsFr(config) {
+  const list =
+    config.redeemable_platforms ||
+    config.platforms ||
+    (config.features && config.features.platforms) ||
+    null;
+  if (Array.isArray(list) && list.length) {
+    return list
+      .map((p) => {
+        const s = String(p).toUpperCase();
+        if (s.includes('CROSS')) return 'Multiplateforme';
+        if (s.includes('DESKTOP') || s.includes('WIN')) return 'Bureau';
+        if (s.includes('XBOX')) return 'Xbox';
+        if (s.includes('PLAYSTATION') || s.includes('PS5') || s.includes('PS4'))
+          return 'PlayStation';
+        if (s.includes('MOBILE') || s.includes('IOS') || s.includes('ANDROID'))
+          return 'Mobile';
+        return String(p);
+      })
+      .join(', ');
+  }
+  // Heuristic from tasks
+  const tasks = (config.task_config_v2 || config.task_config || {}).tasks || {};
+  const keys = Object.keys(tasks).join(' ');
+  if (/CROSS|DESKTOP|XBOX|PLAYSTATION|MOBILE/i.test(keys)) return 'Multiplateforme';
+  return 'Multiplateforme';
+}
+
+function featuresFr(config) {
+  const feats = config.features || config.feature_flags || [];
+  if (Array.isArray(feats) && feats.length) {
+    return feats.map((f) => '`' + f + '`').join(' ');
+  }
+  if (typeof feats === 'object' && feats) {
+    return Object.keys(feats)
+      .filter((k) => feats[k])
+      .map((k) => '`' + k + '`')
+      .join(' ');
+  }
+  return null;
 }
 
 function normalizeQuest(raw) {
@@ -76,7 +176,12 @@ function normalizeQuest(raw) {
     assetUrl(id, assets.quest_bar_hero);
 
   let videoUrl = null;
-  for (const key of ['hero_video', 'quest_bar_hero_video']) {
+  for (const key of [
+    'hero_video',
+    'quest_bar_hero_video',
+    'video',
+    'preview_video',
+  ]) {
     if (assets[key]) {
       videoUrl = assetUrl(id, assets[key]);
       break;
@@ -85,10 +190,15 @@ function normalizeQuest(raw) {
 
   return {
     id,
-    name: messages.quest_name || messages.game_title || app.name || 'Quest ' + id,
+    name:
+      messages.quest_name ||
+      messages.game_title ||
+      app.name ||
+      'Quête ' + id,
     gameTitle: messages.game_title || app.name || null,
     publisher: messages.game_publisher || null,
     applicationId: app.id || null,
+    applicationName: app.name || null,
     applicationLink: app.link || null,
     startsAt: config.starts_at || null,
     expiresAt: config.expires_at || null,
@@ -97,9 +207,11 @@ function normalizeQuest(raw) {
     logotype: assetUrl(id, assets.logotype),
     videoUrl,
     primaryColor: colors.primary || null,
+    platforms: platformsFr(config),
+    features: featuresFr(config),
     rewards: rewards.map((r) => ({
       type: r.type,
-      typeLabel: rewardTypeLabel(r.type),
+      typeLabel: rewardTypeFr(r.type),
       name: (r.messages && r.messages.name) || null,
       skuId: r.sku_id || null,
       orbQuantity: r.orb_quantity != null ? r.orb_quantity : null,
@@ -107,9 +219,136 @@ function normalizeQuest(raw) {
       assetVideo: assetUrl(id, r.asset_video),
       redemptionLink: r.redemption_link || null,
     })),
-    tasksText: taskSummary(config),
+    tasksText: formatTasks(config),
     preview: !!raw.preview,
   };
+}
+
+function parseColor(hex) {
+  if (!hex) return 0x5865f2;
+  const s = String(hex).replace('#', '');
+  const n = parseInt(s.slice(0, 6), 16);
+  return Number.isFinite(n) ? n : 0x5865f2;
+}
+
+function buildQuestEmbed(quest) {
+  const duree =
+    formatDateFr(quest.startsAt) && formatDateFr(quest.expiresAt)
+      ? formatDateFr(quest.startsAt) + ' → ' + formatDateFr(quest.expiresAt)
+      : formatDateFr(quest.startsAt) ||
+        formatDateFr(quest.expiresAt) ||
+        '—';
+
+  const infoLines = [];
+  infoLines.push('**Durée** · ' + duree);
+  if (quest.platforms) infoLines.push('**Plateformes** · ' + quest.platforms);
+  if (quest.gameTitle) infoLines.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 200));
+  if (quest.publisher) infoLines.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
+  if (quest.applicationId || quest.applicationName) {
+    const appBit =
+      (quest.applicationName || 'App') +
+      (quest.applicationId ? ' (`' + quest.applicationId + '`)' : '');
+    infoLines.push('**Application** · ' + appBit);
+  }
+  if (quest.features) infoLines.push('**Flags** · ' + quest.features);
+
+  const fields = [];
+
+  fields.push({
+    name: 'Infos',
+    value: infoLines.join('\n').slice(0, 1024),
+  });
+
+  if (quest.tasksText) {
+    fields.push({
+      name: 'Tâches',
+      value: quest.tasksText.slice(0, 1024),
+    });
+  }
+
+  const rewards = quest.rewards || [];
+  if (rewards.length) {
+    const rLines = [];
+    for (const r of rewards.slice(0, 6)) {
+      let line = '• **' + r.typeLabel + '**';
+      if (r.name) line += ' — ' + r.name;
+      if (r.orbQuantity != null) line += ' · `' + r.orbQuantity + ' orbes`';
+      if (r.skuId) line += '\n  SKU `' + r.skuId + '`';
+      if (r.redemptionLink) line += '\n  [Récupérer](' + r.redemptionLink + ')';
+      rLines.push(line);
+    }
+    fields.push({
+      name: 'Récompenses',
+      value: rLines.join('\n').slice(0, 1024),
+    });
+  }
+
+  if (quest.videoUrl) {
+    fields.push({
+      name: 'Vidéo',
+      value: '[Lire la vidéo](' + quest.videoUrl + ')',
+    });
+  }
+
+  if (quest.applicationLink) {
+    fields.push({
+      name: 'Lien',
+      value: quest.applicationLink.slice(0, 1024),
+    });
+  }
+
+  // Reward image as thumbnail if available
+  const rewardThumb =
+    (rewards.find((r) => r.asset) || {}).asset || quest.gameTile || null;
+
+  return {
+    author: {
+      name: 'Nouvelle quête',
+      icon_url: AVATAR,
+    },
+    title: String(quest.name).slice(0, 256),
+    url: quest.applicationLink || undefined,
+    description: quest.preview ? '⚠️ Quête en aperçu (preview)' : undefined,
+    color: parseColor(quest.primaryColor),
+    fields,
+    image: quest.heroImage ? { url: quest.heroImage } : undefined,
+    thumbnail: rewardThumb ? { url: rewardThumb } : undefined,
+    footer: {
+      text: 'Datamining · ID ' + quest.id,
+    },
+    timestamp: new Date().toISOString(),
+  };
+}
+
+async function postWebhook(body) {
+  if (!WEBHOOK) return { ok: false, status: 0, text: 'no webhook' };
+  body.username = BOT_NAME;
+  body.avatar_url = AVATAR;
+  const res = await fetch(WEBHOOK, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const text = await res.text().catch(() => '');
+  return { ok: res.ok, status: res.status, text: text.slice(0, 400) };
+}
+
+async function sendQuestWebhook(quest) {
+  if (!WEBHOOK) {
+    console.warn('Pas de QUEST_WEBHOOK_URL / DISCORD_WEBHOOK_URL');
+    return false;
+  }
+
+  const emb = await postWebhook({
+    embeds: [buildQuestEmbed(quest)],
+  });
+  if (emb.ok) {
+    console.log('🔔 Quête envoyée: ' + quest.name + ' (' + quest.id + ')');
+  } else {
+    console.warn('Embed échoué', emb.status, emb.text);
+  }
+  await new Promise((r) => setTimeout(r, 400));
+  return emb.ok;
 }
 
 async function fetchPublicQuests() {
@@ -138,102 +377,13 @@ async function fetchOfficialQuests() {
     return [];
   }
   const data = await res.json();
-  return (data.quests || []).map(normalizeQuest).filter((q) => q.id);
-}
-
-function parseColor(hex) {
-  if (!hex || typeof hex !== 'string') return 0xfee75c;
-  const h = hex.replace('#', '').trim();
-  const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
-  const n = parseInt(full, 16);
-  return Number.isFinite(n) ? n : 0xfee75c;
-}
-
-function buildClassicEmbed(quest) {
-  const rewardText = (quest.rewards || [])
-    .map((r) => {
-      let line = '• ' + r.typeLabel;
-      if (r.name) line += ': ' + r.name;
-      if (r.orbQuantity != null) line += ' (×' + r.orbQuantity + ')';
-      return line;
-    })
-    .join('\n')
-    .slice(0, 1000);
-
-  const fields = [
-    quest.gameTitle && {
-      name: 'Game',
-      value: String(quest.gameTitle).slice(0, 256),
-      inline: true,
-    },
-    quest.publisher && {
-      name: 'Publisher',
-      value: String(quest.publisher).slice(0, 256),
-      inline: true,
-    },
-    quest.startsAt && { name: 'Starts', value: quest.startsAt, inline: true },
-    quest.expiresAt && { name: 'Expires', value: quest.expiresAt, inline: true },
-    {
-      name: 'Tasks',
-      value: (quest.tasksText || '_none_').slice(0, 1024),
-    },
-    rewardText && { name: 'Rewards', value: rewardText },
-    quest.videoUrl && { name: 'Video', value: quest.videoUrl.slice(0, 1024) },
-    quest.applicationLink && {
-      name: 'Link',
-      value: quest.applicationLink.slice(0, 1024),
-    },
-  ].filter(Boolean);
-
-  return {
-    title: ('New Quest — ' + quest.name).slice(0, 256),
-    description:
-      'Quest ID: `' +
-      quest.id +
-      '`' +
-      (quest.preview ? '\n⚠️ Preview' : ''),
-    color: parseColor(quest.primaryColor),
-    fields,
-    image: quest.heroImage ? { url: quest.heroImage } : undefined,
-    thumbnail: quest.gameTile ? { url: quest.gameTile } : undefined,
-    timestamp: new Date().toISOString(),
-    footer: { text: 'Quest Pulse' },
-  };
-}
-
-async function postWebhook(body) {
-  if (!WEBHOOK) return { ok: false, status: 0, text: 'no webhook' };
-  const res = await fetch(WEBHOOK, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  const text = await res.text().catch(() => '');
-  return { ok: res.ok, status: res.status, text: text.slice(0, 400) };
-}
-
-async function sendQuestWebhook(quest) {
-  if (!WEBHOOK) {
-    console.warn('No QUEST_WEBHOOK_URL / DISCORD_WEBHOOK_URL — cannot notify');
-    return false;
-  }
-
-  const emb = await postWebhook({
-    username: BOT_NAME,
-    embeds: [buildClassicEmbed(quest)],
-  });
-  if (emb.ok) {
-    console.log('🔔 Embed OK: ' + quest.name + ' (' + quest.id + ')');
-  } else {
-    console.warn('Embed failed', emb.status, emb.text);
-  }
-  await new Promise((r) => setTimeout(r, 500));
-  return emb.ok;
+  const list = Array.isArray(data) ? data : data.quests || [];
+  return list.map(normalizeQuest).filter((q) => q.id);
 }
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('🎮 Fetching quests…');
+  console.log('🎮 Récupération des quêtes…');
   console.log(
     'Webhook:',
     WEBHOOK
@@ -246,9 +396,9 @@ async function main() {
   let quests = [];
   try {
     quests = await fetchPublicQuests();
-    console.log('Public API: ' + quests.length + ' quests');
+    console.log('API publique: ' + quests.length + ' quêtes');
   } catch (e) {
-    console.error('Public API failed:', e.message);
+    console.error('API publique échouée:', e.message);
     process.exitCode = 1;
   }
 
@@ -257,16 +407,16 @@ async function main() {
     if (official.length) {
       const byId = new Map(quests.map((q) => [q.id, q]));
       for (const q of official)
-        byId.set(q.id, Object.assign({}, byId.get(q.id), q));
+        byId.set(q.id, Object.assign({}, byId.get(q.id) || {}, q));
       quests = Array.from(byId.values());
-      console.log('Merged official: ' + quests.length);
+      console.log('Fusion officielle: ' + quests.length);
     }
   } catch (e) {
-    console.warn('Official quests:', e.message);
+    console.warn('Quêtes officielles:', e.message);
   }
 
   if (!quests.length) {
-    console.error('No quests fetched — abort');
+    console.error('Aucune quête — abort');
     process.exit(1);
   }
 
@@ -278,7 +428,7 @@ async function main() {
     if (exp && exp < now) return false;
     return true;
   });
-  console.log('Active/upcoming: ' + active.length);
+  console.log('Actives / à venir: ' + active.length);
 
   let previous = { ids: [] };
   if (await fs.pathExists(STATE_FILE)) {
@@ -314,18 +464,20 @@ async function main() {
   );
 
   if (isFirstRun) {
-    console.log('First run — seeded ' + active.length + ' quest ids (no flood)');
+    console.log(
+      'Premier run — seed de ' + active.length + ' ids (pas de flood)',
+    );
     return;
   }
 
-  console.log('New quests: ' + newQuests.length);
+  console.log('Nouvelles quêtes: ' + newQuests.length);
   if (!WEBHOOK && newQuests.length) {
-    console.warn('New quests found but NO webhook configured');
+    console.warn('Nouvelles quêtes mais aucune webhook configurée');
   }
   for (const q of newQuests.slice(0, 15)) {
     await sendQuestWebhook(q);
   }
-  console.log('✅ Quests check done');
+  console.log('✅ Quêtes terminé');
 }
 
 if (require.main === module) {
@@ -334,3 +486,5 @@ if (require.main === module) {
     process.exit(1);
   });
 }
+
+module.exports = { normalizeQuest, buildQuestEmbed, main };
