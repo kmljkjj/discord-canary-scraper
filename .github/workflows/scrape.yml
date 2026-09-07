@@ -50,7 +50,7 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
-          ORBIT_BOT_NAME: Orbit
+          ORBIT_BOT_NAME: Datamining
         run: node src/index.js
 
       - name: Commit baseline
