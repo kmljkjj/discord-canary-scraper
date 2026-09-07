@@ -18,16 +18,16 @@ async function fetchBuild() {
   console.log('HTML length:', html.length);
 
   const env = parseGlobalEnv(html);
-  let assets = extractAssetUrls(html);
-
-  // web.*.js is the main client bundle (~10–15MB): experiments + routes live there
-  assets = prioritizeAssets(assets);
+  const { js, css } = extractAssetUrls(html);
+  const assets = prioritizeAssets(js);
 
   console.log(
     'BUILD_NUMBER:',
     env.BUILD_NUMBER,
-    '| assets:',
+    '| js:',
     assets.length,
+    '| css:',
+    css.length,
     '| web:',
     assets.filter((u) => /\/web\./i.test(u)).length,
   );
@@ -38,12 +38,16 @@ async function fetchBuild() {
   if (assets.length === 0) {
     console.warn('WARNING: no /assets/ JS URLs found');
   }
+  if (css.length === 0) {
+    console.warn('WARNING: no /assets/ CSS URLs found');
+  }
 
   return {
     buildNumber: env.BUILD_NUMBER || 'unknown',
     versionHash: env.VERSION_HASH || null,
     releaseChannel: env.RELEASE_CHANNEL || 'canary',
     assets,
+    cssAssets: css,
     scrapedAt: new Date().toISOString(),
   };
 }
@@ -59,23 +63,36 @@ function parseGlobalEnv(html) {
   };
 }
 
+/**
+ * Récupère TOUS les assets JS + CSS référencés dans le HTML Canary.
+ * Avant: seulement .js → on rattait ~250+ CSS.
+ */
 function extractAssetUrls(html) {
   const $ = cheerio.load(html);
-  const urls = new Set();
+  const js = new Set();
+  const css = new Set();
+
   const add = (href) => {
     if (!href || !href.includes('/assets/')) return;
     const clean = href.split('?')[0];
-    if (!clean.endsWith('.js')) return;
-    urls.add(
-      clean.startsWith('http') ? clean : `https://canary.discord.com${clean}`,
-    );
+    const full = clean.startsWith('http')
+      ? clean
+      : `https://canary.discord.com${clean}`;
+    if (clean.endsWith('.js')) js.add(full);
+    else if (clean.endsWith('.css')) css.add(full);
   };
+
   $('script[src]').each((_, el) => add($(el).attr('src')));
-  // Inline /assets/*.js references (main list ~300)
-  const re = /\/assets\/([a-zA-Z0-9._-]+\.js)/g;
+  $('link[href]').each((_, el) => add($(el).attr('href')));
+
+  // Références inline dans le HTML (listes d'assets Discord)
+  const reJs = /\/assets\/([a-zA-Z0-9._-]+\.js)/g;
+  const reCss = /\/assets\/([a-zA-Z0-9._-]+\.css)/g;
   let m;
-  while ((m = re.exec(html)) !== null) add(`/assets/${m[1]}`);
-  return [...urls];
+  while ((m = reJs.exec(html)) !== null) add(`/assets/${m[1]}`);
+  while ((m = reCss.exec(html)) !== null) add(`/assets/${m[1]}`);
+
+  return { js: [...js], css: [...css].sort() };
 }
 
 /** web.* first — contains nearly all experiments + routes */

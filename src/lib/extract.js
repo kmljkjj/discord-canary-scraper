@@ -23,10 +23,13 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   let assets = [...(build.assets || [])];
   assets.sort((a, b) => scoreAsset(b) - scoreAsset(a));
 
+  // CSS: toujours récupérer la liste complète (léger vs tout le JS)
+  const cssAssets = [...(build.cssAssets || [])];
+
   if (WEB_ONLY) {
     const web = assets.filter((u) => /\/web\./i.test(u));
     if (web.length) {
-      console.log('FAST MODE: web.* + en-US locale chunks');
+      console.log('FAST MODE: web.* + en-US locale + ALL css');
       assets = web;
     } else {
       console.warn('No web.* — fallback full list');
@@ -34,7 +37,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   }
 
   if (forceRefresh) {
-    for (const url of assets) {
+    for (const url of [...assets, ...cssAssets]) {
       const name = path.basename(String(url).split('?')[0]);
       try {
         await fs.remove(path.join(assetsDir, name));
@@ -43,7 +46,21 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   }
 
   await downloadList(assets, assetsDir, true);
+  if (cssAssets.length) {
+    console.log('Downloading CSS files:', cssAssets.length);
+    await downloadList(cssAssets, assetsDir, true);
+  }
   await assertWebBundle(assetsDir);
+
+  // Inventaire CSS (noms de fichiers = id.hash.css → détecte new UI sheets)
+  const cssInventory = {};
+  for (const url of cssAssets) {
+    const name = path.basename(String(url).split('?')[0]);
+    const m = name.match(/^(.+)\.([a-f0-9]{8,})\.css$/i);
+    if (m) cssInventory[m[1]] = m[2];
+    else cssInventory[name] = name;
+  }
+  console.log('CSS inventory:', Object.keys(cssInventory).length);
 
   // Read web.js for exp/routes + locale chunk map
   const webFiles = (await fs.readdir(assetsDir)).filter((f) =>
@@ -61,7 +78,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   if (webContent) {
     extractRoutes(webContent, routes);
     extractExperiments(webContent, expSet);
-    extractStrings(webContent, strings); // few plain strings
+    extractStrings(webContent, strings);
   }
 
   // ── REAL strings: en-US locale chunks (hash.js) ───────
@@ -83,13 +100,19 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
         console.warn('locale', name, e.message);
       }
     }
-    console.log('Strings from en-US locales +', fromLocale, 'total', Object.keys(strings).length);
+    console.log(
+      'Strings from en-US locales +',
+      fromLocale,
+      'total',
+      Object.keys(strings).length,
+    );
   }
 
   console.log('Raw extract (Discord)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
+    css: Object.keys(cssInventory).length,
   });
 
   // Experiments meta (Wumpus) — kind/label only, not strings
@@ -143,17 +166,18 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     console.log('Wumpus routes +', n, 'total', Object.keys(routes).length);
   }
 
-  // NOTE: do NOT merge Wumpus strings into diff set — that froze diffs at 0
   console.log('Final counts (Discord-native strings)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
+    css: Object.keys(cssInventory).length,
   });
 
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
+    css: cssInventory,
   };
 }
 
@@ -183,11 +207,7 @@ function resolveEnUsLocaleUrls(webContent) {
   return urls;
 }
 
-/**
- * Locale format: "key":["value"] inside JSON.parse('...')
- */
 function extractLocaleStrings(content, out) {
-  // Primary: "key":["text"]
   const reArr =
     /["']([A-Za-z0-9+/_-]{6})["']\s*:\s*\[\s*["']([^"'\\]*(?:\\.[^"'\\]*)*)["']/g;
   let m;
@@ -198,8 +218,6 @@ function extractLocaleStrings(content, out) {
     } catch {}
     if (isGoodStringKey(m[1]) && isGoodStringVal(val)) out[m[1]] = val;
   }
-
-  // Fallback plain "key":"value"
   extractStrings(content, out);
 }
 
@@ -239,7 +257,8 @@ async function downloadList(urls, assetsDir, force) {
   for (const url of urls) {
     if (!url || !url.includes('/assets/')) continue;
     const name = path.basename(url.split('?')[0]);
-    if (!name.endsWith('.js')) continue;
+    // JS + CSS (avant: seulement .js)
+    if (!name.endsWith('.js') && !name.endsWith('.css')) continue;
     jobs.push({ url, name });
   }
 
@@ -249,39 +268,44 @@ async function downloadList(urls, assetsDir, force) {
   async function worker() {
     while (i < jobs.length) {
       const job = jobs[i++];
-      if (!job) break;
-      const dest = path.join(assetsDir, job.name);
+      const fp = path.join(assetsDir, job.name);
       try {
-        if (!force && (await fs.pathExists(dest))) {
-          const st = await fs.stat(dest);
-          if (st.size > 50_000) continue;
+        if (!force && (await fs.pathExists(fp))) {
+          const st = await fs.stat(fp);
+          if (st.size > 0) continue;
         }
         const res = await fetch(job.url, {
-          headers: { 'User-Agent': UA },
-          timeout: 90000,
+          headers: { 'User-Agent': UA, Accept: '*/*' },
+          timeout: 60000,
         });
-        if (!res.ok) throw new Error(String(res.status));
+        if (!res.ok) {
+          console.warn('✗', job.name, res.status);
+          continue;
+        }
         const buf = await res.buffer();
-        await fs.writeFile(dest, buf);
+        await fs.writeFile(fp, buf);
         n++;
-        if (n <= 8 || job.name.startsWith('web.') || n % 20 === 0)
-          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
+        if (n <= 8 || job.name.endsWith('.css') && n % 50 === 0) {
+          console.log(
+            '✓',
+            job.name,
+            Math.round(buf.length / 1024) + 'KB',
+          );
+        }
       } catch (e) {
         console.warn('✗', job.name, e.message);
       }
     }
   }
 
-  await Promise.all(
-    Array.from({ length: Math.min(DOWNLOAD_CONCURRENCY, jobs.length || 1) }, () =>
-      worker(),
-    ),
-  );
-  console.log('Downloaded', n, 'file(s)');
+  const workers = [];
+  for (let w = 0; w < DOWNLOAD_CONCURRENCY; w++) workers.push(worker());
+  await Promise.all(workers);
+  console.log('Downloaded', n, 'file(s) this pass');
 }
 
 async function cachedJson(cacheDir, name, url, ttlSec) {
-  if (!cacheDir) return fetchJson(url);
+  if (!cacheDir) return null;
   const fp = path.join(cacheDir, name);
   try {
     if (await fs.pathExists(fp)) {
@@ -291,59 +315,53 @@ async function cachedJson(cacheDir, name, url, ttlSec) {
       }
     }
   } catch {}
-  const data = await fetchJson(url);
-  if (data) {
-    try {
-      await fs.writeJson(fp, data);
-    } catch {}
-  }
-  return data;
-}
-
-async function fetchJson(url) {
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'canary-pulse', Accept: 'application/json' },
-      timeout: 40000,
+      headers: { 'User-Agent': UA },
+      timeout: 20000,
     });
     if (!res.ok) return null;
-    return await res.json();
-  } catch (e) {
-    console.warn('fetch', url, e.message);
+    const data = await res.json();
+    await fs.writeJson(fp, data);
+    return data;
+  } catch {
+    try {
+      if (await fs.pathExists(fp)) return await fs.readJson(fp);
+    } catch {}
     return null;
   }
 }
 
 async function fetchWumpusExperimentMeta(cacheDir) {
   const map = new Map();
-  const [exp, apex] = await Promise.all([
+  const [exps, apex] = await Promise.all([
     cachedJson(cacheDir, 'experiments.json', WUMPUS_EXP_URL, 3600),
     cachedJson(cacheDir, 'apex_experiments.json', WUMPUS_APEX_URL, 3600),
   ]);
-  for (const data of [exp, apex]) {
-    if (!data) continue;
-    const list = Array.isArray(data) ? data : data.experiments || [];
-    for (const e of list) {
-      const id = e.id || e.name;
-      if (!id) continue;
-      const kind = (e.kind || e.type || '').toLowerCase();
-      const treatments = e.treatments || null;
-      const variations = e.variations || null;
-      const treatmentList = treatments
-        ? treatments
-        : variations
-          ? Object.keys(variations).map((k) => ({
-              id: k,
-              label: variations[k] && variations[k].label,
-            }))
-          : null;
-      map.set(String(id), {
-        kind: kind === 'guild' || kind === 'user' ? kind : null,
-        label: e.label || null,
-        treatments: treatmentList,
-        variations,
-      });
+  const list = [];
+  if (Array.isArray(exps)) list.push(...exps);
+  else if (exps && typeof exps === 'object') {
+    for (const v of Object.values(exps)) {
+      if (Array.isArray(v)) list.push(...v);
+      else if (v && v.id) list.push(v);
     }
+  }
+  if (Array.isArray(apex)) list.push(...apex);
+  else if (apex && typeof apex === 'object') {
+    for (const v of Object.values(apex)) {
+      if (Array.isArray(v)) list.push(...v);
+      else if (v && (v.id || v.name)) list.push(v);
+    }
+  }
+  for (const e of list) {
+    const id = e.id || e.name || e.experiment_id;
+    if (!id) continue;
+    map.set(String(id), {
+      kind: e.kind || e.type || null,
+      label: e.label || e.title || null,
+      treatments: e.treatments || e.variants || null,
+      variations: e.variations || null,
+    });
   }
   console.log('Wumpus meta', map.size);
   return map;
@@ -351,18 +369,14 @@ async function fetchWumpusExperimentMeta(cacheDir) {
 
 function isGoodStringKey(k) {
   if (typeof k !== 'string' || k.length !== 6) return false;
-  // Discord keys: base64-ish, may include + / _ -
   if (!/^[A-Za-z0-9+/_-]{6}$/.test(k)) return false;
-  // reject pure lowercase noise words
-  if (/^[a-z]{6}$/.test(k)) return false;
+  if (/^[0-9a-f]{6}$/i.test(k)) return false;
   return true;
 }
 
-function isGoodStringVal(v) {
-  if (typeof v !== 'string') return false;
-  const s = v.trim();
-  if (s.length < 1 || s.length > 500) return false;
-  if (/^[a-f0-9]{16,}$/i.test(s) || /^\d+$/.test(s)) return false;
+function isGoodStringVal(s) {
+  if (typeof s !== 'string') return false;
+  if (s.length < 2 || s.length > 500) return false;
   if (/^discord_web-/i.test(s) || /^release:/i.test(s)) return false;
   return true;
 }
