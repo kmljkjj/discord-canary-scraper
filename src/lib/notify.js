@@ -1,13 +1,15 @@
 /**
- * Orbit webhook embeds — clean identity, fast delivery
+ * Datamining — Discord Canary webhook embeds
+ * Avatar: Twemoji 🔍 (jdecked/twemoji, CC-BY 4.0) — libre, pas de marque Discord
  */
 const fetch = require('node-fetch');
 
-const BOT = process.env.ORBIT_BOT_NAME || 'Orbit';
-// Clean indigo mark (Discord-adjacent palette)
+const BOT = process.env.ORBIT_BOT_NAME || process.env.WEBHOOK_BOT_NAME || 'Datamining';
+// Twemoji magnifying glass — open source (CC-BY 4.0), no Discord trademark assets
 const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
-  'https://api.dicebear.com/9.x/shapes/png?seed=orbit-canary&backgroundColor=5865f2&shape1Color=ffffff&shape2Color=eb459e&shape3Color=57f287&size=128';
+  process.env.WEBHOOK_AVATAR_URL ||
+  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 const C = {
   build: 0x5865f2,
@@ -87,7 +89,7 @@ async function notifyAll({
               : '• Client bump — no catalog changes') +
             (hash ? '\n• Hash `' + hash + '`' : ''),
           color: C.build,
-          footer: { text: 'Orbit' },
+          footer: { text: 'Datamining' },
           timestamp: ts,
         },
       ],
@@ -183,7 +185,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
         title: 'Canary experiments',
         description: lines.join('\n').slice(0, 3900),
         color: C.exp,
-        footer: { text: 'Orbit' },
+        footer: { text: 'Datamining' },
         timestamp: ts,
       },
     ],
@@ -242,7 +244,7 @@ async function sendCatalog(webhookUrl, bn, diff, ts, kind) {
         title: isRoutes ? 'Canary routes' : 'Canary strings',
         description: lines.join('\n').slice(0, 3900),
         color: isRoutes ? C.route : C.str,
-        footer: { text: 'Orbit' },
+        footer: { text: 'Datamining' },
         timestamp: ts,
       },
     ],
