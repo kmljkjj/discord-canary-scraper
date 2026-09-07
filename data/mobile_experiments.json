@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-07T15:32:22.146Z",
+  "scrapedAt": "2026-09-07T19:37:24.792Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "bd38fe8b",
+  "sourceCommit": "e26dfbf7",
   "experimentCount": 305,
   "stringCount": 7,
   "newExperimentCount": 0,
@@ -900,7 +900,6 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "_runtime/metro/01282__.js",
         "discord_app/modules/people/FriendRequestMessageExperiment.tsx"
       ]
     },
@@ -917,7 +916,9 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "discord_app/modules/icymi/ICYMIExperiment.tsx"
+        "discord_app/modules/double_tap_to_react/native/DoubleTapToReactUtils.tsx",
+        "discord_app/modules/icymi/ICYMIExperiment.tsx",
+        "discord_app/modules/unique_usernames/UniqueUsernamesStore.tsx"
       ]
     },
     {
@@ -1437,9 +1438,7 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "discord_app/modules/design/ManaTypeConsolidationExperiment.tsx",
-        "discord_app/modules/double_tap_to_react/native/DoubleTapToReactUtils.tsx",
-        "discord_app/modules/unique_usernames/UniqueUsernamesStore.tsx"
+        "discord_app/modules/design/ManaTypeConsolidationExperiment.tsx"
       ]
     },
     {
