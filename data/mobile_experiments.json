@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-08T08:39:01.668Z",
+  "scrapedAt": "2026-09-08T14:11:18.557Z",
   "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
-  "sourceCommit": "e26dfbf7",
+  "sourceCommit": "fe7d375d",
   "experimentCount": 305,
   "stringCount": 7,
   "newExperimentCount": 0,
@@ -916,9 +916,7 @@
       "type": "user",
       "isApex": false,
       "sources": [
-        "discord_app/modules/double_tap_to_react/native/DoubleTapToReactUtils.tsx",
-        "discord_app/modules/icymi/ICYMIExperiment.tsx",
-        "discord_app/modules/unique_usernames/UniqueUsernamesStore.tsx"
+        "discord_app/modules/icymi/ICYMIExperiment.tsx"
       ]
     },
     {
