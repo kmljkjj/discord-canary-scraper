@@ -1,12 +1,6 @@
 /**
  * Mobile experiments / strings from REAL client files
- *
- * Source of files (not version APIs):
- *   https://github.com/Wumpus-Central/discord-mobile-datamining
- *   → sparse clone of discord_app + discord_common/js
- *
- * Then scan for experiment IDs (same style as web Canary scraper)
- * and notify webhook on new mobile experiments.
+ * Source: Wumpus-Central/discord-mobile-datamining (sparse clone)
  */
 
 const { execSync } = require('child_process');
@@ -17,14 +11,19 @@ const fetch = require('node-fetch');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const WORK_DIR = path.join(__dirname, '..', '.mobile_datamine');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_experiments.json');
+const KNOWN_FILE = path.join(DATA_DIR, 'known_mobile_experiment_ids.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
 const SOURCE_REPO =
   process.env.MOBILE_DATAMINE_REPO ||
   'https://github.com/Wumpus-Central/discord-mobile-datamining.git';
 
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+const BOT_NAME = process.env.ORBIT_BOT_NAME || 'Datamining';
+const BOT_AVATAR =
+  process.env.ORBIT_BOT_AVATAR ||
+  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
+
+const MAX_NOTIFY_EXP = Number(process.env.MAX_WEBHOOKS_PER_RUN || 8);
 
 function isExpId(id) {
   if (!/^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id)) return false;
@@ -38,7 +37,7 @@ function run(cmd, cwd) {
     cwd,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
-    maxBuffer: 50 * 1024 * 1024,
+    maxBuffer: 80 * 1024 * 1024,
   });
 }
 
@@ -47,17 +46,22 @@ async function syncSourceRepo() {
   if (!(await fs.pathExists(path.join(WORK_DIR, '.git')))) {
     await fs.remove(WORK_DIR);
     await fs.ensureDir(WORK_DIR);
-    // Partial clone + sparse checkout of JS client paths only
     run(
       `git clone --depth 1 --filter=blob:none --sparse "${SOURCE_REPO}" "${WORK_DIR}"`,
       path.dirname(WORK_DIR),
     );
-    run('git sparse-checkout set discord_app discord_common/js _runtime', WORK_DIR);
+    run(
+      'git sparse-checkout set discord_app discord_common/js _runtime discord_assets',
+      WORK_DIR,
+    );
   } else {
     try {
       run('git fetch --depth 1 origin', WORK_DIR);
       run('git reset --hard origin/HEAD', WORK_DIR);
-      run('git sparse-checkout set discord_app discord_common/js _runtime', WORK_DIR);
+      run(
+        'git sparse-checkout set discord_app discord_common/js _runtime discord_assets',
+        WORK_DIR,
+      );
     } catch (e) {
       console.warn('git update failed, reclone…', e.message);
       await fs.remove(WORK_DIR);
@@ -69,7 +73,11 @@ async function syncSourceRepo() {
   try {
     head = run('git rev-parse --short HEAD', WORK_DIR).trim();
   } catch {}
-  return { dir: WORK_DIR, commit: head };
+  let msg = '';
+  try {
+    msg = run('git log -1 --pretty=%s', WORK_DIR).trim();
+  } catch {}
+  return { dir: WORK_DIR, commit: head, message: msg };
 }
 
 async function collectJsFiles(root) {
@@ -82,12 +90,17 @@ async function collectJsFiles(root) {
       return;
     }
     for (const ent of entries) {
-      const full = path.join(dir, ent.name);
+      const p = path.join(dir, ent.name);
       if (ent.isDirectory()) {
-        if (ent.name === 'node_modules' || ent.name === '.git') continue;
-        await walk(full);
-      } else if (/\.(js|ts|tsx|jsx|json)$/i.test(ent.name)) {
-        out.push(full);
+        if (
+          ent.name === 'node_modules' ||
+          ent.name === '.git' ||
+          ent.name === '__tests__'
+        )
+          continue;
+        await walk(p);
+      } else if (/\.(js|jsx|ts|tsx|mjs|cjs)$/i.test(ent.name)) {
+        out.push(p);
       }
     }
   }
@@ -95,99 +108,117 @@ async function collectJsFiles(root) {
   return out;
 }
 
-function extractExperimentsFromText(content, fileLabel, expMap) {
-  const idRe = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80})["']/gi;
-  let m;
-  while ((m = idRe.exec(content)) !== null) {
-    const id = m[1].toLowerCase();
-    if (!isExpId(id)) continue;
-    if (!expMap.has(id)) {
-      expMap.set(id, {
-        id,
-        type: /guild/i.test(id) ? 'guild' : 'user',
-        isApex: /apex|_aa_|-aa-/i.test(id),
-        sources: [fileLabel],
-      });
-    } else {
-      const e = expMap.get(id);
-      if (!e.sources.includes(fileLabel) && e.sources.length < 5) {
-        e.sources.push(fileLabel);
-      }
-    }
-  }
+function inferType(id) {
+  const s = String(id).toLowerCase();
+  if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
+    return 'guild';
+  return 'user';
 }
 
-/** Optional light string extraction (hashed keys only) */
-function extractStringsFromText(content, stringMap) {
-  const re =
-    /["']([A-Za-z0-9]{5,8})["']\s*:\s*["']((?:[^"'\\]|\\.){2,200})["']/g;
+function extractFromContent(content, expMap, strings) {
+  const reExp = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   let m;
-  while ((m = re.exec(content)) !== null) {
-    const key = m[1];
-    const val = m[2];
-    if (!/[A-Za-z]/.test(key)) continue;
-    if (!/[A-Za-zÀ-ÿ]{2,}/.test(val)) continue;
-    if (/discord_web|webpack|function\s*\(/i.test(val)) continue;
-    if (/^[a-f0-9]{16,}$/i.test(val)) continue;
-    stringMap.set(key, val);
+  while ((m = reExp.exec(content)) !== null) {
+    const id = m[1];
+    if (!isExpId(id) || expMap.has(id)) continue;
+    const start = Math.max(0, m.index - 80);
+    const ctx = content.slice(start, m.index + id.length + 120);
+    let type = inferType(id);
+    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
+    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx)) type = 'user';
+    expMap.set(id, { id, type, kind: type, source: 'mobile_files' });
+  }
+
+  const reStr =
+    /["']([A-Za-z0-9+/_-]{6})["']\s*:\s*["']([^"'\\]*(?:\\.[^"'\\]*)*)["']/g;
+  while ((m = reStr.exec(content)) !== null) {
+    if (m[1].length !== 6) continue;
+    if (/^[0-9a-f]{6}$/i.test(m[1])) continue;
+    let val = m[2];
+    try {
+      val = JSON.parse('"' + val + '"');
+    } catch {}
+    if (typeof val === 'string' && val.length >= 2 && val.length <= 400) {
+      strings[m[1]] = val;
+    }
   }
 }
 
 async function scanMobileFiles(root) {
   const files = await collectJsFiles(root);
-  console.log(`Scanning ${files.length} mobile source files…`);
+  console.log('JS files to scan:', files.length);
   const expMap = new Map();
-  const stringMap = new Map();
-  let scanned = 0;
-  for (const file of files) {
+  const strings = {};
+  let n = 0;
+  for (const fp of files) {
     try {
-      const st = await fs.stat(file);
-      if (st.size > 20_000_000) continue;
-      let content = await fs.readFile(file, 'utf8');
-      if (st.size > 5_000_000) content = content.slice(0, 5_000_000);
-      const label = path.relative(root, file).replace(/\\/g, '/');
-      extractExperimentsFromText(content, label, expMap);
-      extractStringsFromText(content, stringMap);
-      scanned++;
-    } catch (e) {
-      // skip binary / encoding issues
-    }
+      const st = await fs.stat(fp);
+      if (st.size > 8_000_000) continue;
+      const content = await fs.readFile(fp, 'utf8');
+      extractFromContent(content, expMap, strings);
+      n++;
+    } catch {}
   }
-  console.log(`Scanned ${scanned} files`);
+  console.log('Scanned files:', n);
   return {
     experiments: [...expMap.values()].sort((a, b) => a.id.localeCompare(b.id)),
-    strings: Object.fromEntries(
-      [...stringMap.entries()].sort((a, b) => a[0].localeCompare(b[0])),
-    ),
+    strings,
   };
+}
+
+async function loadKnown() {
+  const set = new Set();
+  try {
+    if (await fs.pathExists(KNOWN_FILE)) {
+      const d = await fs.readJson(KNOWN_FILE);
+      for (const id of d.ids || []) set.add(String(id));
+    }
+  } catch {}
+  return set;
+}
+
+async function saveKnown(set) {
+  const ids = [...set].sort();
+  await fs.writeJson(
+    KNOWN_FILE,
+    { updatedAt: new Date().toISOString(), count: ids.length, ids },
+    { spaces: 2 },
+  );
 }
 
 async function postWebhook(payload) {
   if (!WEBHOOK_URL) return;
+  const body = {
+    username: BOT_NAME,
+    avatar_url: BOT_AVATAR,
+    ...payload,
+  };
   const res = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(body),
   });
-  if (!res.ok) console.warn('Webhook failed', res.status, await res.text());
-  else console.log('Webhook sent');
-  await new Promise((r) => setTimeout(r, 550));
+  if (!res.ok) console.warn('Webhook', res.status, await res.text());
+  else console.log('Webhook OK');
+  await new Promise((r) => setTimeout(r, 400));
 }
 
-function experimentEmbed(exp, sourceCommit) {
-  const isApex = exp.isApex;
+function experimentEmbed(exp, meta) {
+  const isApex = /apex|20\d{2}-\d{2}-/i.test(exp.id);
   const type = exp.type || 'user';
   const desc = [
     `+ \`${exp.id}\` (**${type}**)`,
-    `* Variant 0`,
-    `* Variant 1`,
     `Type: **${type}**`,
-    `Source: **mobile files** (\`${sourceCommit}\`)`,
-  ].join('\n');
+    meta.message ? `Repo: ${meta.message.slice(0, 80)}` : null,
+    `Source: **mobile files** (\`${meta.commit}\`)`,
+  ]
+    .filter(Boolean)
+    .join('\n');
   return {
     title: isApex ? 'New Apex Experiment (Mobile)' : 'New Experiment (Mobile)',
     description: desc,
     color: isApex ? 0xfee75c : 0xeb459e,
+    footer: { text: `Mobile files · ${meta.commit}` },
     timestamp: new Date().toISOString(),
   };
 }
@@ -199,54 +230,32 @@ async function notify(newExps, stringDiff, meta) {
   }
   if (!newExps.length && !Object.keys(stringDiff.added || {}).length) return;
 
-  await postWebhook({
-    username: 'Mobile Files',
-    embeds: [
-      {
-        title: 'New Discord Mobile Build',
-        description:
-          'From **real client files** ([discord-mobile-datamining](https://github.com/Wumpus-Central/discord-mobile-datamining))',
-        color: 0xed4245,
-        fields: [
-          { name: 'Commit', value: meta.commit || '—', inline: true },
-          { name: 'New experiments', value: String(newExps.length), inline: true },
-          {
-            name: 'New strings',
-            value: String(Object.keys(stringDiff.added || {}).length),
-            inline: true,
-          },
-        ],
-        timestamp: new Date().toISOString(),
-      },
-    ],
-  });
-
-  const sorted = [...newExps].sort((a, b) => {
-    const aa = a.isApex ? 0 : 1;
-    const bb = b.isApex ? 0 : 1;
-    if (aa !== bb) return aa - bb;
-    return b.id.localeCompare(a.id);
-  });
-  for (const exp of sorted.slice(0, 12)) {
+  if (newExps.length) {
     await postWebhook({
-      username: 'Mobile Files',
-      embeds: [experimentEmbed(exp, meta.commit)],
+      embeds: [
+        {
+          title: 'Mobile Experiments',
+          description: newExps
+            .slice(0, 20)
+            .map((e) => `+ \`${e.id}\` (${e.type || 'user'})`)
+            .join('\n'),
+          color: 0xeb459e,
+          footer: { text: `Mobile · ${meta.commit} · +${newExps.length}` },
+          timestamp: new Date().toISOString(),
+        },
+      ],
     });
   }
 
-  const lines = [];
-  for (const [k, v] of Object.entries(stringDiff.added || {}).slice
-    ? Object.entries(stringDiff.added || {})
-    : []) {
-    lines.push(`+ ${k}: ${v}`);
+  for (const exp of newExps.slice(0, MAX_NOTIFY_EXP)) {
+    await postWebhook({ embeds: [experimentEmbed(exp, meta)] });
   }
-  // Object.entries doesn't have slice — fix
+
   const strLines = Object.entries(stringDiff.added || {})
-    .slice(0, 40)
-    .map(([k, v]) => `+ ${k}: ${v}`);
+    .slice(0, 35)
+    .map(([k, v]) => `+ ${k}: ${String(v).slice(0, 80)}`);
   if (strLines.length) {
     await postWebhook({
-      username: 'Mobile Files',
       embeds: [
         {
           title: 'Strings (Mobile)',
@@ -263,34 +272,47 @@ async function notify(newExps, stringDiff, meta) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📱 Sync mobile datamining files…');
+  console.log('=== Mobile files datamine ===');
   const meta = await syncSourceRepo();
-  console.log(`Source commit: ${meta.commit}`);
+  console.log('Source commit:', meta.commit, meta.message);
 
   const findings = await scanMobileFiles(meta.dir);
-  console.log(`Experiments found: ${findings.experiments.length}`);
-  console.log(`Strings found: ${Object.keys(findings.strings).length}`);
+  console.log('Experiments found:', findings.experiments.length);
+  console.log('Strings found:', Object.keys(findings.strings).length);
 
+  const known = await loadKnown();
   let previous = null;
   if (await fs.pathExists(STATE_FILE)) {
     try {
       previous = await fs.readJson(STATE_FILE);
     } catch {}
   }
+  for (const e of previous?.experiments || []) {
+    if (e?.id) known.add(String(e.id));
+  }
 
-  const prevIds = new Set((previous?.experiments || []).map((e) => e.id));
-  const newExps = findings.experiments.filter((e) => !prevIds.has(e.id));
+  const newExps = findings.experiments.filter((e) => !known.has(e.id));
+  for (const e of findings.experiments) known.add(e.id);
 
   const prevStrings = previous?.strings || {};
   const stringDiff = { added: {} };
-  for (const [k, v] of Object.entries(findings.strings)) {
-    if (!(k in prevStrings)) stringDiff.added[k] = v;
+  // Only report string adds if previous had a meaningful baseline
+  const prevCount = Object.keys(prevStrings).length;
+  if (prevCount >= 20) {
+    for (const [k, v] of Object.entries(findings.strings)) {
+      if (!(k in prevStrings)) stringDiff.added[k] = v;
+    }
+    if (Object.keys(stringDiff.added).length > 80) {
+      console.log('String flood — skip notify, reseed');
+      stringDiff.added = {};
+    }
   }
 
   const state = {
     scrapedAt: new Date().toISOString(),
     sourceRepo: SOURCE_REPO,
     sourceCommit: meta.commit,
+    sourceMessage: meta.message,
     experimentCount: findings.experiments.length,
     stringCount: Object.keys(findings.strings).length,
     newExperimentCount: newExps.length,
@@ -298,12 +320,13 @@ async function main() {
     strings: findings.strings,
   };
   await fs.writeJson(STATE_FILE, state, { spaces: 2 });
+  await saveKnown(known);
 
-  console.log(`New mobile experiments: ${newExps.length}`);
-  console.log(`New mobile strings: ${Object.keys(stringDiff.added).length}`);
+  console.log('New mobile experiments:', newExps.length);
+  console.log('New mobile strings:', Object.keys(stringDiff.added).length);
 
   await notify(newExps, stringDiff, meta);
-  console.log('✅ Mobile files scan done');
+  console.log('=== Mobile files done ===');
 }
 
 main().catch((err) => {
