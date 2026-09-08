@@ -12,9 +12,10 @@ const WUMPUS_EXP_URL =
 const WUMPUS_APEX_URL =
   'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/apex_experiments.json';
 
-const DOWNLOAD_CONCURRENCY = 16;
-const MAX_READ_BYTES = 25_000_000;
+const DOWNLOAD_CONCURRENCY = 24;
 const WEB_ONLY = process.env.SCRAPE_WEB_ONLY !== '0';
+// CSS download after critical extract (does not block exp/str/routes parsing)
+const DOWNLOAD_CSS = process.env.SCRAPE_CSS !== '0';
 
 async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   await fs.ensureDir(assetsDir);
@@ -23,36 +24,9 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   let assets = [...(build.assets || [])];
   assets.sort((a, b) => scoreAsset(b) - scoreAsset(a));
 
-  // CSS: toujours récupérer la liste complète (léger vs tout le JS)
   const cssAssets = [...(build.cssAssets || [])];
 
-  if (WEB_ONLY) {
-    const web = assets.filter((u) => /\/web\./i.test(u));
-    if (web.length) {
-      console.log('FAST MODE: web.* + en-US locale + ALL css');
-      assets = web;
-    } else {
-      console.warn('No web.* — fallback full list');
-    }
-  }
-
-  if (forceRefresh) {
-    for (const url of [...assets, ...cssAssets]) {
-      const name = path.basename(String(url).split('?')[0]);
-      try {
-        await fs.remove(path.join(assetsDir, name));
-      } catch {}
-    }
-  }
-
-  await downloadList(assets, assetsDir, true);
-  if (cssAssets.length) {
-    console.log('Downloading CSS files:', cssAssets.length);
-    await downloadList(cssAssets, assetsDir, true);
-  }
-  await assertWebBundle(assetsDir);
-
-  // Inventaire CSS (noms de fichiers = id.hash.css → détecte new UI sheets)
+  // Inventaire CSS dès les URLs HTML (pas besoin d'attendre le download)
   const cssInventory = {};
   for (const url of cssAssets) {
     const name = path.basename(String(url).split('?')[0]);
@@ -60,9 +34,31 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     if (m) cssInventory[m[1]] = m[2];
     else cssInventory[name] = name;
   }
-  console.log('CSS inventory:', Object.keys(cssInventory).length);
+  console.log('CSS listed from HTML:', Object.keys(cssInventory).length);
 
-  // Read web.js for exp/routes + locale chunk map
+  if (WEB_ONLY) {
+    const web = assets.filter((u) => /\/web\./i.test(u));
+    if (web.length) {
+      console.log('FAST MODE: web.* + en-US locales first (CSS after extract)');
+      assets = web;
+    } else {
+      console.warn('No web.* — fallback full list');
+    }
+  }
+
+  if (forceRefresh) {
+    for (const url of assets) {
+      const name = path.basename(String(url).split('?')[0]);
+      try {
+        await fs.remove(path.join(assetsDir, name));
+      } catch {}
+    }
+  }
+
+  // 1) Critical path: JS only
+  await downloadList(assets, assetsDir, true);
+  await assertWebBundle(assetsDir);
+
   const webFiles = (await fs.readdir(assetsDir)).filter((f) =>
     /^web\./i.test(f),
   );
@@ -81,7 +77,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     extractStrings(webContent, strings);
   }
 
-  // ── REAL strings: en-US locale chunks (hash.js) ───────
   const localeUrls = resolveEnUsLocaleUrls(webContent);
   console.log('en-US locale chunks:', localeUrls.length);
   if (localeUrls.length) {
@@ -115,7 +110,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     css: Object.keys(cssInventory).length,
   });
 
-  // Experiments meta (Wumpus) — kind/label only, not strings
   const [meta, wRoutes] = await Promise.all([
     fetchWumpusExperimentMeta(cacheDir),
     cachedJson(cacheDir, 'routes.json', WUMPUS_ROUTES_URL, 3600),
@@ -166,7 +160,13 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     console.log('Wumpus routes +', n, 'total', Object.keys(routes).length);
   }
 
-  console.log('Final counts (Discord-native strings)', {
+  // 2) CSS after extract — notif peut partir dès le return
+  if (DOWNLOAD_CSS && cssAssets.length) {
+    console.log('Downloading CSS (post-extract):', cssAssets.length);
+    await downloadList(cssAssets, assetsDir, !!forceRefresh);
+  }
+
+  console.log('Final counts', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
@@ -181,9 +181,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   };
 }
 
-/**
- * From web.js: en-US → n.e("chunkId") + chunkId:"hash" → /assets/{hash}.js
- */
 function resolveEnUsLocaleUrls(webContent) {
   if (!webContent) return [];
   const chunkMap = {};
@@ -257,7 +254,6 @@ async function downloadList(urls, assetsDir, force) {
   for (const url of urls) {
     if (!url || !url.includes('/assets/')) continue;
     const name = path.basename(url.split('?')[0]);
-    // JS + CSS (avant: seulement .js)
     if (!name.endsWith('.js') && !name.endsWith('.css')) continue;
     jobs.push({ url, name });
   }
@@ -285,12 +281,8 @@ async function downloadList(urls, assetsDir, force) {
         const buf = await res.buffer();
         await fs.writeFile(fp, buf);
         n++;
-        if (n <= 8 || job.name.endsWith('.css') && n % 50 === 0) {
-          console.log(
-            '✓',
-            job.name,
-            Math.round(buf.length / 1024) + 'KB',
-          );
+        if (n <= 6) {
+          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
         }
       } catch (e) {
         console.warn('✗', job.name, e.message);
