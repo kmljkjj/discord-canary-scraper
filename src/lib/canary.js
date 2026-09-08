@@ -32,41 +32,57 @@ async function fetchBuild() {
     assets.filter((u) => /\/web\./i.test(u)).length,
   );
 
-  if (!env.BUILD_NUMBER) {
-    console.warn('WARNING: BUILD_NUMBER not found in HTML');
-  }
-  if (assets.length === 0) {
-    console.warn('WARNING: no /assets/ JS URLs found');
-  }
-  if (css.length === 0) {
-    console.warn('WARNING: no /assets/ CSS URLs found');
-  }
+  if (!env.BUILD_NUMBER) console.warn('WARNING: BUILD_NUMBER not found');
+  if (!assets.length) console.warn('WARNING: no JS assets');
+  if (!css.length) console.warn('WARNING: no CSS assets');
 
   return {
     buildNumber: env.BUILD_NUMBER || 'unknown',
     versionHash: env.VERSION_HASH || null,
     releaseChannel: env.RELEASE_CHANNEL || 'canary',
+    apiEndpoint: env.API_ENDPOINT || null,
+    webappEndpoint: env.WEBAPP_ENDPOINT || null,
     assets,
     cssAssets: css,
+    globalEnv: env,
     scrapedAt: new Date().toISOString(),
   };
 }
 
 function parseGlobalEnv(html) {
-  const bn = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d+)"?/);
-  const vh = html.match(/"VERSION_HASH"\s*:\s*"([a-f0-9]+)"/i);
-  const rc = html.match(/"RELEASE_CHANNEL"\s*:\s*"([a-z]+)"/i);
-  return {
-    BUILD_NUMBER: bn ? bn[1] : null,
-    VERSION_HASH: vh ? vh[1] : null,
-    RELEASE_CHANNEL: rc ? rc[1] : 'canary',
-  };
+  const out = {};
+  // window.GLOBAL_ENV = { ... } or inline "KEY":"value"
+  const keys = [
+    'BUILD_NUMBER',
+    'VERSION_HASH',
+    'RELEASE_CHANNEL',
+    'API_ENDPOINT',
+    'WEBAPP_ENDPOINT',
+    'CDN_HOST',
+    'ASSET_ENDPOINT',
+    'MEDIA_PROXY_ENDPOINT',
+    'WIDGET_ENDPOINT',
+    'INVITE_HOST',
+    'GUILD_TEMPLATE_HOST',
+    'GIFT_CODE_HOST',
+    'MARKETING_ENDPOINT',
+    'NETWORKING_ENDPOINT',
+    'REMOTE_AUTH_ENDPOINT',
+    'SENTRY_TAGS',
+  ];
+  for (const k of keys) {
+    const re = new RegExp('"' + k + '"\\s*:\\s*"([^"]*)"');
+    const m = html.match(re);
+    if (m) out[k] = m[1];
+  }
+  // BUILD_NUMBER sometimes unquoted
+  if (!out.BUILD_NUMBER) {
+    const m = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d+)"?/);
+    if (m) out.BUILD_NUMBER = m[1];
+  }
+  return out;
 }
 
-/**
- * Récupère TOUS les assets JS + CSS référencés dans le HTML Canary.
- * Avant: seulement .js → on rattait ~250+ CSS.
- */
 function extractAssetUrls(html) {
   const $ = cheerio.load(html);
   const js = new Set();
@@ -85,7 +101,6 @@ function extractAssetUrls(html) {
   $('script[src]').each((_, el) => add($(el).attr('src')));
   $('link[href]').each((_, el) => add($(el).attr('href')));
 
-  // Références inline dans le HTML (listes d'assets Discord)
   const reJs = /\/assets\/([a-zA-Z0-9._-]+\.js)/g;
   const reCss = /\/assets\/([a-zA-Z0-9._-]+\.css)/g;
   let m;
@@ -95,7 +110,6 @@ function extractAssetUrls(html) {
   return { js: [...js], css: [...css].sort() };
 }
 
-/** web.* first — contains nearly all experiments + routes */
 function prioritizeAssets(assets) {
   return [...assets].sort((a, b) => score(b) - score(a));
 }
@@ -109,4 +123,4 @@ function score(url) {
   return s;
 }
 
-module.exports = { fetchBuild, extractAssetUrls, prioritizeAssets };
+module.exports = { fetchBuild, extractAssetUrls, prioritizeAssets, parseGlobalEnv };
