@@ -27,18 +27,16 @@ from discord.ext import commands, tasks
 GITHUB_TOKEN = "ghp_COLLLE_TON_TOKEN_ICI"  # PAT classic : repo + workflow
 GITHUB_REPO = "kmljkjj/discord-canary-scraper"
 DISPATCH_EVENT = "trigger-scraping"
-INTERVAL_SECONDS = 20
+INTERVAL_SECONDS = 15  # détection build ~15s max (bot 24/7 requis)
 STATE_FILE = Path(__file__).resolve().parent / "last_canary_build.txt"
 # ═══════════════════════════════════════════════════════
 
-# Plusieurs URLs : si /app renvoie 400, /login a souvent le même BUILD_NUMBER
 CANARY_URLS = (
     "https://canary.discord.com/app",
     "https://canary.discord.com/login",
     "https://canary.discord.com/channels/@me",
 )
 
-# UA navigateur réel (les UA "bot" se font parfois 400 / Cloudflare)
 UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -47,8 +45,8 @@ UA = (
 _BUILD_RE = re.compile(r'"BUILD_NUMBER"\s*:\s*"?(\d+)"?')
 _HASH_RE = re.compile(r'"VERSION_HASH"\s*:\s*"([a-f0-9]{8,})"', re.I)
 
-HTTP_TIMEOUT = 15
-DISPATCH_TIMEOUT = 15
+HTTP_TIMEOUT = 12
+DISPATCH_TIMEOUT = 12
 
 _CTX = ssl.create_default_context()
 
@@ -67,7 +65,6 @@ def _read_build_from_url(url: str) -> tuple[str | None, str | None]:
     req = urllib.request.Request(url, headers=_headers(), method="GET")
     try:
         with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT, context=_CTX) as res:
-            # Pas besoin de toute la page : BUILD_NUMBER est en début de HTML
             buf = b""
             while len(buf) < 65536:
                 chunk = res.read(8192)
@@ -94,7 +91,6 @@ def _read_build_from_url(url: str) -> tuple[str | None, str | None]:
 
 
 def _read_build_fast() -> tuple[str | None, str | None]:
-    """Essaie plusieurs URLs + 1 retry."""
     last_err = None
     for attempt in range(2):
         for url in CANARY_URLS:
@@ -106,10 +102,9 @@ def _read_build_fast() -> tuple[str | None, str | None]:
                 last_err = e
                 continue
         if attempt == 0:
-            # petite pause avant retry
             import time
 
-            time.sleep(1.2)
+            time.sleep(0.8)
     if last_err:
         print(f"[canary-cog] all URLs failed: {last_err}", flush=True)
     return None, None
