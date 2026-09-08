@@ -2,7 +2,8 @@ name: Mobile Versions + Files
 
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    # Hourly — versions move slower than Canary web but OTA can land anytime
+    - cron: '15 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-mobile-versions]
@@ -12,31 +13,42 @@ permissions:
 
 concurrency:
   group: mobile-scrape
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   mobile:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
+      - name: Cache node_modules
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: nm-mobile-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
+          restore-keys: |
+            nm-mobile-${{ runner.os }}-node22-
+
       - name: Install dependencies
         run: |
+          if [ ! -d node_modules/node-fetch ]; then
+            npm install --no-audit --no-fund --no-package-lock
+          else
+            echo "cache hit"
+          fi
           rm -f package-lock.json
-          rm -rf node_modules
-          npm install --no-audit --no-fund --prefer-online
 
-      - name: Mobile versions (store / OTA)
+      - name: Mobile versions (store + OTA)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          MAX_WEBHOOKS_PER_RUN: '6'
+          ORBIT_BOT_NAME: Datamining
         run: node src/mobile_versions.js
         continue-on-error: true
 
@@ -44,12 +56,13 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           MOBILE_DATAMINE_REPO: https://github.com/Wumpus-Central/discord-mobile-datamining.git
-          MAX_WEBHOOKS_PER_RUN: '6'
+          ORBIT_BOT_NAME: Datamining
         run: node src/mobile_from_files.js
         continue-on-error: true
 
       - name: Commit state
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/mobile_versions.json data/mobile_experiments.json 2>/dev/null || true
@@ -57,9 +70,14 @@ jobs:
             echo "No mobile state changes"
             exit 0
           fi
-          git commit -m "📱 Mobile state" || exit 0
-          for i in 1 2 3; do
-            git pull --rebase origin main && git push origin HEAD:main && exit 0
+          VER=$(node -e "try{const d=require('./data/mobile_versions.json');const c=(d.channels||[]).filter(x=>x.version).map(x=>x.platform+':'+x.version).slice(0,4).join(' ');console.log(c||'state')}catch(e){console.log('state')}")
+          git commit -m "mobile: ${VER}" || exit 0
+          for i in 1 2 3 4; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo "Pushed mobile OK"
+              exit 0
+            fi
             sleep 2
           done
+          echo "::warning::mobile push failed"
           exit 0
