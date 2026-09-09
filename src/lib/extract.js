@@ -13,6 +13,11 @@ const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 36);
 const WEB_ONLY = process.env.SCRAPE_WEB_ONLY !== '0';
 const DOWNLOAD_CSS = process.env.SCRAPE_CSS !== '0';
 
+function matchEnd(m) {
+  // RegExpExecArray has .index, not .end() (Python habit)
+  return m.index + m[0].length;
+}
+
 async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   await fs.ensureDir(assetsDir);
   if (cacheDir) await fs.ensureDir(cacheDir);
@@ -65,9 +70,14 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   const expSet = new Map();
 
   if (webContent) {
-    extractRoutes(webContent, routes);
-    extractExperiments(webContent, expSet);
-    extractStrings(webContent, strings);
+    try {
+      extractRoutes(webContent, routes);
+      extractExperiments(webContent, expSet);
+      extractStrings(webContent, strings);
+    } catch (e) {
+      console.error('web extract error', e.message);
+      throw e;
+    }
   }
 
   const localeUrls = resolveEnUsLocaleUrls(webContent);
@@ -397,24 +407,20 @@ function extractRoutes(content, out) {
 /**
  * Parse Discord client experiment definitions from web.js:
  *   { name:"2026-…", kind:"user"|"guild", variations:{ 0:{…}, 1:{…} } }
- * Fallback: bare ID strings + heuristic type.
  */
 function extractExperiments(content, map) {
-  // 1) Structured: name then kind
   const reNK =
     /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
   let m;
   while ((m = reNK.exec(content)) !== null) {
-    upsertExp(map, m[1], m[2].toLowerCase(), content, m.end());
+    upsertExp(map, m[1], m[2].toLowerCase(), content, matchEnd(m));
   }
-  // 2) Structured: kind then name
   const reKN =
     /\{\s*kind\s*:\s*["'](user|guild)["']\s*,\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   while ((m = reKN.exec(content)) !== null) {
-    upsertExp(map, m[2], m[1].toLowerCase(), content, m.end());
+    upsertExp(map, m[2], m[1].toLowerCase(), content, matchEnd(m));
   }
 
-  // 3) Bare IDs still not seen
   const reId = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   while ((m = reId.exec(content)) !== null) {
     const id = m[1];
@@ -466,7 +472,6 @@ function upsertExp(map, id, kind, content, posAfter) {
   });
 }
 
-/** Read variations:{0:{…},1:{…}} keys near experiment definition */
 function countVariationsNear(content, from) {
   const window = content.slice(from, from + 900);
   const m = window.match(/variations\s*:\s*\{/);
