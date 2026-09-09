@@ -1,3 +1,7 @@
+/**
+ * Extract experiments / strings / routes from Discord Canary assets only.
+ * Source of truth: web.*.js + en-US locale chunks on canary.discord.com
+ */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -5,14 +9,7 @@ const fetch = require('node-fetch');
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
-const WUMPUS_ROUTES_URL =
-  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/routes.json';
-const WUMPUS_EXP_URL =
-  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/experiments.json';
-const WUMPUS_APEX_URL =
-  'https://raw.githubusercontent.com/Wumpus-Central/discrapper-canary/main/data/apex_experiments.json';
-
-const DOWNLOAD_CONCURRENCY = 24;
+const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 36);
 const WEB_ONLY = process.env.SCRAPE_WEB_ONLY !== '0';
 const DOWNLOAD_CSS = process.env.SCRAPE_CSS !== '0';
 
@@ -36,7 +33,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   if (WEB_ONLY) {
     const web = assets.filter((u) => /\/web\./i.test(u));
     if (web.length) {
-      console.log('FAST MODE: web.* + en-US locales first');
+      console.log('FAST MODE: web.* + en-US locales');
       assets = web;
     } else {
       console.warn('No web.* — fallback full list');
@@ -73,7 +70,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     extractStrings(webContent, strings);
   }
 
-  // en-US locale chunks (real Discord strings)
   const localeUrls = resolveEnUsLocaleUrls(webContent);
   console.log('en-US locale chunks:', localeUrls.length);
   if (localeUrls.length) {
@@ -100,11 +96,10 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     );
   }
 
-  // Extra JS chunks discovered inside web.js (not only HTML list)
   if (!WEB_ONLY || process.env.SCRAPE_EXTRA_CHUNKS === '1') {
     const extra = discoverExtraChunks(webContent).slice(0, 40);
     if (extra.length) {
-      console.log('Extra chunks from web map:', extra.length);
+      console.log('Extra chunks:', extra.length);
       await downloadList(extra, assetsDir, false);
       for (const url of extra) {
         const name = path.basename(url.split('?')[0]);
@@ -121,74 +116,17 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     }
   }
 
-  console.log('Raw extract (Discord)', {
+  console.log('Extract (Discord only)', {
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
     css: Object.keys(cssInventory).length,
   });
-
-  const [meta, wRoutes] = await Promise.all([
-    fetchWumpusExperimentMeta(cacheDir),
-    cachedJson(cacheDir, 'routes.json', WUMPUS_ROUTES_URL, 3600),
-  ]);
-
-  let enriched = 0;
-  for (const [id, e] of expSet) {
-    const m = meta.get(id);
-    if (m) {
-      if (m.kind) {
-        e.type = m.kind;
-        e.kind = m.kind;
-      }
-      if (m.label) e.label = m.label;
-      if (m.treatments) e.treatments = m.treatments;
-      if (m.variations) e.variations = m.variations;
-      e.source = 'wumpus+extract';
-      enriched++;
-    } else {
-      e.type = inferType(id, e.type);
-      e.kind = e.type;
-      e.source = 'extract';
-    }
-  }
-  for (const [id, m] of meta) {
-    if (!expSet.has(id)) {
-      expSet.set(id, {
-        id,
-        type: m.kind || inferType(id),
-        kind: m.kind || inferType(id),
-        label: m.label || null,
-        treatments: m.treatments || null,
-        variations: m.variations || null,
-        source: 'wumpus',
-      });
-    }
-  }
-  console.log('Wumpus exp enriched', enriched, 'total', expSet.size);
-
-  if (Object.keys(routes).length < 50 && wRoutes) {
-    let n = 0;
-    for (const [k, v] of Object.entries(wRoutes)) {
-      if (!(k in routes) && isValidRouteKey(k) && normalizePath(v)) {
-        routes[k] = normalizePath(v);
-        n++;
-      }
-    }
-    console.log('Wumpus routes +', n, 'total', Object.keys(routes).length);
-  }
 
   if (DOWNLOAD_CSS && cssAssets.length) {
     console.log('Downloading CSS (post-extract):', cssAssets.length);
     await downloadList(cssAssets, assetsDir, !!forceRefresh);
   }
-
-  console.log('Final counts', {
-    strings: Object.keys(strings).length,
-    routes: Object.keys(routes).length,
-    experiments: expSet.size,
-    css: Object.keys(cssInventory).length,
-  });
 
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
@@ -198,13 +136,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
   };
 }
 
-/**
- * en-US loaders in web.js:
- *   "en-US":()=>n.e("177761").then(...)
- * chunk map:
- *   177761:"2cb8cfba..."
- * Also: "./en-US.json":"444819"
- */
 function resolveEnUsLocaleUrls(webContent) {
   if (!webContent) return [];
   const chunkMap = {};
@@ -219,7 +150,6 @@ function resolveEnUsLocaleUrls(webContent) {
     /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["'](\d+)["']\)/g;
   while ((m = reEn.exec(webContent)) !== null) chunkIds.add(m[1]);
 
-  // secondary: "./en-US.json":"chunkId"
   const reJson = /\.\/en-US\.json["']\s*:\s*["'](\d+)["']/g;
   while ((m = reJson.exec(webContent)) !== null) chunkIds.add(m[1]);
 
@@ -234,7 +164,6 @@ function resolveEnUsLocaleUrls(webContent) {
   return urls;
 }
 
-/** High-value extra chunks (not locale) from webpack map — optional */
 function discoverExtraChunks(webContent) {
   if (!webContent) return [];
   const chunkMap = {};
@@ -243,7 +172,6 @@ function discoverExtraChunks(webContent) {
   while ((m = reMap.exec(webContent)) !== null) {
     chunkMap[m[1]] = m[2];
   }
-  // Prefer chunks referenced near experiment-looking strings — skip, just skip locales
   const localeIds = new Set();
   const reEn =
     /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["'](\d+)["']\)/g;
@@ -253,20 +181,13 @@ function discoverExtraChunks(webContent) {
   let n = 0;
   for (const [id, hash] of Object.entries(chunkMap)) {
     if (localeIds.has(id)) continue;
-    // skip tiny hashes already in HTML list by not caring
     urls.push('https://canary.discord.com/assets/' + hash + '.js');
     if (++n >= 40) break;
   }
   return urls;
 }
 
-/**
- * Locale modules are typically:
- *   JSON.parse('{"/cp93l":["Next month"],...}')
- * Values can be ICU arrays: ["Hello ", [1, "name"]]
- */
 function extractLocaleStrings(content, out) {
-  // 1) Full JSON.parse('...') blobs
   const reParse = /JSON\.parse\('((?:\\'|[^'])*)'\)/g;
   let m;
   while ((m = reParse.exec(content)) !== null) {
@@ -285,14 +206,10 @@ function extractLocaleStrings(content, out) {
         if (isGoodStringVal(text)) out[k] = text;
       }
     } catch {
-      // fallback regex on the raw blob
       extractStringsFromLocaleBlob(raw, out);
     }
   }
-
-  // 2) Direct "key":["value"] outside parse
   extractStringsFromLocaleBlob(content, out);
-  // 3) Plain "key":"value"
   extractStrings(content, out);
 }
 
@@ -316,10 +233,10 @@ function extractStringsFromLocaleBlob(content, out) {
   let m;
   while ((m = reArr.exec(content)) !== null) {
     if (!isGoodStringKey(m[1])) continue;
-    // simple: ["text"] or ["a", [1,"x"], "b"]
     const inner = m[2];
     const parts = [];
-    const rePart = /["']([^"'\\]*(?:\\.[^"'\\]*)*)["']|\[\s*\d+\s*,\s*["']([^"']+)["']\s*\]/g;
+    const rePart =
+      /["']([^"'\\]*(?:\\.[^"'\\]*)*)["']|\[\s*\d+\s*,\s*["']([^"']+)["']\s*\]/g;
     let p;
     while ((p = rePart.exec(inner)) !== null) {
       if (p[1] != null) {
@@ -341,7 +258,7 @@ function extractStringsFromLocaleBlob(content, out) {
 async function assertWebBundle(assetsDir) {
   const files = (await fs.readdir(assetsDir)).filter((f) => /^web\./i.test(f));
   if (!files.length) {
-    console.warn('⚠️  No web.*.js');
+    console.warn('No web.*.js');
     return;
   }
   for (const f of files) {
@@ -350,16 +267,15 @@ async function assertWebBundle(assetsDir) {
       'web bundle:',
       f,
       Math.round(st.size / 1024) + 'KB',
-      st.size < 1_000_000 ? '⚠️ small' : 'OK',
+      st.size < 1_000_000 ? 'small?' : 'OK',
     );
   }
 }
 
-function inferType(id, fallback) {
+function inferType(id) {
   const s = String(id || '').toLowerCase();
   if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
     return 'guild';
-  if (fallback === 'guild' || fallback === 'user') return fallback;
   return 'user';
 }
 
@@ -395,17 +311,17 @@ async function downloadList(urls, assetsDir, force) {
           timeout: 60000,
         });
         if (!res.ok) {
-          console.warn('✗', job.name, res.status);
+          console.warn('DL fail', job.name, res.status);
           continue;
         }
         const buf = await res.buffer();
         await fs.writeFile(fp, buf);
         n++;
         if (n <= 6) {
-          console.log('✓', job.name, Math.round(buf.length / 1024) + 'KB');
+          console.log('DL', job.name, Math.round(buf.length / 1024) + 'KB');
         }
       } catch (e) {
-        console.warn('✗', job.name, e.message);
+        console.warn('DL fail', job.name, e.message);
       }
     }
   }
@@ -413,70 +329,7 @@ async function downloadList(urls, assetsDir, force) {
   const workers = [];
   for (let w = 0; w < DOWNLOAD_CONCURRENCY; w++) workers.push(worker());
   await Promise.all(workers);
-  console.log('Downloaded', n, 'file(s) this pass');
-}
-
-async function cachedJson(cacheDir, name, url, ttlSec) {
-  if (!cacheDir) return null;
-  const fp = path.join(cacheDir, name);
-  try {
-    if (await fs.pathExists(fp)) {
-      const st = await fs.stat(fp);
-      if (Date.now() - st.mtimeMs < ttlSec * 1000) {
-        return await fs.readJson(fp);
-      }
-    }
-  } catch {}
-  try {
-    const res = await fetch(url, {
-      headers: { 'User-Agent': UA },
-      timeout: 20000,
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    await fs.writeJson(fp, data);
-    return data;
-  } catch {
-    try {
-      if (await fs.pathExists(fp)) return await fs.readJson(fp);
-    } catch {}
-    return null;
-  }
-}
-
-async function fetchWumpusExperimentMeta(cacheDir) {
-  const map = new Map();
-  const [exps, apex] = await Promise.all([
-    cachedJson(cacheDir, 'experiments.json', WUMPUS_EXP_URL, 3600),
-    cachedJson(cacheDir, 'apex_experiments.json', WUMPUS_APEX_URL, 3600),
-  ]);
-  const list = [];
-  if (Array.isArray(exps)) list.push(...exps);
-  else if (exps && typeof exps === 'object') {
-    for (const v of Object.values(exps)) {
-      if (Array.isArray(v)) list.push(...v);
-      else if (v && v.id) list.push(v);
-    }
-  }
-  if (Array.isArray(apex)) list.push(...apex);
-  else if (apex && typeof apex === 'object') {
-    for (const v of Object.values(apex)) {
-      if (Array.isArray(v)) list.push(...v);
-      else if (v && (v.id || v.name)) list.push(v);
-    }
-  }
-  for (const e of list) {
-    const id = e.id || e.name || e.experiment_id;
-    if (!id) continue;
-    map.set(String(id), {
-      kind: e.kind || e.type || null,
-      label: e.label || e.title || null,
-      treatments: e.treatments || e.variants || null,
-      variations: e.variations || null,
-    });
-  }
-  console.log('Wumpus meta', map.size);
-  return map;
+  console.log('Downloaded', n, 'file(s)');
 }
 
 function isGoodStringKey(k) {
@@ -541,25 +394,98 @@ function extractRoutes(content, out) {
   }
 }
 
+/**
+ * Parse Discord client experiment definitions from web.js:
+ *   { name:"2026-…", kind:"user"|"guild", variations:{ 0:{…}, 1:{…} } }
+ * Fallback: bare ID strings + heuristic type.
+ */
 function extractExperiments(content, map) {
-  const re = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  // 1) Structured: name then kind
+  const reNK =
+    /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
   let m;
-  while ((m = re.exec(content)) !== null) {
+  while ((m = reNK.exec(content)) !== null) {
+    upsertExp(map, m[1], m[2].toLowerCase(), content, m.end());
+  }
+  // 2) Structured: kind then name
+  const reKN =
+    /\{\s*kind\s*:\s*["'](user|guild)["']\s*,\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  while ((m = reKN.exec(content)) !== null) {
+    upsertExp(map, m[2], m[1].toLowerCase(), content, m.end());
+  }
+
+  // 3) Bare IDs still not seen
+  const reId = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  while ((m = reId.exec(content)) !== null) {
     const id = m[1];
     if (/^20\d{2}-\d{2}$/.test(id)) continue;
+    if (map.has(id)) continue;
     const start = Math.max(0, m.index - 120);
     const end = Math.min(content.length, m.index + id.length + 200);
     const ctx = content.slice(start, end);
     let type = null;
-    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
-    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx)) type = 'user';
+    if (/kind\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
+    else if (/kind\s*:\s*["']user["']/i.test(ctx)) type = 'user';
     else type = inferType(id);
-    if (map.has(id)) {
-      if (type === 'guild') map.get(id).type = 'guild';
-      continue;
-    }
-    map.set(id, { id, type, kind: type, label: null, treatments: null });
+    const variations = countVariationsNear(content, m.index);
+    map.set(id, {
+      id,
+      type,
+      kind: type,
+      label: null,
+      variations,
+      variationCount: variations ? Object.keys(variations).length : 0,
+      source: 'discord',
+    });
   }
+}
+
+function upsertExp(map, id, kind, content, posAfter) {
+  if (!id || /^20\d{2}-\d{2}$/.test(id)) return;
+  const variations = countVariationsNear(content, posAfter);
+  const existing = map.get(id);
+  if (existing) {
+    if (kind === 'guild') {
+      existing.type = 'guild';
+      existing.kind = 'guild';
+    }
+    if (variations && !existing.variations) {
+      existing.variations = variations;
+      existing.variationCount = Object.keys(variations).length;
+    }
+    return;
+  }
+  map.set(id, {
+    id,
+    type: kind,
+    kind,
+    label: null,
+    variations,
+    variationCount: variations ? Object.keys(variations).length : 0,
+    source: 'discord',
+  });
+}
+
+/** Read variations:{0:{…},1:{…}} keys near experiment definition */
+function countVariationsNear(content, from) {
+  const window = content.slice(from, from + 900);
+  const m = window.match(/variations\s*:\s*\{/);
+  if (!m) return null;
+  const start = m.index + m[0].length;
+  let depth = 1;
+  let i = start;
+  for (; i < window.length && depth > 0; i++) {
+    if (window[i] === '{') depth++;
+    else if (window[i] === '}') depth--;
+  }
+  const body = window.slice(start, i - 1);
+  const keys = [...body.matchAll(/(?:^|[,{])\s*(\d+)\s*:/g)].map((x) =>
+    x[1],
+  );
+  if (!keys.length) return null;
+  const out = {};
+  for (const k of keys) out[k] = { id: Number(k) };
+  return out;
 }
 
 module.exports = {
@@ -572,4 +498,5 @@ module.exports = {
   inferType,
   resolveEnUsLocaleUrls,
   extractLocaleStrings,
+  extractExperiments,
 };
