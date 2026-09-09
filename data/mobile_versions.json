@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-09T01:16:03.407Z",
+  "scrapedAt": "2026-09-09T07:24:14.204Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "storeUrl": "https://apps.apple.com/us/app/discord-talk-play-hang-out/id985746746?uo=4",
       "source": "itunes_lookup",
       "available": true,
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     },
     {
       "platform": "ios",
@@ -23,7 +23,7 @@
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
       "available": true,
       "note": "OTA aligned with or behind App Store",
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     },
     {
       "platform": "android",
@@ -35,7 +35,7 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     },
     {
       "platform": "android",
@@ -43,7 +43,7 @@
       "version": null,
       "available": false,
       "note": "Play beta track not public without Google auth",
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     },
     {
       "platform": "android",
@@ -51,7 +51,7 @@
       "version": null,
       "available": false,
       "note": "Play alpha track not public without Google auth",
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     },
     {
       "platform": "ios",
@@ -59,7 +59,7 @@
       "version": null,
       "available": false,
       "note": "Filled when OTA is newer than App Store stable",
-      "checkedAt": "2026-09-09T01:16:03.407Z"
+      "checkedAt": "2026-09-09T07:24:14.204Z"
     }
   ],
   "otaIndex": {
@@ -234,21 +234,6 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-09-08T22:23:49.868Z",
-  "changes": [
-    {
-      "type": "updated",
-      "key": "ios/stable",
-      "from": "343.0",
-      "to": "344.0",
-      "build": null
-    },
-    {
-      "type": "updated",
-      "key": "android/stable",
-      "from": "343.12",
-      "to": "343.12",
-      "build": "34301200432780"
-    }
-  ]
+  "previousScrapedAt": "2026-09-09T01:16:03.407Z",
+  "changes": []
 }
