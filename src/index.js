@@ -1,12 +1,5 @@
 /**
- * Canary Pulse v10 — flash build + notify-first + full diffs
- *
- * Speed path:
- *  1) fetch BUILD_NUMBER (HTML only, ~0.5s)
- *  2) if new → FLASH webhook immediately (before 12MB web.js download)
- *  3) download web + en-US locales, extract, diff
- *  4) webhook experiments / strings / routes
- *  5) save state to disk
+ * Canary Pulse v10 — flash build + notify-first + Discord-only extract
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -19,7 +12,7 @@ const ALREADY_NOTIFIED = require('./lib/already_notified');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
-const CACHE = path.join(DATA, 'wumpus_cache');
+const CACHE = path.join(DATA, 'cache');
 const KNOWN_EXP = path.join(DATA, 'known_experiment_ids.json');
 const KNOWN_STR = path.join(DATA, 'known_string_keys.json');
 const KNOWN_RT = path.join(DATA, 'known_route_keys.json');
@@ -106,7 +99,9 @@ async function loadLastExtract(file) {
   try {
     if (!(await fs.pathExists(file))) return {};
     const d = await fs.readJson(file);
-    return d.data && typeof d.data === 'object' ? d.data : d.strings || d.routes || d || {};
+    return d.data && typeof d.data === 'object'
+      ? d.data
+      : d.strings || d.routes || d || {};
   } catch {
     return {};
   }
@@ -130,10 +125,11 @@ function expFingerprint(e) {
   const parts = [
     e.type || e.kind || '',
     e.label || '',
-    Array.isArray(e.treatments) ? e.treatments.length : '',
-    e.variations && typeof e.variations === 'object'
-      ? Object.keys(e.variations).length
-      : '',
+    e.variationCount ||
+      (e.variations && typeof e.variations === 'object'
+        ? Object.keys(e.variations).length
+        : '') ||
+      (Array.isArray(e.treatments) ? e.treatments.length : ''),
   ];
   return parts.join('|');
 }
@@ -162,24 +158,28 @@ async function flashBuild(webhookUrl, build) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error('flash HTTP ' + res.status + ' ' + (await res.text()).slice(0, 120));
+  if (!res.ok)
+    throw new Error(
+      'flash HTTP ' + res.status + ' ' + (await res.text()).slice(0, 120),
+    );
 }
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v10 (flash + notify-first) ===');
+  console.log('=== Canary Pulse v10 (Discord-only) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(CACHE);
 
-  const [prev, knownExp, knownStr, knownRt, lastStr, lastRt] = await Promise.all([
-    loadState(DATA),
-    loadKnownExp(),
-    loadKnownStr(),
-    loadKnownRt(),
-    loadLastExtract(LAST_EXTRACT_STR),
-    loadLastExtract(LAST_EXTRACT_RT),
-  ]);
+  const [prev, knownExp, knownStr, knownRt, lastStr, lastRt] =
+    await Promise.all([
+      loadState(DATA),
+      loadKnownExp(),
+      loadKnownStr(),
+      loadKnownRt(),
+      loadLastExtract(LAST_EXTRACT_STR),
+      loadLastExtract(LAST_EXTRACT_RT),
+    ]);
 
   for (const e of prev.experiments || []) {
     if (e && e.id) knownExp.add(String(e.id));
@@ -222,7 +222,12 @@ async function main() {
   const needsExtractSeed =
     Object.keys(lastStr).length < 50 || Object.keys(lastRt).length < 20;
 
-  if (!isNewBuild && prev.initialized && knownExp.size > 50 && !needsExtractSeed) {
+  if (
+    !isNewBuild &&
+    prev.initialized &&
+    knownExp.size > 50 &&
+    !needsExtractSeed
+  ) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
@@ -231,7 +236,6 @@ async function main() {
     console.log('SEED RUN — fill last_extract, no flood');
   }
 
-  // FLASH: announce build number ASAP (before 12MB download)
   let flashSent = false;
   if (isNewBuild && process.env.DISCORD_WEBHOOK_URL) {
     const already = await wasBuildAnnounced(build.buildNumber);
@@ -247,7 +251,10 @@ async function main() {
     }
   }
 
-  console.log('FULL SCRAPE isNewBuild=' + isNewBuild, 'seed=' + needsExtractSeed);
+  console.log(
+    'FULL SCRAPE isNewBuild=' + isNewBuild,
+    'seed=' + needsExtractSeed,
+  );
   const findings = await analyzeAssets(build, {
     forceRefresh: isNewBuild || needsExtractSeed,
     assetsDir: ASSETS,
@@ -415,7 +422,6 @@ async function main() {
     expDiff.removed = [];
   }
 
-  // Detail webhooks (exp/str/routes). Build embed only if FLASH missed.
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild && !flashSent;
 

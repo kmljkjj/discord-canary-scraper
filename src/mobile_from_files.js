@@ -1,6 +1,7 @@
 /**
- * Mobile experiments / strings from REAL client files
- * Source: Wumpus-Central/discord-mobile-datamining (sparse clone)
+ * Mobile experiments / strings from real client JS dumps.
+ * Set MOBILE_DATAMINE_REPO to a git URL that contains discord_app / discord_common/js.
+ * No default third-party org name — you choose the source.
  */
 
 const { execSync } = require('child_process');
@@ -14,9 +15,7 @@ const STATE_FILE = path.join(DATA_DIR, 'mobile_experiments.json');
 const KNOWN_FILE = path.join(DATA_DIR, 'known_mobile_experiment_ids.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
-const SOURCE_REPO =
-  process.env.MOBILE_DATAMINE_REPO ||
-  'https://github.com/Wumpus-Central/discord-mobile-datamining.git';
+const SOURCE_REPO = process.env.MOBILE_DATAMINE_REPO || '';
 
 const BOT_NAME = process.env.ORBIT_BOT_NAME || 'Datamining';
 const BOT_AVATAR =
@@ -42,6 +41,11 @@ function run(cmd, cwd) {
 }
 
 async function syncSourceRepo() {
+  if (!SOURCE_REPO) {
+    throw new Error(
+      'Set MOBILE_DATAMINE_REPO to a git URL with mobile client JS (discord_app / discord_common/js)',
+    );
+  }
   await fs.ensureDir(path.dirname(WORK_DIR));
   if (!(await fs.pathExists(path.join(WORK_DIR, '.git')))) {
     await fs.remove(WORK_DIR);
@@ -116,17 +120,34 @@ function inferType(id) {
 }
 
 function extractFromContent(content, expMap, strings) {
-  const reExp = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  const reNK =
+    /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
   let m;
+  while ((m = reNK.exec(content)) !== null) {
+    const id = m[1];
+    const type = m[2].toLowerCase();
+    if (!isExpId(id) || expMap.has(id)) continue;
+    expMap.set(id, { id, type, kind: type, source: 'mobile_files' });
+  }
+  const reKN =
+    /\{\s*kind\s*:\s*["'](user|guild)["']\s*,\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  while ((m = reKN.exec(content)) !== null) {
+    const type = m[1].toLowerCase();
+    const id = m[2];
+    if (!isExpId(id) || expMap.has(id)) continue;
+    expMap.set(id, { id, type, kind: type, source: 'mobile_files' });
+  }
+
+  const reExp = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   while ((m = reExp.exec(content)) !== null) {
     const id = m[1];
     if (!isExpId(id) || expMap.has(id)) continue;
-    const start = Math.max(0, m.index - 80);
-    const ctx = content.slice(start, m.index + id.length + 120);
-    let type = inferType(id);
-    if (/kind["']?\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
-    else if (/kind["']?\s*:\s*["']user["']/i.test(ctx)) type = 'user';
-    expMap.set(id, { id, type, kind: type, source: 'mobile_files' });
+    expMap.set(id, {
+      id,
+      type: inferType(id),
+      kind: inferType(id),
+      source: 'mobile_files',
+    });
   }
 
   const reStr =
@@ -204,20 +225,19 @@ async function postWebhook(payload) {
 }
 
 function experimentEmbed(exp, meta) {
-  const isApex = /apex|20\d{2}-\d{2}-/i.test(exp.id);
   const type = exp.type || 'user';
   const desc = [
     `+ \`${exp.id}\` (**${type}**)`,
     `Type: **${type}**`,
-    meta.message ? `Repo: ${meta.message.slice(0, 80)}` : null,
+    meta.message ? `Rev: ${meta.message.slice(0, 80)}` : null,
     `Source: **mobile files** (\`${meta.commit}\`)`,
   ]
     .filter(Boolean)
     .join('\n');
   return {
-    title: isApex ? 'New Apex Experiment (Mobile)' : 'New Experiment (Mobile)',
+    title: 'New Experiment (Mobile)',
     description: desc,
-    color: isApex ? 0xfee75c : 0xeb459e,
+    color: 0xeb459e,
     footer: { text: `Mobile files · ${meta.commit}` },
     timestamp: new Date().toISOString(),
   };
@@ -273,6 +293,10 @@ async function notify(newExps, stringDiff, meta) {
 async function main() {
   await fs.ensureDir(DATA_DIR);
   console.log('=== Mobile files datamine ===');
+  if (!SOURCE_REPO) {
+    console.log('MOBILE_DATAMINE_REPO not set — skip mobile file scan');
+    return;
+  }
   const meta = await syncSourceRepo();
   console.log('Source commit:', meta.commit, meta.message);
 
@@ -296,7 +320,6 @@ async function main() {
 
   const prevStrings = previous?.strings || {};
   const stringDiff = { added: {} };
-  // Only report string adds if previous had a meaningful baseline
   const prevCount = Object.keys(prevStrings).length;
   if (prevCount >= 20) {
     for (const [k, v] of Object.entries(findings.strings)) {
@@ -310,7 +333,6 @@ async function main() {
 
   const state = {
     scrapedAt: new Date().toISOString(),
-    sourceRepo: SOURCE_REPO,
     sourceCommit: meta.commit,
     sourceMessage: meta.message,
     experimentCount: findings.experiments.length,
