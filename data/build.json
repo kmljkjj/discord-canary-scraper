@@ -1,11 +1,11 @@
 {
-  "buildNumber": "609344",
-  "versionHash": "fbde4c8f7251886bff12d68436722667596337a3",
+  "buildNumber": "609411",
+  "versionHash": "17d8594805f1429bb22c5e11aa1158ca57405b13",
   "releaseChannel": "canary",
   "apiEndpoint": "//canary.discord.com/api",
   "webappEndpoint": "//canary.discord.com",
   "assets": [
-    "https://canary.discord.com/assets/web.f2ad42919fcb70af.js",
+    "https://canary.discord.com/assets/web.24e858eceae4e23a.js",
     "https://canary.discord.com/assets/533077.aaffa7a528706cc2.js",
     "https://canary.discord.com/assets/536004.a83dbed8d40db3b2.js",
     "https://canary.discord.com/assets/libdiscore-wasm-fetch.8551c537a5846c00.js",
@@ -18,11 +18,11 @@
     "https://canary.discord.com/assets/162412.aa9087f204b9b1a2.js",
     "https://canary.discord.com/assets/99286.3b48322384eb245f.js",
     "https://canary.discord.com/assets/824668.0fdbd2db54964d5e.js",
-    "https://canary.discord.com/assets/fast-connect.da2cd650b6aed7ab.js",
+    "https://canary.discord.com/assets/fast-connect.f2c89fb5d7ce2527.js",
     "https://canary.discord.com/assets/324644.9fe0c100e808e762.js",
     "https://canary.discord.com/assets/64310.f09c86493518d14b.js",
     "https://canary.discord.com/assets/556707.bb1a25f3c212ce8f.js",
-    "https://canary.discord.com/assets/sentry.33ee417d6f7b63b1.js",
+    "https://canary.discord.com/assets/sentry.ce47baf273f2e52d.js",
     "https://canary.discord.com/assets/362698.48aa681dfc3cb36b.js",
     "https://canary.discord.com/assets/904530.2822ee37472e602f.js",
     "https://canary.discord.com/assets/909091.200b31e0c1ebf756.js",
@@ -569,8 +569,8 @@
     "https://canary.discord.com/assets/996907.f44faedf28bbf7c2.css"
   ],
   "globalEnv": {
-    "BUILD_NUMBER": "609344",
-    "VERSION_HASH": "fbde4c8f7251886bff12d68436722667596337a3",
+    "BUILD_NUMBER": "609411",
+    "VERSION_HASH": "17d8594805f1429bb22c5e11aa1158ca57405b13",
     "RELEASE_CHANNEL": "canary",
     "API_ENDPOINT": "//canary.discord.com/api",
     "WEBAPP_ENDPOINT": "//canary.discord.com",
@@ -585,5 +585,5 @@
     "NETWORKING_ENDPOINT": "//router.discordapp.net",
     "REMOTE_AUTH_ENDPOINT": "wss://remote-auth-gateway.discord.gg"
   },
-  "scrapedAt": "2026-09-09T00:06:54.461Z"
+  "scrapedAt": "2026-09-09T00:40:31.455Z"
 }
