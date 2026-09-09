@@ -50,8 +50,6 @@ jobs:
           SCRAPE_WEB_ONLY: '1'
           SCRAPE_CSS: '0'
           ORBIT_BOT_NAME: Datamining
-          # Emojis custom Discord — format <:name:id> ou <a:name:id>
-          # Dans Discord: \:emoji: puis coller la valeur dans le secret GitHub
           EMOJI_ADDED: ${{ secrets.EMOJI_ADDED }}
           EMOJI_MODIFIED: ${{ secrets.EMOJI_MODIFIED }}
           EMOJI_REMOVED: ${{ secrets.EMOJI_REMOVED }}
@@ -80,7 +78,7 @@ jobs:
             data/strings.json \
             data/routes.json \
             data/meta.json \
-            data/wumpus_cache/ \
+            data/cache/ \
             data/ || true
 
           if git diff --staged --quiet; then

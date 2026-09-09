@@ -2,7 +2,6 @@ name: Mobile Versions + Files
 
 on:
   schedule:
-    # Hourly — versions move slower than Canary web but OTA can land anytime
     - cron: '15 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -52,10 +51,11 @@ jobs:
         run: node src/mobile_versions.js
         continue-on-error: true
 
-      - name: Mobile experiments from real files
+      - name: Mobile experiments from client files
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          MOBILE_DATAMINE_REPO: https://github.com/Wumpus-Central/discord-mobile-datamining.git
+          # Optional: git URL of a mobile client JS dump (discord_app / discord_common/js)
+          MOBILE_DATAMINE_REPO: ${{ secrets.MOBILE_DATAMINE_REPO }}
           ORBIT_BOT_NAME: Datamining
         run: node src/mobile_from_files.js
         continue-on-error: true
@@ -65,7 +65,7 @@ jobs:
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/mobile_versions.json data/mobile_experiments.json 2>/dev/null || true
+          git add -f data/mobile_versions.json data/mobile_experiments.json data/known_mobile_experiment_ids.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No mobile state changes"
             exit 0
