@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v10 — flash build + notify-first + Discord-only extract
+ * Canary Pulse v10.1 — flash + Discord-only + stable diffs
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -25,7 +25,7 @@ const MAX_NOTIFY_STR = 80;
 const MAX_NOTIFY_RT = 40;
 const MIN_STRINGS_FOR_DIFF = 200;
 const MIN_ROUTES_FOR_DIFF = 50;
-const MIN_EXP_COVERAGE = 0.35;
+const MIN_EXP_COVERAGE = 0.5;
 
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
 const AVATAR =
@@ -99,39 +99,44 @@ async function loadLastExtract(file) {
   try {
     if (!(await fs.pathExists(file))) return {};
     const d = await fs.readJson(file);
-    return d.data && typeof d.data === 'object'
-      ? d.data
-      : d.strings || d.routes || d || {};
-  } catch {
+    const raw =
+      d.data && typeof d.data === 'object'
+        ? d.data
+        : d.strings || d.routes || d || {};
+    // Ne garder que des paires utiles (évite pollution metadata)
+    const out = {};
+    for (const [k, v] of Object.entries(raw)) {
+      if (k === 'buildNumber' || k === 'updatedAt' || k === 'count' || k === 'data')
+        continue;
+      if (typeof v === 'string' || typeof v === 'number') out[k] = String(v);
+    }
+    return out;
+  } catch (e) {
+    console.warn('loadLastExtract fail', e.message);
     return {};
   }
 }
 
 async function saveLastExtract(file, data, buildNumber) {
-  await fs.writeJson(
-    file,
-    {
-      buildNumber: String(buildNumber),
-      updatedAt: new Date().toISOString(),
-      count: Object.keys(data || {}).length,
-      data,
-    },
-    { spaces: 2 },
-  );
+  // compact JSON — moins de RAM sur le runner
+  await fs.writeJson(file, {
+    buildNumber: String(buildNumber),
+    updatedAt: new Date().toISOString(),
+    count: Object.keys(data || {}).length,
+    data,
+  });
 }
 
+/** Fingerprint stable: type + nb variations (0 si absent) */
 function expFingerprint(e) {
   if (!e || typeof e !== 'object') return '';
-  const parts = [
-    e.type || e.kind || '',
-    e.label || '',
-    e.variationCount ||
-      (e.variations && typeof e.variations === 'object'
-        ? Object.keys(e.variations).length
-        : '') ||
-      (Array.isArray(e.treatments) ? e.treatments.length : ''),
-  ];
-  return parts.join('|');
+  const type = e.type === 'guild' || e.kind === 'guild' ? 'guild' : 'user';
+  let n = 0;
+  if (typeof e.variationCount === 'number') n = e.variationCount;
+  else if (e.variations && typeof e.variations === 'object')
+    n = Object.keys(e.variations).length;
+  else if (Array.isArray(e.treatments)) n = e.treatments.length;
+  return type + '|' + n;
 }
 
 async function flashBuild(webhookUrl, build) {
@@ -166,7 +171,7 @@ async function flashBuild(webhookUrl, build) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v10 (Discord-only) ===');
+  console.log('=== Canary Pulse v10.1 ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(CACHE);
@@ -197,7 +202,14 @@ async function main() {
     lastExtractRt: Object.keys(lastRt).length,
   });
 
-  const build = await fetchBuild();
+  let build;
+  try {
+    build = await fetchBuild();
+  } catch (e) {
+    console.error('fetchBuild failed', e.message);
+    process.exit(1);
+  }
+
   console.log(
     'STATE',
     JSON.stringify({
@@ -255,11 +267,28 @@ async function main() {
     'FULL SCRAPE isNewBuild=' + isNewBuild,
     'seed=' + needsExtractSeed,
   );
-  const findings = await analyzeAssets(build, {
-    forceRefresh: isNewBuild || needsExtractSeed,
-    assetsDir: ASSETS,
-    cacheDir: CACHE,
-  });
+
+  let findings;
+  try {
+    findings = await analyzeAssets(build, {
+      forceRefresh: isNewBuild || needsExtractSeed,
+      assetsDir: ASSETS,
+      cacheDir: CACHE,
+    });
+  } catch (e) {
+    console.error('analyzeAssets failed', e);
+    // Ne pas planter le job si FLASH déjà parti — commit partial state build only
+    try {
+      await saveState(DATA, {
+        initialized: prev.initialized || true,
+        build,
+        experiments: prev.experiments || [],
+        strings: prev.strings || {},
+        routes: prev.routes || {},
+      });
+    } catch {}
+    process.exit(1);
+  }
   console.log('Extract done', Date.now() - t0 + 'ms');
 
   const extractedStrings = { ...(findings.strings || {}) };
@@ -275,6 +304,19 @@ async function main() {
       routes: extractedRtCount,
     }),
   );
+
+  if (extractedExpCount < 20 && extractedStrCount < 100) {
+    console.warn('Extract looks empty — skip diffs to avoid flood');
+    await saveState(DATA, {
+      initialized: true,
+      build,
+      experiments: prev.experiments || findings.experiments || [],
+      strings: prev.strings || extractedStrings,
+      routes: prev.routes || findings.routes || {},
+    });
+    console.log('=== Done (empty extract guard)', Date.now() - t0 + 'ms ===');
+    process.exit(0);
+  }
 
   const prevExpMap = new Map();
   for (const e of prev.experiments || []) {
@@ -296,6 +338,7 @@ async function main() {
     }
   }
 
+  // Removals seulement si couverture solide
   const coverage =
     (prev.experiments || []).length > 0
       ? extractedExpCount / (prev.experiments || []).length
@@ -304,7 +347,15 @@ async function main() {
     for (const [id] of prevExpMap) {
       if (!nextExpMap.has(id)) expDiff.removed.push({ id });
     }
-    if (expDiff.removed.length > 40) expDiff.removed = [];
+    if (expDiff.removed.length > 25) {
+      console.log('Too many exp removals', expDiff.removed.length, '— clear');
+      expDiff.removed = [];
+    }
+  }
+
+  if (expDiff.modified.length > 20) {
+    console.log('Too many exp modified', expDiff.modified.length, '— clear');
+    expDiff.modified = [];
   }
 
   const strDiff = { added: {}, modified: {}, removed: {} };
@@ -321,7 +372,7 @@ async function main() {
     console.log(
       'String source shifted (overlap ' +
         strOverlapRatio.toFixed(2) +
-        ') — reseed last_extract, no flood',
+        ') — reseed, no flood',
     );
     for (const k of Object.keys(lastStr)) delete lastStr[k];
   }
@@ -342,9 +393,20 @@ async function main() {
       }
       if (Object.keys(strDiff.removed).length > 150) strDiff.removed = {};
     }
-    if (Object.keys(strDiff.added).length > MAX_NOTIFY_STR) strDiff.added = {};
-    if (Object.keys(strDiff.modified).length > MAX_NOTIFY_STR)
-      strDiff.modified = {};
+    // Cap notify size — keep first N, don't wipe all
+    const addKeys = Object.keys(strDiff.added);
+    if (addKeys.length > MAX_NOTIFY_STR) {
+      const keep = {};
+      for (const k of addKeys.slice(0, MAX_NOTIFY_STR)) keep[k] = strDiff.added[k];
+      strDiff.added = keep;
+    }
+    const modKeys = Object.keys(strDiff.modified);
+    if (modKeys.length > MAX_NOTIFY_STR) {
+      const keep = {};
+      for (const k of modKeys.slice(0, MAX_NOTIFY_STR))
+        keep[k] = strDiff.modified[k];
+      strDiff.modified = keep;
+    }
   } else if (Object.keys(lastStr).length < 50) {
     console.log('Strings seed last_extract (' + extractedStrCount + ')');
   }
@@ -365,16 +427,15 @@ async function main() {
       }
       if (Object.keys(rtDiff.removed).length > 50) rtDiff.removed = {};
     }
-    if (Object.keys(rtDiff.added).length > MAX_NOTIFY_RT) {
-      rtDiff.added = {};
-      rtDiff.modified = {};
-      rtDiff.removed = {};
+    const addKeys = Object.keys(rtDiff.added);
+    if (addKeys.length > MAX_NOTIFY_RT) {
+      const keep = {};
+      for (const k of addKeys.slice(0, MAX_NOTIFY_RT)) keep[k] = rtDiff.added[k];
+      rtDiff.added = keep;
     }
   } else if (lastRtCount < 20) {
     console.log('Routes seed');
   }
-
-  if (expDiff.modified.length > 30) expDiff.modified = [];
 
   if (!isNewBuild && needsExtractSeed) {
     console.log('Seed-only: no webhook');
@@ -416,25 +477,34 @@ async function main() {
   for (const k of Object.keys(nextRt)) knownRt.add(k);
   for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
 
+  // Cap experiments notify (keep slice, don't drop silently without log)
   if (expDiff.added.length > MAX_NOTIFY_EXP) {
-    expDiff.added = [];
-    expDiff.modified = [];
-    expDiff.removed = [];
+    console.log(
+      'Cap exp added',
+      expDiff.added.length,
+      '→',
+      MAX_NOTIFY_EXP,
+    );
+    expDiff.added = expDiff.added.slice(0, MAX_NOTIFY_EXP);
   }
 
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild && !flashSent;
 
   if (process.env.DISCORD_WEBHOOK_URL) {
-    await notifyAll({
-      build,
-      isNewBuild: shouldAnnounceBuild,
-      expDiff,
-      strDiff,
-      rtDiff,
-      webhookUrl: process.env.DISCORD_WEBHOOK_URL,
-    });
-    if (shouldAnnounceBuild) await markBuild(build.buildNumber);
+    try {
+      await notifyAll({
+        build,
+        isNewBuild: shouldAnnounceBuild,
+        expDiff,
+        strDiff,
+        rtDiff,
+        webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+      });
+      if (shouldAnnounceBuild) await markBuild(build.buildNumber);
+    } catch (e) {
+      console.warn('notify failed', e.message);
+    }
   }
   console.log('Notify done', Date.now() - t0 + 'ms');
 
