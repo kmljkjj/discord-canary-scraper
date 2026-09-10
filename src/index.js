@@ -1,6 +1,10 @@
 /**
- * Canary Pulse v10.2 — extract-to-extract diffs (exp / str / routes)
- * New / modified variants / removed based on last scrape snapshot, not historical union.
+ * Canary Pulse v10.3 — extract-to-extract + catch-up
+ *
+ * Discord CDN only serves the CURRENT canary assets.
+ * Missed intermediate builds cannot be reconstructed one-by-one.
+ * When we skip builds (no Actions run), the next scrape reports the
+ * NET delta since last successful extract (catch-up), not each missed build.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -88,7 +92,6 @@ async function saveLastMap(file, data, buildNumber) {
   });
 }
 
-/** Stable fingerprint: kind + sorted variation ids */
 function expFingerprint(e) {
   if (!e || typeof e !== 'object') return '';
   const type = e.type === 'guild' || e.kind === 'guild' ? 'guild' : 'user';
@@ -117,21 +120,52 @@ function expSnapshot(e) {
   };
 }
 
-async function flashBuild(webhookUrl, build) {
+function buildGap(prevBuild, remoteBuild) {
+  const a = parseInt(String(prevBuild || ''), 10);
+  const b = parseInt(String(remoteBuild || ''), 10);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return 0;
+  return Math.max(0, b - a);
+}
+
+async function flashBuild(webhookUrl, build, meta) {
   const bn = String(build.buildNumber || '?');
   const hash = build.versionHash ? String(build.versionHash).slice(0, 12) : null;
+  const gap = meta && meta.gap ? meta.gap : 0;
+  const prev = meta && meta.prevBuild ? String(meta.prevBuild) : null;
+
+  let desc = hash ? 'Hash `' + hash + '`\n' : '';
+  if (gap > 1 && prev) {
+    desc +=
+      '**Catch-up** · last seen `' +
+      prev +
+      '` → now `' +
+      bn +
+      '` (+' +
+      gap +
+      ')\n' +
+      '_Intermediate builds are not on Discord CDN — reporting **net** changes since last scrape._\n';
+  }
+  desc += '_Extracting experiments, strings & routes…_';
+
   const body = {
     username: BOT,
     avatar_url: AVATAR,
     embeds: [
       {
         author: { name: 'Datamining', icon_url: AVATAR },
-        title: 'New Discord Canary Build · ' + bn,
-        description:
-          (hash ? 'Hash `' + hash + '`\n' : '') +
-          '_Extracting experiments, strings & routes…_',
-        color: 0x5865f2,
-        footer: { text: 'Build ' + bn + ' · Datamining · flash' },
+        title:
+          gap > 1
+            ? 'Canary Catch-up · ' + bn
+            : 'New Discord Canary Build · ' + bn,
+        description: desc,
+        color: gap > 1 ? 0xfee75c : 0x5865f2,
+        footer: {
+          text:
+            'Build ' +
+            bn +
+            (prev ? ' · was ' + prev : '') +
+            ' · Datamining · flash',
+        },
         timestamp: new Date().toISOString(),
       },
     ],
@@ -149,7 +183,7 @@ async function flashBuild(webhookUrl, build) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v10.2 (extract-to-extract) ===');
+  console.log('=== Canary Pulse v10.3 (catch-up) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(CACHE);
@@ -165,7 +199,6 @@ async function main() {
       loadLastMap(LAST_EXTRACT_EXP),
     ]);
 
-  // known = already notified only (not full historical union for exp diffs)
   console.log('Known / last extract', {
     knownExp: knownExp.size,
     knownStr: knownStr.size,
@@ -183,11 +216,17 @@ async function main() {
     process.exit(1);
   }
 
+  const prevBuildNum = prev.build && prev.build.buildNumber;
+  const gap = buildGap(prevBuildNum, build.buildNumber);
+  const isCatchUp = gap > 1;
+
   console.log(
     'STATE',
     JSON.stringify({
       remote: build.buildNumber,
-      prevBuild: prev.build && prev.build.buildNumber,
+      prevBuild: prevBuildNum,
+      gap,
+      catchUp: isCatchUp,
       lastExp: Object.keys(lastExp).length,
       t_html: Date.now() - t0 + 'ms',
     }),
@@ -221,13 +260,25 @@ async function main() {
   if (needsExtractSeed && !isNewBuild) {
     console.log('SEED RUN — fill last_extract, no flood');
   }
+  if (isCatchUp) {
+    console.log(
+      'CATCH-UP mode: last',
+      prevBuildNum,
+      '→',
+      build.buildNumber,
+      '(+' + gap + ') — net delta only (CDN has current assets only)',
+    );
+  }
 
   let flashSent = false;
   if (isNewBuild && process.env.DISCORD_WEBHOOK_URL) {
     const already = await wasBuildAnnounced(build.buildNumber);
     if (!already) {
       try {
-        await flashBuild(process.env.DISCORD_WEBHOOK_URL, build);
+        await flashBuild(process.env.DISCORD_WEBHOOK_URL, build, {
+          gap,
+          prevBuild: prevBuildNum,
+        });
         flashSent = true;
         await markBuild(build.buildNumber);
         console.log('FLASH build', build.buildNumber, Date.now() - t0 + 'ms');
@@ -240,6 +291,7 @@ async function main() {
   console.log(
     'FULL SCRAPE isNewBuild=' + isNewBuild,
     'seed=' + needsExtractSeed,
+    'catchUp=' + isCatchUp,
   );
 
   let findings;
@@ -292,7 +344,6 @@ async function main() {
     process.exit(0);
   }
 
-  // ─── Experiments: compare to last EXTRACT snapshot (not historical union)
   const nextExpMap = new Map();
   const nextExpSnap = {};
   for (const e of findings.experiments || []) {
@@ -305,11 +356,13 @@ async function main() {
   const lastExpCount = Object.keys(lastExp).length;
   const expDiff = { added: [], modified: [], removed: [] };
 
+  // Catch-up: trust last_extract only (ignore known* so net-new since last scrape still notifies)
+  const skipKnownFilter = isCatchUp;
+
   if (extractedExpCount >= MIN_EXP_FOR_DIFF && lastExpCount >= 40) {
     for (const [id, e] of nextExpMap) {
       if (!(id in lastExp)) {
-        // New vs last extract — also skip if already notified as "new" once
-        if (!knownExp.has(id)) expDiff.added.push(e);
+        if (skipKnownFilter || !knownExp.has(id)) expDiff.added.push(e);
       } else {
         const prevFp =
           (lastExp[id] && lastExp[id].fp) ||
@@ -327,12 +380,10 @@ async function main() {
     }
 
     const coverage = extractedExpCount / lastExpCount;
-    // Removals only if extract coverage is sane vs previous extract
     if (coverage >= 0.75 && coverage <= 1.35) {
       for (const id of Object.keys(lastExp)) {
         if (!nextExpMap.has(id)) expDiff.removed.push({ id });
       }
-      // Cap: real removals are rare
       if (expDiff.removed.length > 30) {
         console.log('Too many exp removals', expDiff.removed.length, '— clear');
         expDiff.removed = [];
@@ -357,7 +408,6 @@ async function main() {
     console.log('Experiments seed last_extract (' + extractedExpCount + ')');
   }
 
-  // ─── Strings
   const strDiff = { added: {}, modified: {}, removed: {} };
   const lastStrCount = Object.keys(lastStr).length;
   let strOverlap = 0;
@@ -383,7 +433,7 @@ async function main() {
   ) {
     for (const [k, v] of Object.entries(extractedStrings)) {
       if (!(k in lastStr)) {
-        if (!knownStr.has(k)) strDiff.added[k] = v;
+        if (skipKnownFilter || !knownStr.has(k)) strDiff.added[k] = v;
       } else if (String(lastStr[k]) !== String(v)) {
         strDiff.modified[k] = v;
       }
@@ -412,13 +462,12 @@ async function main() {
     console.log('Strings seed (' + extractedStrCount + ')');
   }
 
-  // ─── Routes (same extract-to-extract idea)
   const rtDiff = { added: {}, modified: {}, removed: {} };
   const lastRtCount = Object.keys(lastRt).length;
   if (extractedRtCount >= MIN_ROUTES_FOR_DIFF && lastRtCount >= 20) {
     for (const [k, v] of Object.entries(nextRt)) {
       if (!(k in lastRt)) {
-        if (!knownRt.has(k)) rtDiff.added[k] = v;
+        if (skipKnownFilter || !knownRt.has(k)) rtDiff.added[k] = v;
       } else if (String(lastRt[k]) !== String(v)) {
         rtDiff.modified[k] = v;
       }
@@ -456,6 +505,7 @@ async function main() {
   }
 
   console.log('TRUE DIFF', {
+    catchUp: isCatchUp,
     exp: {
       added: expDiff.added.length,
       modified: expDiff.modified.length,
@@ -473,7 +523,6 @@ async function main() {
     },
   });
 
-  // Mark notified
   for (const e of expDiff.added) knownExp.add(String(e.id || e));
   for (const k of Object.keys(strDiff.added)) knownStr.add(k);
   for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
@@ -490,6 +539,8 @@ async function main() {
         strDiff,
         rtDiff,
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+        catchUp: isCatchUp,
+        prevBuild: prevBuildNum,
       });
       if (shouldAnnounceBuild) await markBuild(build.buildNumber);
     } catch (e) {
@@ -507,7 +558,6 @@ async function main() {
     saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber),
   ]);
 
-  // Historical merge for site / archive only (not used for diffs anymore)
   let mergedExps = mergeExp(prev.experiments, findings.experiments);
   if (expDiff.removed.length) {
     const drop = new Set(expDiff.removed.map((e) => String(e.id || e)));
