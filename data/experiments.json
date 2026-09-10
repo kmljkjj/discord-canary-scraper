@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-10T22:09:09.394Z",
-  "buildNumber": "611030",
+  "scrapedAt": "2026-09-10T23:14:33.334Z",
+  "buildNumber": "611147",
   "totals": {
-    "all": 390
+    "all": 391
   },
   "experiments": [
     {
@@ -4893,6 +4893,31 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-07-premium-referral-incentives",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        }
+      },
+      "variationCount": 5,
       "source": "discord"
     },
     {
