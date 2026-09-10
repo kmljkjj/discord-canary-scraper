@@ -1,16 +1,7 @@
 /**
- * Datamining — embeds stylés + emojis custom Discord
- *
- * Couleurs:
- *   vert  = ajouté
- *   orange = modifié
- *   rouge = supprimé
- *
- * Emojis custom (format <:name:id> ou <a:name:id>) via env:
- *   EMOJI_ADDED / EMOJI_MODIFIED / EMOJI_REMOVED
- *   EMOJI_BUILD / EMOJI_EXP / EMOJI_STR / EMOJI_ROUTE
- *
- * Dans Discord: tape \:ton_emoji: → copie <:name:1234567890>
+ * Datamining — priority notify
+ * URGENT = experiments (+ flash already sent)
+ * NORMAL = strings / routes / optional summary
  */
 const fetch = require('node-fetch');
 
@@ -27,10 +18,8 @@ const COLOR = {
   removed: 0xed4245,
 };
 
-/** Emojis custom si définis, sinon rien (pas d'emoji unicode basique) */
 function envEmoji(key) {
   const v = (process.env[key] || '').trim();
-  // accepte <:name:id> ou <a:name:id>
   if (/^<a?:[\w~]+:\d+>$/.test(v)) return v;
   return '';
 }
@@ -52,31 +41,52 @@ function label(emoji, text) {
 const FIELD_MAX = 1000;
 const LINE_VAL_MAX = 120;
 
-async function notifyAll({
+/** Full pipeline (legacy) */
+async function notifyAll(opts) {
+  await notifyUrgent(opts);
+  await notifyNormal(opts);
+}
+
+/** URGENT — experiments first */
+async function notifyUrgent({
   build,
-  isNewBuild,
   expDiff,
+  webhookUrl,
+  isNewBuild,
+  catchUp,
+  prevBuild,
+}) {
+  if (!webhookUrl) return;
+  const bn = String(build.buildNumber || '?');
+  const ts = new Date().toISOString();
+  const exp = normalizeExpDiff(expDiff);
+  const nExp =
+    exp.added.length + exp.modified.length + exp.removed.length;
+
+  if (nExp) {
+    await sendExperiments(webhookUrl, bn, exp, ts);
+  } else {
+    console.log('Urgent: no experiment diff');
+  }
+}
+
+/** NORMAL — strings + routes (+ light summary if needed) */
+async function notifyNormal({
+  build,
   strDiff,
   rtDiff,
   webhookUrl,
+  isNewBuild,
 }) {
-  if (!webhookUrl) {
-    console.log('No webhook');
-    return;
-  }
-
+  if (!webhookUrl) return;
   const bn = String(build.buildNumber || '?');
   const hash = build.versionHash
     ? String(build.versionHash).slice(0, 12)
     : null;
   const ts = new Date().toISOString();
 
-  const exp = normalizeExpDiff(expDiff);
   const str = normalizeMapDiff(strDiff);
   const rt = normalizeMapDiff(rtDiff);
-
-  const nExp =
-    exp.added.length + exp.modified.length + exp.removed.length;
   const nStr =
     Object.keys(str.added).length +
     Object.keys(str.modified).length +
@@ -86,28 +96,26 @@ async function notifyAll({
     Object.keys(rt.modified).length +
     Object.keys(rt.removed).length;
 
-  if (isNewBuild) {
+  if (isNewBuild && (nStr || nRt)) {
     await post(webhookUrl, {
       embeds: [
         {
           author: { name: 'Datamining', icon_url: AVATAR },
-          title: label(E.build, `New Discord Canary Build · ${bn}`),
+          title: label(E.build, `Catalog · ${bn}`),
           description: [
             hash ? `Hash \`${hash}\`` : null,
-            channelLine(nExp, nStr, nRt),
+            channelLine(0, nStr, nRt),
           ]
             .filter(Boolean)
             .join('\n'),
-          fields: summaryFields(exp, str, rt),
           color: COLOR.build,
-          footer: { text: `Build ${bn} · Datamining` },
+          footer: { text: `Build ${bn} · Datamining · normal` },
           timestamp: ts,
         },
       ],
     });
   }
 
-  if (nExp) await sendExperiments(webhookUrl, bn, exp, ts);
   if (nStr) await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
   if (nRt) await sendMapDiff(webhookUrl, bn, rt, ts, 'Routes');
 }
@@ -117,41 +125,7 @@ function channelLine(nExp, nStr, nRt) {
   if (nExp) bits.push(`${label(E.exp, 'Experiments')} **${nExp}**`);
   if (nStr) bits.push(`${label(E.str, 'Strings')} **${nStr}**`);
   if (nRt) bits.push(`${label(E.route, 'Routes')} **${nRt}**`);
-  return bits.length
-    ? bits.join(' · ')
-    : '_Client bump — no catalog changes_';
-}
-
-function summaryFields(exp, str, rt) {
-  const fields = [];
-  const push = (name, emoji, a, m, r) => {
-    if (!(a || m || r)) return;
-    const parts = [];
-    if (a) parts.push(`${label(E.added, 'added')} \`+${a}\``);
-    if (m) parts.push(`${label(E.modified, 'modified')} \`~${m}\``);
-    if (r) parts.push(`${label(E.removed, 'removed')} \`-${r}\``);
-    fields.push({
-      name: label(emoji, name),
-      value: parts.join('\n'),
-      inline: true,
-    });
-  };
-  push('Experiments', E.exp, exp.added.length, exp.modified.length, exp.removed.length);
-  push(
-    'Strings',
-    E.str,
-    Object.keys(str.added).length,
-    Object.keys(str.modified).length,
-    Object.keys(str.removed).length,
-  );
-  push(
-    'Routes',
-    E.route,
-    Object.keys(rt.added).length,
-    Object.keys(rt.modified).length,
-    Object.keys(rt.removed).length,
-  );
-  return fields;
+  return bits.length ? bits.join(' · ') : '_no catalog changes_';
 }
 
 function normalizeExpDiff(diff) {
@@ -312,7 +286,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     ts,
     sections,
   });
-  console.log('Sent experiments', {
+  console.log('Sent experiments (URGENT)', {
     added: exp.added.length,
     modified: exp.modified.length,
     removed: exp.removed.length,
@@ -373,7 +347,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     ts,
     sections,
   });
-  console.log('Sent', kind, {
+  console.log('Sent', kind, '(NORMAL)', {
     added: a.length,
     modified: m.length,
     removed: r.length,
@@ -394,7 +368,7 @@ async function post(url, body) {
   } catch (e) {
     console.warn('webhook error', e.message);
   }
-  await new Promise((r) => setTimeout(r, 120));
+  await new Promise((r) => setTimeout(r, 80));
 }
 
-module.exports = { notifyAll };
+module.exports = { notifyAll, notifyUrgent, notifyNormal };
