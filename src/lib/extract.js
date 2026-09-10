@@ -1,6 +1,6 @@
 /**
- * Extract experiments / strings / routes from Discord Canary assets only.
- * Source of truth: web.*.js + en-US locale chunks on canary.discord.com
+ * Extract from Discord Canary assets only.
+ * Stages: web download → parallel core (exp/routes/strings) → optional onCore → locales
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -17,7 +17,7 @@ function matchEnd(m) {
   return m.index + m[0].length;
 }
 
-async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
+async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore }) {
   await fs.ensureDir(assetsDir);
   if (cacheDir) await fs.ensureDir(cacheDir);
 
@@ -70,13 +70,28 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
 
   if (webContent) {
     try {
-      extractRoutes(webContent, routes);
-      extractExperiments(webContent, expSet);
-      extractStrings(webContent, strings);
+      await extractCoreParallel(webContent, { routes, expSet, strings });
     } catch (e) {
       console.error('web extract error', e.message);
       throw e;
     }
+  }
+
+  // Priority hook: experiments + routes ready before slow locales
+  if (typeof onCore === 'function') {
+    const experiments = [...expSet.values()].sort((a, b) =>
+      a.id.localeCompare(b.id),
+    );
+    console.log('CORE ready', {
+      experiments: experiments.length,
+      routes: Object.keys(routes).length,
+      stringsWeb: Object.keys(strings).length,
+    });
+    await onCore({
+      experiments,
+      routes: { ...routes },
+      stringsWeb: { ...strings },
+    });
   }
 
   const localeUrls = resolveEnUsLocaleUrls(webContent);
@@ -143,6 +158,15 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir }) {
     routes,
     css: cssInventory,
   };
+}
+
+/** Independent parsers in parallel on the same web bundle */
+async function extractCoreParallel(webContent, { routes, expSet, strings }) {
+  await Promise.all([
+    Promise.resolve().then(() => extractRoutes(webContent, routes)),
+    Promise.resolve().then(() => extractExperiments(webContent, expSet)),
+    Promise.resolve().then(() => extractStrings(webContent, strings)),
+  ]);
 }
 
 function resolveEnUsLocaleUrls(webContent) {
@@ -388,7 +412,6 @@ function normalizePath(raw) {
 }
 
 function extractRoutes(content, out) {
-  // KEY: "/path"
   const re =
     /\b([A-Z][A-Z0-9_]{2,80})\s*:\s*["'`](\/[a-zA-Z0-9_\-./{}@:]+)["'`]/g;
   let m;
@@ -396,14 +419,12 @@ function extractRoutes(content, out) {
     const p = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
-  // "KEY": "/path"
   const re2 =
     /["']([A-Z][A-Z0-9_]{2,80})["']\s*:\s*["'](\/[^"']{1,200})["']/g;
   while ((m = re2.exec(content)) !== null) {
     const p = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
-  // .KEY = "/path"
   const re3 =
     /\.([A-Z][A-Z0-9_]{2,80})\s*=\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
   while ((m = re3.exec(content)) !== null) {
@@ -459,7 +480,12 @@ function upsertExp(map, id, kind, content, posAfter) {
       existing.type = 'guild';
       existing.kind = 'guild';
     }
-    if (variations && (!existing.variations || Object.keys(variations).length > Object.keys(existing.variations || {}).length)) {
+    if (
+      variations &&
+      (!existing.variations ||
+        Object.keys(variations).length >
+          Object.keys(existing.variations || {}).length)
+    ) {
       existing.variations = variations;
       existing.variationCount = Object.keys(variations).length;
     }
@@ -508,4 +534,5 @@ module.exports = {
   resolveEnUsLocaleUrls,
   extractLocaleStrings,
   extractExperiments,
+  extractCoreParallel,
 };
