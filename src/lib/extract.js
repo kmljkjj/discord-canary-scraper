@@ -14,7 +14,6 @@ const WEB_ONLY = process.env.SCRAPE_WEB_ONLY !== '0';
 const DOWNLOAD_CSS = process.env.SCRAPE_CSS !== '0';
 
 function matchEnd(m) {
-  // RegExpExecArray has .index, not .end() (Python habit)
   return m.index + m[0].length;
 }
 
@@ -389,6 +388,7 @@ function normalizePath(raw) {
 }
 
 function extractRoutes(content, out) {
+  // KEY: "/path"
   const re =
     /\b([A-Z][A-Z0-9_]{2,80})\s*:\s*["'`](\/[a-zA-Z0-9_\-./{}@:]+)["'`]/g;
   let m;
@@ -396,18 +396,22 @@ function extractRoutes(content, out) {
     const p = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
+  // "KEY": "/path"
   const re2 =
     /["']([A-Z][A-Z0-9_]{2,80})["']\s*:\s*["'](\/[^"']{1,200})["']/g;
   while ((m = re2.exec(content)) !== null) {
     const p = normalizePath(m[2]);
     if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
   }
+  // .KEY = "/path"
+  const re3 =
+    /\.([A-Z][A-Z0-9_]{2,80})\s*=\s*["'](\/[a-zA-Z0-9_\-./{}@:]+)["']/g;
+  while ((m = re3.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
 }
 
-/**
- * Parse Discord client experiment definitions from web.js:
- *   { name:"2026-…", kind:"user"|"guild", variations:{ 0:{…}, 1:{…} } }
- */
 function extractExperiments(content, map) {
   const reNK =
     /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
@@ -455,7 +459,7 @@ function upsertExp(map, id, kind, content, posAfter) {
       existing.type = 'guild';
       existing.kind = 'guild';
     }
-    if (variations && !existing.variations) {
+    if (variations && (!existing.variations || Object.keys(variations).length > Object.keys(existing.variations || {}).length)) {
       existing.variations = variations;
       existing.variationCount = Object.keys(variations).length;
     }
