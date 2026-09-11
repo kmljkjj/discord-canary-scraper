@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-11T16:49:26.312Z",
-  "buildNumber": "611480",
+  "scrapedAt": "2026-09-11T17:02:47.746Z",
+  "buildNumber": "611492",
   "totals": {
-    "all": 398
+    "all": 399
   },
   "experiments": [
     {
@@ -5718,6 +5718,22 @@
     },
     {
       "id": "2026-09-jxr-upload-conversion",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-markdown-file-preview",
       "type": "user",
       "kind": "user",
       "label": null,
