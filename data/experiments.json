@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-09-10T23:45:16.698Z",
-  "buildNumber": "611178",
+  "scrapedAt": "2026-09-11T00:08:11.707Z",
+  "buildNumber": "611205",
   "totals": {
     "all": 391
   },
@@ -4696,25 +4696,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-07-krisp-cpu-disablement",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 3,
-      "source": "discord"
-    },
-    {
       "id": "2026-07-manual-age-assurance-fallback",
       "type": "user",
       "kind": "user",
@@ -5861,6 +5842,22 @@
     },
     {
       "id": "2026-09-friends-sidebar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-halloween-holiday",
       "type": "user",
       "kind": "user",
       "label": null,
