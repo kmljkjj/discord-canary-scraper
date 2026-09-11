@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-11T21:48:40.543Z",
-  "buildNumber": "611919",
+  "scrapedAt": "2026-09-11T21:50:17.749Z",
+  "buildNumber": "611922",
   "totals": {
-    "all": 396
+    "all": 397
   },
   "experiments": [
     {
@@ -5585,6 +5585,22 @@
     },
     {
       "id": "2026-09-friends-sidebar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-gifting-badge-complex-art",
       "type": "user",
       "kind": "user",
       "label": null,
