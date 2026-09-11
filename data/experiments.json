@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-11T16:18:33.329Z",
-  "buildNumber": "611447",
+  "scrapedAt": "2026-09-11T16:26:07.908Z",
+  "buildNumber": "611462",
   "totals": {
-    "all": 390
+    "all": 398
   },
   "experiments": [
     {
@@ -18,28 +18,37 @@
       "id": "2021-10_runtime_accessibility_system",
       "type": "user",
       "kind": "user",
-      "label": "Runtime Accessibility System",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2021-10_study_group",
       "type": "guild",
       "kind": "guild",
-      "label": "Student hub study group",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2021-12_inferno_spam_redaction",
       "type": "user",
       "kind": "user",
-      "label": "Inferno Spam Redaction",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
+    },
+    {
+      "id": "2022-01_threads",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": null,
+      "variationCount": 0,
+      "source": "discord"
     },
     {
       "id": "2022-03_block_russian_purchases",
@@ -67,10 +76,10 @@
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
       "kind": "guild",
-      "label": "Disable mass mentions for communities by default",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2022-12_mention_raid_limit",
@@ -85,28 +94,28 @@
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
       "kind": "guild",
-      "label": "Guest Voice Invites",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2023-09_iar_dsa_webform",
       "type": "user",
       "kind": "user",
-      "label": "Safety Experience Unauthenticated Report Form",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2023-09_iar_user_reporting",
       "type": "user",
       "kind": "user",
-      "label": "Safety Experience IAR User Reporting",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
@@ -139,16 +148,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2025-04-desktop-refresh-fast-follows",
@@ -182,15 +187,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-05-search-results-feedback",
@@ -218,10 +222,10 @@
       "id": "2025-08_default_invite_expiration_guild",
       "type": "guild",
       "kind": "guild",
-      "label": "Default Invite Expiration Guild",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-08_portkey_enabled",
@@ -428,10 +432,10 @@
       "id": "2025-10_community_account_link_onboarding",
       "type": "guild",
       "kind": "guild",
-      "label": "Community Account Linking",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-10-collectibles-custom-cursors",
@@ -440,15 +444,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enableCustomCursors": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-10-desktop-communication-notifications-emoji",
@@ -527,25 +530,21 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2025-11_tida_webform",
       "type": "user",
       "kind": "user",
-      "label": "Tida Webform",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -588,16 +587,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "isHidden": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2025-11-mana-context-menu",
@@ -653,16 +648,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2025-11-video-end-card-v2",
@@ -709,15 +700,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2025-12-hdr-accessibility-setting",
@@ -754,16 +744,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2025-12-nitro-s-rewards",
@@ -831,41 +817,30 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 1
         },
         "2": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 2
         },
         "3": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 3
         },
         "4": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 4
         },
         "5": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 5
         },
         "6": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 6
         },
         "7": {
-          "enabled": true,
-          "enabledQuestStates": null
+          "id": 7
         }
       },
-      "variationCount": 8,
-      "source": "wumpus"
+      "variationCount": 7,
+      "source": "discord"
     },
     {
       "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
@@ -1008,16 +983,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "guildFriendsEnabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-01-ios-push-notif-json-fix",
@@ -1107,10 +1078,10 @@
       "id": "2026-02_game_claim_coachmark",
       "type": "guild",
       "kind": "guild",
-      "label": "Game Claim Coachmark",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-02_hangout_window",
@@ -1137,20 +1108,17 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "copyChanges": true,
-          "upsell": false
+          "id": 1
         },
         "2": {
-          "copyChanges": true,
-          "upsell": true
+          "id": 2
         }
       },
       "variationCount": 3,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-02-android-chat-mosaic-shared-pool",
@@ -1176,16 +1144,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "announcementComposer": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-02-boosting-refresh-modals",
@@ -1194,18 +1158,17 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "variant": "refresh"
+          "id": 1
         },
         "2": {
-          "variant": "refresh_expressive_cta"
+          "id": 2
         }
       },
       "variationCount": 3,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-02-capture-target-window",
@@ -1213,16 +1176,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-02-content-classification-presence-filter",
@@ -1246,16 +1205,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-02-expiring-powerup-coachmark",
@@ -1264,15 +1219,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-02-friends-list",
@@ -1306,16 +1260,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-02-gifting-modal-redesign",
@@ -1446,16 +1396,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "muteTutorialEnabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-02-non-dm-gifting-modal-redesign",
@@ -1701,15 +1647,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-03-application-widget-v2-add-tweak",
@@ -1718,15 +1663,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-03-arborium-highlight",
@@ -2052,15 +1996,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-03-media-play-metrics",
@@ -2161,21 +2104,15 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true,
-          "showCta": true
+          "id": 1
         },
         "2": {
-          "enabled": true,
-          "showCta": false
+          "id": 2
         }
       },
-      "variationCount": 3,
-      "source": "wumpus"
+      "variationCount": 2,
+      "source": "discord"
     },
     {
       "id": "2026-03-overlay-default-keybind",
@@ -2318,15 +2255,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-03-surface-direct-renderer",
@@ -2371,19 +2307,19 @@
       "id": "2026-04_application_identity_linked_roles",
       "type": "guild",
       "kind": "guild",
-      "label": "Application Identity Linked Roles",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-04_guild_verification_role",
       "type": "guild",
       "kind": "guild",
-      "label": "Guild Verification Role",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-04_server_theme",
@@ -2411,10 +2347,10 @@
       "id": "2026-04_voice_user_duration",
       "type": "guild",
       "kind": "guild",
-      "label": "Voice User Duration",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-04-badge-discovery",
@@ -2439,15 +2375,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-04-browser-transceiver-padding-removal",
@@ -2633,16 +2568,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "showButton": false
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-04-http-request-sample",
@@ -2677,15 +2608,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-04-inappropriate-conversations-prescan",
@@ -2744,16 +2674,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-04-new-games-coachmark",
@@ -2761,16 +2687,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-04-one-day-fractional-nitro",
@@ -2778,14 +2700,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": true
+        "1": {
+          "id": 1
+        }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-04-overlay-fps-limit",
@@ -2906,22 +2826,18 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "showSettingsToggle": true
+          "id": 1
         },
         "2": {
-          "showSettingsToggle": true
+          "id": 2
         },
         "3": {
-          "showSettingsToggle": true
+          "id": 3
         }
       },
-      "variationCount": 4,
-      "source": "wumpus"
+      "variationCount": 3,
+      "source": "discord"
     },
     {
       "id": "2026-04-user-profile-performance-analytics",
@@ -2982,19 +2898,19 @@
       "id": "2026-05_default_invite_expiration_guild_web",
       "type": "guild",
       "kind": "guild",
-      "label": "Default Invite Expiration Guild Web",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05_voice_channel_list_invite_embed",
       "type": "guild",
       "kind": "guild",
-      "label": "Voice Channel List Invite Embed",
+      "label": null,
       "variations": null,
       "variationCount": 0,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-age-restricted-application-commands",
@@ -3028,16 +2944,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enableAutoClipsReview": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-05-av1-bitrate-tuning",
@@ -3094,15 +3006,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-bounties-stage-1",
@@ -3252,15 +3163,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "useDiscordVideoPlayer": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-electron-multilang-spellcheck",
@@ -3382,21 +3292,20 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "treatment": "treatment_a"
+          "id": 1
         },
         "2": {
-          "treatment": "treatment_b"
+          "id": 2
         },
         "3": {
-          "treatment": "treatment_c"
+          "id": 3
         }
       },
       "variationCount": 4,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-quest-home-tile-redesign",
@@ -3456,15 +3365,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-social-layer-storefront-game-shops-dropdown",
@@ -3473,15 +3381,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-05-spatial-audio-for-voice",
@@ -3608,14 +3515,17 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
-        "1": 1,
-        "2": 2
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
       },
       "variationCount": 3,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-06-chat-bar-customization",
@@ -3649,16 +3559,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-clips-league-events",
@@ -3763,16 +3669,12 @@
       "kind": "guild",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-game-server-hosting-in-shop",
@@ -3812,16 +3714,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "showServerTag": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-gummy-bears",
@@ -3855,16 +3753,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-improved-shop-loading",
@@ -3873,15 +3767,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-06-magic-scoring",
@@ -3953,16 +3846,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-orbs-holdout",
@@ -3971,15 +3860,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-06-otp-orders-phase-1",
@@ -3987,16 +3875,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-post-call-survey-assets",
@@ -4005,15 +3889,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "surveyEmojiKind": "face-refresh"
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-06-quest-fetch-reconnect-jitter",
@@ -4072,16 +3955,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-server-theme-apex-shadow",
@@ -4166,16 +4045,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-web-translate-dom-guard",
@@ -4225,16 +4100,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-06-wysiwyg-user-profile-premium-try-it-out",
@@ -4242,23 +4113,15 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true,
-          "showPresetName": true,
-          "clientThemeAdaptedColorsEnabled": false
+          "id": 1
         },
         "2": {
-          "enabled": true,
-          "showPresetName": false,
-          "clientThemeAdaptedColorsEnabled": true
+          "id": 2
         }
       },
-      "variationCount": 3,
-      "source": "wumpus"
+      "variationCount": 2,
+      "source": "discord"
     },
     {
       "id": "2026-07-ad-recheck-interval-experiment",
@@ -4291,16 +4154,12 @@
       "kind": "guild",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-07-attachment-image-ladder",
@@ -4439,16 +4298,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-07-clips-game-events-on-player",
@@ -4483,15 +4338,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-clips-on-profile-viewer",
@@ -4516,15 +4370,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-cod-3pp",
@@ -4621,15 +4474,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-gsimagic",
@@ -4715,15 +4567,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-nvenc-reconstructed-frames",
@@ -4745,15 +4596,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-orbchievements",
@@ -4810,13 +4660,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
-        "1": true
+        "1": {
+          "id": 1
+        }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-powerups-coachmark-scroll-close",
@@ -4825,15 +4676,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-premium-group-announcement-modal",
@@ -4926,16 +4776,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "useStaticGradient": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-07-reject-with-error-kill-switch",
@@ -4973,15 +4819,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "shopThisLookEnabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-smag-dm-sidebar-nitro-recommendation",
@@ -4990,15 +4835,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "isEnabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-07-social-layer-storefront-spend-orbs-banner-copy",
@@ -5074,21 +4918,15 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "clickRoutesToGift": true,
-          "showGiftButton": true
+          "id": 1
         },
         "2": {
-          "clickRoutesToGift": true,
-          "showGiftButton": false
+          "id": 2
         }
       },
-      "variationCount": 3,
-      "source": "wumpus"
+      "variationCount": 2,
+      "source": "discord"
     },
     {
       "id": "2026-07-wishlist-show-owned-items-last",
@@ -5096,16 +4934,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "isEnabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-08-ad-topic-opt-out-client",
@@ -5113,28 +4947,24 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": false
+          "id": 1
         },
         "2": {
-          "enabled": true
+          "id": 2
         },
         "3": {
-          "enabled": true
+          "id": 3
         },
         "4": {
-          "enabled": true
+          "id": 4
         },
         "5": {
-          "enabled": true
+          "id": 5
         }
       },
-      "variationCount": 6,
-      "source": "wumpus"
+      "variationCount": 5,
+      "source": "discord"
     },
     {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -5324,15 +5154,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-08-gift-recipient-display-name-search",
@@ -5341,24 +5170,20 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "displayNameSearchEnabled": true,
-          "affinityOrderingEnabled": false
+          "id": 1
         },
         "2": {
-          "displayNameSearchEnabled": false,
-          "affinityOrderingEnabled": true
+          "id": 2
         },
         "3": {
-          "displayNameSearchEnabled": true,
-          "affinityOrderingEnabled": true
+          "id": 3
         }
       },
       "variationCount": 4,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-08-gsh-subs-activity-bar",
@@ -5421,15 +5246,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "isHidden": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-08-ios-objc-composed-image-cache",
@@ -5462,16 +5286,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-08-mute-aware-noise-cancellation",
@@ -5494,17 +5314,9 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variations": null,
+      "variationCount": 0,
+      "source": "discord"
     },
     {
       "id": "2026-08-nitro-tenure-badge-total-progress",
@@ -5513,15 +5325,14 @@
       "label": null,
       "variations": {
         "0": {
-          "enabled": false,
-          "variant": 0
+          "id": 0
         },
         "1": {
-          "measureFromStreakStart": true
+          "id": 1
         }
       },
       "variationCount": 2,
-      "source": "wumpus"
+      "source": "discord"
     },
     {
       "id": "2026-08-nitro-tenure-badge-withheld-state",
@@ -5602,16 +5413,21 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-08-profile-read-state-v1",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": null,
+      "variationCount": 0,
+      "source": "discord"
     },
     {
       "id": "2026-08-rich-presence-invite-banner",
@@ -5661,16 +5477,12 @@
       "kind": "user",
       "label": null,
       "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
         "1": {
-          "enabled": true
+          "id": 1
         }
       },
-      "variationCount": 2,
-      "source": "wumpus"
+      "variationCount": 1,
+      "source": "discord"
     },
     {
       "id": "2026-08-soundboard-desktop-nux",
@@ -5691,6 +5503,22 @@
     },
     {
       "id": "2026-08-timestamp-autocomplete-mobile",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-08-tiny-bronco",
       "type": "user",
       "kind": "user",
       "label": null,
@@ -5825,6 +5653,38 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-collectibles-navigation-menu",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-connected-thread-sidebar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-friends-sidebar",
       "type": "user",
       "kind": "user",
@@ -5842,6 +5702,22 @@
     },
     {
       "id": "2026-09-halloween-holiday",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-jxr-upload-conversion",
       "type": "user",
       "kind": "user",
       "label": null,
@@ -5945,6 +5821,38 @@
     },
     {
       "id": "2026-09-video-background-profile-fetch",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-wysiwyg-user-profile-edit-polish",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-youtube-3p",
       "type": "user",
       "kind": "user",
       "label": null,
