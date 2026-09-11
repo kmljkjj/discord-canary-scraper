@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-11T22:23:50.457Z",
-  "buildNumber": "611968",
+  "scrapedAt": "2026-09-11T22:26:03.841Z",
+  "buildNumber": "611974",
   "totals": {
-    "all": 397
+    "all": 398
   },
   "experiments": [
     {
@@ -5549,6 +5549,28 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-agc2-mobile",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        }
+      },
+      "variationCount": 4,
       "source": "discord"
     },
     {
