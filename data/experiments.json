@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-11T17:56:54.546Z",
-  "buildNumber": "611575",
+  "scrapedAt": "2026-09-11T17:58:39.697Z",
+  "buildNumber": "611579",
   "totals": {
-    "all": 398
+    "all": 396
   },
   "experiments": [
     {
@@ -2178,19 +2178,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03-quest-home-bounties",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-03-requiremodule-caching-redux",
       "type": "user",
       "kind": "user",
@@ -2997,37 +2984,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-05-bounties-stage-1",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        },
-        "4": {
-          "id": 4
-        },
-        "5": {
-          "id": 5
-        },
-        "6": {
-          "id": 6
-        },
-        "7": {
-          "id": 7
-        }
-      },
-      "variationCount": 7,
       "source": "discord"
     },
     {
@@ -4201,31 +4157,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-bounties-vertical-scroll",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        },
-        "4": {
-          "id": 4
-        },
-        "5": {
-          "id": 5
-        }
-      },
-      "variationCount": 5,
       "source": "discord"
     },
     {
@@ -5763,6 +5694,19 @@
     },
     {
       "id": "2026-09-profile-link-fetch",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-quest-home-bounties-feature-gate",
       "type": "user",
       "kind": "user",
       "label": null,
