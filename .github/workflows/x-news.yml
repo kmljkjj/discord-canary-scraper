@@ -2,7 +2,6 @@ name: X News · DiscordNEW8r
 
 on:
   schedule:
-    # every 5 min (was 10)
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
@@ -48,6 +47,9 @@ jobs:
           X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          # FREE mode — browser session cookies (no API credits)
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
+          X_CT0: ${{ secrets.X_CT0 }}
           X_SCREEN_NAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
         run: node src/x_news.js

@@ -1,13 +1,16 @@
 /**
  * Watch @DiscordNEW8r on X → Discord webhook
  *
- * Secrets:
- *   X_NEWS_WEBHOOK_URL  — Discord webhook
- *   X_BEARER_TOKEN      — X API Bearer (needs remaining credits)
+ * FREE mode (recommended when API credits are empty):
+ *   Secrets:
+ *     X_AUTH_TOKEN  — cookie auth_token from x.com (logged-in browser)
+ *     X_CT0         — cookie ct0 from x.com
+ *     X_NEWS_WEBHOOK_URL
  *
- * If logs show HTTP 402 "credits depleted":
- *   → developer.x.com → your app → add credits / wait for monthly reset
- * Public RSS/Nitter are dead in 2026; no free reliable fallback.
+ * Paid / official API (optional):
+ *     X_BEARER_TOKEN — needs remaining X API credits
+ *
+ * Order: session cookies → official API → RSS (almost always dead)
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -25,9 +28,63 @@ const WEBHOOK =
   '';
 const BEARER =
   process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '';
+const AUTH_TOKEN = process.env.X_AUTH_TOKEN || process.env.TWITTER_AUTH_TOKEN || '';
+const CT0 = process.env.X_CT0 || process.env.TWITTER_CT0 || '';
+
+// Public web bearer (same for every browser client — not a secret)
+const WEB_BEARER =
+  'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
+
 const MAX_NOTIFY = 8;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+
+// Query IDs rotate; try several known 2026 hashes
+const QID_USER = [
+  'sLVLhk0bGj3MVFEKTdax1w',
+  'IGgvgiOx4QZndDHuD3x9TQ',
+  'AWbeRIdkLtqTRN7yL_H8yw',
+  'G3KFHM9HUZNbYNHz9YdBcw',
+];
+const QID_TWEETS = [
+  '36rb3Xj3iJ64Q-9wKDjCcQ',
+  'x3B_xLqC0yZawOB7WQhaVQ',
+  'N2tFDY-MlrLxXJ9F_ZxJGA',
+  'HeWHY26ItCfUmm1e6ITjeA',
+  'V7H0Ap3_Hh2FyS75OCDO3Q',
+  'HuTx74uyqr4tle0VtzMM7A',
+];
+
+const FEATURES = {
+  rweb_tipjar_consumption_enabled: true,
+  responsive_web_graphql_exclude_directive_enabled: true,
+  verified_phone_label_enabled: false,
+  creator_subscriptions_tweet_preview_api_enabled: true,
+  responsive_web_graphql_timeline_navigation_enabled: true,
+  responsive_web_graphql_skip_user_profile_image_extensions_enabled: false,
+  communities_web_enable_tweet_community_results_fetch: true,
+  c9s_tweet_anatomy_moderator_badge_enabled: true,
+  articles_preview_enabled: true,
+  responsive_web_edit_tweet_api_enabled: true,
+  graphql_is_translatable_rweb_tweet_is_translatable_enabled: true,
+  view_counts_everywhere_api_enabled: true,
+  longform_notetweets_consumption_enabled: true,
+  responsive_web_twitter_article_tweet_consumption_enabled: true,
+  tweet_awards_web_tipping_enabled: false,
+  creator_subscriptions_quote_tweet_preview_enabled: false,
+  freedom_of_speech_not_reach_fetch_enabled: true,
+  standardized_nudges_misinfo: true,
+  tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled: true,
+  rweb_video_timestamps_enabled: true,
+  longform_notetweets_rich_text_read_enabled: true,
+  longform_notetweets_inline_media_enabled: true,
+  responsive_web_enhance_cards_enabled: false,
+  hidden_profile_subscriptions_enabled: true,
+  subscriptions_verification_info_is_identity_verified_enabled: true,
+  subscriptions_verification_info_verified_since_enabled: true,
+  highlights_tweets_tab_ui_enabled: true,
+  responsive_web_twitter_article_notes_tab_enabled: false,
+};
 
 const RSS_MIRRORS = [
   `https://rsshub.rssforever.com/twitter/user/${SCREEN_NAME}`,
@@ -39,7 +96,11 @@ const RSS_MIRRORS = [
 async function main() {
   console.log('=== X News Watch · @' + SCREEN_NAME + ' ===');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
-  console.log('Bearer:', BEARER ? 'set (' + BEARER.slice(0, 8) + '…)' : 'MISSING');
+  console.log(
+    'Session cookies:',
+    AUTH_TOKEN && CT0 ? 'set (free mode)' : 'missing',
+  );
+  console.log('Bearer API:', BEARER ? 'set' : 'missing');
 
   if (!WEBHOOK) {
     console.warn('Missing X_NEWS_WEBHOOK_URL — soft skip');
@@ -52,28 +113,38 @@ async function main() {
 
   let posts = [];
   let source = 'none';
-  let apiError = null;
+  let lastErr = null;
 
-  if (BEARER) {
+  // 1) FREE — browser session cookies
+  if (AUTH_TOKEN && CT0) {
+    try {
+      posts = await fetchFromSession(AUTH_TOKEN, CT0);
+      if (posts.length) source = 'session-cookies';
+    } catch (e) {
+      lastErr = String(e.message || e);
+      console.warn('Session fetch fail:', lastErr);
+    }
+  } else {
+    console.warn(
+      'No X_AUTH_TOKEN / X_CT0 — free mode disabled. See README tip in workflow logs.',
+    );
+  }
+
+  // 2) Official API (needs credits)
+  if (!posts.length && BEARER) {
     try {
       posts = await fetchFromApi(BEARER);
       if (posts.length) source = 'x-api-v2';
     } catch (e) {
-      apiError = String(e.message || e);
-      console.warn('API error', apiError);
-      if (/402|credits depleted|Payment Required/i.test(apiError)) {
-        console.warn(
-          'X API credits are EMPTY (HTTP 402).\n' +
-            '→ https://developer.x.com → your project → Billing / Credits\n' +
-            'Add credits or wait for the free monthly reset. RSS cannot replace this.',
-        );
+      lastErr = String(e.message || e);
+      console.warn('API error', lastErr);
+      if (/402|credits depleted/i.test(lastErr)) {
         await maybeWarnCredits(seen);
       }
     }
-  } else {
-    console.warn('No X_BEARER_TOKEN — cannot use official API');
   }
 
+  // 3) RSS last resort
   if (!posts.length) {
     posts = await fetchFromRss();
     if (posts.length) source = 'rss';
@@ -81,11 +152,12 @@ async function main() {
 
   console.log('Fetched', posts.length, 'posts via', source);
   if (!posts.length) {
-    if (apiError && /402|credits/i.test(apiError)) {
-      console.warn('Stopped: X API credits depleted + RSS blocked');
-    } else {
-      console.warn('No posts fetched');
-    }
+    console.warn(
+      'No posts.\n' +
+        '→ Mode gratuit: ajoute les secrets X_AUTH_TOKEN + X_CT0\n' +
+        '  (F12 → Application → Cookies → x.com → auth_token et ct0)\n' +
+        '→ Ou recharge les crédits X API (Bearer).',
+    );
     process.exit(0);
   }
 
@@ -111,7 +183,6 @@ async function main() {
   for (const p of fresh.slice(0, MAX_NOTIFY)) {
     const ok = await postWebhook(p);
     if (ok) {
-      known.add(String(p.id));
       seen.ids.push(String(p.id));
       sent++;
       await sleep(400);
@@ -125,12 +196,153 @@ async function main() {
   console.log('Sent', sent, '/', fresh.length, '· seen now', seen.ids.length);
 }
 
-async function maybeWarnCredits(seen) {
-  // at most one Discord warning every 12h
-  const now = Date.now();
-  if (seen.creditsWarnedAt && now - seen.creditsWarnedAt < 12 * 3600 * 1000) {
-    return;
+function sessionHeaders(authToken, ct0) {
+  return {
+    Authorization: 'Bearer ' + WEB_BEARER,
+    'x-csrf-token': ct0,
+    Cookie: `auth_token=${authToken}; ct0=${ct0}`,
+    'User-Agent': UA,
+    'x-twitter-active-user': 'yes',
+    'x-twitter-auth-type': 'OAuth2Session',
+    'x-twitter-client-language': 'en',
+    Accept: '*/*',
+    'content-type': 'application/json',
+    Referer: `https://x.com/${SCREEN_NAME}`,
+    Origin: 'https://x.com',
+  };
+}
+
+async function fetchFromSession(authToken, ct0) {
+  const headers = sessionHeaders(authToken, ct0);
+  let uid = USER_ID;
+
+  // Resolve user id
+  for (const qid of QID_USER) {
+    try {
+      const variables = {
+        screen_name: SCREEN_NAME,
+        withSafetyModeUserFields: true,
+      };
+      const url =
+        `https://x.com/i/api/graphql/${qid}/UserByScreenName` +
+        `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
+        `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
+      const res = await fetch(url, { headers, timeout: 20000 });
+      if (!res.ok) {
+        console.warn('UserByScreenName', qid, res.status);
+        continue;
+      }
+      const data = await res.json();
+      const rest =
+        data &&
+        data.data &&
+        data.data.user &&
+        data.data.user.result &&
+        (data.data.user.result.rest_id ||
+          (data.data.user.result.legacy && data.data.user.result.id));
+      if (rest) {
+        uid = String(rest);
+        console.log('Session resolved user', uid, 'via', qid);
+        break;
+      }
+    } catch (e) {
+      console.warn('UserByScreenName fail', qid, e.message);
+    }
   }
+
+  // UserTweets
+  for (const qid of QID_TWEETS) {
+    try {
+      const variables = {
+        userId: uid,
+        count: 20,
+        includePromotedContent: false,
+        withQuickPromoteEligibilityTweetFields: true,
+        withVoice: true,
+        withV2Timeline: true,
+      };
+      const url =
+        `https://x.com/i/api/graphql/${qid}/UserTweets` +
+        `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
+        `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
+      const res = await fetch(url, { headers, timeout: 25000 });
+      const text = await res.text();
+      if (!res.ok) {
+        console.warn('UserTweets', qid, res.status, text.slice(0, 120));
+        continue;
+      }
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        continue;
+      }
+      if (data.errors) {
+        console.warn('UserTweets errors', qid, JSON.stringify(data.errors).slice(0, 200));
+        continue;
+      }
+      const posts = parseTimelineJson(data);
+      if (posts.length) {
+        console.log('Session UserTweets OK', posts.length, 'via', qid);
+        return posts;
+      }
+      console.warn('UserTweets empty', qid);
+    } catch (e) {
+      console.warn('UserTweets fail', qid, e.message);
+    }
+  }
+
+  throw new Error('Session GraphQL returned no tweets (cookies expired or queryId rotated)');
+}
+
+function parseTimelineJson(data) {
+  const out = [];
+  const seen = new Set();
+  const walk = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) {
+      for (const x of node) walk(x);
+      return;
+    }
+    // Tweet object shapes
+    const legacy = node.legacy;
+    const restId = node.rest_id || (legacy && legacy.id_str);
+    if (legacy && restId && (legacy.full_text || legacy.text)) {
+      const id = String(restId);
+      if (!seen.has(id)) {
+        seen.add(id);
+        let image = null;
+        const media =
+          (legacy.extended_entities && legacy.extended_entities.media) ||
+          (legacy.entities && legacy.entities.media) ||
+          [];
+        if (media[0]) {
+          image =
+            media[0].media_url_https ||
+            media[0].media_url ||
+            (media[0].video_info && null) ||
+            null;
+        }
+        out.push({
+          id,
+          text: legacy.full_text || legacy.text || '',
+          url: `https://x.com/${SCREEN_NAME}/status/${id}`,
+          createdAt: legacy.created_at
+            ? new Date(legacy.created_at).toISOString()
+            : null,
+          image,
+        });
+      }
+    }
+    for (const k of Object.keys(node)) walk(node[k]);
+  };
+  walk(data);
+  return out;
+}
+
+async function maybeWarnCredits(seen) {
+  const now = Date.now();
+  if (seen.creditsWarnedAt && now - seen.creditsWarnedAt < 12 * 3600 * 1000) return;
   try {
     const res = await fetch(WEBHOOK, {
       method: 'POST',
@@ -139,32 +351,31 @@ async function maybeWarnCredits(seen) {
         username: 'Datamining · X',
         embeds: [
           {
-            title: 'X API — crédits épuisés',
+            title: 'X — mode gratuit disponible',
             description:
-              'Impossible de lire @' +
-              SCREEN_NAME +
-              '.\n' +
-              'L’API répond **402 credits depleted**.\n\n' +
-              '**Que faire :**\n' +
-              '1. [developer.x.com](https://developer.x.com) → ton projet\n' +
-              '2. Billing / Credits → ajouter des crédits **ou** attendre le reset mensuel\n' +
-              '3. Relancer le workflow **X News**\n\n' +
-              '_Les miroirs RSS publics ne marchent plus en 2026._',
-            color: 0xed4245,
-            footer: { text: 'X · setup' },
+              'L’API officielle n’a plus de crédits.\n\n' +
+              '**Gratuit :** ajoute 2 secrets GitHub\n' +
+              '• `X_AUTH_TOKEN`\n' +
+              '• `X_CT0`\n\n' +
+              'Comment les avoir :\n' +
+              '1. Connecte-toi sur [x.com](https://x.com)\n' +
+              '2. F12 → Application → Cookies → `https://x.com`\n' +
+              '3. Copie **auth_token** et **ct0**\n' +
+              '4. Relance le workflow **X News**',
+            color: 0xfaa61a,
+            footer: { text: 'X · free mode' },
             timestamp: new Date().toISOString(),
           },
         ],
       }),
       timeout: 12000,
     });
-    console.log('credits warning webhook', res.status);
     if (res.ok) {
       seen.creditsWarnedAt = now;
       await saveSeen(seen);
     }
   } catch (e) {
-    console.warn('credits warning failed', e.message);
+    console.warn('warn failed', e.message);
   }
 }
 
@@ -183,29 +394,22 @@ async function fetchFromApi(bearer) {
     );
     if (uRes.ok) {
       const uj = await uRes.json();
-      if (uj.data && uj.data.id) {
-        uid = String(uj.data.id);
-        console.log('Resolved user id', uid);
-      }
+      if (uj.data && uj.data.id) uid = String(uj.data.id);
     } else {
       const t = await uRes.text();
       if (uRes.status === 402 || /credits depleted/i.test(t)) {
         throw new Error('API 402 ' + t.slice(0, 200));
       }
-      console.warn('username lookup', uRes.status, t.slice(0, 120));
     }
   } catch (e) {
     if (/402|credits/i.test(String(e.message))) throw e;
-    console.warn('username lookup fail', e.message);
   }
 
   const url =
     `https://api.twitter.com/2/users/${uid}/tweets` +
-    `?max_results=10` +
-    `&exclude=replies` +
+    `?max_results=10&exclude=replies` +
     `&tweet.fields=created_at,text,entities,attachments` +
-    `&expansions=attachments.media_keys` +
-    `&media.fields=url,preview_image_url,type`;
+    `&expansions=attachments.media_keys&media.fields=url,preview_image_url,type`;
 
   const res = await fetch(url, {
     headers: {
