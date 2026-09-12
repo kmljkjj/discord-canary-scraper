@@ -1,11 +1,12 @@
 /**
- * Suivi des quêtes Discord — embeds FR riches
+ * Suivi des quêtes Discord — Components V2 (média + layout)
  *
- * API publique (plat, sans .config) :
- *   https://api.discordquest.com/api/quests
- * Optionnel token : /api/v10/quests/@me
+ * - flags IS_COMPONENTS_V2 (32768)
+ * - Container + TextDisplay + Separator + MediaGallery + link buttons
+ * - Vidéo / images CDN dans MediaGallery (plus seulement un lien)
+ * - Webhook: ?with_components=true
  *
- * Webhook : QUEST_WEBHOOK_URL (prioritaire) ou DISCORD_WEBHOOK_URL
+ * Fallback: embed classique si V2 refuse le payload
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -33,14 +34,12 @@ const AVATAR =
   'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 const CDN = 'https://cdn.discordapp.com/';
+const IS_COMPONENTS_V2 = 1 << 15; // 32768
 
-/** Resolve Discord CDN asset path */
 function assetUrl(questId, filename) {
   if (!filename) return null;
   if (/^https?:\/\//i.test(filename)) return filename;
-  // Already full path: quests/ID/file.ext
   if (/^quests\//i.test(filename)) return CDN + filename.replace(/^\//, '');
-  // Bare filename
   if (questId) return CDN + 'quests/' + questId + '/' + filename.replace(/^\//, '');
   return CDN + filename.replace(/^\//, '');
 }
@@ -131,13 +130,15 @@ function extractTaskVideos(root, questId) {
   const tc = root.task_config_v2 || root.task_config || {};
   const tasks = tc.tasks || {};
   const out = [];
-  for (const [key, val] of Object.entries(tasks)) {
+  for (const val of Object.values(tasks)) {
     const assets = (val && val.assets) || {};
-    for (const ak of ['video', 'video_low_res', 'video_hls']) {
+    for (const ak of ['video', 'video_low_res']) {
       const v = assets[ak];
       const url = v && (v.url || v);
-      if (!url) continue;
-      const full = assetUrl(questId, typeof url === 'string' ? url : null);
+      if (!url || typeof url !== 'string') continue;
+      // Prefer mp4 over m3u8 for gallery playback
+      if (/\.m3u8(\?|$)/i.test(url)) continue;
+      const full = assetUrl(questId, url);
       if (full && !out.includes(full)) out.push(full);
     }
   }
@@ -161,10 +162,7 @@ function formatDateFr(iso) {
 }
 
 function platformsFr(root) {
-  const list =
-    root.redeemable_platforms ||
-    root.platforms ||
-    null;
+  const list = root.redeemable_platforms || root.platforms || null;
   if (Array.isArray(list) && list.length) {
     return list
       .map((p) => {
@@ -191,10 +189,6 @@ function platformsFr(root) {
   return bits.length ? bits.join(', ') : 'Multiplateforme';
 }
 
-/**
- * API publique = objet plat (pas de .config).
- * /quests/@me = parfois { id, config: {...}, preview }.
- */
 function normalizeQuest(raw) {
   if (!raw || typeof raw !== 'object') return null;
   const root =
@@ -222,12 +216,7 @@ function normalizeQuest(raw) {
     assetUrl(id, assets.game_tile_light);
 
   let videoUrl = null;
-  for (const key of [
-    'hero_video',
-    'quest_bar_hero_video',
-    'video',
-    'preview_video',
-  ]) {
+  for (const key of ['hero_video', 'quest_bar_hero_video', 'video', 'preview_video']) {
     if (assets[key]) {
       videoUrl = assetUrl(id, assets[key]);
       break;
@@ -294,7 +283,16 @@ function parseColor(hex) {
   return Number.isFinite(n) ? n : 0x5865f2;
 }
 
-function buildQuestEmbed(quest) {
+function isVideoUrl(url) {
+  return /\.(mp4|webm|mov)(\?|$)/i.test(url || '');
+}
+
+function isImageUrl(url) {
+  return /\.(png|jpe?g|gif|webp)(\?|$)/i.test(url || '');
+}
+
+/** Components V2 payload — MediaGallery for hero + video */
+function buildQuestComponentsV2(quest) {
   const start = formatDateFr(quest.startsAt);
   const end = formatDateFr(quest.expiresAt);
   let duree = '—';
@@ -302,30 +300,83 @@ function buildQuestEmbed(quest) {
   else if (start) duree = 'À partir du ' + start;
   else if (end) duree = 'Jusqu’au ' + end;
 
-  // Description style Discord Previews / modèle FR
-  const desc = [];
-  desc.push('**Durée**');
-  desc.push(duree);
-  desc.push('');
-  desc.push('**Plateformes** · ' + (quest.platforms || 'Multiplateforme'));
-  if (quest.gameTitle) desc.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
-  if (quest.publisher) desc.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
+  const header = [
+    '## Nouvelle quête',
+    '### ' + String(quest.name).slice(0, 200),
+  ];
+  if (quest.preview) header.push('⚠️ _Aperçu (preview)_');
+
+  const info = [
+    '**Durée**',
+    duree,
+    '',
+    '**Plateformes** · ' + (quest.platforms || 'Multiplateforme'),
+  ];
+  if (quest.gameTitle) info.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
+  if (quest.publisher) info.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
   if (quest.applicationName || quest.applicationId) {
-    desc.push(
+    info.push(
       '**Application** · ' +
         (quest.applicationName || 'App') +
         (quest.applicationId ? ' · `' + quest.applicationId + '`' : ''),
     );
   }
-  if (quest.preview) desc.push('⚠️ _Quête en aperçu (preview)_');
+  if (quest.features) info.push('**Flags** · ' + quest.features);
 
-  const fields = [];
+  const blocks = [];
+
+  // Media gallery: hero image + videos (Discord may render mp4 inline)
+  const galleryItems = [];
+  if (quest.heroImage) {
+    galleryItems.push({
+      media: { url: quest.heroImage },
+      description: 'Hero · ' + String(quest.name).slice(0, 80),
+    });
+  }
+  if (quest.gameTile && quest.gameTile !== quest.heroImage) {
+    galleryItems.push({
+      media: { url: quest.gameTile },
+      description: 'Game tile',
+    });
+  }
+  // Videos first priority for "display video in message"
+  const vids = [];
+  if (quest.videoUrl && isVideoUrl(quest.videoUrl)) vids.push(quest.videoUrl);
+  for (const v of quest.taskVideos || []) {
+    if (isVideoUrl(v) && !vids.includes(v)) vids.push(v);
+  }
+  for (const v of vids.slice(0, 4)) {
+    galleryItems.push({
+      media: { url: v },
+      description: 'Vidéo quête',
+    });
+  }
+  // Reward images
+  for (const r of (quest.rewards || []).slice(0, 3)) {
+    if (r.asset && isImageUrl(r.asset)) {
+      galleryItems.push({
+        media: { url: r.asset },
+        description: r.name || r.typeLabel || 'Récompense',
+      });
+    }
+  }
+
+  if (galleryItems.length) {
+    blocks.push({
+      type: 12, // Media Gallery
+      items: galleryItems.slice(0, 10),
+    });
+  }
+
+  blocks.push({ type: 10, content: header.join('\n').slice(0, 4000) });
+  blocks.push({ type: 14, divider: true, spacing: 1 });
+  blocks.push({ type: 10, content: info.join('\n').slice(0, 4000) });
 
   if (quest.tasksText) {
-    fields.push({
-      name: 'Tâches',
-      value: quest.tasksText.slice(0, 1024),
-      inline: false,
+    blocks.push({ type: 14, divider: true, spacing: 1 });
+    blocks.push({
+      type: 10,
+      content: ('**Tâches**\n' + quest.tasksText).slice(0, 4000),
     });
   }
 
@@ -337,79 +388,137 @@ function buildQuestEmbed(quest) {
       if (r.name) line += ' — ' + r.name;
       if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
       if (r.skuId) line += '\n　SKU `' + r.skuId + '`';
-      if (r.redemptionLink) line += '\n　[Récupérer](' + r.redemptionLink + ')';
       rLines.push(line);
     }
-    fields.push({
-      name: 'Récompenses',
-      value: rLines.join('\n').slice(0, 1024),
-      inline: false,
+    blocks.push({ type: 14, divider: true, spacing: 1 });
+    blocks.push({
+      type: 10,
+      content: ('**Récompenses**\n' + rLines.join('\n')).slice(0, 4000),
     });
   }
 
-  const mediaLines = [];
-  if (quest.videoUrl) mediaLines.push('[Vidéo principale](' + quest.videoUrl + ')');
-  for (const v of (quest.taskVideos || []).slice(0, 4)) {
-    if (v !== quest.videoUrl) mediaLines.push('[Vidéo tâche](' + v + ')');
-  }
-  if (mediaLines.length) {
-    fields.push({
-      name: 'Médias',
-      value: mediaLines.join('\n').slice(0, 1024),
-      inline: false,
-    });
-  }
-
-  if (quest.applicationLink) {
-    fields.push({
-      name: 'Lien',
-      value: quest.applicationLink.slice(0, 1024),
-      inline: false,
-    });
-  }
-
-  fields.push({
-    name: 'ID',
-    value: '`' + quest.id + '`',
-    inline: true,
+  blocks.push({ type: 14, divider: true, spacing: 1 });
+  blocks.push({
+    type: 10,
+    content: '**ID** · `' + quest.id + '`',
   });
 
-  const rewardThumb =
-    (rewards.find((r) => r.asset) || {}).asset ||
-    quest.gameTile ||
-    quest.logotype ||
-    null;
+  // Link buttons (style 5) — work on non-app webhooks
+  const buttons = [];
+  if (quest.videoUrl) {
+    buttons.push({
+      type: 2,
+      style: 5,
+      label: 'Ouvrir la vidéo',
+      url: quest.videoUrl.slice(0, 512),
+    });
+  }
+  if (quest.applicationLink) {
+    buttons.push({
+      type: 2,
+      style: 5,
+      label: 'Lien application',
+      url: quest.applicationLink.slice(0, 512),
+    });
+  }
+  for (const r of rewards) {
+    if (r.redemptionLink && buttons.length < 5) {
+      buttons.push({
+        type: 2,
+        style: 5,
+        label: 'Récupérer récompense',
+        url: String(r.redemptionLink).slice(0, 512),
+      });
+      break;
+    }
+  }
+  if (buttons.length) {
+    blocks.push({
+      type: 1, // Action Row
+      components: buttons.slice(0, 5),
+    });
+  }
+
+  const container = {
+    type: 17, // Container
+    accent_color: parseColor(quest.primaryColor),
+    components: blocks,
+  };
 
   return {
-    author: {
-      name: 'Nouvelle quête',
-      icon_url: AVATAR,
-    },
+    flags: IS_COMPONENTS_V2,
+    components: [container],
+  };
+}
+
+/** Fallback classic embed */
+function buildQuestEmbed(quest) {
+  const start = formatDateFr(quest.startsAt);
+  const end = formatDateFr(quest.expiresAt);
+  let duree = '—';
+  if (start && end) duree = start + ' → ' + end;
+  else if (start) duree = 'À partir du ' + start;
+  else if (end) duree = 'Jusqu’au ' + end;
+
+  const desc = [];
+  desc.push('**Durée**');
+  desc.push(duree);
+  desc.push('');
+  desc.push('**Plateformes** · ' + (quest.platforms || 'Multiplateforme'));
+  if (quest.gameTitle) desc.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
+  if (quest.publisher) desc.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
+
+  const fields = [];
+  if (quest.tasksText) {
+    fields.push({ name: 'Tâches', value: quest.tasksText.slice(0, 1024) });
+  }
+  const rewards = quest.rewards || [];
+  if (rewards.length) {
+    const rLines = rewards.slice(0, 6).map((r) => {
+      let line = '• **' + r.typeLabel + '**';
+      if (r.name) line += ' — ' + r.name;
+      if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
+      return line;
+    });
+    fields.push({ name: 'Récompenses', value: rLines.join('\n').slice(0, 1024) });
+  }
+  if (quest.videoUrl) {
+    fields.push({ name: 'Vidéo', value: '[Lire](' + quest.videoUrl + ')' });
+  }
+  fields.push({ name: 'ID', value: '`' + quest.id + '`', inline: true });
+
+  return {
+    author: { name: 'Nouvelle quête', icon_url: AVATAR },
     title: String(quest.name).slice(0, 256),
-    url: quest.applicationLink || undefined,
     description: desc.join('\n').slice(0, 4090),
     color: parseColor(quest.primaryColor),
     fields,
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
-    thumbnail: rewardThumb ? { url: rewardThumb } : undefined,
-    footer: {
-      text: 'Datamining · Quêtes · ID ' + quest.id,
-    },
+    thumbnail: quest.gameTile ? { url: quest.gameTile } : undefined,
+    footer: { text: 'Datamining · Quêtes · ID ' + quest.id },
     timestamp: new Date().toISOString(),
   };
 }
 
-async function postWebhook(body) {
-  if (!WEBHOOK) return { ok: false, status: 0, text: 'no webhook' };
+function webhookUrlWithComponents() {
+  if (!WEBHOOK) return null;
+  const u = new URL(WEBHOOK);
+  u.searchParams.set('with_components', 'true');
+  u.searchParams.set('wait', 'true');
+  return u.toString();
+}
+
+async function postWebhook(url, body) {
+  if (!url) return { ok: false, status: 0, text: 'no webhook' };
   body.username = BOT_NAME;
   body.avatar_url = AVATAR;
-  const res = await fetch(WEBHOOK, {
+  const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   const text = await res.text().catch(() => '');
-  return { ok: res.ok, status: res.status, text: text.slice(0, 400) };
+  return { ok: res.ok, status: res.status, text: text.slice(0, 500) };
 }
 
 async function sendQuestWebhook(quest) {
@@ -417,14 +526,26 @@ async function sendQuestWebhook(quest) {
     console.warn('Pas de QUEST_WEBHOOK_URL / DISCORD_WEBHOOK_URL');
     return false;
   }
-  const emb = await postWebhook({ embeds: [buildQuestEmbed(quest)] });
-  if (emb.ok) {
-    console.log('🔔 Quête envoyée:', quest.name, '(' + quest.id + ')');
+
+  const v2Url = webhookUrlWithComponents();
+  const v2Body = buildQuestComponentsV2(quest);
+  let res = await postWebhook(v2Url, v2Body);
+
+  if (res.ok) {
+    console.log('🔔 Quête V2:', quest.name, '(' + quest.id + ')');
+    await new Promise((r) => setTimeout(r, 450));
+    return true;
+  }
+
+  console.warn('V2 échoué', res.status, res.text, '→ fallback embed');
+  res = await postWebhook(WEBHOOK, { embeds: [buildQuestEmbed(quest)] });
+  if (res.ok) {
+    console.log('🔔 Quête embed:', quest.name);
   } else {
-    console.warn('Embed échoué', emb.status, emb.text);
+    console.warn('Embed échoué', res.status, res.text);
   }
   await new Promise((r) => setTimeout(r, 450));
-  return emb.ok;
+  return res.ok;
 }
 
 async function fetchPublicQuests() {
@@ -475,9 +596,18 @@ async function main() {
     console.log('API publique:', quests.length, 'quêtes');
     const sample = quests.find((q) => q.name && !q.name.startsWith('Quête '));
     if (sample) {
-      console.log('Sample OK:', sample.name, '| tasks:', !!sample.tasksText, '| rewards:', (sample.rewards || []).length, '| image:', !!sample.heroImage);
-    } else {
-      console.warn('Sample: noms/champs peut-être vides — vérifier normalize');
+      console.log(
+        'Sample OK:',
+        sample.name,
+        '| tasks:',
+        !!sample.tasksText,
+        '| rewards:',
+        (sample.rewards || []).length,
+        '| image:',
+        !!sample.heroImage,
+        '| video:',
+        !!sample.videoUrl,
+      );
     }
   } catch (e) {
     console.error('API publique échouée:', e.message);
@@ -490,7 +620,11 @@ async function main() {
       const byId = new Map(quests.map((q) => [q.id, q]));
       for (const q of official) {
         const prev = byId.get(q.id) || {};
-        byId.set(q.id, { ...prev, ...q, rewards: q.rewards?.length ? q.rewards : prev.rewards });
+        byId.set(q.id, {
+          ...prev,
+          ...q,
+          rewards: q.rewards?.length ? q.rewards : prev.rewards,
+        });
       }
       quests = Array.from(byId.values());
       console.log('Fusion officielle:', quests.length);
@@ -552,9 +686,6 @@ async function main() {
   }
 
   console.log('Nouvelles quêtes:', newQuests.length);
-  if (!WEBHOOK && newQuests.length) {
-    console.warn('Nouvelles quêtes mais aucune webhook configurée');
-  }
   for (const q of newQuests.slice(0, 15)) {
     await sendQuestWebhook(q);
   }
@@ -568,4 +699,9 @@ if (require.main === module) {
   });
 }
 
-module.exports = { normalizeQuest, buildQuestEmbed, main };
+module.exports = {
+  normalizeQuest,
+  buildQuestEmbed,
+  buildQuestComponentsV2,
+  main,
+};
