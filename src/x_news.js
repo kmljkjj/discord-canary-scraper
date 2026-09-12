@@ -44,12 +44,15 @@ const MAX_NOTIFY = 8;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
+// Query IDs from live main.59435dbf6f40166da.js (Sep 2026)
 const QID_USER = [
+  'KybxDj9RrADIITXlGG8kpw',
   'sLVLhk0bGj3MVFEKTdax1w',
   'IGgvgiOx4QZndDHuD3x9TQ',
   'AWbeRIdkLtqTRN7yL_H8yw',
 ];
 const QID_TWEETS = [
+  'OeFjWKHutsuyWXZGmLr02A',
   '36rb3Xj3iJ64Q-9wKDjCcQ',
   'x3B_xLqC0yZawOB7WQhaVQ',
   'N2tFDY-MlrLxXJ9F_ZxJGA',
@@ -102,7 +105,6 @@ function cleanSecret(s) {
     .trim();
 }
 
-/** Parse X_COOKIE or X_AUTH_TOKEN + X_CT0 */
 function loadSession() {
   const full = cleanSecret(
     process.env.X_COOKIE || process.env.TWITTER_COOKIE || '',
@@ -130,7 +132,6 @@ function loadSession() {
   if (auth && ct0 && !cookieHeader) {
     cookieHeader = `auth_token=${auth}; ct0=${ct0}`;
   } else if (auth && ct0 && cookieHeader) {
-    // ensure both present in header
     if (!/auth_token=/i.test(cookieHeader))
       cookieHeader += `; auth_token=${auth}`;
     if (!/\bct0=/i.test(cookieHeader)) cookieHeader += `; ct0=${ct0}`;
@@ -165,14 +166,11 @@ async function main() {
   let source = 'none';
 
   if (session.auth && session.ct0) {
-    // sanity checks
     if (session.auth.length < 20) {
-      console.warn(
-        'auth_token looks too short — re-copy from Application → Cookies',
-      );
+      console.warn('auth_token looks too short');
     }
     if (session.ct0.length < 20) {
-      console.warn('ct0 looks too short — re-copy from Application → Cookies');
+      console.warn('ct0 looks too short');
     }
     try {
       posts = await fetchFromSession(session);
@@ -181,9 +179,7 @@ async function main() {
       console.warn('Session fetch fail:', e.message || e);
     }
   } else {
-    console.warn(
-      'No session. Add X_COOKIE (full cookie header) OR X_AUTH_TOKEN + X_CT0',
-    );
+    console.warn('No session. Add X_COOKIE or X_AUTH_TOKEN + X_CT0');
   }
 
   if (!posts.length && BEARER) {
@@ -205,9 +201,7 @@ async function main() {
   console.log('Fetched', posts.length, 'posts via', source);
   if (!posts.length) {
     console.warn(
-      'No posts.\n' +
-        '401 = cookies invalid/expired.\n' +
-        'Best fix: Network tab → copy full Cookie header → secret X_COOKIE',
+      'No posts. 401 = need valid auth_token cookie. Network → cookie: → X_COOKIE',
     );
     process.exit(0);
   }
@@ -384,8 +378,7 @@ async function fetchFromSession(session) {
 
   if (got401 > 0) {
     throw new Error(
-      'HTTP 401 Could not authenticate you — cookies invalid or expired. ' +
-        'Re-copy from browser (prefer full Cookie header → secret X_COOKIE). ' +
+      'HTTP 401 — cookies invalid/expired. Need auth_token. ' +
         `auth_token len=${session.auth.length} ct0 len=${session.ct0.length}`,
     );
   }
@@ -444,15 +437,10 @@ async function maybeWarnCredits(seen) {
         username: 'Datamining · X',
         embeds: [
           {
-            title: 'X cookies invalides / expirés',
+            title: 'X — auth_token manquant / invalide',
             description:
-              'HTTP 401 sur GraphQL.\n\n' +
-              '**Méthode fiable :**\n' +
-              '1. x.com connecté\n' +
-              '2. F12 → **Network** → une requête `graphql`\n' +
-              '3. Request Headers → copier toute la valeur **cookie:**\n' +
-              '4. Secret GitHub **`X_COOKIE`** = ce texte\n' +
-              '5. Relancer X News',
+              'Cherche le cookie **auth_token** (pas le Bearer).\n' +
+              'Network → cookie: → secret **X_COOKIE**.',
             color: 0xed4245,
             timestamp: new Date().toISOString(),
           },
@@ -616,10 +604,10 @@ function pick(block, tag) {
 function strip(s) {
   return String(s || '')
     .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
     .replace(/&#39;/g, "'")
     .trim();
 }
