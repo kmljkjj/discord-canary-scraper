@@ -1,0 +1,3399 @@
+{
+  "scrapedAt": "2026-09-12T14:23:29.547Z",
+  "source": "https://experiments.dscrd.workers.dev/experiments",
+  "count": 216,
+  "fingerprints": {
+    "2023-01_global_display_names": "-1:100.00",
+    "2021-09_favorites_server": "-1:100.00",
+    "2022-07_channel_highlights": "-1:100.00",
+    "2022-09_community_bleeding_edge": "-1:100.00",
+    "2022-09_guild_onboarding_admin_only": "-1:100.00",
+    "2022-08_new_unreads_bar": "-1:100.00",
+    "2022-1_read_state_staff": "-1:100.00",
+    "2022-08_community_onboarding": "1:500.00",
+    "2022-05_channel_opt_in": "-1:100.00",
+    "2022-04_creator_monetization_country_allowlist": "-1:100.00",
+    "2022-09_creator_monetization_raven": "1:100.00",
+    "2022-09_creator_monetization_raven_users": "-1:100.00",
+    "2022-11_creator_monetization_onboarding_waitlist": "-1:100.00|1:100.00",
+    "2023-01_creator_monetization_nag_activate_users": "-1:100.00",
+    "2023-03_cr_accept_new_terms": "-1:100.00",
+    "2021-06_guild_role_subscriptions": "-1:128.00|1:72.00",
+    "2021-08_guild_role_subscription_users": "-1:100.00",
+    "2022-01_guild_role_subscription_multigroup": "-1:100.00",
+    "2022-01_guild_role_subscription_trials": "-1:100.00|1:100.00",
+    "2022-03_role_subscription_analytics_portal": "1:100.00",
+    "2022-04_guild_role_subscription_purchase_feedback_loop": "1:100.00",
+    "2022-05_mobile_web_role_subscription_purchase_page": "1:100.00",
+    "2022-06_native_mobile_role_subscription_management": "-1:100.00",
+    "2022-07_guild_role_subscriptions_variable_max_tiers": "-1:100.00",
+    "2022-08_mobile_web_role_subscription_upsell": "-1:100.00",
+    "2022-10_creator_store_pages": "1:100.00",
+    "2022-12_mobile_guild_role_subscription_team_setup": "-1:90.00|1:10.00",
+    "2023-02_server_subscriptions_iap": "1:100.00",
+    "2023-03_server_subs_iap_geo_rollout": "-1:100.00",
+    "2023-03_server_subscriptions_tier_templates": "-1:100.00",
+    "2023-03_self_demonetization": "1:100.00",
+    "2022-12_mobile_gdm_invite_link": "-1:100.00",
+    "2023-02_tabs_v2": "-1:100.00",
+    "2023-03_mobile_re_design_existing_users": "-1:100.00",
+    "2023-02_mobile_redesign_new_users": "-1:100.00",
+    "2023-02_onboarding_home_admin": "-1:100.00|1:50.00",
+    "2023-02_onboarding_home": "-1:100.00",
+    "2022-08_rtc_minimum_jitter_buffer_level": "-1:100.00",
+    "2021-10_price_determination": "-1:100.00",
+    "2022-07_file_upload_limit": "-1:100.00",
+    "2022-09_free_file_upload_limit": "-1:100.00",
+    "2022-10_premium_tier_0_desktop_gifting": "-1:100.00",
+    "2022-11_rtx40xx_gpu_screenshare_with_av1": "-1:100.00",
+    "2022-08_windows_graphics_capture": "-1:100.00",
+    "2023-02_h265_android": "-1:100.00",
+    "2022-10_h265_dm_call": "-1:100.00",
+    "2021-06_hdr_screen_capture": "-1:100.00",
+    "2021-08_max_sync_delay": "-1:100.00",
+    "2021-02_quartz_video_source": "-1:100.00",
+    "2021-03_videotoolbox_rate_optimization": "-1:100.00",
+    "2022-12_auto_disable_video_mobile_v1": "-1:100.00",
+    "2022-09_remote_audio_settings": "-1:100.00",
+    "2022-11_client_themes": "-1:100.00",
+    "2023-03_client_themes_16thru21": "-1:100.00",
+    "2022-04_forced_colors_desktop": "-1:100.00",
+    "2022-10_communities_multi": "-1:60.00|1:40.00|2:40.00|4:20.00",
+    "2022-01_home_tab_guild": "-1:100.00",
+    "2022-01_home_tab_user": "-1:100.00",
+    "2022-01_home_feed_toggle": "-1:100.00",
+    "2022-06_home_refresh_button": "-1:100.00",
+    "2022-08_home_badge": "-1:100.00",
+    "2022-08_home_drawer_autoclose": "-1:100.00",
+    "2022-09_welcome_header": "-1:100.00",
+    "2022-12_home_feedback_ux": "-1:100.00",
+    "2023-03_home_deprecation": "-1:100.00|1:100.00",
+    "2023-03_free_discord_stickers": "-1:100.00",
+    "2022-10_context_menu_and_new_media_picker": "-1:100.00",
+    "2023-02_burst_reaction_guild_experiment": "-1:80.00|1:5.00|2:105.00|4:5.00",
+    "2022-09_burst_reactions": "-1:100.00",
+    "2023-03_mobile_burst_reactions": "-1:100.00",
+    "2023-03_store_latest_message_data": "-1:100.00",
+    "2022-12_media_mosaic_experiment": "-1:100.00",
+    "2023-02_inline_sending_preview_mobile": "-1:100.00",
+    "2023-03_activities_release_tools": "-1:100.00",
+    "2022-08_guild_unreads": "-1:100.00",
+    "2022-11_desktop_notification_center": "-1:100.00",
+    "2022-09_emoji_ecosystem_holdout": "-1:100.00",
+    "2022-09_emoji_picker_discovery": "-1:100.00",
+    "2021-04_network_action_logging": "-1:100.00",
+    "2023-02_stage_boosting": "-1:200.00|1:50.00",
+    "2021-09_ios_screenshare_resolution_profiles": "-1:100.00",
+    "2022-10_text_in_stage": "-1:200.00|1:100.00",
+    "2023-03_pomelo_compatible_ux": "-1:100.00",
+    "2023-01_mfa_v2": "-1:100.00",
+    "2021-11_member_verification_manual_approval": "-1:100.00",
+    "2021-04_impression_logging": "-1:100.00",
+    "2023-01_emoji_discovery_backfill": "-1:100.00",
+    "2022-08_amoled_mode_web": "-1:100.00",
+    "2022-11_clips_experiment": "-1:100.00",
+    "2021-12_soundboard": "-1:190.00|1:100.00|3:5.00|4:5.00",
+    "2023-01_silent_messages": "-1:100.00",
+    "2022-12_forum_activity": "-1:100.00",
+    "2023-01_forums_activity_2_guild": "-1:100.00",
+    "2023-01_activities_in_gdm": "-1:100.00",
+    "2023-03_clyde_ai": "-1:198.00|1:101.00",
+    "2023-02_discord_embeds": "-1:100.00",
+    "2023-02_nitroduction_experience": "-1:100.00",
+    "2023-04_nitro_drop_announcement_modal": "-1:100.00",
+    "2023-04_nitro_drop_experience": "-1:100.00",
+    "2023-03_april_fools": "-1:100.00",
+    "2022-12_avatar_decorations": "-1:100.00",
+    "2023-02_app_recommendations_server_checklist": "1:100.00",
+    "2023-03_improved_message_markdown": "-1:100.00",
+    "2023-03_improved_message_markdown_guild": "-1:100.00",
+    "2022-07_application_subscriptions": "1:200.00",
+    "2023-02_p13n_summarization": "1:100.00|2:100.00",
+    "2023-03_p13n_summarization_user": "-1:100.00",
+    "2023-03_apps_in_gdms": "-1:100.00",
+    "2022-07_voice_in_threads": "1:100.00",
+    "2022-11_command_query_pagination": "-1:100.00",
+    "2022-03_block_russian_purchases": "-1:100.00",
+    "2022-03_block_russian_purchases_desktop": "-1:100.00",
+    "2022-01_pronouns": "-1:100.00",
+    "2022-07_report_raids": "-1:100.00|1:100.00",
+    "2022-10_guild_raid_messaging": "1:100.00",
+    "2022-12_premium_targeted_upsells": "-1:100.00",
+    "2022-09_premium_tier_0_global": "-1:100.00",
+    "2022-04_activities_nitro": "-1:100.00",
+    "2022-09_mobile_account_switcher": "-1:100.00",
+    "2022-11_mobile_account_switcher_notifications": "-1:100.00",
+    "2022-08_back_to_school": "-1:100.00",
+    "2023-04_soundboard_nitro": "-1:100.00",
+    "2022-12_get_my_guilds_application_ids_endpoint": "-1:100.00",
+    "2023-02_app_directory_for_all_guild": "-1:100.00|1:100.00",
+    "2023-02_app_directory_for_all_modal": "-1:100.00",
+    "2023-02_referral_trials": "-1:100.00",
+    "2021-02_staff_qc_debugging": "-1:100.00",
+    "2021-07_role_popout": "-1:100.00",
+    "2023-03_ios_keyboard_resizes_view": "-1:100.00",
+    "2023-02_mfa_remove_phone": "-1:100.00",
+    "2023-03_birthday_activities": "-1:100.00",
+    "2022-09_inboxes_v2_frontend": "-1:100.00",
+    "2021-07_popout_autocomplete": "-1:100.00",
+    "2021-03_nitro_emoji_autocomplete_upsell": "-1:100.00",
+    "2021-04_nitro_emoji_autocomplete_upsell_ios": "-1:100.00",
+    "2021-05_application_command_suggestions": "-1:100.00",
+    "2022-07_invites_disabled": "1:200.00",
+    "2022-12_timestamp_tooltip": "-1:100.00",
+    "2023-03_mj_chat_bar_user": "-1:100.00",
+    "2023-03_mj_chat_bar_guild": "-1:100.00",
+    "2022-12_seasonal_gifting": "-1:100.00",
+    "2023-02_guild_boosting_marketing_redesign": "-1:100.00",
+    "2023-02_nitro_most_popular_tag": "-1:100.00",
+    "2021-12_inferno_spam_redaction": "-1:100.00",
+    "2020-01_in_app_reporting": "-1:100.00",
+    "2022-08_message_todos_staff_only": "-1:100.00",
+    "2022-11_automod_non_community_guilds_release": "-1:300.00|1:200.00",
+    "2022-12_mention_raid_limit": "1:100.00",
+    "2023-01_mention_raid_notice": "1:200.00",
+    "2023-02_automod_custom_message": "1:200.00",
+    "2023-02_free_form": "-1:100.00",
+    "2023-02_automod_on_user_profile": "-1:60.00|1:120.00",
+    "2022-07_system_dm_safety_onboarding": "-1:100.00",
+    "2023-01_forums_non_community": "-1:50.00|1:25.00",
+    "2023-03_onboarding_upsell_lifecycle": "-1:100.00",
+    "2023-03_pomelo": "-1:100.00",
+    "2022-12_home_header_redesign": "-1:100.00",
+    "2023-03_channel_name_emojis": "-1:100.00",
+    "2023-03_guild_safety_settings": "-1:80.00|1:10.00",
+    "2023-01_guild_onboarding_includes_rules": "-1:100.00",
+    "2022-10_guild_onboarding_home_landing": "-1:100.00",
+    "2023-03_activities_game_night_coach_mark": "-1:100.00",
+    "2023-03_activity_gartic_phone_coach_mark": "-1:100.00",
+    "2022-11_activitiesbashoutcoachmark": "-1:100.00",
+    "2021-10_study_group": "-1:33.34|1:33.33",
+    "2022-08_application_command_forced_migration": "1:100.00",
+    "2021-12_discovery_requirements_m2": "-1:100.00",
+    "2022-11_default_disable_mass_mention": "-1:100.00|1:100.00",
+    "2021-11_hub_events": "-1:100.00",
+    "2022-12_channel_notice_redesign": "-1:100.00",
+    "2022-01_server_recommendations_rollout": "-1:100.00",
+    "2023-01_clear_all_message_requests": "-1:100.00",
+    "2023-02_parent_tools_launch": "-1:100.00",
+    "2021-04_longer_group_dm_invites": "-1:100.00",
+    "2023-01_shared_canvas": "-1:200.00|1:100.00",
+    "2022-12_activities_auto_suggest": "-1:100.00",
+    "2023-03_activitieswatchtogetherpromo": "-1:100.00",
+    "2023-03_activities_watch_together_promo_sparkles_week_1": "-1:100.00",
+    "2023-03_activities_watch_together_promo_sparkles_week_2": "-1:100.00",
+    "2023-03_pax_vc_tile_activities": "-1:100.00",
+    "2023-01_vc_tile_activities_entry_point": "-1:100.00",
+    "2022-10_profile_panel": "-1:100.00",
+    "2021-06_guild_subscriptions_payment_flow_test_page": "-1:100.00",
+    "2022-11_premium_bogo_month_promotion": "-1:100.00",
+    "2023-03_free_user_marketing_page_cta_copy": "-1:100.00",
+    "2023-03_free_user_marketing_page_headline_copy": "-1:100.00",
+    "2023-03_tier_0_marketing_page_headline_copy": "-1:100.00",
+    "2023-03_tier_0_subscriber_marketing_page_cta_copy": "-1:100.00",
+    "2023-03_tier_2_marketing_page_headline_copy": "-1:100.00",
+    "2023-03_tier_2_subscriber_marketing_page_cta_copy": "-1:100.00",
+    "2023-03_user_trial_offer_marketing_page_tier_0_cta_copy": "-1:100.00",
+    "2023-03_user_trial_offer_marketing_page_tier_2_cta_copy": "-1:100.00",
+    "2021-06_preview_promotions": "-1:100.00",
+    "2021-11_discovery_tags": "-1:100.00",
+    "2022-01_discovery_iar": "-1:100.00",
+    "2023-01_consumer_education_launch": "-1:100.00",
+    "2022-05_safety_coms_update": "-1:100.00",
+    "2022-04_account_profile_popout": "-1:100.00",
+    "2022-07_user_panel_context_menu_profile_entrypoint_behavior": "-1:100.00",
+    "2022-07_user_panel_context_menu_profile_entrypoint": "-1:100.00",
+    "2023-03_mute_block_aa": "-1:100.00",
+    "2021-09_watch_together_rollout": "-1:100.00",
+    "2022-02_guild_audit_log_user": "-1:100.00",
+    "2022-02_guild_audit_log_guild": "-1:100.00",
+    "2022-11_application_command_permission_v3_rollout": "2:100.00",
+    "2022-03_guild_access_rate_insight_experiment": "-1:100.00",
+    "2020-12_guild_delete_feedback": "-1:100.00",
+    "2023-02_onboardingdropdowns": "-1:100.00|1:100.00",
+    "2022-06_community_admin_server": "1:100.00",
+    "2023-03_onboarding_soft_requirement_for_partnership": "-1:100.00|1:100.00",
+    "2021-10_pause_partner_applications_experiment": "-1:100.00",
+    "2022-06_free_sticker_slots_design_updates": "1:100.00",
+    "2021-03_expiration_notice_mobile_web": "-1:100.00",
+    "2021-03_expiration_notice_ios": "-1:100.00",
+    "2021-03_expiration_notice_ios_embed": "-1:100.00",
+    "2022-04_registration_copy_updates": "-1:100.00"
+  },
+  "experiments": [
+    {
+      "id": "2023-01_global_display_names",
+      "type": "user",
+      "title": "Global Display Name",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-09_favorites_server",
+      "type": "user",
+      "title": "Enable fancy super-alpha favorites server.",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_channel_highlights",
+      "type": "user",
+      "title": "Channel Highlights",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_community_bleeding_edge",
+      "type": "user",
+      "title": "(Staff only) Bleeding edge experiment for Community 2.0 features",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_guild_onboarding_admin_only",
+      "type": "guild",
+      "title": "Guild Onboarding Admin only",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_new_unreads_bar",
+      "type": "user",
+      "title": "New Unreads Bar",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-1_read_state_staff",
+      "type": "user",
+      "title": "Read State Staff",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_community_onboarding",
+      "type": "guild",
+      "title": "Community Onboarding",
+      "fingerprint": "1:500.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show Community Onboarding",
+          "pct": 500
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2022-05_channel_opt_in",
+      "type": "user",
+      "title": "Channel Opt In",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_creator_monetization_country_allowlist",
+      "type": "user",
+      "title": "Creator Monetization Available in Country",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_creator_monetization_raven",
+      "type": "guild",
+      "title": "Creator Monetization Onboarding v2",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to create Guild Role Subscriptions quickly",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_creator_monetization_raven_users",
+      "type": "user",
+      "title": "Creator Monetization Onboarding v2 Users",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_creator_monetization_onboarding_waitlist",
+      "type": "guild",
+      "title": "Creator Monetization Onboarding Waitlist",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables Guilds to (possibly) see the waitlist",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_creator_monetization_nag_activate_users",
+      "type": "user",
+      "title": "Creator Monetization Nag Activate Users",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_cr_accept_new_terms",
+      "type": "guild",
+      "title": "Server Subscriptions Accept New Terms",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-06_guild_role_subscriptions",
+      "type": "guild",
+      "title": "Guild Role Subscriptions",
+      "fingerprint": "-1:128.00|1:72.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 128
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to create Guild Role Subscriptions",
+          "pct": 72
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-08_guild_role_subscription_users",
+      "type": "user",
+      "title": "Guild Role Subscription Users",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_guild_role_subscription_multigroup",
+      "type": "guild",
+      "title": "Guild Role Subscription Multigroup",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_guild_role_subscription_trials",
+      "type": "guild",
+      "title": "Guild Role Subscription Trials",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to create Guild Role Subscription Trials",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-03_role_subscription_analytics_portal",
+      "type": "guild",
+      "title": "Guild Role Subscription Analytics",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to view analytics for role subscriptions",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_guild_role_subscription_purchase_feedback_loop",
+      "type": "guild",
+      "title": "Guild Role Subscription Purchase Feedback Loop",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guilds to send purchsae feedback loop system messages",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-05_mobile_web_role_subscription_purchase_page",
+      "type": "guild",
+      "title": "Guild Role Subscription Mobile Web",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables role subscription mobile web purchase page",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-06_native_mobile_role_subscription_management",
+      "type": "user",
+      "title": "Mobile Guild Role Subscription Management",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_guild_role_subscriptions_variable_max_tiers",
+      "type": "guild",
+      "title": "Guild Role Subscription Max Tiers",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_mobile_web_role_subscription_upsell",
+      "type": "user",
+      "title": "Mobile Web Guild Role Subscription Upsell",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_creator_store_pages",
+      "type": "guild",
+      "title": "Creator Store Pages ",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to have store page",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_mobile_guild_role_subscription_team_setup",
+      "type": "guild",
+      "title": "Mobile Guild Role Subscription Team Setup",
+      "fingerprint": "-1:90.00|1:10.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 90
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to allow payout team setup on mobile",
+          "pct": 10
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_server_subscriptions_iap",
+      "type": "guild",
+      "title": "Server Subscriptions IAP",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables Server Subscriptions IAP",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_server_subs_iap_geo_rollout",
+      "type": "user",
+      "title": "Server Subscriptions IAP User",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_server_subscriptions_tier_templates",
+      "type": "guild",
+      "title": "Server Subscriptions Tier Templates",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_self_demonetization",
+      "type": "guild",
+      "title": "Self Demonetization",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables Self Demonetization",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_mobile_gdm_invite_link",
+      "type": "user",
+      "title": "Enable Mobile GDM Invite Links",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_tabs_v2",
+      "type": "user",
+      "title": "Tabs V2 - GDM Bucketing",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mobile_re_design_existing_users",
+      "type": "user",
+      "title": "Tabs V2 - Existing Users",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_mobile_redesign_new_users",
+      "type": "user",
+      "title": "Tabs V2 - New Users",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_onboarding_home_admin",
+      "type": "guild",
+      "title": "[ADMIN] Home as a community onboarding surface",
+      "fingerprint": "-1:100.00|1:50.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show the Onboarding Version of Home in Admin Settings",
+          "pct": 50
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_onboarding_home",
+      "type": "user",
+      "title": "Home as a community onboarding surface",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_rtc_minimum_jitter_buffer_level",
+      "type": "user",
+      "title": "Minimum Jitter Buffer Level",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-10_price_determination",
+      "type": "user",
+      "title": "Price determination experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_file_upload_limit",
+      "type": "user",
+      "title": "File Upload Limit Increase",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_free_file_upload_limit",
+      "type": "user",
+      "title": "Free File Upload Limit Increase",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_premium_tier_0_desktop_gifting",
+      "type": "user",
+      "title": "Premium Tier 0 Desktop Gifting",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_rtx40xx_gpu_screenshare_with_av1",
+      "type": "user",
+      "title": "Test how AV1 works on windows with RTX40xx GPUs for screenshare",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_windows_graphics_capture",
+      "type": "user",
+      "title": "Windows Graphics Capture",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_h265_android",
+      "type": "user",
+      "title": "Test how h265 works on android for DM calls",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_h265_dm_call",
+      "type": "user",
+      "title": "Test how h265 works on ios/macos for DM calls",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-06_hdr_screen_capture",
+      "type": "user",
+      "title": "HDR Screen Capture",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-08_max_sync_delay",
+      "type": "user",
+      "title": "Overrides the default max sync delay for AV streams in WebRTC",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-02_quartz_video_source",
+      "type": "user",
+      "title": "Quartz Video Source",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_videotoolbox_rate_optimization",
+      "type": "user",
+      "title": "VideoToolbox Rate Control Optimizations",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_auto_disable_video_mobile_v1",
+      "type": "user",
+      "title": "Mobile performance: VideoHealthManager",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_remote_audio_settings",
+      "type": "user",
+      "title": "Remote Audio Settings",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_client_themes",
+      "type": "user",
+      "title": "Client Themes",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_client_themes_16thru21",
+      "type": "user",
+      "title": "Client Themes New Themes",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_forced_colors_desktop",
+      "type": "user",
+      "title": "Forced Colors Mode (Desktop)",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_communities_multi",
+      "type": "guild",
+      "title": "A multi-arm guild experiment that segments all eligible guilds to test different combinations of the Communities 2.0 experience",
+      "fingerprint": "-1:60.00|1:40.00|2:40.00|4:20.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 60
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: NMX Core",
+          "pct": 40
+        },
+        {
+          "bucket": 2,
+          "label": "Treatment 2: NMX Core + Home",
+          "pct": 40
+        },
+        {
+          "bucket": 4,
+          "label": "Treatment 4: Home",
+          "pct": 20
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2022-01_home_tab_guild",
+      "type": "guild",
+      "title": "Home Tab Guild",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 4
+    },
+    {
+      "id": "2022-01_home_tab_user",
+      "type": "user",
+      "title": "Home Tab User",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_home_feed_toggle",
+      "type": "user",
+      "title": "Show Guild Feed Sorting Selector",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-06_home_refresh_button",
+      "type": "user",
+      "title": "Show refresh button",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_home_badge",
+      "type": "user",
+      "title": "Show badge on home channel",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_home_drawer_autoclose",
+      "type": "user",
+      "title": "Auto close home drawer",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_welcome_header",
+      "type": "user",
+      "title": "Show welcome header for home",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_home_feedback_ux",
+      "type": "user",
+      "title": "Show post feedback for home",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_home_deprecation",
+      "type": "guild",
+      "title": "Home Deprecation",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show notice",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_discord_stickers",
+      "type": "user",
+      "title": "Free Default Stickers",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_context_menu_and_new_media_picker",
+      "type": "user",
+      "title": "Context Menu and New Media Picker",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_burst_reaction_guild_experiment",
+      "type": "guild",
+      "title": "Burst Reactions",
+      "fingerprint": "-1:80.00|1:5.00|2:105.00|4:5.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 80
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 5
+        },
+        {
+          "bucket": 2,
+          "label": "Treatment 2: Tab UI",
+          "pct": 105
+        },
+        {
+          "bucket": 4,
+          "label": "Treatment 4: Free Bursts",
+          "pct": 5
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2022-09_burst_reactions",
+      "type": "user",
+      "title": "Burst Reactions User Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mobile_burst_reactions",
+      "type": "user",
+      "title": "Mobile Burst Reactions User Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_store_latest_message_data",
+      "type": "user",
+      "title": "Store latest message data",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_media_mosaic_experiment",
+      "type": "user",
+      "title": "Media Mosaic",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_inline_sending_preview_mobile",
+      "type": "user",
+      "title": "Inline Sending Preview Mobile",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activities_release_tools",
+      "type": "user",
+      "title": "Activities Release Tools",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_guild_unreads",
+      "type": "user",
+      "title": "Guild Unreads",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_desktop_notification_center",
+      "type": "user",
+      "title": "Desktop notification center",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_emoji_ecosystem_holdout",
+      "type": "user",
+      "title": "Emoji Ecosystem Holdout Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_emoji_picker_discovery",
+      "type": "user",
+      "title": "Emoji Picker Improved Discovery",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_network_action_logging",
+      "type": "user",
+      "title": "Standard Analytics: Log Network Actions",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_stage_boosting",
+      "type": "guild",
+      "title": "Stage Boosting",
+      "fingerprint": "-1:200.00|1:50.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 200
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 50
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2021-09_ios_screenshare_resolution_profiles",
+      "type": "user",
+      "title": "iOS: Screenshare resolution profiles",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_text_in_stage",
+      "type": "guild",
+      "title": "Text-In-Stage",
+      "fingerprint": "-1:200.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 200
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Text-In-Stage",
+          "pct": 100
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2023-03_pomelo_compatible_ux",
+      "type": "user",
+      "title": "Pomelo Compatibility",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_mfa_v2",
+      "type": "user",
+      "title": "New MFA",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-11_member_verification_manual_approval",
+      "type": "guild",
+      "title": "Member Verification Manual Approval",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_impression_logging",
+      "type": "user",
+      "title": "Standard Analytics: Log Impressions",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_emoji_discovery_backfill",
+      "type": "user",
+      "title": "Emoji Hotrail Backfill",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_amoled_mode_web",
+      "type": "user",
+      "title": "Enabled AMOLED Mode on Web",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_clips_experiment",
+      "type": "user",
+      "title": "Clips Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-12_soundboard",
+      "type": "guild",
+      "title": "Soundboard",
+      "fingerprint": "-1:190.00|1:100.00|3:5.00|4:5.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 190
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Soundboard on",
+          "pct": 100
+        },
+        {
+          "bucket": 3,
+          "label": "Treatment 3: Control (soundboard off)",
+          "pct": 5
+        },
+        {
+          "bucket": 4,
+          "label": "Treatment 4: Soundboard on w/ volume tooltip",
+          "pct": 5
+        }
+      ],
+      "revision": 7
+    },
+    {
+      "id": "2023-01_silent_messages",
+      "type": "user",
+      "title": "Silent Messages",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_forum_activity",
+      "type": "user",
+      "title": "Increased activity view for Forums, per user",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_forums_activity_2_guild",
+      "type": "guild",
+      "title": "Increased activity view for Forums, per guild",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2023-01_activities_in_gdm",
+      "type": "user",
+      "title": "Activities in GDM",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_clyde_ai",
+      "type": "guild",
+      "title": "ClydeAI",
+      "fingerprint": "-1:198.00|1:101.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 198
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 101
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_discord_embeds",
+      "type": "user",
+      "title": "Discord embeds",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_nitroduction_experience",
+      "type": "user",
+      "title": "Nitroduction Experience",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-04_nitro_drop_announcement_modal",
+      "type": "user",
+      "title": "2023 Nitro April Drop Announcement Modal",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-04_nitro_drop_experience",
+      "type": "user",
+      "title": "2023 Nitro April Drop Experience",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_april_fools",
+      "type": "user",
+      "title": "April Fools 2023",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_avatar_decorations",
+      "type": "user",
+      "title": "Avatar Decorations",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_app_recommendations_server_checklist",
+      "type": "guild",
+      "title": "Application Recommendation Server Checklist Experiment",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show recommendation to add apps in new server checklist",
+          "pct": 100
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2023-03_improved_message_markdown",
+      "type": "user",
+      "title": "Improved Message Markdown ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_improved_message_markdown_guild",
+      "type": "guild",
+      "title": "Improved Message Markdown Guild Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_application_subscriptions",
+      "type": "guild",
+      "title": "Application Subscriptions",
+      "fingerprint": "1:200.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 200
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2023-02_p13n_summarization",
+      "type": "guild",
+      "title": "Channel Summaries Guild Experiment",
+      "fingerprint": "1:100.00|2:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable channel summaries",
+          "pct": 100
+        },
+        {
+          "bucket": 2,
+          "label": "Treatment 2: Enable channel summaries GA",
+          "pct": 100
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2023-03_p13n_summarization_user",
+      "type": "user",
+      "title": "Channel Summaries User Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_apps_in_gdms",
+      "type": "user",
+      "title": "Apps in GDMs",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_voice_in_threads",
+      "type": "guild",
+      "title": "Voice in Threads",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: On",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_command_query_pagination",
+      "type": "user",
+      "title": "Command Query Pagination",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-03_block_russian_purchases",
+      "type": "user",
+      "title": "Block purchases based on country",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-03_block_russian_purchases_desktop",
+      "type": "user",
+      "title": "Block purchases based on country (desktop specific flags)",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_pronouns",
+      "type": "user",
+      "title": "Pronouns in Profile",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_report_raids",
+      "type": "guild",
+      "title": "Report Raids",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Reporting Of Raids",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_guild_raid_messaging",
+      "type": "guild",
+      "title": "Raid Alerts",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Reporting Of Raids",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_premium_targeted_upsells",
+      "type": "user",
+      "title": "Premium Targeted Upsells",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_premium_tier_0_global",
+      "type": "user",
+      "title": "Premium tier 0 (Global)",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_activities_nitro",
+      "type": "user",
+      "title": "Activities in Nitro",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_mobile_account_switcher",
+      "type": "user",
+      "title": "Mobile Account Switcher",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_mobile_account_switcher_notifications",
+      "type": "user",
+      "title": "Mobile Account Switcher: Notifications",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_back_to_school",
+      "type": "user",
+      "title": "Back to School Event",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-04_soundboard_nitro",
+      "type": "user",
+      "title": "Soundboard Nitro",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_get_my_guilds_application_ids_endpoint",
+      "type": "user",
+      "title": "Get My Guilds' Application IDs Endpoint Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_app_directory_for_all_guild",
+      "type": "guild",
+      "title": "App Directory Upsell For All Guild",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_app_directory_for_all_modal",
+      "type": "user",
+      "title": "App Directory Upsell For All Modal",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_referral_trials",
+      "type": "user",
+      "title": "Referral Trials",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-02_staff_qc_debugging",
+      "type": "user",
+      "title": "Display QS scores in results. Not a real experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-07_role_popout",
+      "type": "user",
+      "title": "Role Popout",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_ios_keyboard_resizes_view",
+      "type": "user",
+      "title": "iOS Keyboard Resizes View",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_mfa_remove_phone",
+      "type": "user",
+      "title": "Safety Experience MFA Remove Phone",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_birthday_activities",
+      "type": "user",
+      "title": "Birthday Activities",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_inboxes_v2_frontend",
+      "type": "user",
+      "title": "Safety Integrity Platform Inboxes V2",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-07_popout_autocomplete",
+      "type": "user",
+      "title": "Popout Autocomplete experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_nitro_emoji_autocomplete_upsell",
+      "type": "user",
+      "title": "Emoji Autocomplete Upsell",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_nitro_emoji_autocomplete_upsell_ios",
+      "type": "user",
+      "title": "Emoji Autocomplete Upsell iOS",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-05_application_command_suggestions",
+      "type": "user",
+      "title": "Application Command Suggestion experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_invites_disabled",
+      "type": "guild",
+      "title": "Report Raids",
+      "fingerprint": "1:200.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Reporting Of Raids",
+          "pct": 200
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_timestamp_tooltip",
+      "type": "user",
+      "title": "Timestamp Tooltip",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mj_chat_bar_user",
+      "type": "user",
+      "title": "MJ Chat Bar user experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mj_chat_bar_guild",
+      "type": "guild",
+      "title": "MJ Chat Bar enabled guilds",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_seasonal_gifting",
+      "type": "user",
+      "title": "Seasonal Gifting",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_guild_boosting_marketing_redesign",
+      "type": "user",
+      "title": "Guild Boosting Marketing Redesign",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_nitro_most_popular_tag",
+      "type": "user",
+      "title": "Most popular tag in nitro plan selection",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-12_inferno_spam_redaction",
+      "type": "user",
+      "title": "Inferno Spam Redaction",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2020-01_in_app_reporting",
+      "type": "user",
+      "title": "2020-29 Exp: Report TOS violating messages in-app via new modal",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_message_todos_staff_only",
+      "type": "user",
+      "title": "Message TODO list",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_automod_non_community_guilds_release",
+      "type": "guild",
+      "title": "Automod Non-Community Guilds Release",
+      "fingerprint": "-1:300.00|1:200.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 300
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod Non-Community Guilds Release",
+          "pct": 200
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "type": "guild",
+      "title": "Automod Mention Raid Limit",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod Mention Raid Limit",
+          "pct": 100
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2023-01_mention_raid_notice",
+      "type": "guild",
+      "title": "Automod Mention Raid Notice",
+      "fingerprint": "1:200.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod Mention Raid Notice",
+          "pct": 200
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2023-02_automod_custom_message",
+      "type": "guild",
+      "title": "Automod Custom Message",
+      "fingerprint": "1:200.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod Custom Message",
+          "pct": 200
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_free_form",
+      "type": "guild",
+      "title": "Automod Server Policy",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_automod_on_user_profile",
+      "type": "guild",
+      "title": "Automod on User Profile",
+      "fingerprint": "-1:60.00|1:120.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 60
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod on User Profile (usernames only)",
+          "pct": 120
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_system_dm_safety_onboarding",
+      "type": "user",
+      "title": "System DM Safety Onboarding",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_forums_non_community",
+      "type": "guild",
+      "title": "Forum non-community",
+      "fingerprint": "-1:50.00|1:25.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 50
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: On",
+          "pct": 25
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_onboarding_upsell_lifecycle",
+      "type": "user",
+      "title": "Onboarding Upsell Lifecycle",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_pomelo",
+      "type": "user",
+      "title": "Pomelo",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_home_header_redesign",
+      "type": "guild",
+      "title": "Home New Header",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_channel_name_emojis",
+      "type": "user",
+      "title": "Channel Name Emojis",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_guild_safety_settings",
+      "type": "guild",
+      "title": "Safety check in guild settings",
+      "fingerprint": "-1:80.00|1:10.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 80
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show safety check in settings",
+          "pct": 10
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_guild_onboarding_includes_rules",
+      "type": "user",
+      "title": "Guild Onboarding includes rules experience",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_guild_onboarding_home_landing",
+      "type": "user",
+      "title": "Guild Onboarding landing on home experience",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activities_game_night_coach_mark",
+      "type": "user",
+      "title": "Activities Game Night Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activity_gartic_phone_coach_mark",
+      "type": "user",
+      "title": "Activity Coach Mark Gartic Phone",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_activitiesbashoutcoachmark",
+      "type": "user",
+      "title": "Bash Out Coach Mark",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-10_study_group",
+      "type": "guild",
+      "title": "Student hub study group",
+      "fingerprint": "-1:33.34|1:33.33",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 33.34
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables study group sidebar",
+          "pct": 33.33
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2022-08_application_command_forced_migration",
+      "type": "guild",
+      "title": "Run Commands scope migration then show upsell to enable disabled integrations",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2021-12_discovery_requirements_m2",
+      "type": "guild",
+      "title": "Lower Server Discovery member count requirements",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_default_disable_mass_mention",
+      "type": "guild",
+      "title": "Disable mass mentions for communities by default",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-11_hub_events",
+      "type": "guild",
+      "title": "Hub Events",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_channel_notice_redesign",
+      "type": "user",
+      "title": "Channel Notice Redesign",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_server_recommendations_rollout",
+      "type": "user",
+      "title": "Rollout experiment for server recommendations.",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_clear_all_message_requests",
+      "type": "user",
+      "title": "Safety Experience Reject All Message Requests",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_parent_tools_launch",
+      "type": "user",
+      "title": "Safety - Parent Tools Launch",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_longer_group_dm_invites",
+      "type": "user",
+      "title": "Longer Group DM Invites",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_shared_canvas",
+      "type": "guild",
+      "title": "Shared Canvas",
+      "fingerprint": "-1:200.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 200
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Shared Canvas",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_activities_auto_suggest",
+      "type": "user",
+      "title": "Activities Auto Suggest",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activitieswatchtogetherpromo",
+      "type": "user",
+      "title": "Activities Watch Together Promo",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activities_watch_together_promo_sparkles_week_1",
+      "type": "user",
+      "title": "Activities Watch Together Promo Week 1 Sparkles",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activities_watch_together_promo_sparkles_week_2",
+      "type": "user",
+      "title": "Activities Watch Together Promo Week 2 Sparkles",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_pax_vc_tile_activities",
+      "type": "user",
+      "title": "PAX VC Tile Activities",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_vc_tile_activities_entry_point",
+      "type": "user",
+      "title": "VC Tile Activities Entry Point",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_profile_panel",
+      "type": "user",
+      "title": "Profiles In DMs",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-06_guild_subscriptions_payment_flow_test_page",
+      "type": "user",
+      "title": "Test page for guild subscription payment flows",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_premium_bogo_month_promotion",
+      "type": "user",
+      "title": "Nitro Promo for Black Friday",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_user_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Free User Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_user_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Free User Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_0_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Tier 0 Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_0_subscriber_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Tier 0 Subscriber Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_2_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Tier 2 Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_2_subscriber_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Tier 2 Subscriber Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_user_trial_offer_marketing_page_tier_0_cta_copy",
+      "type": "user",
+      "title": "User Trial Offer Marketing Page Tier 0 CTA Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_user_trial_offer_marketing_page_tier_2_cta_copy",
+      "type": "user",
+      "title": "User Trial Offer Marketing Page Tier 2 CTA Copy ",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-06_preview_promotions",
+      "type": "user",
+      "title": "Promotions Preview",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-11_discovery_tags",
+      "type": "user",
+      "title": "Discovery Tags",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_discovery_iar",
+      "type": "user",
+      "title": "Ability to report servers in Server Discovery",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_consumer_education_launch",
+      "type": "user",
+      "title": "Safety Consumer Education Launch - Block/Mute",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-05_safety_coms_update",
+      "type": "user",
+      "title": "Safety Integrity Platform Coms Update",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_account_profile_popout",
+      "type": "user",
+      "title": "Account Profile Popout",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_user_panel_context_menu_profile_entrypoint_behavior",
+      "type": "user",
+      "title": "User Panel Context Menu Profile Entrypoint (behavior)",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_user_panel_context_menu_profile_entrypoint",
+      "type": "user",
+      "title": "User Panel Context Menu Profile Entrypoint",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mute_block_aa",
+      "type": "user",
+      "title": "Safety Consumer Education Block/Mute - A/A",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-09_watch_together_rollout",
+      "type": "guild",
+      "title": "Exposure tracking for Watch Together (do not override)",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-02_guild_audit_log_user",
+      "type": "user",
+      "title": "Guild Audit Log - User Feature Flag",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-02_guild_audit_log_guild",
+      "type": "guild",
+      "title": "Guild Audit Log - Guild Feature Flag",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_application_command_permission_v3_rollout",
+      "type": "guild",
+      "title": "Application Command Permission v3 Rollout",
+      "fingerprint": "2:100.00",
+      "treatments": [
+        {
+          "bucket": 2,
+          "label": "Treatment 2: Show toggle to opt-in to the v3 system and the dismissible message",
+          "pct": 100
+        }
+      ],
+      "revision": 1
+    },
+    {
+      "id": "2022-03_guild_access_rate_insight_experiment",
+      "type": "guild",
+      "title": "Guild Access Rate Insight Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2020-12_guild_delete_feedback",
+      "type": "user",
+      "title": "Guild Delete Feedback experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_onboardingdropdowns",
+      "type": "guild",
+      "title": "Enables dropdown selections from onboarding prompts",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: On",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-06_community_admin_server",
+      "type": "guild",
+      "title": "Show the button to join the admin server in community overview server settings page",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show button if requirements met",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_onboarding_soft_requirement_for_partnership",
+      "type": "guild",
+      "title": "Hide onboarding soft requirement for partnership",
+      "fingerprint": "-1:100.00|1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show onboarding soft requirement for partnership",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-10_pause_partner_applications_experiment",
+      "type": "user",
+      "title": "Pause Partner Applications Experiment",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-06_free_sticker_slots_design_updates",
+      "type": "guild",
+      "title": "Free Sticker Slots Design Updates",
+      "fingerprint": "1:100.00",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_expiration_notice_mobile_web",
+      "type": "user",
+      "title": "Show expiration notice on mobile web invite",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_expiration_notice_ios",
+      "type": "user",
+      "title": "Show expiration notice on ios invite",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_expiration_notice_ios_embed",
+      "type": "user",
+      "title": "Show expiration notice on ios invite embed",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_registration_copy_updates",
+      "type": "user",
+      "title": "Registration Copy Updates",
+      "fingerprint": "-1:100.00",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "revision": 0
+    }
+  ]
+}
