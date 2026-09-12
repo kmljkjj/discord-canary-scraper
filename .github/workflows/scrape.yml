@@ -17,7 +17,7 @@ concurrency:
 jobs:
   scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
         with:
@@ -44,13 +44,15 @@ jobs:
           fi
           rm -f package-lock.json
 
-      - name: Scrape + notify (full chunks after urgent)
+      - name: Scrape + notify + archive chunks
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # web.js first (urgent experiments), then ALL webpack chunks
           SCRAPE_FULL_CHUNKS: '1'
           SCRAPE_CSS: '0'
           DOWNLOAD_CONCURRENCY: '48'
+          ARCHIVE_CHUNKS: '1'
+          ARCHIVE_COPY_ALL: '1'
+          ARCHIVE_KEEP_BUILDS: '6'
           ORBIT_BOT_NAME: Datamining
           EMOJI_ADDED: ${{ secrets.EMOJI_ADDED }}
           EMOJI_MODIFIED: ${{ secrets.EMOJI_MODIFIED }}
@@ -61,13 +63,61 @@ jobs:
           EMOJI_ROUTE: ${{ secrets.EMOJI_ROUTE }}
         run: node src/index.js
 
-      - name: Commit baseline
+      - name: Zip chunks for GitHub Release
+        id: zip
+        run: |
+          set -e
+          if [ ! -f builds/zip-hint.json ]; then
+            echo "No zip-hint — skip release zip"
+            echo "has_zip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          BN=$(node -e "console.log(require('./builds/zip-hint.json').buildNumber||'')")
+          if [ -z "$BN" ]; then
+            echo "has_zip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          DIR="builds/${BN}"
+          if [ ! -d "$DIR" ]; then
+            echo "has_zip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ZIP="canary-${BN}-chunks.zip"
+          # Prefer files/ (all chunks); fallback to whole build folder
+          if [ -d "${DIR}/files" ] && [ "$(ls -A "${DIR}/files" 2>/dev/null | head -1)" ]; then
+            (cd "${DIR}/files" && zip -qr -9 "../../../${ZIP}" .)
+          else
+            (cd "$DIR" && zip -qr -9 "../../${ZIP}" . -x 'files/*')
+          fi
+          ls -lh "$ZIP" || true
+          echo "has_zip=true" >> "$GITHUB_OUTPUT"
+          echo "zip_name=${ZIP}" >> "$GITHUB_OUTPUT"
+          echo "build=${BN}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload chunks Release
+        if: steps.zip.outputs.has_zip == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: canary-${{ steps.zip.outputs.build }}
+          name: Canary ${{ steps.zip.outputs.build }} · chunks
+          body: |
+            Discord Canary build **${{ steps.zip.outputs.build }}**
+            Full webpack chunk archive from this scrape.
+          files: ${{ steps.zip.outputs.zip_name }}
+          fail_on_unmatched_files: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Commit baseline + build archives
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           rm -f package-lock.json
+          rm -f canary-*-chunks.zip 2>/dev/null || true
 
+          # data + manifests + web bundles (NOT builds/*/files — too large for git)
           git add -f \
             data/known_experiment_ids.json \
             data/known_string_keys.json \
@@ -82,7 +132,22 @@ jobs:
             data/routes.json \
             data/meta.json \
             data/cache/ \
-            data/ || true
+            data/ \
+            builds/latest.json \
+            builds/zip-hint.json \
+            2>/dev/null || true
+
+          # Per-build: manifest + web.*.js only
+          if [ -d builds ]; then
+            for d in builds/*/; do
+              [ -d "$d" ] || continue
+              git add -f "${d}manifest.json" 2>/dev/null || true
+              git add -f "${d}"web.*.js 2>/dev/null || true
+            done
+          fi
+
+          # Ensure heavy chunk dumps stay untracked
+          git reset -q -- builds/*/files 2>/dev/null || true
 
           if git diff --staged --quiet; then
             echo "No data changes"

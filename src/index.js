@@ -1,6 +1,7 @@
 /**
  * Canary Pulse v11 — priority pipeline
  * FLASH → web.js → parallel core → URGENT exp → locales → NORMAL str/routes
+ * + archive chunks per build → builds/{buildNumber}/
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -9,10 +10,12 @@ const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, saveState } = require('./lib/state');
 const { notifyUrgent, notifyNormal } = require('./lib/notify');
+const { archiveBuildChunks, writeZipHint } = require('./lib/archive_chunks');
 const ALREADY_NOTIFIED = require('./lib/already_notified');
 
 const DATA = path.join(__dirname, '..', 'data');
 const ASSETS = path.join(__dirname, '..', 'assets');
+const BUILDS = path.join(__dirname, '..', 'builds');
 const CACHE = path.join(DATA, 'cache');
 const KNOWN_EXP = path.join(DATA, 'known_experiment_ids.json');
 const KNOWN_STR = path.join(DATA, 'known_string_keys.json');
@@ -183,6 +186,7 @@ async function main() {
   console.log('=== Canary Pulse v11 (priority pipeline) ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
+  await fs.ensureDir(BUILDS);
   await fs.ensureDir(CACHE);
 
   const [prev, knownExp, knownStr, knownRt, lastStr, lastRt, lastExp] = await Promise.all([
@@ -297,6 +301,18 @@ async function main() {
     process.exit(1);
   }
   console.log('Extract done', Date.now() - t0 + 'ms');
+
+  // ── Archive all downloaded chunks for this build → builds/{bn}/
+  try {
+    const manifest = await archiveBuildChunks({
+      build,
+      assetsDir: ASSETS,
+      buildsDir: BUILDS,
+    });
+    if (manifest) await writeZipHint(BUILDS, build.buildNumber, manifest);
+  } catch (e) {
+    console.warn('archive chunks failed', e.message);
+  }
 
   const extractedStrings = { ...(findings.strings || {}) };
   const nextRt = { ...(findings.routes || {}) };

@@ -1,7 +1,24 @@
 node_modules/
-.mobile_datamine/
-assets/*
-!assets/.gitkeep
-*.log
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
+
+# working download cache (re-fetched each run)
+assets/
+
+# full chunk dumps are huge — published via GitHub Releases instead
+builds/*/files/
+
+# local zip artifacts
+canary-*-chunks.zip
+*.zip
+
+# env / secrets
 .env
-data/logs/
+.env.*
+*.pem
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
