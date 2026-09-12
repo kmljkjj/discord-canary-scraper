@@ -1,17 +1,23 @@
 /**
- * Watch @DiscordNEW8r on X → Discord webhook
+ * Watch @DiscordNEW8r on X → Discord webhook (free session mode)
  *
- * FREE mode:
- *   X_AUTH_TOKEN + X_CT0 (cookies x.com)
- *   X_NEWS_WEBHOOK_URL
+ * Secrets (choose one style):
  *
- * Optional paid:
- *   X_BEARER_TOKEN
+ *   A) Two secrets:
+ *      X_AUTH_TOKEN  = cookie auth_token
+ *      X_CT0         = cookie ct0
  *
- * Session requests send the same headers as the web client:
- *   authorization, x-twitter-auth-type, x-csrf-token,
- *   x-twitter-client-language, x-twitter-active-user,
- *   content-type, x-client-transaction-id
+ *   B) One secret (recommended — less copy errors):
+ *      X_COOKIE = full Cookie header from browser, e.g.
+ *        auth_token=xxx; ct0=yyy; guest_id=zzz; ...
+ *
+ *   + X_NEWS_WEBHOOK_URL
+ *
+ * How to copy cookies:
+ *   1. x.com logged in
+ *   2. F12 → Network → click any request to x.com/i/api/...
+ *   3. Request Headers → copy the whole "cookie:" value → secret X_COOKIE
+ *   OR Application → Cookies → copy auth_token + ct0 values only
  */
 const crypto = require('crypto');
 const fs = require('fs-extra');
@@ -29,9 +35,7 @@ const WEBHOOK =
   process.env.DISCORD_X_WEBHOOK_URL ||
   '';
 const BEARER =
-  process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '';
-const AUTH_TOKEN = process.env.X_AUTH_TOKEN || process.env.TWITTER_AUTH_TOKEN || '';
-const CT0 = process.env.X_CT0 || process.env.TWITTER_CT0 || '';
+  (process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '').trim();
 
 const WEB_BEARER =
   'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
@@ -44,7 +48,6 @@ const QID_USER = [
   'sLVLhk0bGj3MVFEKTdax1w',
   'IGgvgiOx4QZndDHuD3x9TQ',
   'AWbeRIdkLtqTRN7yL_H8yw',
-  'G3KFHM9HUZNbYNHz9YdBcw',
 ];
 const QID_TWEETS = [
   '36rb3Xj3iJ64Q-9wKDjCcQ',
@@ -52,7 +55,6 @@ const QID_TWEETS = [
   'N2tFDY-MlrLxXJ9F_ZxJGA',
   'HeWHY26ItCfUmm1e6ITjeA',
   'V7H0Ap3_Hh2FyS75OCDO3Q',
-  'HuTx74uyqr4tle0VtzMM7A',
 ];
 
 const FEATURES = {
@@ -93,12 +95,60 @@ const RSS_MIRRORS = [
   `https://xcancel.com/${SCREEN_NAME}/rss`,
 ];
 
+function cleanSecret(s) {
+  return String(s || '')
+    .trim()
+    .replace(/^['"]|['"]$/g, '')
+    .trim();
+}
+
+/** Parse X_COOKIE or X_AUTH_TOKEN + X_CT0 */
+function loadSession() {
+  const full = cleanSecret(
+    process.env.X_COOKIE || process.env.TWITTER_COOKIE || '',
+  );
+  let auth = cleanSecret(
+    process.env.X_AUTH_TOKEN || process.env.TWITTER_AUTH_TOKEN || '',
+  );
+  let ct0 = cleanSecret(process.env.X_CT0 || process.env.TWITTER_CT0 || '');
+  let cookieHeader = '';
+
+  if (full) {
+    cookieHeader = full.replace(/^cookie:\s*/i, '').trim();
+    const map = {};
+    for (const part of cookieHeader.split(';')) {
+      const i = part.indexOf('=');
+      if (i < 1) continue;
+      const k = part.slice(0, i).trim();
+      const v = part.slice(i + 1).trim();
+      if (k) map[k] = v;
+    }
+    if (map.auth_token) auth = map.auth_token;
+    if (map.ct0) ct0 = map.ct0;
+  }
+
+  if (auth && ct0 && !cookieHeader) {
+    cookieHeader = `auth_token=${auth}; ct0=${ct0}`;
+  } else if (auth && ct0 && cookieHeader) {
+    // ensure both present in header
+    if (!/auth_token=/i.test(cookieHeader))
+      cookieHeader += `; auth_token=${auth}`;
+    if (!/\bct0=/i.test(cookieHeader)) cookieHeader += `; ct0=${ct0}`;
+  }
+
+  return { auth, ct0, cookieHeader };
+}
+
 async function main() {
   console.log('=== X News Watch · @' + SCREEN_NAME + ' ===');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
+
+  const session = loadSession();
   console.log(
-    'Session cookies:',
-    AUTH_TOKEN && CT0 ? 'set (free mode)' : 'missing',
+    'Session:',
+    session.auth && session.ct0
+      ? `auth_token len=${session.auth.length} ct0 len=${session.ct0.length} cookie len=${session.cookieHeader.length}`
+      : 'missing',
   );
   console.log('Bearer API:', BEARER ? 'set' : 'missing');
 
@@ -114,15 +164,26 @@ async function main() {
   let posts = [];
   let source = 'none';
 
-  if (AUTH_TOKEN && CT0) {
+  if (session.auth && session.ct0) {
+    // sanity checks
+    if (session.auth.length < 20) {
+      console.warn(
+        'auth_token looks too short — re-copy from Application → Cookies',
+      );
+    }
+    if (session.ct0.length < 20) {
+      console.warn('ct0 looks too short — re-copy from Application → Cookies');
+    }
     try {
-      posts = await fetchFromSession(AUTH_TOKEN, CT0);
+      posts = await fetchFromSession(session);
       if (posts.length) source = 'session-cookies';
     } catch (e) {
       console.warn('Session fetch fail:', e.message || e);
     }
   } else {
-    console.warn('No X_AUTH_TOKEN / X_CT0 — free mode disabled');
+    console.warn(
+      'No session. Add X_COOKIE (full cookie header) OR X_AUTH_TOKEN + X_CT0',
+    );
   }
 
   if (!posts.length && BEARER) {
@@ -145,8 +206,8 @@ async function main() {
   if (!posts.length) {
     console.warn(
       'No posts.\n' +
-        '→ Secrets gratuits: X_AUTH_TOKEN + X_CT0\n' +
-        '  F12 → Application → Cookies → x.com',
+        '401 = cookies invalid/expired.\n' +
+        'Best fix: Network tab → copy full Cookie header → secret X_COOKIE',
     );
     process.exit(0);
   }
@@ -176,8 +237,6 @@ async function main() {
       seen.ids.push(String(p.id));
       sent++;
       await sleep(400);
-    } else {
-      console.warn('Webhook failed for', p.id);
     }
   }
 
@@ -186,40 +245,6 @@ async function main() {
   console.log('Sent', sent, '/', fresh.length, '· seen now', seen.ids.length);
 }
 
-/**
- * Headers aligned with the logged-in X web client.
- * x-client-transaction-id is generated per request (path-aware).
- */
-function sessionHeaders(authToken, ct0, method, apiPath) {
-  const tid = makeClientTransactionId(method || 'GET', apiPath || '/');
-  return {
-    authorization: 'Bearer ' + WEB_BEARER,
-    'x-twitter-auth-type': 'OAuth2Session',
-    'x-csrf-token': ct0,
-    'x-twitter-client-language': 'en',
-    'x-twitter-active-user': 'yes',
-    'content-type': 'application/json',
-    'x-client-transaction-id': tid,
-    Cookie: `auth_token=${authToken}; ct0=${ct0}`,
-    'User-Agent': UA,
-    Accept: '*/*',
-    'Accept-Language': 'en-US,en;q=0.9',
-    Referer: `https://x.com/${SCREEN_NAME}`,
-    Origin: 'https://x.com',
-    'sec-ch-ua': '"Chromium";v="131", "Not_A Brand";v="24"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
-    'sec-fetch-site': 'same-origin',
-  };
-}
-
-/**
- * Lightweight transaction id (browser-like base64 blob).
- * Full XCT needs live SVG + ondemand.js; this is enough for many UserTweets
- * calls when auth cookies are valid. Regenerated every request.
- */
 function makeClientTransactionId(method, apiPath) {
   const EPOCH = 1682924400;
   const timeNow = Math.floor(Date.now() / 1000) - EPOCH;
@@ -227,7 +252,11 @@ function makeClientTransactionId(method, apiPath) {
   timeBuf.writeUInt32LE(timeNow >>> 0, 0);
   const keyBytes = crypto.randomBytes(32);
   const payload = `${(method || 'GET').toUpperCase()}!${apiPath || '/'}!${timeNow}!obfiowerehiring`;
-  const hash = crypto.createHash('sha256').update(payload).digest().subarray(0, 16);
+  const hash = crypto
+    .createHash('sha256')
+    .update(payload)
+    .digest()
+    .subarray(0, 16);
   const rnd = crypto.randomBytes(1)[0];
   const arr = Buffer.concat([keyBytes, timeBuf, hash, Buffer.from([3])]);
   const out = Buffer.alloc(1 + arr.length);
@@ -236,8 +265,31 @@ function makeClientTransactionId(method, apiPath) {
   return out.toString('base64').replace(/=+$/, '');
 }
 
-async function fetchFromSession(authToken, ct0) {
+function sessionHeaders(session, method, apiPath) {
+  const tid = makeClientTransactionId(method || 'GET', apiPath || '/');
+  return {
+    authorization: 'Bearer ' + WEB_BEARER,
+    'x-twitter-auth-type': 'OAuth2Session',
+    'x-csrf-token': session.ct0,
+    'x-twitter-client-language': 'en',
+    'x-twitter-active-user': 'yes',
+    'content-type': 'application/json',
+    'x-client-transaction-id': tid,
+    Cookie: session.cookieHeader,
+    'User-Agent': UA,
+    Accept: '*/*',
+    'Accept-Language': 'en-US,en;q=0.9',
+    Referer: `https://x.com/${SCREEN_NAME}`,
+    Origin: 'https://x.com',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+  };
+}
+
+async function fetchFromSession(session) {
   let uid = USER_ID;
+  let got401 = 0;
 
   for (const qid of QID_USER) {
     try {
@@ -250,8 +302,13 @@ async function fetchFromSession(authToken, ct0) {
         `https://x.com${apiPath}` +
         `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
         `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
-      const headers = sessionHeaders(authToken, ct0, 'GET', apiPath);
+      const headers = sessionHeaders(session, 'GET', apiPath);
       const res = await fetch(url, { headers, timeout: 20000 });
+      if (res.status === 401) {
+        got401++;
+        console.warn('UserByScreenName', qid, 401);
+        continue;
+      }
       if (!res.ok) {
         console.warn('UserByScreenName', qid, res.status);
         continue;
@@ -288,9 +345,14 @@ async function fetchFromSession(authToken, ct0) {
         `https://x.com${apiPath}` +
         `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
         `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
-      const headers = sessionHeaders(authToken, ct0, 'GET', apiPath);
+      const headers = sessionHeaders(session, 'GET', apiPath);
       const res = await fetch(url, { headers, timeout: 25000 });
       const text = await res.text();
+      if (res.status === 401) {
+        got401++;
+        console.warn('UserTweets', qid, 401, text.slice(0, 100));
+        continue;
+      }
       if (!res.ok) {
         console.warn('UserTweets', qid, res.status, text.slice(0, 120));
         continue;
@@ -320,9 +382,14 @@ async function fetchFromSession(authToken, ct0) {
     }
   }
 
-  throw new Error(
-    'Session GraphQL returned no tweets (cookies expired or queryId rotated)',
-  );
+  if (got401 > 0) {
+    throw new Error(
+      'HTTP 401 Could not authenticate you — cookies invalid or expired. ' +
+        'Re-copy from browser (prefer full Cookie header → secret X_COOKIE). ' +
+        `auth_token len=${session.auth.length} ct0 len=${session.ct0.length}`,
+    );
+  }
+  throw new Error('Session GraphQL returned no tweets');
 }
 
 function parseTimelineJson(data) {
@@ -377,12 +444,16 @@ async function maybeWarnCredits(seen) {
         username: 'Datamining · X',
         embeds: [
           {
-            title: 'X — mode gratuit',
+            title: 'X cookies invalides / expirés',
             description:
-              'API crédits vides.\n\n' +
-              'Ajoute les secrets **X_AUTH_TOKEN** + **X_CT0**\n' +
-              '(cookies depuis x.com → F12 → Application).',
-            color: 0xfaa61a,
+              'HTTP 401 sur GraphQL.\n\n' +
+              '**Méthode fiable :**\n' +
+              '1. x.com connecté\n' +
+              '2. F12 → **Network** → une requête `graphql`\n' +
+              '3. Request Headers → copier toute la valeur **cookie:**\n' +
+              '4. Secret GitHub **`X_COOKIE`** = ce texte\n' +
+              '5. Relancer X News',
+            color: 0xed4245,
             timestamp: new Date().toISOString(),
           },
         ],
@@ -393,9 +464,7 @@ async function maybeWarnCredits(seen) {
       seen.creditsWarnedAt = now;
       await saveSeen(seen);
     }
-  } catch (e) {
-    console.warn('warn failed', e.message);
-  }
+  } catch {}
 }
 
 async function fetchFromApi(bearer) {
@@ -416,9 +485,8 @@ async function fetchFromApi(bearer) {
       if (uj.data && uj.data.id) uid = String(uj.data.id);
     } else {
       const t = await uRes.text();
-      if (uRes.status === 402 || /credits depleted/i.test(t)) {
+      if (uRes.status === 402 || /credits depleted/i.test(t))
         throw new Error('API 402 ' + t.slice(0, 200));
-      }
     }
   } catch (e) {
     if (/402|credits/i.test(String(e.message))) throw e;
