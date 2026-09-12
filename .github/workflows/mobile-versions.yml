@@ -44,17 +44,18 @@ jobs:
           fi
           rm -f package-lock.json
 
-      - name: Mobile versions (store + OTA)
+      # PAUSED — no version notifications for now
+      - name: Mobile versions (PAUSED)
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           ORBIT_BOT_NAME: Datamining
+          MOBILE_VERSIONS_PAUSED: '1'
         run: node src/mobile_versions.js
         continue-on-error: true
 
       - name: Mobile experiments from client files
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Optional: git URL of a mobile client JS dump (discord_app / discord_common/js)
           MOBILE_DATAMINE_REPO: ${{ secrets.MOBILE_DATAMINE_REPO }}
           ORBIT_BOT_NAME: Datamining
         run: node src/mobile_from_files.js

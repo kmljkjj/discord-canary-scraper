@@ -1,7 +1,6 @@
 /**
- * Discord Mobile Version Tracker
- * Notifies ONLY on real version bumps — never the same fingerprint twice.
- * First run / empty state = seed only (no flood).
+ * Discord Mobile Version Tracker — PAUSED
+ * Set MOBILE_VERSIONS_PAUSED=0 to re-enable notifications.
  */
 
 const fetch = require('node-fetch');
@@ -11,6 +10,13 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
+
+// ── PAUSE ─────────────────────────────────────────────
+// true = no version scrape notifications (requested)
+const PAUSED =
+  process.env.MOBILE_VERSIONS_PAUSED !== '0' &&
+  process.env.MOBILE_VERSIONS_PAUSED !== 'false';
+// ──────────────────────────────────────────────────────
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -44,7 +50,6 @@ function channelKey(c) {
   return `${c.platform}/${c.channel}`;
 }
 
-/** platform|channel|version — build excluded (build flaps caused spam) */
 function versionFingerprint(c) {
   if (!c || !c.version) return null;
   return `${c.platform}|${c.channel}|${c.version}`;
@@ -384,15 +389,9 @@ async function collectAll() {
   return { scrapedAt: checkedAt, channels, otaIndex };
 }
 
-/**
- * Only real version bumps (strictly newer) + never-seen fingerprint.
- * Same version or lower → never notify.
- */
 function detectChanges(previous, snapshot) {
   const changes = [];
-  const notified = new Set(
-    (previous?.notifiedFingerprints || []).map(String),
-  );
+  const notified = new Set((previous?.notifiedFingerprints || []).map(String));
   const prevMap = new Map();
   for (const c of previous?.channels || []) {
     if (c && c.version) prevMap.set(channelKey(c), c);
@@ -403,23 +402,16 @@ function detectChanges(previous, snapshot) {
     const key = channelKey(c);
     const fp = versionFingerprint(c);
     if (!fp) continue;
-
-    // Already announced this exact version for this slot
     if (notified.has(fp)) continue;
 
     const prev = prevMap.get(key);
     if (!prev || !prev.version) {
-      // New slot with a version — only notify if we are NOT on a seed run
-      // (seed handled in main). Here we still record as candidate.
       changes.push({ type: 'new', channel: c, previous: null, fp });
       continue;
     }
-
-    // Only notify if version is STRICTLY greater (blocks oscillation spam)
     if (cmpVersion(c.version, prev.version) > 0) {
       changes.push({ type: 'updated', channel: c, previous: prev, fp });
     }
-    // same or lower → silent
   }
 
   return { changes, notified };
@@ -486,6 +478,14 @@ async function notify(changes) {
 }
 
 async function main() {
+  if (PAUSED) {
+    console.log('=== Mobile Versions ===');
+    console.log('PAUSED — no scrape / no webhooks');
+    console.log('Set MOBILE_VERSIONS_PAUSED=0 to re-enable');
+    console.log('=== Mobile versions done (paused) ===');
+    return;
+  }
+
   await fs.ensureDir(DATA_DIR);
   let previous = null;
   if (await fs.pathExists(STATE_FILE)) {
@@ -499,14 +499,11 @@ async function main() {
 
   const hadPriorState =
     previous &&
-    ((
-      (previous.notifiedFingerprints && previous.notifiedFingerprints.length) ||
-      (previous.channels || []).some((c) => c && c.version)
-    ));
+    ((previous.notifiedFingerprints && previous.notifiedFingerprints.length) ||
+      (previous.channels || []).some((c) => c && c.version));
 
   const { changes, notified } = detectChanges(previous, snapshot);
 
-  // Always seed fingerprints from current + previous so next run is quiet
   for (const c of snapshot.channels) {
     const fp = versionFingerprint(c);
     if (fp) notified.add(fp);
@@ -519,7 +516,6 @@ async function main() {
   }
 
   const history = previous?.history || [];
-  // Only record history when we actually notify
   const willNotify = hadPriorState && changes.length > 0;
 
   if (willNotify) {
@@ -536,7 +532,6 @@ async function main() {
 
   snapshot.history = history.slice(0, 100);
   snapshot.previousScrapedAt = previous?.scrapedAt || null;
-  // Keep a large window of fingerprints to survive flaky git pushes
   snapshot.notifiedFingerprints = [...notified].sort().slice(-2000);
   snapshot.changes = willNotify
     ? changes.map((c) => ({
@@ -547,6 +542,7 @@ async function main() {
         build: c.channel.build || null,
       }))
     : [];
+  snapshot.paused = false;
 
   await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
 
@@ -565,7 +561,7 @@ async function main() {
   );
 
   if (!hadPriorState) {
-    console.log('Seed run — no webhook (prevents spam)');
+    console.log('Seed run — no webhook');
   } else if (willNotify) {
     await notify(changes);
   } else {
