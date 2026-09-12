@@ -1,7 +1,6 @@
 /**
  * Datamining — priority notify
- * URGENT = experiments (+ flash already sent)
- * NORMAL = strings / routes / optional summary
+ * post() returns boolean; retries 429/5xx; callers must only mark known on success
  */
 const fetch = require('node-fetch');
 
@@ -41,13 +40,13 @@ function label(emoji, text) {
 const FIELD_MAX = 1000;
 const LINE_VAL_MAX = 120;
 
-/** Full pipeline (legacy) */
 async function notifyAll(opts) {
-  await notifyUrgent(opts);
-  await notifyNormal(opts);
+  const a = await notifyUrgent(opts);
+  const b = await notifyNormal(opts);
+  return a && b;
 }
 
-/** URGENT — experiments first */
+/** URGENT — experiments first. Returns true if all posts succeeded (or nothing to send). */
 async function notifyUrgent({
   build,
   expDiff,
@@ -56,21 +55,21 @@ async function notifyUrgent({
   catchUp,
   prevBuild,
 }) {
-  if (!webhookUrl) return;
+  if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
   const ts = new Date().toISOString();
   const exp = normalizeExpDiff(expDiff);
   const nExp =
     exp.added.length + exp.modified.length + exp.removed.length;
 
-  if (nExp) {
-    await sendExperiments(webhookUrl, bn, exp, ts);
-  } else {
+  if (!nExp) {
     console.log('Urgent: no experiment diff');
+    return true;
   }
+  return sendExperiments(webhookUrl, bn, exp, ts);
 }
 
-/** NORMAL — strings + routes (+ light summary if needed) */
+/** NORMAL — strings + routes */
 async function notifyNormal({
   build,
   strDiff,
@@ -78,7 +77,7 @@ async function notifyNormal({
   webhookUrl,
   isNewBuild,
 }) {
-  if (!webhookUrl) return;
+  if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
   const hash = build.versionHash
     ? String(build.versionHash).slice(0, 12)
@@ -96,8 +95,10 @@ async function notifyNormal({
     Object.keys(rt.modified).length +
     Object.keys(rt.removed).length;
 
+  let ok = true;
+
   if (isNewBuild && (nStr || nRt)) {
-    await post(webhookUrl, {
+    const r = await post(webhookUrl, {
       embeds: [
         {
           author: { name: 'Datamining', icon_url: AVATAR },
@@ -114,10 +115,18 @@ async function notifyNormal({
         },
       ],
     });
+    if (!r) ok = false;
   }
 
-  if (nStr) await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
-  if (nRt) await sendMapDiff(webhookUrl, bn, rt, ts, 'Routes');
+  if (nStr) {
+    const r = await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
+    if (!r) ok = false;
+  }
+  if (nRt) {
+    const r = await sendMapDiff(webhookUrl, bn, rt, ts, 'Routes');
+    if (!r) ok = false;
+  }
+  return ok;
 }
 
 function channelLine(nExp, nStr, nRt) {
@@ -195,6 +204,7 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
 }
 
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
+  let ok = true;
   for (const sec of sections) {
     if (!sec.lines.length) continue;
     const chunks = chunkLines(sec.lines, FIELD_MAX);
@@ -234,9 +244,11 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
     }
 
     for (let i = 0; i < embeds.length; i += 5) {
-      await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
+      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
+      if (!r) ok = false;
     }
   }
+  return ok;
 }
 
 async function sendExperiments(webhookUrl, bn, exp, ts) {
@@ -279,7 +291,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     });
   }
 
-  await sendSectionEmbeds({
+  const ok = await sendSectionEmbeds({
     webhookUrl,
     title: label(E.exp, 'Experiments'),
     bn,
@@ -287,10 +299,12 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     sections,
   });
   console.log('Sent experiments (URGENT)', {
+    ok,
     added: exp.added.length,
     modified: exp.modified.length,
     removed: exp.removed.length,
   });
+  return ok;
 }
 
 async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
@@ -340,7 +354,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     });
   }
 
-  await sendSectionEmbeds({
+  const ok = await sendSectionEmbeds({
     webhookUrl,
     title: label(kindEmoji, kind),
     bn,
@@ -348,27 +362,60 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     sections,
   });
   console.log('Sent', kind, '(NORMAL)', {
+    ok,
     added: a.length,
     modified: m.length,
     removed: r.length,
   });
+  return ok;
 }
 
+/**
+ * Reliable webhook post with retries for 429 / 5xx.
+ * @returns {Promise<boolean>}
+ */
 async function post(url, body) {
   body.username = BOT;
   body.avatar_url = AVATAR;
-  try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    console.log('webhook', res.status, body.embeds?.[0]?.title || '');
-    if (!res.ok) console.warn('webhook fail', (await res.text()).slice(0, 200));
-  } catch (e) {
-    console.warn('webhook error', e.message);
+  const payload = JSON.stringify(body);
+  let lastErr = null;
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        timeout: 20000,
+      });
+      console.log('webhook', res.status, body.embeds?.[0]?.title || '');
+      if (res.ok) {
+        await sleep(80);
+        return true;
+      }
+      const text = await res.text();
+      lastErr = `HTTP ${res.status}: ${text.slice(0, 180)}`;
+      if (res.status === 429 || res.status >= 500) {
+        const retryAfter = Number(res.headers.get('retry-after') || 0);
+        const delay = retryAfter > 0 ? retryAfter * 1000 : 400 * 2 ** attempt;
+        console.warn('webhook retry', attempt + 1, lastErr, 'wait', delay);
+        await sleep(delay);
+        continue;
+      }
+      console.warn('webhook fail', lastErr);
+      return false;
+    } catch (e) {
+      lastErr = e.message;
+      console.warn('webhook error', e.message, 'attempt', attempt + 1);
+      await sleep(400 * 2 ** attempt);
+    }
   }
-  await new Promise((r) => setTimeout(r, 80));
+  console.warn('webhook gave up', lastErr);
+  return false;
 }
 
-module.exports = { notifyAll, notifyUrgent, notifyNormal };
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+module.exports = { notifyAll, notifyUrgent, notifyNormal, post };
