@@ -1,6 +1,7 @@
 /**
  * Discord Mobile Version Tracker
- * Notifies only on real version changes — never the same fingerprint twice.
+ * Notifies ONLY on real version bumps — never the same fingerprint twice.
+ * First run / empty state = seed only (no flood).
  */
 
 const fetch = require('node-fetch');
@@ -39,25 +40,14 @@ function cmpVersion(a, b) {
   return 0;
 }
 
-/** Stable key for a channel slot */
 function channelKey(c) {
   return `${c.platform}/${c.channel}`;
 }
 
-/**
- * Fingerprint used for "already notified".
- * Version is required. Build is optional — same version with null vs build
- * must NOT re-notify (that was the main spam source).
- */
+/** platform|channel|version — build excluded (build flaps caused spam) */
 function versionFingerprint(c) {
   if (!c || !c.version) return null;
   return `${c.platform}|${c.channel}|${c.version}`;
-}
-
-function fullFingerprint(c) {
-  if (!c || !c.version) return null;
-  const build = c.build != null && String(c.build) !== '' ? String(c.build) : '';
-  return `${c.platform}|${c.channel}|${c.version}|${build}`;
 }
 
 async function fetchText(url, opts = {}) {
@@ -244,7 +234,6 @@ async function collectAll() {
 
   const centerMajor = iosS ? parseVersion(iosS.version)[0] : 340;
 
-  // iOS OTA → single stable channel name: "beta" only if newer than store
   try {
     const iosOta = await probeOta('ios', centerMajor);
     otaIndex.ios = iosOta.slice(0, 30);
@@ -266,7 +255,6 @@ async function collectAll() {
           checkedAt,
         });
       } else {
-        // placeholder — no version → never notifies
         channels.push({
           platform: 'ios',
           channel: 'beta',
@@ -356,7 +344,6 @@ async function collectAll() {
   }
   channels.push(androidStable);
 
-  // Android beta/alpha: only if OTA truly ahead of stable (rare)
   const higher =
     androidOtaLatest && androidStable?.version
       ? otaIndex.android.filter(
@@ -398,13 +385,14 @@ async function collectAll() {
 }
 
 /**
- * Detect changes using:
- * 1) previous channel version comparison
- * 2) permanent notifiedFingerprints set (survives channel rename / null build flaps)
+ * Only real version bumps (strictly newer) + never-seen fingerprint.
+ * Same version or lower → never notify.
  */
 function detectChanges(previous, snapshot) {
   const changes = [];
-  const notified = new Set(previous?.notifiedFingerprints || []);
+  const notified = new Set(
+    (previous?.notifiedFingerprints || []).map(String),
+  );
   const prevMap = new Map();
   for (const c of previous?.channels || []) {
     if (c && c.version) prevMap.set(channelKey(c), c);
@@ -416,23 +404,22 @@ function detectChanges(previous, snapshot) {
     const fp = versionFingerprint(c);
     if (!fp) continue;
 
-    // Already announced this platform/channel/version → skip forever
-    if (notified.has(fp)) {
-      continue;
-    }
+    // Already announced this exact version for this slot
+    if (notified.has(fp)) continue;
 
     const prev = prevMap.get(key);
     if (!prev || !prev.version) {
-      // First time we see this channel with a version
+      // New slot with a version — only notify if we are NOT on a seed run
+      // (seed handled in main). Here we still record as candidate.
       changes.push({ type: 'new', channel: c, previous: null, fp });
-    } else if (prev.version !== c.version) {
-      // Real version bump only (ignore build-only / null↔build)
-      changes.push({ type: 'updated', channel: c, previous: prev, fp });
-    } else {
-      // Same version — mark as notified silently (seed) without webhook
-      // (handles first run after fix when version already known in state)
-      notified.add(fp);
+      continue;
     }
+
+    // Only notify if version is STRICTLY greater (blocks oscillation spam)
+    if (cmpVersion(c.version, prev.version) > 0) {
+      changes.push({ type: 'updated', channel: c, previous: prev, fp });
+    }
+    // same or lower → silent
   }
 
   return { changes, notified };
@@ -509,39 +496,57 @@ async function main() {
 
   console.log('=== Mobile Versions ===');
   const snapshot = await collectAll();
+
+  const hadPriorState =
+    previous &&
+    ((
+      (previous.notifiedFingerprints && previous.notifiedFingerprints.length) ||
+      (previous.channels || []).some((c) => c && c.version)
+    ));
+
   const { changes, notified } = detectChanges(previous, snapshot);
 
-  // Seed fingerprints from current channels so next run is quiet
+  // Always seed fingerprints from current + previous so next run is quiet
   for (const c of snapshot.channels) {
     const fp = versionFingerprint(c);
     if (fp) notified.add(fp);
   }
-  // Mark those we actually notify
+  for (const fp of previous?.notifiedFingerprints || []) {
+    notified.add(String(fp));
+  }
   for (const ch of changes) {
     if (ch.fp) notified.add(ch.fp);
   }
 
   const history = previous?.history || [];
-  for (const ch of changes) {
-    history.unshift({
-      at: snapshot.scrapedAt,
-      key: channelKey(ch.channel),
-      from: ch.previous?.version || null,
-      to: ch.channel.version,
-      build: ch.channel.build || null,
-    });
+  // Only record history when we actually notify
+  const willNotify = hadPriorState && changes.length > 0;
+
+  if (willNotify) {
+    for (const ch of changes) {
+      history.unshift({
+        at: snapshot.scrapedAt,
+        key: channelKey(ch.channel),
+        from: ch.previous?.version || null,
+        to: ch.channel.version,
+        build: ch.channel.build || null,
+      });
+    }
   }
 
   snapshot.history = history.slice(0, 100);
   snapshot.previousScrapedAt = previous?.scrapedAt || null;
-  snapshot.notifiedFingerprints = [...notified].sort().slice(-500);
-  snapshot.changes = changes.map((c) => ({
-    type: c.type,
-    key: channelKey(c.channel),
-    from: c.previous?.version || null,
-    to: c.channel.version,
-    build: c.channel.build || null,
-  }));
+  // Keep a large window of fingerprints to survive flaky git pushes
+  snapshot.notifiedFingerprints = [...notified].sort().slice(-2000);
+  snapshot.changes = willNotify
+    ? changes.map((c) => ({
+        type: c.type,
+        key: channelKey(c.channel),
+        from: c.previous?.version || null,
+        to: c.channel.version,
+        build: c.channel.build || null,
+      }))
+    : [];
 
   await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
 
@@ -550,10 +555,22 @@ async function main() {
       `  ${c.platform}/${c.channel}: ${c.version || 'n/a'}${c.build ? ` [${c.build}]` : ''}`,
     );
   }
-  console.log('Changes:', changes.length, '| fingerprints:', notified.size);
+  console.log(
+    'Candidates:',
+    changes.length,
+    '| hadPriorState:',
+    !!hadPriorState,
+    '| fingerprints:',
+    notified.size,
+  );
 
-  if (changes.length) await notify(changes);
-  else console.log('No version changes — no webhook');
+  if (!hadPriorState) {
+    console.log('Seed run — no webhook (prevents spam)');
+  } else if (willNotify) {
+    await notify(changes);
+  } else {
+    console.log('No version bumps — no webhook');
+  }
   console.log('=== Mobile versions done ===');
 }
 

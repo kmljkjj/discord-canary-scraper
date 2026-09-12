@@ -1,11 +1,11 @@
 /**
  * Watch @DiscordNEW8r → Discord webhook
  *
- * Secrets:
- *   X_NEWS_WEBHOOK_URL or X_WEBHOOK_URL
- *   X_BEARER_TOKEN (recommended — official X API v2)
+ * Secrets (priority):
+ *   X_WEBHOOK_URL or X_NEWS_WEBHOOK_URL
+ *   X_BEARER_TOKEN  ← strongly recommended (public RSS is mostly dead)
  *
- * Without bearer, public sources often fail (403/404) → soft exit 0.
+ * Soft-exit 0 if no posts (never red the workflow).
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -23,15 +23,17 @@ const BEARER =
 
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'x_seen_ids.json');
-const MAX_SEEN = 200;
+const MAX_SEEN = 300;
 const MAX_NOTIFY = 5;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 const RSS_SOURCES = [
+  `https://rsshub.rssforever.com/twitter/user/${USERNAME}`,
+  `https://rsshub.app/twitter/user/${USERNAME}`,
   `https://nitter.privacyredirect.com/${USERNAME}/rss`,
   `https://nitter.poast.org/${USERNAME}/rss`,
-  `https://rsshub.rssforever.com/twitter/user/${USERNAME}`,
+  `https://xcancel.com/${USERNAME}/rss`,
 ];
 
 async function main() {
@@ -56,7 +58,7 @@ async function main() {
       console.warn('API fail:', e.message);
     }
   } else {
-    console.log('No X_BEARER_TOKEN — public sources only (often blocked)');
+    console.log('No X_BEARER_TOKEN — public sources often fail');
   }
 
   if (posts.length < 1) {
@@ -66,7 +68,7 @@ async function main() {
 
   if (!posts.length) {
     console.warn(
-      'No posts fetched (soft) — set secret X_BEARER_TOKEN for reliable watch',
+      'No posts fetched (soft). Add secret X_BEARER_TOKEN for reliable X watch.',
     );
     process.exit(0);
   }
@@ -74,11 +76,7 @@ async function main() {
   posts.sort((a, b) => String(b.id).localeCompare(String(a.id)));
 
   const isFirstRun = seen.size === 0;
-  const fresh = [];
-  for (const p of posts) {
-    if (!p.id || seen.has(String(p.id))) continue;
-    fresh.push(p);
-  }
+  const fresh = posts.filter((p) => p.id && !seen.has(String(p.id)));
 
   console.log('Fresh:', fresh.length, isFirstRun ? '(seed only)' : '');
 
@@ -100,8 +98,26 @@ async function main() {
 }
 
 async function fetchViaOfficialApi(bearer) {
+  // Resolve user id if needed
+  let uid = USER_ID;
+  try {
+    const uRes = await fetch(
+      `https://api.twitter.com/2/users/by/username/${USERNAME}`,
+      {
+        headers: { Authorization: 'Bearer ' + bearer, 'User-Agent': 'orbit-x-watch' },
+        timeout: 15000,
+      },
+    );
+    if (uRes.ok) {
+      const uj = await uRes.json();
+      if (uj.data && uj.data.id) uid = String(uj.data.id);
+    }
+  } catch (e) {
+    console.warn('username lookup fail, using env USER_ID');
+  }
+
   const url =
-    `https://api.twitter.com/2/users/${USER_ID}/tweets` +
+    `https://api.twitter.com/2/users/${uid}/tweets` +
     `?max_results=10` +
     `&tweet.fields=created_at,text,entities,attachments` +
     `&expansions=attachments.media_keys` +
@@ -154,15 +170,27 @@ async function fetchViaRss() {
           'User-Agent': UA,
           Accept: 'application/rss+xml, application/xml, text/xml, */*',
         },
-        timeout: 10000,
+        timeout: 12000,
       });
       if (!res.ok) {
         console.warn('RSS', src, res.status);
         continue;
       }
       const xml = await res.text();
-      if (/whitelist|cloudflare|Attention Required/i.test(xml) && !/<item/i.test(xml))
+      if (
+        /whitelist|cloudflare|Attention Required|not yet whitelist|Making sure you're not a bot/i.test(
+          xml,
+        ) &&
+        !/<item[\s>]/i.test(xml)
+      ) {
+        console.warn('RSS blocked', src);
         continue;
+      }
+      // Skip fake whitelist items
+      if (/RSS reader not yet whitelist/i.test(xml) && !/status\/\d{10,}/i.test(xml)) {
+        console.warn('RSS whitelist-only', src);
+        continue;
+      }
       const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
       for (const m of items) {
         const block = m[1];
@@ -172,6 +200,7 @@ async function fetchViaRss() {
         const date = pick(block, /<pubDate>([^<]+)<\/pubDate>/i);
         const id = extractStatusId(link || guid || '');
         if (!id) continue;
+        if (/whitelist/i.test(title)) continue;
         posts.push({
           id,
           url: `https://x.com/${USERNAME}/status/${id}`,
@@ -194,9 +223,9 @@ async function postWebhook(p) {
   const url = p.url || `https://x.com/${USERNAME}/status/${p.id}`;
   const text = (p.text || '').replace(/\s+/g, ' ').trim().slice(0, 280);
   const body = {
-    username: '◈ Orbit · X',
+    username: 'Datamining · X',
     avatar_url:
-      'https://ui-avatars.com/api/?name=X&background=1da1f2&color=ffffff&bold=true&size=128&format=png',
+      'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f4f0.png',
     content: url,
     embeds: [
       {
@@ -204,12 +233,12 @@ async function postWebhook(p) {
           name: '@' + USERNAME,
           url: `https://x.com/${USERNAME}`,
           icon_url:
-            'https://pbs.twimg.com/profile_images/2088274756466286592/ZU7Jl8B-.jpg',
+            'https://pbs.twimg.com/profile_images/2088274756466286592/ZU7Jl8B-_normal.jpg',
         },
         description: text || undefined,
         url,
         color: 0x1da1f2,
-        footer: { text: 'Orbit · X radar' },
+        footer: { text: 'X · @' + USERNAME },
         timestamp: p.date || new Date().toISOString(),
       },
     ],
@@ -234,6 +263,12 @@ async function loadSeen() {
   try {
     if (await fs.pathExists(SEEN_FILE)) {
       const d = await fs.readJson(SEEN_FILE);
+      for (const id of d.ids || []) set.add(String(id));
+    }
+    // also merge legacy seen_x_posts.json
+    const legacy = path.join(DATA, 'seen_x_posts.json');
+    if (await fs.pathExists(legacy)) {
+      const d = await fs.readJson(legacy);
       for (const id of d.ids || []) set.add(String(id));
     }
   } catch {}

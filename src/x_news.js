@@ -3,9 +3,9 @@
  *
  * Secrets:
  *   X_NEWS_WEBHOOK_URL  — Discord webhook (required)
- *   X_BEARER_TOKEN      — Twitter/X API v2 Bearer (recommended)
+ *   X_BEARER_TOKEN      — X API v2 Bearer (required for reliability)
  *
- * Without X_BEARER_TOKEN, tries public RSS mirrors (often unreliable).
+ * Soft exit 0 if nothing fetched.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -14,23 +14,26 @@ const fetch = require('node-fetch');
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'seen_x_posts.json');
 const SCREEN_NAME = process.env.X_SCREEN_NAME || 'DiscordNEW8r';
-const USER_ID = process.env.X_USER_ID || '2073982489836584960'; // DiscordNEW8r
-const WEBHOOK = process.env.X_NEWS_WEBHOOK_URL || process.env.DISCORD_X_WEBHOOK_URL;
+const USER_ID = process.env.X_USER_ID || '2073982489836584960';
+const WEBHOOK = process.env.X_NEWS_WEBHOOK_URL || process.env.X_WEBHOOK_URL || process.env.DISCORD_X_WEBHOOK_URL;
 const BEARER = process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN;
 const MAX_NOTIFY = 5;
+const UA =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 const RSS_MIRRORS = [
-  `https://nitter.poast.org/${SCREEN_NAME}/rss`,
+  `https://rsshub.rssforever.com/twitter/user/${SCREEN_NAME}`,
+  `https://rsshub.app/twitter/user/${SCREEN_NAME}`,
   `https://nitter.privacyredirect.com/${SCREEN_NAME}/rss`,
-  `https://nitter.lucabased.xyz/${SCREEN_NAME}/rss`,
+  `https://nitter.poast.org/${SCREEN_NAME}/rss`,
   `https://xcancel.com/${SCREEN_NAME}/rss`,
 ];
 
 async function main() {
   console.log('=== X News Watch · @' + SCREEN_NAME + ' ===');
   if (!WEBHOOK) {
-    console.error('Missing X_NEWS_WEBHOOK_URL secret');
-    process.exit(1);
+    console.warn('Missing X_NEWS_WEBHOOK_URL — soft skip');
+    process.exit(0);
   }
 
   await fs.ensureDir(DATA);
@@ -40,22 +43,28 @@ async function main() {
   let posts = [];
   if (BEARER) {
     console.log('Source: X API v2');
-    posts = await fetchFromApi(BEARER);
+    try {
+      posts = await fetchFromApi(BEARER);
+    } catch (e) {
+      console.warn('API error', e.message);
+      posts = await fetchFromRss();
+    }
   } else {
-    console.log('No X_BEARER_TOKEN — trying RSS mirrors');
+    console.log('No X_BEARER_TOKEN — trying RSS (often blocked)');
     posts = await fetchFromRss();
   }
 
   console.log('Fetched', posts.length, 'posts');
   if (!posts.length) {
-    console.warn('No posts fetched — check token / RSS');
+    console.warn(
+      'No posts fetched — add secret X_BEARER_TOKEN for reliable monitoring',
+    );
     process.exit(0);
   }
 
-  // First run: seed all, no flood
   if (!seen.ids.length) {
     for (const p of posts) seen.ids.push(p.id);
-    seen.ids = uniq(seen.ids).slice(-200);
+    seen.ids = uniq(seen.ids).slice(-300);
     await saveSeen(seen);
     console.log('Seeded', seen.ids.length, 'ids — no notify');
     return;
@@ -63,7 +72,6 @@ async function main() {
 
   const known = new Set(seen.ids.map(String));
   const fresh = posts.filter((p) => !known.has(String(p.id)));
-  // API returns newest first
   fresh.sort((a, b) => String(b.id).localeCompare(String(a.id)));
 
   console.log('New posts:', fresh.length);
@@ -79,14 +87,29 @@ async function main() {
   }
 
   for (const p of posts) known.add(String(p.id));
-  seen.ids = uniq([...known]).slice(-200);
+  seen.ids = uniq([...known]).slice(-300);
   await saveSeen(seen);
   console.log('Sent', sent, '· seen now', seen.ids.length);
 }
 
 async function fetchFromApi(bearer) {
+  let uid = USER_ID;
+  try {
+    const uRes = await fetch(
+      `https://api.twitter.com/2/users/by/username/${SCREEN_NAME}`,
+      {
+        headers: { Authorization: 'Bearer ' + bearer, 'User-Agent': 'canary-x-news' },
+        timeout: 15000,
+      },
+    );
+    if (uRes.ok) {
+      const uj = await uRes.json();
+      if (uj.data && uj.data.id) uid = String(uj.data.id);
+    }
+  } catch {}
+
   const url =
-    `https://api.twitter.com/2/users/${USER_ID}/tweets` +
+    `https://api.twitter.com/2/users/${uid}/tweets` +
     `?max_results=10` +
     `&tweet.fields=created_at,text,entities,attachments` +
     `&expansions=attachments.media_keys` +
@@ -102,7 +125,6 @@ async function fetchFromApi(bearer) {
   if (!res.ok) {
     const t = await res.text();
     console.error('API', res.status, t.slice(0, 300));
-    // fallback RSS
     return fetchFromRss();
   }
   const data = await res.json();
@@ -137,7 +159,10 @@ async function fetchFromRss() {
     try {
       console.log('RSS try', url);
       const res = await fetch(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 canary-x-news', Accept: 'application/rss+xml, application/xml, text/xml, */*' },
+        headers: {
+          'User-Agent': UA,
+          Accept: 'application/rss+xml, application/xml, text/xml, */*',
+        },
         timeout: 15000,
       });
       if (!res.ok) {
@@ -145,7 +170,12 @@ async function fetchFromRss() {
         continue;
       }
       const xml = await res.text();
-      if (/not yet whitelisted|Error 404|403 Forbidden/i.test(xml)) {
+      if (
+        /not yet whitelist|Error 404|403 Forbidden|Making sure you're not a bot|Attention Required/i.test(
+          xml,
+        ) &&
+        !/status\/\d{10,}/i.test(xml)
+      ) {
         console.warn('RSS blocked', url);
         continue;
       }
@@ -166,6 +196,7 @@ function parseRss(xml) {
   const blocks = xml.split(/<item>/i).slice(1);
   for (const block of blocks) {
     const title = strip(pick(block, 'title'));
+    if (/whitelist/i.test(title)) continue;
     const link = strip(pick(block, 'link')) || strip(pick(block, 'guid'));
     if (!link) continue;
     const idMatch =
@@ -174,7 +205,6 @@ function parseRss(xml) {
       (pick(block, 'guid') || '').match(/(\d{15,})/);
     const id = idMatch ? idMatch[1] : null;
     if (!id) continue;
-    // Normalize to x.com link
     const url = `https://x.com/${SCREEN_NAME}/status/${id}`;
     items.push({
       id: String(id),
@@ -188,7 +218,6 @@ function parseRss(xml) {
 }
 
 function pick(block, tag) {
-  const re = new RegExp(`<${tag}[^>]*><!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>|<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const m = block.match(
     new RegExp(
       '<' +
@@ -239,9 +268,9 @@ async function postWebhook(p) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: 'X · DiscordNEW8r',
+        username: 'Datamining · X',
         embeds: [embed],
-        content: p.url, // lien clair dans le salon
+        content: p.url,
       }),
     });
     console.log('webhook', res.status, p.id);
@@ -257,6 +286,14 @@ async function loadSeen() {
   try {
     if (await fs.pathExists(SEEN_FILE)) {
       const d = await fs.readJson(SEEN_FILE);
+      return { ids: (d.ids || []).map(String) };
+    }
+  } catch {}
+  // merge x_seen_ids.json if present
+  try {
+    const alt = path.join(DATA, 'x_seen_ids.json');
+    if (await fs.pathExists(alt)) {
+      const d = await fs.readJson(alt);
       return { ids: (d.ids || []).map(String) };
     }
   } catch {}
@@ -280,6 +317,6 @@ function sleep(ms) {
 }
 
 main().catch((e) => {
-  console.error(e);
-  process.exit(1);
+  console.warn('X news soft error:', e.message || e);
+  process.exit(0);
 });
