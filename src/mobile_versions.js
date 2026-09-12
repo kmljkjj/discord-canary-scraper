@@ -1,13 +1,6 @@
 /**
- * Discord Mobile Version Tracker (max coverage)
- *
- * Channels:
- *  - iOS stable     → iTunes Lookup API
- *  - iOS OTA/beta   → discord.com/ios/{ver}/manifest.json (probe)
- *  - Android stable → OTA manifest + APKCombo / Play HTML
- *  - Android beta/alpha → OTA probe when public manifests exist
- *
- * Notifies only on real version/build changes (no spam snapshot).
+ * Discord Mobile Version Tracker
+ * Notifies only on real version changes — never the same fingerprint twice.
  */
 
 const fetch = require('node-fetch');
@@ -46,6 +39,27 @@ function cmpVersion(a, b) {
   return 0;
 }
 
+/** Stable key for a channel slot */
+function channelKey(c) {
+  return `${c.platform}/${c.channel}`;
+}
+
+/**
+ * Fingerprint used for "already notified".
+ * Version is required. Build is optional — same version with null vs build
+ * must NOT re-notify (that was the main spam source).
+ */
+function versionFingerprint(c) {
+  if (!c || !c.version) return null;
+  return `${c.platform}|${c.channel}|${c.version}`;
+}
+
+function fullFingerprint(c) {
+  if (!c || !c.version) return null;
+  const build = c.build != null && String(c.build) !== '' ? String(c.build) : '';
+  return `${c.platform}|${c.channel}|${c.version}|${build}`;
+}
+
 async function fetchText(url, opts = {}) {
   const res = await fetch(url, {
     timeout: 22000,
@@ -77,7 +91,6 @@ async function postWebhook(payload) {
   await new Promise((r) => setTimeout(r, 400));
 }
 
-// ── iOS stable (App Store) ─────────────────────────────
 async function iosStable() {
   const data = await fetchJson(
     `https://itunes.apple.com/lookup?id=${IOS_APP_ID}&country=us`,
@@ -97,30 +110,20 @@ async function iosStable() {
   };
 }
 
-/**
- * Public OTA manifests:
- *   https://discord.com/ios/{major.minor}/manifest.json
- *   https://discord.com/android/{major.minor}/manifest.json
- */
 async function probeOta(platform, centerMajor) {
   const found = [];
   const seen = new Set();
   const majors = [];
   for (let m = centerMajor + 15; m >= Math.max(180, centerMajor - 12); m--)
     majors.push(m);
-  // Android often uses x.y with higher minors (e.g. 343.12)
   const minors =
     platform === 'android'
-      ? [
-          0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21,
-          22, 25, 30,
-        ]
+      ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21, 22, 25, 30]
       : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20];
 
   let emptyMajors = 0;
   for (const major of majors) {
     let hits = 0;
-    // parallel batches of minors
     const batchSize = 6;
     for (let i = 0; i < minors.length; i += batchSize) {
       const slice = minors.slice(i, i + batchSize);
@@ -217,16 +220,11 @@ async function androidFromStores() {
   return null;
 }
 
-function channelKey(c) {
-  return `${c.platform}/${c.channel}`;
-}
-
 async function collectAll() {
   const checkedAt = new Date().toISOString();
   const channels = [];
   const otaIndex = { ios: [], android: [] };
 
-  // ── iOS stable ──
   let iosS;
   try {
     iosS = await iosStable();
@@ -244,11 +242,9 @@ async function collectAll() {
     });
   }
 
-  const centerMajor = iosS
-    ? parseVersion(iosS.version)[0]
-    : 340;
+  const centerMajor = iosS ? parseVersion(iosS.version)[0] : 340;
 
-  // ── iOS OTA ──
+  // iOS OTA → single stable channel name: "beta" only if newer than store
   try {
     const iosOta = await probeOta('ios', centerMajor);
     otaIndex.ios = iosOta.slice(0, 30);
@@ -256,30 +252,27 @@ async function collectAll() {
     if (latest) {
       const newerThanStore =
         iosS && cmpVersion(latest.version, iosS.version) > 0;
-      channels.push({
-        platform: 'ios',
-        channel: newerThanStore ? 'beta' : 'ota_latest',
-        version: latest.version,
-        build: latest.build,
-        commit: latest.commit,
-        source: 'discord_ota_manifest',
-        storeUrl: 'https://testflight.apple.com/join/gdE4pRzI',
-        available: true,
-        note: newerThanStore
-          ? 'OTA newer than App Store stable'
-          : 'OTA aligned with or behind App Store',
-        checkedAt,
-      });
       if (newerThanStore) {
-        // also keep ota_latest alias for history
         channels.push({
           platform: 'ios',
-          channel: 'ota_latest',
+          channel: 'beta',
           version: latest.version,
           build: latest.build,
           commit: latest.commit,
           source: 'discord_ota_manifest',
+          storeUrl: 'https://testflight.apple.com/join/gdE4pRzI',
           available: true,
+          note: 'OTA newer than App Store stable',
+          checkedAt,
+        });
+      } else {
+        // placeholder — no version → never notifies
+        channels.push({
+          platform: 'ios',
+          channel: 'beta',
+          version: null,
+          available: false,
+          note: 'OTA not ahead of App Store',
           checkedAt,
         });
       }
@@ -287,26 +280,28 @@ async function collectAll() {
     }
   } catch (e) {
     console.warn('iOS OTA fail', e.message);
+    channels.push({
+      platform: 'ios',
+      channel: 'beta',
+      version: null,
+      available: false,
+      note: e.message,
+      checkedAt,
+    });
   }
 
-  // ── Android OTA (best public source for version+build) ──
   let androidOtaLatest = null;
   try {
     const andOta = await probeOta('android', centerMajor);
     otaIndex.android = andOta.slice(0, 40);
     androidOtaLatest = andOta[0] || null;
     if (androidOtaLatest) {
-      console.log(
-        'Android OTA latest',
-        androidOtaLatest.version,
-        androidOtaLatest.build,
-      );
+      console.log('Android OTA latest', androidOtaLatest.version, androidOtaLatest.build);
     }
   } catch (e) {
     console.warn('Android OTA fail', e.message);
   }
 
-  // ── Android store fallback ──
   let androidStore = null;
   try {
     androidStore = await androidFromStores();
@@ -315,7 +310,6 @@ async function collectAll() {
     console.warn('Android store fail', e.message);
   }
 
-  // Pick best Android stable: prefer higher version, prefer OTA if equal (has build)
   let androidStable = null;
   if (androidOtaLatest && androidStore) {
     const cmp = cmpVersion(androidOtaLatest.version, androidStore.version);
@@ -356,56 +350,38 @@ async function collectAll() {
       channel: 'stable',
       version: null,
       available: false,
-      note: 'No public Android version source responded',
+      note: 'No public Android version source',
       checkedAt,
     };
   }
   channels.push(androidStable);
 
-  // Android beta/alpha placeholders — filled if OTA has multiple tracks later
-  // (Play closed tracks need auth; public OTA is usually one line)
-  if (androidOtaLatest && otaIndex.android.length > 1) {
-    // If we ever see a higher-than-stable OTA naming convention, surface it
-    const higher = otaIndex.android.filter(
-      (x) => cmpVersion(x.version, androidStable.version || '0') > 0,
-    );
-    if (higher.length) {
-      channels.push({
-        platform: 'android',
-        channel: 'alpha',
-        version: higher[0].version,
-        build: higher[0].build,
-        commit: higher[0].commit,
-        source: 'discord_ota_manifest',
-        available: true,
-        note: 'OTA version ahead of selected stable',
-        checkedAt,
-      });
-    } else {
-      channels.push({
-        platform: 'android',
-        channel: 'beta',
-        version: null,
-        available: false,
-        note: 'Play beta track not public without Google auth',
-        checkedAt,
-      });
-      channels.push({
-        platform: 'android',
-        channel: 'alpha',
-        version: null,
-        available: false,
-        note: 'Play alpha track not public without Google auth',
-        checkedAt,
-      });
-    }
+  // Android beta/alpha: only if OTA truly ahead of stable (rare)
+  const higher =
+    androidOtaLatest && androidStable?.version
+      ? otaIndex.android.filter(
+          (x) => cmpVersion(x.version, androidStable.version) > 0,
+        )
+      : [];
+  if (higher.length) {
+    channels.push({
+      platform: 'android',
+      channel: 'alpha',
+      version: higher[0].version,
+      build: higher[0].build,
+      commit: higher[0].commit,
+      source: 'discord_ota_manifest',
+      available: true,
+      note: 'OTA version ahead of selected stable',
+      checkedAt,
+    });
   } else {
     channels.push({
       platform: 'android',
       channel: 'beta',
       version: null,
       available: false,
-      note: 'Play beta track not public without Google auth',
+      note: 'Play beta not public',
       checkedAt,
     });
     channels.push({
@@ -413,63 +389,64 @@ async function collectAll() {
       channel: 'alpha',
       version: null,
       available: false,
-      note: 'Play alpha track not public without Google auth',
+      note: 'Play alpha not public',
       checkedAt,
     });
   }
 
-  // Ensure iOS beta slot exists if only ota_latest
-  if (!channels.some((c) => c.platform === 'ios' && c.channel === 'beta')) {
-    channels.push({
-      platform: 'ios',
-      channel: 'beta',
-      version: null,
-      available: false,
-      note: 'Filled when OTA is newer than App Store stable',
-      checkedAt,
-    });
-  }
-
-  return {
-    scrapedAt: checkedAt,
-    channels,
-    otaIndex,
-  };
+  return { scrapedAt: checkedAt, channels, otaIndex };
 }
 
+/**
+ * Detect changes using:
+ * 1) previous channel version comparison
+ * 2) permanent notifiedFingerprints set (survives channel rename / null build flaps)
+ */
 function detectChanges(previous, snapshot) {
   const changes = [];
+  const notified = new Set(previous?.notifiedFingerprints || []);
   const prevMap = new Map();
   for (const c of previous?.channels || []) {
-    prevMap.set(channelKey(c), c);
+    if (c && c.version) prevMap.set(channelKey(c), c);
   }
+
   for (const c of snapshot.channels) {
     if (!c.version) continue;
     const key = channelKey(c);
+    const fp = versionFingerprint(c);
+    if (!fp) continue;
+
+    // Already announced this platform/channel/version → skip forever
+    if (notified.has(fp)) {
+      continue;
+    }
+
     const prev = prevMap.get(key);
     if (!prev || !prev.version) {
-      changes.push({ type: 'new', channel: c, previous: null });
-    } else if (
-      prev.version !== c.version ||
-      String(prev.build || '') !== String(c.build || '')
-    ) {
-      changes.push({ type: 'updated', channel: c, previous: prev });
+      // First time we see this channel with a version
+      changes.push({ type: 'new', channel: c, previous: null, fp });
+    } else if (prev.version !== c.version) {
+      // Real version bump only (ignore build-only / null↔build)
+      changes.push({ type: 'updated', channel: c, previous: prev, fp });
+    } else {
+      // Same version — mark as notified silently (seed) without webhook
+      // (handles first run after fix when version already known in state)
+      notified.add(fp);
     }
   }
-  return changes;
+
+  return { changes, notified };
 }
 
 function colorFor(channel) {
   if (channel === 'alpha') return 0xed4245;
   if (channel === 'beta') return 0xfee75c;
-  if (channel === 'ota_latest') return 0xeb459e;
   return 0x5865f2;
 }
 
 async function notify(changes) {
   if (!WEBHOOK_URL || !changes.length) return;
 
-  // Summary embed
   const summaryLines = changes.map((ch) => {
     const c = ch.channel;
     const arrow =
@@ -510,10 +487,7 @@ async function notify(changes) {
     await postWebhook({
       embeds: [
         {
-          title:
-            c.channel === 'beta' || c.channel === 'alpha'
-              ? `Mobile ${c.platform.toUpperCase()} ${c.channel}`
-              : `Mobile ${c.platform.toUpperCase()} · ${c.channel}`,
+          title: `Mobile ${c.platform.toUpperCase()} · ${c.channel}`,
           description: lines.join('\n'),
           color: colorFor(c.channel),
           footer: { text: `Mobile · ${c.platform} · ${c.channel}` },
@@ -533,11 +507,20 @@ async function main() {
     } catch {}
   }
 
-  console.log('=== Mobile Versions (max) ===');
+  console.log('=== Mobile Versions ===');
   const snapshot = await collectAll();
-  const changes = detectChanges(previous, snapshot);
+  const { changes, notified } = detectChanges(previous, snapshot);
 
-  // Keep short history of version keys
+  // Seed fingerprints from current channels so next run is quiet
+  for (const c of snapshot.channels) {
+    const fp = versionFingerprint(c);
+    if (fp) notified.add(fp);
+  }
+  // Mark those we actually notify
+  for (const ch of changes) {
+    if (ch.fp) notified.add(ch.fp);
+  }
+
   const history = previous?.history || [];
   for (const ch of changes) {
     history.unshift({
@@ -548,8 +531,10 @@ async function main() {
       build: ch.channel.build || null,
     });
   }
+
   snapshot.history = history.slice(0, 100);
   snapshot.previousScrapedAt = previous?.scrapedAt || null;
+  snapshot.notifiedFingerprints = [...notified].sort().slice(-500);
   snapshot.changes = changes.map((c) => ({
     type: c.type,
     key: channelKey(c.channel),
@@ -565,7 +550,7 @@ async function main() {
       `  ${c.platform}/${c.channel}: ${c.version || 'n/a'}${c.build ? ` [${c.build}]` : ''}`,
     );
   }
-  console.log('Changes:', changes.length);
+  console.log('Changes:', changes.length, '| fingerprints:', notified.size);
 
   if (changes.length) await notify(changes);
   else console.log('No version changes — no webhook');
