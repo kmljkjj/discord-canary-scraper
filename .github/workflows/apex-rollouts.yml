@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '*/20 * * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-apex-rollouts]
 
 permissions:
   contents: write

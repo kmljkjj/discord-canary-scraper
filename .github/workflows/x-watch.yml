@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '*/10 * * * *'
   workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-x-watch]
 
 permissions:
   contents: write
@@ -42,13 +44,11 @@ jobs:
 
       - name: Watch @DiscordNEW8r
         env:
-          # Accept either secret name
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL || secrets.X_NEWS_WEBHOOK_URL }}
           X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL || secrets.X_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_USERNAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
-        # Public X sources often fail — never red the workflow
         continue-on-error: true
         run: node src/x_watch.js
 
