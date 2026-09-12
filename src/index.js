@@ -1,16 +1,16 @@
 /**
- * Canary Pulse v11 — priority pipeline
- * FLASH → web.js → parallel core → URGENT exp → locales → NORMAL str/routes
- * + archive chunks per build → builds/{buildNumber}/
+ * Canary Pulse v11.1 — priority pipeline + reliable notify marking
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
+const crypto = require('crypto');
 const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, saveState } = require('./lib/state');
 const { notifyUrgent, notifyNormal } = require('./lib/notify');
 const { archiveBuildChunks, writeZipHint } = require('./lib/archive_chunks');
+const { writeJsonAtomic } = require('./lib/atomic');
 const ALREADY_NOTIFIED = require('./lib/already_notified');
 
 const DATA = path.join(__dirname, '..', 'data');
@@ -52,17 +52,25 @@ async function loadKnownIds(file, fromAlready) {
 async function saveKnownIds(file, set, maxKeep) {
   let ids = [...set].filter((id) => id && !String(id).startsWith('hash:')).sort();
   if (maxKeep && ids.length > maxKeep) ids = ids.slice(-maxKeep);
-  await fs.writeJson(file, { updatedAt: new Date().toISOString(), count: ids.length, ids }, { spaces: 2 });
+  await writeJsonAtomic(file, {
+    updatedAt: new Date().toISOString(),
+    count: ids.length,
+    ids,
+  });
 }
 
 async function loadLastMap(file) {
   try {
     if (!(await fs.pathExists(file))) return {};
     const d = await fs.readJson(file);
-    const raw = d.data && typeof d.data === 'object' ? d.data : d.strings || d.routes || d.experiments || d || {};
+    const raw =
+      d.data && typeof d.data === 'object'
+        ? d.data
+        : d.strings || d.routes || d.experiments || d || {};
     const out = {};
     for (const [k, v] of Object.entries(raw)) {
-      if (k === 'buildNumber' || k === 'updatedAt' || k === 'count' || k === 'data') continue;
+      if (k === 'buildNumber' || k === 'updatedAt' || k === 'count' || k === 'data')
+        continue;
       out[k] = v;
     }
     return out;
@@ -73,12 +81,25 @@ async function loadLastMap(file) {
 }
 
 async function saveLastMap(file, data, buildNumber) {
-  await fs.writeJson(file, {
+  await writeJsonAtomic(file, {
     buildNumber: String(buildNumber),
     updatedAt: new Date().toISOString(),
     count: Object.keys(data || {}).length,
     data,
   });
+}
+
+function stableObject(value) {
+  if (Array.isArray(value)) return value.map(stableObject);
+  if (value && typeof value === 'object') {
+    return Object.keys(value)
+      .sort()
+      .reduce((out, key) => {
+        out[key] = stableObject(value[key]);
+        return out;
+      }, {});
+  }
+  return value;
 }
 
 function expFingerprint(e) {
@@ -87,10 +108,18 @@ function expFingerprint(e) {
   let keys = [];
   if (e.variations && typeof e.variations === 'object')
     keys = Object.keys(e.variations).sort((a, b) => Number(a) - Number(b));
-  else if (Array.isArray(e.treatments)) keys = e.treatments.map((_, i) => String(i));
+  else if (Array.isArray(e.treatments))
+    keys = e.treatments.map((_, i) => String(i));
   else if (typeof e.variationCount === 'number' && e.variationCount > 0)
     keys = Array.from({ length: e.variationCount }, (_, i) => String(i));
-  return type + '|' + keys.join(',');
+  const payload = stableObject({
+    type,
+    label: e.label || null,
+    keys,
+    variationCount: keys.length || e.variationCount || 0,
+    variations: e.variations || null,
+  });
+  return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 24);
 }
 
 function expSnapshot(e) {
@@ -98,7 +127,9 @@ function expSnapshot(e) {
     id: e.id,
     type: e.type || e.kind || 'user',
     kind: e.kind || e.type || 'user',
-    variationCount: e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,
+    label: e.label || null,
+    variationCount:
+      e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,
     variations: e.variations || null,
     fp: expFingerprint(e),
   };
@@ -129,7 +160,8 @@ function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
       if (!(id in lastExp)) {
         if (skipKnownFilter || !knownExp.has(id)) expDiff.added.push(e);
       } else {
-        const prevFp = (lastExp[id] && lastExp[id].fp) || expFingerprint(lastExp[id]) || '';
+        const prevFp =
+          (lastExp[id] && lastExp[id].fp) || expFingerprint(lastExp[id]) || '';
         const nextFp = expFingerprint(e);
         if (prevFp && nextFp && prevFp !== nextFp)
           expDiff.modified.push({ ...e, _prevFp: prevFp, _nextFp: nextFp });
@@ -157,47 +189,58 @@ async function flashBuild(webhookUrl, build, meta) {
   let desc = hash ? 'Hash `' + hash + '`\n' : '';
   if (gap > 1 && prev) {
     desc +=
-      '**Catch-up** · `' + prev + '` → `' + bn + '` (+' + gap + ')\n' +
-      '_Net changes since last scrape._\n';
+      '**Catch-up** · `' +
+      prev +
+      '` → `' +
+      bn +
+      '` (+' +
+      gap +
+      ')\n_Net changes since last scrape._\n';
   }
   desc += '_Priority extract…_';
   const body = {
     username: BOT,
     avatar_url: AVATAR,
-    embeds: [{
-      author: { name: 'Datamining', icon_url: AVATAR },
-      title: gap > 1 ? 'Canary Catch-up · ' + bn : 'New Discord Canary Build · ' + bn,
-      description: desc,
-      color: gap > 1 ? 0xfee75c : 0x5865f2,
-      footer: { text: 'Build ' + bn + (prev ? ' · was ' + prev : '') + ' · flash' },
-      timestamp: new Date().toISOString(),
-    }],
+    embeds: [
+      {
+        author: { name: 'Datamining', icon_url: AVATAR },
+        title: gap > 1 ? 'Canary Catch-up · ' + bn : 'New Discord Canary Build · ' + bn,
+        description: desc,
+        color: gap > 1 ? 0xfee75c : 0x5865f2,
+        footer: {
+          text: 'Build ' + bn + (prev ? ' · was ' + prev : '') + ' · flash',
+        },
+        timestamp: new Date().toISOString(),
+      },
+    ],
   };
   const res = await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
+    timeout: 20000,
   });
   if (!res.ok) throw new Error('flash HTTP ' + res.status);
 }
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v11 (priority pipeline) ===');
+  console.log('=== Canary Pulse v11.1 ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(BUILDS);
   await fs.ensureDir(CACHE);
 
-  const [prev, knownExp, knownStr, knownRt, lastStr, lastRt, lastExp] = await Promise.all([
-    loadState(DATA),
-    loadKnownIds(KNOWN_EXP, true),
-    loadKnownIds(KNOWN_STR, false),
-    loadKnownIds(KNOWN_RT, false),
-    loadLastMap(LAST_EXTRACT_STR),
-    loadLastMap(LAST_EXTRACT_RT),
-    loadLastMap(LAST_EXTRACT_EXP),
-  ]);
+  const [prev, knownExp, knownStr, knownRt, lastStr, lastRt, lastExp] =
+    await Promise.all([
+      loadState(DATA),
+      loadKnownIds(KNOWN_EXP, true),
+      loadKnownIds(KNOWN_STR, false),
+      loadKnownIds(KNOWN_RT, false),
+      loadLastMap(LAST_EXTRACT_STR),
+      loadLastMap(LAST_EXTRACT_RT),
+      loadLastMap(LAST_EXTRACT_EXP),
+    ]);
 
   console.log('Known / last', {
     knownExp: knownExp.size,
@@ -218,13 +261,16 @@ async function main() {
   const gap = buildGap(prevBuildNum, build.buildNumber);
   const isCatchUp = gap > 1;
 
-  console.log('STATE', JSON.stringify({
-    remote: build.buildNumber,
-    prevBuild: prevBuildNum,
-    gap,
-    catchUp: isCatchUp,
-    t_html: Date.now() - t0 + 'ms',
-  }));
+  console.log(
+    'STATE',
+    JSON.stringify({
+      remote: build.buildNumber,
+      prevBuild: prevBuildNum,
+      gap,
+      catchUp: isCatchUp,
+      t_html: Date.now() - t0 + 'ms',
+    }),
+  );
 
   if (!build.buildNumber || build.buildNumber === 'unknown') {
     console.error('No BUILD_NUMBER');
@@ -232,7 +278,8 @@ async function main() {
   }
 
   const isNewBuild =
-    !prev.build || !prev.build.buildNumber ||
+    !prev.build ||
+    !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
   const needsExtractSeed =
@@ -240,7 +287,12 @@ async function main() {
     Object.keys(lastRt).length < 20 ||
     Object.keys(lastExp).length < 40;
 
-  if (!isNewBuild && prev.initialized && !needsExtractSeed && Object.keys(lastExp).length > 40) {
+  if (
+    !isNewBuild &&
+    prev.initialized &&
+    !needsExtractSeed &&
+    Object.keys(lastExp).length > 40
+  ) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
     process.exit(0);
   }
@@ -250,7 +302,10 @@ async function main() {
     const already = await wasBuildAnnounced(build.buildNumber);
     if (!already) {
       try {
-        await flashBuild(process.env.DISCORD_WEBHOOK_URL, build, { gap, prevBuild: prevBuildNum });
+        await flashBuild(process.env.DISCORD_WEBHOOK_URL, build, {
+          gap,
+          prevBuild: prevBuildNum,
+        });
         flashSent = true;
         await markBuild(build.buildNumber);
         console.log('FLASH', build.buildNumber, Date.now() - t0 + 'ms');
@@ -273,7 +328,10 @@ async function main() {
         const { expDiff } = computeExpDiff(experiments, lastExp, knownExp, {
           skipKnownFilter: isCatchUp,
         });
-        const n = expDiff.added.length + expDiff.modified.length + expDiff.removed.length;
+        const n =
+          expDiff.added.length +
+          expDiff.modified.length +
+          expDiff.removed.length;
         if (!n) {
           console.log('URGENT: no exp delta', Date.now() - t0 + 'ms');
           return;
@@ -284,7 +342,7 @@ async function main() {
           removed: expDiff.removed.length,
           t: Date.now() - t0 + 'ms',
         });
-        await notifyUrgent({
+        const ok = await notifyUrgent({
           build,
           expDiff,
           webhookUrl: process.env.DISCORD_WEBHOOK_URL,
@@ -292,8 +350,12 @@ async function main() {
           catchUp: isCatchUp,
           prevBuild: prevBuildNum,
         });
-        urgentSent = true;
-        for (const e of expDiff.added) knownExp.add(String(e.id || e));
+        if (ok) {
+          urgentSent = true;
+          for (const e of expDiff.added) knownExp.add(String(e.id || e));
+        } else {
+          console.warn('URGENT webhook failed — NOT marking known exp');
+        }
       },
     });
   } catch (e) {
@@ -302,7 +364,6 @@ async function main() {
   }
   console.log('Extract done', Date.now() - t0 + 'ms');
 
-  // ── Archive all downloaded chunks for this build → builds/{bn}/
   try {
     const manifest = await archiveBuildChunks({
       build,
@@ -320,11 +381,14 @@ async function main() {
   const extractedRtCount = Object.keys(nextRt).length;
   const extractedExpCount = (findings.experiments || []).length;
 
-  console.log('EXTRACT', JSON.stringify({
-    experiments: extractedExpCount,
-    strings: extractedStrCount,
-    routes: extractedRtCount,
-  }));
+  console.log(
+    'EXTRACT',
+    JSON.stringify({
+      experiments: extractedExpCount,
+      strings: extractedStrCount,
+      routes: extractedRtCount,
+    }),
+  );
 
   if (extractedExpCount < 20 && extractedStrCount < 100) {
     console.warn('empty extract');
@@ -392,14 +456,22 @@ async function main() {
 
   console.log('TRUE DIFF', {
     urgentSent,
-    exp: { added: expDiff.added.length, modified: expDiff.modified.length, removed: expDiff.removed.length },
-    str: { added: Object.keys(strDiff.added).length, modified: Object.keys(strDiff.modified).length, removed: Object.keys(strDiff.removed).length },
-    rt: { added: Object.keys(rtDiff.added).length, modified: Object.keys(rtDiff.modified).length, removed: Object.keys(rtDiff.removed).length },
+    exp: {
+      added: expDiff.added.length,
+      modified: expDiff.modified.length,
+      removed: expDiff.removed.length,
+    },
+    str: {
+      added: Object.keys(strDiff.added).length,
+      modified: Object.keys(strDiff.modified).length,
+      removed: Object.keys(strDiff.removed).length,
+    },
+    rt: {
+      added: Object.keys(rtDiff.added).length,
+      modified: Object.keys(rtDiff.modified).length,
+      removed: Object.keys(rtDiff.removed).length,
+    },
   });
-
-  for (const e of expDiff.added) knownExp.add(String(e.id || e));
-  for (const k of Object.keys(strDiff.added)) knownStr.add(k);
-  for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
 
   const alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   const shouldAnnounceBuild = isNewBuild && !alreadyBuild && !flashSent;
@@ -407,7 +479,7 @@ async function main() {
   if (process.env.DISCORD_WEBHOOK_URL) {
     try {
       if (!urgentSent) {
-        await notifyUrgent({
+        const okU = await notifyUrgent({
           build,
           expDiff,
           webhookUrl: process.env.DISCORD_WEBHOOK_URL,
@@ -415,20 +487,37 @@ async function main() {
           catchUp: isCatchUp,
           prevBuild: prevBuildNum,
         });
+        if (okU) {
+          for (const e of expDiff.added) knownExp.add(String(e.id || e));
+        } else {
+          console.warn('URGENT retry path failed — NOT marking known exp');
+        }
       } else {
         console.log('URGENT already sent');
       }
-      await notifyNormal({
+
+      const okN = await notifyNormal({
         build,
         isNewBuild: shouldAnnounceBuild,
         strDiff,
         rtDiff,
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,
       });
-      if (shouldAnnounceBuild) await markBuild(build.buildNumber);
+      if (okN) {
+        for (const k of Object.keys(strDiff.added)) knownStr.add(k);
+        for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
+        if (shouldAnnounceBuild) await markBuild(build.buildNumber);
+      } else {
+        console.warn('NORMAL webhook failed — NOT marking known str/rt');
+      }
     } catch (e) {
       console.warn('notify failed', e.message);
     }
+  } else {
+    // no webhook: still advance known so state converges
+    for (const e of expDiff.added) knownExp.add(String(e.id || e));
+    for (const k of Object.keys(strDiff.added)) knownStr.add(k);
+    for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
   }
   console.log('Notify done', Date.now() - t0 + 'ms');
 
@@ -471,7 +560,9 @@ function mergeExp(prev, next) {
   for (const e of next || []) {
     if (e && e.id) map.set(String(e.id), e);
   }
-  return [...map.values()].sort((a, b) => String(a.id).localeCompare(String(b.id)));
+  return [...map.values()].sort((a, b) =>
+    String(a.id).localeCompare(String(b.id)),
+  );
 }
 
 async function markBuild(buildNumber) {
@@ -481,7 +572,10 @@ async function markBuild(buildNumber) {
   } catch {}
   const set = new Set((data.builds || []).map(String));
   set.add(String(buildNumber));
-  await fs.writeJson(ANNOUNCED, { builds: [...set].slice(-300), updatedAt: new Date().toISOString() }, { spaces: 2 });
+  await writeJsonAtomic(ANNOUNCED, {
+    builds: [...set].slice(-300),
+    updatedAt: new Date().toISOString(),
+  });
 }
 
 async function wasBuildAnnounced(buildNumber) {
