@@ -20,15 +20,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Sync findings into docs
+      - name: Sync experiments into docs
         run: |
           mkdir -p docs/data
-          if [ -f data/findings.json ]; then
+          if [ -f data/experiments.json ]; then
+            cp data/experiments.json docs/data/experiments.json
+            cp data/experiments.json docs/data/findings.json
+            echo "Synced experiments.json"
+          elif [ -f data/findings.json ]; then
             cp data/findings.json docs/data/findings.json
+            cp data/findings.json docs/data/experiments.json
             echo "Synced findings.json"
           else
-            echo '{"experiments":[],"scrapedAt":null}' > docs/data/findings.json
-            echo "Placeholder findings.json"
+            echo '{"experiments":[],"scrapedAt":null}' > docs/data/experiments.json
+            cp docs/data/experiments.json docs/data/findings.json
+            echo "Placeholder experiments.json"
           fi
           [ -f data/routes.json ] && cp data/routes.json docs/data/routes.json || true
           [ -f data/build.json ] && cp data/build.json docs/data/build.json || true

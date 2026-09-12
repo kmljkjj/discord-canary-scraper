@@ -1,10 +1,10 @@
 /**
- * Experiments gallery — loads findings from the scraper repo
+ * Experiments gallery — loads experiments from the scraper repo
  */
 const DATA_URLS = [
-  // Same-origin when data is published under docs/
+  './data/experiments.json',
   './data/findings.json',
-  // Fallback: live raw from GitHub main
+  'https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/main/data/experiments.json',
   'https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/main/data/findings.json',
 ];
 
@@ -36,10 +36,10 @@ function normalize(raw) {
   const list = Array.isArray(raw?.experiments) ? raw.experiments : Array.isArray(raw) ? raw : [];
   return list.map((e) => ({
     id: e.id || e.name || 'unknown',
-    type: (e.type || 'unknown').toLowerCase(),
+    type: (e.type || e.kind || 'unknown').toLowerCase(),
     isApex: !!(e.isApex || e.apex || /apex/i.test(e.type || '')),
     relatedUI: e.relatedUI || e.related_ui || [],
-    variations: e.variations || e.treatments || null,
+    variations: e.variations || e.treatments || e.variationCount || null,
   }));
 }
 
@@ -105,7 +105,11 @@ function render() {
         '</div>' +
         '<div class="card-meta">' +
         (exp.variations != null
-          ? '<span>Variations / treatments: ' + escapeHtml(String(exp.variations)) + '</span>'
+          ? '<span>Variations / treatments: ' + escapeHtml(String(
+              typeof exp.variations === 'object' && !Array.isArray(exp.variations)
+                ? Object.keys(exp.variations).length
+                : exp.variations
+            )) + '</span>'
           : '') +
         '</div>' +
         ui +
@@ -157,7 +161,7 @@ searchInput.addEventListener('input', () => render());
   } catch (e) {
     metaEl.textContent = 'Erreur de chargement';
     grid.innerHTML =
-      '<div class="empty">Impossible de charger <code>findings.json</code>.<br/>Lance un scrape puis réessaie.<br/><small>' +
+      '<div class="empty">Impossible de charger <code>experiments.json</code>.<br/>Lance un scrape puis réessaie.<br/><small>' +
       escapeHtml(String(e.message || e)) +
       '</small></div>';
   }

@@ -12,7 +12,8 @@ permissions:
 
 concurrency:
   group: canary-scrape
-  cancel-in-progress: true
+  # Never cancel a running scrape mid-download
+  cancel-in-progress: false
 
 jobs:
   scrape:
@@ -37,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ ! -d node_modules/node-fetch ]; then
+          if [ ! -d node_modules/node-fetch ] || [ ! -d node_modules/cheerio ] || [ ! -d node_modules/fs-extra ]; then
             npm install --no-audit --no-fund --no-package-lock
           else
             echo "cache hit"
@@ -49,7 +50,7 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_FULL_CHUNKS: '1'
           SCRAPE_CSS: '0'
-          DOWNLOAD_CONCURRENCY: '48'
+          DOWNLOAD_CONCURRENCY: '16'
           ARCHIVE_CHUNKS: '1'
           ARCHIVE_COPY_ALL: '1'
           ARCHIVE_KEEP_BUILDS: '6'
@@ -83,7 +84,6 @@ jobs:
             exit 0
           fi
           ZIP="canary-${BN}-chunks.zip"
-          # Prefer files/ (all chunks); fallback to whole build folder
           if [ -d "${DIR}/files" ] && [ "$(ls -A "${DIR}/files" 2>/dev/null | head -1)" ]; then
             (cd "${DIR}/files" && zip -qr -9 "../../../${ZIP}" .)
           else
@@ -117,7 +117,6 @@ jobs:
           rm -f package-lock.json
           rm -f canary-*-chunks.zip 2>/dev/null || true
 
-          # data + manifests + web bundles (NOT builds/*/files — too large for git)
           git add -f \
             data/known_experiment_ids.json \
             data/known_string_keys.json \
@@ -128,6 +127,7 @@ jobs:
             data/announced_builds.json \
             data/build.json \
             data/experiments.json \
+            data/findings.json \
             data/strings.json \
             data/routes.json \
             data/meta.json \
@@ -137,7 +137,6 @@ jobs:
             builds/zip-hint.json \
             2>/dev/null || true
 
-          # Per-build: manifest + web.*.js only
           if [ -d builds ]; then
             for d in builds/*/; do
               [ -d "$d" ] || continue
@@ -146,7 +145,6 @@ jobs:
             done
           fi
 
-          # Ensure heavy chunk dumps stay untracked
           git reset -q -- builds/*/files 2>/dev/null || true
 
           if git diff --staged --quiet; then

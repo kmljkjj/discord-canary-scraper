@@ -1,11 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
+const { writeJsonAtomic } = require('./atomic');
 
-/**
- * experiments.json peut être:
- *  A) [ {id}, ... ]
- *  B) { experiments: [ {id}, ... ], totals, ... }
- */
 function normalizeExperiments(raw) {
   if (!raw) return [];
 
@@ -28,11 +24,8 @@ function normalizeExperiments(raw) {
         return { id: e, type, kind: type, source: 'baseline' };
       }
       if (!e || !e.id) return null;
-      // kind/type = user|guild uniquement (jamais apex/legacy)
       let type = e.type || e.kind || null;
-      if (type === 'apex' || type === 'legacy' || type === 'user' || type === 'guild') {
-        if (type === 'apex' || type === 'legacy') type = null;
-      }
+      if (type === 'apex' || type === 'legacy') type = null;
       if (type !== 'user' && type !== 'guild') {
         type = /guild|server/i.test(String(e.id)) ? 'guild' : 'user';
       }
@@ -89,7 +82,6 @@ async function loadState(dataDir) {
 async function saveState(dataDir, state) {
   await fs.ensureDir(dataDir);
 
-  // build sans lister tous les assets (évite fichiers énormes / diffs git inutiles)
   const buildOut = state.build
     ? {
         buildNumber: state.build.buildNumber,
@@ -104,34 +96,28 @@ async function saveState(dataDir, state) {
           : state.build.cssCount || null,
       }
     : null;
-  await fs.writeJson(path.join(dataDir, 'build.json'), buildOut, { spaces: 2 });
+  await writeJsonAtomic(path.join(dataDir, 'build.json'), buildOut);
 
-  await fs.writeJson(
-    path.join(dataDir, 'experiments.json'),
-    {
-      scrapedAt: new Date().toISOString(),
-      buildNumber: state.build && state.build.buildNumber,
-      totals: { all: (state.experiments || []).length },
-      experiments: state.experiments || [],
-    },
-    { spaces: 2 },
-  );
+  const expPayload = {
+    scrapedAt: new Date().toISOString(),
+    buildNumber: state.build && state.build.buildNumber,
+    totals: { all: (state.experiments || []).length },
+    experiments: state.experiments || [],
+  };
+  await writeJsonAtomic(path.join(dataDir, 'experiments.json'), expPayload);
+  // Alias for GitHub Pages / legacy docs
+  await writeJsonAtomic(path.join(dataDir, 'findings.json'), expPayload);
 
-  // strings/routes en compact (moins de RAM / I/O sur Actions)
-  await fs.writeJson(path.join(dataDir, 'strings.json'), state.strings || {});
-  await fs.writeJson(path.join(dataDir, 'routes.json'), state.routes || {});
-  await fs.writeJson(
-    path.join(dataDir, 'meta.json'),
-    {
-      initialized: true,
-      updatedAt: new Date().toISOString(),
-      experimentCount: (state.experiments || []).length,
-      stringCount: Object.keys(state.strings || {}).length,
-      routeCount: Object.keys(state.routes || {}).length,
-      lastBuild: state.build && state.build.buildNumber,
-    },
-    { spaces: 2 },
-  );
+  await writeJsonAtomic(path.join(dataDir, 'strings.json'), state.strings || {}, null);
+  await writeJsonAtomic(path.join(dataDir, 'routes.json'), state.routes || {}, null);
+  await writeJsonAtomic(path.join(dataDir, 'meta.json'), {
+    initialized: true,
+    updatedAt: new Date().toISOString(),
+    experimentCount: (state.experiments || []).length,
+    stringCount: Object.keys(state.strings || {}).length,
+    routeCount: Object.keys(state.routes || {}).length,
+    lastBuild: state.build && state.build.buildNumber,
+  });
 }
 
 async function readJson(p, fallback = null) {
