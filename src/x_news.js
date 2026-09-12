@@ -1,23 +1,30 @@
 /**
  * Watch @DiscordNEW8r on X → Discord webhook
  *
- * Secrets:
- *   X_NEWS_WEBHOOK_URL  — Discord webhook (required)
- *   X_BEARER_TOKEN      — X API v2 Bearer (required for reliability)
+ * REQUIRED for reliability:
+ *   Secrets → X_BEARER_TOKEN  (X Developer Portal → Bearer Token)
+ *   Secrets → X_NEWS_WEBHOOK_URL
  *
- * Soft exit 0 if nothing fetched.
+ * Without X_BEARER_TOKEN, public RSS/Nitter are almost always blocked in 2026
+ * and new posts will NOT be detected.
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'seen_x_posts.json');
 const SCREEN_NAME = process.env.X_SCREEN_NAME || 'DiscordNEW8r';
 const USER_ID = process.env.X_USER_ID || '2073982489836584960';
-const WEBHOOK = process.env.X_NEWS_WEBHOOK_URL || process.env.X_WEBHOOK_URL || process.env.DISCORD_X_WEBHOOK_URL;
-const BEARER = process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN;
-const MAX_NOTIFY = 5;
+const WEBHOOK =
+  process.env.X_NEWS_WEBHOOK_URL ||
+  process.env.X_WEBHOOK_URL ||
+  process.env.DISCORD_X_WEBHOOK_URL ||
+  '';
+const BEARER =
+  process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '';
+const MAX_NOTIFY = 8;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
@@ -31,6 +38,9 @@ const RSS_MIRRORS = [
 
 async function main() {
   console.log('=== X News Watch · @' + SCREEN_NAME + ' ===');
+  console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
+  console.log('Bearer:', BEARER ? 'set (' + BEARER.slice(0, 8) + '…)' : 'MISSING');
+
   if (!WEBHOOK) {
     console.warn('Missing X_NEWS_WEBHOOK_URL — soft skip');
     process.exit(0);
@@ -41,55 +51,71 @@ async function main() {
   console.log('Seen posts:', seen.ids.length);
 
   let posts = [];
+  let source = 'none';
+
   if (BEARER) {
-    console.log('Source: X API v2');
     try {
       posts = await fetchFromApi(BEARER);
+      if (posts.length) source = 'x-api-v2';
     } catch (e) {
       console.warn('API error', e.message);
-      posts = await fetchFromRss();
     }
   } else {
-    console.log('No X_BEARER_TOKEN — trying RSS (often blocked)');
-    posts = await fetchFromRss();
+    console.warn(
+      '⚠️  No X_BEARER_TOKEN secret — public RSS almost always fails. Add it in GitHub → Settings → Secrets.',
+    );
   }
 
-  console.log('Fetched', posts.length, 'posts');
+  if (!posts.length) {
+    posts = await fetchFromRss();
+    if (posts.length) source = 'rss';
+  }
+
+  console.log('Fetched', posts.length, 'posts via', source);
   if (!posts.length) {
     console.warn(
-      'No posts fetched — add secret X_BEARER_TOKEN for reliable monitoring',
+      'No posts fetched. Action required: add secret X_BEARER_TOKEN from https://developer.x.com',
     );
+    // Soft exit — do not red the workflow, but do not touch seen file
     process.exit(0);
   }
 
+  // First run: seed only
   if (!seen.ids.length) {
-    for (const p of posts) seen.ids.push(p.id);
-    seen.ids = uniq(seen.ids).slice(-300);
+    seen.ids = uniq(posts.map((p) => p.id)).slice(-300);
     await saveSeen(seen);
-    console.log('Seeded', seen.ids.length, 'ids — no notify');
+    console.log('Seeded', seen.ids.length, 'ids — no notify on first run');
     return;
   }
 
   const known = new Set(seen.ids.map(String));
-  const fresh = posts.filter((p) => !known.has(String(p.id)));
-  fresh.sort((a, b) => String(b.id).localeCompare(String(a.id)));
+  const fresh = posts
+    .filter((p) => p.id && !known.has(String(p.id)))
+    .sort((a, b) => String(b.id).localeCompare(String(a.id)));
 
   console.log('New posts:', fresh.length);
+  if (!fresh.length) {
+    console.log('Nothing new');
+    return;
+  }
 
   let sent = 0;
   for (const p of fresh.slice(0, MAX_NOTIFY)) {
     const ok = await postWebhook(p);
     if (ok) {
       known.add(String(p.id));
+      seen.ids.push(String(p.id));
       sent++;
       await sleep(400);
+    } else {
+      console.warn('Webhook failed for', p.id, '— will retry next run');
+      // do NOT mark as seen
     }
   }
 
-  for (const p of posts) known.add(String(p.id));
-  seen.ids = uniq([...known]).slice(-300);
+  seen.ids = uniq(seen.ids).slice(-300);
   await saveSeen(seen);
-  console.log('Sent', sent, '· seen now', seen.ids.length);
+  console.log('Sent', sent, '/', fresh.length, '· seen now', seen.ids.length);
 }
 
 async function fetchFromApi(bearer) {
@@ -98,19 +124,30 @@ async function fetchFromApi(bearer) {
     const uRes = await fetch(
       `https://api.twitter.com/2/users/by/username/${SCREEN_NAME}`,
       {
-        headers: { Authorization: 'Bearer ' + bearer, 'User-Agent': 'canary-x-news' },
+        headers: {
+          Authorization: 'Bearer ' + bearer,
+          'User-Agent': 'canary-x-news',
+        },
         timeout: 15000,
       },
     );
     if (uRes.ok) {
       const uj = await uRes.json();
-      if (uj.data && uj.data.id) uid = String(uj.data.id);
+      if (uj.data && uj.data.id) {
+        uid = String(uj.data.id);
+        console.log('Resolved user id', uid);
+      }
+    } else {
+      console.warn('username lookup', uRes.status, (await uRes.text()).slice(0, 120));
     }
-  } catch {}
+  } catch (e) {
+    console.warn('username lookup fail', e.message);
+  }
 
   const url =
     `https://api.twitter.com/2/users/${uid}/tweets` +
     `?max_results=10` +
+    `&exclude=replies` +
     `&tweet.fields=created_at,text,entities,attachments` +
     `&expansions=attachments.media_keys` +
     `&media.fields=url,preview_image_url,type`;
@@ -124,8 +161,7 @@ async function fetchFromApi(bearer) {
   });
   if (!res.ok) {
     const t = await res.text();
-    console.error('API', res.status, t.slice(0, 300));
-    return fetchFromRss();
+    throw new Error('API ' + res.status + ' ' + t.slice(0, 250));
   }
   const data = await res.json();
   const mediaMap = {};
@@ -163,7 +199,7 @@ async function fetchFromRss() {
           'User-Agent': UA,
           Accept: 'application/rss+xml, application/xml, text/xml, */*',
         },
-        timeout: 15000,
+        timeout: 12000,
       });
       if (!res.ok) {
         console.warn('RSS', res.status, url);
@@ -171,7 +207,7 @@ async function fetchFromRss() {
       }
       const xml = await res.text();
       if (
-        /not yet whitelist|Error 404|403 Forbidden|Making sure you're not a bot|Attention Required/i.test(
+        /not yet whitelist|Error 404|403 Forbidden|Making sure you're not a bot|Attention Required|cloudflare/i.test(
           xml,
         ) &&
         !/status\/\d{10,}/i.test(xml)
@@ -205,11 +241,10 @@ function parseRss(xml) {
       (pick(block, 'guid') || '').match(/(\d{15,})/);
     const id = idMatch ? idMatch[1] : null;
     if (!id) continue;
-    const url = `https://x.com/${SCREEN_NAME}/status/${id}`;
     items.push({
       id: String(id),
       text: title || '',
-      url,
+      url: `https://x.com/${SCREEN_NAME}/status/${id}`,
       createdAt: strip(pick(block, 'pubDate')) || null,
       image: null,
     });
@@ -272,6 +307,7 @@ async function postWebhook(p) {
         embeds: [embed],
         content: p.url,
       }),
+      timeout: 15000,
     });
     console.log('webhook', res.status, p.id);
     if (!res.ok) console.warn(await res.text());
@@ -289,7 +325,6 @@ async function loadSeen() {
       return { ids: (d.ids || []).map(String) };
     }
   } catch {}
-  // merge x_seen_ids.json if present
   try {
     const alt = path.join(DATA, 'x_seen_ids.json');
     if (await fs.pathExists(alt)) {
@@ -301,11 +336,10 @@ async function loadSeen() {
 }
 
 async function saveSeen(seen) {
-  await fs.writeJson(
-    SEEN_FILE,
-    { updatedAt: new Date().toISOString(), ids: seen.ids },
-    { spaces: 2 },
-  );
+  await writeJsonAtomic(SEEN_FILE, {
+    updatedAt: new Date().toISOString(),
+    ids: seen.ids,
+  });
 }
 
 function uniq(arr) {

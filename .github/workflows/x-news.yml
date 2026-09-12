@@ -2,7 +2,8 @@ name: X News · DiscordNEW8r
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    # every 5 min (was 10)
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-x-news]
@@ -37,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ ! -d node_modules/node-fetch ]; then
+          if [ ! -d node_modules/node-fetch ] || [ ! -d node_modules/fs-extra ]; then
             npm install --no-audit --no-fund --no-package-lock
           fi
           rm -f package-lock.json
@@ -45,19 +46,20 @@ jobs:
       - name: Watch @DiscordNEW8r
         env:
           X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_SCREEN_NAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
-        continue-on-error: true
         run: node src/x_news.js
 
       - name: Save seen ids
+        if: always()
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           rm -f package-lock.json
-          git add -f data/seen_x_posts.json || true
+          git add -f data/seen_x_posts.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No seen-file changes"
             exit 0
