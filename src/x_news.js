@@ -1,12 +1,13 @@
 /**
  * Watch @DiscordNEW8r on X → Discord webhook
  *
- * REQUIRED for reliability:
- *   Secrets → X_BEARER_TOKEN  (X Developer Portal → Bearer Token)
- *   Secrets → X_NEWS_WEBHOOK_URL
+ * Secrets:
+ *   X_NEWS_WEBHOOK_URL  — Discord webhook
+ *   X_BEARER_TOKEN      — X API Bearer (needs remaining credits)
  *
- * Without X_BEARER_TOKEN, public RSS/Nitter are almost always blocked in 2026
- * and new posts will NOT be detected.
+ * If logs show HTTP 402 "credits depleted":
+ *   → developer.x.com → your app → add credits / wait for monthly reset
+ * Public RSS/Nitter are dead in 2026; no free reliable fallback.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -32,7 +33,6 @@ const RSS_MIRRORS = [
   `https://rsshub.rssforever.com/twitter/user/${SCREEN_NAME}`,
   `https://rsshub.app/twitter/user/${SCREEN_NAME}`,
   `https://nitter.privacyredirect.com/${SCREEN_NAME}/rss`,
-  `https://nitter.poast.org/${SCREEN_NAME}/rss`,
   `https://xcancel.com/${SCREEN_NAME}/rss`,
 ];
 
@@ -52,18 +52,26 @@ async function main() {
 
   let posts = [];
   let source = 'none';
+  let apiError = null;
 
   if (BEARER) {
     try {
       posts = await fetchFromApi(BEARER);
       if (posts.length) source = 'x-api-v2';
     } catch (e) {
-      console.warn('API error', e.message);
+      apiError = String(e.message || e);
+      console.warn('API error', apiError);
+      if (/402|credits depleted|Payment Required/i.test(apiError)) {
+        console.warn(
+          'X API credits are EMPTY (HTTP 402).\n' +
+            '→ https://developer.x.com → your project → Billing / Credits\n' +
+            'Add credits or wait for the free monthly reset. RSS cannot replace this.',
+        );
+        await maybeWarnCredits(seen);
+      }
     }
   } else {
-    console.warn(
-      '⚠️  No X_BEARER_TOKEN secret — public RSS almost always fails. Add it in GitHub → Settings → Secrets.',
-    );
+    console.warn('No X_BEARER_TOKEN — cannot use official API');
   }
 
   if (!posts.length) {
@@ -73,14 +81,14 @@ async function main() {
 
   console.log('Fetched', posts.length, 'posts via', source);
   if (!posts.length) {
-    console.warn(
-      'No posts fetched. Action required: add secret X_BEARER_TOKEN from https://developer.x.com',
-    );
-    // Soft exit — do not red the workflow, but do not touch seen file
+    if (apiError && /402|credits/i.test(apiError)) {
+      console.warn('Stopped: X API credits depleted + RSS blocked');
+    } else {
+      console.warn('No posts fetched');
+    }
     process.exit(0);
   }
 
-  // First run: seed only
   if (!seen.ids.length) {
     seen.ids = uniq(posts.map((p) => p.id)).slice(-300);
     await saveSeen(seen);
@@ -109,13 +117,55 @@ async function main() {
       await sleep(400);
     } else {
       console.warn('Webhook failed for', p.id, '— will retry next run');
-      // do NOT mark as seen
     }
   }
 
   seen.ids = uniq(seen.ids).slice(-300);
   await saveSeen(seen);
   console.log('Sent', sent, '/', fresh.length, '· seen now', seen.ids.length);
+}
+
+async function maybeWarnCredits(seen) {
+  // at most one Discord warning every 12h
+  const now = Date.now();
+  if (seen.creditsWarnedAt && now - seen.creditsWarnedAt < 12 * 3600 * 1000) {
+    return;
+  }
+  try {
+    const res = await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: 'Datamining · X',
+        embeds: [
+          {
+            title: 'X API — crédits épuisés',
+            description:
+              'Impossible de lire @' +
+              SCREEN_NAME +
+              '.\n' +
+              'L’API répond **402 credits depleted**.\n\n' +
+              '**Que faire :**\n' +
+              '1. [developer.x.com](https://developer.x.com) → ton projet\n' +
+              '2. Billing / Credits → ajouter des crédits **ou** attendre le reset mensuel\n' +
+              '3. Relancer le workflow **X News**\n\n' +
+              '_Les miroirs RSS publics ne marchent plus en 2026._',
+            color: 0xed4245,
+            footer: { text: 'X · setup' },
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      }),
+      timeout: 12000,
+    });
+    console.log('credits warning webhook', res.status);
+    if (res.ok) {
+      seen.creditsWarnedAt = now;
+      await saveSeen(seen);
+    }
+  } catch (e) {
+    console.warn('credits warning failed', e.message);
+  }
 }
 
 async function fetchFromApi(bearer) {
@@ -138,9 +188,14 @@ async function fetchFromApi(bearer) {
         console.log('Resolved user id', uid);
       }
     } else {
-      console.warn('username lookup', uRes.status, (await uRes.text()).slice(0, 120));
+      const t = await uRes.text();
+      if (uRes.status === 402 || /credits depleted/i.test(t)) {
+        throw new Error('API 402 ' + t.slice(0, 200));
+      }
+      console.warn('username lookup', uRes.status, t.slice(0, 120));
     }
   } catch (e) {
+    if (/402|credits/i.test(String(e.message))) throw e;
     console.warn('username lookup fail', e.message);
   }
 
@@ -322,23 +377,20 @@ async function loadSeen() {
   try {
     if (await fs.pathExists(SEEN_FILE)) {
       const d = await fs.readJson(SEEN_FILE);
-      return { ids: (d.ids || []).map(String) };
+      return {
+        ids: (d.ids || []).map(String),
+        creditsWarnedAt: d.creditsWarnedAt || null,
+      };
     }
   } catch {}
-  try {
-    const alt = path.join(DATA, 'x_seen_ids.json');
-    if (await fs.pathExists(alt)) {
-      const d = await fs.readJson(alt);
-      return { ids: (d.ids || []).map(String) };
-    }
-  } catch {}
-  return { ids: [] };
+  return { ids: [], creditsWarnedAt: null };
 }
 
 async function saveSeen(seen) {
   await writeJsonAtomic(SEEN_FILE, {
     updatedAt: new Date().toISOString(),
-    ids: seen.ids,
+    ids: seen.ids || [],
+    creditsWarnedAt: seen.creditsWarnedAt || null,
   });
 }
 
