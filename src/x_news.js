@@ -1,17 +1,19 @@
 /**
  * Watch @DiscordNEW8r on X → Discord webhook
  *
- * FREE mode (recommended when API credits are empty):
- *   Secrets:
- *     X_AUTH_TOKEN  — cookie auth_token from x.com (logged-in browser)
- *     X_CT0         — cookie ct0 from x.com
- *     X_NEWS_WEBHOOK_URL
+ * FREE mode:
+ *   X_AUTH_TOKEN + X_CT0 (cookies x.com)
+ *   X_NEWS_WEBHOOK_URL
  *
- * Paid / official API (optional):
- *     X_BEARER_TOKEN — needs remaining X API credits
+ * Optional paid:
+ *   X_BEARER_TOKEN
  *
- * Order: session cookies → official API → RSS (almost always dead)
+ * Session requests send the same headers as the web client:
+ *   authorization, x-twitter-auth-type, x-csrf-token,
+ *   x-twitter-client-language, x-twitter-active-user,
+ *   content-type, x-client-transaction-id
  */
+const crypto = require('crypto');
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -31,7 +33,6 @@ const BEARER =
 const AUTH_TOKEN = process.env.X_AUTH_TOKEN || process.env.TWITTER_AUTH_TOKEN || '';
 const CT0 = process.env.X_CT0 || process.env.TWITTER_CT0 || '';
 
-// Public web bearer (same for every browser client — not a secret)
 const WEB_BEARER =
   'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
@@ -39,7 +40,6 @@ const MAX_NOTIFY = 8;
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
-// Query IDs rotate; try several known 2026 hashes
 const QID_USER = [
   'sLVLhk0bGj3MVFEKTdax1w',
   'IGgvgiOx4QZndDHuD3x9TQ',
@@ -113,38 +113,29 @@ async function main() {
 
   let posts = [];
   let source = 'none';
-  let lastErr = null;
 
-  // 1) FREE — browser session cookies
   if (AUTH_TOKEN && CT0) {
     try {
       posts = await fetchFromSession(AUTH_TOKEN, CT0);
       if (posts.length) source = 'session-cookies';
     } catch (e) {
-      lastErr = String(e.message || e);
-      console.warn('Session fetch fail:', lastErr);
+      console.warn('Session fetch fail:', e.message || e);
     }
   } else {
-    console.warn(
-      'No X_AUTH_TOKEN / X_CT0 — free mode disabled. See README tip in workflow logs.',
-    );
+    console.warn('No X_AUTH_TOKEN / X_CT0 — free mode disabled');
   }
 
-  // 2) Official API (needs credits)
   if (!posts.length && BEARER) {
     try {
       posts = await fetchFromApi(BEARER);
       if (posts.length) source = 'x-api-v2';
     } catch (e) {
-      lastErr = String(e.message || e);
-      console.warn('API error', lastErr);
-      if (/402|credits depleted/i.test(lastErr)) {
-        await maybeWarnCredits(seen);
-      }
+      const msg = String(e.message || e);
+      console.warn('API error', msg);
+      if (/402|credits depleted/i.test(msg)) await maybeWarnCredits(seen);
     }
   }
 
-  // 3) RSS last resort
   if (!posts.length) {
     posts = await fetchFromRss();
     if (posts.length) source = 'rss';
@@ -154,9 +145,8 @@ async function main() {
   if (!posts.length) {
     console.warn(
       'No posts.\n' +
-        '→ Mode gratuit: ajoute les secrets X_AUTH_TOKEN + X_CT0\n' +
-        '  (F12 → Application → Cookies → x.com → auth_token et ct0)\n' +
-        '→ Ou recharge les crédits X API (Bearer).',
+        '→ Secrets gratuits: X_AUTH_TOKEN + X_CT0\n' +
+        '  F12 → Application → Cookies → x.com',
     );
     process.exit(0);
   }
@@ -187,7 +177,7 @@ async function main() {
       sent++;
       await sleep(400);
     } else {
-      console.warn('Webhook failed for', p.id, '— will retry next run');
+      console.warn('Webhook failed for', p.id);
     }
   }
 
@@ -196,37 +186,71 @@ async function main() {
   console.log('Sent', sent, '/', fresh.length, '· seen now', seen.ids.length);
 }
 
-function sessionHeaders(authToken, ct0) {
+/**
+ * Headers aligned with the logged-in X web client.
+ * x-client-transaction-id is generated per request (path-aware).
+ */
+function sessionHeaders(authToken, ct0, method, apiPath) {
+  const tid = makeClientTransactionId(method || 'GET', apiPath || '/');
   return {
-    Authorization: 'Bearer ' + WEB_BEARER,
+    authorization: 'Bearer ' + WEB_BEARER,
+    'x-twitter-auth-type': 'OAuth2Session',
     'x-csrf-token': ct0,
+    'x-twitter-client-language': 'en',
+    'x-twitter-active-user': 'yes',
+    'content-type': 'application/json',
+    'x-client-transaction-id': tid,
     Cookie: `auth_token=${authToken}; ct0=${ct0}`,
     'User-Agent': UA,
-    'x-twitter-active-user': 'yes',
-    'x-twitter-auth-type': 'OAuth2Session',
-    'x-twitter-client-language': 'en',
     Accept: '*/*',
-    'content-type': 'application/json',
+    'Accept-Language': 'en-US,en;q=0.9',
     Referer: `https://x.com/${SCREEN_NAME}`,
     Origin: 'https://x.com',
+    'sec-ch-ua': '"Chromium";v="131", "Not_A Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
   };
 }
 
+/**
+ * Lightweight transaction id (browser-like base64 blob).
+ * Full XCT needs live SVG + ondemand.js; this is enough for many UserTweets
+ * calls when auth cookies are valid. Regenerated every request.
+ */
+function makeClientTransactionId(method, apiPath) {
+  const EPOCH = 1682924400;
+  const timeNow = Math.floor(Date.now() / 1000) - EPOCH;
+  const timeBuf = Buffer.alloc(4);
+  timeBuf.writeUInt32LE(timeNow >>> 0, 0);
+  const keyBytes = crypto.randomBytes(32);
+  const payload = `${(method || 'GET').toUpperCase()}!${apiPath || '/'}!${timeNow}!obfiowerehiring`;
+  const hash = crypto.createHash('sha256').update(payload).digest().subarray(0, 16);
+  const rnd = crypto.randomBytes(1)[0];
+  const arr = Buffer.concat([keyBytes, timeBuf, hash, Buffer.from([3])]);
+  const out = Buffer.alloc(1 + arr.length);
+  out[0] = rnd;
+  for (let i = 0; i < arr.length; i++) out[i + 1] = arr[i] ^ rnd;
+  return out.toString('base64').replace(/=+$/, '');
+}
+
 async function fetchFromSession(authToken, ct0) {
-  const headers = sessionHeaders(authToken, ct0);
   let uid = USER_ID;
 
-  // Resolve user id
   for (const qid of QID_USER) {
     try {
       const variables = {
         screen_name: SCREEN_NAME,
         withSafetyModeUserFields: true,
       };
+      const apiPath = `/i/api/graphql/${qid}/UserByScreenName`;
       const url =
-        `https://x.com/i/api/graphql/${qid}/UserByScreenName` +
+        `https://x.com${apiPath}` +
         `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
         `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
+      const headers = sessionHeaders(authToken, ct0, 'GET', apiPath);
       const res = await fetch(url, { headers, timeout: 20000 });
       if (!res.ok) {
         console.warn('UserByScreenName', qid, res.status);
@@ -238,8 +262,7 @@ async function fetchFromSession(authToken, ct0) {
         data.data &&
         data.data.user &&
         data.data.user.result &&
-        (data.data.user.result.rest_id ||
-          (data.data.user.result.legacy && data.data.user.result.id));
+        data.data.user.result.rest_id;
       if (rest) {
         uid = String(rest);
         console.log('Session resolved user', uid, 'via', qid);
@@ -250,7 +273,6 @@ async function fetchFromSession(authToken, ct0) {
     }
   }
 
-  // UserTweets
   for (const qid of QID_TWEETS) {
     try {
       const variables = {
@@ -261,10 +283,12 @@ async function fetchFromSession(authToken, ct0) {
         withVoice: true,
         withV2Timeline: true,
       };
+      const apiPath = `/i/api/graphql/${qid}/UserTweets`;
       const url =
-        `https://x.com/i/api/graphql/${qid}/UserTweets` +
+        `https://x.com${apiPath}` +
         `?variables=${encodeURIComponent(JSON.stringify(variables))}` +
         `&features=${encodeURIComponent(JSON.stringify(FEATURES))}`;
+      const headers = sessionHeaders(authToken, ct0, 'GET', apiPath);
       const res = await fetch(url, { headers, timeout: 25000 });
       const text = await res.text();
       if (!res.ok) {
@@ -278,7 +302,11 @@ async function fetchFromSession(authToken, ct0) {
         continue;
       }
       if (data.errors) {
-        console.warn('UserTweets errors', qid, JSON.stringify(data.errors).slice(0, 200));
+        console.warn(
+          'UserTweets errors',
+          qid,
+          JSON.stringify(data.errors).slice(0, 200),
+        );
         continue;
       }
       const posts = parseTimelineJson(data);
@@ -292,7 +320,9 @@ async function fetchFromSession(authToken, ct0) {
     }
   }
 
-  throw new Error('Session GraphQL returned no tweets (cookies expired or queryId rotated)');
+  throw new Error(
+    'Session GraphQL returned no tweets (cookies expired or queryId rotated)',
+  );
 }
 
 function parseTimelineJson(data) {
@@ -304,7 +334,6 @@ function parseTimelineJson(data) {
       for (const x of node) walk(x);
       return;
     }
-    // Tweet object shapes
     const legacy = node.legacy;
     const restId = node.rest_id || (legacy && legacy.id_str);
     if (legacy && restId && (legacy.full_text || legacy.text)) {
@@ -317,11 +346,7 @@ function parseTimelineJson(data) {
           (legacy.entities && legacy.entities.media) ||
           [];
         if (media[0]) {
-          image =
-            media[0].media_url_https ||
-            media[0].media_url ||
-            (media[0].video_info && null) ||
-            null;
+          image = media[0].media_url_https || media[0].media_url || null;
         }
         out.push({
           id,
@@ -342,7 +367,8 @@ function parseTimelineJson(data) {
 
 async function maybeWarnCredits(seen) {
   const now = Date.now();
-  if (seen.creditsWarnedAt && now - seen.creditsWarnedAt < 12 * 3600 * 1000) return;
+  if (seen.creditsWarnedAt && now - seen.creditsWarnedAt < 12 * 3600 * 1000)
+    return;
   try {
     const res = await fetch(WEBHOOK, {
       method: 'POST',
@@ -351,19 +377,12 @@ async function maybeWarnCredits(seen) {
         username: 'Datamining · X',
         embeds: [
           {
-            title: 'X — mode gratuit disponible',
+            title: 'X — mode gratuit',
             description:
-              'L’API officielle n’a plus de crédits.\n\n' +
-              '**Gratuit :** ajoute 2 secrets GitHub\n' +
-              '• `X_AUTH_TOKEN`\n' +
-              '• `X_CT0`\n\n' +
-              'Comment les avoir :\n' +
-              '1. Connecte-toi sur [x.com](https://x.com)\n' +
-              '2. F12 → Application → Cookies → `https://x.com`\n' +
-              '3. Copie **auth_token** et **ct0**\n' +
-              '4. Relance le workflow **X News**',
+              'API crédits vides.\n\n' +
+              'Ajoute les secrets **X_AUTH_TOKEN** + **X_CT0**\n' +
+              '(cookies depuis x.com → F12 → Application).',
             color: 0xfaa61a,
-            footer: { text: 'X · free mode' },
             timestamp: new Date().toISOString(),
           },
         ],
