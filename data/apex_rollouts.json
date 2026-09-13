@@ -1,11 +1,11 @@
 {
-  "scrapedAt": "2026-09-13T05:43:37.639Z",
+  "scrapedAt": "2026-09-13T05:48:39.496Z",
   "sources": {
-    "primary": 0,
+    "primary": 216,
     "fallback": 283,
-    "merged": 283
+    "merged": 365
   },
-  "count": 283,
+  "count": 365,
   "experiments": [
     {
       "id": "2020-01_in_app_reporting",
@@ -43,7 +43,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -55,7 +55,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -71,7 +71,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -83,7 +83,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -99,7 +99,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -111,7 +111,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -127,7 +127,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -139,7 +139,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -155,7 +155,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -167,7 +167,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -183,7 +183,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -195,7 +195,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-03_nitro_emoji_autocomplete_upsell",
+      "type": "user",
+      "title": "Emoji Autocomplete Upsell",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -211,7 +239,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -223,7 +251,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_impression_logging",
+      "type": "user",
+      "title": "Standard Analytics: Log Impressions",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -239,7 +295,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -251,7 +307,91 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_network_action_logging",
+      "type": "user",
+      "title": "Standard Analytics: Log Network Actions",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-04_nitro_emoji_autocomplete_upsell_ios",
+      "type": "user",
+      "title": "Emoji Autocomplete Upsell iOS",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-05_application_command_suggestions",
+      "type": "user",
+      "title": "Application Command Suggestion experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -267,7 +407,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -284,7 +424,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 28
             },
             {
@@ -299,7 +439,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-06_guild_subscriptions_payment_flow_test_page",
+      "type": "user",
+      "title": "Test page for guild subscription payment flows",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -315,7 +483,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -327,7 +495,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -343,7 +511,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -355,7 +523,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -371,7 +539,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -383,7 +551,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -399,7 +567,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -411,7 +579,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -427,7 +595,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -439,7 +607,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -455,7 +623,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -467,7 +635,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -483,7 +651,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -495,7 +663,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -511,7 +679,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -523,7 +691,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -539,7 +707,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -551,7 +719,63 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-10_pause_partner_applications_experiment",
+      "type": "user",
+      "title": "Pause Partner Applications Experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2021-10_price_determination",
+      "type": "user",
+      "title": "Price determination experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -567,7 +791,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 33.34
         },
         {
@@ -584,7 +808,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 33.34
             },
             {
@@ -605,7 +829,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -617,7 +841,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -633,7 +857,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -645,7 +869,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -661,7 +885,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -673,7 +897,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -689,7 +913,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -701,7 +925,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -717,7 +941,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -729,13 +953,86 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2021-12_soundboard",
+      "type": "guild",
+      "title": "Soundboard",
+      "fingerprint": "-1:100.00,1:100.00,3:5.00,4:5.00|ov:0|pops:3|Feature · SOUNDBOARD;Feature · COMMUNITY;Members ·",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Soundboard on",
+          "pct": 100
+        },
+        {
+          "bucket": 3,
+          "label": "Treatment 3: Control (soundboard off)",
+          "pct": 5
+        },
+        {
+          "bucket": 4,
+          "label": "Treatment 4: Soundboard on w/ volume tooltip",
+          "pct": 5
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 3,
+      "populations": [
+        {
+          "filters": "Feature · SOUNDBOARD",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Soundboard on",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Members ·",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 90
+            },
+            {
+              "bucket": 3,
+              "label": "Treatment 3: Control (soundboard off)",
+              "pct": 5
+            },
+            {
+              "bucket": 4,
+              "label": "Treatment 4: Soundboard on w/ volume tooltip",
+              "pct": 5
+            }
+          ]
+        }
+      ],
+      "revision": 7
     },
     {
       "id": "2022-01_discovery_iar",
@@ -745,7 +1042,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -757,7 +1054,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_guild_role_subscription_multigroup",
+      "type": "guild",
+      "title": "Guild Role Subscription Multigroup",
+      "fingerprint": "-1:100.00|ov:4|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 4,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -773,7 +1098,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -800,7 +1125,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -816,7 +1141,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -828,7 +1153,91 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_home_tab_guild",
+      "type": "guild",
+      "title": "Home Tab Guild",
+      "fingerprint": "-1:100.00|ov:2|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 2,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 4
+    },
+    {
+      "id": "2022-01_home_tab_user",
+      "type": "user",
+      "title": "Home Tab User",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-01_pronouns",
+      "type": "user",
+      "title": "Pronouns in Profile",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -844,7 +1253,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -856,7 +1265,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -872,7 +1281,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -884,7 +1293,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -900,7 +1309,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -912,7 +1321,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -928,7 +1337,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -940,7 +1349,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -956,7 +1365,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -968,7 +1377,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -984,7 +1393,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -996,7 +1405,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-03_role_subscription_analytics_portal",
+      "type": "guild",
+      "title": "Guild Role Subscription Analytics",
+      "fingerprint": "1:100.00|ov:12|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to view analytics for role subscriptions",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 12,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enables guild to view analytics for role subscriptions",
               "pct": 100
             }
           ]
@@ -1012,7 +1449,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1024,7 +1461,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_activities_nitro",
+      "type": "user",
+      "title": "Activities in Nitro",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1040,7 +1505,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1052,7 +1517,63 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_forced_colors_desktop",
+      "type": "user",
+      "title": "Forced Colors Mode (Desktop)",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-04_guild_role_subscription_purchase_feedback_loop",
+      "type": "guild",
+      "title": "Guild Role Subscription Purchase Feedback Loop",
+      "fingerprint": "1:100.00|ov:1|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guilds to send purchsae feedback loop system messages",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 1,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enables guilds to send purchsae feedback loop system messages",
               "pct": 100
             }
           ]
@@ -1068,7 +1589,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1080,7 +1601,91 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-05_channel_opt_in",
+      "type": "user",
+      "title": "Channel Opt In",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-05_mobile_web_role_subscription_purchase_page",
+      "type": "guild",
+      "title": "Guild Role Subscription Mobile Web",
+      "fingerprint": "1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables role subscription mobile web purchase page",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enables role subscription mobile web purchase page",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-05_safety_coms_update",
+      "type": "user",
+      "title": "Safety Integrity Platform Coms Update",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1152,7 +1757,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1164,7 +1769,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1180,7 +1785,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1192,13 +1797,51 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2022-07_application_subscriptions",
+      "type": "guild",
+      "title": "Application Subscriptions",
+      "fingerprint": "1:100.00|ov:24|pops:2|Feature · DEVELOPER_SUPPORT_SERVER;-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 24,
+      "populationCount": 2,
+      "populations": [
+        {
+          "filters": "Feature · DEVELOPER_SUPPORT_SERVER",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enabled",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enabled",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 2
     },
     {
       "id": "2022-07_channel_highlights",
@@ -1208,7 +1851,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1220,7 +1863,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1236,7 +1879,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1248,7 +1891,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1264,7 +1907,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1276,7 +1919,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1330,7 +1973,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -1357,7 +2000,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1373,7 +2016,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1385,7 +2028,63 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_user_panel_context_menu_profile_entrypoint",
+      "type": "user",
+      "title": "User Panel Context Menu Profile Entrypoint",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-07_user_panel_context_menu_profile_entrypoint_behavior",
+      "type": "user",
+      "title": "User Panel Context Menu Profile Entrypoint (behavior)",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1429,7 +2128,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1441,13 +2140,41 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2022-08_application_command_forced_migration",
+      "type": "guild",
+      "title": "Run Commands scope migration then show upsell to enable disabled integrations",
+      "fingerprint": "1:100.00|ov:3|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 3,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enabled",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 1
     },
     {
       "id": "2022-08_back_to_school",
@@ -1457,7 +2184,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1469,7 +2196,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1506,6 +2233,74 @@
       "revision": 0
     },
     {
+      "id": "2022-08_community_onboarding",
+      "type": "guild",
+      "title": "Community Onboarding",
+      "fingerprint": "1:100.00|ov:0|pops:5|Feature · GUILD_ONBOARDING_ADMIN_ONLY;Feature · PARTNERED;Feature · COMMUNITY · Members ·;Feature · COMMUNITY · Members ·;-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show Community Onboarding",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 5,
+      "populations": [
+        {
+          "filters": "Feature · GUILD_ONBOARDING_ADMIN_ONLY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show Community Onboarding",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show Community Onboarding",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY · Members ·",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show Community Onboarding",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY · Members ·",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show Community Onboarding",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show Community Onboarding",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 2
+    },
+    {
       "id": "2022-08_guild_unreads",
       "type": "user",
       "title": "Guild Unreads",
@@ -1513,7 +2308,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1525,7 +2320,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1541,7 +2336,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1553,7 +2348,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1569,7 +2364,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1581,7 +2376,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1597,7 +2392,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1609,7 +2404,119 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_mobile_web_role_subscription_upsell",
+      "type": "user",
+      "title": "Mobile Web Guild Role Subscription Upsell",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_new_unreads_bar",
+      "type": "user",
+      "title": "New Unreads Bar",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_rtc_minimum_jitter_buffer_level",
+      "type": "user",
+      "title": "Minimum Jitter Buffer Level",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-08_windows_graphics_capture",
+      "type": "user",
+      "title": "Windows Graphics Capture",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1625,7 +2532,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1637,7 +2544,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_community_bleeding_edge",
+      "type": "user",
+      "title": "(Staff only) Bleeding edge experiment for Community 2.0 features",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1681,7 +2616,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1693,7 +2628,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1709,7 +2644,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1721,7 +2656,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1737,7 +2672,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1749,7 +2684,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1765,7 +2700,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1777,7 +2712,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_guild_onboarding_admin_only",
+      "type": "guild",
+      "title": "Guild Onboarding Admin only",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1793,7 +2756,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1805,7 +2768,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1821,7 +2784,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1833,7 +2796,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-09_premium_tier_0_global",
+      "type": "user",
+      "title": "Premium tier 0 (Global)",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1849,7 +2840,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1861,7 +2852,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1877,7 +2868,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1889,7 +2880,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1905,7 +2896,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1917,13 +2908,91 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2022-10_communities_multi",
+      "type": "guild",
+      "title": "A multi-arm guild experiment that segments all eligible guilds to test different combinations of the Communities 2.0 experience",
+      "fingerprint": "-1:40.00,1:20.00,2:20.00,4:20.00|ov:0|pops:2|Feature · COMMUNITY_EXP_LARGE_UNGATED;Feature · COMMUNITY_EXP_LARGE_GATED",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 40
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: NMX Core",
+          "pct": 20
+        },
+        {
+          "bucket": 2,
+          "label": "Treatment 2: NMX Core + Home",
+          "pct": 20
+        },
+        {
+          "bucket": 4,
+          "label": "Treatment 4: Home",
+          "pct": 20
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 2,
+      "populations": [
+        {
+          "filters": "Feature · COMMUNITY_EXP_LARGE_UNGATED",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 20
+            },
+            {
+              "bucket": 1,
+              "label": "Treatment 1: NMX Core",
+              "pct": 20
+            },
+            {
+              "bucket": 2,
+              "label": "Treatment 2: NMX Core + Home",
+              "pct": 20
+            },
+            {
+              "bucket": 4,
+              "label": "Treatment 4: Home",
+              "pct": 20
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY_EXP_LARGE_GATED",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 40
+            },
+            {
+              "bucket": 1,
+              "label": "Treatment 1: NMX Core",
+              "pct": 20
+            },
+            {
+              "bucket": 2,
+              "label": "Treatment 2: NMX Core + Home",
+              "pct": 20
+            }
+          ]
+        }
+      ],
+      "revision": 2
     },
     {
       "id": "2022-10_context_menu_and_new_media_picker",
@@ -1933,7 +3002,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -1945,7 +3014,63 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_creator_store_pages",
+      "type": "guild",
+      "title": "Creator Store Pages ",
+      "fingerprint": "1:100.00|ov:20|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables guild to have store page",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 20,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enables guild to have store page",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_guild_onboarding_home_landing",
+      "type": "user",
+      "title": "Guild Onboarding landing on home experience",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -1989,7 +3114,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2001,13 +3126,122 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2022-10_premium_tier_0_desktop_gifting",
+      "type": "user",
+      "title": "Premium Tier 0 Desktop Gifting",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_profile_panel",
+      "type": "user",
+      "title": "Profiles In DMs",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-10_text_in_stage",
+      "type": "guild",
+      "title": "Text-In-Stage",
+      "fingerprint": "-1:100.00,1:100.00|ov:0|pops:3|Feature · COMMUNITY · Range by hash;Feature · COMMUNITY;-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enable Text-In-Stage",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 3,
+      "populations": [
+        {
+          "filters": "Feature · COMMUNITY · Range by hash",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enable Text-In-Stage",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 2
     },
     {
       "id": "2022-11_activitiesbashoutcoachmark",
@@ -2017,7 +3251,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2029,13 +3263,41 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2022-11_application_command_permission_v3_rollout",
+      "type": "guild",
+      "title": "Application Command Permission v3 Rollout",
+      "fingerprint": "2:100.00|ov:7|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 2,
+          "label": "Treatment 2: Show toggle to opt-in to the v3 system and the dismissible message",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 7,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 2,
+              "label": "Treatment 2: Show toggle to opt-in to the v3 system and the dismissible message",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 1
     },
     {
       "id": "2022-11_automod_non_community_guilds_release",
@@ -2045,7 +3307,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -2062,7 +3324,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2082,7 +3344,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2102,7 +3364,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_client_themes",
+      "type": "user",
+      "title": "Client Themes",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2118,7 +3408,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2130,7 +3420,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-11_command_query_pagination",
+      "type": "user",
+      "title": "Command Query Pagination",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2146,7 +3464,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -2173,7 +3491,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2189,7 +3507,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -2206,7 +3524,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2232,7 +3550,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2244,7 +3562,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2260,7 +3578,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2272,7 +3590,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2316,7 +3634,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2328,7 +3646,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2344,7 +3662,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2356,7 +3674,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2372,7 +3690,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2384,7 +3702,63 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_auto_disable_video_mobile_v1",
+      "type": "user",
+      "title": "Mobile performance: VideoHealthManager",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_avatar_decorations",
+      "type": "user",
+      "title": "Avatar Decorations",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2400,7 +3774,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2412,7 +3786,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2428,7 +3802,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2440,7 +3814,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2022-12_get_my_guilds_application_ids_endpoint",
+      "type": "user",
+      "title": "Get My Guilds' Application IDs Endpoint Experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2456,7 +3858,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2468,7 +3870,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2484,7 +3886,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2496,7 +3898,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2533,15 +3935,43 @@
       "revision": 0
     },
     {
+      "id": "2022-12_media_mosaic_experiment",
+      "type": "user",
+      "title": "Media Mosaic",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
       "title": "Automod Mention Raid Limit",
-      "fingerprint": "1:100.00|ov:16|pops:2|Feature · PARTNERED;Feature · COMMUNITY",
+      "fingerprint": "1:50.00|ov:16|pops:2|Feature · PARTNERED;Feature · COMMUNITY",
       "treatments": [
         {
           "bucket": 1,
           "label": "Treatment 1: Automod Mention Raid Limit",
-          "pct": 100
+          "pct": 50
         }
       ],
       "overrideIdCount": 16,
@@ -2553,7 +3983,7 @@
             {
               "bucket": 1,
               "label": "Treatment 1: Automod Mention Raid Limit",
-              "pct": 100
+              "pct": 50
             }
           ]
         },
@@ -2563,12 +3993,40 @@
             {
               "bucket": 1,
               "label": "Treatment 1: Automod Mention Raid Limit",
+              "pct": 50
+            }
+          ]
+        }
+      ],
+      "revision": 2
+    },
+    {
+      "id": "2022-12_mobile_gdm_invite_link",
+      "type": "user",
+      "title": "Enable Mobile GDM Invite Links",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
-      "revision": 3
+      "revision": 0
     },
     {
       "id": "2022-12_mobile_guild_role_subscription_team_setup",
@@ -2578,7 +4036,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 90
         },
         {
@@ -2595,7 +4053,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 90
             },
             {
@@ -2616,7 +4074,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2628,7 +4086,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2644,7 +4102,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2656,7 +4114,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2672,7 +4130,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2684,7 +4142,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2700,7 +4158,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2712,7 +4170,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2728,7 +4186,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2740,7 +4198,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2756,7 +4214,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2768,7 +4226,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2784,7 +4242,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2796,7 +4254,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2812,7 +4270,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2824,7 +4282,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2840,7 +4298,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2852,7 +4310,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2868,7 +4326,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 50
         },
         {
@@ -2885,13 +4343,41 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 50
             },
             {
               "bucket": 1,
               "label": "Treatment 1: On",
               "pct": 25
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-01_global_display_names",
+      "type": "user",
+      "title": "Global Display Name",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
             }
           ]
         }
@@ -2906,7 +4392,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -2918,7 +4404,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -2965,6 +4451,34 @@
       "revision": 1
     },
     {
+      "id": "2023-01_mfa_v2",
+      "type": "user",
+      "title": "New MFA",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
       "id": "2023-01_shared_canvas",
       "type": "guild",
       "title": "Shared Canvas",
@@ -2972,7 +4486,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -2989,7 +4503,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3009,7 +4523,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3025,7 +4539,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3037,7 +4551,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3053,7 +4567,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3065,13 +4579,112 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2023-02_app_directory_for_all_guild",
+      "type": "guild",
+      "title": "App Directory Upsell For All Guild",
+      "fingerprint": "-1:100.00,1:100.00|ov:0|pops:2|Range by hash;-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 2,
+      "populations": [
+        {
+          "filters": "Range by hash",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enabled",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_app_directory_for_all_modal",
+      "type": "user",
+      "title": "App Directory Upsell For All Modal",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_app_recommendations_server_checklist",
+      "type": "guild",
+      "title": "Application Recommendation Server Checklist Experiment",
+      "fingerprint": "1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show recommendation to add apps in new server checklist",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show recommendation to add apps in new server checklist",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 2
     },
     {
       "id": "2023-02_automod_custom_message",
@@ -3112,14 +4725,62 @@
       "revision": 0
     },
     {
-      "id": "2023-02_burst_reaction_guild_experiment",
+      "id": "2023-02_automod_on_user_profile",
       "type": "guild",
-      "title": "Burst Reactions",
-      "fingerprint": "-1:80.00,1:5.00,4:100.00|ov:23|pops:2|Feature · INTERNAL_EMPLOYEE_ONLY;-",
+      "title": "Automod on User Profile",
+      "fingerprint": "-1:60.00,1:100.00|ov:8|pops:2|Feature · PARTNERED;Feature · COMMUNITY",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
+          "pct": 60
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Automod on User Profile (usernames only)",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 8,
+      "populationCount": 2,
+      "populations": [
+        {
+          "filters": "Feature · PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Automod on User Profile (usernames only)",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 60
+            },
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Automod on User Profile (usernames only)",
+              "pct": 20
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_burst_reaction_guild_experiment",
+      "type": "guild",
+      "title": "Burst Reactions",
+      "fingerprint": "-1:80.00,1:5.00,2:100.00,4:5.00|ov:23|pops:2|Feature · INTERNAL_EMPLOYEE_ONLY;-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
           "pct": 80
         },
         {
@@ -3128,9 +4789,14 @@
           "pct": 5
         },
         {
+          "bucket": 2,
+          "label": "Treatment 2: Tab UI",
+          "pct": 100
+        },
+        {
           "bucket": 4,
           "label": "Treatment 4: Free Bursts",
-          "pct": 100
+          "pct": 5
         }
       ],
       "overrideIdCount": 23,
@@ -3140,8 +4806,8 @@
           "filters": "Feature · INTERNAL_EMPLOYEE_ONLY",
           "treatments": [
             {
-              "bucket": 4,
-              "label": "Treatment 4: Free Bursts",
+              "bucket": 2,
+              "label": "Treatment 2: Tab UI",
               "pct": 100
             }
           ]
@@ -3151,7 +4817,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 80
             },
             {
@@ -3160,14 +4826,47 @@
               "pct": 5
             },
             {
+              "bucket": 2,
+              "label": "Treatment 2: Tab UI",
+              "pct": 5
+            },
+            {
               "bucket": 4,
               "label": "Treatment 4: Free Bursts",
-              "pct": 15
+              "pct": 5
             }
           ]
         }
       ],
-      "revision": 3
+      "revision": 2
+    },
+    {
+      "id": "2023-02_discord_embeds",
+      "type": "user",
+      "title": "Discord embeds",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
     },
     {
       "id": "2023-02_free_form",
@@ -3177,7 +4876,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3189,7 +4888,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_guild_boosting_marketing_redesign",
+      "type": "user",
+      "title": "Guild Boosting Marketing Redesign",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3205,7 +4932,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3217,7 +4944,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_inline_sending_preview_mobile",
+      "type": "user",
+      "title": "Inline Sending Preview Mobile",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3233,7 +4988,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3245,7 +5000,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3261,7 +5016,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3273,7 +5028,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_nitro_most_popular_tag",
+      "type": "user",
+      "title": "Most popular tag in nitro plan selection",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3289,7 +5072,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3301,7 +5084,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3380,7 +5163,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3392,7 +5175,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3408,7 +5191,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -3435,7 +5218,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3451,7 +5234,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -3478,7 +5261,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3530,14 +5313,14 @@
       "revision": 2
     },
     {
-      "id": "2023-02_referral_trials",
+      "id": "2023-02_parent_tools_launch",
       "type": "user",
-      "title": "Referral Trials",
+      "title": "Safety - Parent Tools Launch",
       "fingerprint": "-1:100.00|ov:0|pops:1|-",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3549,13 +5332,122 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
         }
       ],
       "revision": 0
+    },
+    {
+      "id": "2023-02_referral_trials",
+      "type": "user",
+      "title": "Referral Trials",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_server_subscriptions_iap",
+      "type": "guild",
+      "title": "Server Subscriptions IAP",
+      "fingerprint": "1:100.00|ov:3|pops:1|IDs explicites · 25",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enables Server Subscriptions IAP",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 3,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": "IDs explicites · 25",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enables Server Subscriptions IAP",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-02_stage_boosting",
+      "type": "guild",
+      "title": "Stage Boosting",
+      "fingerprint": "-1:100.00,1:50.00|ov:0|pops:3|Feature · COMMUNITY · Members · · Range by hash;Feature · COMMUNITY · Members ·;-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Enabled",
+          "pct": 50
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 3,
+      "populations": [
+        {
+          "filters": "Feature · COMMUNITY · Members · · Range by hash",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Enabled",
+              "pct": 50
+            }
+          ]
+        },
+        {
+          "filters": "Feature · COMMUNITY · Members ·",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 1
     },
     {
       "id": "2023-02_tabs_v2",
@@ -3565,7 +5457,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3577,7 +5469,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3621,7 +5513,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3633,7 +5525,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_activities_release_tools",
+      "type": "user",
+      "title": "Activities Release Tools",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3649,7 +5569,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3661,7 +5581,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3677,7 +5597,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3689,7 +5609,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3705,7 +5625,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3717,7 +5637,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3733,7 +5653,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3745,7 +5665,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3761,7 +5681,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3773,7 +5693,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3789,7 +5709,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3801,7 +5721,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3817,7 +5737,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3829,7 +5749,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3840,12 +5760,12 @@
     {
       "id": "2023-03_channel_name_emojis",
       "type": "user",
-      "title": "Channel Emojis",
+      "title": "Channel Name Emojis",
       "fingerprint": "-1:100.00|ov:0|pops:1|-",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3857,7 +5777,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_client_themes_16thru21",
+      "type": "user",
+      "title": "Client Themes New Themes",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3869,33 +5817,28 @@
       "id": "2023-03_clyde_ai",
       "type": "guild",
       "title": "ClydeAI",
-      "fingerprint": "-1:100.00,1:100.00,3:12.00|ov:25|pops:4|Feature · CLYDE_EXPERIMENT_ENABLED, INTERNAL_EMPLOYEE_ONLY;Feature · COMMUNITY;Members ·;Members ·",
+      "fingerprint": "-1:100.00,1:100.00|ov:25|pops:3|Feature · CLYDE_EXPERIMENT_ENABLED, INTERNAL_EMPLOYEE_ONLY;Feature · COMMUNITY;Members ·",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
           "bucket": 1,
-          "label": "Treatment 1: Enabled (Default Off)",
+          "label": "Treatment 1: Enabled",
           "pct": 100
-        },
-        {
-          "bucket": 3,
-          "label": "Treatment 3: Enabled (Default On)",
-          "pct": 12
         }
       ],
       "overrideIdCount": 25,
-      "populationCount": 4,
+      "populationCount": 3,
       "populations": [
         {
           "filters": "Feature · CLYDE_EXPERIMENT_ENABLED, INTERNAL_EMPLOYEE_ONLY",
           "treatments": [
             {
               "bucket": 1,
-              "label": "Treatment 1: Enabled (Default Off)",
+              "label": "Treatment 1: Enabled",
               "pct": 100
             }
           ]
@@ -3905,7 +5848,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -3915,48 +5858,28 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 78
+              "label": "None",
+              "pct": 98
             },
             {
               "bucket": 1,
-              "label": "Treatment 1: Enabled (Default Off)",
+              "label": "Treatment 1: Enabled",
               "pct": 1
-            },
-            {
-              "bucket": 3,
-              "label": "Treatment 3: Enabled (Default On)",
-              "pct": 10
-            }
-          ]
-        },
-        {
-          "filters": "Members ·",
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 80
-            },
-            {
-              "bucket": 3,
-              "label": "Treatment 3: Enabled (Default On)",
-              "pct": 10
             }
           ]
         }
       ],
-      "revision": 2
+      "revision": 0
     },
     {
-      "id": "2023-03_free_discord_stickers",
-      "type": "user",
-      "title": "Free Default Stickers",
+      "id": "2023-03_cr_accept_new_terms",
+      "type": "guild",
+      "title": "Server Subscriptions Accept New Terms",
       "fingerprint": "-1:100.00|ov:0|pops:1|-",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -3968,7 +5891,91 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_discord_stickers",
+      "type": "user",
+      "title": "Free Default Stickers",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_user_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Free User Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_free_user_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Free User Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4025,6 +6032,44 @@
       "revision": 0
     },
     {
+      "id": "2023-03_guild_safety_settings",
+      "type": "guild",
+      "title": "Safety check in guild settings",
+      "fingerprint": "-1:80.00,1:10.00|ov:1|pops:1|Feature · COMMUNITY",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 80
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show safety check in settings",
+          "pct": 10
+        }
+      ],
+      "overrideIdCount": 1,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": "Feature · COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 80
+            },
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show safety check in settings",
+              "pct": 10
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
       "id": "2023-03_home_deprecation",
       "type": "guild",
       "title": "Home Deprecation",
@@ -4032,7 +6077,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         },
         {
@@ -4059,7 +6104,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4075,7 +6120,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4087,7 +6132,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4099,64 +6144,11 @@
       "id": "2023-03_improved_message_markdown_guild",
       "type": "guild",
       "title": "Improved Message Markdown Guild Experiment",
-      "fingerprint": "-1:100.00,2:100.00|ov:0|pops:3|Range by hash;-;-",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "Not Eligible",
-          "pct": 100
-        },
-        {
-          "bucket": 2,
-          "label": "Treatment 2: Show improved message markdown WITHOUT masked links",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "populationCount": 3,
-      "populations": [
-        {
-          "filters": "Range by hash",
-          "treatments": [
-            {
-              "bucket": 2,
-              "label": "Treatment 2: Show improved message markdown WITHOUT masked links",
-              "pct": 100
-            }
-          ]
-        },
-        {
-          "filters": null,
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 100
-            }
-          ]
-        },
-        {
-          "filters": null,
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 100
-            }
-          ]
-        }
-      ],
-      "revision": 1
-    },
-    {
-      "id": "2023-03_mobile_re_design_existing_users",
-      "type": "user",
-      "title": "Tabs V2 - Existing Users",
       "fingerprint": "-1:100.00|ov:0|pops:1|-",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4168,7 +6160,147 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_ios_keyboard_resizes_view",
+      "type": "user",
+      "title": "iOS Keyboard Resizes View",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mj_chat_bar_guild",
+      "type": "guild",
+      "title": "MJ Chat Bar enabled guilds",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mj_chat_bar_user",
+      "type": "user",
+      "title": "MJ Chat Bar user experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mobile_burst_reactions",
+      "type": "user",
+      "title": "Mobile Burst Reactions User Experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_mobile_re_design_existing_users",
+      "type": "user",
+      "title": "Tabs V2 - Existing Users",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4184,7 +6316,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4196,7 +6328,50 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_onboarding_soft_requirement_for_partnership",
+      "type": "guild",
+      "title": "Hide onboarding soft requirement for partnership",
+      "fingerprint": "-1:100.00,1:100.00|ov:0|pops:2|Range by hash;-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1: Show onboarding soft requirement for partnership",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 2,
+      "populations": [
+        {
+          "filters": "Range by hash",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1: Show onboarding soft requirement for partnership",
+              "pct": 100
+            }
+          ]
+        },
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4206,81 +6381,13 @@
     },
     {
       "id": "2023-03_onboarding_upsell_lifecycle",
-      "type": "guild",
-      "title": "Onboarding Upsell Lifecycle",
-      "fingerprint": "-1:100.00,1:20.00|ov:0|pops:4|-;Members · · Range by hash;Members ·;-",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "Not Eligible",
-          "pct": 100
-        },
-        {
-          "bucket": 1,
-          "label": "Treatment 1: Show new lifecycle upsells",
-          "pct": 20
-        }
-      ],
-      "overrideIdCount": 0,
-      "populationCount": 4,
-      "populations": [
-        {
-          "filters": null,
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 100
-            }
-          ]
-        },
-        {
-          "filters": "Members · · Range by hash",
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 60
-            },
-            {
-              "bucket": 1,
-              "label": "Treatment 1: Show new lifecycle upsells",
-              "pct": 20
-            }
-          ]
-        },
-        {
-          "filters": "Members ·",
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 100
-            }
-          ]
-        },
-        {
-          "filters": null,
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 100
-            }
-          ]
-        }
-      ],
-      "revision": 3
-    },
-    {
-      "id": "2023-03_p13n_summarization_user",
       "type": "user",
-      "title": "Channel Summaries User Experiment",
+      "title": "Onboarding Upsell Lifecycle",
       "fingerprint": "-1:100.00|ov:0|pops:1|-",
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4292,7 +6399,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_p13n_summarization_user",
+      "type": "user",
+      "title": "Channel Summaries User Experiment",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4308,7 +6443,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4320,7 +6455,7 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4336,7 +6471,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4348,7 +6483,35 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_pomelo_compatible_ux",
+      "type": "user",
+      "title": "Pomelo Compatibility",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4385,76 +6548,82 @@
       "revision": 0
     },
     {
-      "id": "2023-03_server_subscriptions_tier_templates",
+      "id": "2023-03_self_demonetization",
       "type": "guild",
-      "title": "Server Subscriptions Tier Templates",
-      "fingerprint": "-1:100.00,1:5.00,2:5.00,3:100.00|ov:23|pops:3|Feature · GUILD_ROLE_SUBSCRIPTION_TIER_TEMPLATE;Feature · ROLE_SUBSCRIPTIONS_ENABLED;-",
+      "title": "Self Demonetization",
+      "fingerprint": "1:100.00|ov:1|pops:1|-",
       "treatments": [
         {
-          "bucket": -1,
-          "label": "Not Eligible",
-          "pct": 100
-        },
-        {
           "bucket": 1,
-          "label": "Treatment 1: 299 basic tier + no link",
-          "pct": 5
-        },
-        {
-          "bucket": 2,
-          "label": "Treatment 2: 399 basic tier + no link",
-          "pct": 5
-        },
-        {
-          "bucket": 3,
-          "label": "Treatment 3: 399 basic tier + link",
+          "label": "Treatment 1: Enables Self Demonetization",
           "pct": 100
         }
       ],
-      "overrideIdCount": 23,
-      "populationCount": 3,
+      "overrideIdCount": 1,
+      "populationCount": 1,
       "populations": [
         {
-          "filters": "Feature · GUILD_ROLE_SUBSCRIPTION_TIER_TEMPLATE",
+          "filters": null,
           "treatments": [
             {
-              "bucket": 3,
-              "label": "Treatment 3: 399 basic tier + link",
+              "bucket": 1,
+              "label": "Treatment 1: Enables Self Demonetization",
               "pct": 100
             }
           ]
-        },
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_server_subs_iap_geo_rollout",
+      "type": "user",
+      "title": "Server Subscriptions IAP User",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
         {
-          "filters": "Feature · ROLE_SUBSCRIPTIONS_ENABLED",
-          "treatments": [
-            {
-              "bucket": -1,
-              "label": "Not Eligible",
-              "pct": 80
-            },
-            {
-              "bucket": 1,
-              "label": "Treatment 1: 299 basic tier + no link",
-              "pct": 5
-            },
-            {
-              "bucket": 2,
-              "label": "Treatment 2: 399 basic tier + no link",
-              "pct": 5
-            },
-            {
-              "bucket": 3,
-              "label": "Treatment 3: 399 basic tier + link",
-              "pct": 5
-            }
-          ]
-        },
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
         {
           "filters": null,
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_server_subscriptions_tier_templates",
+      "type": "guild",
+      "title": "Server Subscriptions Tier Templates",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4470,7 +6639,7 @@
       "treatments": [
         {
           "bucket": -1,
-          "label": "Not Eligible",
+          "label": "None",
           "pct": 100
         }
       ],
@@ -4482,7 +6651,119 @@
           "treatments": [
             {
               "bucket": -1,
-              "label": "Not Eligible",
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_0_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Tier 0 Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_0_subscriber_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Tier 0 Subscriber Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_2_marketing_page_headline_copy",
+      "type": "user",
+      "title": "Tier 2 Marketing Page Headline Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_tier_2_subscriber_marketing_page_cta_copy",
+      "type": "user",
+      "title": "Tier 2 Subscriber Marketing Page CTA Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4511,6 +6792,62 @@
             {
               "bucket": -1,
               "label": "Not Eligible",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_user_trial_offer_marketing_page_tier_0_cta_copy",
+      "type": "user",
+      "title": "User Trial Offer Marketing Page Tier 0 CTA Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-03_user_trial_offer_marketing_page_tier_2_cta_copy",
+      "type": "user",
+      "title": "User Trial Offer Marketing Page Tier 2 CTA Copy ",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
@@ -4827,6 +7164,62 @@
       "revision": 0
     },
     {
+      "id": "2023-04_nitro_drop_announcement_modal",
+      "type": "user",
+      "title": "2023 Nitro April Drop Announcement Modal",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-04_nitro_drop_experience",
+      "type": "user",
+      "title": "2023 Nitro April Drop Experience",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
       "id": "2023-04_notification_redesign_v2",
       "type": "user",
       "title": "NotificationRedesignV2",
@@ -5015,6 +7408,34 @@
             {
               "bucket": -1,
               "label": "Not Eligible",
+              "pct": 100
+            }
+          ]
+        }
+      ],
+      "revision": 0
+    },
+    {
+      "id": "2023-04_soundboard_nitro",
+      "type": "user",
+      "title": "Soundboard Nitro",
+      "fingerprint": "-1:100.00|ov:0|pops:1|-",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": null,
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
               "pct": 100
             }
           ]
