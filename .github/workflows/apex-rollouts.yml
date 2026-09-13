@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: apex-rollouts
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   rollouts:
@@ -44,10 +44,13 @@ jobs:
 
       - name: Track Apex rollout percentages
         env:
+          DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           APEX_MIN_PCT_DELTA: '0.5'
+          APEX_RECENT_YEAR: '2024'
+          ORBIT_BOT_NAME: Datamining
         continue-on-error: true
         run: node src/apex_rollouts.js
 
