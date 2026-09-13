@@ -54,7 +54,7 @@ jobs:
           ARCHIVE_CHUNKS: '1'
           ARCHIVE_COPY_ALL: '1'
           ARCHIVE_KEEP_BUILDS: '6'
-          ORBIT_BOT_NAME: Datamining
+          ORBIT_BOT_NAME: datamining client
           EMOJI_ADDED: ${{ secrets.EMOJI_ADDED }}
           EMOJI_MODIFIED: ${{ secrets.EMOJI_MODIFIED }}
           EMOJI_REMOVED: ${{ secrets.EMOJI_REMOVED }}
