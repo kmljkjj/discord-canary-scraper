@@ -1,0 +1,22 @@
+name: Restore apex once
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and restore
+        run: |
+          base64 -d assets/apex_restore.b64 > src/apex_rollouts.js
+          wc -c src/apex_rollouts.js
+          head -c 80 src/apex_rollouts.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/apex_rollouts.js
+          git commit -m "fix: restore apex_rollouts.js + yellow document avatar" || exit 0
+          git push origin HEAD:main
