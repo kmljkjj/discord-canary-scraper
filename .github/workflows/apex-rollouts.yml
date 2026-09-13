@@ -51,6 +51,7 @@ jobs:
           APEX_MIN_PCT_DELTA: '0.5'
           APEX_RECENT_YEAR: '2024'
           ORBIT_BOT_NAME: Datamining
+          ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.svg
         continue-on-error: true
         run: node src/apex_rollouts.js
 
