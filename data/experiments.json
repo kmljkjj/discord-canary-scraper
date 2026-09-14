@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-14T20:03:21.236Z",
-  "buildNumber": "612831",
+  "scrapedAt": "2026-09-14T20:16:20.779Z",
+  "buildNumber": "612853",
   "totals": {
-    "all": 394
+    "all": 395
   },
   "experiments": [
     {
@@ -5771,6 +5771,22 @@
     },
     {
       "id": "2026-09-youtube-3p",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-badge-directory-updates",
       "type": "user",
       "kind": "user",
       "label": null,
