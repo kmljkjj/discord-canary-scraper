@@ -1,6 +1,10 @@
 name: Fix double notify
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/fix-double-notify.yml'
+      - 'scripts/anti_double_notify.py'
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -14,10 +18,14 @@ jobs:
         run: |
           node --check src/index.js
           node --check src/lib/notify.js
-      - name: Commit
+      - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/index.js src/lib/notify.js .github/workflows/scrape.yml scripts/anti_double_notify.py
-          git commit -m "fix: anti-double Datamining notify (claim + dedupe)" || exit 0
+          git add src/index.js src/lib/notify.js .github/workflows/scrape.yml
+          if git diff --staged --quiet; then
+            echo "Already patched"
+            exit 0
+          fi
+          git commit -m "fix: anti-double Datamining notify (claim + dedupe)"
           git push origin HEAD:main
