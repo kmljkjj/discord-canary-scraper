@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-14T19:09:18.017Z",
-  "buildNumber": "612752",
+  "scrapedAt": "2026-09-14T19:42:48.523Z",
+  "buildNumber": "612795",
   "totals": {
-    "all": 395
+    "all": 394
   },
   "experiments": [
     {
@@ -375,19 +375,6 @@
     },
     {
       "id": "2025-09-server-nsfw-level",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2025-09-threads-also-send-to-channel",
       "type": "user",
       "kind": "user",
       "label": null,
