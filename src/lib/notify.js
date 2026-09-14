@@ -10,6 +10,8 @@ const AVATAR =
   process.env.WEBHOOK_AVATAR_URL ||
   'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
+const { wasPosted, markPosted, payloadFingerprint } = require('./webhook_dedupe');
+
 const COLOR = {
   build: 0x5865f2,
   added: 0x57f287,
@@ -377,6 +379,11 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
 async function post(url, body) {
   body.username = BOT;
   body.avatar_url = AVATAR;
+  const fp = payloadFingerprint(body);
+  if (await wasPosted(fp)) {
+    console.log('webhook DEDUPE skip', body.embeds?.[0]?.title || fp);
+    return true;
+  }
   const payload = JSON.stringify(body);
   let lastErr = null;
 
@@ -390,6 +397,7 @@ async function post(url, body) {
       });
       console.log('webhook', res.status, body.embeds?.[0]?.title || '');
       if (res.ok) {
+        await markPosted(fp);
         await sleep(80);
         return true;
       }
