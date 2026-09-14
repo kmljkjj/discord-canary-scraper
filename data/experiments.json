@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-14T18:13:27.189Z",
-  "buildNumber": "612677",
+  "scrapedAt": "2026-09-14T18:15:22.654Z",
+  "buildNumber": "612680",
   "totals": {
-    "all": 397
+    "all": 396
   },
   "experiments": [
     {
@@ -840,28 +840,6 @@
         }
       },
       "variationCount": 7,
-      "source": "discord"
-    },
-    {
-      "id": "2025-12-social-layer-storefront-activity-card-entrypoints-user-experiment",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
       "source": "discord"
     },
     {
