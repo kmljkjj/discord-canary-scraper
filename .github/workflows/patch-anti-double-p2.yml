@@ -2,7 +2,9 @@ name: Patch anti-double part2
 on:
   workflow_dispatch:
   push:
-    paths: ['.github/workflows/patch-anti-double-p2.yml']
+    paths:
+      - '.github/workflows/patch-anti-double-p2.yml'
+      - 'scripts/patch_anti_double_notify_index.py'
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -13,8 +15,7 @@ jobs:
       - name: Patch notify+index
         run: |
           set -euo pipefail
-          python3 -c "import base64,pathlib;pathlib.Path('scripts').mkdir(exist_ok=True);pathlib.Path('scripts/p.py').write_bytes(base64.b64decode('$(cat /tmp/patch_ni.py | base64 -w0)'))"
-          python3 scripts/p.py
+          python3 scripts/patch_anti_double_notify_index.py
           node --check src/index.js
           node --check src/lib/notify.js
           grep -n "COOLDOWN\|expbatch\|claimPosted\|v11.6" src/index.js src/lib/notify.js | head -15
