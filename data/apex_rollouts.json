@@ -1,17 +1,17 @@
 {
-  "scrapedAt": "2026-09-15T19:04:37.994Z",
+  "scrapedAt": "2026-09-15T19:11:13.164Z",
   "sources": {
-    "discord": 23,
+    "discord": 22,
     "advaith": 0,
     "workers": 216,
     "fallback": 283,
-    "merged": 385,
+    "merged": 384,
     "recent": 10,
-    "user": 285,
+    "user": 284,
     "guild": 100,
     "hasToken": true
   },
-  "count": 385,
+  "count": 384,
   "experiments": [
     {
       "id": "2026-06_guild_rooms",
@@ -352,7 +352,7 @@
       "id": "2025-11_tida_webform",
       "type": "user",
       "title": "2025-11_tida_webform",
-      "fingerprint": "user|b:1|rev:0|pop:0|hr:4883|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:0|hr:5106|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -459,7 +459,7 @@
       "id": "hash:3948141150",
       "type": "user",
       "title": "hash:3948141150",
-      "fingerprint": "user|b:3|rev:6|pop:0|hr:4688|ov:-1",
+      "fingerprint": "user|b:3|rev:6|pop:0|hr:3720|ov:-1",
       "treatments": [
         {
           "bucket": 3,
@@ -551,7 +551,7 @@
       "id": "hash:3013881204",
       "type": "user",
       "title": "hash:3013881204",
-      "fingerprint": "user|b:11|rev:5|pop:1|hr:7924|ov:-1",
+      "fingerprint": "user|b:11|rev:5|pop:1|hr:3395|ov:-1",
       "treatments": [
         {
           "bucket": 11,
@@ -572,7 +572,7 @@
       "id": "hash:2974740189",
       "type": "user",
       "title": "hash:2974740189",
-      "fingerprint": "user|b:1|rev:3|pop:0|hr:2987|ov:-1",
+      "fingerprint": "user|b:1|rev:3|pop:0|hr:8553|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -593,7 +593,7 @@
       "id": "hash:2582794089",
       "type": "user",
       "title": "hash:2582794089",
-      "fingerprint": "user|b:1|rev:0|pop:1|hr:4901|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:1|hr:7408|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -648,27 +648,6 @@
       "recent": false,
       "hash": 2453702596,
       "source": "discord"
-    },
-    {
-      "id": "hash:1144304849",
-      "type": "user",
-      "title": "hash:1144304849",
-      "fingerprint": "user|b:1|rev:0|pop:0|hr:47|ov:-1",
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Treatment 1",
-          "pct": null,
-          "assigned": true
-        }
-      ],
-      "overrideIdCount": 0,
-      "populationCount": 0,
-      "populations": [],
-      "revision": 0,
-      "recent": false,
-      "hash": 1144304849,
-      "source": "discord-assignment"
     },
     {
       "id": "2023-10_viewer_clipping",
@@ -1377,7 +1356,7 @@
       "id": "2023-09_iar_user_reporting",
       "type": "user",
       "title": "2023-09_iar_user_reporting",
-      "fingerprint": "user|b:1|rev:0|pop:4|hr:3583|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:4|hr:9572|ov:-1",
       "treatments": [
         {
           "bucket": 1,
