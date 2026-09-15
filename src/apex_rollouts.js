@@ -1,5 +1,5 @@
 /**
- * Apex rollouts v3.2 — Discord live % + structured guild decode
+ * Apex rollouts v4 (Wumpus-style) — Discord live % + structured guild decode
  * Secret: DISCORD_USER_TOKEN (user token, not bot)
  */
 const fetch = require('node-fetch');
@@ -25,6 +25,10 @@ const DISCORD_TOKEN = (process.env.DISCORD_USER_TOKEN || process.env.DISCORD_TOK
 const ADVAITH = process.env.APEX_ADVAITH_URL || 'https://api.rollouts.advaith.io';
 const WORKERS = process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
 const FALLBACK = process.env.APEX_FALLBACK_URL || 'https://raw.githubusercontent.com/discordexperimenthub/experimentAPI/master/experiments.json';
+const WUMPUS_DEFS =
+  process.env.APEX_DEFS_URL ||
+  'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
+const APEX_LOCAL = path.join(DATA_DIR, 'apex_experiments.json');
 const WEBHOOK = process.env.APEX_WEBHOOK_URL || process.env.ROLLOUT_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL || null;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
@@ -277,63 +281,147 @@ async function buildHashMap() {
   const map = new Map();
   const addId = (id) => {
     if (!id || typeof id !== 'string') return;
-    const h = murmur3(id);
-    map.set(h, id);
-    map.set(String(h), id);
+    const clean = id.trim();
+    if (!clean) return;
+    const h = murmur3(clean);
+    map.set(h, clean);
+    map.set(String(h), clean);
   };
-  try {
-    if (await fs.pathExists(LOCAL_EXP)) {
-      const data = await fs.readJson(LOCAL_EXP);
-      const list = Array.isArray(data) ? data : data.experiments || [];
-      for (const e of list) if (e && e.id) addId(String(e.id));
+  for (const file of [LOCAL_EXP, APEX_LOCAL, KNOWN_EXP]) {
+    try {
+      if (!(await fs.pathExists(file))) continue;
+      const data = await fs.readJson(file);
+      const list = Array.isArray(data) ? data : data.experiments || data.ids || [];
+      for (const x of list) {
+        if (typeof x === 'string') addId(x);
+        else if (x && (x.id || x.name)) addId(String(x.id || x.name));
+      }
+    } catch (e) {
+      console.warn('Hash map', path.basename(file) + ':', e.message);
     }
-  } catch (e) {
-    console.warn('Hash map experiments.json:', e.message);
   }
   try {
-    if (await fs.pathExists(KNOWN_EXP)) {
-      const data = await fs.readJson(KNOWN_EXP);
-      const list = Array.isArray(data) ? data : data.ids || data.experiments || [];
-      for (const x of list) addId(typeof x === 'string' ? x : x && x.id ? String(x.id) : null);
+    const res = await fetch(WUMPUS_DEFS, {
+      headers: { 'User-Agent': UA, Accept: 'application/json' },
+      timeout: 20000,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      let n = 0;
+      for (const e of Array.isArray(data) ? data : []) {
+        if (e && (e.id || e.name)) {
+          addId(String(e.id || e.name));
+          n++;
+        }
+      }
+      console.log('Defs gist:', n, 'ids');
     }
   } catch (e) {
-    console.warn('Hash map known:', e.message);
+    console.warn('Defs gist:', e.message);
   }
-  console.log('Hash map:', map.size / 2, 'ids');
+  console.log('Hash map:', Math.floor(map.size / 2), 'ids');
   return map;
 }
 
-async function fetchDiscord(hashMap) {
+function discordClientHeaders(withToken) {
+  const superProps = Buffer.from(
+    JSON.stringify({
+      os: 'Windows',
+      browser: 'Chrome',
+      device: '',
+      system_locale: 'en-US',
+      browser_user_agent: UA,
+      browser_version: '131.0.0.0',
+      os_version: '10',
+      referrer: '',
+      referring_domain: '',
+      release_channel: 'canary',
+      client_build_number: 609601,
+      client_event_source: null,
+    }),
+  ).toString('base64');
   const headers = {
     'User-Agent': UA,
-    Accept: 'application/json',
+    Accept: '*/*',
     'Accept-Language': 'en-US,en;q=0.9',
+    'X-Super-Properties': superProps,
+    'X-Discord-Locale': 'en-US',
+    Origin: 'https://canary.discord.com',
+    Referer: 'https://canary.discord.com/channels/@me',
   };
-  if (DISCORD_TOKEN) headers.Authorization = DISCORD_TOKEN;
-  for (const url of [
-    'https://discord.com/api/v9/experiments?with_guild_experiments=true',
+  if (withToken && DISCORD_TOKEN) headers.Authorization = DISCORD_TOKEN;
+  return headers;
+}
+
+async function fetchDiscordOnce(url, headers, hashMap, label) {
+  const res = await fetch(url, { headers, timeout: 30000 });
+  if (!res.ok) {
+    console.warn('Discord', res.status, label, url);
+    return [];
+  }
+  const data = await res.json();
+  const ge = data.guild_experiments || [];
+  console.log('Discord guild_experiments:', ge.length, '(' + label + ')');
+  const parsed = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
+  console.log(
+    '  sample:',
+    parsed.map((e) => e.id).slice(0, 12).join(', ') || '(none)',
+  );
+  console.log('  recent >=' + YEAR_MIN + ':', parsed.filter((e) => e.recent).length);
+  return parsed;
+}
+
+// Wumpus-Central/guild-experiments: GET experiments?with_guild_experiments=true
+// + X-Super-Properties client headers (returns more tuples than bare request)
+async function fetchDiscord(hashMap) {
+  const urls = [
     'https://canary.discord.com/api/v9/experiments?with_guild_experiments=true',
-  ]) {
-    try {
-      const res = await fetch(url, { headers, timeout: 30000 });
-      if (!res.ok) {
-        console.warn('Discord', res.status, url);
+    'https://discord.com/api/v9/experiments?with_guild_experiments=true',
+  ];
+  const byHash = new Map();
+  const ingest = (list) => {
+    for (const e of list) {
+      const key = e.hash != null ? String(e.hash) : e.id;
+      const prev = byHash.get(key);
+      if (!prev) {
+        byHash.set(key, e);
         continue;
       }
-      const data = await res.json();
-      const ge = data.guild_experiments || [];
-      console.log('Discord guild_experiments:', ge.length, DISCORD_TOKEN ? '(token)' : '(anon limited)');
-      const parsed = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
-      const ids = parsed.map((e) => e.id).slice(0, 20);
-      console.log('Discord ids sample:', ids.join(', ') || '(none)');
-      const recentN = parsed.filter((e) => e.recent).length;
-      console.log('Discord recent ≥' + YEAR_MIN + ':', recentN);
-      return parsed;
+      const prevHashId = String(prev.id).startsWith('hash:');
+      const nextHashId = String(e.id).startsWith('hash:');
+      if (prevHashId && !nextHashId) byHash.set(key, e);
+      else if ((e.treatments || []).length > (prev.treatments || []).length)
+        byHash.set(key, e);
+    }
+  };
+
+  for (const url of urls) {
+    try {
+      ingest(await fetchDiscordOnce(url, discordClientHeaders(false), hashMap, 'client'));
+      break;
     } catch (e) {
-      console.warn('Discord fail', e.message);
+      console.warn('Discord client fail', e.message);
     }
   }
-  return [];
+  if (DISCORD_TOKEN) {
+    for (const url of urls) {
+      try {
+        ingest(await fetchDiscordOnce(url, discordClientHeaders(true), hashMap, 'token'));
+        break;
+      } catch (e) {
+        console.warn('Discord token fail', e.message);
+      }
+    }
+  }
+
+  const out = [...byHash.values()];
+  console.log(
+    'Discord merged unique:',
+    out.length,
+    'recent',
+    out.filter((e) => e.recent).length,
+  );
+  return out;
 }
 
 async function fetchAdvaith(hashMap) {
@@ -586,7 +674,7 @@ async function postWebhook(embeds) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📊 Apex rollouts v3…');
+  console.log('📊 Apex rollouts v4 (Wumpus-style)…');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Token:', DISCORD_TOKEN ? 'set' : 'MISSING');
   const { experiments, sources } = await loadExperiments();
