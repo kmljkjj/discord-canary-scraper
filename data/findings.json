@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-15T18:11:44.399Z",
-  "buildNumber": "613606",
+  "scrapedAt": "2026-09-15T18:20:34.515Z",
+  "buildNumber": "613617",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -6603,6 +6603,21 @@
     },
     {
       "id": "2026-09-stream-zero-vad-leading",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-update-email-settings-copy-subtext",
       "type": "user",
       "kind": "user",
       "label": null,
