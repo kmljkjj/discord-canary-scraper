@@ -1,5 +1,5 @@
 /**
- * Apex rollouts v4 (Wumpus-style) — Discord live % + structured guild decode
+ * Apex rollouts v4.1 (user + guild) — Discord live % + structured guild decode
  * Secret: DISCORD_USER_TOKEN (user token, not bot)
  */
 const fetch = require('node-fetch');
@@ -167,6 +167,59 @@ function fromWire(tuple, hashMap) {
   };
 }
 
+
+/** User assignment from GET /experiments → assignments[]
+ * [hash, revision, bucket, override, population, hash_result, aa_mode, trigger_debugging, holdout_name?, ...]
+ * Discord does NOT expose global user % here — only this account's bucket.
+ * We still track revision/bucket changes; global user % comes from workers/fallback.
+ */
+function fromUserAssignment(tuple, hashMap) {
+  if (!Array.isArray(tuple) || tuple.length < 3) return null;
+  const hash = tuple[0];
+  const revision = tuple[1];
+  const bucket = tuple[2];
+  const override = tuple[3];
+  const population = tuple[4];
+  const hashResult = tuple[5];
+  const holdout = typeof tuple[8] === 'string' ? tuple[8] : null;
+  let id =
+    hashMap.get(Number(hash)) ||
+    hashMap.get(String(hash)) ||
+    (holdout && String(holdout)) ||
+    ('hash:' + hash);
+  const label = tLabel(bucket);
+  const treatments = [{ bucket, label, pct: null, assigned: true }];
+  const fingerprint =
+    'user|b:' +
+    bucket +
+    '|rev:' +
+    revision +
+    '|pop:' +
+    population +
+    '|hr:' +
+    hashResult +
+    '|ov:' +
+    override;
+  return {
+    id: String(id),
+    type: 'user',
+    title: String(id),
+    treatments,
+    populations: [],
+    overrideIdCount: override === 0 ? 1 : 0,
+    populationCount: 0,
+    fingerprint,
+    revision,
+    hash: Number(hash),
+    hashResult: hashResult != null ? Number(hashResult) : null,
+    assignedBucket: bucket,
+    recent: isRecent(id),
+    source: 'discord-assignment',
+    // no global % available from API for user experiments
+    hasGlobalPct: false,
+  };
+}
+
 /** advaith shape: { data: { id, type, title, hash }, rollout: [hash, key, rev, pops, ovs, ...] } */
 function fromAdvaith(raw, hashMap) {
   if (!raw || !raw.data) return null;
@@ -274,6 +327,7 @@ function fromObject(raw) {
     hash: raw.hash ?? null,
     recent: isRecent(id),
     source: 'object',
+    hasGlobalPct: treatments.some((x) => x.pct != null && Number.isFinite(x.pct)),
   };
 }
 
@@ -357,18 +411,30 @@ async function fetchDiscordOnce(url, headers, hashMap, label) {
   const res = await fetch(url, { headers, timeout: 30000 });
   if (!res.ok) {
     console.warn('Discord', res.status, label, url);
-    return [];
+    return { guild: [], user: [] };
   }
   const data = await res.json();
   const ge = data.guild_experiments || [];
+  const asg = data.assignments || [];
   console.log('Discord guild_experiments:', ge.length, '(' + label + ')');
-  const parsed = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
+  console.log('Discord user assignments:', asg.length, '(' + label + ')');
+  const guild = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
+  const user = asg.map((t) => fromUserAssignment(t, hashMap)).filter(Boolean);
   console.log(
-    '  sample:',
-    parsed.map((e) => e.id).slice(0, 12).join(', ') || '(none)',
+    '  guild sample:',
+    guild.map((e) => e.id).slice(0, 8).join(', ') || '(none)',
   );
-  console.log('  recent >=' + YEAR_MIN + ':', parsed.filter((e) => e.recent).length);
-  return parsed;
+  console.log(
+    '  user sample:',
+    user.map((e) => e.id + '@b' + e.assignedBucket).slice(0, 8).join(', ') || '(none)',
+  );
+  console.log(
+    '  recent guild/user ≥' + YEAR_MIN + ':',
+    guild.filter((e) => e.recent).length,
+    '/',
+    user.filter((e) => e.recent).length,
+  );
+  return { guild, user };
 }
 
 // Wumpus-Central/guild-experiments: GET experiments?with_guild_experiments=true
@@ -378,26 +444,35 @@ async function fetchDiscord(hashMap) {
     'https://canary.discord.com/api/v9/experiments?with_guild_experiments=true',
     'https://discord.com/api/v9/experiments?with_guild_experiments=true',
   ];
-  const byHash = new Map();
+  const byKey = new Map();
   const ingest = (list) => {
     for (const e of list) {
-      const key = e.hash != null ? String(e.hash) : e.id;
-      const prev = byHash.get(key);
+      const key = (e.type || 'x') + ':' + (e.hash != null ? String(e.hash) : e.id);
+      const prev = byKey.get(key);
       if (!prev) {
-        byHash.set(key, e);
+        byKey.set(key, e);
         continue;
       }
       const prevHashId = String(prev.id).startsWith('hash:');
       const nextHashId = String(e.id).startsWith('hash:');
-      if (prevHashId && !nextHashId) byHash.set(key, e);
+      if (prevHashId && !nextHashId) byKey.set(key, e);
       else if ((e.treatments || []).length > (prev.treatments || []).length)
-        byHash.set(key, e);
+        byKey.set(key, e);
+      // prefer assignment with named id
+      else if (prev.source === 'discord-assignment' && !nextHashId) byKey.set(key, e);
     }
   };
 
   for (const url of urls) {
     try {
-      ingest(await fetchDiscordOnce(url, discordClientHeaders(false), hashMap, 'client'));
+      const { guild, user } = await fetchDiscordOnce(
+        url,
+        discordClientHeaders(false),
+        hashMap,
+        'client',
+      );
+      ingest(guild);
+      ingest(user);
       break;
     } catch (e) {
       console.warn('Discord client fail', e.message);
@@ -406,7 +481,14 @@ async function fetchDiscord(hashMap) {
   if (DISCORD_TOKEN) {
     for (const url of urls) {
       try {
-        ingest(await fetchDiscordOnce(url, discordClientHeaders(true), hashMap, 'token'));
+        const { guild, user } = await fetchDiscordOnce(
+          url,
+          discordClientHeaders(true),
+          hashMap,
+          'token',
+        );
+        ingest(guild);
+        ingest(user);
         break;
       } catch (e) {
         console.warn('Discord token fail', e.message);
@@ -414,10 +496,16 @@ async function fetchDiscord(hashMap) {
     }
   }
 
-  const out = [...byHash.values()];
+  const out = [...byKey.values()];
+  const u = out.filter((e) => e.type === 'user').length;
+  const g = out.filter((e) => e.type === 'guild').length;
   console.log(
     'Discord merged unique:',
     out.length,
+    '(user',
+    u,
+    '/ guild',
+    g + ')',
     'recent',
     out.filter((e) => e.recent).length,
   );
@@ -469,11 +557,13 @@ async function loadExperiments() {
     fallback: 0,
     merged: 0,
     recent: 0,
+    user: 0,
+    guild: 0,
     hasToken: !!DISCORD_TOKEN,
   };
   const byId = new Map();
 
-  // 1) Live Discord (priority for % accuracy)
+  // 1) Live Discord — guild wire (global %) + user assignments (bucket only)
   try {
     const live = await fetchDiscord(hashMap);
     sources.discord = live.length;
@@ -508,7 +598,20 @@ async function loadExperiments() {
       for (const raw of arr) {
         const n = fromObject(raw);
         if (!n) continue;
-        if (byId.has(n.id)) continue; // never replace live
+        const prev = byId.get(n.id);
+        if (prev) {
+          // Upgrade assignment-only user entry with global % from workers/fallback
+          if (
+            prev.source === 'discord-assignment' &&
+            n.hasGlobalPct &&
+            (n.type === 'user' || n.type === 'guild')
+          ) {
+            n.assignedBucket = prev.assignedBucket;
+            byId.set(n.id, n);
+            added++;
+          }
+          continue; // never replace richer live guild wire / advaith
+        }
         byId.set(n.id, n);
         added++;
       }
@@ -524,10 +627,20 @@ async function loadExperiments() {
   );
   sources.merged = experiments.length;
   sources.recent = experiments.filter((e) => e.recent).length;
+  sources.user = experiments.filter((e) => e.type === 'user').length;
+  sources.guild = experiments.filter((e) => e.type === 'guild').length;
 
   if (!DISCORD_TOKEN) console.warn('⚠️ DISCORD_USER_TOKEN manquant');
   if (sources.advaith === 0 && sources.recent === 0)
     console.warn('⚠️ Peu de rollouts récents — advaith KO ou Cloudflare');
+  console.log(
+    'Types: user',
+    sources.user,
+    'guild',
+    sources.guild,
+    'with global %',
+    experiments.filter((e) => e.hasGlobalPct).length,
+  );
 
   return { experiments, sources };
 }
@@ -674,7 +787,7 @@ async function postWebhook(embeds) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📊 Apex rollouts v4 (Wumpus-style)…');
+  console.log('📊 Apex rollouts v4.1 (user + guild)…');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Token:', DISCORD_TOKEN ? 'set' : 'MISSING');
   const { experiments, sources } = await loadExperiments();
