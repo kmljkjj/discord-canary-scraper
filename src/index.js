@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v11.3 (stable experiments) — priority pipeline + reliable notify marking
+ * Canary Pulse v11.4 (no build webhooks — exp/routes/strings only) — priority pipeline + reliable notify marking
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -323,25 +323,17 @@ async function main() {
     process.exit(0);
   }
 
-    // Claim build BEFORE notify so parallel/queued runs don't double-post
+    // Claim build in state only — NO build webhook (focus: experiments / routes / strings)
   let alreadyBuild = await wasBuildAnnounced(build.buildNumber);
   let flashSent = false;
-  if (isNewBuild && process.env.DISCORD_WEBHOOK_URL) {
+  if (isNewBuild) {
     if (alreadyBuild) {
-      console.log('FLASH skip — build already announced', build.buildNumber);
+      console.log('BUILD claim skip — already marked', build.buildNumber);
     } else {
       await markBuild(build.buildNumber);
       alreadyBuild = true;
-      try {
-        await flashBuild(process.env.DISCORD_WEBHOOK_URL, build, {
-          gap,
-          prevBuild: prevBuildNum,
-        });
-        flashSent = true;
-        console.log('FLASH', build.buildNumber, Date.now() - t0 + 'ms');
-      } catch (e) {
-        console.warn('FLASH failed', e.message);
-      }
+      flashSent = true; // treat as announced so catalog build embed stays off
+      console.log('BUILD claimed (no flash webhook)', build.buildNumber, Date.now() - t0 + 'ms');
     }
   }
 
@@ -529,7 +521,7 @@ async function main() {
 
       const okN = await notifyNormal({
         build,
-        isNewBuild: shouldAnnounceBuild,
+        isNewBuild: false, // never send build/catalog embed — only strings & routes
         strDiff,
         rtDiff,
         webhookUrl: process.env.DISCORD_WEBHOOK_URL,

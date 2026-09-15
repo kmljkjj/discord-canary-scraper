@@ -99,26 +99,7 @@ async function notifyNormal({
 
   let ok = true;
 
-  if (isNewBuild && (nStr || nRt)) {
-    const r = await post(webhookUrl, {
-      embeds: [
-        {
-          author: { name: 'Datamining', icon_url: AVATAR },
-          title: label(E.build, `Catalog · ${bn}`),
-          description: [
-            hash ? `Hash \`${hash}\`` : null,
-            channelLine(0, nStr, nRt),
-          ]
-            .filter(Boolean)
-            .join('\n'),
-          color: COLOR.build,
-          footer: { text: `Build ${bn} · Datamining · normal` },
-          timestamp: ts,
-        },
-      ],
-    });
-    if (!r) ok = false;
-  }
+  // Build/catalog webhook disabled — Strings + Routes only
 
   if (nStr) {
     const r = await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
