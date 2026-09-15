@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'scripts/apex_restore/**'
       - '.github/workflows/restore-apex-v4.yml'
+      - 'scripts/patch_apex_v4.py'
 jobs:
   restore:
     runs-on: ubuntu-latest
@@ -12,22 +12,15 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Decode and restore apex_rollouts.js
+      - name: Restore + patch apex_rollouts.js
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import base64, gzip
-          from pathlib import Path
-          parts = sorted(Path('scripts/apex_restore').glob('part*.b64'))
-          assert parts, 'no parts'
-          b64 = ''.join(p.read_text().strip() for p in parts)
-          data = gzip.decompress(base64.b64decode(b64))
-          Path('src/apex_rollouts.js').write_bytes(data)
-          print('restored', len(data), 'bytes')
-          PY
+          curl -fsSL "https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/477463ae84eab403851c898cc6cf4422d2ae03b2/src/apex_rollouts.js" -o src/apex_rollouts.js
+          wc -c src/apex_rollouts.js
+          python3 scripts/patch_apex_v4.py
           node --check src/apex_rollouts.js
           head -3 src/apex_rollouts.js
-          grep -n "Apex rollouts v4\|Variant \|formatFilters\|humanizeId" src/apex_rollouts.js | head
+          grep -n "Apex rollouts v4\|formatFilters\|humanizeId\|Variant " src/apex_rollouts.js | head
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
