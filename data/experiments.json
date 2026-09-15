@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-15T18:37:50.915Z",
-  "buildNumber": "613652",
+  "scrapedAt": "2026-09-15T18:42:06.486Z",
+  "buildNumber": "613656",
   "totals": {
-    "all": 386
+    "all": 387
   },
   "experiments": [
     {
@@ -6466,6 +6466,24 @@
     },
     {
       "id": "2026-09-markdown-file-preview",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-new-hscroll",
       "type": "user",
       "kind": "user",
       "label": null,
