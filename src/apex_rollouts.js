@@ -1,10 +1,21 @@
 /**
- * Apex rollouts v3 — live Discord + advaith (2024/2025/2026 %)
+ * Apex rollouts v3.2 — Discord live % + structured guild decode
  * Secret: DISCORD_USER_TOKEN (user token, not bot)
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
+
+// Prefer structured decoder when available
+let decodeGuildExperiment = null;
+try {
+  decodeGuildExperiment = require('./lib/guild_decode').decodeGuildExperiment;
+} catch (_) {
+  try {
+    decodeGuildExperiment = require('../lib/guild_decode').decodeGuildExperiment;
+  } catch (_) {}
+}
+
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
@@ -114,6 +125,12 @@ function countOverrides(ovs) {
 }
 
 function fromWire(tuple, hashMap) {
+  if (typeof decodeGuildExperiment === 'function') {
+    try {
+      const d = decodeGuildExperiment(tuple, hashMap);
+      if (d) return d;
+    } catch (_) {}
+  }
   if (!Array.isArray(tuple) || tuple.length < 4) return null;
   const hash = tuple[0];
   const key = tuple[1];
