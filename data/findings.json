@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-15T20:43:39.425Z",
-  "buildNumber": "613834",
+  "scrapedAt": "2026-09-15T20:45:45.851Z",
+  "buildNumber": "613835",
   "totals": {
-    "all": 387
+    "all": 386
   },
   "experiments": [
     {
@@ -4299,32 +4299,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-monthly-to-yearly-upsells",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "referralRewardType": null
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
       "source": "discord"
     },
     {
