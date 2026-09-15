@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v11.5 (apex/legacy · snapshots · richer routes) — priority pipeline + reliable notify marking
+ * Canary Pulse v11.6 (anti-double under FORCE dispatch) — priority pipeline + reliable notify marking
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -24,6 +24,7 @@ const LAST_EXTRACT_STR = path.join(DATA, 'last_extract_strings.json');
 const LAST_EXTRACT_RT = path.join(DATA, 'last_extract_routes.json');
 const LAST_EXTRACT_EXP = path.join(DATA, 'last_extract_experiments.json');
 const ANNOUNCED = path.join(DATA, 'announced_builds.json');
+const LAST_RUN_META = path.join(DATA, 'last_run_meta.json');
 
 const MAX_NOTIFY_EXP = 30;
 const MAX_NOTIFY_STR = 80;
@@ -312,6 +313,20 @@ async function main() {
     Object.keys(lastStr).length < 50 ||
     Object.keys(lastRt).length < 20 ||
     Object.keys(lastExp).length < 40;
+
+  try {
+    if (await fs.pathExists(LAST_RUN_META)) {
+      const meta = await fs.readJson(LAST_RUN_META);
+      const same = String(meta.buildNumber || '') === String(build.buildNumber);
+      const age = Date.now() - Number(meta.ts || 0);
+      if (same && age >= 0 && age < 3 * 60 * 1000 && meta.ok && !needsExtractSeed) {
+        console.log('COOLDOWN SKIP', build.buildNumber, Math.round(age / 1000) + 's since last success');
+        process.exit(0);
+      }
+    }
+  } catch (e) {
+    console.warn('last_run_meta read', e.message);
+  }
 
   if (
     !isNewBuild &&
@@ -604,6 +619,17 @@ async function main() {
     strings: mergedStrings,
     routes: mergedRoutes,
   });
+
+  try {
+    await fs.writeJson(LAST_RUN_META, {
+      buildNumber: String(build.buildNumber),
+      ts: Date.now(),
+      ok: true,
+      versionHash: build.versionHash || null,
+    });
+  } catch (e) {
+    console.warn('last_run_meta write', e.message);
+  }
 
   console.log('=== Done', Date.now() - t0 + 'ms ===');
 }

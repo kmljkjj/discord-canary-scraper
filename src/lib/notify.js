@@ -10,7 +10,7 @@ const AVATAR =
   process.env.WEBHOOK_AVATAR_URL ||
   'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
-const { wasPosted, markPosted, payloadFingerprint } = require('./webhook_dedupe');
+const { wasPosted, markPosted, claimPosted, payloadFingerprint, stableExpKey, stableMapKey } = require('./webhook_dedupe');
 
 const COLOR = {
   build: 0x5865f2,
@@ -239,6 +239,13 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
 }
 
 async function sendExperiments(webhookUrl, bn, exp, ts) {
+  const batchKey = 'expbatch:' + stableExpKey(bn, exp);
+  if (!(await claimPosted(batchKey))) {
+    console.log('Experiments batch CLAIM skip', batchKey);
+    return true;
+  }
+  await markPosted(batchKey);
+
   const sections = [];
 
   if (exp.added.length) {
@@ -295,6 +302,13 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 }
 
 async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
+  const batchKey = 'mapbatch:' + stableMapKey(bn, kind, diff);
+  if (!(await claimPosted(batchKey))) {
+    console.log(kind, 'batch CLAIM skip', batchKey);
+    return true;
+  }
+  await markPosted(batchKey);
+
   const isRoutes = kind === 'Routes';
   const a = Object.keys(diff.added);
   const m = Object.keys(diff.modified);
@@ -365,8 +379,8 @@ async function post(url, body) {
   body.username = BOT;
   body.avatar_url = AVATAR;
   const fp = payloadFingerprint(body);
-  if (await wasPosted(fp)) {
-    console.log('webhook DEDUPE skip', body.embeds?.[0]?.title || fp);
+  if (!(await claimPosted(fp))) {
+    console.log('webhook CLAIM skip', body.embeds?.[0]?.title || fp);
     return true;
   }
   const payload = JSON.stringify(body);
