@@ -154,15 +154,19 @@ function cleanText(s, max = LINE_VAL_MAX) {
 function expLine(e, prefix) {
   const id = typeof e === 'string' ? e : e.id;
   const kind = (e && (e.type || e.kind)) || 'user';
+  const system = (e && e.system) || (e && e.treatments ? 'legacy' : 'apex');
   const labelTxt = e && e.label ? cleanText(e.label, 70) : null;
   let depth = null;
   if (e && Array.isArray(e.treatments) && e.treatments.length)
     depth = `${e.treatments.length} treatments`;
   else if (e && e.variations && typeof e.variations === 'object')
     depth = `${Object.keys(e.variations).length} variations`;
+  else if (e && e.variationCount)
+    depth = `${e.variationCount} variations`;
 
-  let line = `\`${prefix}${id}\` · **${kind}**`;
-  if (labelTxt) line += `\n　${labelTxt}`;
+  let line = `\`${prefix}${id}\` · **${kind}** · _${system}_`;
+  if (labelTxt) line += `
+　${labelTxt}`;
   if (depth) line += ` · _${depth}_`;
   return line;
 }
@@ -276,7 +280,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
   const ok = await sendSectionEmbeds({
     webhookUrl,
-    title: label(E.exp, 'Experiments'),
+    title: label(E.exp, 'Experiments · Apex / Legacy'),
     bn,
     ts,
     sections,

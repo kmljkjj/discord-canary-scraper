@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v11.4 (no build webhooks — exp/routes/strings only) — priority pipeline + reliable notify marking
+ * Canary Pulse v11.5 (apex/legacy · snapshots · richer routes) — priority pipeline + reliable notify marking
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -552,6 +552,40 @@ async function main() {
     saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber),
     saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber),
   ]);
+
+  try {
+    const allExps = findings.experiments || [];
+    const apexList = allExps
+      .filter((e) => e.system !== 'legacy')
+      .map((e) => ({
+        kind: e.kind || e.type || 'user',
+        name: e.id,
+        defaultConfig: e.defaultConfig || null,
+        variations: e.variations || null,
+        label: e.label || null,
+        system: e.system || 'apex',
+      }));
+    const legacyList = allExps
+      .filter((e) => e.system === 'legacy' || (e.treatments && e.treatments.length))
+      .map((e) => ({
+        kind: e.kind || e.type || 'user',
+        id: e.id,
+        label: e.label || null,
+        defaultConfig: e.defaultConfig || null,
+        treatments: e.treatments || null,
+        system: 'legacy',
+      }));
+    await fs.writeJson(path.join(DATA, 'apex_experiments.json'), apexList, { spaces: 2 });
+    await fs.writeJson(path.join(DATA, 'experiments.json'), legacyList.length ? legacyList : allExps, { spaces: 2 });
+    await fs.writeJson(path.join(DATA, 'routes.json'), nextRt, { spaces: 2 });
+    console.log('Snapshots', {
+      apex: apexList.length,
+      legacy: legacyList.length,
+      routes: Object.keys(nextRt).length,
+    });
+  } catch (e) {
+    console.warn('snapshot write', e.message);
+  }
 
   let mergedExps = mergeExp(prev.experiments, findings.experiments);
   if (expDiff.removed.length) {
