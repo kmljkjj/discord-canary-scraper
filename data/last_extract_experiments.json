@@ -1,43 +1,62 @@
 {
-  "buildNumber": "613318",
-  "updatedAt": "2026-09-15T05:09:16.489Z",
-  "count": 379,
+  "buildNumber": "613331",
+  "updatedAt": "2026-09-15T06:50:29.605Z",
+  "count": 369,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2021-10_runtime_accessibility_system": {
       "id": "2021-10_runtime_accessibility_system",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "fp": "f44d6f0eb6e4563019d5aa79"
     },
     "2021-10_study_group": {
       "id": "2021-10_study_group",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2021-12_inferno_spam_redaction": {
       "id": "2021-12_inferno_spam_redaction",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2022-01_threads": {
       "id": "2022-01_threads",
@@ -53,63 +72,94 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2022-11_default_disable_mass_mention": {
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2022-12_mention_raid_limit": {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2023-02_guest_voice_invites": {
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2023-09_iar_dsa_webform": {
       "id": "2023-09_iar_dsa_webform",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "fp": "f44d6f0eb6e4563019d5aa79"
     },
     "2023-09_iar_user_reporting": {
       "id": "2023-09_iar_user_reporting",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2024-06_rtc_pacer__simulcast": {
       "id": "2024-06_rtc_pacer__simulcast",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2024-12_guild_voice_channel_ringing": {
       "id": "2024-12_guild_voice_channel_ringing",
@@ -199,18 +249,41 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 4,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        }
+      },
+      "fp": "5c77e86646335e1936a55a3a"
     },
     "2025-08_default_invite_expiration_guild": {
       "id": "2025-08_default_invite_expiration_guild",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 3,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "fp": "dcd925bc23b166e34829fb2f"
     },
     "2025-08_portkey_enabled": {
       "id": "2025-08_portkey_enabled",
@@ -268,9 +341,16 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 2,
+      "variations": {
+        "16": {
+          "id": 16
+        },
+        "17": {
+          "id": 17
+        }
+      },
+      "fp": "2bef41d291f6efc6c17a6563"
     },
     "2025-09-image-attachment-mezzanine-v2": {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -290,15 +370,6 @@
         }
       },
       "fp": "a80296903cc2e06ce785d5ee"
-    },
-    "2025-09-libdiscore-telemetry": {
-      "id": "2025-09-libdiscore-telemetry",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
     },
     "2025-09-overlay-state-tracking": {
       "id": "2025-09-overlay-state-tracking",
@@ -360,9 +431,13 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2025-10-collectibles-custom-cursors": {
       "id": "2025-10-collectibles-custom-cursors",
@@ -469,9 +544,13 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2025-11-age-verification-expressive-everywhere": {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -485,15 +564,6 @@
         }
       },
       "fp": "f168eaf07e491e0688f2b8f8"
-    },
-    "2025-11-defer-load-late-lazy-cache": {
-      "id": "2025-11-defer-load-late-lazy-cache",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
     },
     "2025-11-global-frame-pool-lock": {
       "id": "2025-11-global-frame-pool-lock",
@@ -600,9 +670,16 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "fp": "0eab4c21afef41b77588c991"
     },
     "2025-12-09-ptt-education": {
       "id": "2025-12-09-ptt-education",
@@ -795,15 +872,6 @@
       },
       "fp": "f168eaf07e491e0688f2b8f8"
     },
-    "2026-01-android-rmle": {
-      "id": "2026-01-android-rmle",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
-    },
     "2026-01-bug-reporter": {
       "id": "2026-01-bug-reporter",
       "type": "user",
@@ -891,15 +959,6 @@
       },
       "fp": "4eb58677fe4d82185914eef5"
     },
-    "2026-01-libdiscore-batch-store-refactor": {
-      "id": "2026-01-libdiscore-batch-store-refactor",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
-    },
     "2026-01-voice-dares-v0": {
       "id": "2026-01-voice-dares-v0",
       "type": "user",
@@ -931,27 +990,39 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-02_hangout_window": {
       "id": "2026-02_hangout_window",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-02_past_vc_activity_messages": {
       "id": "2026-02_past_vc_activity_messages",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-02-activity-privacy-matching": {
       "id": "2026-02-activity-privacy-matching",
@@ -971,24 +1042,6 @@
         }
       },
       "fp": "a80296903cc2e06ce785d5ee"
-    },
-    "2026-02-android-chat-mosaic-shared-pool": {
-      "id": "2026-02-android-chat-mosaic-shared-pool",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
-    },
-    "2026-02-android-fresco-cache": {
-      "id": "2026-02-android-fresco-cache",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
     },
     "2026-02-announcement-composer": {
       "id": "2026-02-announcement-composer",
@@ -1466,18 +1519,29 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-03_voice_badge": {
       "id": "2026-03_voice_badge",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "74fc9d0ff39d614ade8bdadc"
     },
     "2026-03-age-verification-google-wallet": {
       "id": "2026-03-age-verification-google-wallet",
@@ -1872,15 +1936,6 @@
       },
       "fp": "f44d6f0eb6e4563019d5aa79"
     },
-    "2026-03-mobile-hermes-occupancy-target": {
-      "id": "2026-03-mobile-hermes-occupancy-target",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
-    },
     "2026-03-mobile-quest-home-red-dot-notification": {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
       "type": "user",
@@ -2113,18 +2168,26 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-04_guild_verification_role": {
       "id": "2026-04_guild_verification_role",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-04_server_theme": {
       "id": "2026-04_server_theme",
@@ -2144,18 +2207,26 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-04_voice_user_duration": {
       "id": "2026-04_voice_user_duration",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-04-boosting-pre-checkout-modal-refresh-v2": {
       "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
@@ -2632,18 +2703,32 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 3,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "fp": "dcd925bc23b166e34829fb2f"
     },
     "2026-05_voice_channel_list_invite_embed": {
       "id": "2026-05_voice_channel_list_invite_embed",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-05-age-restricted-application-commands": {
       "id": "2026-05-age-restricted-application-commands",
@@ -3121,18 +3206,38 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 5,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        },
+        "5": {
+          "id": 5
+        }
+      },
+      "fp": "034dc13d421322bfab1afb0b"
     },
     "2026-06_guild_spaces": {
       "id": "2026-06_guild_spaces",
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "5cee2b27365b09a577fd4bc7"
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "21e8485f60217160d4c2e2f4"
     },
     "2026-06-age-verification-incode": {
       "id": "2026-06-age-verification-incode",
@@ -4273,15 +4378,6 @@
       },
       "fp": "4eb58677fe4d82185914eef5"
     },
-    "2026-07-premium-group-announcement-modal": {
-      "id": "2026-07-premium-group-announcement-modal",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
-    },
     "2026-07-premium-group-expansion-announcement": {
       "id": "2026-07-premium-group-expansion-announcement",
       "type": "user",
@@ -4409,15 +4505,6 @@
         }
       },
       "fp": "4eb58677fe4d82185914eef5"
-    },
-    "2026-07-tr-offer-1-campaign": {
-      "id": "2026-07-tr-offer-1-campaign",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
     },
     "2026-07-typing-users-css-dots": {
       "id": "2026-07-typing-users-css-dots",
@@ -4857,15 +4944,6 @@
         }
       },
       "fp": "4eb58677fe4d82185914eef5"
-    },
-    "2026-08-mweb-invite-registration": {
-      "id": "2026-08-mweb-invite-registration",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 0,
-      "variations": null,
-      "fp": "a352318c557a1ae211733b52"
     },
     "2026-08-nitro-tenure-badge-total-progress": {
       "id": "2026-08-nitro-tenure-badge-total-progress",

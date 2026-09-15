@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-15T05:09:16.523Z",
-  "buildNumber": "613318",
+  "scrapedAt": "2026-09-15T06:50:29.655Z",
+  "buildNumber": "613331",
   "totals": {
-    "all": 395
+    "all": 385
   },
   "experiments": [
     {
@@ -10,8 +10,12 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -19,8 +23,15 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -28,8 +39,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -37,8 +52,12 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -55,8 +74,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -64,8 +87,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -73,8 +100,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -82,8 +113,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -91,8 +126,15 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -100,8 +142,12 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -109,8 +155,12 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -201,8 +251,21 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        }
+      },
+      "variationCount": 4,
       "source": "discord"
     },
     {
@@ -210,8 +273,18 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
@@ -270,8 +343,15 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "16": {
+          "id": 16
+        },
+        "17": {
+          "id": 17
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -339,15 +419,6 @@
       "source": "discord"
     },
     {
-      "id": "2025-09-libdiscore-telemetry",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
       "id": "2025-09-overlay-state-tracking",
       "type": "user",
       "kind": "user",
@@ -407,8 +478,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -516,8 +591,12 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -531,15 +610,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2025-11-defer-load-late-lazy-cache",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
       "source": "discord"
     },
     {
@@ -647,8 +717,15 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -860,15 +937,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-01-android-rmle",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
       "id": "2026-01-bug-reporter",
       "type": "user",
       "kind": "user",
@@ -956,15 +1024,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-01-libdiscore-batch-store-refactor",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
       "id": "2026-01-profile-updates-notification",
       "type": "user",
       "kind": "user",
@@ -1015,8 +1074,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -1024,8 +1087,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -1033,8 +1100,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -1054,24 +1125,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-android-chat-mosaic-shared-pool",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-android-fresco-cache",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
       "source": "discord"
     },
     {
@@ -1550,8 +1603,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -1559,8 +1616,15 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -1974,15 +2038,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03-mobile-hermes-occupancy-target",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
       "type": "user",
       "kind": "user",
@@ -2231,8 +2286,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -2240,8 +2299,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -2262,8 +2325,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -2271,8 +2338,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -2806,8 +2877,18 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
@@ -2815,8 +2896,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -3329,8 +3414,24 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        },
+        "4": {
+          "id": 4
+        },
+        "5": {
+          "id": 5
+        }
+      },
+      "variationCount": 5,
       "source": "discord"
     },
     {
@@ -3338,8 +3439,12 @@
       "type": "guild",
       "kind": "guild",
       "label": null,
-      "variations": null,
-      "variationCount": 0,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -4521,15 +4626,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-07-premium-group-announcement-modal",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
-    },
-    {
       "id": "2026-07-premium-group-expansion-announcement",
       "type": "user",
       "kind": "user",
@@ -4695,15 +4791,6 @@
       },
       "variationCount": 2,
       "source": "wumpus"
-    },
-    {
-      "id": "2026-07-tr-offer-1-campaign",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
-      "source": "discord"
     },
     {
       "id": "2026-07-typing-users-css-dots",
@@ -5142,15 +5229,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-mweb-invite-registration",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variations": null,
-      "variationCount": 0,
       "source": "discord"
     },
     {
