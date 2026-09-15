@@ -1,0 +1,28 @@
+name: Patch anti-double part2
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/patch-anti-double-p2.yml']
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch notify+index
+        run: |
+          set -euo pipefail
+          python3 -c "import base64,pathlib;pathlib.Path('scripts').mkdir(exist_ok=True);pathlib.Path('scripts/p.py').write_bytes(base64.b64decode('$(cat /tmp/patch_ni.py | base64 -w0)'))"
+          python3 scripts/p.py
+          node --check src/index.js
+          node --check src/lib/notify.js
+          grep -n "COOLDOWN\|expbatch\|claimPosted\|v11.6" src/index.js src/lib/notify.js | head -15
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/index.js src/lib/notify.js
+          git commit -m "fix: cooldown + batch claim anti-double (v11.6)" || exit 0
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main
