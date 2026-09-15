@@ -1,0 +1,5144 @@
+[
+  {
+    "kind": "user",
+    "name": "2021-02_staff_qc_debugging",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Display QS scores in results. Not a real experiment",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2021-10_runtime_accessibility_system",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": "Runtime Accessibility System",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2021-10_study_group",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Student hub study group",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2021-12_inferno_spam_redaction",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Inferno Spam Redaction",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2022-01_threads",
+    "defaultConfig": null,
+    "variations": null,
+    "label": "Allow logged out users",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2022-07_voice_in_threads",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Voice in Threads",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2022-11_default_disable_mass_mention",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Disable mass mentions for communities by default",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2022-12_mention_raid_limit",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Automod Mention Raid Limit",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2023-02_guest_voice_invites",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Guest Voice Invites",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2023-09_iar_dsa_webform",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": "Safety Experience Unauthenticated Report Form",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2023-09_iar_user_reporting",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Safety Experience IAR User Reporting",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2024-06_rtc_pacer__simulcast",
+    "defaultConfig": {
+      "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/"
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "RTC Pacer & Golive Simulcast",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2024-12_guild_voice_channel_ringing",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": "Guild Voice Ringing",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-01-allow-nonstaff-to-preview-app-collections",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-04-desktop-refresh-fast-follows",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-04-native-markdown",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-05-search-results-feedback",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-06_native_intents",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": "Native Intents",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2025-08_default_invite_expiration_guild",
+    "defaultConfig": {
+      "defaultMaxAge": 604800
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": "Default Invite Expiration Guild",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2025-08_portkey_enabled",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": "GameServer Enabled",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-08-browser-hevc",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-08-voice-user-affinity",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09_hotwheels_nvidia_boost",
+    "defaultConfig": null,
+    "variations": {
+      "16": {
+        "id": 16
+      },
+      "17": {
+        "id": 17
+      }
+    },
+    "label": "Next iteration of the activity feed ranking model.",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09-image-attachment-mezzanine-v2",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09-overlay-state-tracking",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09-sensitive-content-self-harm",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09-server-nsfw-level",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-09-video-qoe-metrics-tracking",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2025-10_community_account_link_onboarding",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Community Account Linking",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-collectibles-custom-cursors",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-desktop-communication-notifications-emoji",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-force-sdr-emojis-stickers",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-friend-request-alerts-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-go-live-auto-quality",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-low-latency-rate-control",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-10-mana-date-inputs",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "None",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11_tida_webform",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Tida Webform",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-age-verification-expressive-everywhere",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-global-frame-pool-lock",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-hide-manual-link",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-mana-context-menu",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-overlay-chat",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-rtc-panel-entry-point-new-copy",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-shockbyte-degraded",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-11-video-end-card-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2025-12_voice_channel_hoisting",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": "Voice Channel Hoisting",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-game-invite-account-linking-entry-point",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-hdr-accessibility-setting",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-katsudon",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-mana-multistep-community-enabled",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-nitro-s-rewards",
+    "defaultConfig": {
+      "treatment": "control"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-orb-redemption-thru-orders",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-proportional-vad-indicator",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-quest-cta-refactor-rollout",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      },
+      "6": {
+        "id": 6
+      },
+      "7": {
+        "id": 7
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-windows-audio-effects",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2025-12-wmf-gpu-encode",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-bug-reporter",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-cms-layouts",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-favorites-server",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-friends-in-server",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-ios-push-notif-json-fix",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-less-personalized-ads",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-voice-dares-v0",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-01-wmf-gpu-encode-intel",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-02_game_claim_coachmark",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Game Claim Coachmark",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-02_hangout_window",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Hangout Window",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-02_past_vc_activity_messages",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Past VC Activity Messages",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-activity-privacy-matching",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-announcement-composer",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-boosting-refresh-modals",
+    "defaultConfig": {
+      "variant": "control"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-capture-target-window",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-content-classification-presence-filter",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-desktop-new-user-onboarding",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-expiring-powerup-coachmark",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-friends-list",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-game-server-tab-always-on",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-gift-cards",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-gifting-modal-redesign",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-go-live-hdr",
+    "defaultConfig": {
+      "hdrCaptureMode": "never"
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-go-live-video-preset-resolution",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-gsh-game-detection-upsell",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-join-game-community-cta",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-lazy-load-all-images",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-longer-group-dm-invites",
+    "defaultConfig": {
+      "inviteMaxAgeSeconds": 86400
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-mana-playground-access",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-mobile-volume-output-slider-removal",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-mute-tutorial",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-non-dm-gifting-modal-redesign",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-premium-offer-reminder-xp",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-private-channel-hiding",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-private-profiles",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-process-boost-on-voice",
+    "defaultConfig": {
+      "threadPriorityConfiguration": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-pubsub-bulk-ban-users",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-referral-reminder-dc",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-silence-warning-aggression",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-sticker-padding",
+    "defaultConfig": {
+      "padding": 2
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-voice-channel-link-click",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-wgc-dirty-regions",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-02-wgc-dirty-regions-all",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-03_file_upload_250_mb_powerup",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "File Upload 250MB Powerup",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-03_game_server_pricing",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Game Server Pricing",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-03_guild_official_messages",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Guild Official Messages",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-03_voice_badge",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Display Voice Channel Badge",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-age-verification-google-wallet",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-03-app-guild-validation",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-application-widget-v2-add-tweak",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-arborium-highlight",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-audio-effects-probe",
+    "defaultConfig": {
+      "condition": "none"
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-block-purchases",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-bogo-promotion-gate-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-bogo-promotion-marketing-materials-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-boost-to-unlock-mobile-coachmark",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-browser-inverted-wants",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-churro",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-clips-experiment",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-conversation-highlighting-utility",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-croissant",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-debug-experiment",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-denormalized-perks-access-read",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-friend-request-message",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-icymi-desktop",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-icymi-staff-debugging-utility",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-image-load-metrics",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-ios-audio-interrupt-handling",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-krisp-stats-collection",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-l-3pp",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-media-play-metrics",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-message-bookmarks",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-mobile-quest-home-red-dot-notification",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-muted-video-quest-new-defaults",
+    "defaultConfig": {
+      "variant": 0
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-new-server-boost-system-messages",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-overlay-default-keybind",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-private-profiles-strict",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-private-profiles-strict-gb",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-soundmoji-rendering",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-soundmoji-sending",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-stage-voice-panel",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-steelseries-3p-recurring",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-surface-direct-renderer",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-video-capture-device-no-reuse",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-03-wysiwyg-user-profile-editing",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-04_application_identity_linked_roles",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Application Identity Linked Roles",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-04_guild_verification_role",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Guild Verification Role",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-04_server_theme",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Server Theme",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-04_voice_call_trigger_point",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Voice Call Trigger Point Experiment",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-04_voice_user_duration",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Voice User Duration",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-boosting-pre-checkout-modal-refresh-v2",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-browser-transceiver-padding-removal",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-clips-v3-runtime",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-composed-quest-player",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-desktop-notification-center",
+    "defaultConfig": {
+      "notificationCenterVariant": null,
+      "entrypoint": null,
+      "filterStyle": null
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-desktop-tti-dnstcp-warmup",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-desktop-tti-early-update-check",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-desktop-tti-update-backoff",
+    "defaultConfig": {
+      "maxBackoffMs": 3
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-desktop-tti-v8-cache",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-ensure-received-messages-added-in-order",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-gift-promotion-reminder",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-gifting-badge",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-hide-view-full-profile-button",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-http-request-sample",
+    "defaultConfig": {
+      "sampleRate": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-icymi-staff-only",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-inappropriate-conversations-default-on",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-inappropriate-conversations-prescan",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-kestrel",
+    "defaultConfig": {
+      "threshold": 0
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-mobile-boost-progress-bar",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-new-games-coachmark",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-one-day-fractional-nitro",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-overlay-fps-limit",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-overlay-streamer-mode",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-quests-premium-orb-multiplier-marketing",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-safety-flows",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-topical-navigation-staff-control",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-upcoming-server-event",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-user-profile-performance-analytics",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-video-hook-dx12",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-voice-gateway-protocol-version",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-04-wetf-parser",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-05_default_invite_expiration_guild_web",
+    "defaultConfig": {
+      "defaultMaxAge": 604800
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": "14 days",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-05_voice_channel_list_invite_embed",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Voice Channel List Invite Embed",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-age-restricted-application-commands",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-app-store-overlay-feature-gate",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-auto-clips-review",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-badge-discovery-milestone-2",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-block-user-feedback",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-bounty-stale-refresh-quest-home",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-clips-media-comments",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-clips-scrub-preview-frontend",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-collectibles-collection-page",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-device-form-factor-indicators",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-dice-roll-slash-command",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-disable-camera-simulcast",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-distributed-clips",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-dvp-for-attachments",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-electron-multilang-spellcheck",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-05-frontier-tuning",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-global-soundboard-wheel-popout",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-ignore-user-feedback",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-mana-type-consolidation",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-nitro-home-header",
+    "defaultConfig": {
+      "treatment": "control"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-quest-home-tile-redesign",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-screenshare-picker-wgc",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-server-theme-user",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-slayer-storefront-hide-leaderboard",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-social-layer-storefront-game-shops-dropdown",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-spatial-audio-for-voice",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-05-use-ad-analytics-interface",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-06_guild_rooms",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      }
+    },
+    "label": "Guild Rooms",
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-06_guild_spaces",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": "Guild Space",
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-age-verification-incode",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-av1-encode-linux",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-battlenet-social-sdk-migration",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-bulk-nitro-gifting",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-chat-bar-customization",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-clickstream-analytics",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-clips-editor-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-clips-league-events",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-clips-secondary-entrypoints",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-content-classification-embedded-activity-filter",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-desktop-tti-http-cdt",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-desktop-tti-splash-asset",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-dont-badge-muted-vcs",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-family-center-connection-prereq",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-06-game-invites-channel",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-game-server-hosting-in-shop",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-gifting-badge-desktop",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-guild-profile-server-tag",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-gummy-bears",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-gummy-viewers",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-hero-shelf-ad-tile",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-improved-shop-loading",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-magic-scoring",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-mobile-server-tag",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-monthly-to-yearly-upsells",
+    "defaultConfig": {
+      "referralRewardType": null
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-nitro-gdm-cap-increase",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-non-friend-messages-requests-in-uk",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-orbs-holdout",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-otp-orders-phase-1",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-post-call-survey-assets",
+    "defaultConfig": {
+      "surveyEmojiKind": "face"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-quest-fetch-reconnect-jitter",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-quest-home-layout-visual-tweaks",
+    "defaultConfig": {
+      "variant": 0
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-server-ladder",
+    "defaultConfig": {
+      "bitrate": 9
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-server-setup-boost-cta",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+    "defaultConfig": {
+      "echoReferenceMode": "mix"
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-06-topical-navigation-guild",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-upscale-small-captured-frames",
+    "defaultConfig": {
+      "minCaptureWidth": 0,
+      "minCaptureHeight": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-use-new-badge-image-source",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-user-profile-sidebar-redesign",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-web-translate-dom-guard",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-web-vitals-monitoring",
+    "defaultConfig": {
+      "sampleRate": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-wmf-cpu-encode-intel",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-wysiwyg-show-dns-to-non-nitro",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-06-wysiwyg-user-profile-premium-try-it-out",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-ad-recheck-interval-experiment",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-07-app-channels",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-attachment-image-ladder",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-autoclipping-default-override",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-autoclipping-marketing",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-aws-gateway",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-call-of-duty-3pp-expired",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-call-of-duty-3pp-marketing",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-call-of-duty-3pp-non-sub-marketing",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-clips-editor-text-track",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-clips-game-events-on-player",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-clips-ntp-clock",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-clips-on-profile-setter",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-clips-on-profile-viewer",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-cobalt",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-cod-3pp",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-custom-app-store-overlay",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-desktop-channel-tabs",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-desktop-tti-update-backoff-algo",
+    "defaultConfig": {
+      "algo": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-expressive-modal-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-gsimagic",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-ios-attribution",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-manual-age-assurance-fallback",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-message-bookmarks-v2",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-nitro-home-header-followup",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-nvenc-reconstructed-frames",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-onyx",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-orbchievements",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-parental-consent-warning-fetch",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-personal-widget",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-plan-select-ui-redesign",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-powerups-coachmark-scroll-close",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-premium-group-expansion-announcement",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-premium-referral-incentives",
+    "defaultConfig": {
+      "referralRewardType": null
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-quest-home-default-banner-removal",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-reduce-leave-call-gpu",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-reject-with-error-kill-switch",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-renewable-end-date-sort",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-shop-this-look",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-smag-dm-sidebar-nitro-recommendation",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-typing-users-css-dots",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-unobtrusive-device-suggestions",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "guild",
+    "name": "2026-07-vibegrations-guild",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-wishlist-direct-to-gifting",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-wishlist-show-owned-items-last",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-ad-topic-opt-out-client",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-android-rn-reparenting-flag",
+    "defaultConfig": null,
+    "variations": null,
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-audio-fidelity",
+    "defaultConfig": {
+      "condition": "none"
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      },
+      "6": {
+        "id": 6
+      },
+      "7": {
+        "id": 7
+      },
+      "8": {
+        "id": 8
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-automontage",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-badge-management",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-bounties-ctr-experiment-1",
+    "defaultConfig": {
+      "variant": 0
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-bounties-mobile-quest-bar",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-call-of-duty-3pp-nagbar",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-compress-logs",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-dcf-new-user-cooldown",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-dont-close-chat",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-favorites-server",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-game-profiles-vc",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-gift-recipient-display-name-search",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-gsh-subs-activity-bar",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-guilds-bar-media-state-store",
+    "defaultConfig": {
+      "source": "hook"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-heic-upload-conversion",
+    "defaultConfig": {
+      "quality": 60
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-hide-gift-shop-upsell",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-ios-objc-composed-image-cache",
+    "defaultConfig": null,
+    "variations": null,
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-kestrel-ga",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-mark-channel-unread",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-mute-aware-noise-cancellation",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-nitro-tenure-badge-total-progress",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-nitro-tenure-badge-withheld-state",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-no-fill-logging",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-premium-gifting-gogo-promotion",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-profile-embed-rendering",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-profile-embed-share-button",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-profile-read-state-v1",
+    "defaultConfig": null,
+    "variations": null,
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-rich-presence-invite-banner",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-rocketleague-events",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-scheduled-messages",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-show-expressive-modal-subtitle-alt",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-timestamp-autocomplete-mobile",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-tiny-bronco",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-top-soundboard-sounds",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-top-soundboard-sounds-mobile",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-user-bio-max-length",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-user-profile-server-tag-style",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-video-guard",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-virtual-backgrounds-ios",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-voice-server-update-immediate",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-vq-remaining-time-truncation",
+    "defaultConfig": {
+      "truncateMoreThanSeconds": null
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-agc2-mobile",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      },
+      "4": {
+        "id": 4
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-collectibles-navigation-menu",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-connected-thread-sidebar",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-friends-sidebar",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-gifting-badge-complex-art",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-halloween-holiday",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-jxr-upload-conversion",
+    "defaultConfig": {
+      "quality": 85
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-markdown-file-preview",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-nitro-file-upload-rollout",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-non-nitro-file-upload-marketing",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-profile-link-fetch",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-profile-widget-empty-state-suggestions",
+    "defaultConfig": {
+      "maxWidgetOptions": 0
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-quest-home-bounties-feature-gate",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-smag-nitro-gifting-lightning-checkout",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-soundboard-quick-action",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-stream-zero-vad-leading",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-video-background-profile-fetch",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-wysiwyg-user-profile-edit-polish",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-09-youtube-3p",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-badge-directory-updates",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null,
+    "system": "apex"
+  }
+]

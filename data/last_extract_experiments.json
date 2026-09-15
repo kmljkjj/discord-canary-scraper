@@ -1,26 +1,26 @@
 {
-  "buildNumber": "613494",
-  "updatedAt": "2026-09-15T16:28:57.760Z",
+  "buildNumber": "613495",
+  "updatedAt": "2026-09-15T16:33:24.122Z",
   "count": 369,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Display QS scores in results. Not a real experiment",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "08fcd7c8501631929708254e"
     },
     "2021-10_runtime_accessibility_system": {
       "id": "2021-10_runtime_accessibility_system",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Runtime Accessibility System",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -30,100 +30,100 @@
           "id": 2
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "5b96f1c51eca77881eec962b"
     },
     "2021-10_study_group": {
       "id": "2021-10_study_group",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Student hub study group",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "d347f0efa663e8d98bccbd7f"
     },
     "2021-12_inferno_spam_redaction": {
       "id": "2021-12_inferno_spam_redaction",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Inferno Spam Redaction",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "55e701ef0ce5f091ddd81357"
     },
     "2022-01_threads": {
       "id": "2022-01_threads",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Allow logged out users",
       "variationCount": 0,
       "variations": null,
-      "fp": "a352318c557a1ae211733b52"
+      "fp": "c5fa9cea901dfe9802b867dd"
     },
     "2022-07_voice_in_threads": {
       "id": "2022-07_voice_in_threads",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Voice in Threads",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "0b889b882ed95b7e4d5cdbbe"
     },
     "2022-11_default_disable_mass_mention": {
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Disable mass mentions for communities by default",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "af856f021bcdc8e4405e768b"
     },
     "2022-12_mention_raid_limit": {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Automod Mention Raid Limit",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "c04c8f0322b7dd35dfd0a052"
     },
     "2023-02_guest_voice_invites": {
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guest Voice Invites",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "c968c1a48c9736a82fa1951d"
     },
     "2023-09_iar_dsa_webform": {
       "id": "2023-09_iar_dsa_webform",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Safety Experience Unauthenticated Report Form",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -133,39 +133,39 @@
           "id": 2
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "7a0490b4ff1cd32d6fbe31ca"
     },
     "2023-09_iar_user_reporting": {
       "id": "2023-09_iar_user_reporting",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Safety Experience IAR User Reporting",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "43b80547443a98790ef43b83"
     },
     "2024-06_rtc_pacer__simulcast": {
       "id": "2024-06_rtc_pacer__simulcast",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "RTC Pacer & Golive Simulcast",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "e4a74d8c0f7fd154bb6618bf"
     },
     "2024-12_guild_voice_channel_ringing": {
       "id": "2024-12_guild_voice_channel_ringing",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guild Voice Ringing",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -175,7 +175,7 @@
           "id": 2
         }
       },
-      "fp": "0eab4c21afef41b77588c991"
+      "fp": "af7e01bf5976c71c1ccd1927"
     },
     "2025-01-allow-nonstaff-to-preview-app-collections": {
       "id": "2025-01-allow-nonstaff-to-preview-app-collections",
@@ -248,7 +248,7 @@
       "id": "2025-06_native_intents",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Native Intents",
       "variationCount": 4,
       "variations": {
         "1": {
@@ -264,13 +264,13 @@
           "id": 4
         }
       },
-      "fp": "5c77e86646335e1936a55a3a"
+      "fp": "28f332e1750d3045ed0c08e8"
     },
     "2025-08_default_invite_expiration_guild": {
       "id": "2025-08_default_invite_expiration_guild",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Default Invite Expiration Guild",
       "variationCount": 3,
       "variations": {
         "1": {
@@ -283,13 +283,13 @@
           "id": 3
         }
       },
-      "fp": "dcd925bc23b166e34829fb2f"
+      "fp": "154342a9176888cc3b76ecb3"
     },
     "2025-08_portkey_enabled": {
       "id": "2025-08_portkey_enabled",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "GameServer Enabled",
       "variationCount": 3,
       "variations": {
         "0": {
@@ -302,7 +302,7 @@
           "id": 2
         }
       },
-      "fp": "867c7ed82d0610b35863acc5"
+      "fp": "dfbf714d35f574503495b40d"
     },
     "2025-08-browser-hevc": {
       "id": "2025-08-browser-hevc",
@@ -340,7 +340,7 @@
       "id": "2025-09_hotwheels_nvidia_boost",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Next iteration of the activity feed ranking model.",
       "variationCount": 2,
       "variations": {
         "16": {
@@ -350,7 +350,7 @@
           "id": 17
         }
       },
-      "fp": "2bef41d291f6efc6c17a6563"
+      "fp": "2406f6c66c3f13c704de2d0b"
     },
     "2025-09-image-attachment-mezzanine-v2": {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -430,14 +430,14 @@
       "id": "2025-10_community_account_link_onboarding",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Community Account Linking",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "cc4407de3daa3a777c5ae647"
     },
     "2025-10-collectibles-custom-cursors": {
       "id": "2025-10-collectibles-custom-cursors",
@@ -530,27 +530,27 @@
       "id": "2025-10-mana-date-inputs",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "None",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "6f06dfea553c8518f7a65027"
     },
     "2025-11_tida_webform": {
       "id": "2025-11_tida_webform",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Tida Webform",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "296a5c36bee5a9495d6706fa"
     },
     "2025-11-age-verification-expressive-everywhere": {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -669,7 +669,7 @@
       "id": "2025-12_voice_channel_hoisting",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Voice Channel Hoisting",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -679,13 +679,13 @@
           "id": 2
         }
       },
-      "fp": "0eab4c21afef41b77588c991"
+      "fp": "3bfe81b67eeacf9709ac9eb2"
     },
     "2025-12-09-ptt-education": {
       "id": "2025-12-09-ptt-education",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Past VC Activity Messages",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -695,7 +695,7 @@
           "id": 2
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "bf7b40018180fe70c02e04a1"
     },
     "2025-12-game-invite-account-linking-entry-point": {
       "id": "2025-12-game-invite-account-linking-entry-point",
@@ -989,40 +989,40 @@
       "id": "2026-02_game_claim_coachmark",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Game Claim Coachmark",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "725cd43d9c0a05b00092b5ca"
     },
     "2026-02_hangout_window": {
       "id": "2026-02_hangout_window",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Hangout Window",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "72c9094389528a229c373f4c"
     },
     "2026-02_past_vc_activity_messages": {
       "id": "2026-02_past_vc_activity_messages",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Past VC Activity Messages",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "6f1828710a1ad50c6f9ad90d"
     },
     "2026-02-activity-privacy-matching": {
       "id": "2026-02-activity-privacy-matching",
@@ -1492,46 +1492,46 @@
       "id": "2026-03_file_upload_250_mb_powerup",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "File Upload 250MB Powerup",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "eb4773a26a45f7cc642dd1e8"
     },
     "2026-03_game_server_pricing": {
       "id": "2026-03_game_server_pricing",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Game Server Pricing",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "dd9c7f049d01a4838b5f4fd9"
     },
     "2026-03_guild_official_messages": {
       "id": "2026-03_guild_official_messages",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guild Official Messages",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "b323e32366eae040f188e5cb"
     },
     "2026-03_voice_badge": {
       "id": "2026-03_voice_badge",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Display Voice Channel Badge",
       "variationCount": 2,
       "variations": {
         "0": {
@@ -1541,7 +1541,7 @@
           "id": 1
         }
       },
-      "fp": "74fc9d0ff39d614ade8bdadc"
+      "fp": "dd1e7a01f55be2767907233b"
     },
     "2026-03-age-verification-google-wallet": {
       "id": "2026-03-age-verification-google-wallet",
@@ -1715,14 +1715,14 @@
       "id": "2026-03-content-inventory-memberlist-and-ranker",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Next iteration of the activity feed ranking model.",
       "variationCount": 1,
       "variations": {
         "0": {
           "id": 0
         }
       },
-      "fp": "5d772b8ae64c04c884c038b4"
+      "fp": "def1c27ac49bced7c29120c6"
     },
     "2026-03-conversation-highlighting-utility": {
       "id": "2026-03-conversation-highlighting-utility",
@@ -1795,14 +1795,14 @@
       "id": "2026-03-file-upload-powerup-holdout",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Server Theme",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "8a23d877b7abc4ce72983e1e"
     },
     "2026-03-friend-request-message": {
       "id": "2026-03-friend-request-message",
@@ -2167,66 +2167,66 @@
       "id": "2026-04_application_identity_linked_roles",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Application Identity Linked Roles",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "d113bc84d573b26f62b2d255"
     },
     "2026-04_guild_verification_role": {
       "id": "2026-04_guild_verification_role",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guild Verification Role",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "97fd56104c92dc4adfff803c"
     },
     "2026-04_server_theme": {
       "id": "2026-04_server_theme",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Server Theme",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "d15d475fcbe32e8ebb0e8cfe"
     },
     "2026-04_voice_call_trigger_point": {
       "id": "2026-04_voice_call_trigger_point",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Voice Call Trigger Point Experiment",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "3a03f8228a2b3af2c64db28f"
     },
     "2026-04_voice_user_duration": {
       "id": "2026-04_voice_user_duration",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Voice User Duration",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "045c4a9a0a0ce29900b579a2"
     },
     "2026-04-boosting-pre-checkout-modal-refresh-v2": {
       "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
@@ -2602,14 +2602,14 @@
       "id": "2026-04-server-boost-copy-1440p",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "Server Theme",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "8a23d877b7abc4ce72983e1e"
     },
     "2026-04-topical-navigation-staff-control": {
       "id": "2026-04-topical-navigation-staff-control",
@@ -2702,7 +2702,7 @@
       "id": "2026-05_default_invite_expiration_guild_web",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "14 days",
       "variationCount": 3,
       "variations": {
         "1": {
@@ -2715,20 +2715,20 @@
           "id": 3
         }
       },
-      "fp": "dcd925bc23b166e34829fb2f"
+      "fp": "e5939fb484181a0bf3ec60ce"
     },
     "2026-05_voice_channel_list_invite_embed": {
       "id": "2026-05_voice_channel_list_invite_embed",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Voice Channel List Invite Embed",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "4018388188804551df6b7db5"
     },
     "2026-05-age-restricted-application-commands": {
       "id": "2026-05-age-restricted-application-commands",
@@ -2773,7 +2773,7 @@
       "id": "2026-05-av1-bitrate-tuning",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "RTC Pacer & Golive Simulcast",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -2783,7 +2783,7 @@
           "id": 2
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "3c669fe63a6fd0e756fc4b11"
     },
     "2026-05-badge-discovery-milestone-2": {
       "id": "2026-05-badge-discovery-milestone-2",
@@ -3205,7 +3205,7 @@
       "id": "2026-06_guild_rooms",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guild Rooms",
       "variationCount": 5,
       "variations": {
         "1": {
@@ -3224,20 +3224,20 @@
           "id": 5
         }
       },
-      "fp": "034dc13d421322bfab1afb0b"
+      "fp": "8792632a285bdc5c55a6dbe0"
     },
     "2026-06_guild_spaces": {
       "id": "2026-06_guild_spaces",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Guild Space",
       "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "35f4fe8553b85dc6a0c21df6"
     },
     "2026-06-age-verification-incode": {
       "id": "2026-06-age-verification-incode",
@@ -3739,7 +3739,7 @@
       "id": "2026-06-server-theme-apex-shadow",
       "type": "guild",
       "kind": "guild",
-      "label": null,
+      "label": "Server Theme",
       "variationCount": 4,
       "variations": {
         "0": {
@@ -3755,7 +3755,7 @@
           "id": 3
         }
       },
-      "fp": "e048d39956a274e648499787"
+      "fp": "0cf38b9caa3dc68345e166c6"
     },
     "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones": {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
