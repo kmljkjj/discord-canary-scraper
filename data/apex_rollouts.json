@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-15T16:02:46.497Z",
+  "scrapedAt": "2026-09-15T16:09:11.245Z",
   "sources": {
     "discord": 6,
     "advaith": 0,
@@ -15,7 +15,7 @@
       "id": "hash:3633668656",
       "type": "guild",
       "title": "hash:3633668656",
-      "fingerprint": "1:100.00|ov:0|pops:1|rev:2",
+      "fingerprint": "1:100.00|ov:0|pops:1|rev:2|f:",
       "treatments": [
         {
           "bucket": 1,
@@ -27,12 +27,13 @@
       "populationCount": 1,
       "populations": [
         {
-          "filters": null,
+          "filters": [],
           "treatments": [
             {
               "bucket": 1,
               "label": "Treatment 1",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
@@ -46,7 +47,7 @@
       "id": "hash:2453702596",
       "type": "guild",
       "title": "hash:2453702596",
-      "fingerprint": "-1:100.00|ov:0|pops:1|rev:1",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:1|f:ID range ? – 1470518767757819904",
       "treatments": [
         {
           "bucket": -1,
@@ -58,12 +59,20 @@
       "populationCount": 1,
       "populations": [
         {
-          "filters": "1 filter(s)",
+          "filters": [
+            {
+              "type": "guild_id_range",
+              "min_id": null,
+              "max_id": "1470518767757819904",
+              "summary": "ID range ? – 1470518767757819904"
+            }
+          ],
           "treatments": [
             {
               "bucket": -1,
               "label": "None",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
@@ -4069,8 +4078,8 @@
     {
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
-      "title": "2023-02_guest_voice_invites",
-      "fingerprint": "-1:100.00|ov:13|pops:1|rev:1",
+      "title": "02 Guest Voice Invites",
+      "fingerprint": "-1:100.00|ov:13|pops:1|rev:1|f:Feature: GUILD_ONBOARDING_HAS_PROMPTS",
       "treatments": [
         {
           "bucket": -1,
@@ -4082,12 +4091,21 @@
       "populationCount": 1,
       "populations": [
         {
-          "filters": "1 filter(s)",
+          "filters": [
+            {
+              "type": "guild_has_feature",
+              "guild_features": [
+                "GUILD_ONBOARDING_HAS_PROMPTS"
+              ],
+              "summary": "Feature: GUILD_ONBOARDING_HAS_PROMPTS"
+            }
+          ],
           "treatments": [
             {
               "bucket": -1,
               "label": "None",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
@@ -4641,8 +4659,8 @@
     {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
-      "title": "2022-12_mention_raid_limit",
-      "fingerprint": "1:100.00|ov:16|pops:2|rev:3",
+      "title": "12 Mention Raid Limit",
+      "fingerprint": "1:100.00|ov:16|pops:2|rev:3|f:Feature: PARTNERED | Feature: COMMUNITY",
       "treatments": [
         {
           "bucket": 1,
@@ -4654,22 +4672,40 @@
       "populationCount": 2,
       "populations": [
         {
-          "filters": "1 filter(s)",
+          "filters": [
+            {
+              "type": "guild_has_feature",
+              "guild_features": [
+                "PARTNERED"
+              ],
+              "summary": "Feature: PARTNERED"
+            }
+          ],
           "treatments": [
             {
               "bucket": 1,
               "label": "Treatment 1",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         },
         {
-          "filters": "1 filter(s)",
+          "filters": [
+            {
+              "type": "guild_has_feature",
+              "guild_features": [
+                "COMMUNITY"
+              ],
+              "summary": "Feature: COMMUNITY"
+            }
+          ],
           "treatments": [
             {
               "bucket": 1,
               "label": "Treatment 1",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
@@ -4967,8 +5003,8 @@
     {
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
-      "title": "2022-11_default_disable_mass_mention",
-      "fingerprint": "-1:100.00,1:100.00|ov:11|pops:2|rev:0",
+      "title": "11 Default Disable Mass Mention",
+      "fingerprint": "-1:100.00,1:100.00|ov:11|pops:2|rev:0|f:Feature: COMMUNITY · ID range 5000 – ?",
       "treatments": [
         {
           "bucket": -1,
@@ -4985,22 +5021,38 @@
       "populationCount": 2,
       "populations": [
         {
-          "filters": "2 filter(s)",
+          "filters": [
+            {
+              "type": "guild_has_feature",
+              "guild_features": [
+                "COMMUNITY"
+              ],
+              "summary": "Feature: COMMUNITY"
+            },
+            {
+              "type": "guild_member_count_range",
+              "min_id": 5000,
+              "max_id": null,
+              "summary": "ID range 5000 – ?"
+            }
+          ],
           "treatments": [
             {
               "bucket": -1,
               "label": "None",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         },
         {
-          "filters": null,
+          "filters": [],
           "treatments": [
             {
               "bucket": 1,
               "label": "Treatment 1",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
@@ -5878,8 +5930,8 @@
     {
       "id": "2022-07_voice_in_threads",
       "type": "guild",
-      "title": "2022-07_voice_in_threads",
-      "fingerprint": "1:100.00|ov:0|pops:1|rev:0",
+      "title": "07 Voice In Threads",
+      "fingerprint": "1:100.00|ov:0|pops:1|rev:0|f:Feature: VOICE_IN_THREADS",
       "treatments": [
         {
           "bucket": 1,
@@ -5891,12 +5943,21 @@
       "populationCount": 1,
       "populations": [
         {
-          "filters": "1 filter(s)",
+          "filters": [
+            {
+              "type": "guild_has_feature",
+              "guild_features": [
+                "VOICE_IN_THREADS"
+              ],
+              "summary": "Feature: VOICE_IN_THREADS"
+            }
+          ],
           "treatments": [
             {
               "bucket": 1,
               "label": "Treatment 1",
-              "pct": 100
+              "pct": 100,
+              "ranges": "0 – 10000"
             }
           ]
         }
