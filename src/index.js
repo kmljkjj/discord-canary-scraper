@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v11.2 (anti-double notify) — priority pipeline + reliable notify marking
+ * Canary Pulse v11.3 (stable experiments) — priority pipeline + reliable notify marking
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -142,8 +142,34 @@ function buildGap(prevBuild, remoteBuild) {
   return Math.max(0, b - a);
 }
 
+function variationKeySet(obj) {
+  if (!obj) return '';
+  if (obj.variations && typeof obj.variations === 'object')
+    return Object.keys(obj.variations)
+      .map(String)
+      .sort((a, b) => Number(a) - Number(b))
+      .join(',');
+  const n = obj.variationCount || 0;
+  if (n > 0) return Array.from({ length: n }, (_, i) => String(i)).join(',');
+  return '';
+}
+
+/** Real treatment/variation changes only — ignore type-only and 0↔N parse noise */
+function isMeaningfulExpMod(prev, next) {
+  if (!prev || !next) return false;
+  const prevKeys = variationKeySet(prev);
+  const nextKeys = variationKeySet(next);
+  const prevN = prevKeys ? prevKeys.split(',').filter(Boolean).length : 0;
+  const nextN = nextKeys ? nextKeys.split(',').filter(Boolean).length : 0;
+  if (prevN === 0 || nextN === 0) return false;
+  if (prevKeys !== nextKeys) return true;
+  const prevLabel = (prev.label || '').trim();
+  const nextLabel = (next.label || '').trim();
+  if (prevLabel && nextLabel && prevLabel !== nextLabel) return true;
+  return false;
+}
+
 function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
-  const skipKnownFilter = opts && opts.skipKnownFilter;
   const nextExpMap = new Map();
   const nextExpSnap = {};
   for (const e of findingsExps || []) {
@@ -158,23 +184,23 @@ function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
   if (extractedExpCount >= MIN_EXP_FOR_DIFF && lastExpCount >= 40) {
     for (const [id, e] of nextExpMap) {
       if (!(id in lastExp)) {
-        if (skipKnownFilter || !knownExp.has(id)) expDiff.added.push(e);
-      } else {
-        const prevFp =
-          (lastExp[id] && lastExp[id].fp) || expFingerprint(lastExp[id]) || '';
-        const nextFp = expFingerprint(e);
-        if (prevFp && nextFp && prevFp !== nextFp)
-          expDiff.modified.push({ ...e, _prevFp: prevFp, _nextFp: nextFp });
+        if (!knownExp.has(id)) expDiff.added.push(e);
+      } else if (isMeaningfulExpMod(lastExp[id], e)) {
+        expDiff.modified.push({
+          ...e,
+          _prevKeys: variationKeySet(lastExp[id]),
+          _nextKeys: variationKeySet(e),
+        });
       }
     }
     const coverage = extractedExpCount / lastExpCount;
-    if (coverage >= 0.75 && coverage <= 1.35) {
+    if (coverage >= 0.85 && coverage <= 1.2) {
       for (const id of Object.keys(lastExp)) {
         if (!nextExpMap.has(id)) expDiff.removed.push({ id });
       }
-      if (expDiff.removed.length > 30) expDiff.removed = [];
+      if (expDiff.removed.length > 15) expDiff.removed = [];
     }
-    if (expDiff.modified.length > 25) expDiff.modified = [];
+    if (expDiff.modified.length > 20) expDiff.modified = [];
     if (expDiff.added.length > MAX_NOTIFY_EXP)
       expDiff.added = expDiff.added.slice(0, MAX_NOTIFY_EXP);
   }

@@ -477,9 +477,15 @@ function extractExperiments(content, map) {
     const id = m[1];
     if (/^20\d{2}-\d{2}$/.test(id)) continue;
     if (map.has(id)) continue;
-    const start = Math.max(0, m.index - 120);
-    const end = Math.min(content.length, m.index + id.length + 200);
+    const start = Math.max(0, m.index - 180);
+    const end = Math.min(content.length, m.index + id.length + 280);
     const ctx = content.slice(start, end);
+    const looksExp =
+      /kind\s*:\s*["'](user|guild)["']/i.test(ctx) ||
+      /\b(experiment|experiments|getExperiment|useExperiment|Exposure)\b/i.test(ctx) ||
+      /variations\s*:/i.test(ctx) ||
+      /treatments\s*:/i.test(ctx);
+    if (!looksExp) continue;
     let type = null;
     if (/kind\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
     else if (/kind\s*:\s*["']user["']/i.test(ctx)) type = 'user';
@@ -529,22 +535,46 @@ function upsertExp(map, id, kind, content, posAfter) {
 }
 
 function countVariationsNear(content, from) {
-  const window = content.slice(from, from + 900);
-  const m = window.match(/variations\s*:\s*\{/);
+  const window = content.slice(from, from + 2800);
+  let m = window.match(/variations\s*:\s*\{/);
+  if (!m) m = window.match(/treatments\s*:\s*\[/);
+  if (!m) m = window.match(/treatments\s*:\s*\{/);
   if (!m) return null;
+
+  const isArray = /treatments\s*:\s*\[/.test(m[0]);
   const start = m.index + m[0].length;
   let depth = 1;
   let i = start;
+  const open = isArray ? '[' : '{';
+  const close = isArray ? ']' : '}';
   for (; i < window.length && depth > 0; i++) {
-    if (window[i] === '{') depth++;
-    else if (window[i] === '}') depth--;
+    if (window[i] === open) depth++;
+    else if (window[i] === close) depth--;
   }
   const body = window.slice(start, i - 1);
-  const keys = [...body.matchAll(/(?:^|[,{])\s*(\d+)\s*:/g)].map((x) => x[1]);
-  if (!keys.length) return null;
   const out = {};
-  for (const k of keys) out[k] = { id: Number(k) };
-  return out;
+  if (isArray) {
+    const ids = [...body.matchAll(/\bid\s*:\s*(\d+)/g)].map((x) => x[1]);
+    if (ids.length) {
+      for (const k of ids) out[k] = { id: Number(k) };
+    } else {
+      let n = 0;
+      let d = 0;
+      for (const ch of body) {
+        if (ch === '{') {
+          if (d === 0) n++;
+          d++;
+        } else if (ch === '}') d = Math.max(0, d - 1);
+      }
+      if (n <= 0) return null;
+      for (let k = 0; k < n && k < 40; k++) out[String(k)] = { id: k };
+    }
+  } else {
+    const keys = [...body.matchAll(/(?:^|[,{])\s*(\d+)\s*:/g)].map((x) => x[1]);
+    if (!keys.length) return null;
+    for (const k of keys) out[k] = { id: Number(k) };
+  }
+  return Object.keys(out).length ? out : null;
 }
 
 module.exports = {
