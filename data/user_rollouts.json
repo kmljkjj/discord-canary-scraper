@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-16T22:03:22.334Z",
+  "scrapedAt": "2026-09-16T22:09:53.675Z",
   "samples": 40,
   "okEstimate": 4,
   "tokens": 1,
@@ -19,8 +19,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 79,
-          "rawMax": 9891
+          "rawMin": 0,
+          "rawMax": 9940
         }
       ],
       "fingerprint": "11:100.0",
@@ -38,11 +38,11 @@
           "pct": 100,
           "range": [
             0,
-            9500
+            10000
           ],
           "samples": 40,
-          "rawMin": 76,
-          "rawMax": 9524
+          "rawMin": 102,
+          "rawMax": 9881
         }
       ],
       "fingerprint": "1:100.0",
@@ -60,11 +60,11 @@
           "pct": 100,
           "range": [
             0,
-            9500
+            10000
           ],
           "samples": 40,
-          "rawMin": 193,
-          "rawMax": 9632
+          "rawMin": 113,
+          "rawMax": 9884
         }
       ],
       "fingerprint": "1:100.0",
@@ -79,17 +79,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 5,
+          "pct": 0,
           "range": [
-            9500,
+            10000,
             10000
           ],
-          "samples": 3,
-          "rawMin": 9579,
-          "rawMax": 9921
+          "samples": 2,
+          "rawMin": 9818,
+          "rawMax": 9951
         }
       ],
-      "fingerprint": "1:5.0",
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -103,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 4922,
+      "hash_result": 399,
       "tokenIndex": 1
     },
     {
@@ -115,7 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 3990,
+      "hash_result": 6865,
       "tokenIndex": 1
     },
     {
@@ -127,7 +127,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 3361,
+      "hash_result": 5114,
       "tokenIndex": 1
     }
   ]
