@@ -1,0 +1,37 @@
+name: Restore Apex v4.4
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'patches/apex_part**'
+      - 'patches/apex-rollouts.yml'
+permissions:
+  contents: write
+concurrency:
+  group: restore-apex-v44
+  cancel-in-progress: true
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and verify
+        run: |
+          set -euo pipefail
+          cat patches/apex_part00 patches/apex_part01 patches/apex_part02 > src/apex_rollouts.js
+          node --check src/apex_rollouts.js
+          cp patches/apex-rollouts.yml .github/workflows/apex-rollouts.yml
+          head -5 src/apex_rollouts.js
+          echo "assembled OK ($(wc -c < src/apex_rollouts.js) bytes)"
+      - name: Commit restore
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/apex_rollouts.js .github/workflows/apex-rollouts.yml
+          if git diff --staged --quiet; then
+            echo "already restored"
+            exit 0
+          fi
+          git commit -m "fix(apex): v4.4 multi-token + anti-spam (assembled)"
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true
