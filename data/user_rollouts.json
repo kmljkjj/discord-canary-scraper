@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-16T20:51:54.508Z",
+  "scrapedAt": "2026-09-16T20:58:25.757Z",
   "samples": 40,
-  "okEstimate": 5,
+  "okEstimate": 4,
   "tokens": 1,
   "experiments": [
     {
@@ -15,12 +15,12 @@
           "label": "Variant 11",
           "pct": 100,
           "range": [
-            500,
+            0,
             9500
           ],
           "samples": 40,
-          "rawMin": 675,
-          "rawMax": 9619
+          "rawMin": 49,
+          "rawMax": 9342
         }
       ],
       "fingerprint": "11:100.0",
@@ -41,30 +41,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 220,
-          "rawMax": 9829
-        }
-      ],
-      "fingerprint": "1:100.0",
-      "source": "fingerprint-sample"
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 100,
-          "range": [
-            500,
-            9500
-          ],
-          "samples": 40,
-          "rawMin": 342,
-          "rawMax": 9642
+          "rawMin": 127,
+          "rawMax": 9901
         }
       ],
       "fingerprint": "1:100.0",
@@ -84,9 +62,9 @@
             0,
             500
           ],
-          "samples": 4,
-          "rawMin": 44,
-          "rawMax": 398
+          "samples": 2,
+          "rawMin": 89,
+          "rawMax": 426
         }
       ],
       "fingerprint": "1:5.0",
@@ -103,12 +81,12 @@
           "label": "Variant 1",
           "pct": 0,
           "range": [
-            10000,
-            10000
+            9500,
+            9500
           ],
           "samples": 1,
-          "rawMin": 9978,
-          "rawMax": 9978
+          "rawMin": 9628,
+          "rawMax": 9628
         }
       ],
       "fingerprint": "1:0.0",
@@ -125,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 2829,
+      "hash_result": 7247,
       "tokenIndex": 1
     },
     {
@@ -137,19 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 8723,
-      "tokenIndex": 1
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
-      "revision": 0,
-      "bucket": 1,
-      "override": -1,
-      "population": 0,
-      "hash_result": 7148,
+      "hash_result": 574,
       "tokenIndex": 1
     }
   ]
