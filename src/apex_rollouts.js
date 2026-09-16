@@ -1,5 +1,5 @@
 /**
- * Apex rollouts v4.5 — crowd hash_result (Escoteiros/Wumpus) + guild
+ * Apex rollouts v4.5.1 — crowd + safe announce (trigger-apex-rollouts fixes)
  * Secrets:
  *   DISCORD_USER_TOKENS = token1,token2,token3  (preferred)
  *   DISCORD_USER_TOKEN / DISCORD_USER_TOKEN_1..5 (fallback)
@@ -53,7 +53,7 @@ const WEBHOOK = process.env.APEX_WEBHOOK_URL || process.env.ROLLOUT_WEBHOOK_URL 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
 const AVATAR = process.env.ORBIT_AVATAR_URL || 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f4ca.png';
-const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '0.5');
+const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '2');
 const YEAR_MIN = Number(process.env.APEX_RECENT_YEAR || '2024');
 const SCALE = 10000;
 
@@ -831,9 +831,14 @@ async function loadExperiments() {
 }
 
 function pctKey(e) {
+  // Stable % fingerprint only — rounded to 0.1
   return (e.treatments || [])
     .filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)))
-    .map((t) => String(t.bucket ?? t.label) + ':' + Number(t.pct).toFixed(1))
+    .map((t) => {
+      const b = t.bucket != null ? String(t.bucket) : String(t.label || '');
+      const p = (Math.round(Number(t.pct) * 10) / 10).toFixed(1);
+      return b + ':' + p;
+    })
     .sort()
     .join('|');
 }
@@ -975,7 +980,7 @@ async function postWebhook(embeds) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📊 Apex rollouts v4.4 (multi-token + anti-spam)…');
+  console.log('📊 Apex rollouts v4.5.1 (trigger-apex fixes)…');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Tokens:', USER_TOKENS.length ? USER_TOKENS.length + ' set' : 'MISSING');
   const { experiments, sources } = await loadExperiments();
@@ -1045,47 +1050,68 @@ async function main() {
       source: e.source,
     }));
 
-  // Mark announced for everything we are about to send + current state
+  // Baseline fingerprints from current scrape (for next-run diff)
+  // Do NOT lock notify-candidates as announced until webhook succeeds.
   for (const e of compact) {
     if (e.id && e.fingerprint) announced[e.id] = e.fingerprint;
   }
-  for (const e of diff.added) {
-    if (e && e.id) announced[e.id] = pctKey(e);
-  }
-  for (const c of diff.changed) {
-    if (c && c.after && c.after.id) announced[c.after.id] = pctKey(c.after);
-  }
-  for (const e of diff.removed) {
-    if (e && e.id) announced[e.id] = 'REMOVED';
-  }
 
-  await fs.writeJson(
-    STATE_FILE,
-    {
-      scrapedAt: new Date().toISOString(),
-      sources,
-      count: compact.length,
-      experiments: compact,
-      announced,
-    },
-    { spaces: 2 },
-  );
+  async function writeState() {
+    await fs.writeJson(
+      STATE_FILE,
+      {
+        scrapedAt: new Date().toISOString(),
+        sources,
+        count: compact.length,
+        experiments: compact,
+        announced,
+      },
+      { spaces: 2 },
+    );
+  }
 
   if (isFirst) {
+    await writeState();
     console.log('Seed', compact.length, '· recent', sources.recent, '· no notify');
     return;
   }
   if (!(diff.added.length || diff.changed.length || diff.removed.length)) {
+    await writeState();
     console.log('No significant % change (anti-spam)');
     return;
   }
   if (!WEBHOOK) {
+    await writeState();
     console.warn('No webhook');
     return;
   }
-  const sent = await postWebhook(buildEmbeds(diff, { sources }));
+
+  const embeds = buildEmbeds(diff, { sources });
+  if (!embeds.length) {
+    await writeState();
+    console.log('No embeds after build');
+    return;
+  }
+
+  const sent = await postWebhook(embeds);
   console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
-  console.log('✅ Done');
+
+  if (sent.ok) {
+    for (const e of diff.added) {
+      if (e && e.id) announced[e.id] = pctKey(e);
+    }
+    for (const c of diff.changed) {
+      if (c && c.after && c.after.id) announced[c.after.id] = pctKey(c.after);
+    }
+    for (const e of diff.removed) {
+      if (e && e.id) announced[e.id] = 'REMOVED';
+    }
+  } else {
+    console.warn('Webhook failed — not marking announced (will retry next run)');
+  }
+
+  await writeState();
+  console.log(sent.ok ? '✅ Done' : '⚠️ Done with webhook error');
 }
 
 if (require.main === module)
