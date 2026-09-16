@@ -1,0 +1,95 @@
+{
+  "scrapedAt": "2026-09-16T11:49:32.132Z",
+  "samples": 150,
+  "experiments": [
+    {
+      "id": "hash:3013881204",
+      "hash": 3013881204,
+      "type": "user",
+      "title": "hash:3013881204",
+      "treatments": [
+        {
+          "bucket": 11,
+          "label": "Variant 11",
+          "pct": 100,
+          "range": [
+            0,
+            9000
+          ],
+          "samples": 35,
+          "rawMin": 90,
+          "rawMax": 9195
+        }
+      ],
+      "fingerprint": "11:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2023-09_iar_user_reporting",
+      "hash": 2180379513,
+      "type": "user",
+      "title": "Safety Experience IAR User Reporting",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            0,
+            9500
+          ],
+          "samples": 35,
+          "rawMin": 190,
+          "rawMax": 9678
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            500,
+            10000
+          ],
+          "samples": 35,
+          "rawMin": 650,
+          "rawMax": 9828
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "hash:1144304849",
+      "hash": 1144304849,
+      "type": "user",
+      "title": "hash:1144304849",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 0,
+          "range": [
+            500,
+            500
+          ],
+          "samples": 1,
+          "rawMin": 386,
+          "rawMax": 386
+        }
+      ],
+      "fingerprint": "1:0.0",
+      "source": "fingerprint-sample"
+    }
+  ],
+  "token": []
+}
