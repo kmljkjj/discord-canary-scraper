@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-16T21:56:55.333Z",
+  "scrapedAt": "2026-09-16T22:03:22.334Z",
   "samples": 40,
   "okEstimate": 4,
   "tokens": 1,
@@ -19,8 +19,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 45,
-          "rawMax": 9769
+          "rawMin": 79,
+          "rawMax": 9891
         }
       ],
       "fingerprint": "11:100.0",
@@ -38,11 +38,11 @@
           "pct": 100,
           "range": [
             0,
-            10000
+            9500
           ],
           "samples": 40,
-          "rawMin": 108,
-          "rawMax": 9950
+          "rawMin": 76,
+          "rawMax": 9524
         }
       ],
       "fingerprint": "1:100.0",
@@ -63,30 +63,30 @@
             9500
           ],
           "samples": 40,
-          "rawMin": 135,
-          "rawMax": 9380
+          "rawMin": 193,
+          "rawMax": 9632
         }
       ],
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample"
     },
     {
-      "id": "hash:1144304849",
-      "hash": 1144304849,
+      "id": "hash:704914099",
+      "hash": 704914099,
       "type": "user",
-      "title": "hash:1144304849",
+      "title": "hash:704914099",
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
           "pct": 5,
           "range": [
-            0,
-            500
+            9500,
+            10000
           ],
-          "samples": 5,
-          "rawMin": 62,
-          "rawMax": 488
+          "samples": 3,
+          "rawMin": 9579,
+          "rawMax": 9921
         }
       ],
       "fingerprint": "1:5.0",
@@ -103,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 6856,
+      "hash_result": 4922,
       "tokenIndex": 1
     },
     {
@@ -115,7 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 2739,
+      "hash_result": 3990,
       "tokenIndex": 1
     },
     {
@@ -127,7 +127,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 6174,
+      "hash_result": 3361,
       "tokenIndex": 1
     }
   ]
