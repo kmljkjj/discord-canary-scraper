@@ -1,22 +1,61 @@
 {
-  "scrapedAt": "2026-09-16T09:49:01.859Z",
+  "scrapedAt": "2026-09-16T09:55:26.539Z",
   "sources": {
     "discord": 22,
-    "advaith": 0,
+    "advaith": 21,
     "workers": 216,
     "fallback": 283,
-    "merged": 384,
-    "recent": 10,
+    "merged": 392,
+    "recent": 18,
     "user": 284,
-    "guild": 100,
+    "guild": 108,
     "hasToken": true
   },
-  "count": 384,
+  "count": 392,
   "experiments": [
+    {
+      "id": "2026-06_guild_spaces",
+      "type": "guild",
+      "title": "Guild Space",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:0|f:ID range ? – 1514386776523800576",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [
+            {
+              "type": "guild_id_range",
+              "min_id": null,
+              "max_id": "1514386776523800576",
+              "summary": "ID range ? – 1514386776523800576"
+            }
+          ],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 0,
+      "recent": true,
+      "hash": 382479389,
+      "source": "advaith"
+    },
     {
       "id": "2026-06_guild_rooms",
       "type": "guild",
-      "title": "06 Guild Rooms",
+      "title": "Guild Rooms",
       "fingerprint": "-1:99.98,5:0.01|ov:0|pops:1|rev:0|f:ID range ? – 1514694729709649920 · ID range 3 – 50",
       "treatments": [
         {
@@ -67,12 +106,12 @@
       "revision": 0,
       "recent": true,
       "hash": 3030912869,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2026-05_voice_channel_list_invite_embed",
       "type": "guild",
-      "title": "05 Voice Channel List Invite Embed",
+      "title": "Voice Channel List Invite Embed",
       "fingerprint": "1:50.00|ov:0|pops:1|rev:2|f:ID range ? – 1504203698912362496",
       "treatments": [
         {
@@ -106,12 +145,55 @@
       "revision": 2,
       "recent": true,
       "hash": 2599801232,
-      "source": "discord"
+      "source": "advaith"
+    },
+    {
+      "id": "2026-05_default_invite_expiration_guild_web",
+      "type": "guild",
+      "title": "Default Invite Expiration Guild Web",
+      "fingerprint": "-1:5.00,2:95.00|ov:0|pops:1|rev:1|f:",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 5
+        },
+        {
+          "bucket": 2,
+          "label": "Treatment 2",
+          "pct": 95
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 5,
+              "ranges": "0 – 500"
+            },
+            {
+              "bucket": 2,
+              "label": "Treatment 2",
+              "pct": 95,
+              "ranges": "500 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 1,
+      "recent": true,
+      "hash": 1508002362,
+      "source": "advaith"
     },
     {
       "id": "2026-04_voice_user_duration",
       "type": "guild",
-      "title": "04 Voice User Duration",
+      "title": "Voice User Duration",
       "fingerprint": "-1:80.00,1:10.00|ov:0|pops:1|rev:0|f:ID range ? – 1497272116444135424 · ID range 0 – 200",
       "treatments": [
         {
@@ -162,12 +244,12 @@
       "revision": 0,
       "recent": true,
       "hash": 4294382796,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2026-04_voice_call_trigger_point",
       "type": "guild",
-      "title": "04 Voice Call Trigger Point",
+      "title": "Voice Call Trigger Point Experiment",
       "fingerprint": "1:50.00|ov:0|pops:1|rev:1|f:ID range ? – 1491132168401846272",
       "treatments": [
         {
@@ -201,12 +283,12 @@
       "revision": 1,
       "recent": true,
       "hash": 1350319550,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2026-04_server_theme",
       "type": "guild",
-      "title": "04 Server Theme",
+      "title": "Server Theme",
       "fingerprint": "-1:80.00,1:10.00|ov:0|pops:1|rev:1|f:ID range ? – 1518767544729600000",
       "treatments": [
         {
@@ -251,12 +333,108 @@
       "revision": 1,
       "recent": true,
       "hash": 4233234519,
-      "source": "discord"
+      "source": "advaith"
+    },
+    {
+      "id": "2026-04_guild_verification_role",
+      "type": "guild",
+      "title": "Guild Verification Role",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:0|f:",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 0,
+      "recent": true,
+      "hash": 2555045592,
+      "source": "advaith"
+    },
+    {
+      "id": "2026-04_application_identity_linked_roles",
+      "type": "guild",
+      "title": "Application Identity Linked Roles",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:0|f:",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 0,
+      "recent": true,
+      "hash": 3262307579,
+      "source": "advaith"
+    },
+    {
+      "id": "2026-03_guild_official_messages",
+      "type": "guild",
+      "title": "Guild Official Messages",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:14|f:",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 14,
+      "recent": true,
+      "hash": 3747270261,
+      "source": "advaith"
     },
     {
       "id": "2026-03_game_server_pricing",
       "type": "guild",
-      "title": "03 Game Server Pricing",
+      "title": "Game Server Pricing",
       "fingerprint": "-1:100.00|ov:0|pops:1|rev:2|f:ID range ? – 1485601071746916352",
       "treatments": [
         {
@@ -290,7 +468,7 @@
       "revision": 2,
       "recent": true,
       "hash": 2769841699,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2026-02_voice_channel_history_hover",
@@ -349,10 +527,144 @@
       "source": "discord"
     },
     {
+      "id": "2026-02_standard_sidebar_popover_gaps",
+      "type": "guild",
+      "title": "Standardize Guild Sidebar Popover Gaps",
+      "fingerprint": "-1:100.00|ov:0|pops:1|rev:1|f:ID range ? – 1470518767757819904",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [
+            {
+              "type": "guild_id_range",
+              "min_id": null,
+              "max_id": "1470518767757819904",
+              "summary": "ID range ? – 1470518767757819904"
+            }
+          ],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 1,
+      "recent": true,
+      "hash": 2453702596,
+      "source": "advaith"
+    },
+    {
+      "id": "2026-02_hangout_window",
+      "type": "guild",
+      "title": "Hangout Window",
+      "fingerprint": "-1:90.00,1:5.00|ov:0|pops:1|rev:1|f:ID range ? – 200 · ID range ? – 1482215114026254336",
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 90
+        },
+        {
+          "bucket": 1,
+          "label": "Treatment 1",
+          "pct": 5
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [
+            {
+              "type": "guild_member_count_range",
+              "min_id": null,
+              "max_id": 200,
+              "summary": "ID range ? – 200"
+            },
+            {
+              "type": "guild_id_range",
+              "min_id": null,
+              "max_id": "1482215114026254336",
+              "summary": "ID range ? – 1482215114026254336"
+            }
+          ],
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "pct": 90,
+              "ranges": "0 – 300, 500 – 700, 700 – 1500, 2300 – 2500, 2500 – 4500, 4500 – 9000, 9000 – 10000"
+            },
+            {
+              "bucket": 1,
+              "label": "Treatment 1",
+              "pct": 5,
+              "ranges": "400 – 500, 1900 – 2300"
+            }
+          ]
+        }
+      ],
+      "revision": 1,
+      "recent": true,
+      "hash": 3972085047,
+      "source": "advaith"
+    },
+    {
+      "id": "2026-01_voice_channel_duration_mobile",
+      "type": "guild",
+      "title": "Voice Channel Duration (Mobile)",
+      "fingerprint": "1:100.00|ov:0|pops:1|rev:0|f:ID range ? – 1457854561669611520",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Treatment 1",
+          "pct": 100
+        }
+      ],
+      "overrideIdCount": 0,
+      "populationCount": 1,
+      "populations": [
+        {
+          "filters": [
+            {
+              "type": "guild_id_range",
+              "min_id": null,
+              "max_id": "1457854561669611520",
+              "summary": "ID range ? – 1457854561669611520"
+            }
+          ],
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Treatment 1",
+              "pct": 100,
+              "ranges": "0 – 10000"
+            }
+          ]
+        }
+      ],
+      "revision": 0,
+      "recent": true,
+      "hash": 746686384,
+      "source": "advaith"
+    },
+    {
       "id": "2025-11_tida_webform",
       "type": "user",
       "title": "2025-11_tida_webform",
-      "fingerprint": "user|b:1|rev:0|pop:0|hr:2761|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:0|hr:5560|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -372,7 +684,7 @@
     {
       "id": "2025-08_portkey_enabled",
       "type": "guild",
-      "title": "08 Portkey Enabled",
+      "title": "GameServer Enabled",
       "fingerprint": "-1:40.00,1:30.00|ov:0|pops:1|rev:2|f:",
       "treatments": [
         {
@@ -410,19 +722,14 @@
       "revision": 2,
       "recent": true,
       "hash": 2387166525,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2025-08_default_invite_expiration_guild",
       "type": "guild",
-      "title": "08 Default Invite Expiration Guild",
-      "fingerprint": "-1:5.00,2:95.00|ov:0|pops:1|rev:1|f:",
+      "title": "Default Invite Expiration Guild",
+      "fingerprint": "2:95.00|ov:0|pops:1|rev:4|f:",
       "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 5
-        },
         {
           "bucket": 2,
           "label": "Treatment 2",
@@ -436,12 +743,6 @@
           "filters": [],
           "treatments": [
             {
-              "bucket": -1,
-              "label": "None",
-              "pct": 5,
-              "ranges": "0 – 500"
-            },
-            {
               "bucket": 2,
               "label": "Treatment 2",
               "pct": 95,
@@ -450,16 +751,16 @@
           ]
         }
       ],
-      "revision": 1,
+      "revision": 4,
       "recent": true,
-      "hash": 1508002362,
-      "source": "discord"
+      "hash": 3641561375,
+      "source": "advaith"
     },
     {
       "id": "hash:3948141150",
       "type": "user",
       "title": "hash:3948141150",
-      "fingerprint": "user|b:3|rev:6|pop:0|hr:4828|ov:-1",
+      "fingerprint": "user|b:3|rev:6|pop:0|hr:4507|ov:-1",
       "treatments": [
         {
           "bucket": 3,
@@ -551,7 +852,7 @@
       "id": "hash:3013881204",
       "type": "user",
       "title": "hash:3013881204",
-      "fingerprint": "user|b:11|rev:5|pop:1|hr:5509|ov:-1",
+      "fingerprint": "user|b:11|rev:5|pop:1|hr:5887|ov:-1",
       "treatments": [
         {
           "bucket": 11,
@@ -572,7 +873,7 @@
       "id": "hash:2974740189",
       "type": "user",
       "title": "hash:2974740189",
-      "fingerprint": "user|b:1|rev:3|pop:0|hr:9240|ov:-1",
+      "fingerprint": "user|b:1|rev:3|pop:0|hr:418|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -593,7 +894,7 @@
       "id": "hash:2582794089",
       "type": "user",
       "title": "hash:2582794089",
-      "fingerprint": "user|b:1|rev:0|pop:1|hr:691|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:1|hr:660|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -1356,7 +1657,7 @@
       "id": "2023-09_iar_user_reporting",
       "type": "user",
       "title": "2023-09_iar_user_reporting",
-      "fingerprint": "user|b:1|rev:0|pop:4|hr:3571|ov:-1",
+      "fingerprint": "user|b:1|rev:0|pop:4|hr:3626|ov:-1",
       "treatments": [
         {
           "bucket": 1,
@@ -4666,7 +4967,7 @@
     {
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
-      "title": "02 Guest Voice Invites",
+      "title": "Guest Voice Invites",
       "fingerprint": "-1:100.00,1:100.00|ov:13|pops:2|rev:1|f:Feature: GUILD_ONBOARDING_HAS_PROMPTS | guild_has_vanity_url · ID range 1 – 200",
       "treatments": [
         {
@@ -4729,7 +5030,7 @@
       "revision": 1,
       "recent": false,
       "hash": 1727857487,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2023-02_free_form",
@@ -5275,7 +5576,7 @@
     {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
-      "title": "12 Mention Raid Limit",
+      "title": "Automod Mention Raid Limit",
       "fingerprint": "1:100.00|ov:16|pops:2|rev:3|f:Feature: PARTNERED | Feature: COMMUNITY",
       "treatments": [
         {
@@ -5329,7 +5630,7 @@
       "revision": 3,
       "recent": false,
       "hash": 1318029053,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2022-12_media_mosaic_experiment",
@@ -5619,7 +5920,7 @@
     {
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
-      "title": "11 Default Disable Mass Mention",
+      "title": "Disable mass mentions for communities by default",
       "fingerprint": "-1:100.00,1:100.00|ov:11|pops:2|rev:0|f:Feature: COMMUNITY · ID range 5000 – ?",
       "treatments": [
         {
@@ -5676,7 +5977,7 @@
       "revision": 0,
       "recent": false,
       "hash": 2462216785,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2022-11_creator_monetization_onboarding_waitlist",
@@ -6546,7 +6847,7 @@
     {
       "id": "2022-07_voice_in_threads",
       "type": "guild",
-      "title": "07 Voice In Threads",
+      "title": "Voice in Threads",
       "fingerprint": "1:100.00|ov:0|pops:1|rev:0|f:Feature: VOICE_IN_THREADS",
       "treatments": [
         {
@@ -6581,7 +6882,7 @@
       "revision": 0,
       "recent": false,
       "hash": 944104242,
-      "source": "discord"
+      "source": "advaith"
     },
     {
       "id": "2022-07_user_panel_context_menu_profile_entrypoint_behavior",
