@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-16T17:05:29.295Z",
-  "buildNumber": "614362",
+  "scrapedAt": "2026-09-16T17:08:43.578Z",
+  "buildNumber": "614363",
   "totals": {
-    "all": 384
+    "all": 385
   },
   "experiments": [
     {
@@ -5712,6 +5712,21 @@
     },
     {
       "id": "2026-08-favorites-server",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-08-forward-age-restricted-destinations",
       "type": "user",
       "kind": "user",
       "label": null,
