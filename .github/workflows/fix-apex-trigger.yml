@@ -1,0 +1,37 @@
+name: Fix Apex Trigger Bugs
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/fix-apex-announce.js"
+      - ".github/workflows/fix-apex-trigger.yml"
+permissions:
+  contents: write
+concurrency:
+  group: fix-apex-trigger
+  cancel-in-progress: true
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Apply announce + delta fixes
+        run: |
+          node scripts/fix-apex-announce.js src/apex_rollouts.js
+          node --check src/apex_rollouts.js
+          head -5 src/apex_rollouts.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/apex_rollouts.js
+          if git diff --staged --quiet; then
+            echo "already fixed"
+            exit 0
+          fi
+          git commit -m "fix(apex): safe announce + stable pctKey for trigger-apex-rollouts"
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true
