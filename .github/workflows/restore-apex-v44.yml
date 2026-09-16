@@ -3,8 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'patches/apex_part**'
-      - 'patches/apex-rollouts.yml'
+      - 'patches/apex.gz.b64.*'
 permissions:
   contents: write
 concurrency:
@@ -15,23 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Assemble and verify
+      - name: Decode gzip payload and commit
         run: |
           set -euo pipefail
-          cat patches/apex_part00 patches/apex_part01 patches/apex_part02 > src/apex_rollouts.js
+          cat patches/apex.gz.b64.0 patches/apex.gz.b64.1 | base64 -d | gzip -d > src/apex_rollouts.js
           node --check src/apex_rollouts.js
-          cp patches/apex-rollouts.yml .github/workflows/apex-rollouts.yml
-          head -5 src/apex_rollouts.js
-          echo "assembled OK ($(wc -c < src/apex_rollouts.js) bytes)"
-      - name: Commit restore
-        run: |
+          test -f patches/apex-rollouts.yml && cp patches/apex-rollouts.yml .github/workflows/apex-rollouts.yml
+          head -6 src/apex_rollouts.js
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/apex_rollouts.js .github/workflows/apex-rollouts.yml
-          if git diff --staged --quiet; then
-            echo "already restored"
-            exit 0
-          fi
-          git commit -m "fix(apex): v4.4 multi-token + anti-spam (assembled)"
+          git commit -m "fix(apex): v4.4 multi-token + anti-spam" || exit 0
           git pull --rebase --autostash origin main || true
           git push origin HEAD:main || true
