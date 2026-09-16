@@ -1,15 +1,16 @@
 {
-  "scrapedAt": "2026-09-16T11:26:52.186Z",
+  "scrapedAt": "2026-09-16T11:46:00.067Z",
   "sources": {
-    "discord": 22,
+    "discord": 23,
     "advaith": 0,
     "workers": 216,
     "fallback": 283,
-    "merged": 384,
+    "merged": 385,
     "recent": 10,
-    "user": 284,
+    "user": 285,
     "guild": 100,
-    "hasToken": true
+    "hasToken": true,
+    "tokenCount": 1
   },
   "count": 16,
   "experiments": [
@@ -341,5 +342,23 @@
       "hash": 944104242,
       "source": "discord"
     }
-  ]
+  ],
+  "announced": {
+    "2026-06_guild_rooms": "-1:100.0|5:0.0",
+    "2026-05_voice_channel_list_invite_embed": "1:50.0",
+    "2026-04_voice_user_duration": "-1:80.0|1:10.0",
+    "2026-04_voice_call_trigger_point": "1:50.0",
+    "2026-04_server_theme": "-1:80.0|1:10.0",
+    "2026-03_game_server_pricing": "-1:100.0",
+    "2026-02_voice_channel_history_hover": "-1:90.0|1:5.0",
+    "2025-08_portkey_enabled": "-1:40.0|1:30.0",
+    "2025-08_default_invite_expiration_guild": "-1:5.0|2:95.0",
+    "hash:3633668656": "1:100.0",
+    "hash:304990790": "1:50.0",
+    "hash:2453702596": "-1:100.0",
+    "2023-02_guest_voice_invites": "-1:100.0|1:100.0",
+    "2022-12_mention_raid_limit": "1:100.0",
+    "2022-11_default_disable_mass_mention": "-1:100.0|1:100.0",
+    "2022-07_voice_in_threads": "1:100.0"
+  }
 }
