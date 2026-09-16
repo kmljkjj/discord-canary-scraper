@@ -1,58 +1,23 @@
 /**
- * Apex rollouts v4.4 — multi-token user + guild % anti-spam
- * Secrets:
- *   DISCORD_USER_TOKENS = token1,token2,token3  (preferred)
- *   DISCORD_USER_TOKEN / DISCORD_USER_TOKEN_1..5 (fallback)
+ * Apex rollouts v3 — live Discord + advaith (2024/2025/2026 %)
+ * Secret: DISCORD_USER_TOKEN (user token, not bot)
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 
-// Prefer structured decoder when available
-let decodeGuildExperiment = null;
-try {
-  decodeGuildExperiment = require('./lib/guild_decode').decodeGuildExperiment;
-} catch (_) {
-  try {
-    decodeGuildExperiment = require('../lib/guild_decode').decodeGuildExperiment;
-  } catch (_) {}
-}
-
-
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
 const LOCAL_EXP = path.join(DATA_DIR, 'experiments.json');
 const KNOWN_EXP = path.join(DATA_DIR, 'known_experiment_ids.json');
-
-function loadUserTokens() {
-  const out = [];
-  const seen = new Set();
-  const push = (t) => {
-    const s = String(t || '').trim();
-    if (!s || seen.has(s)) return;
-    seen.add(s);
-    out.push(s);
-  };
-  const bulk = process.env.DISCORD_USER_TOKENS || '';
-  for (const part of bulk.split(/[,;\n]+/)) push(part);
-  for (let i = 1; i <= 10; i++) push(process.env['DISCORD_USER_TOKEN_' + i]);
-  push(process.env.DISCORD_USER_TOKEN);
-  push(process.env.DISCORD_TOKEN);
-  return out;
-}
-const USER_TOKENS = loadUserTokens();
-const DISCORD_TOKEN = USER_TOKENS[0] || '';
+const DISCORD_TOKEN = (process.env.DISCORD_USER_TOKEN || process.env.DISCORD_TOKEN || '').trim();
 const ADVAITH = process.env.APEX_ADVAITH_URL || 'https://api.rollouts.advaith.io';
 const WORKERS = process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
 const FALLBACK = process.env.APEX_FALLBACK_URL || 'https://raw.githubusercontent.com/discordexperimenthub/experimentAPI/master/experiments.json';
-const WUMPUS_DEFS =
-  process.env.APEX_DEFS_URL ||
-  'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
-const APEX_LOCAL = path.join(DATA_DIR, 'apex_experiments.json');
 const WEBHOOK = process.env.APEX_WEBHOOK_URL || process.env.ROLLOUT_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL || null;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
-const AVATAR = process.env.ORBIT_AVATAR_URL || 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f4ca.png';
+const AVATAR = process.env.ORBIT_AVATAR_URL || 'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.svg';
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '0.5');
 const YEAR_MIN = Number(process.env.APEX_RECENT_YEAR || '2024');
 const SCALE = 10000;
@@ -149,12 +114,6 @@ function countOverrides(ovs) {
 }
 
 function fromWire(tuple, hashMap) {
-  if (typeof decodeGuildExperiment === 'function') {
-    try {
-      const d = decodeGuildExperiment(tuple, hashMap);
-      if (d) return d;
-    } catch (_) {}
-  }
   if (!Array.isArray(tuple) || tuple.length < 4) return null;
   const hash = tuple[0];
   const key = tuple[1];
@@ -169,7 +128,7 @@ function fromWire(tuple, hashMap) {
   const { treatments, details } = parsePopulations(pops);
   const ov = countOverrides(ovs);
   const fingerprint =
-    treatments.map((t) => t.bucket + ':' + Number(t.pct).toFixed(1)).join(',') +
+    treatments.map((t) => t.bucket + ':' + t.pct.toFixed(2)).join(',') +
     '|ov:' + ov + '|pops:' + pops.length + '|rev:' + rev;
   return {
     id: String(id),
@@ -184,59 +143,6 @@ function fromWire(tuple, hashMap) {
     hash: Number(hash),
     recent: isRecent(id),
     source: 'discord',
-  };
-}
-
-
-/** User assignment from GET /experiments → assignments[]
- * [hash, revision, bucket, override, population, hash_result, aa_mode, trigger_debugging, holdout_name?, ...]
- * Discord does NOT expose global user % here — only this account's bucket.
- * We still track revision/bucket changes; global user % comes from workers/fallback.
- */
-function fromUserAssignment(tuple, hashMap) {
-  if (!Array.isArray(tuple) || tuple.length < 3) return null;
-  const hash = tuple[0];
-  const revision = tuple[1];
-  const bucket = tuple[2];
-  const override = tuple[3];
-  const population = tuple[4];
-  const hashResult = tuple[5];
-  const holdout = typeof tuple[8] === 'string' ? tuple[8] : null;
-  let id =
-    hashMap.get(Number(hash)) ||
-    hashMap.get(String(hash)) ||
-    (holdout && String(holdout)) ||
-    ('hash:' + hash);
-  const label = tLabel(bucket);
-  const treatments = [{ bucket, label, pct: null, assigned: true }];
-  const fingerprint =
-    'user|b:' +
-    bucket +
-    '|rev:' +
-    revision +
-    '|pop:' +
-    population +
-    '|hr:' +
-    hashResult +
-    '|ov:' +
-    override;
-  return {
-    id: String(id),
-    type: 'user',
-    title: String(id),
-    treatments,
-    populations: [],
-    overrideIdCount: override === 0 ? 1 : 0,
-    populationCount: 0,
-    fingerprint,
-    revision,
-    hash: Number(hash),
-    hashResult: hashResult != null ? Number(hashResult) : null,
-    assignedBucket: bucket,
-    recent: isRecent(id),
-    source: 'discord-assignment',
-    // no global % available from API for user experiments
-    hasGlobalPct: false,
   };
 }
 
@@ -332,7 +238,7 @@ function fromObject(raw) {
   const ovs = rollout.overrides || [];
   const ov = Array.isArray(ovs) ? ovs.reduce((n, o) => n + ((o.ids || o.k || []).length || 0), 0) : 0;
   const fingerprint =
-    treatments.map((t) => (t.bucket != null ? t.bucket : t.label) + ':' + Number(t.pct).toFixed(1)).join(',') +
+    treatments.map((t) => (t.bucket != null ? t.bucket : t.label) + ':' + t.pct.toFixed(2)).join(',') +
     '|ov:' + ov + '|pops:' + pops.length;
   return {
     id,
@@ -347,7 +253,6 @@ function fromObject(raw) {
     hash: raw.hash ?? null,
     recent: isRecent(id),
     source: 'object',
-    hasGlobalPct: treatments.some((x) => x.pct != null && Number.isFinite(x.pct)),
   };
 }
 
@@ -355,329 +260,88 @@ async function buildHashMap() {
   const map = new Map();
   const addId = (id) => {
     if (!id || typeof id !== 'string') return;
-    const clean = id.trim();
-    if (!clean) return;
-    const h = murmur3(clean);
-    map.set(h, clean);
-    map.set(String(h), clean);
+    const h = murmur3(id);
+    map.set(h, id);
+    map.set(String(h), id);
   };
-  for (const file of [LOCAL_EXP, APEX_LOCAL, KNOWN_EXP]) {
-    try {
-      if (!(await fs.pathExists(file))) continue;
-      const data = await fs.readJson(file);
-      const list = Array.isArray(data) ? data : data.experiments || data.ids || [];
-      for (const x of list) {
-        if (typeof x === 'string') addId(x);
-        else if (x && (x.id || x.name)) addId(String(x.id || x.name));
-      }
-    } catch (e) {
-      console.warn('Hash map', path.basename(file) + ':', e.message);
-    }
-  }
   try {
-    const res = await fetch(WUMPUS_DEFS, {
-      headers: { 'User-Agent': UA, Accept: 'application/json' },
-      timeout: 20000,
-    });
-    if (res.ok) {
-      const data = await res.json();
-      let n = 0;
-      for (const e of Array.isArray(data) ? data : []) {
-        if (e && (e.id || e.name)) {
-          addId(String(e.id || e.name));
-          n++;
-        }
-      }
-      console.log('Defs gist:', n, 'ids');
+    if (await fs.pathExists(LOCAL_EXP)) {
+      const data = await fs.readJson(LOCAL_EXP);
+      const list = Array.isArray(data) ? data : data.experiments || [];
+      for (const e of list) if (e && e.id) addId(String(e.id));
     }
   } catch (e) {
-    console.warn('Defs gist:', e.message);
+    console.warn('Hash map experiments.json:', e.message);
   }
-  console.log('Hash map:', Math.floor(map.size / 2), 'ids');
+  try {
+    if (await fs.pathExists(KNOWN_EXP)) {
+      const data = await fs.readJson(KNOWN_EXP);
+      const list = Array.isArray(data) ? data : data.ids || data.experiments || [];
+      for (const x of list) addId(typeof x === 'string' ? x : x && x.id ? String(x.id) : null);
+    }
+  } catch (e) {
+    console.warn('Hash map known:', e.message);
+  }
+  console.log('Hash map:', map.size / 2, 'ids');
   return map;
 }
 
-function discordClientHeaders(withToken) {
-  const superProps = Buffer.from(
-    JSON.stringify({
-      os: 'Windows',
-      browser: 'Chrome',
-      device: '',
-      system_locale: 'en-US',
-      browser_user_agent: UA,
-      browser_version: '131.0.0.0',
-      os_version: '10',
-      referrer: '',
-      referring_domain: '',
-      release_channel: 'canary',
-      client_build_number: 609601,
-      client_event_source: null,
-    }),
-  ).toString('base64');
-  const headers = {
-    'User-Agent': UA,
-    Accept: '*/*',
-    'Accept-Language': 'en-US,en;q=0.9',
-    'X-Super-Properties': superProps,
-    'X-Discord-Locale': 'en-US',
-    Origin: 'https://canary.discord.com',
-    Referer: 'https://canary.discord.com/channels/@me',
-  };
-  const tok = typeof withToken === 'string' ? withToken : (withToken ? DISCORD_TOKEN : '');
-  if (tok) headers.Authorization = tok;
-  return headers;
-}
-
-async function fetchDiscordOnce(url, headers, hashMap, label) {
-  const res = await fetch(url, { headers, timeout: 30000 });
-  if (!res.ok) {
-    console.warn('Discord', res.status, label, url);
-    return { guild: [], user: [] };
-  }
-  const data = await res.json();
-  const ge = data.guild_experiments || [];
-  const asg = data.assignments || [];
-  console.log('Discord guild_experiments:', ge.length, '(' + label + ')');
-  console.log('Discord user assignments:', asg.length, '(' + label + ')');
-  const guild = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
-  const user = asg.map((t) => fromUserAssignment(t, hashMap)).filter(Boolean);
-  console.log(
-    '  guild sample:',
-    guild.map((e) => e.id).slice(0, 8).join(', ') || '(none)',
-  );
-  console.log(
-    '  user sample:',
-    user.map((e) => e.id + '@b' + e.assignedBucket).slice(0, 8).join(', ') || '(none)',
-  );
-  console.log(
-    '  recent guild/user ≥' + YEAR_MIN + ':',
-    guild.filter((e) => e.recent).length,
-    '/',
-    user.filter((e) => e.recent).length,
-  );
-  return { guild, user };
-}
-
-// Live Discord: client headers + multi user tokens
-// Guild = global % (same for all). User = per-account bucket → aggregate across tokens.
 async function fetchDiscord(hashMap) {
-  const urls = [
-    'https://canary.discord.com/api/v9/experiments?with_guild_experiments=true',
-    'https://discord.com/api/v9/experiments?with_guild_experiments=true',
-  ];
-  const byKey = new Map();
-  // hash -> { id, buckets: Map(bucket -> count), revision, samples }
-  const userAgg = new Map();
-
-  const ingest = (list) => {
-    for (const e of list) {
-      if (!e) continue;
-      if (e.source === 'discord-assignment' || e.type === 'user') {
-        const hk = e.hash != null ? String(e.hash) : e.id;
-        let ag = userAgg.get(hk);
-        if (!ag) {
-          ag = {
-            id: e.id,
-            hash: e.hash,
-            revision: e.revision,
-            buckets: new Map(),
-            samples: 0,
-            recent: e.recent,
-            title: e.title,
-          };
-          userAgg.set(hk, ag);
-        }
-        if (String(ag.id).startsWith('hash:') && !String(e.id).startsWith('hash:')) ag.id = e.id;
-        const b = e.assignedBucket;
-        if (b != null) ag.buckets.set(b, (ag.buckets.get(b) || 0) + 1);
-        ag.samples++;
-        if (e.revision != null) ag.revision = e.revision;
-        continue;
-      }
-      const key = (e.type || 'x') + ':' + (e.hash != null ? String(e.hash) : e.id);
-      const prev = byKey.get(key);
-      if (!prev) {
-        byKey.set(key, e);
-        continue;
-      }
-      const prevHashId = String(prev.id).startsWith('hash:');
-      const nextHashId = String(e.id).startsWith('hash:');
-      if (prevHashId && !nextHashId) byKey.set(key, e);
-      else if ((e.treatments || []).length > (prev.treatments || []).length) byKey.set(key, e);
-    }
-  };
-
-  // anonymous client (guild list)
-  for (const url of urls) {
-    try {
-      const { guild, user } = await fetchDiscordOnce(
-        url,
-        discordClientHeaders(false),
-        hashMap,
-        'client',
-      );
-      ingest(guild);
-      ingest(user);
-      break;
-    } catch (e) {
-      console.warn('Discord client fail', e.message);
-    }
-  }
-
-  // multi-token
-  console.log('User tokens loaded:', USER_TOKENS.length);
-  for (let i = 0; i < USER_TOKENS.length; i++) {
-    const tok = USER_TOKENS[i];
-    let ok = false;
-    for (const url of urls) {
-      try {
-        const { guild, user } = await fetchDiscordOnce(
-          url,
-          discordClientHeaders(tok),
-          hashMap,
-          'token#' + (i + 1),
-        );
-        ingest(guild);
-        ingest(user);
-        ok = true;
-        break;
-      } catch (e) {
-        console.warn('Discord token#' + (i + 1) + ' fail', e.message);
-      }
-    }
-    if (!ok) console.warn('token#' + (i + 1) + ' no response');
-    // small pause between tokens
-    await new Promise((r) => setTimeout(r, 350));
-  }
-
-  // build aggregated user entries (sample % across tokens)
-  for (const ag of userAgg.values()) {
-    const total = Math.max(1, ag.samples);
-    const treatments = [...ag.buckets.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .map(([bucket, n]) => ({
-        bucket,
-        label: tLabel(bucket),
-        pct: Math.round((n / total) * 1000) / 10,
-        samples: n,
-        assigned: true,
-      }));
-    const fingerprint =
-      'user-agg|' +
-      treatments.map((t) => t.bucket + ':' + t.pct.toFixed(1)).join(',') +
-      '|n:' +
-      total +
-      '|rev:' +
-      ag.revision;
-    byKey.set('user:' + (ag.hash != null ? ag.hash : ag.id), {
-      id: String(ag.id),
-      type: 'user',
-      title: String(ag.title || ag.id),
-      treatments,
-      populations: [],
-      overrideIdCount: 0,
-      populationCount: 0,
-      fingerprint,
-      revision: ag.revision,
-      hash: ag.hash,
-      recent: !!ag.recent,
-      source: 'discord-assignment',
-      hasGlobalPct: treatments.some((t) => t.pct != null),
-      sampleCount: total,
-    });
-  }
-
-  const out = [...byKey.values()];
-  const u = out.filter((e) => e.type === 'user').length;
-  const g = out.filter((e) => e.type === 'guild').length;
-  console.log(
-    'Discord merged unique:',
-    out.length,
-    '(user',
-    u,
-    '/ guild',
-    g + ')',
-    'recent',
-    out.filter((e) => e.recent).length,
-    'tokens',
-    USER_TOKENS.length,
-  );
-  return out;
-}
-
-async function fetchAdvaith(hashMap) {
-  // Direct API is often CF 403 from GitHub Actions. Try mirrors/proxies.
-  // Wumpus-style live guild % (incl. 2026-08-profile-read-state-v1, quest gates)
-  // come from this dataset — without it we only see ~16 Discord public rollouts.
-  const urls = [
-    ADVAITH,
-    process.env.APEX_ADVAITH_MIRROR || '',
-    process.env.APEX_ADVAITH_PROXY || '',
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(ADVAITH),
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(ADVAITH + '/'),
-  ].filter(Boolean);
-
   const headers = {
     'User-Agent': UA,
     Accept: 'application/json',
-    Referer: 'https://rollouts.advaith.io/',
-    Origin: 'https://rollouts.advaith.io',
+    'Accept-Language': 'en-US,en;q=0.9',
   };
-
-  let lastErr = null;
-  for (const url of urls) {
+  if (DISCORD_TOKEN) headers.Authorization = DISCORD_TOKEN;
+  for (const url of [
+    'https://discord.com/api/v9/experiments?with_guild_experiments=true',
+    'https://canary.discord.com/api/v9/experiments?with_guild_experiments=true',
+  ]) {
     try {
-      const res = await fetch(url, { headers, timeout: 50000 });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      let data = await res.json();
-      // allorigins sometimes wraps
-      if (data && !Array.isArray(data) && Array.isArray(data.contents)) {
-        try {
-          data = JSON.parse(data.contents);
-        } catch (_) {}
+      const res = await fetch(url, { headers, timeout: 30000 });
+      if (!res.ok) {
+        console.warn('Discord', res.status, url);
+        continue;
       }
-      if (typeof data === 'string') {
-        try {
-          data = JSON.parse(data);
-        } catch (_) {
-          throw new Error('not json');
-        }
-      }
-      if (!Array.isArray(data)) throw new Error('not array');
-      if (!data.length) throw new Error('empty');
-      const list = data.map((r) => fromAdvaith(r, hashMap)).filter(Boolean);
-      if (!list.length) throw new Error('parsed 0');
-      const recentN = list.filter((e) => e.recent).length;
-      console.log(
-        'advaith:',
-        list.length,
-        'recent',
-        recentN,
-        'via',
-        url.startsWith(ADVAITH) ? 'direct' : url.includes('allorigins') ? 'allorigins' : 'mirror',
-      );
-      const want = ['profile-read-state', 'quest-home-bounties'];
-      for (const w of want) {
-        const hit = list.find((e) => String(e.id).includes(w));
-        if (hit)
-          console.log(
-            '  hit',
-            hit.id,
-            (hit.treatments || []).map((t) => t.label + '=' + t.pct + '%').join(', '),
-          );
-      }
-      if (list.length) console.log('advaith sample:', list.slice(0, 5).map((e) => e.id).join(', '));
-      return list;
+      const data = await res.json();
+      const ge = data.guild_experiments || [];
+      console.log('Discord guild_experiments:', ge.length, DISCORD_TOKEN ? '(token)' : '(anon limited)');
+      const parsed = ge.map((t) => fromWire(t, hashMap)).filter(Boolean);
+      const ids = parsed.map((e) => e.id).slice(0, 20);
+      console.log('Discord ids sample:', ids.join(', ') || '(none)');
+      const recentN = parsed.filter((e) => e.recent).length;
+      console.log('Discord recent ≥' + YEAR_MIN + ':', recentN);
+      return parsed;
     } catch (e) {
-      lastErr = e;
-      console.warn('advaith try fail:', (url || '').slice(0, 60), e.message);
+      console.warn('Discord fail', e.message);
     }
   }
-  console.warn('advaith fail (all mirrors):', lastErr && lastErr.message);
-  console.warn(
-    'Tip: set secret APEX_ADVAITH_MIRROR to a JSON mirror of api.rollouts.advaith.io (Wumpus source).',
-  );
   return [];
+}
+
+async function fetchAdvaith(hashMap) {
+  try {
+    const res = await fetch(ADVAITH, {
+      headers: {
+        'User-Agent': UA,
+        Accept: 'application/json',
+        Referer: 'https://rollouts.advaith.io/',
+        Origin: 'https://rollouts.advaith.io',
+      },
+      timeout: 45000,
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error('not array');
+    const list = data.map((r) => fromAdvaith(r, hashMap)).filter(Boolean);
+    const recentN = list.filter((e) => e.recent).length;
+    console.log('advaith:', list.length, 'recent', recentN);
+    if (list.length) console.log('advaith sample:', list.slice(0, 5).map((e) => e.id).join(', '));
+    return list;
+  } catch (e) {
+    console.warn('advaith fail:', e.message);
+    return [];
+  }
 }
 
 async function fetchJson(url) {
@@ -700,14 +364,11 @@ async function loadExperiments() {
     fallback: 0,
     merged: 0,
     recent: 0,
-    user: 0,
-    guild: 0,
-    hasToken: USER_TOKENS.length > 0,
-    tokenCount: USER_TOKENS.length,
+    hasToken: !!DISCORD_TOKEN,
   };
   const byId = new Map();
 
-  // 1) Live Discord — guild wire (global %) + user assignments (bucket only)
+  // 1) Live Discord (priority for % accuracy)
   try {
     const live = await fetchDiscord(hashMap);
     sources.discord = live.length;
@@ -721,17 +382,10 @@ async function loadExperiments() {
     const adv = await fetchAdvaith(hashMap);
     sources.advaith = adv.length;
     for (const e of adv) {
-      // advaith = best live guild % source (Wumpus uses this)
+      // advaith wins on name if discord only had hash:
       const prev = byId.get(e.id);
-      if (!prev) {
-        byId.set(e.id, e);
-        continue;
-      }
-      const prevPct = (prev.treatments || []).some((t) => t && t.pct != null);
-      const nextPct = (e.treatments || []).some((t) => t && t.pct != null);
-      if (nextPct && (!prevPct || e.source === 'advaith')) byId.set(e.id, e);
-      else if (String(prev.id).startsWith('hash:')) byId.set(e.id, e);
-      else if (e.recent && !prev.recent) byId.set(e.id, e);
+      if (!prev || String(prev.id).startsWith('hash:') || e.recent) byId.set(e.id, e);
+      else if (!prev.recent && e.fingerprint !== 'empty') byId.set(e.id, e);
     }
   } catch (e) {
     console.warn(e.message);
@@ -749,20 +403,7 @@ async function loadExperiments() {
       for (const raw of arr) {
         const n = fromObject(raw);
         if (!n) continue;
-        const prev = byId.get(n.id);
-        if (prev) {
-          // Upgrade assignment-only user entry with global % from workers/fallback
-          if (
-            prev.source === 'discord-assignment' &&
-            n.hasGlobalPct &&
-            (n.type === 'user' || n.type === 'guild')
-          ) {
-            n.assignedBucket = prev.assignedBucket;
-            byId.set(n.id, n);
-            added++;
-          }
-          continue; // never replace richer live guild wire / advaith
-        }
+        if (byId.has(n.id)) continue; // never replace live
         byId.set(n.id, n);
         added++;
       }
@@ -778,78 +419,55 @@ async function loadExperiments() {
   );
   sources.merged = experiments.length;
   sources.recent = experiments.filter((e) => e.recent).length;
-  sources.user = experiments.filter((e) => e.type === 'user').length;
-  sources.guild = experiments.filter((e) => e.type === 'guild').length;
 
-  if (!USER_TOKENS.length) console.warn('⚠️ Aucun token (DISCORD_USER_TOKENS / DISCORD_USER_TOKEN)');
+  if (!DISCORD_TOKEN) console.warn('⚠️ DISCORD_USER_TOKEN manquant');
   if (sources.advaith === 0 && sources.recent === 0)
     console.warn('⚠️ Peu de rollouts récents — advaith KO ou Cloudflare');
-  console.log(
-    'Types: user',
-    sources.user,
-    'guild',
-    sources.guild,
-    'with global %',
-    experiments.filter((e) => e.hasGlobalPct).length,
-  );
 
   return { experiments, sources };
 }
 
-function pctKey(e) {
-  return (e.treatments || [])
-    .filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)))
-    .map((t) => String(t.bucket ?? t.label) + ':' + Number(t.pct).toFixed(1))
-    .sort()
-    .join('|');
-}
-function isLiveGuild(e) {
-  return e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user';
-}
-/** Only real guild % changes from Discord/advaith — never workers spam. */
 function diffExperiments(prev, next) {
   const pMap = new Map(prev.map((e) => [e.id, e]));
   const nMap = new Map(next.map((e) => [e.id, e]));
   const added = [], removed = [], changed = [];
   for (const [id, n] of nMap) {
-    if (!isLiveGuild(n)) continue;
-    const treatments = (n.treatments || []).filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)));
-    if (!treatments.length) continue;
     const p = pMap.get(id);
     if (!p) {
-      // new live guild with real %
-      if (treatments.some((t) => Number(t.pct) > 0))
+      // notify new recent OR any with real % from live sources
+      if (n.recent || (n.source === 'discord' || n.source === 'advaith') && (n.treatments || []).some((t) => t.pct > 0))
         added.push(n);
       continue;
     }
-    if (pctKey(p) === pctKey(n)) continue;
+    if (p.fingerprint === n.fingerprint) continue;
     const deltas = [];
     const pt = new Map((p.treatments || []).map((t) => [String(t.bucket ?? t.label), t]));
-    for (const t of treatments) {
+    for (const t of n.treatments || []) {
       const k = String(t.bucket ?? t.label);
       const old = pt.get(k);
-      const from = old && old.pct != null ? Number(old.pct) : 0;
-      const to = Number(t.pct);
-      const d = Math.round((to - from) * 10) / 10;
-      if (Math.abs(d) >= MIN_DELTA)
-        deltas.push({ label: t.label, bucket: t.bucket, from, to, delta: d });
+      const from = old ? old.pct : 0;
+      const d = Math.round((t.pct - from) * 100) / 100;
+      if (Math.abs(d) >= MIN_DELTA) deltas.push({ label: t.label, bucket: t.bucket, from, to: t.pct, delta: d });
     }
     for (const t of p.treatments || []) {
-      if (t.pct == null || !Number.isFinite(Number(t.pct))) continue;
       const k = String(t.bucket ?? t.label);
-      if (!treatments.some((x) => String(x.bucket ?? x.label) === k) && Math.abs(Number(t.pct)) >= MIN_DELTA)
-        deltas.push({ label: t.label, bucket: t.bucket, from: Number(t.pct), to: 0, delta: -Number(t.pct) });
+      if (!(n.treatments || []).some((x) => String(x.bucket ?? x.label) === k) && Math.abs(t.pct) >= MIN_DELTA)
+        deltas.push({ label: t.label, bucket: t.bucket, from: t.pct, to: 0, delta: -t.pct });
     }
-    if (!deltas.length) continue;
-    const maxAbs = deltas.reduce((m, x) => Math.max(m, Math.abs(x.delta)), 0);
-    changed.push({ before: p, after: n, deltas, ovDelta: null, maxAbs });
+    const ovDelta =
+      (n.overrideIdCount || 0) !== (p.overrideIdCount || 0)
+        ? { from: p.overrideIdCount || 0, to: n.overrideIdCount || 0 }
+        : null;
+    if (deltas.length || ovDelta) {
+      const maxAbs = deltas.reduce((m, x) => Math.max(m, Math.abs(x.delta)), 0);
+      // skip tiny noise on ancient experiments
+      if (!n.recent && !p.recent && maxAbs < 5) continue;
+      changed.push({ before: p, after: n, deltas, ovDelta, maxAbs });
+    }
   }
-  for (const [id, p] of pMap) {
-    if (nMap.has(id)) continue;
-    if (!isLiveGuild(p)) continue;
-    if (p.recent || isRecent(p.id)) removed.push(p);
-  }
+  for (const [id, p] of pMap) if (!nMap.has(id) && (p.recent || isRecent(p.id))) removed.push(p);
   changed.sort((a, b) => b.maxAbs - a.maxAbs);
+  added.sort((a, b) => (a.recent === b.recent ? 0 : a.recent ? -1 : 1));
   return { added, removed, changed };
 }
 
@@ -860,7 +478,30 @@ function fmtTreat(ts, max = 10) {
 }
 
 function buildEmbeds(diff, stats) {
-  const embeds = [];
+  const embeds = [
+    {
+      author: { name: 'Apex Rollouts', icon_url: AVATAR },
+      title: 'Mise à jour des pourcentages',
+      description: [
+        '**Live** · Discord `' +
+          stats.sources.discord +
+          '` · advaith `' +
+          stats.sources.advaith +
+          '` · merged `' +
+          stats.sources.merged +
+          '` · récents ≥' +
+          YEAR_MIN +
+          ' `' +
+          stats.sources.recent +
+          '`',
+        '**Token** · `' + (stats.sources.hasToken ? 'oui' : 'non') + '`',
+        '**Δ** · +`' + diff.added.length + '` · ~`' + diff.changed.length + '` · -`' + diff.removed.length + '`',
+      ].join('\n'),
+      color: 0x5865f2,
+      footer: { text: 'Datamining · Apex %' },
+      timestamp: new Date().toISOString(),
+    },
+  ];
   for (const e of diff.added.slice(0, 8)) {
     embeds.push({
       title: '+ ' + e.id,
@@ -928,108 +569,46 @@ async function postWebhook(embeds) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📊 Apex rollouts v4.4 (multi-token + anti-spam)…');
+  console.log('📊 Apex rollouts v3…');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
-  console.log('Tokens:', USER_TOKENS.length ? USER_TOKENS.length + ' set' : 'MISSING');
+  console.log('Token:', DISCORD_TOKEN ? 'set' : 'MISSING');
   const { experiments, sources } = await loadExperiments();
   console.log('Merged:', experiments.length, sources);
-  let previous = { experiments: [], announced: {} };
+  let previous = { experiments: [] };
   if (await fs.pathExists(STATE_FILE)) {
     try {
       previous = await fs.readJson(STATE_FILE);
     } catch (e) {}
   }
   const prev = previous.experiments || [];
-  const announced = previous.announced && typeof previous.announced === 'object' ? { ...previous.announced } : {};
-  // rebuild announced from prev fingerprints if empty
-  if (!Object.keys(announced).length) {
-    for (const e of prev) {
-      if (e && e.id) announced[e.id] = e.fingerprint || pctKey(e);
-    }
-  }
   const isFirst = !prev.length;
-  let diff = isFirst ? { added: [], removed: [], changed: [] } : diffExperiments(prev, experiments);
-
-  // Anti-spam: drop anything whose pct fingerprint was already announced
-  const filterAnnounced = (list, getId, getKey) =>
-    list.filter((item) => {
-      const id = getId(item);
-      const key = getKey(item);
-      if (!id || !key) return false;
-      if (announced[id] === key) return false;
-      return true;
-    });
-
-  if (!isFirst) {
-    diff = {
-      added: filterAnnounced(diff.added, (e) => e.id, (e) => pctKey(e)),
-      changed: filterAnnounced(
-        diff.changed,
-        (c) => c.after && c.after.id,
-        (c) => pctKey(c.after),
-      ),
-      removed: diff.removed.filter((e) => e && e.id && announced[e.id] !== 'REMOVED'),
-    };
-  }
-
-  console.log('Diff', {
-    added: diff.added.length,
-    changed: diff.changed.length,
-    removed: diff.removed.length,
-    first: isFirst,
-    announcedKeys: Object.keys(announced).length,
-  });
-
-  // State: live guild only (stable % keys)
-  const compact = experiments
-    .filter((e) => e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user')
-    .map((e) => ({
-      id: e.id,
-      type: e.type || 'guild',
-      title: e.title,
-      fingerprint: pctKey(e),
-      treatments: (e.treatments || [])
-        .filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)))
-        .map((t) => ({ bucket: t.bucket, label: t.label, pct: Math.round(Number(t.pct) * 10) / 10 })),
-      overrideIdCount: e.overrideIdCount || 0,
-      revision: e.revision,
-      recent: !!e.recent,
-      hash: e.hash,
-      source: e.source,
-    }));
-
-  // Mark announced for everything we are about to send + current state
-  for (const e of compact) {
-    if (e.id && e.fingerprint) announced[e.id] = e.fingerprint;
-  }
-  for (const e of diff.added) {
-    if (e && e.id) announced[e.id] = pctKey(e);
-  }
-  for (const c of diff.changed) {
-    if (c && c.after && c.after.id) announced[c.after.id] = pctKey(c.after);
-  }
-  for (const e of diff.removed) {
-    if (e && e.id) announced[e.id] = 'REMOVED';
-  }
-
+  const diff = isFirst ? { added: [], removed: [], changed: [] } : diffExperiments(prev, experiments);
+  console.log('Diff', { added: diff.added.length, changed: diff.changed.length, removed: diff.removed.length, first: isFirst });
+  const compact = experiments.map((e) => ({
+    id: e.id,
+    type: e.type,
+    title: e.title,
+    fingerprint: e.fingerprint,
+    treatments: e.treatments,
+    overrideIdCount: e.overrideIdCount,
+    populationCount: e.populationCount,
+    populations: (e.populations || []).map((p) => ({ filters: p.filters, treatments: p.treatments })),
+    revision: e.revision,
+    recent: e.recent,
+    hash: e.hash,
+    source: e.source,
+  }));
   await fs.writeJson(
     STATE_FILE,
-    {
-      scrapedAt: new Date().toISOString(),
-      sources,
-      count: compact.length,
-      experiments: compact,
-      announced,
-    },
-    { spaces: 2 },
+    { scrapedAt: new Date().toISOString(), sources, count: compact.length, experiments: compact },
+    { spaces: 2 }
   );
-
   if (isFirst) {
-    console.log('Seed', compact.length, '· recent', sources.recent, '· no notify');
+    console.log('Seed', compact.length, '· recent', sources.recent);
     return;
   }
   if (!(diff.added.length || diff.changed.length || diff.removed.length)) {
-    console.log('No significant % change (anti-spam)');
+    console.log('No significant % change');
     return;
   }
   if (!WEBHOOK) {
@@ -1046,4 +625,4 @@ if (require.main === module)
     console.error(e);
     process.exit(1);
   });
-module.exports = { main, murmur3, intervalsToPct, diffExperiments, loadUserTokens };
+module.exports = { main, murmur3, intervalsToPct, diffExperiments };
