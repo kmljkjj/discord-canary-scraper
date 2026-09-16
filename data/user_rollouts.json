@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-16T12:12:01.437Z",
+  "scrapedAt": "2026-09-16T12:18:23.903Z",
   "samples": 40,
-  "okEstimate": 3,
+  "okEstimate": 4,
   "tokens": 1,
   "experiments": [
     {
@@ -19,8 +19,8 @@
             9500
           ],
           "samples": 40,
-          "rawMin": 445,
-          "rawMax": 9576
+          "rawMin": 369,
+          "rawMax": 9450
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            500,
-            9500
+            0,
+            10000
           ],
           "samples": 40,
-          "rawMin": 665,
-          "rawMax": 9633
+          "rawMin": 20,
+          "rawMax": 9993
         }
       ],
       "fingerprint": "1:100.0",
@@ -63,11 +63,33 @@
             9500
           ],
           "samples": 40,
-          "rawMin": 98,
-          "rawMax": 9564
+          "rawMin": 228,
+          "rawMax": 9625
         }
       ],
       "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "hash:1144304849",
+      "hash": 1144304849,
+      "type": "user",
+      "title": "hash:1144304849",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 0.63,
+          "range": [
+            0,
+            63
+          ],
+          "samples": 1,
+          "rawMin": 63,
+          "rawMax": 63
+        }
+      ],
+      "fingerprint": "1:0.6",
       "source": "fingerprint-sample"
     }
   ],
@@ -81,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 7498,
+      "hash_result": 9946,
       "tokenIndex": 1
     },
     {
@@ -93,7 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 9753,
+      "hash_result": 8123,
       "tokenIndex": 1
     },
     {
@@ -105,7 +127,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 9327,
+      "hash_result": 4591,
       "tokenIndex": 1
     }
   ]
