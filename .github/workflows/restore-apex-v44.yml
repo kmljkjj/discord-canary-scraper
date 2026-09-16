@@ -17,7 +17,7 @@ jobs:
       - name: Decode gzip payload and commit
         run: |
           set -euo pipefail
-          cat patches/apex.gz.b64.0 patches/apex.gz.b64.1 | base64 -d | gzip -d > src/apex_rollouts.js
+          cat patches/apex.gz.b64.0 patches/apex.gz.b64.1 patches/apex.gz.b64.2 patches/apex.gz.b64.3 patches/apex.gz.b64.4 patches/apex.gz.b64.5 patches/apex.gz.b64.6 patches/apex.gz.b64.7 | base64 -d | gzip -d > src/apex_rollouts.js
           node --check src/apex_rollouts.js
           test -f patches/apex-rollouts.yml && cp patches/apex-rollouts.yml .github/workflows/apex-rollouts.yml
           head -6 src/apex_rollouts.js
