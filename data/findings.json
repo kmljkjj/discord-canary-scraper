@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-16T17:41:11.138Z",
-  "buildNumber": "614411",
+  "scrapedAt": "2026-09-16T17:44:24.618Z",
+  "buildNumber": "614415",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -6326,6 +6326,21 @@
         }
       },
       "variationCount": 4,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-automod-application-rules",
+      "type": "guild",
+      "kind": "guild",
+      "label": "Automod Mention Raid Limit",
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

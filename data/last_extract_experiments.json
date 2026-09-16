@@ -1,7 +1,7 @@
 {
-  "buildNumber": "614411",
-  "updatedAt": "2026-09-16T17:41:11.082Z",
-  "count": 369,
+  "buildNumber": "614415",
+  "updatedAt": "2026-09-16T17:44:24.562Z",
+  "count": 370,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5246,6 +5246,19 @@
         }
       },
       "fp": "5c77e86646335e1936a55a3a"
+    },
+    "2026-09-automod-application-rules": {
+      "id": "2026-09-automod-application-rules",
+      "type": "guild",
+      "kind": "guild",
+      "label": "Automod Mention Raid Limit",
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "c04c8f0322b7dd35dfd0a052"
     },
     "2026-09-connected-thread-sidebar": {
       "id": "2026-09-connected-thread-sidebar",
