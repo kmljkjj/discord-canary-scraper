@@ -1,19 +1,18 @@
 /**
- * User experiment rollouts — method used by Discord Experiment Hub / Wumpus-linked tools
+ * User experiment rollouts — fingerprint sampling (DEH-style)
  *
- * Official API only returns YOUR assignment for user experiments (bucket), not global %.
- * DEH's experimentAPI estimates ranges by sampling many anonymous fingerprints:
- *   GET /experiments → assignments[].hash_result (0–10000 position)
- * then min/max per (hash, bucket) → approximate %.
+ * GET /experiments without auth returns anonymous fingerprint + assignments.
+ * Sampling many fingerprints estimates bucket ranges / %.
  *
- * + user token: track revision / bucket changes for named experiments.
+ * Soft on rate-limits (429): low concurrency, delays, Retry-After.
  *
  * Env:
- *   DISCORD_USER_TOKEN   optional but recommended
+ *   DISCORD_USER_TOKEN / DISCORD_USER_TOKENS / TOKEN_1..5  optional
  *   APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
- *   USER_ROLLOUT_SAMPLES  default 120 (GHA-friendly; DEH used 10000)
- *   USER_ROLLOUT_CONCURRENCY  default 6
- *   APEX_MIN_PCT_DELTA  default 2
+ *   USER_ROLLOUT_SAMPLES       default 40 (was 150 — too aggressive)
+ *   USER_ROLLOUT_CONCURRENCY   default 2
+ *   USER_ROLLOUT_DELAY_MS      default 250 between requests
+ *   APEX_MIN_PCT_DELTA         default 2
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -26,14 +25,33 @@ const KNOWN = path.join(DATA, 'known_experiment_ids.json');
 const EXPS = path.join(DATA, 'experiments.json');
 const BASELINE = path.join(DATA, 'baseline_experiments.json');
 
-const TOKEN = (process.env.DISCORD_USER_TOKEN || process.env.DISCORD_TOKEN || '').trim();
+function loadTokens() {
+  const out = [];
+  const push = (t) => {
+    const s = String(t || '').trim();
+    if (s && !out.includes(s)) out.push(s);
+  };
+  const multi = process.env.DISCORD_USER_TOKENS || '';
+  if (multi) multi.split(/[,\n;]+/).forEach(push);
+  push(process.env.DISCORD_USER_TOKEN);
+  push(process.env.DISCORD_TOKEN);
+  for (let i = 1; i <= 5; i++) {
+    push(process.env['DISCORD_USER_TOKEN_' + i]);
+    push(process.env['DISCORD_USER_TOKENS' + i]);
+  }
+  return out;
+}
+
+const TOKENS = loadTokens();
+const TOKEN = TOKENS[0] || '';
 const WEBHOOK =
   process.env.APEX_WEBHOOK_URL ||
   process.env.ROLLOUT_WEBHOOK_URL ||
   process.env.DISCORD_WEBHOOK_URL ||
   null;
-const SAMPLES = Math.max(20, Math.min(2000, Number(process.env.USER_ROLLOUT_SAMPLES || 120)));
-const CONC = Math.max(1, Math.min(12, Number(process.env.USER_ROLLOUT_CONCURRENCY || 6)));
+const SAMPLES = Math.max(10, Math.min(400, Number(process.env.USER_ROLLOUT_SAMPLES || 40)));
+const CONC = Math.max(1, Math.min(4, Number(process.env.USER_ROLLOUT_CONCURRENCY || 2)));
+const DELAY_MS = Math.max(50, Math.min(5000, Number(process.env.USER_ROLLOUT_DELAY_MS || 250)));
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 2);
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
 const AVATAR =
@@ -42,6 +60,10 @@ const AVATAR =
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const SCALE = 10000;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
 
 function murmur3(key, seed = 0) {
   let h1 = seed >>> 0;
@@ -85,7 +107,7 @@ function murmur3(key, seed = 0) {
 }
 
 async function loadHashMap() {
-  const map = new Map(); // hash -> { id, type, title }
+  const map = new Map();
   const add = (id, type, title) => {
     if (!id || typeof id !== 'string') return;
     const h = murmur3(id);
@@ -106,7 +128,7 @@ async function loadHashMap() {
   return map;
 }
 
-async function fetchAssignments(extraHeaders = {}) {
+async function fetchAssignments(extraHeaders = {}, attempt = 0) {
   const res = await fetch('https://canary.discord.com/api/v10/experiments', {
     headers: {
       'User-Agent': UA,
@@ -115,8 +137,15 @@ async function fetchAssignments(extraHeaders = {}) {
       Pragma: 'no-cache',
       ...extraHeaders,
     },
-    timeout: 20000,
+    timeout: 25000,
   });
+  if (res.status === 429 && attempt < 4) {
+    const ra = Number(res.headers.get('retry-after') || res.headers.get('x-ratelimit-reset-after') || 2);
+    const wait = Math.min(30, Math.max(1, ra)) * 1000 + attempt * 500;
+    console.warn('429 → wait', Math.round(wait / 1000) + 's');
+    await sleep(wait);
+    return fetchAssignments(extraHeaders, attempt + 1);
+  }
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const data = await res.json();
   return {
@@ -126,21 +155,29 @@ async function fetchAssignments(extraHeaders = {}) {
 }
 
 /**
- * Sample many anonymous fingerprints (DEH rollout-calculation.js approach).
- * Collect hash_result per (hash, bucket).
+ * Sample anonymous fingerprints slowly (avoid Cloudflare / Discord 429).
  */
 async function sampleFingerprints(n, concurrency) {
-  const ranges = new Map(); // hash -> Map(bucket -> number[])
+  const ranges = new Map();
   let ok = 0,
-    fail = 0;
-  let i = 0;
-  async function one() {
-    while (i < n) {
-      const my = i++;
+    fail = 0,
+    consecutive429 = 0;
+  let next = 0;
+
+  async function worker() {
+    while (true) {
+      const my = next++;
+      if (my >= n) break;
+      if (consecutive429 > 8) {
+        fail++;
+        continue;
+      }
       try {
+        await sleep(DELAY_MS + Math.floor(Math.random() * 80));
         const { assignments } = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
         });
+        consecutive429 = 0;
         for (const a of assignments) {
           if (!Array.isArray(a) || a.length < 6) continue;
           const hash = a[0],
@@ -155,12 +192,15 @@ async function sampleFingerprints(n, concurrency) {
         ok++;
       } catch (e) {
         fail++;
-        if (fail < 5) console.warn('sample fail', e.message);
+        if (String(e.message).includes('429')) consecutive429++;
+        if (fail <= 6) console.warn('sample fail', e.message);
+        if (consecutive429 > 3) await sleep(3000);
       }
-      if (my && my % 30 === 0) console.log('  sampled', my, '/', n);
+      if (my && my % 20 === 0) console.log('  sampled', my, '/', n, 'ok', ok);
     }
   }
-  await Promise.all(Array.from({ length: concurrency }, () => one()));
+
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log('Samples ok', ok, 'fail', fail, 'hashes', ranges.size);
   return ranges;
 }
@@ -171,11 +211,9 @@ function rangesToTreatments(bucketMap) {
     if (!hrs.length) continue;
     const min = Math.min(...hrs);
     const max = Math.max(...hrs);
-    // DEH: round to nearest 500
     const start = Math.round(min / 500) * 500;
     const end = Math.min(SCALE, Math.round(max / 500) * 500 || max);
     const span = Math.max(0, end - start);
-    // crude: if we only ever see one bucket, treat observed span as that bucket's share
     const pct = Math.round((span / SCALE) * 10000) / 100;
     treatments.push({
       bucket: Number(bucket),
@@ -187,12 +225,10 @@ function rangesToTreatments(bucketMap) {
       rawMax: max,
     });
   }
-  // If single bucket spans ~full range → ~100%
   if (treatments.length === 1 && treatments[0].samples > 5) {
     const t = treatments[0];
     if (t.rawMax - t.rawMin > 8000) t.pct = 100;
   }
-  // Normalize if multiple buckets: weight by sample counts as soft signal
   const totalSamples = treatments.reduce((s, t) => s + t.samples, 0);
   if (treatments.length > 1 && totalSamples > 0) {
     for (const t of treatments) {
@@ -210,37 +246,45 @@ function fingerprintOf(treatments) {
 }
 
 async function fetchTokenSnapshot(hashMap) {
-  if (!TOKEN) return [];
-  try {
-    const { assignments } = await fetchAssignments({
-      Authorization: TOKEN,
-      'X-Discord-Locale': 'en-US',
-    });
-    console.log('Token assignments:', assignments.length);
-    const out = [];
-    for (const a of assignments) {
-      if (!Array.isArray(a) || a.length < 3) continue;
-      const hash = a[0],
-        revision = a[1],
-        bucket = a[2];
-      const meta = hashMap.get(hash) || { id: 'hash:' + hash, type: 'user', title: 'hash:' + hash };
-      out.push({
-        id: meta.id,
-        hash,
-        type: meta.type || 'user',
-        title: meta.title,
-        revision,
-        bucket,
-        override: a[3],
-        population: a[4],
-        hash_result: a[5],
+  if (!TOKENS.length) return [];
+  const out = [];
+  const seen = new Set();
+  for (let i = 0; i < TOKENS.length; i++) {
+    const tok = TOKENS[i];
+    try {
+      await sleep(400);
+      const { assignments } = await fetchAssignments({
+        Authorization: tok,
+        'X-Discord-Locale': 'en-US',
       });
+      console.log('Token#' + (i + 1) + ' assignments:', assignments.length);
+      for (const a of assignments) {
+        if (!Array.isArray(a) || a.length < 3) continue;
+        const hash = a[0],
+          revision = a[1],
+          bucket = a[2];
+        const key = hash + '@' + revision + '@' + bucket;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const meta = hashMap.get(hash) || { id: 'hash:' + hash, type: 'user', title: 'hash:' + hash };
+        out.push({
+          id: meta.id,
+          hash,
+          type: meta.type || 'user',
+          title: meta.title,
+          revision,
+          bucket,
+          override: a[3],
+          population: a[4],
+          hash_result: a[5],
+          tokenIndex: i + 1,
+        });
+      }
+    } catch (e) {
+      console.warn('Token#' + (i + 1) + ' snapshot fail:', e.message);
     }
-    return out;
-  } catch (e) {
-    console.warn('Token snapshot fail:', e.message);
-    return [];
   }
+  return out;
 }
 
 function buildEmbeds(changes) {
@@ -274,7 +318,7 @@ function buildEmbeds(changes) {
         if (t.range) lines.push('  `(' + t.range[0] + ' - ' + t.range[1] + ')`');
       }
     }
-    lines.push('_estimé par sampling fingerprint (méthode DEH)_');
+    lines.push('_estimé par sampling fingerprint_');
     embeds.push({
       author: { name: 'Datamining', icon_url: AVATAR },
       title: (c.kind === 'new' ? '➕ ' : '🔁 ') + (c.title || c.id),
@@ -300,7 +344,16 @@ async function postWebhook(embeds) {
 async function main() {
   await fs.ensureDir(DATA);
   console.log('📊 User rollouts (fingerprint sampling)…');
-  console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'token:', TOKEN ? 'yes' : 'no');
+  console.log(
+    'Samples:',
+    SAMPLES,
+    'concurrency:',
+    CONC,
+    'delayMs:',
+    DELAY_MS,
+    'tokens:',
+    TOKENS.length,
+  );
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
 
   const hashMap = await loadHashMap();
@@ -360,7 +413,6 @@ async function main() {
       if (deltas.length) changes.push({ kind: 'pct', id: n.id, title: n.title, deltas });
     }
 
-    // revision changes from token
     const prevTok = new Map((prev.token || []).map((t) => [t.hash, t]));
     for (const t of tokenSnap) {
       const p = prevTok.get(t.hash);
@@ -382,6 +434,8 @@ async function main() {
     {
       scrapedAt: new Date().toISOString(),
       samples: SAMPLES,
+      okEstimate: experiments.length,
+      tokens: TOKENS.length,
       experiments,
       token: tokenSnap,
     },
