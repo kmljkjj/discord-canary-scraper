@@ -210,16 +210,13 @@ function decodeGuildExperiment(tuple, hashMap) {
     0,
   );
 
+  // % only — filter ID ranges change often and caused false "changed" spam
   const fingerprint =
-    treatments.map((t) => t.bucket + ':' + t.pct.toFixed(2)).join(',') +
+    treatments.map((t) => t.bucket + ':' + Number(t.pct).toFixed(1)).join(',') +
     '|ov:' +
     ovCount +
-    '|pops:' +
-    populations.length +
     '|rev:' +
-    revision +
-    '|f:' +
-    filterSummary;
+    revision;
 
   const idStr = id ? String(id) : 'hash:' + hash;
   const title = humanizeId(idStr);

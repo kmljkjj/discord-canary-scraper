@@ -1,5 +1,5 @@
 /**
- * Apex rollouts v4.1 (user + guild) — Discord live % + structured guild decode
+ * Apex rollouts v4.3 (guild pct stable) — Discord live % + structured guild decode
  * Secret: DISCORD_USER_TOKEN (user token, not bot)
  */
 const fetch = require('node-fetch');
@@ -149,7 +149,7 @@ function fromWire(tuple, hashMap) {
   const { treatments, details } = parsePopulations(pops);
   const ov = countOverrides(ovs);
   const fingerprint =
-    treatments.map((t) => t.bucket + ':' + t.pct.toFixed(2)).join(',') +
+    treatments.map((t) => t.bucket + ':' + Number(t.pct).toFixed(1)).join(',') +
     '|ov:' + ov + '|pops:' + pops.length + '|rev:' + rev;
   return {
     id: String(id),
@@ -312,7 +312,7 @@ function fromObject(raw) {
   const ovs = rollout.overrides || [];
   const ov = Array.isArray(ovs) ? ovs.reduce((n, o) => n + ((o.ids || o.k || []).length || 0), 0) : 0;
   const fingerprint =
-    treatments.map((t) => (t.bucket != null ? t.bucket : t.label) + ':' + t.pct.toFixed(2)).join(',') +
+    treatments.map((t) => (t.bucket != null ? t.bucket : t.label) + ':' + Number(t.pct).toFixed(1)).join(',') +
     '|ov:' + ov + '|pops:' + pops.length;
   return {
     id,
@@ -702,47 +702,60 @@ async function loadExperiments() {
   return { experiments, sources };
 }
 
+function pctKey(e) {
+  return (e.treatments || [])
+    .filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)))
+    .map((t) => String(t.bucket ?? t.label) + ':' + Number(t.pct).toFixed(1))
+    .sort()
+    .join('|');
+}
+function isLiveGuild(e) {
+  return e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user';
+}
+/** Only real guild % changes from Discord/advaith — never workers spam. */
 function diffExperiments(prev, next) {
   const pMap = new Map(prev.map((e) => [e.id, e]));
   const nMap = new Map(next.map((e) => [e.id, e]));
   const added = [], removed = [], changed = [];
   for (const [id, n] of nMap) {
+    if (!isLiveGuild(n)) continue;
+    const treatments = (n.treatments || []).filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)));
+    if (!treatments.length) continue;
     const p = pMap.get(id);
     if (!p) {
-      // notify new recent OR any with real % from live sources
-      if (n.recent || (n.source === 'discord' || n.source === 'advaith') && (n.treatments || []).some((t) => t.pct > 0))
+      // new live guild with real %
+      if (treatments.some((t) => Number(t.pct) > 0))
         added.push(n);
       continue;
     }
-    if (p.fingerprint === n.fingerprint) continue;
+    if (pctKey(p) === pctKey(n)) continue;
     const deltas = [];
     const pt = new Map((p.treatments || []).map((t) => [String(t.bucket ?? t.label), t]));
-    for (const t of n.treatments || []) {
+    for (const t of treatments) {
       const k = String(t.bucket ?? t.label);
       const old = pt.get(k);
-      const from = old ? old.pct : 0;
-      const d = Math.round((t.pct - from) * 100) / 100;
-      if (Math.abs(d) >= MIN_DELTA) deltas.push({ label: t.label, bucket: t.bucket, from, to: t.pct, delta: d });
+      const from = old && old.pct != null ? Number(old.pct) : 0;
+      const to = Number(t.pct);
+      const d = Math.round((to - from) * 10) / 10;
+      if (Math.abs(d) >= MIN_DELTA)
+        deltas.push({ label: t.label, bucket: t.bucket, from, to, delta: d });
     }
     for (const t of p.treatments || []) {
+      if (t.pct == null || !Number.isFinite(Number(t.pct))) continue;
       const k = String(t.bucket ?? t.label);
-      if (!(n.treatments || []).some((x) => String(x.bucket ?? x.label) === k) && Math.abs(t.pct) >= MIN_DELTA)
-        deltas.push({ label: t.label, bucket: t.bucket, from: t.pct, to: 0, delta: -t.pct });
+      if (!treatments.some((x) => String(x.bucket ?? x.label) === k) && Math.abs(Number(t.pct)) >= MIN_DELTA)
+        deltas.push({ label: t.label, bucket: t.bucket, from: Number(t.pct), to: 0, delta: -Number(t.pct) });
     }
-    const ovDelta =
-      (n.overrideIdCount || 0) !== (p.overrideIdCount || 0)
-        ? { from: p.overrideIdCount || 0, to: n.overrideIdCount || 0 }
-        : null;
-    if (deltas.length || ovDelta) {
-      const maxAbs = deltas.reduce((m, x) => Math.max(m, Math.abs(x.delta)), 0);
-      // skip tiny noise on ancient experiments
-      if (!n.recent && !p.recent && maxAbs < 5) continue;
-      changed.push({ before: p, after: n, deltas, ovDelta, maxAbs });
-    }
+    if (!deltas.length) continue;
+    const maxAbs = deltas.reduce((m, x) => Math.max(m, Math.abs(x.delta)), 0);
+    changed.push({ before: p, after: n, deltas, ovDelta: null, maxAbs });
   }
-  for (const [id, p] of pMap) if (!nMap.has(id) && (p.recent || isRecent(p.id))) removed.push(p);
+  for (const [id, p] of pMap) {
+    if (nMap.has(id)) continue;
+    if (!isLiveGuild(p)) continue;
+    if (p.recent || isRecent(p.id)) removed.push(p);
+  }
   changed.sort((a, b) => b.maxAbs - a.maxAbs);
-  added.sort((a, b) => (a.recent === b.recent ? 0 : a.recent ? -1 : 1));
   return { added, removed, changed };
 }
 
@@ -753,30 +766,7 @@ function fmtTreat(ts, max = 10) {
 }
 
 function buildEmbeds(diff, stats) {
-  const embeds = [
-    {
-      author: { name: 'Apex Rollouts', icon_url: AVATAR },
-      title: 'Mise à jour des pourcentages',
-      description: [
-        '**Live** · Discord `' +
-          stats.sources.discord +
-          '` · advaith `' +
-          stats.sources.advaith +
-          '` · merged `' +
-          stats.sources.merged +
-          '` · récents ≥' +
-          YEAR_MIN +
-          ' `' +
-          stats.sources.recent +
-          '`',
-        '**Token** · `' + (stats.sources.hasToken ? 'oui' : 'non') + '`',
-        '**Δ** · +`' + diff.added.length + '` · ~`' + diff.changed.length + '` · -`' + diff.removed.length + '`',
-      ].join('\n'),
-      color: 0x5865f2,
-      footer: { text: 'Datamining · Apex %' },
-      timestamp: new Date().toISOString(),
-    },
-  ];
+  const embeds = [];
   for (const e of diff.added.slice(0, 8)) {
     embeds.push({
       title: '+ ' + e.id,
@@ -844,7 +834,7 @@ async function postWebhook(embeds) {
 
 async function main() {
   await fs.ensureDir(DATA_DIR);
-  console.log('📊 Apex rollouts v4.1 (user + guild)…');
+  console.log('📊 Apex rollouts v4.3 (guild pct stable)…');
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Token:', DISCORD_TOKEN ? 'set' : 'MISSING');
   const { experiments, sources } = await loadExperiments();
@@ -859,20 +849,23 @@ async function main() {
   const isFirst = !prev.length;
   const diff = isFirst ? { added: [], removed: [], changed: [] } : diffExperiments(prev, experiments);
   console.log('Diff', { added: diff.added.length, changed: diff.changed.length, removed: diff.removed.length, first: isFirst });
-  const compact = experiments.map((e) => ({
-    id: e.id,
-    type: e.type,
-    title: e.title,
-    fingerprint: e.fingerprint,
-    treatments: e.treatments,
-    overrideIdCount: e.overrideIdCount,
-    populationCount: e.populationCount,
-    populations: (e.populations || []).map((p) => ({ filters: p.filters, treatments: p.treatments })),
-    revision: e.revision,
-    recent: e.recent,
-    hash: e.hash,
-    source: e.source,
-  }));
+  // Only live guild % sources in state — workers/assignments caused false +/~
+  const compact = experiments
+    .filter((e) => e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user')
+    .map((e) => ({
+      id: e.id,
+      type: e.type || 'guild',
+      title: e.title,
+      fingerprint: pctKey(e),
+      treatments: (e.treatments || [])
+        .filter((t) => t && t.pct != null && Number.isFinite(Number(t.pct)))
+        .map((t) => ({ bucket: t.bucket, label: t.label, pct: Math.round(Number(t.pct) * 10) / 10 })),
+      overrideIdCount: e.overrideIdCount || 0,
+      revision: e.revision,
+      recent: !!e.recent,
+      hash: e.hash,
+      source: e.source,
+    }));
   await fs.writeJson(
     STATE_FILE,
     { scrapedAt: new Date().toISOString(), sources, count: compact.length, experiments: compact },
