@@ -4,7 +4,7 @@ on:
   repository_dispatch:
     types: [trigger-user-rollouts, trigger-apex-rollouts]
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/20 * * * *'
 
 concurrency:
   group: user-rollouts
@@ -22,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-          # no cache: npm — repo has no package-lock.json
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -49,8 +48,10 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          USER_ROLLOUT_SAMPLES: '150'
-          USER_ROLLOUT_CONCURRENCY: '6'
+          # Soft defaults — Discord rate-limits aggressive sampling
+          USER_ROLLOUT_SAMPLES: '40'
+          USER_ROLLOUT_CONCURRENCY: '2'
+          USER_ROLLOUT_DELAY_MS: '300'
           APEX_MIN_PCT_DELTA: '2'
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.svg
