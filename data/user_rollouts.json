@@ -1,8 +1,156 @@
 {
-  "scrapedAt": "2026-09-16T19:09:12.818Z",
+  "scrapedAt": "2026-09-16T19:14:21.647Z",
   "samples": 40,
-  "okEstimate": 0,
+  "okEstimate": 5,
   "tokens": 1,
-  "experiments": [],
-  "token": []
+  "experiments": [
+    {
+      "id": "hash:3013881204",
+      "hash": 3013881204,
+      "type": "user",
+      "title": "hash:3013881204",
+      "treatments": [
+        {
+          "bucket": 11,
+          "label": "Variant 11",
+          "pct": 100,
+          "range": [
+            0,
+            10000
+          ],
+          "samples": 40,
+          "rawMin": 47,
+          "rawMax": 9843
+        }
+      ],
+      "fingerprint": "11:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2023-09_iar_user_reporting",
+      "hash": 2180379513,
+      "type": "user",
+      "title": "Safety Experience IAR User Reporting",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            0,
+            9500
+          ],
+          "samples": 40,
+          "rawMin": 17,
+          "rawMax": 9743
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            0,
+            10000
+          ],
+          "samples": 40,
+          "rawMin": 94,
+          "rawMax": 9838
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "hash:1144304849",
+      "hash": 1144304849,
+      "type": "user",
+      "title": "hash:1144304849",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 1.15,
+          "range": [
+            0,
+            115
+          ],
+          "samples": 2,
+          "rawMin": 2,
+          "rawMax": 115
+        }
+      ],
+      "fingerprint": "1:1.1",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "hash:704914099",
+      "hash": 704914099,
+      "type": "user",
+      "title": "hash:704914099",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 0,
+          "range": [
+            10000,
+            10000
+          ],
+          "samples": 1,
+          "rawMin": 9919,
+          "rawMax": 9919
+        }
+      ],
+      "fingerprint": "1:0.0",
+      "source": "fingerprint-sample"
+    }
+  ],
+  "token": [
+    {
+      "id": "hash:3013881204",
+      "hash": 3013881204,
+      "type": "user",
+      "title": "hash:3013881204",
+      "revision": 5,
+      "bucket": 11,
+      "override": -1,
+      "population": 1,
+      "hash_result": 9600,
+      "tokenIndex": 1
+    },
+    {
+      "id": "2023-09_iar_user_reporting",
+      "hash": 2180379513,
+      "type": "user",
+      "title": "Safety Experience IAR User Reporting",
+      "revision": 0,
+      "bucket": 1,
+      "override": -1,
+      "population": 4,
+      "hash_result": 4794,
+      "tokenIndex": 1
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
+      "revision": 0,
+      "bucket": 1,
+      "override": -1,
+      "population": 0,
+      "hash_result": 3157,
+      "tokenIndex": 1
+    }
+  ]
 }
