@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-16T20:25:53.509Z",
+  "scrapedAt": "2026-09-16T20:32:23.702Z",
   "samples": 40,
   "okEstimate": 5,
   "tokens": 1,
@@ -16,11 +16,11 @@
           "pct": 100,
           "range": [
             0,
-            10000
+            9500
           ],
           "samples": 40,
-          "rawMin": 14,
-          "rawMax": 9831
+          "rawMin": 194,
+          "rawMax": 9650
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,34 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            0,
+            500,
             10000
           ],
           "samples": 40,
-          "rawMin": 123,
-          "rawMax": 9985
+          "rawMin": 256,
+          "rawMax": 9838
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            500,
+            9500
+          ],
+          "samples": 40,
+          "rawMin": 715,
+          "rawMax": 9295
         }
       ],
       "fingerprint": "1:100.0",
@@ -62,34 +84,12 @@
             9500,
             10000
           ],
-          "samples": 2,
-          "rawMin": 9624,
-          "rawMax": 9979
+          "samples": 4,
+          "rawMin": 9629,
+          "rawMax": 9943
         }
       ],
       "fingerprint": "1:5.0",
-      "source": "fingerprint-sample"
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 100,
-          "range": [
-            0,
-            10000
-          ],
-          "samples": 40,
-          "rawMin": 136,
-          "rawMax": 9946
-        }
-      ],
-      "fingerprint": "1:100.0",
       "source": "fingerprint-sample"
     },
     {
@@ -101,17 +101,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 0,
+          "pct": 2.01,
           "range": [
-            500,
-            500
+            0,
+            201
           ],
-          "samples": 2,
-          "rawMin": 468,
-          "rawMax": 491
+          "samples": 1,
+          "rawMin": 201,
+          "rawMax": 201
         }
       ],
-      "fingerprint": "1:0.0",
+      "fingerprint": "1:2.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -125,7 +125,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 5125,
+      "hash_result": 5191,
       "tokenIndex": 1
     },
     {
@@ -137,7 +137,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 8441,
+      "hash_result": 9666,
       "tokenIndex": 1
     },
     {
@@ -149,7 +149,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 8522,
+      "hash_result": 9163,
       "tokenIndex": 1
     }
   ]
