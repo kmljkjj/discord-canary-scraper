@@ -1,7 +1,7 @@
 {
-  "buildNumber": "614588",
-  "updatedAt": "2026-09-16T20:16:06.679Z",
-  "count": 661,
+  "buildNumber": "614600",
+  "updatedAt": "2026-09-16T20:22:37.712Z",
+  "count": 662,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -557,6 +557,7 @@
     "USER_BANNER": "/users/:param/banners/:param.:param",
     "LAYOUT_SYSTEM": "/layouts/:param/:param",
     "LAYOUT_SYSTEM_TEMPLATE": "/templates/:param/:param",
+    "CHANNEL_CONVERSATION": "/channels/:param/conversations/:param",
     "CHANNEL_CONVERSATION_MESSAGES": "/channels/:param/conversations/:param/messages",
     "MESSAGE": "/channels/:param/:param/:param",
     "MESSAGE_ACK": "/channels/:param/messages/:param/ack",
