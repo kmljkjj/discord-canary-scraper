@@ -2,7 +2,7 @@ name: Apex Rollouts %
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: "*/20 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-apex-rollouts]
@@ -10,14 +10,15 @@ on:
 permissions:
   contents: write
 
+# CRITICAL: never cancel a run mid-save — that causes same-% spam on next trigger
 concurrency:
   group: apex-rollouts
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   rollouts:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,7 +26,7 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -37,12 +38,13 @@ jobs:
 
       - name: Install npm packages
         run: |
-          if [ ! -d node_modules/node-fetch ]; then
+          if [ ! -d node_modules/node-fetch ] || [ ! -d node_modules/fs-extra ]; then
             npm install --no-audit --no-fund --no-package-lock
           fi
           rm -f package-lock.json
 
       - name: Track Apex rollout percentages
+        id: apex
         env:
           DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
           DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
@@ -54,15 +56,16 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          APEX_MIN_PCT_DELTA: '0.5'
-          APEX_RECENT_YEAR: '2024'
+          APEX_MIN_PCT_DELTA: "2"
+          APEX_RECENT_YEAR: "2024"
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.svg
-        continue-on-error: true
         run: node src/apex_rollouts.js
 
       - name: Save apex state
+        if: success()
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           rm -f package-lock.json
@@ -71,6 +74,11 @@ jobs:
             echo "No apex state changes"
             exit 0
           fi
-          git commit -m "📊 apex rollouts state" || exit 0
-          git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git commit -m "📊 apex rollouts state"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
+            echo "push retry $i"
+            sleep $((i * 2))
+          done
+          echo "WARN: could not push state — next run may re-diff"
+          exit 0
