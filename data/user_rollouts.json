@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-16T23:47:24.203Z",
+  "scrapedAt": "2026-09-16T23:53:49.030Z",
   "samples": 40,
   "okEstimate": 4,
   "tokens": 1,
@@ -15,12 +15,12 @@
           "label": "Variant 11",
           "pct": 100,
           "range": [
-            500,
+            0,
             10000
           ],
           "samples": 40,
-          "rawMin": 265,
-          "rawMax": 9901
+          "rawMin": 42,
+          "rawMax": 9784
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            500,
+            0,
             10000
           ],
           "samples": 40,
-          "rawMin": 430,
-          "rawMax": 9881
+          "rawMin": 203,
+          "rawMax": 9953
         }
       ],
       "fingerprint": "1:100.0",
@@ -60,11 +60,11 @@
           "pct": 100,
           "range": [
             0,
-            10000
+            9500
           ],
           "samples": 40,
-          "rawMin": 121,
-          "rawMax": 9967
+          "rawMin": 192,
+          "rawMax": 9359
         }
       ],
       "fingerprint": "1:100.0",
@@ -84,9 +84,9 @@
             9500,
             10000
           ],
-          "samples": 4,
-          "rawMin": 9584,
-          "rawMax": 9974
+          "samples": 5,
+          "rawMin": 9580,
+          "rawMax": 9887
         }
       ],
       "fingerprint": "1:5.0",
@@ -103,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 2322,
+      "hash_result": 7374,
       "tokenIndex": 1
     },
     {
@@ -115,7 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 6679,
+      "hash_result": 2812,
       "tokenIndex": 1
     },
     {
@@ -127,7 +127,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 9939,
+      "hash_result": 9988,
       "tokenIndex": 1
     },
     {
@@ -139,7 +139,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 1404,
+      "hash_result": 607,
       "tokenIndex": 1
     }
   ]
