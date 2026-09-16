@@ -1,0 +1,212 @@
+name: Patch Apex Crowd Method
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/patch-apex-crowd.yml'
+permissions:
+  contents: write
+concurrency:
+  group: patch-apex-crowd
+  cancel-in-progress: true
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Apply crowd method patch
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const p = 'src/apex_rollouts.js';
+          let t = fs.readFileSync(p, 'utf8');
+          const a = `        if (!ag) {
+          ag = {
+            id: e.id,
+            hash: e.hash,
+            revision: e.revision,
+            buckets: new Map(),
+            samples: 0,
+            recent: e.recent,
+            title: e.title,
+          };
+          userAgg.set(hk, ag);
+        }
+        if (String(ag.id).startsWith('hash:') && !String(e.id).startsWith('hash:')) ag.id = e.id;
+        const b = e.assignedBucket;
+        if (b != null) ag.buckets.set(b, (ag.buckets.get(b) || 0) + 1);
+        ag.samples++;
+        if (e.revision != null) ag.revision = e.revision;
+        continue;`;
+          const b = `        if (!ag) {
+          ag = {
+            id: e.id,
+            hash: e.hash,
+            revision: e.revision,
+            buckets: new Map(),
+            hrs: new Map(),
+            samples: 0,
+            recent: e.recent,
+            title: e.title,
+            contributors: [],
+          };
+          userAgg.set(hk, ag);
+        }
+        if (String(ag.id).startsWith('hash:') && !String(e.id).startsWith('hash:')) {
+          ag.id = e.id;
+          ag.title = e.title || e.id;
+        }
+        const bkt = e.assignedBucket;
+        if (bkt != null) {
+          ag.buckets.set(bkt, (ag.buckets.get(bkt) || 0) + 1);
+          if (e.hashResult != null && Number.isFinite(Number(e.hashResult))) {
+            if (!ag.hrs.has(bkt)) ag.hrs.set(bkt, []);
+            ag.hrs.get(bkt).push(Number(e.hashResult));
+          }
+        }
+        ag.samples++;
+        if (e.revision != null) ag.revision = e.revision;
+        continue;`;
+          if (!t.includes(a)) { console.error('block A missing'); process.exit(1); }
+          t = t.replace(a, b);
+          const c = `  // build aggregated user entries (sample % across tokens)
+  for (const ag of userAgg.values()) {
+    const total = Math.max(1, ag.samples);
+    const treatments = [...ag.buckets.entries()]
+      .sort((a, b) => a[0] - b[0])
+      .map(([bucket, n]) => ({
+        bucket,
+        label: tLabel(bucket),
+        pct: Math.round((n / total) * 1000) / 10,
+        samples: n,
+        assigned: true,
+      }));
+    const fingerprint =
+      'user-agg|' +
+      treatments.map((t) => t.bucket + ':' + t.pct.toFixed(1)).join(',') +
+      '|n:' +
+      total +
+      '|rev:' +
+      ag.revision;
+    byKey.set('user:' + (ag.hash != null ? ag.hash : ag.id), {
+      id: String(ag.id),
+      type: 'user',
+      title: String(ag.title || ag.id),
+      treatments,
+      populations: [],
+      overrideIdCount: 0,
+      populationCount: 0,
+      fingerprint,
+      revision: ag.revision,
+      hash: ag.hash,
+      recent: !!ag.recent,
+      source: 'discord-assignment',
+      hasGlobalPct: treatments.some((t) => t.pct != null),
+      sampleCount: total,
+    });
+  }`;
+          const d = `  // build aggregated user entries — crowd method (Escoteiros/Wumpus Apex research)
+  for (const ag of userAgg.values()) {
+    const total = Math.max(1, ag.samples);
+    const treatments = [];
+    const bucketKeys = new Set([...ag.buckets.keys(), ...(ag.hrs ? ag.hrs.keys() : [])]);
+    for (const bucket of [...bucketKeys].sort((x, y) => x - y)) {
+      const n = ag.buckets.get(bucket) || 0;
+      const hrs = (ag.hrs && ag.hrs.get(bucket)) || [];
+      let pct = Math.round((n / total) * 1000) / 10;
+      let range = null;
+      if (hrs.length >= 1) {
+        const mn = Math.min(...hrs);
+        const mx = Math.max(...hrs);
+        const start = Math.round(mn / 500) * 500;
+        const end = Math.min(SCALE, Math.round(mx / 500) * 500 || mx);
+        range = [start, end];
+        if (hrs.length >= 2 || total >= 2) {
+          const span = Math.max(0, end - start);
+          pct = Math.min(100, Math.round((span / SCALE) * 10000) / 100);
+        }
+        if (hrs.length === 1 && total === 1) pct = null;
+      } else if (total < 2) {
+        pct = null;
+      }
+      treatments.push({ bucket, label: tLabel(bucket), pct, range, samples: Math.max(n, hrs.length), assigned: true });
+    }
+    const fingerprint =
+      'user-crowd|' +
+      treatments.map((t) => t.bucket + ':' + (t.pct != null ? Number(t.pct).toFixed(1) : 'x') + (t.range ? '@' + t.range.join('-') : '')).join(',') +
+      '|n:' + total + '|rev:' + ag.revision;
+    byKey.set('user:' + (ag.hash != null ? ag.hash : ag.id), {
+      id: String(ag.id),
+      type: 'user',
+      title: String(ag.title || ag.id),
+      treatments,
+      populations: [],
+      overrideIdCount: 0,
+      populationCount: 0,
+      fingerprint,
+      revision: ag.revision,
+      hash: ag.hash,
+      recent: !!ag.recent,
+      source: 'apex-crowd',
+      hasGlobalPct: treatments.some((t) => t.pct != null && Number.isFinite(t.pct)),
+      sampleCount: total,
+    });
+  }`;
+          if (!t.includes(c)) { console.error('block C missing'); process.exit(1); }
+          t = t.replace(c, d);
+          const e = `function isLiveGuild(e) {
+  return e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user';
+}
+/** Only real guild % changes from Discord/advaith — never workers spam. */
+function diffExperiments(prev, next) {
+  const pMap = new Map(prev.map((e) => [e.id, e]));
+  const nMap = new Map(next.map((e) => [e.id, e]));
+  const added = [], removed = [], changed = [];
+  for (const [id, n] of nMap) {
+    if (!isLiveGuild(n)) continue;`;
+          const f = `function isLiveGuild(e) {
+  return e && (e.source === 'discord' || e.source === 'advaith') && e.type !== 'user';
+}
+function isLiveRollout(e) {
+  if (!e || !e.id) return false;
+  if (String(e.id).startsWith('hash:')) return false;
+  if (isLiveGuild(e)) return true;
+  if (e.type === 'user' && (e.source === 'apex-crowd' || e.source === 'discord-assignment')) {
+    return !!(e.hasGlobalPct && (e.sampleCount || 0) >= 2);
+  }
+  return false;
+}
+/** Guild exact % + user crowd hash_result ranges */
+function diffExperiments(prev, next) {
+  const pMap = new Map(prev.map((e) => [e.id, e]));
+  const nMap = new Map(next.map((e) => [e.id, e]));
+  const added = [], removed = [], changed = [];
+  for (const [id, n] of nMap) {
+    if (!isLiveRollout(n)) continue;`;
+          if (!t.includes(e)) { console.error('block E missing'); process.exit(1); }
+          t = t.replace(e, f);
+          t = t.replace(
+            `  for (const [id, p] of pMap) {\n    if (nMap.has(id)) continue;\n    if (!isLiveGuild(p)) continue;\n    if (p.recent || isRecent(p.id)) removed.push(p);\n  }`,
+            `  for (const [id, p] of pMap) {\n    if (nMap.has(id)) continue;\n    if (!isLiveRollout(p)) continue;\n    if (p.recent || isRecent(p.id)) removed.push(p);\n  }`
+          );
+          t = t.replace(
+            `function fmtTreat(ts, max = 10) {\n  const lines = (ts || []).slice(0, max).map((t) => '• **' + (t.label || 'Bucket ' + t.bucket) + '** · \`' + t.pct + '%\`');\n  if ((ts || []).length > max) lines.push('_+' + (ts.length - max) + ' autres_');\n  return lines.join('\\n') || '_—_';\n}`,
+            `function fmtTreat(ts, max = 10) {\n  const lines = (ts || []).slice(0, max).map((t) => {\n    let s = '• **' + (t.label || 'Bucket ' + t.bucket) + '** · \`' + (t.pct != null ? t.pct + '%' : '?') + '\`';\n    if (t.range && Array.isArray(t.range)) s += ' \`(' + t.range[0] + ' - ' + t.range[1] + ')\`';\n    return s;\n  });\n  if ((ts || []).length > max) lines.push('_+' + (ts.length - max) + ' autres_');\n  return lines.join('\\n') || '_—_';\n}`
+          );
+          t = t.replace('Apex rollouts v4.4 — multi-token user + guild % anti-spam', 'Apex rollouts v4.5 — crowd hash_result (Escoteiros/Wumpus) + guild');
+          fs.writeFileSync(p, t);
+          console.log('patched', p, t.length);
+          NODE
+          node --check src/apex_rollouts.js
+          head -5 src/apex_rollouts.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/apex_rollouts.js
+          git commit -m "feat(apex): crowd hash_result method like Escoteiros/Wumpus research" || exit 0
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true
