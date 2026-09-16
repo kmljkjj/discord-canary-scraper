@@ -42,15 +42,12 @@ jobs:
           PY
           node --check src/apex_rollouts.js
           head -6 src/apex_rollouts.js
-          if [ -f patches/apex-rollouts.yml ]; then
-            cp patches/apex-rollouts.yml .github/workflows/apex-rollouts.yml
-          fi
-      - name: Commit
+      - name: Commit JS only
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/apex_rollouts.js .github/workflows/apex-rollouts.yml || true
+          git add src/apex_rollouts.js
           if git diff --staged --quiet; then echo no changes; exit 0; fi
           git commit -m "fix(apex): v4.4 multi-token + anti-spam"
           git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git push origin HEAD:main
