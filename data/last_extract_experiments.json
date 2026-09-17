@@ -1,7 +1,7 @@
 {
-  "buildNumber": "615418",
-  "updatedAt": "2026-09-17T19:27:12.308Z",
-  "count": 366,
+  "buildNumber": "615435",
+  "updatedAt": "2026-09-17T19:34:42.818Z",
+  "count": 367,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5389,6 +5389,19 @@
     },
     "2026-09-quest-home-bounties-feature-gate": {
       "id": "2026-09-quest-home-bounties-feature-gate",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
+    },
+    "2026-09-single-cpu-copy": {
+      "id": "2026-09-single-cpu-copy",
       "type": "user",
       "kind": "user",
       "label": null,

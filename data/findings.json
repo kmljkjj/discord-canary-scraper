@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-17T19:27:12.363Z",
-  "buildNumber": "615418",
+  "scrapedAt": "2026-09-17T19:34:42.875Z",
+  "buildNumber": "615435",
   "totals": {
-    "all": 382
+    "all": 383
   },
   "experiments": [
     {
@@ -6490,6 +6490,21 @@
     },
     {
       "id": "2026-09-quest-home-bounties-feature-gate",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-single-cpu-copy",
       "type": "user",
       "kind": "user",
       "label": null,
