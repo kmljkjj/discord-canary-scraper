@@ -1,7 +1,7 @@
 /**
  * Datamining — priority notify
  * Strings/Routes: key + full text (Added green / Modified orange / Removed red)
- * post() returns boolean; retries 429/5xx; callers must only mark known on success
+ * No code-block wrapping (avoids raw ** _ display)
  */
 const fetch = require('node-fetch');
 
@@ -41,7 +41,6 @@ function label(emoji, text) {
 }
 
 const FIELD_MAX = 1020;
-/** Longer text so Nitro / promo strings are readable like competitors */
 const LINE_VAL_MAX = 240;
 const LINE_VAL_ROUTES = 100;
 const MAX_STR_LINES = 80;
@@ -53,15 +52,7 @@ async function notifyAll(opts) {
   return a && b;
 }
 
-/** URGENT — experiments first. Returns true if all posts succeeded (or nothing to send). */
-async function notifyUrgent({
-  build,
-  expDiff,
-  webhookUrl,
-  isNewBuild,
-  catchUp,
-  prevBuild,
-}) {
+async function notifyUrgent({ build, expDiff, webhookUrl }) {
   if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
   const ts = new Date().toISOString();
@@ -76,14 +67,7 @@ async function notifyUrgent({
   return sendExperiments(webhookUrl, bn, exp, ts);
 }
 
-/** NORMAL — strings + routes */
-async function notifyNormal({
-  build,
-  strDiff,
-  rtDiff,
-  webhookUrl,
-  isNewBuild,
-}) {
+async function notifyNormal({ build, strDiff, rtDiff, webhookUrl }) {
   if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
   const ts = new Date().toISOString();
@@ -100,7 +84,6 @@ async function notifyNormal({
     Object.keys(rt.removed).length;
 
   let ok = true;
-
   if (nStr) {
     const r = await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
     if (!r) ok = false;
@@ -110,14 +93,6 @@ async function notifyNormal({
     if (!r) ok = false;
   }
   return ok;
-}
-
-function channelLine(nExp, nStr, nRt) {
-  const bits = [];
-  if (nExp) bits.push(`${label(E.exp, 'Experiments')} **${nExp}**`);
-  if (nStr) bits.push(`${label(E.str, 'Strings')} **${nStr}**`);
-  if (nRt) bits.push(`${label(E.route, 'Routes')} **${nRt}**`);
-  return bits.length ? bits.join(' · ') : '_no catalog changes_';
 }
 
 function normalizeExpDiff(diff) {
@@ -152,16 +127,10 @@ function cleanText(s, max = LINE_VAL_MAX) {
     .slice(0, max);
 }
 
-/** Escape backticks so Discord code formatting stays stable */
 function escTick(s) {
   return String(s || '').replace(/`/g, "'");
 }
 
-/**
- * One line like the competitor:
- *   - key: full human text
- * Prefix + / ~ / - for added / modified / removed
- */
 function stringLine(prefix, key, value, maxVal) {
   const k = escTick(key);
   const v = cleanText(value, maxVal);
@@ -176,22 +145,32 @@ function routeLine(prefix, key, value) {
   return `${prefix} \`${k}\` → \`${v}\``;
 }
 
+/** Clean experiment line — no ** _ inside code fences */
 function expLine(e, prefix) {
   const id = typeof e === 'string' ? e : e.id;
   const kind = (e && (e.type || e.kind)) || 'user';
-  const system = (e && e.system) || (e && e.treatments ? 'legacy' : 'apex');
-  const labelTxt = e && e.label ? cleanText(e.label, 70) : null;
-  let depth = null;
-  if (e && Array.isArray(e.treatments) && e.treatments.length)
-    depth = `${e.treatments.length} treatments`;
-  else if (e && e.variations && typeof e.variations === 'object')
-    depth = `${Object.keys(e.variations).length} variations`;
-  else if (e && e.variationCount)
-    depth = `${e.variationCount} variations`;
+  const system =
+    (e && e.system) ||
+    (e && e.treatments ? 'legacy' : 'apex');
+  const labelTxt = e && e.label ? cleanText(e.label, 80) : null;
 
-  let line = `\`${prefix}${id}\` · **${kind}** · _${system}_`;
-  if (labelTxt) line += `\n　${labelTxt}`;
-  if (depth) line += ` · _${depth}_`;
+  let nVar = null;
+  if (e && Array.isArray(e.treatments) && e.treatments.length)
+    nVar = e.treatments.length;
+  else if (e && e.variations && typeof e.variations === 'object')
+    nVar = Object.keys(e.variations).length;
+  else if (e && e.variationCount)
+    nVar = e.variationCount;
+
+  // + name
+  // Type user · apex · 1 variation
+  let line = `${prefix} \`${id}\``;
+  const meta = [];
+  if (kind) meta.push(`Type ${kind}`);
+  if (system) meta.push(system);
+  if (nVar != null) meta.push(`${nVar} variation${nVar === 1 ? '' : 's'}`);
+  if (meta.length) line += `\n${meta.join(' · ')}`;
+  if (labelTxt) line += `\n${labelTxt}`;
   return line;
 }
 
@@ -214,26 +193,16 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
-/** Wrap field body in a code block when short enough — easier to copy-paste */
-function fieldValue(raw) {
-  const body = String(raw || '').slice(0, FIELD_MAX);
-  // code fence costs 8 chars (```\n ... \n```)
-  if (body.length + 8 <= FIELD_MAX && !body.includes('```')) {
-    return '```\n' + body + '\n```';
-  }
-  return body;
-}
-
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
   let ok = true;
   for (const sec of sections) {
     if (!sec.lines.length) continue;
-    const chunks = chunkLines(sec.lines, FIELD_MAX - 12);
+    const chunks = chunkLines(sec.lines, FIELD_MAX);
     const embeds = [];
 
     const firstFields = chunks.slice(0, 5).map((c, i) => ({
       name: i === 0 ? sec.label : `… (${i + 1})`,
-      value: fieldValue(c),
+      value: String(c).slice(0, FIELD_MAX),
       inline: false,
     }));
 
@@ -254,7 +223,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
         title: `${title} · suite`,
         fields: slice.map((c, i) => ({
           name: `… (${offset + i + 1})`,
-          value: fieldValue(c),
+          value: String(c).slice(0, FIELD_MAX),
           inline: false,
         })),
         color: sec.color,
@@ -285,7 +254,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   if (exp.added.length) {
     const lines = exp.added.slice(0, 40).map((e) => expLine(e, '+'));
     if (exp.added.length > 40)
-      lines.push(`_… +${exp.added.length - 40} more_`);
+      lines.push(`… +${exp.added.length - 40} more`);
     sections.push({
       label: label(E.added, `Added · ${exp.added.length}`),
       color: COLOR.added,
@@ -296,7 +265,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   if (exp.modified.length) {
     const lines = exp.modified.slice(0, 40).map((e) => expLine(e, '~'));
     if (exp.modified.length > 40)
-      lines.push(`_… +${exp.modified.length - 40} more_`);
+      lines.push(`… +${exp.modified.length - 40} more`);
     sections.push({
       label: label(E.modified, `Modified · ${exp.modified.length}`),
       color: COLOR.modified,
@@ -307,10 +276,10 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   if (exp.removed.length) {
     const lines = exp.removed.slice(0, 40).map((e) => {
       const id = typeof e === 'string' ? e : e.id;
-      return `\`-${id}\``;
+      return `- \`${id}\``;
     });
     if (exp.removed.length > 40)
-      lines.push(`_… +${exp.removed.length - 40} more_`);
+      lines.push(`… +${exp.removed.length - 40} more`);
     sections.push({
       label: label(E.removed, `Removed · ${exp.removed.length}`),
       color: COLOR.removed,
@@ -321,7 +290,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
   const ok = await sendSectionEmbeds({
     webhookUrl,
-    title: label(E.exp, 'Experiments · Apex / Legacy'),
+    title: label(E.exp, 'Experiments'),
     bn,
     ts,
     sections,
@@ -360,7 +329,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (a.length > maxLines) lines.push(`… +${a.length - maxLines} more`);
     sections.push({
-      label: label(E.added, `(+) ADDED · ${a.length}`),
+      label: label(E.added, `Added · ${a.length}`),
       color: COLOR.added,
       count: a.length,
       lines,
@@ -375,7 +344,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (m.length > maxLines) lines.push(`… +${m.length - maxLines} more`);
     sections.push({
-      label: label(E.modified, '(~) MODIFIED · ' + m.length),
+      label: label(E.modified, `Modified · ${m.length}`),
       color: COLOR.modified,
       count: m.length,
       lines,
@@ -383,7 +352,6 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   }
 
   if (r.length) {
-    // CRITICAL: include the previous string value (was only showing the key)
     const lines = r.slice(0, maxLines).map((k) =>
       isRoutes
         ? routeLine('-', k, diff.removed[k])
@@ -391,7 +359,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (r.length > maxLines) lines.push(`… +${r.length - maxLines} more`);
     sections.push({
-      label: label(E.removed, `(--) REMOVED · ${r.length}`),
+      label: label(E.removed, `Removed · ${r.length}`),
       color: COLOR.removed,
       count: r.length,
       lines,
@@ -414,10 +382,6 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
-/**
- * Reliable webhook post with retries for 429 / 5xx.
- * @returns {Promise<boolean>}
- */
 async function post(url, body) {
   body.username = BOT;
   body.avatar_url = AVATAR;
