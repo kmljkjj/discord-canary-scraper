@@ -1,5 +1,6 @@
 /**
  * Datamining — priority notify
+ * Strings/Routes: key + full text (Added green / Modified orange / Removed red)
  * post() returns boolean; retries 429/5xx; callers must only mark known on success
  */
 const fetch = require('node-fetch');
@@ -8,7 +9,7 @@ const BOT = process.env.ORBIT_BOT_NAME || process.env.WEBHOOK_BOT_NAME || 'Datam
 const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
   process.env.WEBHOOK_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
+  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg';
 
 const { wasPosted, markPosted, claimPosted, payloadFingerprint, stableExpKey, stableMapKey } = require('./webhook_dedupe');
 
@@ -39,8 +40,12 @@ function label(emoji, text) {
   return emoji ? `${emoji} ${text}` : text;
 }
 
-const FIELD_MAX = 1000;
-const LINE_VAL_MAX = 120;
+const FIELD_MAX = 1020;
+/** Longer text so Nitro / promo strings are readable like competitors */
+const LINE_VAL_MAX = 240;
+const LINE_VAL_ROUTES = 100;
+const MAX_STR_LINES = 80;
+const MAX_RT_LINES = 50;
 
 async function notifyAll(opts) {
   const a = await notifyUrgent(opts);
@@ -81,9 +86,6 @@ async function notifyNormal({
 }) {
   if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
-  const hash = build.versionHash
-    ? String(build.versionHash).slice(0, 12)
-    : null;
   const ts = new Date().toISOString();
 
   const str = normalizeMapDiff(strDiff);
@@ -98,8 +100,6 @@ async function notifyNormal({
     Object.keys(rt.removed).length;
 
   let ok = true;
-
-  // Build/catalog webhook disabled — Strings + Routes only
 
   if (nStr) {
     const r = await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
@@ -146,9 +146,34 @@ function normalizeMapDiff(diff) {
 
 function cleanText(s, max = LINE_VAL_MAX) {
   return String(s || '')
+    .replace(/\r\n/g, '\n')
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, max);
+}
+
+/** Escape backticks so Discord code formatting stays stable */
+function escTick(s) {
+  return String(s || '').replace(/`/g, "'");
+}
+
+/**
+ * One line like the competitor:
+ *   - key: full human text
+ * Prefix + / ~ / - for added / modified / removed
+ */
+function stringLine(prefix, key, value, maxVal) {
+  const k = escTick(key);
+  const v = cleanText(value, maxVal);
+  if (!v) return `${prefix} \`${k}\``;
+  return `${prefix} \`${k}\`: ${v}`;
+}
+
+function routeLine(prefix, key, value) {
+  const k = escTick(key);
+  const v = cleanText(value, LINE_VAL_ROUTES);
+  if (!v) return `${prefix} \`${k}\``;
+  return `${prefix} \`${k}\` → \`${v}\``;
 }
 
 function expLine(e, prefix) {
@@ -165,8 +190,7 @@ function expLine(e, prefix) {
     depth = `${e.variationCount} variations`;
 
   let line = `\`${prefix}${id}\` · **${kind}** · _${system}_`;
-  if (labelTxt) line += `
-　${labelTxt}`;
+  if (labelTxt) line += `\n　${labelTxt}`;
   if (depth) line += ` · _${depth}_`;
   return line;
 }
@@ -190,21 +214,31 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
+/** Wrap field body in a code block when short enough — easier to copy-paste */
+function fieldValue(raw) {
+  const body = String(raw || '').slice(0, FIELD_MAX);
+  // code fence costs 8 chars (```\n ... \n```)
+  if (body.length + 8 <= FIELD_MAX && !body.includes('```')) {
+    return '```\n' + body + '\n```';
+  }
+  return body;
+}
+
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
   let ok = true;
   for (const sec of sections) {
     if (!sec.lines.length) continue;
-    const chunks = chunkLines(sec.lines, FIELD_MAX);
+    const chunks = chunkLines(sec.lines, FIELD_MAX - 12);
     const embeds = [];
 
     const firstFields = chunks.slice(0, 5).map((c, i) => ({
       name: i === 0 ? sec.label : `… (${i + 1})`,
-      value: c.slice(0, FIELD_MAX),
+      value: fieldValue(c),
       inline: false,
     }));
 
     embeds.push({
-      author: { name: 'Datamining', icon_url: AVATAR },
+      author: { name: BOT, icon_url: AVATAR },
       title,
       description: `Build \`${bn}\` · **${sec.count}**`,
       fields: firstFields,
@@ -220,7 +254,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
         title: `${title} · suite`,
         fields: slice.map((c, i) => ({
           name: `… (${offset + i + 1})`,
-          value: c.slice(0, FIELD_MAX),
+          value: fieldValue(c),
           inline: false,
         })),
         color: sec.color,
@@ -315,15 +349,18 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   const r = Object.keys(diff.removed);
   const sections = [];
   const kindEmoji = isRoutes ? E.route : E.str;
+  const maxLines = isRoutes ? MAX_RT_LINES : MAX_STR_LINES;
+  const maxVal = isRoutes ? LINE_VAL_ROUTES : LINE_VAL_MAX;
 
   if (a.length) {
-    const lines = a.slice(0, 60).map((k) => {
-      const v = cleanText(diff.added[k], isRoutes ? 80 : LINE_VAL_MAX);
-      return isRoutes ? `\`+${k}\` → \`${v}\`` : `\`+${k}\`\n${v}`;
-    });
-    if (a.length > 60) lines.push(`_… +${a.length - 60} more_`);
+    const lines = a.slice(0, maxLines).map((k) =>
+      isRoutes
+        ? routeLine('+', k, diff.added[k])
+        : stringLine('+', k, diff.added[k], maxVal),
+    );
+    if (a.length > maxLines) lines.push(`… +${a.length - maxLines} more`);
     sections.push({
-      label: label(E.added, `Added · ${a.length}`),
+      label: label(E.added, `(+) ADDED · ${a.length}`),
       color: COLOR.added,
       count: a.length,
       lines,
@@ -331,13 +368,14 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   }
 
   if (m.length) {
-    const lines = m.slice(0, 50).map((k) => {
-      const v = cleanText(diff.modified[k], isRoutes ? 80 : LINE_VAL_MAX);
-      return isRoutes ? `\`~${k}\` → \`${v}\`` : `\`~${k}\`\n${v}`;
-    });
-    if (m.length > 50) lines.push(`_… +${m.length - 50} more_`);
+    const lines = m.slice(0, maxLines).map((k) =>
+      isRoutes
+        ? routeLine('~', k, diff.modified[k])
+        : stringLine('~', k, diff.modified[k], maxVal),
+    );
+    if (m.length > maxLines) lines.push(`… +${m.length - maxLines} more`);
     sections.push({
-      label: label(E.modified, `Modified · ${m.length}`),
+      label: label(E.modified, '(~) MODIFIED · ' + m.length),
       color: COLOR.modified,
       count: m.length,
       lines,
@@ -345,10 +383,15 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   }
 
   if (r.length) {
-    const lines = r.slice(0, 50).map((k) => `\`-${k}\``);
-    if (r.length > 50) lines.push(`_… +${r.length - 50} more_`);
+    // CRITICAL: include the previous string value (was only showing the key)
+    const lines = r.slice(0, maxLines).map((k) =>
+      isRoutes
+        ? routeLine('-', k, diff.removed[k])
+        : stringLine('-', k, diff.removed[k], maxVal),
+    );
+    if (r.length > maxLines) lines.push(`… +${r.length - maxLines} more`);
     sections.push({
-      label: label(E.removed, `Removed · ${r.length}`),
+      label: label(E.removed, `(--) REMOVED · ${r.length}`),
       color: COLOR.removed,
       count: r.length,
       lines,
