@@ -48,13 +48,14 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Soft defaults — Discord rate-limits aggressive sampling
-          USER_ROLLOUT_SAMPLES: '40'
+          USER_ROLLOUT_SAMPLES: '80'
           USER_ROLLOUT_CONCURRENCY: '2'
           USER_ROLLOUT_DELAY_MS: '300'
-          APEX_MIN_PCT_DELTA: '2'
+          USER_ROLLOUT_MIN_OK: '25'
+          USER_ROLLOUT_NOTIFY_HASH: '0'
+          APEX_MIN_PCT_DELTA: '3'
           ORBIT_BOT_NAME: Datamining
-          ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.svg
+          ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg
         run: node src/user_rollouts.js
 
       - name: Commit state
