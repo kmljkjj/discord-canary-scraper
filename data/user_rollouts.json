@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T06:49:51.617Z",
+  "scrapedAt": "2026-09-17T06:56:23.225Z",
   "samples": 40,
   "okEstimate": 4,
   "tokens": 1,
@@ -19,8 +19,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 28,
-          "rawMax": 9960
+          "rawMin": 13,
+          "rawMax": 9827
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            0,
+            500,
             10000
           ],
           "samples": 40,
-          "rawMin": 1,
-          "rawMax": 9979
+          "rawMin": 562,
+          "rawMax": 9958
         }
       ],
       "fingerprint": "1:100.0",
@@ -60,11 +60,11 @@
           "pct": 100,
           "range": [
             0,
-            10000
+            9500
           ],
           "samples": 40,
-          "rawMin": 10,
-          "rawMax": 9872
+          "rawMin": 80,
+          "rawMax": 9278
         }
       ],
       "fingerprint": "1:100.0",
@@ -79,17 +79,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 5,
+          "pct": 0,
           "range": [
             9500,
-            10000
+            9500
           ],
-          "samples": 3,
-          "rawMin": 9624,
-          "rawMax": 9954
+          "samples": 1,
+          "rawMin": 9636,
+          "rawMax": 9636
         }
       ],
-      "fingerprint": "1:5.0",
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -103,7 +103,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 6731,
+      "hash_result": 4548,
       "tokenIndex": 1
     },
     {
@@ -115,7 +115,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 2442,
+      "hash_result": 8882,
       "tokenIndex": 1
     },
     {
@@ -127,7 +127,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 5579,
+      "hash_result": 3530,
       "tokenIndex": 1
     }
   ]
