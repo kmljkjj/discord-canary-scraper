@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T22:19:38.870Z",
+  "scrapedAt": "2026-09-17T22:26:08.558Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            104,
-            9954
+            339,
+            9917
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            345,
-            9902
+            38,
+            9868
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            174,
-            9948
+            18,
+            9795
           ],
           "samples": 80
         }
@@ -89,35 +89,11 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.89,
+          "pct": 3.7,
           "pctKnown": true,
           "observed": [
-            108,
-            497
-          ],
-          "samples": 4
-        }
-      ],
-      "fingerprint": "1:3.9",
-      "source": "fingerprint-sample",
-      "named": false
-    },
-    {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.05,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 3.73,
-          "pctKnown": true,
-          "observed": [
-            9602,
-            9975
+            10,
+            380
           ],
           "samples": 4
         }
@@ -135,7 +111,7 @@
       "type": "user",
       "revision": 5,
       "bucket": 11,
-      "hash_result": 9115
+      "hash_result": 4350
     },
     {
       "hash": 2180379513,
@@ -144,7 +120,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 2518
+      "hash_result": 6376
     },
     {
       "hash": 4055210228,
@@ -153,7 +129,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 243
+      "hash_result": 612
     }
   ],
   "announced": {
