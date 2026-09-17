@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T08:59:54.809Z",
+  "scrapedAt": "2026-09-17T09:06:24.731Z",
   "samples": 40,
   "okEstimate": 5,
   "tokens": 1,
@@ -16,11 +16,11 @@
           "pct": 100,
           "range": [
             0,
-            9500
+            10000
           ],
           "samples": 40,
-          "rawMin": 74,
-          "rawMax": 9717
+          "rawMin": 218,
+          "rawMax": 9976
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            500,
-            9000
+            0,
+            10000
           ],
           "samples": 40,
-          "rawMin": 254,
-          "rawMax": 8928
+          "rawMin": 185,
+          "rawMax": 9847
         }
       ],
       "fingerprint": "1:100.0",
@@ -60,11 +60,11 @@
           "pct": 100,
           "range": [
             0,
-            9000
+            10000
           ],
           "samples": 40,
-          "rawMin": 129,
-          "rawMax": 8997
+          "rawMin": 230,
+          "rawMax": 9855
         }
       ],
       "fingerprint": "1:100.0",
@@ -84,9 +84,9 @@
             9500,
             10000
           ],
-          "samples": 4,
-          "rawMin": 9697,
-          "rawMax": 9936
+          "samples": 2,
+          "rawMin": 9602,
+          "rawMax": 9755
         }
       ],
       "fingerprint": "1:5.0",
@@ -101,17 +101,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 0,
+          "pct": 5,
           "range": [
-            500,
+            0,
             500
           ],
-          "samples": 1,
-          "rawMin": 266,
-          "rawMax": 266
+          "samples": 2,
+          "rawMin": 115,
+          "rawMax": 402
         }
       ],
-      "fingerprint": "1:0.0",
+      "fingerprint": "1:5.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -125,7 +125,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 9004,
+      "hash_result": 6791,
       "tokenIndex": 1
     },
     {
@@ -137,7 +137,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 6369,
+      "hash_result": 6746,
       "tokenIndex": 1
     },
     {
@@ -149,7 +149,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 1648,
+      "hash_result": 6362,
       "tokenIndex": 1
     }
   ]
