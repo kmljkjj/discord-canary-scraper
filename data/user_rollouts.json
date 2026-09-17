@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-17T05:18:54.906Z",
+  "scrapedAt": "2026-09-17T05:25:23.485Z",
   "samples": 40,
-  "okEstimate": 4,
+  "okEstimate": 5,
   "tokens": 1,
   "experiments": [
     {
@@ -15,12 +15,12 @@
           "label": "Variant 11",
           "pct": 100,
           "range": [
-            500,
-            9500
+            0,
+            10000
           ],
           "samples": 40,
-          "rawMin": 573,
-          "rawMax": 9433
+          "rawMin": 13,
+          "rawMax": 9836
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,12 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            500,
+            0,
             10000
           ],
           "samples": 40,
-          "rawMin": 574,
-          "rawMax": 9918
+          "rawMin": 140,
+          "rawMax": 9948
         }
       ],
       "fingerprint": "1:100.0",
@@ -59,15 +59,37 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            1000,
-            10000
+            0,
+            9500
           ],
           "samples": 40,
-          "rawMin": 813,
-          "rawMax": 9887
+          "rawMin": 93,
+          "rawMax": 9713
         }
       ],
       "fingerprint": "1:100.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "hash:704914099",
+      "hash": 704914099,
+      "type": "user",
+      "title": "hash:704914099",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 0,
+          "range": [
+            9500,
+            9500
+          ],
+          "samples": 2,
+          "rawMin": 9520,
+          "rawMax": 9543
+        }
+      ],
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     },
     {
@@ -79,17 +101,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 5,
+          "pct": 0,
           "range": [
-            0,
+            500,
             500
           ],
-          "samples": 4,
-          "rawMin": 38,
-          "rawMax": 494
+          "samples": 2,
+          "rawMin": 254,
+          "rawMax": 381
         }
       ],
-      "fingerprint": "1:5.0",
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -103,7 +125,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 9759,
+      "hash_result": 8559,
       "tokenIndex": 1
     },
     {
@@ -115,7 +137,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 1812,
+      "hash_result": 1017,
       "tokenIndex": 1
     },
     {
@@ -127,7 +149,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 2535,
+      "hash_result": 9844,
       "tokenIndex": 1
     }
   ]
