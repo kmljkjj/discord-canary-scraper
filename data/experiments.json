@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-17T19:13:08.658Z",
-  "buildNumber": "615399",
+  "scrapedAt": "2026-09-17T19:24:56.991Z",
+  "buildNumber": "615417",
   "totals": {
-    "all": 384
+    "all": 382
   },
   "experiments": [
     {
@@ -1936,36 +1936,6 @@
     },
     {
       "id": "2026-03-block-purchases",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-bogo-promotion-gate-v2",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-bogo-promotion-marketing-materials-v2",
       "type": "user",
       "kind": "user",
       "label": null,
