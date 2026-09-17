@@ -1,41 +1,23 @@
 {
-  "scrapedAt": "2026-09-17T02:30:08.836Z",
+  "scrapedAt": "2026-09-17T02:36:45.043Z",
   "sources": {
     "discord": 22,
-    "advaith": 21,
+    "advaith": 0,
     "workers": 216,
     "fallback": 283,
-    "merged": 392,
-    "recent": 18,
+    "merged": 384,
+    "recent": 10,
     "user": 284,
-    "guild": 108,
+    "guild": 100,
     "hasToken": true,
     "tokenCount": 1
   },
-  "count": 24,
+  "count": 16,
   "experiments": [
-    {
-      "id": "2026-06_guild_spaces",
-      "type": "guild",
-      "title": "Guild Space",
-      "fingerprint": "-1:100.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 0,
-      "recent": true,
-      "hash": 382479389,
-      "source": "advaith"
-    },
     {
       "id": "2026-06_guild_rooms",
       "type": "guild",
-      "title": "Guild Rooms",
+      "title": "06 Guild Rooms",
       "fingerprint": "-1:100.0|5:0.0",
       "treatments": [
         {
@@ -53,12 +35,12 @@
       "revision": 0,
       "recent": true,
       "hash": 3030912869,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-05_voice_channel_list_invite_embed",
       "type": "guild",
-      "title": "Voice Channel List Invite Embed",
+      "title": "05 Voice Channel List Invite Embed",
       "fingerprint": "1:50.0",
       "treatments": [
         {
@@ -71,35 +53,12 @@
       "revision": 2,
       "recent": true,
       "hash": 2599801232,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-05_default_invite_expiration_guild_web",
-      "type": "guild",
-      "title": "Default Invite Expiration Guild Web",
-      "fingerprint": "-1:5.0|2:95.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 5
-        },
-        {
-          "bucket": 2,
-          "label": "Treatment 2",
-          "pct": 95
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 1,
-      "recent": true,
-      "hash": 1508002362,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-04_voice_user_duration",
       "type": "guild",
-      "title": "Voice User Duration",
+      "title": "04 Voice User Duration",
       "fingerprint": "-1:80.0|1:10.0",
       "treatments": [
         {
@@ -117,12 +76,12 @@
       "revision": 0,
       "recent": true,
       "hash": 4294382796,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-04_voice_call_trigger_point",
       "type": "guild",
-      "title": "Voice Call Trigger Point Experiment",
+      "title": "04 Voice Call Trigger Point",
       "fingerprint": "1:50.0",
       "treatments": [
         {
@@ -135,12 +94,12 @@
       "revision": 1,
       "recent": true,
       "hash": 1350319550,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-04_server_theme",
       "type": "guild",
-      "title": "Server Theme",
+      "title": "04 Server Theme",
       "fingerprint": "-1:80.0|1:10.0",
       "treatments": [
         {
@@ -158,66 +117,12 @@
       "revision": 1,
       "recent": true,
       "hash": 4233234519,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-04_guild_verification_role",
-      "type": "guild",
-      "title": "Guild Verification Role",
-      "fingerprint": "-1:100.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 0,
-      "recent": true,
-      "hash": 2555045592,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-04_application_identity_linked_roles",
-      "type": "guild",
-      "title": "Application Identity Linked Roles",
-      "fingerprint": "-1:100.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 0,
-      "recent": true,
-      "hash": 3262307579,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-03_guild_official_messages",
-      "type": "guild",
-      "title": "Guild Official Messages",
-      "fingerprint": "-1:100.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 14,
-      "recent": true,
-      "hash": 3747270261,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-03_game_server_pricing",
       "type": "guild",
-      "title": "Game Server Pricing",
+      "title": "03 Game Server Pricing",
       "fingerprint": "-1:100.0",
       "treatments": [
         {
@@ -230,7 +135,7 @@
       "revision": 2,
       "recent": true,
       "hash": 2769841699,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2026-02_voice_channel_history_hover",
@@ -256,68 +161,9 @@
       "source": "discord"
     },
     {
-      "id": "2026-02_standard_sidebar_popover_gaps",
-      "type": "guild",
-      "title": "Standardize Guild Sidebar Popover Gaps",
-      "fingerprint": "-1:100.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 1,
-      "recent": true,
-      "hash": 2453702596,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-02_hangout_window",
-      "type": "guild",
-      "title": "Hangout Window",
-      "fingerprint": "-1:90.0|1:5.0",
-      "treatments": [
-        {
-          "bucket": -1,
-          "label": "None",
-          "pct": 90
-        },
-        {
-          "bucket": 1,
-          "label": "Treatment 1",
-          "pct": 5
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 1,
-      "recent": true,
-      "hash": 3972085047,
-      "source": "advaith"
-    },
-    {
-      "id": "2026-01_voice_channel_duration_mobile",
-      "type": "guild",
-      "title": "Voice Channel Duration (Mobile)",
-      "fingerprint": "1:100.0",
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Treatment 1",
-          "pct": 100
-        }
-      ],
-      "overrideIdCount": 0,
-      "revision": 0,
-      "recent": true,
-      "hash": 746686384,
-      "source": "advaith"
-    },
-    {
       "id": "2025-08_portkey_enabled",
       "type": "guild",
-      "title": "GameServer Enabled",
+      "title": "08 Portkey Enabled",
       "fingerprint": "-1:40.0|1:30.0",
       "treatments": [
         {
@@ -335,14 +181,19 @@
       "revision": 2,
       "recent": true,
       "hash": 2387166525,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2025-08_default_invite_expiration_guild",
       "type": "guild",
-      "title": "Default Invite Expiration Guild",
-      "fingerprint": "2:95.0",
+      "title": "08 Default Invite Expiration Guild",
+      "fingerprint": "-1:5.0|2:95.0",
       "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "pct": 5
+        },
         {
           "bucket": 2,
           "label": "Treatment 2",
@@ -350,10 +201,10 @@
         }
       ],
       "overrideIdCount": 0,
-      "revision": 4,
+      "revision": 1,
       "recent": true,
-      "hash": 3641561375,
-      "source": "advaith"
+      "hash": 1508002362,
+      "source": "discord"
     },
     {
       "id": "hash:3633668656",
@@ -412,7 +263,7 @@
     {
       "id": "2023-02_guest_voice_invites",
       "type": "guild",
-      "title": "Guest Voice Invites",
+      "title": "02 Guest Voice Invites",
       "fingerprint": "-1:100.0|1:100.0",
       "treatments": [
         {
@@ -430,12 +281,12 @@
       "revision": 1,
       "recent": false,
       "hash": 1727857487,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2022-12_mention_raid_limit",
       "type": "guild",
-      "title": "Automod Mention Raid Limit",
+      "title": "12 Mention Raid Limit",
       "fingerprint": "1:100.0",
       "treatments": [
         {
@@ -448,12 +299,12 @@
       "revision": 3,
       "recent": false,
       "hash": 1318029053,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2022-11_default_disable_mass_mention",
       "type": "guild",
-      "title": "Disable mass mentions for communities by default",
+      "title": "11 Default Disable Mass Mention",
       "fingerprint": "-1:100.0|1:100.0",
       "treatments": [
         {
@@ -471,12 +322,12 @@
       "revision": 0,
       "recent": false,
       "hash": 2462216785,
-      "source": "advaith"
+      "source": "discord"
     },
     {
       "id": "2022-07_voice_in_threads",
       "type": "guild",
-      "title": "Voice in Threads",
+      "title": "07 Voice In Threads",
       "fingerprint": "1:100.0",
       "treatments": [
         {
@@ -489,7 +340,7 @@
       "revision": 0,
       "recent": false,
       "hash": 944104242,
-      "source": "advaith"
+      "source": "discord"
     }
   ],
   "announced": {
@@ -501,7 +352,7 @@
     "2026-03_game_server_pricing": "-1:100.0",
     "2026-02_voice_channel_history_hover": "-1:90.0|1:5.0",
     "2025-08_portkey_enabled": "-1:40.0|1:30.0",
-    "2025-08_default_invite_expiration_guild": "2:95.0",
+    "2025-08_default_invite_expiration_guild": "-1:5.0|2:95.0",
     "hash:3633668656": "1:100.0",
     "hash:304990790": "1:50.0",
     "hash:2453702596": "-1:100.0",
@@ -509,15 +360,15 @@
     "2022-12_mention_raid_limit": "1:100.0",
     "2022-11_default_disable_mass_mention": "-1:100.0|1:100.0",
     "2022-07_voice_in_threads": "1:100.0",
-    "2026-06_guild_spaces": "-1:100.0",
-    "2026-05_default_invite_expiration_guild_web": "-1:5.0|2:95.0",
-    "2026-04_guild_verification_role": "-1:100.0",
-    "2026-04_application_identity_linked_roles": "-1:100.0",
-    "2026-03_guild_official_messages": "-1:100.0",
-    "2026-02_standard_sidebar_popover_gaps": "-1:100.0",
-    "2026-02_hangout_window": "-1:90.0|1:5.0",
-    "2026-01_voice_channel_duration_mobile": "1:100.0",
-    "2025-11_tida_webform": "1:20.0",
-    "2023-09_iar_user_reporting": "1:10.0"
+    "2026-06_guild_spaces": "REMOVED",
+    "2026-05_default_invite_expiration_guild_web": "REMOVED",
+    "2026-04_guild_verification_role": "REMOVED",
+    "2026-04_application_identity_linked_roles": "REMOVED",
+    "2026-03_guild_official_messages": "REMOVED",
+    "2026-02_standard_sidebar_popover_gaps": "REMOVED",
+    "2026-02_hangout_window": "REMOVED",
+    "2026-01_voice_channel_duration_mobile": "REMOVED",
+    "2025-11_tida_webform": "1:55.0",
+    "2023-09_iar_user_reporting": "1:60.0"
   }
 }
