@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T15:23:22.532Z",
+  "scrapedAt": "2026-09-17T15:29:55.575Z",
   "samples": 40,
   "okEstimate": 5,
   "tokens": 1,
@@ -15,12 +15,12 @@
           "label": "Variant 11",
           "pct": 100,
           "range": [
-            0,
-            9500
+            500,
+            10000
           ],
           "samples": 40,
-          "rawMin": 89,
-          "rawMax": 9637
+          "rawMin": 486,
+          "rawMax": 9966
         }
       ],
       "fingerprint": "11:100.0",
@@ -41,8 +41,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 178,
-          "rawMax": 9852
+          "rawMin": 77,
+          "rawMax": 9765
         }
       ],
       "fingerprint": "1:100.0",
@@ -63,8 +63,8 @@
             10000
           ],
           "samples": 40,
-          "rawMin": 36,
-          "rawMax": 9923
+          "rawMin": 134,
+          "rawMax": 9909
         }
       ],
       "fingerprint": "1:100.0",
@@ -79,17 +79,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 5,
+          "pct": 0,
           "range": [
             9500,
-            10000
+            9500
           ],
-          "samples": 4,
-          "rawMin": 9577,
-          "rawMax": 9997
+          "samples": 1,
+          "rawMin": 9594,
+          "rawMax": 9594
         }
       ],
-      "fingerprint": "1:5.0",
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     },
     {
@@ -101,17 +101,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 5,
+          "pct": 0,
           "range": [
-            0,
+            500,
             500
           ],
-          "samples": 3,
-          "rawMin": 79,
-          "rawMax": 473
+          "samples": 2,
+          "rawMin": 368,
+          "rawMax": 375
         }
       ],
-      "fingerprint": "1:5.0",
+      "fingerprint": "1:0.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -125,7 +125,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 570,
+      "hash_result": 1194,
       "tokenIndex": 1
     },
     {
@@ -137,7 +137,19 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 5151,
+      "hash_result": 1051,
+      "tokenIndex": 1
+    },
+    {
+      "id": "hash:1144304849",
+      "hash": 1144304849,
+      "type": "user",
+      "title": "hash:1144304849",
+      "revision": 0,
+      "bucket": 1,
+      "override": -1,
+      "population": 0,
+      "hash_result": 37,
       "tokenIndex": 1
     },
     {
@@ -149,7 +161,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 6838,
+      "hash_result": 941,
       "tokenIndex": 1
     }
   ]
