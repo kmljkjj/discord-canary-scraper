@@ -1,11 +1,8 @@
 /**
- * Datamining — notify
+ * Datamining — notify (classic embeds only — reliable on all webhooks)
  * - No backticks around keys
- * - Components V2 (Container + Text Display) for short messages
- * - Classic embeds for long lists (V2 has component limits)
- * - Webhook: ?with_components=true for V2
- * Note: a real "Copy" button needs a bot (custom_id). V2 text is easier to
- * long-press-copy on mobile than embed fields.
+ * - Strings/Routes: key + full text
+ * - Batch dedupe marked ONLY after successful webhook post
  */
 const fetch = require('node-fetch');
 
@@ -30,8 +27,6 @@ const COLOR = {
   modified: 0xe67e22,
   removed: 0xed4245,
 };
-
-const FLAG_COMPONENTS_V2 = 1 << 15; // 32768
 
 function envEmoji(key) {
   const v = (process.env[key] || '').trim();
@@ -58,8 +53,6 @@ const LINE_VAL_MAX = 240;
 const LINE_VAL_ROUTES = 100;
 const MAX_STR_LINES = 80;
 const MAX_RT_LINES = 50;
-/** Prefer V2 when total body under this size */
-const V2_MAX_CHARS = 3200;
 
 async function notifyAll(opts) {
   const a = await notifyUrgent(opts);
@@ -140,7 +133,6 @@ function cleanText(s, max = LINE_VAL_MAX) {
     .slice(0, max);
 }
 
-/** No backticks — plain readable lines */
 function stringLine(prefix, key, value, maxVal) {
   const k = String(key || '').replace(/`/g, "'");
   const v = cleanText(value, maxVal);
@@ -199,61 +191,7 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
-function totalChars(sections) {
-  return sections.reduce(
-    (n, s) => n + (s.lines || []).join('\n').length + (s.label || '').length,
-    0,
-  );
-}
-
-/** Build Components V2 payload (short messages only) */
-function buildV2Payload(title, bn, sections) {
-  const components = [];
-
-  for (const sec of sections) {
-    if (!sec.lines.length) continue;
-    const body = sec.lines.join('\n');
-    // Container with accent color (like embed sidebar)
-    const inner = [
-      {
-        type: 10, // Text Display
-        content: `**${title}**\nBuild ${bn} · ${sec.count}`,
-      },
-      { type: 14, divider: true, spacing: 1 }, // Separator
-      {
-        type: 10,
-        content: `**${sec.label}**\n${body}`.slice(0, 3900),
-      },
-    ];
-    components.push({
-      type: 17, // Container
-      accent_color: sec.color,
-      components: inner,
-    });
-  }
-
-  return {
-    username: BOT,
-    avatar_url: AVATAR,
-    flags: FLAG_COMPONENTS_V2,
-    components,
-  };
-}
-
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
-  const short = totalChars(sections) <= V2_MAX_CHARS && sections.length <= 3;
-
-  if (short) {
-    const body = buildV2Payload(title, bn, sections);
-    const ok = await post(webhookUrl, body, true);
-    if (ok) {
-      console.log('Sent V2', title, { sections: sections.length });
-      return true;
-    }
-    console.warn('V2 failed — fallback classic embed');
-  }
-
-  // Classic embeds for long content (or V2 failure)
   let ok = true;
   for (const sec of sections) {
     if (!sec.lines.length) continue;
@@ -294,7 +232,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
     }
 
     for (let i = 0; i < embeds.length; i += 5) {
-      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) }, false);
+      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
       if (!r) ok = false;
     }
   }
@@ -307,7 +245,6 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     console.log('Experiments batch CLAIM skip', batchKey);
     return true;
   }
-  await markPosted(batchKey);
 
   const sections = [];
 
@@ -355,6 +292,11 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     ts,
     sections,
   });
+
+  // Only lock the batch after a successful send (or nothing to send)
+  if (ok) await markPosted(batchKey);
+  else console.warn('Experiments webhook failed — batch NOT locked');
+
   console.log('Sent experiments', {
     ok,
     added: exp.added.length,
@@ -370,7 +312,6 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     console.log(kind, 'batch CLAIM skip', batchKey);
     return true;
   }
-  await markPosted(batchKey);
 
   const isRoutes = kind === 'Routes';
   const a = Object.keys(diff.added);
@@ -433,6 +374,10 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     ts,
     sections,
   });
+
+  if (ok) await markPosted(batchKey);
+  else console.warn(kind, 'webhook failed — batch NOT locked');
+
   console.log('Sent', kind, {
     ok,
     added: a.length,
@@ -442,37 +387,26 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
-function withComponentsParam(url) {
-  if (!url) return url;
-  if (/[?&]with_components=/.test(url)) return url;
-  return url + (url.includes('?') ? '&' : '?') + 'with_components=true';
-}
-
-/**
- * @param {boolean} v2 — Components V2 message
- */
-async function post(url, body, v2 = false) {
+async function post(url, body) {
   body.username = BOT;
   body.avatar_url = AVATAR;
   const fp = payloadFingerprint(body);
   if (!(await claimPosted(fp))) {
-    console.log('webhook CLAIM skip', body.embeds?.[0]?.title || body.components?.[0]?.type || fp);
+    console.log('webhook CLAIM skip', body.embeds?.[0]?.title || fp);
     return true;
   }
-
-  const endpoint = v2 ? withComponentsParam(url) : url;
   const payload = JSON.stringify(body);
   let lastErr = null;
 
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
-      const res = await fetch(endpoint, {
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: payload,
         timeout: 20000,
       });
-      console.log('webhook', res.status, v2 ? 'V2' : body.embeds?.[0]?.title || '');
+      console.log('webhook', res.status, body.embeds?.[0]?.title || '');
       if (res.ok) {
         await markPosted(fp);
         await sleep(80);
