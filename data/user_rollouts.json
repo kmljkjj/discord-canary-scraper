@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T06:04:18.803Z",
+  "scrapedAt": "2026-09-17T06:10:44.972Z",
   "samples": 40,
   "okEstimate": 5,
   "tokens": 1,
@@ -15,12 +15,12 @@
           "label": "Variant 11",
           "pct": 100,
           "range": [
-            500,
+            1000,
             10000
           ],
           "samples": 40,
-          "rawMin": 421,
-          "rawMax": 9961
+          "rawMin": 804,
+          "rawMax": 9939
         }
       ],
       "fingerprint": "11:100.0",
@@ -37,34 +37,12 @@
           "label": "Variant 1",
           "pct": 100,
           "range": [
-            0,
+            500,
             10000
           ],
           "samples": 40,
-          "rawMin": 140,
-          "rawMax": 9817
-        }
-      ],
-      "fingerprint": "1:100.0",
-      "source": "fingerprint-sample"
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 100,
-          "range": [
-            0,
-            9500
-          ],
-          "samples": 40,
-          "rawMin": 26,
-          "rawMax": 9546
+          "rawMin": 476,
+          "rawMax": 9947
         }
       ],
       "fingerprint": "1:100.0",
@@ -79,17 +57,39 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 0,
+          "pct": 5,
           "range": [
-            10000,
+            9500,
             10000
           ],
-          "samples": 2,
-          "rawMin": 9827,
-          "rawMax": 9997
+          "samples": 3,
+          "rawMin": 9558,
+          "rawMax": 9995
         }
       ],
-      "fingerprint": "1:0.0",
+      "fingerprint": "1:5.0",
+      "source": "fingerprint-sample"
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "range": [
+            500,
+            9500
+          ],
+          "samples": 40,
+          "rawMin": 344,
+          "rawMax": 9597
+        }
+      ],
+      "fingerprint": "1:100.0",
       "source": "fingerprint-sample"
     },
     {
@@ -101,17 +101,17 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 0,
+          "pct": 5,
           "range": [
-            500,
+            0,
             500
           ],
-          "samples": 1,
-          "rawMin": 301,
-          "rawMax": 301
+          "samples": 2,
+          "rawMin": 201,
+          "rawMax": 497
         }
       ],
-      "fingerprint": "1:0.0",
+      "fingerprint": "1:5.0",
       "source": "fingerprint-sample"
     }
   ],
@@ -125,7 +125,7 @@
       "bucket": 11,
       "override": -1,
       "population": 1,
-      "hash_result": 3536,
+      "hash_result": 4102,
       "tokenIndex": 1
     },
     {
@@ -137,7 +137,7 @@
       "bucket": 1,
       "override": -1,
       "population": 4,
-      "hash_result": 7623,
+      "hash_result": 722,
       "tokenIndex": 1
     },
     {
@@ -149,7 +149,7 @@
       "bucket": 1,
       "override": -1,
       "population": 0,
-      "hash_result": 5353,
+      "hash_result": 929,
       "tokenIndex": 1
     }
   ]
