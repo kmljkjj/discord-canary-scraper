@@ -1,7 +1,11 @@
 /**
- * Datamining — priority notify
- * Strings/Routes: key + full text (Added green / Modified orange / Removed red)
- * No code-block wrapping (avoids raw ** _ display)
+ * Datamining — notify
+ * - No backticks around keys
+ * - Components V2 (Container + Text Display) for short messages
+ * - Classic embeds for long lists (V2 has component limits)
+ * - Webhook: ?with_components=true for V2
+ * Note: a real "Copy" button needs a bot (custom_id). V2 text is easier to
+ * long-press-copy on mobile than embed fields.
  */
 const fetch = require('node-fetch');
 
@@ -11,7 +15,14 @@ const AVATAR =
   process.env.WEBHOOK_AVATAR_URL ||
   'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg';
 
-const { wasPosted, markPosted, claimPosted, payloadFingerprint, stableExpKey, stableMapKey } = require('./webhook_dedupe');
+const {
+  wasPosted,
+  markPosted,
+  claimPosted,
+  payloadFingerprint,
+  stableExpKey,
+  stableMapKey,
+} = require('./webhook_dedupe');
 
 const COLOR = {
   build: 0x5865f2,
@@ -19,6 +30,8 @@ const COLOR = {
   modified: 0xe67e22,
   removed: 0xed4245,
 };
+
+const FLAG_COMPONENTS_V2 = 1 << 15; // 32768
 
 function envEmoji(key) {
   const v = (process.env[key] || '').trim();
@@ -45,6 +58,8 @@ const LINE_VAL_MAX = 240;
 const LINE_VAL_ROUTES = 100;
 const MAX_STR_LINES = 80;
 const MAX_RT_LINES = 50;
+/** Prefer V2 when total body under this size */
+const V2_MAX_CHARS = 3200;
 
 async function notifyAll(opts) {
   const a = await notifyUrgent(opts);
@@ -59,7 +74,6 @@ async function notifyUrgent({ build, expDiff, webhookUrl }) {
   const exp = normalizeExpDiff(expDiff);
   const nExp =
     exp.added.length + exp.modified.length + exp.removed.length;
-
   if (!nExp) {
     console.log('Urgent: no experiment diff');
     return true;
@@ -71,7 +85,6 @@ async function notifyNormal({ build, strDiff, rtDiff, webhookUrl }) {
   if (!webhookUrl) return true;
   const bn = String(build.buildNumber || '?');
   const ts = new Date().toISOString();
-
   const str = normalizeMapDiff(strDiff);
   const rt = normalizeMapDiff(rtDiff);
   const nStr =
@@ -127,31 +140,26 @@ function cleanText(s, max = LINE_VAL_MAX) {
     .slice(0, max);
 }
 
-function escTick(s) {
-  return String(s || '').replace(/`/g, "'");
-}
-
+/** No backticks — plain readable lines */
 function stringLine(prefix, key, value, maxVal) {
-  const k = escTick(key);
+  const k = String(key || '').replace(/`/g, "'");
   const v = cleanText(value, maxVal);
-  if (!v) return `${prefix} \`${k}\``;
-  return `${prefix} \`${k}\`: ${v}`;
+  if (!v) return `${prefix} ${k}`;
+  return `${prefix} ${k}: ${v}`;
 }
 
 function routeLine(prefix, key, value) {
-  const k = escTick(key);
+  const k = String(key || '').replace(/`/g, "'");
   const v = cleanText(value, LINE_VAL_ROUTES);
-  if (!v) return `${prefix} \`${k}\``;
-  return `${prefix} \`${k}\` → \`${v}\``;
+  if (!v) return `${prefix} ${k}`;
+  return `${prefix} ${k} → ${v}`;
 }
 
-/** Clean experiment line — no ** _ inside code fences */
 function expLine(e, prefix) {
   const id = typeof e === 'string' ? e : e.id;
   const kind = (e && (e.type || e.kind)) || 'user';
   const system =
-    (e && e.system) ||
-    (e && e.treatments ? 'legacy' : 'apex');
+    (e && e.system) || (e && e.treatments ? 'legacy' : 'apex');
   const labelTxt = e && e.label ? cleanText(e.label, 80) : null;
 
   let nVar = null;
@@ -159,16 +167,14 @@ function expLine(e, prefix) {
     nVar = e.treatments.length;
   else if (e && e.variations && typeof e.variations === 'object')
     nVar = Object.keys(e.variations).length;
-  else if (e && e.variationCount)
-    nVar = e.variationCount;
+  else if (e && e.variationCount) nVar = e.variationCount;
 
-  // + name
-  // Type user · apex · 1 variation
-  let line = `${prefix} \`${id}\``;
+  let line = `${prefix} ${id}`;
   const meta = [];
   if (kind) meta.push(`Type ${kind}`);
   if (system) meta.push(system);
-  if (nVar != null) meta.push(`${nVar} variation${nVar === 1 ? '' : 's'}`);
+  if (nVar != null)
+    meta.push(`${nVar} variation${nVar === 1 ? '' : 's'}`);
   if (meta.length) line += `\n${meta.join(' · ')}`;
   if (labelTxt) line += `\n${labelTxt}`;
   return line;
@@ -193,7 +199,61 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
+function totalChars(sections) {
+  return sections.reduce(
+    (n, s) => n + (s.lines || []).join('\n').length + (s.label || '').length,
+    0,
+  );
+}
+
+/** Build Components V2 payload (short messages only) */
+function buildV2Payload(title, bn, sections) {
+  const components = [];
+
+  for (const sec of sections) {
+    if (!sec.lines.length) continue;
+    const body = sec.lines.join('\n');
+    // Container with accent color (like embed sidebar)
+    const inner = [
+      {
+        type: 10, // Text Display
+        content: `**${title}**\nBuild ${bn} · ${sec.count}`,
+      },
+      { type: 14, divider: true, spacing: 1 }, // Separator
+      {
+        type: 10,
+        content: `**${sec.label}**\n${body}`.slice(0, 3900),
+      },
+    ];
+    components.push({
+      type: 17, // Container
+      accent_color: sec.color,
+      components: inner,
+    });
+  }
+
+  return {
+    username: BOT,
+    avatar_url: AVATAR,
+    flags: FLAG_COMPONENTS_V2,
+    components,
+  };
+}
+
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
+  const short = totalChars(sections) <= V2_MAX_CHARS && sections.length <= 3;
+
+  if (short) {
+    const body = buildV2Payload(title, bn, sections);
+    const ok = await post(webhookUrl, body, true);
+    if (ok) {
+      console.log('Sent V2', title, { sections: sections.length });
+      return true;
+    }
+    console.warn('V2 failed — fallback classic embed');
+  }
+
+  // Classic embeds for long content (or V2 failure)
   let ok = true;
   for (const sec of sections) {
     if (!sec.lines.length) continue;
@@ -209,7 +269,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
     embeds.push({
       author: { name: BOT, icon_url: AVATAR },
       title,
-      description: `Build \`${bn}\` · **${sec.count}**`,
+      description: `Build ${bn} · **${sec.count}**`,
       fields: firstFields,
       color: sec.color,
       footer: { text: `Build ${bn} · Datamining` },
@@ -234,7 +294,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
     }
 
     for (let i = 0; i < embeds.length; i += 5) {
-      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
+      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) }, false);
       if (!r) ok = false;
     }
   }
@@ -276,7 +336,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   if (exp.removed.length) {
     const lines = exp.removed.slice(0, 40).map((e) => {
       const id = typeof e === 'string' ? e : e.id;
-      return `- \`${id}\``;
+      return `- ${id}`;
     });
     if (exp.removed.length > 40)
       lines.push(`… +${exp.removed.length - 40} more`);
@@ -295,7 +355,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     ts,
     sections,
   });
-  console.log('Sent experiments (URGENT)', {
+  console.log('Sent experiments', {
     ok,
     added: exp.added.length,
     modified: exp.modified.length,
@@ -373,7 +433,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     ts,
     sections,
   });
-  console.log('Sent', kind, '(NORMAL)', {
+  console.log('Sent', kind, {
     ok,
     added: a.length,
     modified: m.length,
@@ -382,33 +442,44 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
-async function post(url, body) {
+function withComponentsParam(url) {
+  if (!url) return url;
+  if (/[?&]with_components=/.test(url)) return url;
+  return url + (url.includes('?') ? '&' : '?') + 'with_components=true';
+}
+
+/**
+ * @param {boolean} v2 — Components V2 message
+ */
+async function post(url, body, v2 = false) {
   body.username = BOT;
   body.avatar_url = AVATAR;
   const fp = payloadFingerprint(body);
   if (!(await claimPosted(fp))) {
-    console.log('webhook CLAIM skip', body.embeds?.[0]?.title || fp);
+    console.log('webhook CLAIM skip', body.embeds?.[0]?.title || body.components?.[0]?.type || fp);
     return true;
   }
+
+  const endpoint = v2 ? withComponentsParam(url) : url;
   const payload = JSON.stringify(body);
   let lastErr = null;
 
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
-      const res = await fetch(url, {
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: payload,
         timeout: 20000,
       });
-      console.log('webhook', res.status, body.embeds?.[0]?.title || '');
+      console.log('webhook', res.status, v2 ? 'V2' : body.embeds?.[0]?.title || '');
       if (res.ok) {
         await markPosted(fp);
         await sleep(80);
         return true;
       }
       const text = await res.text();
-      lastErr = `HTTP ${res.status}: ${text.slice(0, 180)}`;
+      lastErr = `HTTP ${res.status}: ${text.slice(0, 200)}`;
       if (res.status === 429 || res.status >= 500) {
         const retryAfter = Number(res.headers.get('retry-after') || 0);
         const delay = retryAfter > 0 ? retryAfter * 1000 : 400 * 2 ** attempt;
