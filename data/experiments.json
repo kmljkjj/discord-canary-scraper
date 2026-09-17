@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-17T20:25:36.828Z",
-  "buildNumber": "615515",
+  "scrapedAt": "2026-09-17T20:30:09.545Z",
+  "buildNumber": "615530",
   "totals": {
-    "all": 383
+    "all": 384
   },
   "experiments": [
     {
@@ -6359,6 +6359,26 @@
         },
         "1": {
           "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-invite-silp-education",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "variant": null
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
         }
       },
       "variationCount": 2,
