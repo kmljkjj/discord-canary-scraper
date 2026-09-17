@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-17T21:40:39.465Z",
+  "scrapedAt": "2026-09-17T21:47:11.832Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            310,
-            9868
+            91,
+            9999
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            107,
-            9934
+            14,
+            9987
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            12,
-            9865
+            67,
+            9806
           ],
           "samples": 80
         }
@@ -77,37 +77,33 @@
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample",
       "named": true
-    }
-  ],
-  "token": [
-    {
-      "hash": 3013881204,
-      "id": "hash:3013881204",
-      "title": "hash:3013881204",
-      "type": "user",
-      "revision": 5,
-      "bucket": 11,
-      "hash_result": 129
     },
     {
-      "hash": 2180379513,
-      "id": "2023-09_iar_user_reporting",
-      "title": "Safety Experience IAR User Reporting",
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
       "type": "user",
-      "revision": 0,
-      "bucket": 1,
-      "hash_result": 2021
-    },
-    {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "title": "Tida Webform",
-      "type": "user",
-      "revision": 0,
-      "bucket": 1,
-      "hash_result": 2578
+      "quality": "estimated",
+      "confidence": 0.038,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 0.45,
+          "pctKnown": true,
+          "observed": [
+            9714,
+            9759
+          ],
+          "samples": 3
+        }
+      ],
+      "fingerprint": "1:0.5",
+      "source": "fingerprint-sample",
+      "named": false
     }
   ],
+  "token": [],
   "announced": {
     "2180379513": "1:100.0",
     "4055210228": "1:100.0"
