@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-17T17:31:10.821Z",
-  "buildNumber": "615237",
+  "scrapedAt": "2026-09-17T17:40:03.864Z",
+  "buildNumber": "615250",
   "totals": {
-    "all": 385
+    "all": 384
   },
   "experiments": [
     {
@@ -5583,18 +5583,15 @@
       "source": "discord"
     },
     {
-      "id": "2026-08-bounties-ctr-experiment-1",
+      "id": "2026-08-bounties-mobile-quest-bar",
       "type": "user",
       "kind": "user",
       "label": null,
       "system": "apex",
       "defaultConfig": {
-        "variant": 0
+        "ctrVariant": 0
       },
       "variations": {
-        "0": {
-          "id": 0
-        },
         "1": {
           "id": 1
         },
@@ -5603,24 +5600,21 @@
         },
         "3": {
           "id": 3
+        },
+        "4": {
+          "id": 4
+        },
+        "5": {
+          "id": 5
+        },
+        "6": {
+          "id": 6
+        },
+        "7": {
+          "id": 7
         }
       },
-      "variationCount": 4,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-bounties-mobile-quest-bar",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
+      "variationCount": 7,
       "source": "discord"
     },
     {

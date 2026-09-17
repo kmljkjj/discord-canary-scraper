@@ -4252,14 +4252,11 @@
   },
   {
     "kind": "user",
-    "name": "2026-08-bounties-ctr-experiment-1",
+    "name": "2026-08-bounties-mobile-quest-bar",
     "defaultConfig": {
-      "variant": 0
+      "ctrVariant": 0
     },
     "variations": {
-      "0": {
-        "id": 0
-      },
       "1": {
         "id": 1
       },
@@ -4268,18 +4265,18 @@
       },
       "3": {
         "id": 3
-      }
-    },
-    "label": null,
-    "system": "apex"
-  },
-  {
-    "kind": "user",
-    "name": "2026-08-bounties-mobile-quest-bar",
-    "defaultConfig": null,
-    "variations": {
-      "1": {
-        "id": 1
+      },
+      "4": {
+        "id": 4
+      },
+      "5": {
+        "id": 5
+      },
+      "6": {
+        "id": 6
+      },
+      "7": {
+        "id": 7
       }
     },
     "label": null,

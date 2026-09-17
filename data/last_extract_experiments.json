@@ -1,7 +1,7 @@
 {
-  "buildNumber": "615237",
-  "updatedAt": "2026-09-17T17:31:10.761Z",
-  "count": 369,
+  "buildNumber": "615250",
+  "updatedAt": "2026-09-17T17:40:03.770Z",
+  "count": 368,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4623,16 +4623,13 @@
       },
       "fp": "f44d6f0eb6e4563019d5aa79"
     },
-    "2026-08-bounties-ctr-experiment-1": {
-      "id": "2026-08-bounties-ctr-experiment-1",
+    "2026-08-bounties-mobile-quest-bar": {
+      "id": "2026-08-bounties-mobile-quest-bar",
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 4,
+      "variationCount": 7,
       "variations": {
-        "0": {
-          "id": 0
-        },
         "1": {
           "id": 1
         },
@@ -4641,22 +4638,21 @@
         },
         "3": {
           "id": 3
+        },
+        "4": {
+          "id": 4
+        },
+        "5": {
+          "id": 5
+        },
+        "6": {
+          "id": 6
+        },
+        "7": {
+          "id": 7
         }
       },
-      "fp": "ae41c6df230b26d679ca167a"
-    },
-    "2026-08-bounties-mobile-quest-bar": {
-      "id": "2026-08-bounties-mobile-quest-bar",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 1,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "185a05d5efed934100f4b84e"
     },
     "2026-08-call-of-duty-3pp-nagbar": {
       "id": "2026-08-call-of-duty-3pp-nagbar",
