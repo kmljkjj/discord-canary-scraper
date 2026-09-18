@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T22:29:59.170Z",
-  "buildNumber": "616723",
+  "scrapedAt": "2026-09-18T22:32:12.231Z",
+  "buildNumber": "616724",
   "totals": {
-    "all": 380
+    "all": 378
   },
   "experiments": [
     {
@@ -2911,32 +2911,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-kestrel",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "threshold": 0
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
-      "source": "discord"
-    },
-    {
       "id": "2026-04-krisp-v9-ios",
       "type": "user",
       "kind": "user",
@@ -5760,24 +5734,6 @@
       "defaultConfig": null,
       "variations": null,
       "variationCount": 0,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-kestrel-ga",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {
