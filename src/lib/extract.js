@@ -2,20 +2,28 @@
  * Extract from Discord Canary assets.
  *
  * Pipeline:
- *  1) Download web.* (fast)
- *  2) Parallel core extract → onCore (URGENT experiments)
- *  3) Parse webpack chunk map → download ALL chunks (like Wumpus archive)
- *  4) en-US locales → strings
- *  5) Scan every JS for routes + experiments enrichment
+ *  1) Clear assetsDir (no stale web.* from previous build)
+ *  2) Download web.* (robust: atomic, retry, 429)
+ *  3) Parallel core extract → onCore (URGENT experiments)
+ *  4) Parse webpack chunk map → download ALL chunks
+ *  5) en-US locales → strings
+ *  6) Scan every JS for routes + experiments enrichment
  */
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
+const {
+  downloadList,
+  assertWebBundle,
+  clearAssetsDir,
+  getDownloadStats,
+  resetDownloadStats,
+  DOWNLOAD_CONCURRENCY,
+} = require('./download');
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
-const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 48);
 // Priority path still starts with web.*; full chunks after unless disabled
 const FULL_CHUNKS = process.env.SCRAPE_FULL_CHUNKS !== '0';
 const DOWNLOAD_CSS = process.env.SCRAPE_CSS === '1';
@@ -29,6 +37,8 @@ function matchEnd(m) {
 async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore }) {
   await fs.ensureDir(assetsDir);
   if (cacheDir) await fs.ensureDir(cacheDir);
+  await clearAssetsDir(assetsDir);
+  resetDownloadStats();
 
   const htmlAssets = [...(build.assets || [])];
   const cssAssets = [...(build.cssAssets || [])];
@@ -42,7 +52,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
   }
   console.log('CSS listed from HTML:', Object.keys(cssInventory).length);
 
-  // ── 1) web.* first (priority)
   let webAssets = htmlAssets.filter((u) => /\/web\./i.test(u));
   if (!webAssets.length) {
     console.warn('No web.* in HTML — using prioritized HTML assets');
@@ -71,7 +80,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     }
   }
 
-  // ── 2) URGENT hook before heavy downloads
   if (typeof onCore === 'function') {
     const experiments = [...expSet.values()].sort((a, b) =>
       a.id.localeCompare(b.id),
@@ -88,7 +96,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     });
   }
 
-  // ── 3) Full webpack chunk map (Wumpus-style mass download)
   const chunkUrls = resolveAllChunkUrls(webContent);
   const htmlRest = htmlAssets.filter((u) => !/\/web\./i.test(u));
   const allUrls = dedupeUrls([...chunkUrls, ...htmlRest]);
@@ -101,7 +108,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     console.log('SCRAPE_FULL_CHUNKS=0 — skip mass chunk download');
   }
 
-  // ── 4) Locales for strings
   const localeUrls = resolveEnUsLocaleUrls(webContent);
   console.log('en-US locale chunks:', localeUrls.length);
   if (localeUrls.length) {
@@ -123,12 +129,11 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     console.log('Strings from en-US locales +', fromLocale, 'total', Object.keys(strings).length);
   }
 
-  // ── 5) Scan all JS on disk for routes + experiments
   const jsFiles = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
   console.log('Scanning', jsFiles.length, 'JS files for routes/experiments');
   let scanned = 0;
   for (const f of jsFiles) {
-    if (/^web\./i.test(f)) continue; // already done
+    if (/^web\./i.test(f)) continue;
     const fp = path.join(assetsDir, f);
     try {
       const st = await fs.stat(fp);
@@ -136,7 +141,6 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
       const content = await fs.readFile(fp, 'utf8');
       extractRoutes(content, routes);
       extractExperiments(content, expSet);
-      // light strings from small modules only
       if (st.size < 500_000) extractStrings(content, strings);
       scanned++;
     } catch {}
@@ -156,11 +160,13 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     await downloadList(cssAssets, assetsDir, !!forceRefresh);
   }
 
+  console.log('Download integrity summary', getDownloadStats());
   return {
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
     css: cssInventory,
+    downloadStats: getDownloadStats(),
   };
 }
 
@@ -172,33 +178,22 @@ async function extractCoreParallel(webContent, { routes, expSet, strings }) {
   ]);
 }
 
-/**
- * Parse Discord webpack chunk id → contenthash map from web.js
- * Covers patterns used by modern Discord canary builds.
- */
 function resolveAllChunkUrls(webContent) {
   if (!webContent) return [];
   const hashById = new Map();
-
-  // Standard: 123456:"abcdef0123456789abcd"
   const re1 = /(\d{1,7}):["']([a-f0-9]{16,22})["']/g;
   let m;
   while ((m = re1.exec(webContent)) !== null) {
     hashById.set(m[1], m[2]);
   }
-
-  // Scientific: 1e3:"hash" / 12e4:"hash"
   const reSci = /(\d+e\d+):["']([a-f0-9]{16,22})["']/gi;
   while ((m = reSci.exec(webContent)) !== null) {
     const id = String(Number(m[1]));
     if (Number.isFinite(Number(id))) hashById.set(id, m[2]);
   }
-
-  // Filename style already on CDN: "assets/HASH.js" inside maps
   const reFile = /["']([a-f0-9]{16,22})\.js["']/g;
   const looseHashes = new Set();
   while ((m = reFile.exec(webContent)) !== null) looseHashes.add(m[1]);
-
   const urls = [];
   const seen = new Set();
   for (const hash of hashById.values()) {
@@ -220,13 +215,11 @@ function resolveEnUsLocaleUrls(webContent) {
   const reMap = /(\d{3,6}):["']([a-f0-9]{16,22})["']/g;
   let m;
   while ((m = reMap.exec(webContent)) !== null) chunkMap[m[1]] = m[2];
-
   const chunkIds = new Set();
   const reEn = /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["'](\d+)["']\)/g;
   while ((m = reEn.exec(webContent)) !== null) chunkIds.add(m[1]);
   const reJson = /\.\/en-US\.json["']\s*:\s*["'](\d+)["']/g;
   while ((m = reJson.exec(webContent)) !== null) chunkIds.add(m[1]);
-
   const urls = [];
   const seen = new Set();
   for (const id of chunkIds) {
@@ -317,78 +310,11 @@ function extractStringsFromLocaleBlob(content, out) {
   }
 }
 
-async function assertWebBundle(assetsDir) {
-  const files = (await fs.readdir(assetsDir)).filter((f) => /^web\./i.test(f));
-  if (!files.length) {
-    console.warn('No web.*.js');
-    return;
-  }
-  for (const f of files) {
-    const st = await fs.stat(path.join(assetsDir, f));
-    console.log(
-      'web bundle:',
-      f,
-      Math.round(st.size / 1024) + 'KB',
-      st.size < 1_000_000 ? 'small?' : 'OK',
-    );
-  }
-}
-
 function inferType(id) {
   const s = String(id || '').toLowerCase();
   if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
     return 'guild';
   return 'user';
-}
-
-async function downloadList(urls, assetsDir, force) {
-  const jobs = [];
-  for (const url of urls) {
-    if (!url || !String(url).includes('/assets/')) continue;
-    const name = path.basename(String(url).split('?')[0]);
-    if (!name.endsWith('.js') && !name.endsWith('.css')) continue;
-    jobs.push({ url: String(url), name });
-  }
-
-  let n = 0;
-  let fail = 0;
-  let i = 0;
-
-  async function worker() {
-    while (i < jobs.length) {
-      const job = jobs[i++];
-      const fp = path.join(assetsDir, job.name);
-      try {
-        if (!force && (await fs.pathExists(fp))) {
-          const st = await fs.stat(fp);
-          if (st.size > 0) continue;
-        }
-        const res = await fetch(job.url, {
-          headers: { 'User-Agent': UA, Accept: '*/*' },
-          timeout: 90000,
-        });
-        if (!res.ok) {
-          fail++;
-          if (fail <= 8) console.warn('DL fail', job.name, res.status);
-          continue;
-        }
-        const buf = await res.buffer();
-        await fs.writeFile(fp, buf);
-        n++;
-        if (n <= 8 || n % 500 === 0) {
-          console.log('DL', n + '/' + jobs.length, job.name, Math.round(buf.length / 1024) + 'KB');
-        }
-      } catch (e) {
-        fail++;
-        if (fail <= 8) console.warn('DL fail', job.name, e.message);
-      }
-    }
-  }
-
-  const workers = [];
-  for (let w = 0; w < DOWNLOAD_CONCURRENCY; w++) workers.push(worker());
-  await Promise.all(workers);
-  console.log('Downloaded', n, 'file(s); failed', fail, '; jobs', jobs.length);
 }
 
 function isGoodStringKey(k) {
@@ -473,18 +399,18 @@ function extractRoutes(content, out) {
 
 function extractExperiments(content, map) {
   const reNK =
-    /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
+    /\{\s*name\s*:\s*["'](20[2-3]\d-(?:0[1-9]|1[0-2])[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
   let m;
   while ((m = reNK.exec(content)) !== null) {
     upsertExp(map, m[1], m[2].toLowerCase(), content, matchEnd(m));
   }
   const reKN =
-    /\{\s*kind\s*:\s*["'](user|guild)["']\s*,\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+    /\{\s*kind\s*:\s*["'](user|guild)["']\s*,\s*name\s*:\s*["'](20[2-3]\d-(?:0[1-9]|1[0-2])[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   while ((m = reKN.exec(content)) !== null) {
     upsertExp(map, m[2], m[1].toLowerCase(), content, matchEnd(m));
   }
 
-  const reId = /["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
+  const reId = /["'](20[2-3]\d-(?:0[1-9]|1[0-2])[_-][a-z0-9][a-z0-9_\-]{2,90})["']/gi;
   while ((m = reId.exec(content)) !== null) {
     const id = m[1];
     if (/^20\d{2}-\d{2}$/.test(id)) continue;
@@ -576,8 +502,7 @@ function upsertExp(map, id, kind, content, posAfter) {
       existing.variations = variations;
       existing.variationCount = Object.keys(variations).length;
     }
-    if (defaultConfig && !existing.defaultConfig)
-      existing.defaultConfig = defaultConfig;
+    if (defaultConfig && !existing.defaultConfig) existing.defaultConfig = defaultConfig;
     if (label && !existing.label) existing.label = label;
     if (!existing.system) existing.system = system;
     return;
@@ -640,6 +565,7 @@ function countVariationsNear(content, from) {
 
 module.exports = {
   analyzeAssets,
+  getDownloadStats,
   isGoodStringKey,
   isGoodStringVal,
   extractRoutes,
