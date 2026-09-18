@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-18T21:14:44.787Z",
+  "scrapedAt": "2026-09-18T21:17:39.015Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            274,
-            9983
+            326,
+            9914
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            28,
-            9968
+            72,
+            9969
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            14,
-            9822
+            114,
+            9995
           ],
           "samples": 80
         }
@@ -77,6 +77,30 @@
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample",
       "named": true
+    },
+    {
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
+      "type": "user",
+      "quality": "estimated",
+      "confidence": 0.038,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 4.1,
+          "pctKnown": true,
+          "observed": [
+            26,
+            436
+          ],
+          "samples": 3
+        }
+      ],
+      "fingerprint": "1:4.1",
+      "source": "fingerprint-sample",
+      "named": false
     }
   ],
   "token": [],
