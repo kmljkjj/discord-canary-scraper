@@ -208,20 +208,46 @@ async function saveKnown(set) {
 }
 
 async function postWebhook(payload) {
-  if (!WEBHOOK_URL) return;
+  if (!WEBHOOK_URL) return false;
   const body = {
     username: BOT_NAME,
     avatar_url: BOT_AVATAR,
     ...payload,
   };
-  const res = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) console.warn('Webhook', res.status, await res.text());
-  else console.log('Webhook OK');
-  await new Promise((r) => setTimeout(r, 400));
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        timeout: 30000,
+      });
+      if (res.status === 429) {
+        const ra = Number(res.headers.get('retry-after') || 0);
+        const wait = ra > 0 ? ra * 1000 : Math.min(15000, 500 * 2 ** attempt);
+        console.warn('Webhook 429 wait', wait + 'ms');
+        await new Promise((r) => setTimeout(r, wait));
+        continue;
+      }
+      if (res.status >= 500) {
+        await new Promise((r) => setTimeout(r, Math.min(10000, 400 * 2 ** attempt)));
+        continue;
+      }
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('Webhook', res.status, t);
+        throw new Error('Webhook HTTP ' + res.status);
+      }
+      console.log('Webhook OK');
+      await new Promise((r) => setTimeout(r, 400));
+      return true;
+    } catch (e) {
+      if (String(e.message || e).startsWith('Webhook HTTP')) throw e;
+      console.warn('Webhook network', e.message);
+      await new Promise((r) => setTimeout(r, Math.min(10000, 400 * 2 ** attempt)));
+    }
+  }
+  throw new Error('Webhook failed after retries');
 }
 
 function experimentEmbed(exp, meta) {
@@ -315,8 +341,7 @@ async function main() {
     if (e?.id) known.add(String(e.id));
   }
 
-  const newExps = findings.experiments.filter((e) => !known.has(e.id));
-  for (const e of findings.experiments) known.add(e.id);
+  const newExps = findings.experiments.filter((e) => e && e.id && !known.has(String(e.id)));
 
   const prevStrings = previous?.strings || {};
   const stringDiff = { added: {} };
@@ -329,6 +354,38 @@ async function main() {
       console.log('String flood — skip notify, reseed');
       stringDiff.added = {};
     }
+  }
+
+  console.log('New mobile experiments:', newExps.length);
+  console.log('New mobile strings:', Object.keys(stringDiff.added).length);
+
+  const prevExpN = (previous && previous.experiments ? previous.experiments.length : 0);
+  const prevStrN = Object.keys((previous && previous.strings) || {}).length;
+  const curExpN = findings.experiments.length;
+  const curStrN = Object.keys(findings.strings).length;
+  if (prevExpN >= 30 && curExpN < Math.max(5, prevExpN * 0.5)) {
+    console.error('MOBILE_FILES_DEGRADED: experiments too low', { prevExpN, curExpN });
+    process.exit(1);
+  }
+  if (prevStrN >= 100 && curStrN < Math.max(20, prevStrN * 0.5)) {
+    console.error('MOBILE_FILES_DEGRADED: strings too low', { prevStrN, curStrN });
+    process.exit(1);
+  }
+
+  const hasDiff = newExps.length > 0 || Object.keys(stringDiff.added).length > 0;
+  if (hasDiff && WEBHOOK_URL) {
+    try {
+      await notify(newExps, stringDiff, meta);
+    } catch (e) {
+      console.warn('NOTIFY_FAIL:', e.message, '- not advancing known/state');
+      process.exit(2);
+    }
+  } else if (hasDiff && !WEBHOOK_URL) {
+    console.log('No webhook - seed state without notify');
+  }
+
+  for (const e of findings.experiments) {
+    if (e && e.id) known.add(String(e.id));
   }
 
   const state = {
@@ -344,10 +401,6 @@ async function main() {
   await fs.writeJson(STATE_FILE, state, { spaces: 2 });
   await saveKnown(known);
 
-  console.log('New mobile experiments:', newExps.length);
-  console.log('New mobile strings:', Object.keys(stringDiff.added).length);
-
-  await notify(newExps, stringDiff, meta);
   console.log('=== Mobile files done ===');
 }
 

@@ -70,20 +70,46 @@ async function fetchJson(url, opts = {}) {
 }
 
 async function postWebhook(payload) {
-  if (!WEBHOOK_URL) return;
+  if (!WEBHOOK_URL) return false;
   const body = {
     username: BOT_NAME,
     avatar_url: BOT_AVATAR,
     ...payload,
   };
-  const res = await fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) console.warn('Webhook', res.status, await res.text());
-  else console.log('Webhook OK');
-  await new Promise((r) => setTimeout(r, 400));
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        timeout: 30000,
+      });
+      if (res.status === 429) {
+        const ra = Number(res.headers.get('retry-after') || 0);
+        const wait = ra > 0 ? ra * 1000 : Math.min(15000, 500 * 2 ** attempt);
+        console.warn('Webhook 429 wait', wait + 'ms');
+        await new Promise((r) => setTimeout(r, wait));
+        continue;
+      }
+      if (res.status >= 500) {
+        await new Promise((r) => setTimeout(r, Math.min(10000, 400 * 2 ** attempt)));
+        continue;
+      }
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('Webhook', res.status, t);
+        throw new Error('Webhook HTTP ' + res.status);
+      }
+      console.log('Webhook OK');
+      await new Promise((r) => setTimeout(r, 400));
+      return true;
+    } catch (e) {
+      if (String(e.message || e).startsWith('Webhook HTTP')) throw e;
+      console.warn('Webhook network', e.message);
+      await new Promise((r) => setTimeout(r, Math.min(10000, 400 * 2 ** attempt)));
+    }
+  }
+  throw new Error('Webhook failed after retries');
 }
 
 async function iosStable() {
@@ -504,22 +530,49 @@ async function main() {
 
   const { changes, notified } = detectChanges(previous, snapshot);
 
-  for (const c of snapshot.channels) {
-    const fp = versionFingerprint(c);
-    if (fp) notified.add(fp);
-  }
   for (const fp of previous?.notifiedFingerprints || []) {
     notified.add(String(fp));
   }
-  for (const ch of changes) {
-    if (ch.fp) notified.add(ch.fp);
-  }
 
   const history = previous?.history || [];
-  const willNotify = hadPriorState && changes.length > 0;
+  const willNotify = hadPriorState && changes.length > 0 && !!WEBHOOK_URL;
 
-  if (willNotify) {
+  for (const c of snapshot.channels) {
+    console.log(
+      `  ${c.platform}/${c.channel}: ${c.version || 'n/a'}${c.build ? ` [${c.build}]` : ''}`,
+    );
+  }
+  console.log(
+    'Candidates:',
+    changes.length,
+    '| hadPriorState:',
+    !!hadPriorState,
+    '| prior fingerprints:',
+    notified.size,
+  );
+
+  if (!hadPriorState) {
+    console.log('Seed run - no webhook; recording fingerprints');
+    for (const c of snapshot.channels) {
+      const fp = versionFingerprint(c);
+      if (fp) notified.add(fp);
+    }
+  } else if (willNotify) {
+    try {
+      await notify(changes);
+    } catch (e) {
+      snapshot.history = history.slice(0, 100);
+      snapshot.previousScrapedAt = previous?.scrapedAt || null;
+      snapshot.notifiedFingerprints = [...notified].sort().slice(-2000);
+      snapshot.changes = [];
+      snapshot.paused = false;
+      snapshot.notifyOk = false;
+      await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
+      console.warn('NOTIFY_FAIL:', e.message, '- fingerprints NOT advanced');
+      process.exit(2);
+    }
     for (const ch of changes) {
+      if (ch.fp) notified.add(ch.fp);
       history.unshift({
         at: snapshot.scrapedAt,
         key: channelKey(ch.channel),
@@ -527,6 +580,16 @@ async function main() {
         to: ch.channel.version,
         build: ch.channel.build || null,
       });
+    }
+    for (const c of snapshot.channels) {
+      const fp = versionFingerprint(c);
+      if (fp) notified.add(fp);
+    }
+  } else {
+    console.log('No version bumps - no webhook');
+    for (const c of snapshot.channels) {
+      const fp = versionFingerprint(c);
+      if (fp) notified.add(fp);
     }
   }
 
@@ -543,30 +606,9 @@ async function main() {
       }))
     : [];
   snapshot.paused = false;
+  snapshot.notifyOk = true;
 
   await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
-
-  for (const c of snapshot.channels) {
-    console.log(
-      `  ${c.platform}/${c.channel}: ${c.version || 'n/a'}${c.build ? ` [${c.build}]` : ''}`,
-    );
-  }
-  console.log(
-    'Candidates:',
-    changes.length,
-    '| hadPriorState:',
-    !!hadPriorState,
-    '| fingerprints:',
-    notified.size,
-  );
-
-  if (!hadPriorState) {
-    console.log('Seed run — no webhook');
-  } else if (willNotify) {
-    await notify(changes);
-  } else {
-    console.log('No version bumps — no webhook');
-  }
   console.log('=== Mobile versions done ===');
 }
 
