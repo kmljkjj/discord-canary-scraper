@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T13:46:44.046Z",
-  "buildNumber": "616056",
+  "scrapedAt": "2026-09-18T15:18:53.483Z",
+  "buildNumber": "616096",
   "totals": {
-    "all": 382
+    "all": 383
   },
   "experiments": [
     {
@@ -6264,6 +6264,21 @@
       "type": "guild",
       "kind": "guild",
       "label": "Automod Mention Raid Limit",
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-clips-editor-image-track",
+      "type": "user",
+      "kind": "user",
+      "label": null,
       "system": "apex",
       "defaultConfig": null,
       "variations": {
