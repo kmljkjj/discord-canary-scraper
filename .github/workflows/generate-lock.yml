@@ -2,20 +2,72 @@ name: Generate package-lock
 on:
   workflow_dispatch:
 jobs:
-  gen:
+  restore-and-lock:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - run: npm install --no-audit --no-fund
-      - run: |
+
+      - name: Restore index.js from known-good v11.9 + EXTRACTION_DEGRADED
+        run: |
+          set -euo pipefail
+          GOOD=b9f73795016ef6600639cc216865207b80294cd9
+          git show "$GOOD:src/index.js" > src/index.js
+          SZ=$(wc -c < src/index.js)
+          echo "restored size=$SZ"
+          test "$SZ" -gt 15000
+          head -3 src/index.js
+          python3 << 'PY'
+          from pathlib import Path
+          src = Path('src/index.js').read_text()
+          assert 'Canary Pulse v11.9' in src
+          src = src.replace('Canary Pulse v11.9', 'Canary Pulse v11.10')
+          src = src.replace(
+            'full transactional notify (no state advance on webhook fail)',
+            'transactional notify + degraded extract guard',
+          )
+          # Expand integrity block
+          old = '''  {\n    const expN = (findings.experiments || []).length;\n    const strN = Object.keys(findings.strings || {}).length;\n    const rtN = Object.keys(findings.routes || {}).length;\n    const ds = findings.downloadStats || {};\n    console.log('Integrity check', { expN, strN, rtN, downloadStats: ds });\n    if (expN === 0 && strN < 50 && Object.keys(lastExp).length > 40) {\n      try {\n        await fs.writeJson(LAST_RUN_META, {\n          schemaVersion: 1,\n          buildNumber: String(build.buildNumber),\n          ts: Date.now(),\n          status: 'failed',\n          ok: false,\n          reason: 'EXTRACTION_EMPTY',\n          downloadStats: ds,\n        });\n      } catch {}\n      console.error(\n        'EXTRACTION_ERROR: empty extract vs non-empty baseline — refuse state update',\n      );\n      process.exit(1);\n    }\n  }'''
+          new = '''  {\n    const expN = (findings.experiments || []).length;\n    const strN = Object.keys(findings.strings || {}).length;\n    const rtN = Object.keys(findings.routes || {}).length;\n    const ds = findings.downloadStats || {};\n    const baseExp = Object.keys(lastExp).length;\n    const baseStr = Object.keys(lastStr).length;\n    const baseRt = Object.keys(lastRt).length;\n    console.log('Integrity check', {\n      expN,\n      strN,\n      rtN,\n      baseExp,\n      baseStr,\n      baseRt,\n      downloadStats: ds,\n    });\n\n    if (expN === 0 && strN < 50 && baseExp > 40) {\n      try {\n        await fs.writeJson(LAST_RUN_META, {\n          schemaVersion: 1,\n          buildNumber: String(build.buildNumber),\n          ts: Date.now(),\n          status: 'failed',\n          ok: false,\n          reason: 'EXTRACTION_EMPTY',\n          downloadStats: ds,\n        });\n      } catch {}\n      console.error(\n        'EXTRACTION_ERROR: empty extract vs non-empty baseline — refuse state update',\n      );\n      process.exit(1);\n    }\n\n    // Degraded extract guard: solid baseline + abnormally low coverage\n    const solidBaseline = baseExp >= 80 && baseStr >= 200;\n    if (solidBaseline) {\n      const ratioExp = expN / Math.max(baseExp, 1);\n      const ratioStr = strN / Math.max(baseStr, 1);\n      const ratioRt = baseRt >= 50 ? rtN / Math.max(baseRt, 1) : 1;\n      const degraded =\n        (ratioExp < 0.6 && ratioStr < 0.7) ||\n        (ratioStr < 0.6 && ratioExp < 0.7) ||\n        ratioExp < 0.5 ||\n        ratioStr < 0.5;\n      if (degraded) {\n        try {\n          await fs.writeJson(LAST_RUN_META, {\n            schemaVersion: 1,\n            buildNumber: String(build.buildNumber),\n            ts: Date.now(),\n            status: 'failed',\n            ok: false,\n            reason: 'EXTRACTION_DEGRADED',\n            ratios: {\n              exp: Math.round(ratioExp * 1000) / 1000,\n              str: Math.round(ratioStr * 1000) / 1000,\n              rt: Math.round(ratioRt * 1000) / 1000,\n            },\n            counts: { expN, strN, rtN, baseExp, baseStr, baseRt },\n            downloadStats: ds,\n          });\n        } catch {}\n        console.error(\n          'EXTRACTION_ERROR: degraded extract vs solid baseline — refuse state update',\n          { ratioExp, ratioStr, ratioRt, expN, strN, baseExp, baseStr },\n        );\n        process.exit(1);\n      }\n    }\n  }'''
+          if old not in src:
+              raise SystemExit('integrity block not found in restored index')
+          src = src.replace(old, new)
+          src = src.replace(
+            "console.warn('empty extract');\n    process.exit(0);",
+            "console.warn('empty extract — abort without state advance');\n    process.exit(1);",
+          )
+          Path('src/index.js').write_text(src)
+          print('patched bytes', len(src))
+          assert 'EXTRACTION_DEGRADED' in src
+          assert 'v11.10' in src
+          PY
+          node --check src/index.js
+          grep -n 'v11.10\|EXTRACTION_DEGRADED\|NOTIFY_FAIL' src/index.js | head
+
+      - name: Generate package-lock.json
+        run: |
+          npm install --no-audit --no-fund --package-lock-only
+          test -f package-lock.json
+          wc -c package-lock.json
+
+      - name: Commit restored index + lockfile
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package-lock.json
-          git commit -m "chore: generate package-lock.json" || exit 0
-          git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git add src/index.js package-lock.json
+          git status
+          git commit -m "fix: restore index.js v11.10 (EXTRACTION_DEGRADED) + package-lock.json"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          echo "push failed"
+          exit 1
