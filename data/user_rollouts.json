@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-18T17:30:04.662Z",
+  "scrapedAt": "2026-09-18T17:36:43.307Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            25,
-            9994
+            147,
+            9962
           ],
           "samples": 80
         }
@@ -44,8 +44,32 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            214,
-            9799
+            122,
+            9999
+          ],
+          "samples": 80
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "fingerprint-sample",
+      "named": true
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "quality": "estimated",
+      "confidence": 1,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 100,
+          "pctKnown": true,
+          "observed": [
+            107,
+            9844
           ],
           "samples": 80
         }
@@ -65,64 +89,16 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 4.44,
+          "pct": 1.19,
           "pctKnown": true,
           "observed": [
-            27,
-            471
+            60,
+            179
           ],
           "samples": 4
         }
       ],
-      "fingerprint": "1:4.4",
-      "source": "fingerprint-sample",
-      "named": false
-    },
-    {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "title": "Tida Webform",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 1,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 100,
-          "pctKnown": true,
-          "observed": [
-            24,
-            9870
-          ],
-          "samples": 80
-        }
-      ],
-      "fingerprint": "1:100.0",
-      "source": "fingerprint-sample",
-      "named": true
-    },
-    {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.063,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 2.72,
-          "pctKnown": true,
-          "observed": [
-            9520,
-            9792
-          ],
-          "samples": 5
-        }
-      ],
-      "fingerprint": "1:2.7",
+      "fingerprint": "1:1.2",
       "source": "fingerprint-sample",
       "named": false
     }
