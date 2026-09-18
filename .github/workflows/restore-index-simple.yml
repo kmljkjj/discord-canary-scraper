@@ -1,0 +1,48 @@
+name: Restore index simple
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 40
+
+      - name: Find and restore good index.js
+        run: |
+          set -e
+          GOOD=""
+          for c in $(git log --pretty=format:%H -40 -- src/index.js); do
+            sz=$(git show "$c:src/index.js" 2>/dev/null | wc -c || echo 0)
+            hd=$(git show "$c:src/index.js" 2>/dev/null | head -c 80 || true)
+            echo "check $c size=$sz"
+            if [ "$sz" -gt 15000 ] && echo "$hd" | grep -q Canary; then
+              GOOD=$c
+              break
+            fi
+          done
+          echo "GOOD=$GOOD"
+          if [ -z "$GOOD" ]; then
+            echo "No good commit found"
+            exit 1
+          fi
+          git show "$GOOD:src/index.js" > src/index.js
+          wc -c src/index.js
+          head -5 src/index.js
+          node --check src/index.js
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/index.js
+          git status
+          git commit -m "restore: index.js from last good Canary Pulse commit" || exit 0
+          git pull --rebase --autostash origin main || true
+          git push origin HEAD:main || true
