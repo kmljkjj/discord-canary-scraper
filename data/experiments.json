@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T00:10:53.388Z",
-  "buildNumber": "615857",
+  "scrapedAt": "2026-09-18T00:17:28.614Z",
+  "buildNumber": "615866",
   "totals": {
-    "all": 383
+    "all": 382
   },
   "experiments": [
     {
@@ -6591,24 +6591,6 @@
     },
     {
       "id": "2026-09-video-background-profile-fetch",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-09-wysiwyg-user-profile-edit-polish",
       "type": "user",
       "kind": "user",
       "label": null,
