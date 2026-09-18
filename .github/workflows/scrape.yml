@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  # Never cancel a running scrape (priority #7)
+  # Never cancel a running scrape
   group: canary-scrape
   cancel-in-progress: false
 
@@ -32,7 +32,11 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
+            npm ci --no-audit --no-fund || {
+              echo "npm ci failed (lock out of sync) — falling back to npm install"
+              rm -rf node_modules
+              npm install --no-audit --no-fund
+            }
           else
             npm install --no-audit --no-fund
           fi
