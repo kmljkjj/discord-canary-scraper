@@ -11,7 +11,6 @@ permissions:
   contents: write
 
 concurrency:
-  # Never cancel a running scrape
   group: canary-scrape
   cancel-in-progress: false
 
@@ -27,7 +26,6 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-          # cache needs package-lock.json; omit until lockfile exists
 
       - name: Install dependencies
         run: |
@@ -93,7 +91,6 @@ jobs:
             exit 0
           fi
           BUILD_NUM=$(node -e "try{console.log(require('./data/build.json').buildNumber||'unknown')}catch(e){console.log('unknown')}")
-          # Fail the step if commit fails (no more silent success)
           git commit -m "canary build: ${BUILD_NUM}"
           PUSHED=0
           for i in 1 2 3 4 5; do
