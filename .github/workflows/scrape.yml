@@ -11,7 +11,6 @@ permissions:
   contents: write
 
 concurrency:
-  # Never cancel a running scrape
   group: canary-scrape
   cancel-in-progress: false
 
@@ -27,13 +26,13 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-          cache: npm
+          # no cache: npm — requires package-lock.json
 
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
             npm ci --no-audit --no-fund || {
-              echo "npm ci failed (lock out of sync) — falling back to npm install"
+              echo "npm ci failed — falling back to npm install"
               rm -rf node_modules
               npm install --no-audit --no-fund
             }
