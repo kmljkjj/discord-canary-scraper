@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T00:07:45.743Z",
-  "buildNumber": "615855",
+  "scrapedAt": "2026-09-18T00:10:53.388Z",
+  "buildNumber": "615857",
   "totals": {
-    "all": 384
+    "all": 383
   },
   "experiments": [
     {
@@ -1677,21 +1677,6 @@
     },
     {
       "id": "2026-02-pubsub-bulk-ban-users",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-referral-reminder-dc",
       "type": "user",
       "kind": "user",
       "label": null,
