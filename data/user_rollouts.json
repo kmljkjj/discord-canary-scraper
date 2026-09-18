@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-18T08:11:02.936Z",
+  "scrapedAt": "2026-09-18T08:17:37.381Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            204,
-            9900
+            85,
+            9912
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            177,
-            9939
+            58,
+            9987
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            100,
-            9951
+            3,
+            9972
           ],
           "samples": 80
         }
@@ -77,9 +77,61 @@
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample",
       "named": true
+    },
+    {
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
+      "type": "user",
+      "quality": "estimated",
+      "confidence": 0.05,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 1.84,
+          "pctKnown": true,
+          "observed": [
+            9785,
+            9969
+          ],
+          "samples": 4
+        }
+      ],
+      "fingerprint": "1:1.8",
+      "source": "fingerprint-sample",
+      "named": false
     }
   ],
-  "token": [],
+  "token": [
+    {
+      "hash": 3013881204,
+      "id": "hash:3013881204",
+      "title": "hash:3013881204",
+      "type": "user",
+      "revision": 5,
+      "bucket": 11,
+      "hash_result": 3008
+    },
+    {
+      "hash": 2180379513,
+      "id": "2023-09_iar_user_reporting",
+      "title": "Safety Experience IAR User Reporting",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 7274
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 9731
+    }
+  ],
   "announced": {
     "2180379513": "1:100.0",
     "4055210228": "1:100.0"
