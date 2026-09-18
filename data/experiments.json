@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T16:17:19.405Z",
-  "buildNumber": "616165",
+  "scrapedAt": "2026-09-18T16:20:35.219Z",
+  "buildNumber": "616168",
   "totals": {
-    "all": 383
+    "all": 382
   },
   "experiments": [
     {
@@ -5980,21 +5980,6 @@
       "defaultConfig": null,
       "variations": null,
       "variationCount": 0,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-rich-presence-invite-banner",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
