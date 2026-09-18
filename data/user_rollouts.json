@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-18T09:48:40.367Z",
+  "scrapedAt": "2026-09-18T09:55:06.628Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            49,
-            9957
+            43,
+            9919
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            332,
-            9947
+            88,
+            9821
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            46,
-            9991
+            136,
+            9722
           ],
           "samples": 80
         }
@@ -84,21 +84,21 @@
       "title": "hash:704914099",
       "type": "user",
       "quality": "estimated",
-      "confidence": 0.088,
+      "confidence": 0.05,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.74,
+          "pct": 4.56,
           "pctKnown": true,
           "observed": [
-            9565,
-            9939
+            9513,
+            9969
           ],
-          "samples": 7
+          "samples": 4
         }
       ],
-      "fingerprint": "1:3.7",
+      "fingerprint": "1:4.6",
       "source": "fingerprint-sample",
       "named": false
     }
@@ -111,7 +111,7 @@
       "type": "user",
       "revision": 5,
       "bucket": 11,
-      "hash_result": 187
+      "hash_result": 1558
     },
     {
       "hash": 2180379513,
@@ -120,7 +120,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 5153
+      "hash_result": 4463
     },
     {
       "hash": 4055210228,
@@ -129,7 +129,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 4843
+      "hash_result": 9691
     }
   ],
   "announced": {
