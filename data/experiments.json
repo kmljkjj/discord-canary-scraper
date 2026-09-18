@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T17:14:44.373Z",
-  "buildNumber": "616243",
+  "scrapedAt": "2026-09-18T17:17:27.281Z",
+  "buildNumber": "616244",
   "totals": {
-    "all": 382
+    "all": 380
   },
   "experiments": [
     {
@@ -3632,32 +3632,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-05-nitro-home-header",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "treatment": "control"
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
-      "source": "discord"
-    },
-    {
       "id": "2026-05-quest-home-tile-redesign",
       "type": "user",
       "kind": "user",
@@ -5016,24 +4990,6 @@
         },
         "2": {
           "id": 2
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-nitro-home-header-followup",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
         }
       },
       "variationCount": 2,
