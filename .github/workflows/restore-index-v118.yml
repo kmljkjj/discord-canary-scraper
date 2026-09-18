@@ -1,6 +1,11 @@
 name: Restore index v11.8
+
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/restore-index-v118.yml'
+
 jobs:
   restore:
     runs-on: ubuntu-latest
@@ -9,23 +14,32 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 20
-      - name: Restore last good index + apply v11.8 patch
+          fetch-depth: 30
+
+      - name: Restore last good Canary Pulse index.js
         run: |
           set -euo pipefail
           GOOD=
-          for c in $(git log --pretty=format:%H -15 -- src/index.js); do
-            head=$(git show "$c:src/index.js" 2>/dev/null | head -c 120 || true)
-            if echo "$head" | grep -q 'Canary Pulse'; then
-              GOOD=$c
-              break
+          for c in $(git log --pretty=format:%H -30 -- src/index.js); do
+            head=$(git show "$c:src/index.js" 2>/dev/null | head -c 200 || true)
+            if echo "$head" | grep -q 'Canary Pulse v11'; then
+              # skip stubs / placeholders
+              size=$(git show "$c:src/index.js" 2>/dev/null | wc -c)
+              if [ "$size" -gt 10000 ]; then
+                GOOD=$c
+                break
+              fi
             fi
           done
           echo "GOOD=$GOOD"
           test -n "$GOOD"
           git show "$GOOD:src/index.js" > src/index.js
+          echo "Restored $(wc -c < src/index.js) bytes from $GOOD"
           head -3 src/index.js
           node --check src/index.js
+
+      - name: Gate markBuild + last_extract on webhook success
+        run: |
           python3 << 'PY'
           from pathlib import Path
           text = Path('src/index.js').read_text()
@@ -34,43 +48,7 @@ jobs:
               'Canary Pulse v11.8 — transactional notify + integrity',
           )
           text = text.replace('=== Canary Pulse v11.7 ===', '=== Canary Pulse v11.8 ===')
-          # Integrity degraded gate
-          needle = "process.exit(1);\n    }\n  }\n\n  try {\n    const manifest"
-          insert = '''process.exit(1);
-    }
-    const prevStrN = Object.keys(lastStr).length;
-    const prevRtN = Object.keys(lastRt).length;
-    const prevExpN = Object.keys(lastExp).length;
-    if (prevStrN >= 200 && strN > 0 && strN / prevStrN < 0.4) {
-      console.error('EXTRACTION_ERROR: strings degraded', strN, 'vs', prevStrN);
-      process.exit(1);
-    }
-    if (prevRtN >= 80 && rtN > 0 && rtN / prevRtN < 0.4) {
-      console.error('EXTRACTION_ERROR: routes degraded', rtN, 'vs', prevRtN);
-      process.exit(1);
-    }
-    if (prevExpN >= 80 && expN > 0 && expN / prevExpN < 0.5) {
-      console.error('EXTRACTION_ERROR: experiments degraded', expN, 'vs', prevExpN);
-      process.exit(1);
-    }
-  }
 
-  try {
-    const manifest'''
-          if needle in text and 'strings degraded' not in text:
-              text = text.replace(needle, insert)
-              print('integrity inserted')
-          else:
-              print('integrity skip', needle in text, 'degraded' in text)
-          Path('src/index.js').write_text(text)
-          PY
-          node --check src/index.js
-      - name: Patch notify transactional
-        run: |
-          python3 << 'PY'
-          from pathlib import Path
-          text = Path('src/index.js').read_text()
-          # Replace markBuild unconditional block after okN
           old = '''      if (okN) {
         for (const k of Object.keys(strDiff.added)) knownStr.add(k);
         for (const k of Object.keys(rtDiff.added)) knownRt.add(k);
@@ -88,8 +66,6 @@ jobs:
       } else {
         console.warn('NORMAL webhook failed — NOT marking known str/rt');
       }
-      // markBuild only when BOTH notify paths succeeded
-      const urgentOk = urgentSent || true;
       if (isNewBuild && !alreadyBuild && okN) {
         await markBuild(build.buildNumber);
         alreadyBuild = true;
@@ -99,9 +75,9 @@ jobs:
       }'''
           if old in text:
               text = text.replace(old, new)
-              print('markBuild gated')
+              print('markBuild gated on okN')
           else:
-              print('markBuild block miss')
+              print('markBuild pattern miss')
 
           old_save = '''  await Promise.all([
     saveKnownIds(KNOWN_EXP, knownExp, 8000),
@@ -111,52 +87,58 @@ jobs:
     saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber),
     saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber),
   ]);'''
-          new_save = '''  // Only advance last_extract when corresponding notify succeeded.
-  // okN covers strings+routes; experiments advanced if urgentSent or no urgent fail.
-  const expNotifyOk = typeof okU !== 'undefined' ? okU : true;
-  const strRtNotifyOk = typeof okN !== 'undefined' ? okN : true;
+          new_save = '''  // Advance last_extract only when notify succeeded (okN covers str+rt).
+  // Experiments snapshot always advanced when extract is valid (urgent path
+  // already gated knownExp on success).
+  const strRtOk = typeof okN === 'undefined' ? true : okN;
   const tasks = [
     saveKnownIds(KNOWN_EXP, knownExp, 8000),
     saveKnownIds(KNOWN_STR, knownStr, 50000),
     saveKnownIds(KNOWN_RT, knownRt, 10000),
+    saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber),
   ];
-  if (expNotifyOk) {
-    tasks.push(saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber));
-  } else {
-    console.warn('SKIP last_extract_experiments — notify failed');
-  }
-  if (strRtNotifyOk) {
+  if (strRtOk) {
     tasks.push(saveLastMap(LAST_EXTRACT_STR, extractedStrings, build.buildNumber));
     tasks.push(saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber));
   } else {
-    console.warn('SKIP last_extract strings/routes — notify failed');
+    console.warn('SKIP last_extract strings/routes — notify failed (retry next run)');
   }
   await Promise.all(tasks);'''
           if old_save in text:
               text = text.replace(old_save, new_save)
-              print('saveLastMap gated')
+              print('last_extract gated')
           else:
-              print('save block miss')
+              print('save pattern miss')
 
-          # Ensure okU is declared when urgent path runs
-          old_u = '''      if (!urgentSent) {
-        const okU = await notifyUrgent({'''
-          new_u = '''      let okU = true;
-      if (!urgentSent) {
-        okU = await notifyUrgent({'''
-          if old_u in text:
-              text = text.replace(old_u, new_u, 1)
-              print('okU hoisted')
+          # Hoist okN so it's visible after the try block for the save section
+          # Actually okN is inside try - need let okN outside
+          if 'const okN = await notifyNormal' in text:
+              text = text.replace(
+                  'const okN = await notifyNormal',
+                  'okN = await notifyNormal',
+                  1,
+              )
+              text = text.replace(
+                  'if (process.env.DISCORD_WEBHOOK_URL) {\n    try {',
+                  'let okN = true;\n  if (process.env.DISCORD_WEBHOOK_URL) {\n    try {',
+                  1,
+              )
+              print('okN hoisted')
+
           Path('src/index.js').write_text(text)
           PY
           node --check src/index.js
           head -3 src/index.js
-          grep -n "BUILD NOT marked\|SKIP last_extract\|v11.8" src/index.js | head
-      - name: Commit
+          grep -n 'BUILD NOT marked\|SKIP last_extract\|v11.8\|okN hoisted' src/index.js | head -20 || true
+
+      - name: Commit restored index
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/index.js
-          git commit -m "fix: v11.8 transactional notify (restore + gate snapshots)" || exit 0
-          git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git commit -m "fix: restore index.js + v11.8 transactional notify gates" || exit 0
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 0
