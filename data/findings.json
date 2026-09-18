@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-18T22:50:44.110Z",
-  "buildNumber": "616745",
+  "scrapedAt": "2026-09-18T23:11:12.798Z",
+  "buildNumber": "616783",
   "totals": {
-    "all": 378
+    "all": 379
   },
   "experiments": [
     {
@@ -6418,6 +6418,24 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-referral-trial-cta",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
