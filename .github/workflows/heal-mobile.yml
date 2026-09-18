@@ -14,10 +14,10 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Write fixed mobile scripts
+      - name: Apply safe transactional mobile patches
         run: |
           set -euo pipefail
-          python3 scripts/mparts/load.py
+          python3 scripts/patch_mobile_safe.py
           node --check src/mobile_from_files.js
           node --check src/mobile_versions.js
           grep -n 'NOTIFY_FAIL\|MOBILE_FILES_DEGRADED' src/mobile_from_files.js src/mobile_versions.js | head
