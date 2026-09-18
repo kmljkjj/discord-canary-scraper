@@ -10,7 +10,6 @@ on:
 permissions:
   contents: write
 
-# CRITICAL: never cancel a run mid-save — that causes same-% spam on next trigger
 concurrency:
   group: apex-rollouts
   cancel-in-progress: false
@@ -20,28 +19,137 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
-          restore-keys: |
-            nm-${{ runner.os }}-node22-
+      - name: Heal apex_rollouts.js if corrupted
+        run: |
+          set -euo pipefail
+          SZ=$(wc -c < src/apex_rollouts.js || echo 0)
+          echo "apex size=$SZ"
+          if [ "$SZ" -lt 5000 ] || grep -q 'SEE_FILE\|PLACEHOLDER' src/apex_rollouts.js 2>/dev/null; then
+            echo "apex corrupted — restoring from git history"
+            GOOD=""
+            for c in $(git log --pretty=format:%H -40 -- src/apex_rollouts.js); do
+              csz=$(git show "$c:src/apex_rollouts.js" 2>/dev/null | wc -c || echo 0)
+              if [ "$csz" -gt 10000 ]; then
+                GOOD=$c
+                break
+              fi
+            done
+            echo "GOOD=$GOOD"
+            test -n "$GOOD"
+            git show "$GOOD:src/apex_rollouts.js" > src/apex_rollouts.js
+            # Apply transactional patch if not already present
+            if ! grep -q 'announced NOT advanced' src/apex_rollouts.js; then
+              python3 << 'PY'
+          from pathlib import Path
+          src = Path('src/apex_rollouts.js').read_text()
+          marker = '  for (const e of compact) {\n    if (e.id && e.fingerprint) announced[e.id] = e.fingerprint;\n  }'
+          idx = src.find(marker)
+          if idx < 0:
+              print('marker not found — leave as restored')
+          else:
+              end = src.find('if (require.main === module)', idx)
+              new_tail = '''  async function writeState(announcedMap) {
+    await fs.writeJson(
+      STATE_FILE,
+      {
+        scrapedAt: new Date().toISOString(),
+        count: compact.length,
+        experiments: compact,
+        announced: announcedMap,
+      },
+      { spaces: 2 },
+    );
+  }
+
+  if (isFirst) {
+    const seedAnn = { ...announced };
+    for (const e of compact) {
+      if (e.id && e.fingerprint) seedAnn[e.id] = e.fingerprint;
+    }
+    await writeState(seedAnn);
+    console.log('Seed', compact.length, '- no notify');
+    return;
+  }
+
+  if (!(diff.added.length || diff.changed.length || diff.removed.length)) {
+    await writeState(announced);
+    console.log('No significant % change');
+    return;
+  }
+
+  if (!WEBHOOK) {
+    await writeState(announced);
+    console.warn('No webhook - state saved without advancing announced');
+    return;
+  }
+
+  const embeds = buildEmbeds(diff);
+  const sent = await postWebhook(embeds);
+  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
+  if (sent.ok) {
+    const nextAnn = { ...announced };
+    for (const e of diff.added) if (e && e.id) nextAnn[e.id] = pctKey(e);
+    for (const c of diff.changed) if (c.after && c.after.id) nextAnn[c.after.id] = pctKey(c.after);
+    for (const e of diff.removed) if (e && e.id) nextAnn[e.id] = 'REMOVED';
+    for (const e of compact) {
+      if (e.id && e.fingerprint && nextAnn[e.id] !== 'REMOVED') {
+        if (!(e.id in nextAnn) || nextAnn[e.id] === e.fingerprint) nextAnn[e.id] = e.fingerprint;
+      }
+    }
+    await writeState(nextAnn);
+    console.log('Done - announced advanced after successful webhook');
+  } else {
+    await writeState(announced);
+    console.warn('Webhook failed - announced NOT advanced (will retry next run)');
+    process.exit(2);
+  }
+}
+
+'''
+              src = src[:idx] + new_tail + src[end:]
+              needle = '  let diff = diffExperiments(prev, experiments);'
+              guard = """  if (!isFirst && prev.length >= 20 && experiments.length < Math.max(5, prev.length * 0.4)) {
+    console.error('APEX_DEGRADED: collection too small vs previous', {
+      prev: prev.length,
+      now: experiments.length,
+    });
+    process.exit(1);
+  }
+
+"""
+              if 'APEX_DEGRADED' not in src and needle in src:
+                  src = src.replace(needle, guard + needle)
+              Path('src/apex_rollouts.js').write_text(src)
+              print('transactional patch applied', len(src))
+          PY
+            fi
+            node --check src/apex_rollouts.js
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/apex_rollouts.js
+            git commit -m "fix: restore apex_rollouts.js transactional" || true
+            git push origin HEAD:main || true
+            echo "healed apex size=$(wc -c < src/apex_rollouts.js)"
+          else
+            echo "apex looks healthy"
+            node --check src/apex_rollouts.js
+          fi
 
       - name: Install npm packages
         run: |
-          if [ ! -d node_modules/node-fetch ] || [ ! -d node_modules/fs-extra ]; then
-            npm install --no-audit --no-fund --no-package-lock
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
           fi
-          rm -f package-lock.json
 
       - name: Track Apex rollout percentages
         id: apex
@@ -65,20 +173,25 @@ jobs:
       - name: Save apex state
         if: success()
         run: |
-          set -e
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          rm -f package-lock.json
           git add data/apex_rollouts.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No apex state changes"
             exit 0
           fi
-          git commit -m "📊 apex rollouts state"
+          git commit -m "apex rollouts state"
+          PUSHED=0
           for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              PUSHED=1
+              break
+            fi
             echo "push retry $i"
             sleep $((i * 2))
           done
-          echo "WARN: could not push state — next run may re-diff"
-          exit 0
+          if [ "$PUSHED" -ne 1 ]; then
+            echo "ERROR: could not push apex state"
+            exit 1
+          fi
