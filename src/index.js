@@ -1,5 +1,5 @@
 /**
- * Canary Pulse v11.7 — priority pipeline + integrity gates
+ * Canary Pulse v11.7 — transactional notify + integrity
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -209,7 +209,7 @@ function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('=== Canary Pulse v11.7 ===');
+  console.log('=== Canary Pulse v11.8 ===');
   await fs.ensureDir(DATA);
   await fs.ensureDir(ASSETS);
   await fs.ensureDir(BUILDS);
@@ -493,6 +493,7 @@ async function main() {
     (typeof alreadyBuild !== 'undefined' && alreadyBuild) ||
     (await wasBuildAnnounced(build.buildNumber));
 
+  let okN = true;
   if (process.env.DISCORD_WEBHOOK_URL) {
     try {
       if (!urgentSent) {
@@ -513,7 +514,7 @@ async function main() {
         console.log('URGENT already sent');
       }
 
-      const okN = await notifyNormal({
+      okN = await notifyNormal({
         build,
         isNewBuild: false,
         strDiff,
@@ -526,10 +527,12 @@ async function main() {
       } else {
         console.warn('NORMAL webhook failed — NOT marking known str/rt');
       }
-      if (isNewBuild && !alreadyBuild) {
+      if (isNewBuild && !alreadyBuild && okN) {
         await markBuild(build.buildNumber);
         alreadyBuild = true;
-        console.log('BUILD marked after successful extract', build.buildNumber);
+        console.log('BUILD marked after successful notifies', build.buildNumber);
+      } else if (isNewBuild && !alreadyBuild && !okN) {
+        console.warn('BUILD NOT marked — normal webhook failed (will retry)');
       }
     } catch (e) {
       console.warn('notify failed', e.message);
@@ -545,14 +548,21 @@ async function main() {
   }
   console.log('Notify done', Date.now() - t0 + 'ms');
 
-  await Promise.all([
+  // Transactional: do not advance last_extract str/rt if notify failed
+  const strRtOk = typeof okN === 'undefined' ? true : okN;
+  const tasks = [
     saveKnownIds(KNOWN_EXP, knownExp, 8000),
     saveKnownIds(KNOWN_STR, knownStr, 50000),
     saveKnownIds(KNOWN_RT, knownRt, 10000),
-    saveLastMap(LAST_EXTRACT_STR, extractedStrings, build.buildNumber),
-    saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber),
     saveLastMap(LAST_EXTRACT_EXP, nextExpSnap, build.buildNumber),
-  ]);
+  ];
+  if (strRtOk) {
+    tasks.push(saveLastMap(LAST_EXTRACT_STR, extractedStrings, build.buildNumber));
+    tasks.push(saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber));
+  } else {
+    console.warn('SKIP last_extract strings/routes — notify failed (retry next run)');
+  }
+  await Promise.all(tasks);
 
   try {
     const allExps = findings.experiments || [];
