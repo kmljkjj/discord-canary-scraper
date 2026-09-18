@@ -11,11 +11,9 @@ permissions:
   contents: write
 
 concurrency:
-  # One scrape at a time. cancel-in-progress: true → if the cog force-dispatches
-  # again while a run is queued/running, keep only the latest (stops stacked
-  # duplicate notifies when FORCE_ALWAYS fires every ~65s).
+  # Never cancel a running scrape (priority #7)
   group: canary-scrape
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   scrape:
@@ -29,29 +27,23 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-
-      - name: Cache node_modules
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
-          restore-keys: |
-            nm-${{ runner.os }}-node22-
+          cache: npm
 
       - name: Install dependencies
         run: |
-          if [ ! -d node_modules/node-fetch ] || [ ! -d node_modules/cheerio ] || [ ! -d node_modules/fs-extra ]; then
-            npm install --no-audit --no-fund --no-package-lock
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
           else
-            echo "cache hit"
+            npm install --no-audit --no-fund
           fi
-          rm -f package-lock.json
 
       - name: Scrape + notify + archive chunks
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
           SCRAPE_CSS: '0'
+          DOWNLOAD_CONCURRENCY: '24'
+          DOWNLOAD_RETRIES: '4'
           ORBIT_BOT_NAME: ${{ secrets.ORBIT_BOT_NAME }}
           EMOJI_ADDED: ${{ secrets.EMOJI_ADDED }}
           EMOJI_MODIFIED: ${{ secrets.EMOJI_MODIFIED }}
@@ -63,7 +55,7 @@ jobs:
         run: node src/index.js
 
       - name: Commit baseline + archive
-        if: always()
+        if: success()
         run: |
           set -e
           git config user.name "github-actions[bot]"
@@ -87,7 +79,6 @@ jobs:
             data/meta.json \
             data/cache/ \
             data/ || true
-          # archive per-build assets if present
           for d in data/builds/*/; do
             [ -d "$d" ] || continue
             git add -f "${d}manifest.json" 2>/dev/null || true
