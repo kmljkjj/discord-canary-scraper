@@ -11,19 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with:
-          fetch-depth: 1
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Apply transactional mobile patches
+      - name: Write fixed mobile scripts
         run: |
           set -euo pipefail
-          python3 scripts/patch_mobile_tx.py
+          python3 scripts/mobile_payload/load_mobile.py
           node --check src/mobile_from_files.js
           node --check src/mobile_versions.js
-          grep -n 'NOTIFY_FAIL\|MOBILE_FILES_DEGRADED\|return false' src/mobile_from_files.js | head
-          grep -n 'NOTIFY_FAIL\|return false' src/mobile_versions.js | head
+          grep -n 'NOTIFY_FAIL\|MOBILE_FILES_DEGRADED' src/mobile_from_files.js | head
+          grep -n 'NOTIFY_FAIL' src/mobile_versions.js | head
       - name: Commit
         run: |
           set -euo pipefail
