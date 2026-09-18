@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-18T08:37:04.334Z",
+  "scrapedAt": "2026-09-18T08:43:39.194Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -21,7 +21,7 @@
           "pctKnown": true,
           "observed": [
             30,
-            9997
+            9886
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            132,
-            9885
+            48,
+            9960
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            36,
-            9940
+            189,
+            9874
           ],
           "samples": 80
         }
@@ -77,30 +77,6 @@
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample",
       "named": true
-    },
-    {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.063,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 3.84,
-          "pctKnown": true,
-          "observed": [
-            9594,
-            9978
-          ],
-          "samples": 5
-        }
-      ],
-      "fingerprint": "1:3.8",
-      "source": "fingerprint-sample",
-      "named": false
     },
     {
       "hash": 1144304849,
@@ -113,21 +89,49 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.47,
+          "pct": 2.93,
           "pctKnown": true,
           "observed": [
-            12,
-            359
+            22,
+            315
           ],
           "samples": 5
         }
       ],
-      "fingerprint": "1:3.5",
+      "fingerprint": "1:2.9",
       "source": "fingerprint-sample",
       "named": false
     }
   ],
-  "token": [],
+  "token": [
+    {
+      "hash": 3013881204,
+      "id": "hash:3013881204",
+      "title": "hash:3013881204",
+      "type": "user",
+      "revision": 5,
+      "bucket": 11,
+      "hash_result": 345
+    },
+    {
+      "hash": 2180379513,
+      "id": "2023-09_iar_user_reporting",
+      "title": "Safety Experience IAR User Reporting",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 4844
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 3343
+    }
+  ],
   "announced": {
     "2180379513": "1:100.0",
     "4055210228": "1:100.0"
