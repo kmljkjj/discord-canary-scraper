@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T15:55:11.706Z",
+  "scrapedAt": "2026-09-19T16:01:49.101Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            374,
-            9426
+            107,
+            9965
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            23,
-            9649
+            146,
+            9987
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            89,
-            9694
+            327,
+            9942
           ],
           "samples": 80
         }
@@ -79,26 +79,26 @@
       "named": true
     },
     {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
       "type": "user",
       "quality": "estimated",
-      "confidence": 0.038,
+      "confidence": 0.075,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 2.68,
+          "pct": 3.68,
           "pctKnown": true,
           "observed": [
-            9647,
-            9915
+            57,
+            425
           ],
-          "samples": 3
+          "samples": 6
         }
       ],
-      "fingerprint": "1:2.7",
+      "fingerprint": "1:3.7",
       "source": "fingerprint-sample",
       "named": false
     }
@@ -111,7 +111,7 @@
       "type": "user",
       "revision": 5,
       "bucket": 11,
-      "hash_result": 2395
+      "hash_result": 7698
     },
     {
       "hash": 2180379513,
@@ -120,7 +120,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 3525
+      "hash_result": 294
     },
     {
       "hash": 4055210228,
@@ -129,7 +129,7 @@
       "type": "user",
       "revision": 0,
       "bucket": 1,
-      "hash_result": 4890
+      "hash_result": 8426
     }
   ],
   "announced": {
