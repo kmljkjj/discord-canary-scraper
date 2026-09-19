@@ -12,14 +12,14 @@ permissions:
 
 concurrency:
   group: discord-quests
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   quests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 1
 
@@ -27,39 +27,51 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
-          restore-keys: |
-            nm-${{ runner.os }}-node22-
-
-      - name: Install npm packages
+      - name: Install dependencies
         run: |
-          if [ ! -d node_modules/node-fetch ]; then
-            npm install --no-audit --no-fund --no-package-lock
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
           fi
-          rm -f package-lock.json
 
       - name: Track Discord quests
+        id: quests
         env:
           QUEST_WEBHOOK_URL: ${{ secrets.QUEST_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        continue-on-error: true
         run: node src/quests.js
 
+      # Persist state even if notify partially failed (exit 2) so successful
+      # sends are recorded; unsent IDs remain pending in quests.js logic.
       - name: Save quest state
+        if: always() && steps.quests.outcome != 'cancelled'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          rm -f package-lock.json
-          git add data/quests.json 2>/dev/null || true
+          git add -f data/quests.json 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No quest state changes"
             exit 0
           fi
-          git commit -m "🎮 Quests state" || exit 0
-          git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git commit -m "quests: state"
+          PUSHED=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              PUSHED=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$PUSHED" -ne 1 ]; then
+            echo "ERROR: could not push quests.json"
+            exit 1
+          fi
+
+      - name: Fail if quests scraper failed
+        if: always() && steps.quests.outcome == 'failure'
+        run: |
+          echo "quests step outcome=${{ steps.quests.outcome }}"
+          exit 1
