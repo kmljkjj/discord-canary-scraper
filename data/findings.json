@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-19T01:15:43.984Z",
-  "buildNumber": "616889",
+  "scrapedAt": "2026-09-19T01:19:02.528Z",
+  "buildNumber": "616892",
   "totals": {
-    "all": 378
+    "all": 379
   },
   "experiments": [
     {
@@ -6302,6 +6302,21 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-multisku-embed-builder",
+      "type": "user",
+      "kind": "user",
+      "label": "Multi-SKU Embed Builder",
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
