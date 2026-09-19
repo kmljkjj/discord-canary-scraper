@@ -1,83 +1,121 @@
 #!/usr/bin/env python3
-"""Wire user_rollouts.js to rollout_math, 1% delta, change types, history, safer logs."""
 from pathlib import Path
+import re
 
 p = Path('src/user_rollouts.js')
 src = p.read_text()
-if "require('./lib/rollout_math')" in src or 'require("./lib/rollout_math")' in src:
-    print('already wired')
-else:
-    # inject require after crypto
-    needle = "const crypto = require('crypto');\n"
-    inject = needle + (
-        "const {\n"
-        "  mergeIntervals,\n"
-        "  intervalsCoverage,\n"
-        "  pointsToIntervals,\n"
-        "  estimateFromPoints,\n"
-        "  classifyChange,\n"
-        "  stableChangeFingerprint,\n"
-        "  DEFAULT_SCALE,\n"
-        "} = require('./lib/rollout_math');\n"
-    )
-    if needle not in src:
-        raise SystemExit('crypto require not found')
-    src = src.replace(needle, inject, 1)
-    print('require wired')
 
-# MIN_DELTA default 1
-src2 = src.replace(
+if "require('./lib/rollout_math')" not in src:
+    needle = "const crypto = require('crypto');\n"
+    if needle not in src:
+        raise SystemExit('crypto require missing')
+    src = src.replace(
+        needle,
+        needle
+        + "const {\n"
+        + "  mergeIntervals,\n"
+        + "  intervalsCoverage,\n"
+        + "  pointsToIntervals,\n"
+        + "  estimateFromPoints,\n"
+        + "  classifyChange,\n"
+        + "  stableChangeFingerprint,\n"
+        + "  DEFAULT_SCALE,\n"
+        + "} = require('./lib/rollout_math');\n",
+        1,
+    )
+
+start = src.find('function mergeIntervals(intervals)')
+end = src.find('function fingerprintOf(treatments)')
+if start >= 0 and end > start:
+    replacement = """function rangesToTreatments(bucketMap, totalOk) {
+  const treatments = [];
+  let coveredAll = 0;
+  for (const [bucket, hrs] of bucketMap) {
+    if (!hrs || !hrs.length) continue;
+    const est = estimateFromPoints(hrs, totalOk, SCALE);
+    coveredAll += Math.round((est.coverage || 0) * SCALE);
+    treatments.push({
+      bucket: Number(bucket),
+      label: tLabel(bucket),
+      percentage: est.percentage,
+      pct: est.percentage,
+      pctKnown: est.percentage != null && est.status !== 'insufficient_data',
+      status: est.status,
+      confidence: est.confidence,
+      sampleCount: est.sampleCount,
+      samples: est.sampleCount,
+      coverage: est.coverage,
+      intervals: est.ranges,
+      ranges: est.ranges,
+      observed: est.observed,
+      gapFill: est.gapFill,
+      sourceKind: est.sourceKind || 'estimated_from_samples',
+    });
+  }
+  treatments.sort((a, b) => a.bucket - b.bucket);
+  const sumPct = treatments.reduce(
+    (s, t) => s + (t.pctKnown && t.pct != null ? t.pct : 0),
+    0,
+  );
+  let globalStatus = 'estimated';
+  if (treatments.every((t) => t.status === 'insufficient_data')) globalStatus = 'insufficient_data';
+  else if (
+    treatments.some((t) => t.status === 'degraded' || t.status === 'unknown') ||
+    sumPct > 105
+  )
+    globalStatus = 'degraded';
+  const conf =
+    totalOk > 0
+      ? Math.min(
+          1,
+          treatments.reduce((s, t) => s + t.sampleCount, 0) /
+            (totalOk * Math.max(1, treatments.length)),
+        )
+      : 0;
+  return {
+    treatments,
+    conf,
+    status: globalStatus,
+    coverage: Math.round((Math.min(coveredAll, SCALE) / SCALE) * 1000) / 1000,
+    sumPct: Math.round(sumPct * 100) / 100,
+  };
+}
+
+"""
+    src = src[:start] + replacement + src[end:]
+    print('thin rangesToTreatments')
+elif 'estimateFromPoints(hrs' in src:
+    print('already thin')
+else:
+    print('WARN mergeIntervals not found')
+
+src = src.replace(
     "const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 3);",
     "const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);",
 )
-if src2 == src and '|| 1)' not in src:
-    # maybe already 1
-    if '|| 1)' in src:
-        print('MIN_DELTA already 1')
-    else:
-        print('WARN MIN_DELTA line not found')
-else:
-    src = src2
-    print('MIN_DELTA default 1')
+src = src.replace('const SCALE = 10000;', 'const SCALE = DEFAULT_SCALE;')
 
-# SCALE from lib if present as const SCALE = 10000
-if 'const SCALE = 10000' in src:
-    src = src.replace('const SCALE = 10000;', 'const SCALE = DEFAULT_SCALE;')
-    print('SCALE from DEFAULT_SCALE')
-
-# Never log token lengths or values — sanitize console of token-ish
 if 'function redactSecrets' not in src:
     src = src.replace(
         'function sleep(ms) {',
-        '''function redactSecrets(msg) {
+        """function redactSecrets(msg) {
   return String(msg || '')
-    .replace(/[\w-]{20,}\.[\w-]{5,}\.[\w-]{10,}/g, '[REDACTED_JWT]')
-    .replace(/mfa\.[\w-]{20,}/gi, '[REDACTED_TOKEN]')
-    .replace(/Bot\s+[\w.-]{20,}/gi, 'Bot [REDACTED]');
+    .replace(/[\\w-]{20,}\\.[\\w-]{5,}\\.[\\w-]{10,}/g, '[REDACTED_JWT]')
+    .replace(/mfa\\.[\\w-]{20,}/gi, '[REDACTED_TOKEN]')
+    .replace(/Bot\\s+[\\w.-]{20,}/gi, 'Bot [REDACTED]');
 }
 
-function sleep(ms) {''',
+function sleep(ms) {""",
         1,
     )
-    print('redactSecrets added')
 
-# Soften token snapshot logging: never print Authorization-related
-src = src.replace(
-    "console.warn('Token snapshot', res.status);",
-    "console.warn('Token snapshot HTTP', res.status);",
-)
 src = src.replace(
     "console.warn('Token snapshot fail:', e.message);",
     "console.warn('Token snapshot fail:', redactSecrets(e.message));",
 )
 
-# Improve pct change detection to use classifyChange when comparing
-old_delta = '''      for (const t of n.treatments || []) {
-        if (!t.pctKnown || t.pct == null) continue;
-        if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
-        const oldT = pt.get(t.bucket);
-        if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
-        const from = Number(oldT.pct);
+if 'classifyChange(from, to, MIN_DELTA)' not in src:
+    old = """        const from = Number(oldT.pct);
         const to = Number(t.pct);
         if (Math.abs(to - from) >= MIN_DELTA) {
           deltas.push({
@@ -92,14 +130,8 @@ old_delta = '''      for (const t of n.treatments || []) {
       }
       if (deltas.length) {
         changes.push({ kind: 'pct', id: n.id, title: n.title, deltas, named: n.named });
-      }'''
-
-new_delta = '''      for (const t of n.treatments || []) {
-        if (!t.pctKnown || t.pct == null) continue;
-        if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
-        const oldT = pt.get(t.bucket);
-        if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
-        const from = Number(oldT.pct);
+      }"""
+    new = """        const from = Number(oldT.pct);
         const to = Number(t.pct);
         const { changeType, change } = classifyChange(from, to, MIN_DELTA);
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
@@ -131,35 +163,18 @@ new_delta = '''      for (const t of n.treatments || []) {
           named: n.named,
           changeFingerprint: fp,
         });
-      }'''
-
-if old_delta in src:
-    src = src.replace(old_delta, new_delta)
+      }"""
+    if old not in src:
+        raise SystemExit('delta block not found')
+    src = src.replace(old, new)
     print('classifyChange wired')
-else:
-    print('WARN delta block not exact — skip classify wire')
 
-# announced skip by changeFingerprint if present on announced map for pct
-# add history in writeState
-old_ws = '''  async function writeState(announcedMap) {
-    await fs.writeJson(
-      STATE,
-      {
-        scrapedAt: new Date().toISOString(),
-        version: 7,
-        samples: SAMPLES,
-        ok,
-        fail,
-        tokens: TOKENS.length,
-        experiments,
-        token: tokenSnap,
-        announced: announcedMap,
-      },
-      { spaces: 2 },
-    );
-  }'''
-
-new_ws = '''  async function writeState(announcedMap, extra = {}) {
+m = re.search(
+    r'  async function writeState\(announcedMap\) \{\n    await fs\.writeJson\(\n      STATE,\n      \{[\s\S]*?announced: announcedMap,\n      \},\n      \{ spaces: 2 \},\n    \);\n  \}',
+    src,
+)
+if m and 'tokensConfigured' not in m.group(0):
+    new_ws = """  async function writeState(announcedMap, extra = {}) {
     const prevHist = Array.isArray(prev.history) ? prev.history : [];
     const histEntry = {
       ts: new Date().toISOString(),
@@ -177,11 +192,13 @@ new_ws = '''  async function writeState(announcedMap, extra = {}) {
         schemaVersion: 8,
         runId:
           extra.runId ||
-          new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
+          new Date().toISOString().replace(/[:.]/g, '-') +
+            '_' +
+            Math.random().toString(36).slice(2, 8),
         samples: SAMPLES,
         ok,
         fail,
-        tokensConfigured: TOKENS.length, // never store token values
+        tokensConfigured: TOKENS.length,
         experiments,
         token: tokenSnap,
         announced: announcedMap,
@@ -190,29 +207,23 @@ new_ws = '''  async function writeState(announcedMap, extra = {}) {
       },
       { spaces: 2 },
     );
-  }'''
-
-if old_ws in src:
-    src = src.replace(old_ws, new_ws)
-    print('writeState history ok')
+  }"""
+    src = src[: m.start()] + new_ws + src[m.end() :]
+    print('writeState updated')
 else:
-    # try version 6
-    old_ws6 = old_ws.replace('version: 7', 'version: 6')
-    if old_ws6 in src:
-        src = src.replace(old_ws6, new_ws)
-        print('writeState history ok (from v6)')
-    else:
-        print('WARN writeState block not found')
+    print('writeState skip')
 
-# module.exports expand
 src = src.replace(
-    "module.exports = { main, murmur3, loadHashMap, rangesToTreatments };",
-    "module.exports = { main, murmur3, loadHashMap, rangesToTreatments, classifyChange, mergeIntervals };",
+    'module.exports = { main, murmur3, loadHashMap, rangesToTreatments };',
+    'module.exports = { main, murmur3, loadHashMap, rangesToTreatments, classifyChange, mergeIntervals };',
 )
-
-# header version
-src = src.replace('rollouts v7', 'rollouts v8')
-src = src.replace('v7 — ESTIMATED', 'v8 — ESTIMATED')
+for a, b in [
+    ('User experiment rollouts v6', 'User experiment rollouts v8'),
+    ('User experiment rollouts v7', 'User experiment rollouts v8'),
+    ('rollouts v6 (ESTIMATED', 'rollouts v8 (ESTIMATED'),
+    ('rollouts v7 (ESTIMATED', 'rollouts v8 (ESTIMATED'),
+]:
+    src = src.replace(a, b)
 
 p.write_text(src)
-print('done', p.stat().st_size)
+print('patched', p.stat().st_size)
