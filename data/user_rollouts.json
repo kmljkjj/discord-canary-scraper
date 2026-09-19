@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-09-19T21:57:14.863Z",
+  "scrapedAt": "2026-09-19T22:03:58.092Z",
   "version": 6,
-  "samples": 80,
-  "ok": 80,
+  "samples": 120,
+  "ok": 120,
   "fail": 0,
   "tokens": 1,
   "experiments": [
@@ -14,78 +14,78 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.092,
-      "sumPct": 9.18,
+      "coverage": 0.109,
+      "sumPct": 10.93,
       "treatments": [
         {
           "bucket": 11,
           "label": "Variant 11",
-          "percentage": 9.18,
-          "pct": 9.18,
+          "percentage": 10.93,
+          "pct": 10.93,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
-          "sampleCount": 80,
-          "samples": 80,
-          "coverage": 0.092,
+          "sampleCount": 120,
+          "samples": 120,
+          "coverage": 0.109,
           "intervals": [
             [
-              72,
-              109
+              413,
+              416
             ],
             [
-              214,
-              259
+              475,
+              485
             ],
             [
-              458,
-              464
+              547,
+              553
             ],
             [
-              756,
-              814
+              650,
+              669
             ],
             [
-              902,
-              941
+              726,
+              728
             ],
             [
-              1042,
-              1049
+              886,
+              915
             ],
             [
-              1137,
-              1137
+              978,
+              981
             ],
             [
-              1201,
-              1256
+              1035,
+              1035
             ],
             [
-              1470,
-              1470
+              1178,
+              1250
             ],
             [
-              1566,
-              1587
+              1318,
+              1347
             ],
             [
-              1753,
-              1753
+              1494,
+              1514
             ],
             [
-              1910,
-              1910
+              1584,
+              1613
             ]
           ],
           "observed": [
-            72,
-            9974
+            413,
+            9965
           ],
-          "gapFill": 62
+          "gapFill": 41
         }
       ],
-      "fingerprint": "11:9.0",
+      "fingerprint": "11:11.0",
       "source": "fingerprint-sample",
       "named": false
     },
@@ -97,75 +97,75 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.112,
-      "sumPct": 11.24,
+      "coverage": 0.113,
+      "sumPct": 11.34,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 11.24,
-          "pct": 11.24,
+          "percentage": 11.34,
+          "pct": 11.34,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
-          "sampleCount": 80,
-          "samples": 80,
-          "coverage": 0.112,
+          "sampleCount": 120,
+          "samples": 120,
+          "coverage": 0.113,
           "intervals": [
             [
-              139,
-              231
+              2,
+              36
             ],
             [
-              368,
-              368
+              364,
+              364
             ],
             [
-              598,
+              546,
+              548
+            ],
+            [
+              641,
               682
             ],
             [
-              1030,
-              1030
+              837,
+              837
             ],
             [
-              1294,
-              1294
+              900,
+              980
             ],
             [
-              1809,
-              1809
+              1024,
+              1033
             ],
             [
-              2148,
-              2148
+              1104,
+              1139
             ],
             [
-              2213,
-              2213
+              1182,
+              1219
             ],
             [
-              2282,
-              2314
+              1336,
+              1336
             ],
             [
-              2383,
-              2383
+              1513,
+              1513
             ],
             [
-              2583,
-              2583
-            ],
-            [
-              2805,
-              2805
+              1628,
+              1628
             ]
           ],
           "observed": [
-            139,
-            9941
+            2,
+            9577
           ],
-          "gapFill": 62
+          "gapFill": 41
         }
       ],
       "fingerprint": "1:11.0",
@@ -180,123 +180,80 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.126,
-      "sumPct": 12.64,
+      "coverage": 0.102,
+      "sumPct": 10.21,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 12.64,
-          "pct": 12.64,
+          "percentage": 10.21,
+          "pct": 10.21,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
-          "sampleCount": 80,
-          "samples": 80,
-          "coverage": 0.126,
+          "sampleCount": 120,
+          "samples": 120,
+          "coverage": 0.102,
           "intervals": [
             [
-              89,
-              145
+              116,
+              116
             ],
             [
-              219,
-              219
+              234,
+              347
             ],
             [
-              349,
-              349
+              418,
+              418
             ],
             [
-              455,
-              540
+              714,
+              714
             ],
             [
-              611,
-              611
+              1035,
+              1035
             ],
             [
-              833,
-              833
+              1099,
+              1099
             ],
             [
-              917,
-              917
+              1658,
+              1662
             ],
             [
-              1217,
-              1217
+              1718,
+              1718
             ],
             [
-              1354,
-              1354
+              1861,
+              1861
             ],
             [
-              1528,
-              1537
+              1951,
+              1951
             ],
             [
-              1722,
-              1722
+              2046,
+              2046
             ],
             [
-              1829,
-              1881
+              2334,
+              2347
             ]
           ],
           "observed": [
-            89,
-            9954
+            116,
+            9915
           ],
-          "gapFill": 62
+          "gapFill": 41
         }
       ],
-      "fingerprint": "1:13.0",
+      "fingerprint": "1:10.0",
       "source": "fingerprint-sample",
       "named": true
-    },
-    {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
-      "type": "user",
-      "quality": "degraded",
-      "status": "degraded",
-      "confidence": 0.05,
-      "coverage": 0.006,
-      "sumPct": 0.55,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "percentage": 0.55,
-          "pct": 0.55,
-          "pctKnown": true,
-          "status": "degraded",
-          "confidence": "low",
-          "sampleCount": 4,
-          "samples": 4,
-          "coverage": 0.006,
-          "intervals": [
-            [
-              162,
-              162
-            ],
-            [
-              436,
-              489
-            ]
-          ],
-          "observed": [
-            162,
-            489
-          ],
-          "gapFill": 62
-        }
-      ],
-      "fingerprint": "1:0.0",
-      "source": "fingerprint-sample",
-      "named": false
     },
     {
       "hash": 704914099,
@@ -305,40 +262,95 @@
       "type": "user",
       "quality": "degraded",
       "status": "degraded",
-      "confidence": 0.038,
-      "coverage": 0,
-      "sumPct": 0.03,
+      "confidence": 0.042,
+      "coverage": 0.004,
+      "sumPct": 0.44,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 0.03,
-          "pct": 0.03,
+          "percentage": 0.44,
+          "pct": 0.44,
           "pctKnown": true,
           "status": "degraded",
           "confidence": "low",
-          "sampleCount": 3,
-          "samples": 3,
-          "coverage": 0,
+          "sampleCount": 5,
+          "samples": 5,
+          "coverage": 0.004,
           "intervals": [
             [
-              9793,
-              9793
+              9621,
+              9662
             ],
             [
-              9874,
-              9874
+              9776,
+              9776
             ],
             [
-              9961,
-              9961
+              9844,
+              9844
             ]
           ],
           "observed": [
-            9793,
-            9961
+            9621,
+            9844
           ],
-          "gapFill": 62
+          "gapFill": 41
+        }
+      ],
+      "fingerprint": "1:0.0",
+      "source": "fingerprint-sample",
+      "named": false
+    },
+    {
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
+      "type": "user",
+      "quality": "degraded",
+      "status": "degraded",
+      "confidence": 0.067,
+      "coverage": 0.006,
+      "sumPct": 0.58,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 0.58,
+          "pct": 0.58,
+          "pctKnown": true,
+          "status": "degraded",
+          "confidence": "low",
+          "sampleCount": 8,
+          "samples": 8,
+          "coverage": 0.006,
+          "intervals": [
+            [
+              58,
+              58
+            ],
+            [
+              173,
+              197
+            ],
+            [
+              270,
+              270
+            ],
+            [
+              372,
+              372
+            ],
+            [
+              450,
+              479
+            ]
+          ],
+          "observed": [
+            58,
+            479
+          ],
+          "gapFill": 41
         }
       ],
       "fingerprint": "1:0.0",
@@ -346,7 +358,35 @@
       "named": false
     }
   ],
-  "token": [],
+  "token": [
+    {
+      "hash": 3013881204,
+      "id": "hash:3013881204",
+      "title": "hash:3013881204",
+      "type": "user",
+      "revision": 5,
+      "bucket": 11,
+      "hash_result": 5303
+    },
+    {
+      "hash": 2180379513,
+      "id": "2023-09_iar_user_reporting",
+      "title": "Safety Experience IAR User Reporting",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 4436
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 5669
+    }
+  ],
   "announced": {
     "2180379513": "1:10.0",
     "4055210228": "1:10.0"
