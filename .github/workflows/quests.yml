@@ -2,7 +2,8 @@ name: Discord Quests
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Toutes les 5 min — réduire le retard vs trackers concurrent
+    - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-quests]
@@ -43,8 +44,6 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node src/quests.js
 
-      # Persist state even if notify partially failed (exit 2) so successful
-      # sends are recorded; unsent IDs remain pending in quests.js logic.
       - name: Save quest state
         if: always() && steps.quests.outcome != 'cancelled'
         run: |
