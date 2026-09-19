@@ -14,8 +14,8 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 // ── PAUSE ─────────────────────────────────────────────
 // true = no version scrape notifications (requested)
 const PAUSED =
-  process.env.MOBILE_VERSIONS_PAUSED !== '0' &&
-  process.env.MOBILE_VERSIONS_PAUSED !== 'false';
+  process.env.MOBILE_VERSIONS_PAUSED === '1' ||
+  process.env.MOBILE_VERSIONS_PAUSED === 'true';
 // ──────────────────────────────────────────────────────
 
 const UA =
