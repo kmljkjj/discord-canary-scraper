@@ -1,10 +1,15 @@
 {
-  "initialized": true,
-  "updatedAt": "2026-09-19T19:18:17.542Z",
+  "files": [
+    "build.json",
+    "experiments.json",
+    "findings.json",
+    "strings.json",
+    "routes.json",
+    "meta.json"
+  ],
   "experimentCount": 378,
   "stringCount": 29894,
   "routeCount": 663,
-  "lastBuild": "616984",
   "schemaVersion": 2,
   "runId": "2026-09-19T19-18-17-537Z_616984_spk7l0",
   "buildNumber": "616984"

@@ -1,6 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T02:06:36.717Z",
-  "buildNumber": "616915",
+  "scrapedAt": "2026-09-19T19:18:17.538Z",
   "totals": {
     "all": 378
   },
@@ -407,8 +406,9 @@
     {
       "id": "2025-09-agc2-v2",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -445,9 +445,7 @@
           "noiseCancellationConfig": null,
           "vadKrispActivationThreshold": 0.95
         }
-      },
-      "variationCount": 7,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -1012,8 +1010,9 @@
     {
       "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -1022,9 +1021,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2025-12-windows-audio-effects",
@@ -1158,8 +1155,9 @@
     {
       "id": "2026-01-profile-updates-notification",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -1171,9 +1169,7 @@
         "2": {
           "showSettingsToggle": true
         }
-      },
-      "variationCount": 3,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-01-voice-dares-v0",
@@ -2018,8 +2014,9 @@
     {
       "id": "2026-03-crepe",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -2028,9 +2025,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus+extract"
+      }
     },
     {
       "id": "2026-03-croissant",
@@ -2275,8 +2270,9 @@
     {
       "id": "2026-03-mobile-web-invite-server-profile",
       "type": "guild",
-      "kind": "guild",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -2285,9 +2281,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
@@ -2639,8 +2633,9 @@
     {
       "id": "2026-04-collectibles-profile-frames-purchase",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -2652,9 +2647,7 @@
         "2": {
           "bucket": 2
         }
-      },
-      "variationCount": 3,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-04-composed-quest-player",
@@ -2895,15 +2888,14 @@
     {
       "id": "2026-04-krisp-v9-ios",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "1": {
           "id": 1
         }
-      },
-      "variationCount": 1,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-04-mobile-boost-progress-bar",
@@ -3040,8 +3032,9 @@
     {
       "id": "2026-04-slayer-storefront-orbs",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -3056,9 +3049,7 @@
         "3": {
           "enabled": true
         }
-      },
-      "variationCount": 4,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-04-topical-navigation-staff-control",
@@ -3558,8 +3549,9 @@
     {
       "id": "2026-05-kontrolfreek-deprecated-ff",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -3568,9 +3560,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-05-mana-type-consolidation",
@@ -3698,8 +3688,9 @@
     {
       "id": "2026-05-steelseries-higher-discount-ff",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -3708,9 +3699,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-05-use-ad-analytics-interface",
@@ -4790,8 +4779,9 @@
     {
       "id": "2026-07-create-gdm-title",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -4800,9 +4790,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-07-custom-app-store-overlay",
@@ -4887,8 +4875,9 @@
     {
       "id": "2026-07-invite-server-liveliness",
       "type": "guild",
-      "kind": "guild",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -4902,9 +4891,7 @@
           "enabled": true,
           "variant": "highlights"
         }
-      },
-      "variationCount": 3,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-07-ios-attribution",
@@ -5124,8 +5111,9 @@
     {
       "id": "2026-07-quest-bar-secondary-cta",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -5139,9 +5127,7 @@
           "enabled": true,
           "showPlayInstantlyLabel": true
         }
-      },
-      "variationCount": 3,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-07-quest-home-default-banner-removal",
@@ -5245,8 +5231,9 @@
     {
       "id": "2026-07-social-layer-storefront-spend-orbs-banner-copy",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -5255,9 +5242,7 @@
         "1": {
           "whileSuppliesLast": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-07-typing-users-css-dots",
@@ -5808,17 +5793,16 @@
     {
       "id": "2026-08-premium-group-perk-check",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
           "variant": 0
         },
         "1": true
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-08-profile-embed-rendering",
@@ -5912,8 +5896,9 @@
     {
       "id": "2026-08-soundboard-desktop-nux",
       "type": "user",
-      "kind": "user",
-      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
       "variations": {
         "0": {
           "enabled": false,
@@ -5922,9 +5907,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "wumpus"
+      }
     },
     {
       "id": "2026-08-timestamp-autocomplete-mobile",
@@ -6555,5 +6538,8 @@
       "variationCount": 2,
       "source": "discord"
     }
-  ]
+  ],
+  "schemaVersion": 2,
+  "runId": "2026-09-19T19-18-17-537Z_616984_spk7l0",
+  "buildNumber": "616984"
 }
