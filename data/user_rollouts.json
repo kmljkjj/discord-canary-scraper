@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T10:37:13.875Z",
+  "scrapedAt": "2026-09-19T10:43:47.328Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            52,
-            9747
+            42,
+            9996
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            234,
-            9808
+            85,
+            9882
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            357,
-            9995
+            111,
+            9938
           ],
           "samples": 80
         }
@@ -79,9 +79,9 @@
       "named": true
     },
     {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
       "type": "user",
       "quality": "estimated",
       "confidence": 0.063,
@@ -89,40 +89,16 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.05,
+          "pct": 2.98,
           "pctKnown": true,
           "observed": [
-            124,
-            429
+            9587,
+            9885
           ],
           "samples": 5
         }
       ],
       "fingerprint": "1:3.0",
-      "source": "fingerprint-sample",
-      "named": false
-    },
-    {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.05,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 2.47,
-          "pctKnown": true,
-          "observed": [
-            9653,
-            9900
-          ],
-          "samples": 4
-        }
-      ],
-      "fingerprint": "1:2.5",
       "source": "fingerprint-sample",
       "named": false
     }
