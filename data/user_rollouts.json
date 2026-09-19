@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T10:30:33.075Z",
+  "scrapedAt": "2026-09-19T10:37:13.875Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            127,
-            9883
+            52,
+            9747
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            3,
-            9754
+            234,
+            9808
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            48,
-            9901
+            357,
+            9995
           ],
           "samples": 80
         }
@@ -89,58 +89,45 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 2.38,
+          "pct": 3.05,
           "pctKnown": true,
           "observed": [
-            214,
-            452
+            124,
+            429
           ],
           "samples": 5
         }
       ],
-      "fingerprint": "1:2.4",
+      "fingerprint": "1:3.0",
       "source": "fingerprint-sample",
       "named": false
-    }
-  ],
-  "token": [
-    {
-      "hash": 3013881204,
-      "id": "hash:3013881204",
-      "title": "hash:3013881204",
-      "type": "user",
-      "revision": 5,
-      "bucket": 11,
-      "hash_result": 822
-    },
-    {
-      "hash": 2180379513,
-      "id": "2023-09_iar_user_reporting",
-      "title": "Safety Experience IAR User Reporting",
-      "type": "user",
-      "revision": 0,
-      "bucket": 1,
-      "hash_result": 3863
     },
     {
       "hash": 704914099,
       "id": "hash:704914099",
       "title": "hash:704914099",
       "type": "user",
-      "revision": 3,
-      "bucket": 1,
-      "hash_result": 9715
-    },
-    {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "title": "Tida Webform",
-      "type": "user",
-      "revision": 0,
-      "bucket": 1,
-      "hash_result": 7056
+      "quality": "estimated",
+      "confidence": 0.05,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 2.47,
+          "pctKnown": true,
+          "observed": [
+            9653,
+            9900
+          ],
+          "samples": 4
+        }
+      ],
+      "fingerprint": "1:2.5",
+      "source": "fingerprint-sample",
+      "named": false
     }
   ],
+  "token": [],
   "announced": {
     "2180379513": "1:100.0",
     "4055210228": "1:100.0"
