@@ -668,38 +668,61 @@ async function main() {
   const isFirstRun = prevIds.size === 0;
 
   const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
-  const allIds = Array.from(
-    new Set([].concat(Array.from(prevIds), active.map((q) => q.id))),
-  );
+  const questSnapshot = active.map((q) => ({
+    id: q.id,
+    name: q.name,
+    expiresAt: q.expiresAt,
+    videoUrl: q.videoUrl || null,
+    heroImage: q.heroImage || null,
+    rewardCount: (q.rewards || []).length,
+  }));
 
-  await fs.writeJson(
-    STATE_FILE,
-    {
-      scrapedAt: new Date().toISOString(),
-      count: active.length,
-      ids: isFirstRun ? active.map((q) => q.id) : allIds,
-      quests: active.map((q) => ({
-        id: q.id,
-        name: q.name,
-        expiresAt: q.expiresAt,
-        videoUrl: q.videoUrl || null,
-        heroImage: q.heroImage || null,
-        rewardCount: (q.rewards || []).length,
-      })),
-    },
-    { spaces: 2 },
-  );
+  async function writeQuestState(ids) {
+    await fs.writeJson(
+      STATE_FILE,
+      {
+        scrapedAt: new Date().toISOString(),
+        count: active.length,
+        ids,
+        quests: questSnapshot,
+      },
+      { spaces: 2 },
+    );
+  }
 
   if (isFirstRun) {
-    console.log('Premier run — seed de', active.length, 'ids (pas de flood)');
+    await writeQuestState(active.map((q) => q.id));
+    console.log('Premier run - seed de', active.length, 'ids (pas de flood)');
     return;
   }
 
-  console.log('Nouvelles quêtes:', newQuests.length);
-  for (const q of newQuests.slice(0, 15)) {
-    await sendQuestWebhook(q);
+  const known = new Set(prevIds);
+  const pending = newQuests.slice();
+  const batch = pending.slice(0, 15);
+  console.log('Nouvelles quetes:', pending.length, '| notify batch:', batch.length);
+
+  let sentOk = 0;
+  let sentFail = 0;
+  for (const q of batch) {
+    const ok = await sendQuestWebhook(q);
+    if (ok) {
+      known.add(q.id);
+      sentOk++;
+    } else {
+      sentFail++;
+      console.warn('NOTIFY_FAIL quest', q.id, '- will retry next run');
+    }
   }
-  console.log('✅ Quêtes terminé');
+
+  for (const q of active) {
+    if (prevIds.has(q.id)) known.add(q.id);
+  }
+
+  await writeQuestState(Array.from(known));
+  console.log('Quetes termine - sent', sentOk, 'failed', sentFail, 'still pending', pending.length - sentOk);
+  if (sentFail > 0 && sentOk === 0 && batch.length > 0) {
+    process.exitCode = 2;
+  }
 }
 
 if (require.main === module) {

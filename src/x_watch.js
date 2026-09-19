@@ -88,13 +88,24 @@ async function main() {
   }
 
   const toSend = fresh.slice(0, MAX_NOTIFY);
+  let sentOk = 0;
+  let sentFail = 0;
   for (const p of toSend) {
-    await postWebhook(p);
-    seen.add(String(p.id));
+    const ok = await postWebhook(p);
+    if (ok) {
+      seen.add(String(p.id));
+      sentOk++;
+    } else {
+      sentFail++;
+      console.warn('NOTIFY_FAIL x post', p.id, '- will retry next run');
+    }
   }
-  for (const p of fresh) seen.add(String(p.id));
+  // Do NOT mark unsent fresh posts as seen
   await saveSeen(seen);
-  console.log('Done. Sent', toSend.length);
+  console.log('Done. Sent', sentOk, 'failed', sentFail, 'pending', fresh.length - sentOk);
+  if (sentFail > 0 && sentOk === 0 && toSend.length > 0) {
+    process.exitCode = 2;
+  }
 }
 
 async function fetchViaOfficialApi(bearer) {
@@ -244,6 +255,7 @@ async function postWebhook(p) {
     ],
   };
   if (p.image) body.embeds[0].image = { url: p.image };
+  let ok = false;
   try {
     const res = await fetch(WEBHOOK, {
       method: 'POST',
@@ -252,10 +264,12 @@ async function postWebhook(p) {
     });
     console.log('webhook', res.status, p.id);
     if (!res.ok) console.warn(await res.text());
+    else ok = true;
   } catch (e) {
     console.warn('webhook error', e.message);
   }
   await sleep(250);
+  return ok;
 }
 
 async function loadSeen() {
@@ -322,6 +336,6 @@ function sleep(ms) {
 }
 
 main().catch((e) => {
-  console.warn('X watch error (soft):', e.message || e);
-  process.exit(0);
+  console.error('X watch error:', e.message || e);
+  process.exit(1);
 });
