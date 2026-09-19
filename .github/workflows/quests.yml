@@ -2,7 +2,6 @@ name: Discord Quests
 
 on:
   schedule:
-    # Toutes les 5 min — réduire le retard vs trackers concurrent
     - cron: '*/5 * * * *'
   workflow_dispatch:
   repository_dispatch:
