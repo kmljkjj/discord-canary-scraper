@@ -17,28 +17,25 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: nm-${{ runner.os }}-node22-${{ hashFiles('package.json') }}
-          restore-keys: |
-            nm-${{ runner.os }}-node22-
-
       - name: Install
         run: |
-          if [ ! -d node_modules/node-fetch ]; then
-            npm install --no-audit --no-fund --no-package-lock
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
           fi
-          rm -f package-lock.json
+
+      - name: Unit tests (rollout math)
+        run: node test/rollout_math.test.js
 
       - name: Sample user rollouts
+        id: rollouts
         env:
           DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
           DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
@@ -48,21 +45,42 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          USER_ROLLOUT_SAMPLES: '80'
+          USER_ROLLOUT_SAMPLES: '120'
           USER_ROLLOUT_CONCURRENCY: '2'
           USER_ROLLOUT_DELAY_MS: '300'
           USER_ROLLOUT_MIN_OK: '25'
           USER_ROLLOUT_NOTIFY_HASH: '0'
-          APEX_MIN_PCT_DELTA: '3'
+          # Detect 1% moves (was 3)
+          APEX_MIN_PCT_DELTA: '1'
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg
         run: node src/user_rollouts.js
 
       - name: Commit state
+        if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/user_rollouts.json || true
-          git commit -m "data: user rollouts sample $(date -u +%Y-%m-%dT%H%MZ)" || exit 0
-          git pull --rebase --autostash origin main || true
-          git push origin HEAD:main || true
+          git add -f data/user_rollouts.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No user_rollouts state changes"
+            exit 0
+          fi
+          git commit -m "data: user rollouts $(date -u +%Y-%m-%dT%H%MZ)"
+          PUSHED=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              PUSHED=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$PUSHED" -ne 1 ]; then
+            echo "ERROR: push user_rollouts.json failed"
+            exit 1
+          fi
+
+      - name: Fail if rollouts failed
+        if: always() && steps.rollouts.outcome == 'failure'
+        run: exit 1
