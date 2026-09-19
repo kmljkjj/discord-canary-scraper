@@ -1,5 +1,5 @@
 /**
- * User experiment rollouts v7 — ESTIMATED only (honest sampling)
+ * User experiment rollouts v8 — ESTIMATED only (honest sampling)
  *
  * Fixes vs previous:
  *  - No more samples/totalSamples as "true %"
@@ -25,6 +25,15 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
+const {
+  mergeIntervals,
+  intervalsCoverage,
+  pointsToIntervals,
+  estimateFromPoints,
+  classifyChange,
+  stableChangeFingerprint,
+  DEFAULT_SCALE,
+} = require('./lib/rollout_math');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'user_rollouts.json');
@@ -59,7 +68,7 @@ const WEBHOOK =
 const SAMPLES = Math.max(20, Math.min(400, Number(process.env.USER_ROLLOUT_SAMPLES || 80)));
 const CONC = Math.max(1, Math.min(4, Number(process.env.USER_ROLLOUT_CONCURRENCY || 2)));
 const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DELAY_MS || 300)));
-const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 3);
+const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);
 const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
@@ -68,12 +77,19 @@ const AVATAR =
   'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg';
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-const SCALE = 10000;
+const SCALE = DEFAULT_SCALE;
 const DEFS_URL =
   process.env.APEX_DEFS_URL ||
   'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
 const WORKERS_URL =
   process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
+
+function redactSecrets(msg) {
+  return String(msg || '')
+    .replace(/[\w-]{20,}\.[\w-]{5,}\.[\w-]{10,}/g, '[REDACTED_JWT]')
+    .replace(/mfa\.[\w-]{20,}/gi, '[REDACTED_TOKEN]')
+    .replace(/Bot\s+[\w.-]{20,}/gi, 'Bot [REDACTED]');
+}
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -256,106 +272,31 @@ async function sampleFingerprints(n, concurrency) {
   return { byHash, ok, fail };
 }
 
-function mergeIntervals(intervals) {
-  if (!intervals.length) return [];
-  const sorted = intervals
-    .map(([a, b]) => [Math.min(a, b), Math.max(a, b)])
-    .sort((x, y) => x[0] - y[0] || x[1] - y[1]);
-  const out = [[sorted[0][0], sorted[0][1]]];
-  for (let i = 1; i < sorted.length; i++) {
-    const [s, e] = sorted[i];
-    const last = out[out.length - 1];
-    if (s <= last[1] + 1) last[1] = Math.max(last[1], e);
-    else out.push([s, e]);
-  }
-  return out;
-}
-
-function intervalsCoverage(intervals) {
-  return mergeIntervals(intervals).reduce((sum, [a, b]) => sum + (b - a + 1), 0);
-}
-
-function pointsToIntervals(hrs, gapFill) {
-  const pts = [...new Set(hrs.map(Number).filter((n) => Number.isFinite(n)))]
-    .filter((n) => n >= 0 && n < SCALE)
-    .sort((a, b) => a - b);
-  if (!pts.length) return [];
-  const intervals = [];
-  let start = pts[0];
-  let prev = pts[0];
-  for (let i = 1; i < pts.length; i++) {
-    if (pts[i] - prev <= gapFill) prev = pts[i];
-    else {
-      intervals.push([start, prev]);
-      start = prev = pts[i];
-    }
-  }
-  intervals.push([start, prev]);
-  return intervals;
-}
-
 function rangesToTreatments(bucketMap, totalOk) {
-  const gapFill = Math.max(
-    1,
-    Math.min(80, Math.floor(SCALE / Math.max(totalOk * 2, 40))),
-  );
   const treatments = [];
   let coveredAll = 0;
-
   for (const [bucket, hrs] of bucketMap) {
     if (!hrs || !hrs.length) continue;
-    const samples = hrs.length;
-    const min = Math.min(...hrs);
-    const max = Math.max(...hrs);
-    const merged = mergeIntervals(pointsToIntervals(hrs, gapFill));
-    const covered = intervalsCoverage(merged);
-    coveredAll += covered;
-
-    let pct = null;
-    let status = 'unknown';
-    let confidence = 'low';
-
-    if (samples < 3) {
-      status = 'insufficient_data';
-    } else {
-      pct = Math.min(100, Math.max(0, Math.round((covered / SCALE) * 10000) / 100));
-      const span = Math.max(1, max - min + 1);
-      const density = samples / span;
-      if (samples >= 30 && density >= 0.02) confidence = 'high';
-      else if (samples >= 12) confidence = 'medium';
-      else confidence = 'low';
-      status = confidence === 'low' || samples < 8 ? 'degraded' : 'estimated';
-    }
-
-    if (
-      bucketMap.size === 1 &&
-      samples >= 12 &&
-      pct != null &&
-      pct >= 85 &&
-      max - min > 8000
-    ) {
-      pct = 100;
-      status = 'estimated';
-      confidence = samples >= 25 ? 'high' : 'medium';
-    }
-
+    const est = estimateFromPoints(hrs, totalOk, SCALE);
+    coveredAll += Math.round((est.coverage || 0) * SCALE);
     treatments.push({
       bucket: Number(bucket),
       label: tLabel(bucket),
-      percentage: pct,
-      pct: pct,
-      pctKnown: pct != null && status !== 'insufficient_data',
-      status,
-      confidence,
-      sampleCount: samples,
-      samples,
-      coverage: Math.round((covered / SCALE) * 1000) / 1000,
-      intervals: merged.slice(0, 12),
-      observed: [min, max],
-      gapFill,
+      percentage: est.percentage,
+      pct: est.percentage,
+      pctKnown: est.percentage != null && est.status !== 'insufficient_data',
+      status: est.status,
+      confidence: est.confidence,
+      sampleCount: est.sampleCount,
+      samples: est.sampleCount,
+      coverage: est.coverage,
+      intervals: est.ranges,
+      ranges: est.ranges,
+      observed: est.observed,
+      gapFill: est.gapFill,
+      sourceKind: est.sourceKind || 'estimated_from_samples',
     });
   }
-
   treatments.sort((a, b) => a.bucket - b.bucket);
   const sumPct = treatments.reduce(
     (s, t) => s + (t.pctKnown && t.pct != null ? t.pct : 0),
@@ -368,7 +309,6 @@ function rangesToTreatments(bucketMap, totalOk) {
     sumPct > 105
   )
     globalStatus = 'degraded';
-
   const conf =
     totalOk > 0
       ? Math.min(
@@ -377,7 +317,6 @@ function rangesToTreatments(bucketMap, totalOk) {
             (totalOk * Math.max(1, treatments.length)),
         )
       : 0;
-
   return {
     treatments,
     conf,
@@ -439,7 +378,7 @@ async function fetchTokenSnapshot(hashMap) {
       }
       await sleep(400);
     } catch (e) {
-      console.warn('Token snapshot fail:', e.message);
+      console.warn('Token snapshot fail:', redactSecrets(e.message));
     }
   }
   return out;
@@ -537,7 +476,7 @@ function hasName(id) {
 
 async function main() {
   await fs.ensureDir(DATA);
-  console.log('📊 User rollouts v6 (ESTIMATED, honest)');
+  console.log('📊 User rollouts v8 (ESTIMATED, honest)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
@@ -634,19 +573,36 @@ async function main() {
         if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
         const from = Number(oldT.pct);
         const to = Number(t.pct);
-        if (Math.abs(to - from) >= MIN_DELTA) {
-          deltas.push({
-            label: t.label,
-            from,
-            to,
-            observed: t.observed,
-            confidence: t.confidence,
-            status: t.status,
-          });
-        }
+        const { changeType, change } = classifyChange(from, to, MIN_DELTA);
+        if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
+        deltas.push({
+          label: t.label,
+          bucket: t.bucket,
+          from,
+          to,
+          change,
+          changeType,
+          observed: t.observed,
+          ranges: t.intervals || t.ranges || null,
+          confidence: t.confidence,
+          status: t.status,
+          population: 'user',
+          treatment: t.label,
+        });
       }
       if (deltas.length) {
-        changes.push({ kind: 'pct', id: n.id, title: n.title, deltas, named: n.named });
+        const fp = stableChangeFingerprint({
+          id: n.id,
+          deltas: deltas.map((d) => [d.bucket, d.from, d.to, d.changeType]),
+        });
+        changes.push({
+          kind: 'pct',
+          id: n.id,
+          title: n.title,
+          deltas,
+          named: n.named,
+          changeFingerprint: fp,
+        });
       }
     }
 
@@ -667,19 +623,36 @@ async function main() {
     }
   }
 
-  async function writeState(announcedMap) {
+  async function writeState(announcedMap, extra = {}) {
+    const prevHist = Array.isArray(prev.history) ? prev.history : [];
+    const histEntry = {
+      ts: new Date().toISOString(),
+      ok,
+      fail,
+      experimentCount: experiments.length,
+      changeCount: (extra.changes && extra.changes.length) || 0,
+    };
+    const history = [...prevHist, histEntry].slice(-40);
     await fs.writeJson(
       STATE,
       {
         scrapedAt: new Date().toISOString(),
-        version: 6,
+        version: 8,
+        schemaVersion: 8,
+        runId:
+          extra.runId ||
+          new Date().toISOString().replace(/[:.]/g, '-') +
+            '_' +
+            Math.random().toString(36).slice(2, 8),
         samples: SAMPLES,
         ok,
         fail,
-        tokens: TOKENS.length,
+        tokensConfigured: TOKENS.length,
         experiments,
         token: tokenSnap,
         announced: announcedMap,
+        history,
+        lastChanges: extra.changes || prev.lastChanges || [],
       },
       { spaces: 2 },
     );
@@ -739,4 +712,4 @@ if (require.main === module)
     process.exit(1);
   });
 
-module.exports = { main, murmur3, loadHashMap, rangesToTreatments };
+module.exports = { main, murmur3, loadHashMap, rangesToTreatments, classifyChange, mergeIntervals };
