@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T04:52:53.774Z",
+  "scrapedAt": "2026-09-19T04:59:06.853Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            63,
-            9952
+            226,
+            9947
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            30,
-            9766
+            146,
+            9846
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            33,
-            9830
+            123,
+            9903
           ],
           "samples": 80
         }
@@ -77,30 +77,6 @@
       "fingerprint": "1:100.0",
       "source": "fingerprint-sample",
       "named": true
-    },
-    {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.063,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 3.76,
-          "pctKnown": true,
-          "observed": [
-            9,
-            385
-          ],
-          "samples": 5
-        }
-      ],
-      "fingerprint": "1:3.8",
-      "source": "fingerprint-sample",
-      "named": false
     },
     {
       "hash": 704914099,
@@ -113,16 +89,40 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.93,
+          "pct": 3.69,
           "pctKnown": true,
           "observed": [
-            9526,
-            9919
+            9598,
+            9967
           ],
           "samples": 6
         }
       ],
-      "fingerprint": "1:3.9",
+      "fingerprint": "1:3.7",
+      "source": "fingerprint-sample",
+      "named": false
+    },
+    {
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
+      "type": "user",
+      "quality": "estimated",
+      "confidence": 0.05,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 2.56,
+          "pctKnown": true,
+          "observed": [
+            2,
+            258
+          ],
+          "samples": 4
+        }
+      ],
+      "fingerprint": "1:2.6",
       "source": "fingerprint-sample",
       "named": false
     }
