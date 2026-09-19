@@ -1,0 +1,28 @@
+name: Heal User Rollouts
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  heal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Assemble and verify
+        run: |
+          set -euo pipefail
+          python3 scripts/assemble_ur.py
+          node --check src/user_rollouts.js
+          grep -n "mergeIntervals\|NOTIFY_FAIL\|TRANSACTIONAL\|rangesToTreatments" src/user_rollouts.js | head -20
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/user_rollouts.js
+          git commit -m "feat(user_rollouts): v7 interval-union estimates + transactional announced"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
+            sleep 2
+          done
+          exit 1
