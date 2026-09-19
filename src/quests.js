@@ -50,7 +50,10 @@ function rewardTypeFr(type) {
     2: 'Collectible',
     3: 'Monnaie virtuelle',
     4: 'Orbes',
-    5: 'Fraction d’orbes',
+    5: 'Fraction d\'orbes',
+    6: 'Décoration de profil',
+    7: 'Effet de profil',
+    8: 'Avatar / décoration',
   };
   return map[type] || 'Type ' + type;
 }
@@ -390,6 +393,25 @@ function buildQuestComponentsV2(quest) {
       type: 10,
       content: ('**Récompenses**\n' + rLines.join('\n')).slice(0, 4000),
     });
+
+    // Images des récompenses (décorations, collectibles, etc.)
+    const rewardMedia = [];
+    for (const r of rewards.slice(0, 8)) {
+      if (r.asset && isImageUrl(r.asset)) {
+        rewardMedia.push({
+          media: { url: r.asset },
+          description: String(r.name || r.typeLabel || 'Récompense').slice(0, 100),
+        });
+      }
+    }
+    if (rewardMedia.length) {
+      blocks.push({ type: 14, divider: true, spacing: 1 });
+      blocks.push({
+        type: 10,
+        content: '**Aperçu récompense' + (rewardMedia.length > 1 ? 's' : '') + '**',
+      });
+      blocks.push({ type: 12, items: rewardMedia.slice(0, 4) });
+    }
   }
 
   blocks.push({ type: 14, divider: true, spacing: 1 });
