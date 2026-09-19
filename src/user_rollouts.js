@@ -8,6 +8,8 @@
  *  - Skip notify for unresolved hash:… (or mark clearly)
  *  - announced map anti-spam
  *  - Confidence gate (min samples / ok rate)
+ *  - TRANSACTIONAL: announced only advanced AFTER successful webhook
+ *    (experiments snapshot still saved for next-run deltas; notify fail → exit 2)
  *
  * Env:
  *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..5
@@ -531,46 +533,7 @@ async function main() {
     }
   }
 
-  for (const e of experiments) {
-    if (e.named || NOTIFY_HASH) announced[String(e.hash)] = e.fingerprint;
-  }
-
-  await fs.writeJson(
-    STATE,
-    {
-      scrapedAt: new Date().toISOString(),
-      version: 6,
-      samples: SAMPLES,
-      ok,
-      fail,
-      tokens: TOKENS.length,
-      experiments,
-      token: tokenSnap,
-      announced,
-    },
-    { spaces: 2 },
-  );
-
-  if (isFirst) {
-    console.log('Seed', experiments.length, '· no notify');
-    return;
-  }
-  console.log('Changes', changes.length);
-  if (!changes.length) {
-    console.log('No significant named user % change');
-    return;
-  }
-  const embeds = buildEmbeds(changes);
-  const sent = await postWebhook(embeds);
-  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
-  if (sent.ok) {
-    for (const c of changes) {
-      if (c.kind === 'new' && c.hash != null) announced[String(c.hash)] = c.fingerprint;
-      if (c.kind === 'pct' && c.id) {
-        const exp = experiments.find((e) => e.id === c.id);
-        if (exp) announced[String(exp.hash)] = exp.fingerprint;
-      }
-    }
+  async function writeState(announcedMap) {
     await fs.writeJson(
       STATE,
       {
@@ -582,12 +545,58 @@ async function main() {
         tokens: TOKENS.length,
         experiments,
         token: tokenSnap,
-        announced,
+        announced: announcedMap,
       },
       { spaces: 2 },
     );
   }
-  console.log('✅ Done');
+
+  // First run: seed experiments + announced fingerprints WITHOUT webhooks (no flood).
+  if (isFirst) {
+    const seedAnnounced = { ...announced };
+    for (const e of experiments) {
+      if (e.named || NOTIFY_HASH) seedAnnounced[String(e.hash)] = e.fingerprint;
+    }
+    await writeState(seedAnnounced);
+    console.log('Seed', experiments.length, '· no notify');
+    return;
+  }
+
+  // Persist current estimates for next-run deltas, but keep PREV announced.
+  // Never advance anti-spam locks before a successful webhook.
+  await writeState(announced);
+
+  console.log('Changes', changes.length);
+  if (!changes.length) {
+    console.log('No significant named user % change');
+    return;
+  }
+
+  const embeds = buildEmbeds(changes);
+  const sent = await postWebhook(embeds);
+  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
+
+  if (!sent.ok) {
+    console.warn(
+      'NOTIFY_FAIL user_rollouts — announced NOT advanced; will retry next run',
+    );
+    process.exitCode = 2;
+    return;
+  }
+
+  // Success only: lock fingerprints for notified changes
+  for (const c of changes) {
+    if (c.kind === 'new' && c.hash != null && c.fingerprint) {
+      announced[String(c.hash)] = c.fingerprint;
+    }
+    if (c.kind === 'pct' && c.id) {
+      const exp = experiments.find((e) => e.id === c.id);
+      if (exp) announced[String(exp.hash)] = exp.fingerprint;
+    }
+    // revision: no fingerprint lock — re-check next run if needed
+  }
+  await writeState(announced);
+  console.log('✅ Done (announced advanced after webhook OK)');
 }
 
 if (require.main === module)
