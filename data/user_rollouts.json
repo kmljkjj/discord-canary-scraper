@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T07:41:34.510Z",
+  "scrapedAt": "2026-09-19T07:48:09.895Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            27,
-            9688
+            152,
+            9994
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            33,
-            9940
+            39,
+            9978
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            21,
-            9889
+            82,
+            9837
           ],
           "samples": 80
         }
@@ -79,9 +79,9 @@
       "named": true
     },
     {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
       "type": "user",
       "quality": "estimated",
       "confidence": 0.05,
@@ -89,16 +89,40 @@
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 3.25,
+          "pct": 2.8,
           "pctKnown": true,
           "observed": [
-            105,
-            430
+            9681,
+            9961
           ],
           "samples": 4
         }
       ],
-      "fingerprint": "1:3.3",
+      "fingerprint": "1:2.8",
+      "source": "fingerprint-sample",
+      "named": false
+    },
+    {
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
+      "type": "user",
+      "quality": "estimated",
+      "confidence": 0.038,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "pct": 1.21,
+          "pctKnown": true,
+          "observed": [
+            333,
+            454
+          ],
+          "samples": 3
+        }
+      ],
+      "fingerprint": "1:1.2",
       "source": "fingerprint-sample",
       "named": false
     }
