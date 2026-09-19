@@ -305,7 +305,14 @@ function isVideoUrl(url) {
 }
 
 function isImageUrl(url) {
-  return /\.(png|jpe?g|gif|webp)(\?|$)/i.test(url || '');
+  if (!url) return false;
+  if (/\.(png|jpe?g|gif|webp)(\?|$)/i.test(url)) return true;
+  // Discord quest CDN paths often include asset names without query
+  if (/cdn\.discordapp\.com\/(quests|assets|collectibles|avatar)/i.test(url)) {
+    if (/\.(mp4|webm|mov)(\?|$)/i.test(url)) return false;
+    return true;
+  }
+  return false;
 }
 
 /** Components V2 payload — MediaGallery for hero + video */
@@ -504,7 +511,11 @@ function buildQuestEmbed(quest) {
     color: 0x000000,
     fields,
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
-    thumbnail: undefined,
+    thumbnail: (() => {
+      const first =
+        (quest.rewards || []).find((r) => r.asset && isImageUrl(r.asset)) || null;
+      return first ? { url: first.asset } : undefined;
+    })(),
     footer: { text: 'Datamining · Quêtes · ID ' + quest.id },
     timestamp: new Date().toISOString(),
   };
