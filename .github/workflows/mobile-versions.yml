@@ -35,12 +35,12 @@ jobs:
             npm install --no-audit --no-fund
           fi
 
-      - name: Mobile versions
+      - name: Mobile versions (PAUSED)
         id: versions
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           ORBIT_BOT_NAME: Datamining
-          MOBILE_VERSIONS_PAUSED: '0'
+          MOBILE_VERSIONS_PAUSED: '1'
         run: node src/mobile_versions.js
 
       - name: Mobile experiments from client files
