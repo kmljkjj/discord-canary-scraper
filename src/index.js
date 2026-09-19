@@ -417,6 +417,7 @@ async function main() {
             },
             counts: { expN, strN, rtN, baseExp, baseStr, baseRt },
             downloadStats: ds,
+            coverage: findings.coverage || null,
           });
         } catch {}
         console.error(
@@ -425,6 +426,36 @@ async function main() {
         );
         process.exit(1);
       }
+    }
+
+    // Chunk coverage from extract.js — incomplete scan must not look like a valid diff.
+    const cov = findings.coverage || null;
+    if (cov && cov.degraded) {
+      try {
+        await fs.writeJson(LAST_RUN_META, {
+          schemaVersion: 1,
+          buildNumber: String(build.buildNumber),
+          ts: Date.now(),
+          status: 'failed',
+          ok: false,
+          reason: 'EXTRACTION_COVERAGE_DEGRADED',
+          coverage: cov,
+          downloadStats: ds,
+          counts: { expN, strN, rtN, baseExp, baseStr, baseRt },
+        });
+      } catch {}
+      console.error(
+        'EXTRACTION_ERROR: chunk coverage degraded — refuse state update',
+        cov.degradedReasons || [],
+        {
+          scanRatio: cov.scanRatio,
+          oversize: cov.skippedOversize,
+          readErrors: cov.readErrors,
+          jsOnDisk: cov.jsOnDisk,
+          mapped: cov.chunkUrlsMapped,
+        },
+      );
+      process.exit(1);
     }
   }
 

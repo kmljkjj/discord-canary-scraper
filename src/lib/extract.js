@@ -54,8 +54,10 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
 
   let webAssets = htmlAssets.filter((u) => /\/web\./i.test(u));
   if (!webAssets.length) {
-    console.warn('No web.* in HTML — using prioritized HTML assets');
-    webAssets = htmlAssets.slice(0, 5);
+    // Guessing random HTML assets produces partial extracts and false "removed".
+    throw new Error(
+      'WEB_BUNDLE_NOT_FOUND: no web.* in HTML assets — refuse extract (was: silent first-5 fallback)',
+    );
   }
   console.log('PRIORITY: download web.* (' + webAssets.length + ')');
   await downloadList(webAssets, assetsDir, !!forceRefresh);
@@ -131,21 +133,93 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
 
   const jsFiles = (await fs.readdir(assetsDir)).filter((f) => f.endsWith('.js'));
   console.log('Scanning', jsFiles.length, 'JS files for routes/experiments');
-  let scanned = 0;
+
+  // Coverage: distinguish downloaded vs actually parsed (false "removed" risk).
+  const coverage = {
+    jsOnDisk: jsFiles.length,
+    webFiles: 0,
+    scanned: 0,
+    skippedEmpty: 0,
+    skippedOversize: 0,
+    skippedWeb: 0,
+    readErrors: 0,
+    bytesScanned: 0,
+    bytesSkippedOversize: 0,
+    maxScanBytes: MAX_CHUNK_SCAN_BYTES,
+    chunkUrlsMapped: chunkUrls.length,
+    localeUrlsMapped: localeUrls.length,
+    fullChunks: !!FULL_CHUNKS,
+  };
+
   for (const f of jsFiles) {
-    if (/^web\./i.test(f)) continue;
+    if (/^web\./i.test(f)) {
+      coverage.webFiles++;
+      coverage.skippedWeb++;
+      continue; // already extracted in core path
+    }
     const fp = path.join(assetsDir, f);
     try {
       const st = await fs.stat(fp);
-      if (st.size === 0 || st.size > MAX_CHUNK_SCAN_BYTES) continue;
+      if (st.size === 0) {
+        coverage.skippedEmpty++;
+        continue;
+      }
+      if (st.size > MAX_CHUNK_SCAN_BYTES) {
+        coverage.skippedOversize++;
+        coverage.bytesSkippedOversize += st.size;
+        continue;
+      }
       const content = await fs.readFile(fp, 'utf8');
       extractRoutes(content, routes);
       extractExperiments(content, expSet);
       if (st.size < 500_000) extractStrings(content, strings);
-      scanned++;
-    } catch {}
+      coverage.scanned++;
+      coverage.bytesScanned += st.size;
+    } catch (e) {
+      coverage.readErrors++;
+      if (coverage.readErrors <= 8) {
+        console.warn('chunk read error', f, e && e.message ? e.message : e);
+      }
+    }
   }
-  console.log('Scanned extra chunks:', scanned);
+
+  const secondaryCandidates =
+    coverage.jsOnDisk - coverage.webFiles - coverage.skippedEmpty;
+  const scannedDenom = Math.max(secondaryCandidates, 1);
+  coverage.scanRatio =
+    Math.round((coverage.scanned / scannedDenom) * 1000) / 1000;
+  coverage.oversizeRatio =
+    Math.round(
+      (coverage.skippedOversize / Math.max(coverage.jsOnDisk - coverage.webFiles, 1)) *
+        1000,
+    ) / 1000;
+
+  coverage.degraded = false;
+  coverage.degradedReasons = [];
+  if (FULL_CHUNKS && coverage.chunkUrlsMapped >= 40) {
+    if (coverage.jsOnDisk < coverage.chunkUrlsMapped * 0.5) {
+      coverage.degraded = true;
+      coverage.degradedReasons.push('JS_ON_DISK_LT_HALF_MAPPED_CHUNKS');
+    }
+  }
+  if (coverage.oversizeRatio > 0.15 && coverage.skippedOversize >= 3) {
+    coverage.degraded = true;
+    coverage.degradedReasons.push('TOO_MANY_OVERSIZE_SKIPPED');
+  }
+  if (coverage.readErrors >= 10) {
+    coverage.degraded = true;
+    coverage.degradedReasons.push('TOO_MANY_READ_ERRORS');
+  }
+  if (
+    secondaryCandidates >= 20 &&
+    coverage.scanRatio < 0.7 &&
+    coverage.skippedOversize + coverage.readErrors > 0
+  ) {
+    coverage.degraded = true;
+    coverage.degradedReasons.push('LOW_SCAN_RATIO');
+  }
+
+  console.log('Scanned extra chunks:', coverage.scanned, '| coverage', coverage);
 
   console.log('Extract totals', {
     strings: Object.keys(strings).length,
@@ -153,6 +227,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     experiments: expSet.size,
     css: Object.keys(cssInventory).length,
     jsOnDisk: jsFiles.length,
+    coverage,
   });
 
   if (DOWNLOAD_CSS && cssAssets.length) {
@@ -167,6 +242,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     routes,
     css: cssInventory,
     downloadStats: getDownloadStats(),
+    coverage,
   };
 }
 
