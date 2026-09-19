@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T21:11:50.648Z",
+  "scrapedAt": "2026-09-19T21:18:18.382Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            148,
-            9796
+            99,
+            9947
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            269,
-            9949
+            4,
+            9878
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            128,
-            9956
+            132,
+            9835
           ],
           "samples": 80
         }
@@ -84,26 +84,54 @@
       "title": "hash:1144304849",
       "type": "user",
       "quality": "estimated",
-      "confidence": 0.05,
+      "confidence": 0.038,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 2.19,
+          "pct": 2.35,
           "pctKnown": true,
           "observed": [
-            128,
-            347
+            237,
+            472
           ],
-          "samples": 4
+          "samples": 3
         }
       ],
-      "fingerprint": "1:2.2",
+      "fingerprint": "1:2.4",
       "source": "fingerprint-sample",
       "named": false
     }
   ],
-  "token": [],
+  "token": [
+    {
+      "hash": 3013881204,
+      "id": "hash:3013881204",
+      "title": "hash:3013881204",
+      "type": "user",
+      "revision": 5,
+      "bucket": 11,
+      "hash_result": 3832
+    },
+    {
+      "hash": 2180379513,
+      "id": "2023-09_iar_user_reporting",
+      "title": "Safety Experience IAR User Reporting",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 251
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 7588
+    }
+  ],
   "announced": {
     "2180379513": "1:100.0",
     "4055210228": "1:100.0"
