@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-19T03:41:04.199Z",
+  "scrapedAt": "2026-09-19T03:47:36.904Z",
   "version": 6,
   "samples": 80,
   "ok": 80,
@@ -20,8 +20,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            174,
-            9620
+            12,
+            9985
           ],
           "samples": 80
         }
@@ -44,8 +44,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            96,
-            9724
+            103,
+            9936
           ],
           "samples": 80
         }
@@ -68,8 +68,8 @@
           "pct": 100,
           "pctKnown": true,
           "observed": [
-            264,
-            9901
+            166,
+            9970
           ],
           "samples": 80
         }
@@ -79,50 +79,26 @@
       "named": true
     },
     {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
-      "type": "user",
-      "quality": "estimated",
-      "confidence": 0.038,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "pct": 4.13,
-          "pctKnown": true,
-          "observed": [
-            75,
-            488
-          ],
-          "samples": 3
-        }
-      ],
-      "fingerprint": "1:4.1",
-      "source": "fingerprint-sample",
-      "named": false
-    },
-    {
       "hash": 704914099,
       "id": "hash:704914099",
       "title": "hash:704914099",
       "type": "user",
       "quality": "estimated",
-      "confidence": 0.038,
+      "confidence": 0.05,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "pct": 0.62,
+          "pct": 2.8,
           "pctKnown": true,
           "observed": [
-            9519,
-            9581
+            9557,
+            9837
           ],
-          "samples": 3
+          "samples": 4
         }
       ],
-      "fingerprint": "1:0.6",
+      "fingerprint": "1:2.8",
       "source": "fingerprint-sample",
       "named": false
     }
