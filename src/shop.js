@@ -1,13 +1,12 @@
 /**
  * Discord Shop / Collectibles tracker
- * Source: official API with user token (fresher than third-party mirrors)
+ * Source: official API with user token
  *
  * Env:
  *   SHOP_WEBHOOK_URL | DISCORD_WEBHOOK_URL
  *   DISCORD_USER_TOKEN (preferred) | DISCORD_TOKEN | DISCORD_USER_TOKEN_1
- *   ORBIT_BOT_NAME, ORBIT_AVATAR_URL
  *
- * Flow: VALIDATE TOKEN → FETCH → NORMALIZE → COMPARE → NOTIFY → SAVE (after success)
+ * 401 on /users/@me = invalid/expired user token in GitHub Secrets (not a shop bug).
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -37,14 +36,16 @@ function loadToken() {
   return null;
 }
 
-/** User token only — strip Bot/Bearer prefixes that cause 401 on shop APIs. */
 function normalizeToken(t) {
-  let s = String(t || '').trim();
+  let s = String(t || '')
+    .replace(/^\uFEFF/, '')
+    .replace(/[\r\n\t]/g, '')
+    .trim();
   if (
     (s.startsWith('"') && s.endsWith('"')) ||
     (s.startsWith("'") && s.endsWith("'"))
   ) {
-    s = s.slice(1, -1).trim();
+    s = s.slice(1, -1).replace(/[\r\n\t]/g, '').trim();
   }
   if (/^Bot\s+/i.test(s)) {
     console.warn(
@@ -54,6 +55,17 @@ function normalizeToken(t) {
   }
   if (/^Bearer\s+/i.test(s)) s = s.replace(/^Bearer\s+/i, '').trim();
   return s || null;
+}
+
+function tokenShape(t) {
+  if (!t) return 'empty';
+  const parts = t.split('.');
+  return [
+    'len=' + t.length,
+    t.startsWith('mfa.') ? 'mfa' : 'no-mfa',
+    'dots=' + (parts.length - 1),
+    'alnum=' + (/^[A-Za-z0-9._-]+$/.test(t) ? 'yes' : 'no'),
+  ].join(' ');
 }
 
 const TOKEN = loadToken();
@@ -119,49 +131,57 @@ function authHeaders() {
 async function validateUserToken() {
   if (!TOKEN) return { ok: false, reason: 'missing' };
   if (TOKEN.length < 20) return { ok: false, reason: 'too_short' };
-  const looksUser =
-    TOKEN.startsWith('mfa.') ||
-    TOKEN.split('.').length >= 3 ||
-    /^[\w-]{20,}$/.test(TOKEN);
-  if (!looksUser) {
-    console.warn('Token format unusual for a Discord user token');
-  }
+  console.log('Token shape:', tokenShape(TOKEN));
+
+  const headerVariants = [
+    {
+      name: 'minimal',
+      headers: {
+        Authorization: TOKEN,
+        'User-Agent': UA,
+        Accept: 'application/json',
+      },
+    },
+    { name: 'client-like', headers: authHeaders() },
+  ];
+
   for (const host of [
     'https://discord.com/api/v9',
     'https://canary.discord.com/api/v9',
   ]) {
-    try {
-      const res = await fetch(host + '/users/@me', {
-        headers: authHeaders(),
-        timeout: 15000,
-      });
-      if (res.ok) {
-        const u = await res.json().catch(() => ({}));
-        console.log(
-          'Token OK as user',
-          u.username
-            ? u.username +
-                (u.discriminator && u.discriminator !== '0'
-                  ? '#' + u.discriminator
-                  : '')
-            : '(ok)',
+    for (const variant of headerVariants) {
+      try {
+        const res = await fetch(host + '/users/@me', {
+          headers: variant.headers,
+          timeout: 15000,
+        });
+        if (res.ok) {
+          const u = await res.json().catch(() => ({}));
+          console.log(
+            'Token OK as user',
+            u.username
+              ? u.username +
+                  (u.discriminator && u.discriminator !== '0'
+                    ? '#' + u.discriminator
+                    : '')
+              : '(ok)',
+            '(' + variant.name + ')',
+          );
+          return { ok: true, host, variant: variant.name };
+        }
+        console.warn(
+          'Token probe',
+          host.includes('canary') ? 'canary' : 'stable',
+          variant.name,
+          'HTTP',
+          res.status,
         );
-        return { ok: true, host };
+      } catch (e) {
+        console.warn('Token probe error:', redact(e.message));
       }
-      console.warn(
-        'Token probe',
-        host.includes('canary') ? 'canary' : 'stable',
-        'HTTP',
-        res.status,
-      );
-      if (res.status === 401 || res.status === 403) {
-        return { ok: false, reason: 'http_' + res.status };
-      }
-    } catch (e) {
-      console.warn('Token probe error:', redact(e.message));
     }
   }
-  return { ok: false, reason: 'unreachable' };
+  return { ok: false, reason: 'http_401' };
 }
 
 async function apiGet(pathAndQuery) {
@@ -388,7 +408,7 @@ async function main() {
 
   if (!TOKEN) {
     console.error(
-      'DISCORD_USER_TOKEN (or DISCORD_TOKEN) required — must be a USER token, not a bot token',
+      'DISCORD_USER_TOKEN required — must be a USER token, not a bot token',
     );
     process.exit(1);
   }
@@ -398,10 +418,10 @@ async function main() {
     console.error(
       'AUTH invalid (',
       probe.reason,
-      '). Shop APIs need a valid Discord USER token in secret DISCORD_USER_TOKEN.',
+      '). Discord rejected DISCORD_USER_TOKEN on /users/@me.',
     );
     console.error(
-      'Tips: regenerate token, no quotes, no "Bot " prefix, secret name exact, repo Actions secrets (not vars).',
+      'Fix: Settings → Secrets → update DISCORD_USER_TOKEN with a fresh USER token (no quotes, no Bot prefix).',
     );
     process.exit(1);
   }
@@ -411,11 +431,6 @@ async function main() {
     items = await fetchShopCatalog();
   } catch (e) {
     console.error('Shop fetch failed:', redact(e.message));
-    if (String(e.message).includes('AUTH_FAILED')) {
-      console.error(
-        'Token works for /users/@me but shop endpoints rejected it — try a fresh user token.',
-      );
-    }
     process.exit(1);
   }
   console.log('Catalog items:', items.length);
