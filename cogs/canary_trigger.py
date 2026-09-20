@@ -4,13 +4,15 @@ cogs/canary_trigger.py
 
   await bot.load_extension("cogs.canary_trigger")
 
-Colle ton PAT classic (repo + workflow) dans GITHUB_TOKEN.
+Set env GITHUB_TOKEN (or GH_TOKEN) — PAT classic: repo + workflow.
+Never hardcode tokens in this file.
 """
 
 from __future__ import annotations
 
 import asyncio
 import json
+import os
 import re
 import socket
 import ssl
@@ -22,13 +24,15 @@ import discord
 from discord.ext import commands, tasks
 
 # ═══════════════════════════════════════════════════════
-# CONFIG
+# CONFIG (secrets via environment only)
 # ═══════════════════════════════════════════════════════
-GITHUB_TOKEN = "ghp_COLLLE_TON_TOKEN_ICI"  # PAT classic : repo + workflow
-GITHUB_REPO = "kmljkjj/discord-canary-scraper"
+GITHUB_TOKEN = (os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or "").strip()
+GITHUB_REPO = os.environ.get("GITHUB_REPO") or "kmljkjj/discord-canary-scraper"
 DISPATCH_EVENT = "trigger-scraping"
 INTERVAL_SECONDS = 15  # détection build ~15s max (bot 24/7 requis)
-STATE_FILE = Path(__file__).resolve().parent / "last_canary_build.txt"
+STATE_FILE = Path(
+    os.environ.get("CANARY_STATE_FILE") or (Path.cwd() / "data" / "last_canary_build.txt")
+)
 # ═══════════════════════════════════════════════════════
 
 CANARY_URLS = (
@@ -81,32 +85,16 @@ def _read_build_from_url(url: str) -> tuple[str | None, str | None]:
             if m:
                 h = _HASH_RE.search(text)
                 return m.group(1), (h.group(1)[:12] if h else None)
-    except urllib.error.HTTPError as e:
-        print(f"[canary-cog] HTTP {e.code} {url}", flush=True)
-        raise
     except Exception as e:
-        print(f"[canary-cog] fetch fail {url}: {e}", flush=True)
-        raise
+        print(f"[canary-cog] read fail {url}: {e}", flush=True)
     return None, None
 
 
-def _read_build_fast() -> tuple[str | None, str | None]:
-    last_err = None
-    for attempt in range(2):
-        for url in CANARY_URLS:
-            try:
-                build, h = _read_build_from_url(url)
-                if build:
-                    return build, h
-            except Exception as e:
-                last_err = e
-                continue
-        if attempt == 0:
-            import time
-
-            time.sleep(0.8)
-    if last_err:
-        print(f"[canary-cog] all URLs failed: {last_err}", flush=True)
+def _fetch_build() -> tuple[str | None, str | None]:
+    for url in CANARY_URLS:
+        build, vhash = _read_build_from_url(url)
+        if build:
+            return build, vhash
     return None, None
 
 
@@ -114,13 +102,14 @@ def _read_last() -> str | None:
     try:
         if STATE_FILE.is_file():
             return STATE_FILE.read_text(encoding="utf-8").strip() or None
-    except Exception:
-        pass
+    except Exception as e:
+        print(f"[canary-cog] state read fail: {e}", flush=True)
     return None
 
 
 def _write_last(token: str) -> None:
     try:
+        STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
         STATE_FILE.write_text(token, encoding="utf-8")
     except Exception as e:
         print(f"[canary-cog] state write fail: {e}", flush=True)
@@ -129,13 +118,13 @@ def _write_last(token: str) -> None:
 def _state_token(build: str, version_hash: str | None) -> str:
     if version_hash:
         return f"{build}:{version_hash}"
-    return build
+    return str(build)
 
 
 def _dispatch() -> tuple[bool, str]:
     tok = (GITHUB_TOKEN or "").strip()
     if not tok or len(tok) < 20 or "COLLLE" in tok or tok == "GITHUB_TOKEN":
-        return False, "GITHUB_TOKEN manquant / invalide"
+        return False, "GITHUB_TOKEN manquant / invalide (export GITHUB_TOKEN=...)"
 
     url = f"https://api.github.com/repos/{GITHUB_REPO}/dispatches"
     body = json.dumps({"event_type": DISPATCH_EVENT}).encode("utf-8")
@@ -144,11 +133,11 @@ def _dispatch() -> tuple[bool, str]:
         data=body,
         method="POST",
         headers={
-            "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {tok}",
+            "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
             "Content-Type": "application/json",
-            "User-Agent": "datamining-cog-trigger",
+            "User-Agent": "canary-trigger-cog",
         },
     )
     try:
@@ -156,19 +145,22 @@ def _dispatch() -> tuple[bool, str]:
             return True, f"OK {res.status} → {GITHUB_REPO}"
     except urllib.error.HTTPError as e:
         err = e.read().decode("utf-8", errors="replace")
-        return False, f"HTTP {e.code}: {err[:200]}"
+        if e.code == 403:
+            retry_after = int(e.headers.get("Retry-After", 60) or 60)
+            return False, f"GitHub rate limit / 403 (retry ~{retry_after}s): {err[:200]}"
+        return False, f"DISPATCH HTTP {e.code}: {err[:300]}"
     except Exception as e:
-        return False, str(e)
+        return False, f"DISPATCH error: {e}"
 
 
 def _tick_sync() -> str:
-    build, vhash = _read_build_fast()
+    build, vhash = _fetch_build()
     if not build:
-        return "pas de BUILD_NUMBER (fetch 400/blocked — retry next tick)"
+        return "SKIP no BUILD_NUMBER"
     token = _state_token(build, vhash)
     last = _read_last()
     if last == token:
-        return f"build {build} inchangé — skip"
+        return f"SAME {token}"
     ok, msg = _dispatch()
     if ok:
         _write_last(token)
@@ -198,8 +190,15 @@ class CanaryTrigger(commands.Cog):
         await self.bot.wait_until_ready()
         try:
             await asyncio.to_thread(socket.getaddrinfo, "canary.discord.com", 443)
-        except Exception:
-            pass
+        except (socket.gaierror, OSError) as e:
+            print(f"[canary-cog] DNS resolution failed (non-fatal): {e}", flush=True)
+        except Exception as e:
+            print(f"[canary-cog] warmup error (non-fatal): {e}", flush=True)
+        if not GITHUB_TOKEN:
+            print(
+                "[canary-cog] WARNING: GITHUB_TOKEN env missing — dispatch disabled",
+                flush=True,
+            )
         print(
             f"[canary-cog] ready — every {INTERVAL_SECONDS}s → {GITHUB_REPO}",
             flush=True,
