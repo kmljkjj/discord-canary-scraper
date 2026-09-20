@@ -33,7 +33,7 @@ async function fetchBuild() {
   );
 
   // BUILD_NUMBER is mandatory — never continue as "unknown".
-  if (!env.BUILD_NUMBER || !/^\d{4,8}$/.test(String(env.BUILD_NUMBER))) {
+  if (!env.BUILD_NUMBER || !/^\d{4,12}$/.test(String(env.BUILD_NUMBER))) {
     throw new Error(
       'BUILD_NUMBER_MISSING: could not parse a valid Discord Canary BUILD_NUMBER from HTML — abort scrape',
     );
@@ -80,21 +80,20 @@ function parseGlobalEnv(html) {
     const m = html.match(re);
     if (m) out[k] = m[1];
   }
-  // BUILD_NUMBER sometimes unquoted numeric
+  // BUILD_NUMBER sometimes unquoted numeric (4–12 digits)
   if (!out.BUILD_NUMBER) {
-    const m = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d{4,8})"?/);
+    const m = html.match(/"BUILD_NUMBER"\s*:\s*"?(\d{4,12})"?/);
     if (m) out.BUILD_NUMBER = m[1];
   }
-  // GLOBAL_ENV block strategies
   if (!out.BUILD_NUMBER) {
-    const m = html.match(/BUILD_NUMBER['"]?\s*[:=]\s*['"]?(\d{4,8})/);
+    const m = html.match(/BUILD_NUMBER['"]?\s*[:=]\s*['"]?(\d{4,12})/);
     if (m) out.BUILD_NUMBER = m[1];
   }
   if (!out.BUILD_NUMBER) {
     const m = html.match(/window\.GLOBAL_ENV\s*=\s*\{([\s\S]{0,4000}?)\}/);
     if (m) {
       const block = m[1];
-      const bm = block.match(/BUILD_NUMBER['"]?\s*:\s*['"]?(\d{4,8})/);
+      const bm = block.match(/BUILD_NUMBER['"]?\s*:\s*['"]?(\d{4,12})/);
       if (bm) out.BUILD_NUMBER = bm[1];
     }
   }
@@ -109,14 +108,25 @@ function extractAssetUrls(html) {
   const add = (href) => {
     if (!href || !href.includes('/assets/')) return;
     const clean = href.split('?')[0];
-    if (clean.endsWith('.js')) js.add(clean.startsWith('http') ? clean : 'https://canary.discord.com' + (clean.startsWith('/') ? clean : '/' + clean));
-    if (clean.endsWith('.css')) css.add(clean.startsWith('http') ? clean : 'https://canary.discord.com' + (clean.startsWith('/') ? clean : '/' + clean));
+    if (clean.endsWith('.js'))
+      js.add(
+        clean.startsWith('http')
+          ? clean
+          : 'https://canary.discord.com' +
+            (clean.startsWith('/') ? clean : '/' + clean),
+      );
+    if (clean.endsWith('.css'))
+      css.add(
+        clean.startsWith('http')
+          ? clean
+          : 'https://canary.discord.com' +
+            (clean.startsWith('/') ? clean : '/' + clean),
+      );
   };
 
   $('script[src]').each((_, el) => add($(el).attr('src')));
   $('link[rel="stylesheet"]').each((_, el) => add($(el).attr('href')));
 
-  // regex fallback for script src not in DOM-friendly form
   const reSrc = /(?:src|href)=["']([^"']*\/assets\/[^"']+\.(?:js|css))["']/gi;
   let m;
   while ((m = reSrc.exec(html))) add(m[1]);
