@@ -752,11 +752,17 @@ async function main() {
 function mergeExp(prev, next) {
   const map = new Map();
   for (const e of prev || []) {
-    const id = e && (e.id || e);
-    if (id) map.set(String(id), typeof e === 'object' ? e : { id: String(e) });
+    if (e == null) continue;
+    if (typeof e === 'object') {
+      if (!e.id) continue;
+      map.set(String(e.id), e);
+    } else if (e !== '') {
+      map.set(String(e), { id: String(e) });
+    }
   }
   for (const e of next || []) {
-    if (e && e.id) map.set(String(e.id), e);
+    if (!e || typeof e !== 'object' || !e.id) continue;
+    map.set(String(e.id), e);
   }
   return [...map.values()].sort((a, b) =>
     String(a.id).localeCompare(String(b.id)),
