@@ -1,0 +1,77 @@
+name: Discord Shop
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-shop]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: discord-shop
+  cancel-in-progress: false
+
+jobs:
+  shop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
+
+      - name: Track shop items
+        id: shop
+        env:
+          SHOP_WEBHOOK_URL: ${{ secrets.SHOP_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
+          DISCORD_USER_TOKEN_1: ${{ secrets.DISCORD_USER_TOKEN_1 }}
+          ORBIT_BOT_NAME: Datamining
+          ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg
+        run: node src/shop.js
+
+      - name: Save shop state
+        if: always() && steps.shop.outcome != 'cancelled'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data/shop_items.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No shop state changes"
+            exit 0
+          fi
+          git commit -m "shop: state"
+          PUSHED=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              PUSHED=1
+              break
+            fi
+            sleep 2
+          done
+          if [ "$PUSHED" -ne 1 ]; then
+            echo "ERROR: could not push shop_items.json"
+            exit 1
+          fi
+
+      - name: Fail if shop step failed
+        if: always() && steps.shop.outcome == 'failure'
+        run: exit 1
