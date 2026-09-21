@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-21T19:38:23.886Z",
+  "scrapedAt": "2026-09-21T19:40:39.545Z",
   "totals": {
-    "all": 378
+    "all": 376
   },
   "experiments": [
     {
@@ -3858,21 +3858,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-06-clips-editor-v2",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-06-clips-league-events",
       "type": "user",
       "kind": "user",
@@ -4642,21 +4627,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-clips-editor-text-track",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6545,6 +6515,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-21T19-38-23-885Z_617513_6122em",
-  "buildNumber": "617513"
+  "runId": "2026-09-21T19-40-39-545Z_617515_osdt2p",
+  "buildNumber": "617515"
 }
