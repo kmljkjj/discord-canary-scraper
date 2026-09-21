@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-21T21:42:57.023Z",
+  "scrapedAt": "2026-09-21T21:45:08.234Z",
   "totals": {
-    "all": 376
+    "all": 377
   },
   "experiments": [
     {
@@ -6110,6 +6110,21 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-desktop-tti-shader-cache",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-friends-sidebar",
       "type": "user",
       "kind": "user",
@@ -6515,6 +6530,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-21T21-42-57-023Z_617719_agvgzt",
-  "buildNumber": "617719"
+  "runId": "2026-09-21T21-45-08-234Z_617725_v4jfdk",
+  "buildNumber": "617725"
 }
