@@ -1,7 +1,7 @@
 {
-  "buildNumber": "618880",
-  "updatedAt": "2026-09-22T23:23:16.040Z",
-  "count": 358,
+  "buildNumber": "618887",
+  "updatedAt": "2026-09-22T23:28:45.420Z",
+  "count": 357,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -166,16 +166,13 @@
       "type": "guild",
       "kind": "guild",
       "label": "Guild Voice Ringing",
-      "variationCount": 2,
+      "variationCount": 1,
       "variations": {
         "1": {
           "id": 1
-        },
-        "2": {
-          "id": 2
         }
       },
-      "fp": "af7e01bf5976c71c1ccd1927"
+      "fp": "f41047beaa21e194213b31dc"
     },
     "2025-01-allow-nonstaff-to-preview-app-collections": {
       "id": "2025-01-allow-nonstaff-to-preview-app-collections",
@@ -680,22 +677,6 @@
         }
       },
       "fp": "3bfe81b67eeacf9709ac9eb2"
-    },
-    "2025-12-09-ptt-education": {
-      "id": "2025-12-09-ptt-education",
-      "type": "user",
-      "kind": "user",
-      "label": "Past VC Activity Messages",
-      "variationCount": 2,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "fp": "bf7b40018180fe70c02e04a1"
     },
     "2025-12-game-invite-account-linking-entry-point": {
       "id": "2025-12-game-invite-account-linking-entry-point",

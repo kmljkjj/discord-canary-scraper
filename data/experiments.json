@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T23:23:16.093Z",
+  "scrapedAt": "2026-09-22T23:28:45.473Z",
   "totals": {
-    "all": 374
+    "all": 373
   },
   "experiments": [
     {
@@ -198,12 +198,9 @@
       "variations": {
         "1": {
           "id": 1
-        },
-        "2": {
-          "id": 2
         }
       },
-      "variationCount": 2,
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -810,24 +807,6 @@
       "kind": "guild",
       "label": "Voice Channel Hoisting",
       "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2025-12-09-ptt-education",
-      "type": "user",
-      "kind": "user",
-      "label": "Past VC Activity Messages",
-      "system": "legacy",
       "defaultConfig": null,
       "variations": {
         "1": {
@@ -6489,6 +6468,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T23-23-16-093Z_618880_wogmmu",
-  "buildNumber": "618880"
+  "runId": "2026-09-22T23-28-45-473Z_618887_llkvik",
+  "buildNumber": "618887"
 }
