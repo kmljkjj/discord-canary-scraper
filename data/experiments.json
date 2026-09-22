@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T23:36:20.622Z",
+  "scrapedAt": "2026-09-22T23:38:24.161Z",
   "totals": {
-    "all": 371
+    "all": 370
   },
   "experiments": [
     {
@@ -1428,21 +1428,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-go-live-video-preset-resolution",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6432,6 +6417,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T23-36-20-622Z_618896_u5mc6b",
-  "buildNumber": "618896"
+  "runId": "2026-09-22T23-38-24-160Z_618899_kp7w9s",
+  "buildNumber": "618899"
 }
