@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T20:33:30.023Z",
+  "scrapedAt": "2026-09-22T20:35:35.048Z",
   "totals": {
-    "all": 373
+    "all": 372
   },
   "experiments": [
     {
@@ -1711,21 +1711,6 @@
     },
     {
       "id": "2026-02-voice-channel-link-click",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-wgc-dirty-regions",
       "type": "user",
       "kind": "user",
       "label": null,
@@ -6463,6 +6448,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T20-33-30-022Z_618638_mwtrt4",
-  "buildNumber": "618638"
+  "runId": "2026-09-22T20-35-35-048Z_618645_kmnmw8",
+  "buildNumber": "618645"
 }
