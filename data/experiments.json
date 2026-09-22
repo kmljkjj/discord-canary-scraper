@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T23:29:44.399Z",
+  "scrapedAt": "2026-09-22T23:31:57.766Z",
   "totals": {
-    "all": 373
+    "all": 372
   },
   "experiments": [
     {
@@ -2325,21 +2325,6 @@
         }
       },
       "variationCount": 4,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-requiremodule-caching-redux",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "legacy",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6468,6 +6453,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T23-29-44-399Z_618886_xuo9ei",
-  "buildNumber": "618886"
+  "runId": "2026-09-22T23-31-57-765Z_618889_paudi5",
+  "buildNumber": "618889"
 }
