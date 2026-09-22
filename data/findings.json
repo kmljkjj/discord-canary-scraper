@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T00:04:18.247Z",
+  "scrapedAt": "2026-09-22T00:06:08.111Z",
   "totals": {
-    "all": 377
+    "all": 376
   },
   "experiments": [
     {
@@ -1917,21 +1917,6 @@
     },
     {
       "id": "2026-03-block-purchases",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-browser-inverted-wants",
       "type": "user",
       "kind": "user",
       "label": null,
@@ -6530,6 +6515,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T00-04-18-246Z_617929_jja47x",
-  "buildNumber": "617929"
+  "runId": "2026-09-22T00-06-08-110Z_617932_hmhw7g",
+  "buildNumber": "617932"
 }
