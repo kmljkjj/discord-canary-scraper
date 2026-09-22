@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T20:05:21.449Z",
+  "scrapedAt": "2026-09-22T20:12:40.194Z",
   "totals": {
-    "all": 372
+    "all": 373
   },
   "experiments": [
     {
@@ -6171,6 +6171,23 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-nameplate-video-preload-none",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "preload": "auto"
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-new-hscroll",
       "type": "user",
       "kind": "user",
@@ -6446,6 +6463,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T20-05-21-448Z_618572_3siaxo",
-  "buildNumber": "618572"
+  "runId": "2026-09-22T20-12-40-193Z_618589_1paj1f",
+  "buildNumber": "618589"
 }
