@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T11:18:38.616Z",
+  "scrapedAt": "2026-09-22T11:42:29.557Z",
   "totals": {
-    "all": 373
+    "all": 372
   },
   "experiments": [
     {
@@ -3900,21 +3900,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-06-family-center-connection-prereq",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-06-game-invites-channel",
       "type": "guild",
       "kind": "guild",
@@ -6461,6 +6446,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T11-18-38-615Z_618143_5wgw37",
-  "buildNumber": "618143"
+  "runId": "2026-09-22T11-42-29-557Z_618153_fzxg8a",
+  "buildNumber": "618153"
 }
