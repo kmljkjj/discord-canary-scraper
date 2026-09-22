@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T22:49:41.162Z",
+  "scrapedAt": "2026-09-22T23:07:00.115Z",
   "totals": {
-    "all": 373
+    "all": 374
   },
   "experiments": [
     {
@@ -6310,6 +6310,29 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-silp-direct-to-discoverable",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "placement": null
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 3,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-single-cpu-copy",
       "type": "user",
       "kind": "user",
@@ -6466,6 +6489,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T22-49-41-161Z_618821_axogli",
-  "buildNumber": "618821"
+  "runId": "2026-09-22T23-07-00-114Z_618849_m1e9ze",
+  "buildNumber": "618849"
 }
