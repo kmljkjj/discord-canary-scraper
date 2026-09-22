@@ -17,7 +17,7 @@ concurrency:
 jobs:
   quests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v5
         with:
@@ -42,7 +42,13 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
+          DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
           DISCORD_USER_TOKEN_1: ${{ secrets.DISCORD_USER_TOKEN_1 }}
+          DISCORD_USER_TOKEN_2: ${{ secrets.DISCORD_USER_TOKEN_2 }}
+          DISCORD_USER_TOKEN_3: ${{ secrets.DISCORD_USER_TOKEN_3 }}
+          DISCORD_USER_TOKEN_4: ${{ secrets.DISCORD_USER_TOKEN_4 }}
+          DISCORD_USER_TOKEN_5: ${{ secrets.DISCORD_USER_TOKEN_5 }}
+          ORBIT_BOT_NAME: Datamining
         run: node src/quests.js
 
       - name: Save quest state
@@ -63,11 +69,12 @@ jobs:
               PUSHED=1
               break
             fi
+            git rebase --abort 2>/dev/null || true
             sleep 2
           done
           if [ "$PUSHED" -ne 1 ]; then
-            echo "ERROR: could not push quests.json"
-            exit 1
+            echo "WARN: could not push quests.json — next run retries"
+            exit 0
           fi
 
       - name: Fail if quests scraper failed
