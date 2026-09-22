@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-22T23:23:04.033Z",
+  "scrapedAt": "2026-09-22T23:24:05.576Z",
   "blog": [
     {
       "id": "https://discord.com/blog/safer-for-teens-same-discord-for-adults",
@@ -444,10 +444,101 @@
   ],
   "zendesk": [
     {
+      "id": "42704051358359",
+      "title": "Why video features are currently unavailable in Brazil",
+      "link": "https://support.discord.com/hc/en-us/articles/42704051358359-Why-video-features-are-currently-unavailable-in-Brazil",
+      "updatedAt": "2026-09-22T23:23:58Z",
+      "createdAt": "2026-08-13T20:30:50Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "3c6ffa025b14d5651ae47029312ebf4e037d78e49a44540b994d24ef311672e9",
+      "bodyPreview": "Last updated: August 17, 2026 If you're in Brazil, Discord’s Go Live and real-time video chat are currently disabled. This is due to a government order, not a bug on our end. What this article covers: What’s affected Why this happened When will video features become available What's affected Brazil's National Data Protection Authority (ANPD) ordered Discord to suspend Go Live and video chat featu…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "29667419799063",
+      "title": "Provisional Discord Accounts FAQ",
+      "link": "https://support.discord.com/hc/en-us/articles/29667419799063-Provisional-Discord-Accounts-FAQ",
+      "updatedAt": "2026-09-22T23:23:19Z",
+      "createdAt": "2025-01-31T21:47:12Z",
+      "sectionId": "360007770532",
+      "bodyHash": "e84206180b1c87a723be5064fd382c959475404675b1a8f4846a86124cb2dc1a",
+      "bodyPreview": "Provisional accounts let you use Discord's voice and text chat features while playing Discord-integrated games, without needing to create a Discord account first. This means you can jump straight into playing without any extra steps. Note: This article is under construction. Stay tuned for more details soon!",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-22T23:23:17Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "769ce66273b71982e2633f2e9b83e57e0b6156886faaca7d89ef748c4d3ddb41",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "30952914470807",
+      "title": "Discord Audio and Video Error Codes: Troubleshooting Guide",
+      "link": "https://support.discord.com/hc/en-us/articles/30952914470807-Discord-Audio-and-Video-Error-Codes-Troubleshooting-Guide",
+      "updatedAt": "2026-09-22T23:23:15Z",
+      "createdAt": "2025-03-26T22:02:36Z",
+      "sectionId": "360007770612",
+      "bodyHash": "d68e0f51a056b509728ae66e1120021d688b0a112b72a8728c597f03abed48b3",
+      "bodyPreview": "Having trouble with Discord? Here's a comprehensive guide to common audio and video error codes and how to resolve them. To learn more about troubleshooting audio and video issues on Discord, make sure to check out our Discord Voice and Video Troubleshooting Guide ! What this article covers: Streaming Issues Audio Issues Debug Logs Quick Reference Error Table Still Need Support? Streaming Issues …",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115001239472",
+      "title": "Troubleshooting Console Log Errors",
+      "link": "https://support.discord.com/hc/en-us/articles/115001239472-Troubleshooting-Console-Log-Errors",
+      "updatedAt": "2026-09-22T23:22:59Z",
+      "createdAt": "2017-08-22T23:11:36Z",
+      "sectionId": "360007770612",
+      "bodyHash": "976b3d441e4c117b55d30d581f493278798f3774c5ab509dcff7bd6f97205bb9",
+      "bodyPreview": "Sometimes, Discord behaves badly, and the only way to troubleshoot is to start digging into the Console Log. Opening the Console In order to get the console tab in Developer Tools, you first need to install either the PTB client or Canary client: Windows Canary MacOS Canary Opening the console on Windows and Mac is slightly different for each platform: Windows Press Ctrl+Shift+I to open the Devel…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "26680694104215",
+      "title": "How to Fix Phone Errors on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
+      "updatedAt": "2026-09-22T23:22:44Z",
+      "createdAt": "2024-09-27T20:04:46Z",
+      "sectionId": "360009072571",
+      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
+      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "14155043715735",
+      "title": "Family Center for Parents and Guardians",
+      "link": "https://support.discord.com/hc/en-us/articles/14155043715735-Family-Center-for-Parents-and-Guardians",
+      "updatedAt": "2026-09-22T23:22:31Z",
+      "createdAt": "2023-04-25T21:55:08Z",
+      "sectionId": "24453355187607",
+      "bodyHash": "09e36a8d8ad7d418739c53f01da92f45bb3400dcb51ca3b8efae665a366fc108",
+      "bodyPreview": "Discord is a place where friends, family, and communities come together to make connections and hangout. Every day, people on Discord build communities and discuss all sorts of topics, play both casual and competitive games, and sometimes even learn something new! Want to learn more? For a more in depth look into how Discord works, please check out our article on a Beginner’s Guide to Discord. Fa…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43515234093975",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-22T23:20:44Z",
+      "updatedAt": "2026-09-22T23:22:30Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
@@ -613,19 +704,6 @@
       "label": "Support"
     },
     {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-22T23:17:48Z",
-      "createdAt": "2020-11-30T20:42:12Z",
-      "sectionId": "115000458672",
-      "bodyHash": "769ce66273b71982e2633f2e9b83e57e0b6156886faaca7d89ef748c4d3ddb41",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "213219267",
       "title": "Resending Verification Email",
       "link": "https://support.discord.com/hc/en-us/articles/213219267-Resending-Verification-Email",
@@ -648,19 +726,6 @@
       "bodyHash": "f519f1b41ea4d8f7ad3c5f32b55db5821ffdaffd8c5cad0e9ffd30f87454d1b9",
       "bodyPreview": "Family Center is an optional tool created to help keep up to three parents or guardians informed about how you use Discord while still maintaining your privacy. As you make connections and join servers, the information provided within the Activity Summary will help you and your connected family members stay on the same page. However, to respect your privacy, the summary will not share the message…",
       "thumb": "https://support.discord.com/hc/article_attachments/43515415808919",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "26680694104215",
-      "title": "How to Fix Phone Errors on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
-      "updatedAt": "2026-09-22T23:16:33Z",
-      "createdAt": "2024-09-27T20:04:46Z",
-      "sectionId": "360009072571",
-      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
-      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
       "source": "support",
       "label": "Support"
     },
@@ -1133,19 +1198,6 @@
       "label": "Support"
     },
     {
-      "id": "42704051358359",
-      "title": "Why video features are currently unavailable in Brazil",
-      "link": "https://support.discord.com/hc/en-us/articles/42704051358359-Why-video-features-are-currently-unavailable-in-Brazil",
-      "updatedAt": "2026-09-22T22:35:40Z",
-      "createdAt": "2026-08-13T20:30:50Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "3c6ffa025b14d5651ae47029312ebf4e037d78e49a44540b994d24ef311672e9",
-      "bodyPreview": "Last updated: August 17, 2026 If you're in Brazil, Discord’s Go Live and real-time video chat are currently disabled. This is due to a government order, not a bug on our end. What this article covers: What’s affected Why this happened When will video features become available What's affected Brazil's National Data Protection Authority (ANPD) ordered Discord to suspend Go Live and video chat featu…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "32556110769943",
       "title": "Discord Error Message Guide",
       "link": "https://support.discord.com/hc/en-us/articles/32556110769943-Discord-Error-Message-Guide",
@@ -1415,19 +1467,6 @@
       "bodyHash": "cb596e98dbc8a9b122994da980c3f93c6fb5e07ec4d340e9d28d46c2aa9d63ce",
       "bodyPreview": "At Discord, we're committed to helping create a positive experience for everyone in our community. Our sensitive content filters are one way we work to support our users as they connect and hang out together online. What this article covers: Types of Filters Sensitive Content Filters for the Adult Age Group Sensitive Content Filters for the Teen Age Group Why We Hide Some Media? What If Media is …",
       "thumb": "https://support.discord.com/hc/article_attachments/43516520209943",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "29667419799063",
-      "title": "Provisional Discord Accounts FAQ",
-      "link": "https://support.discord.com/hc/en-us/articles/29667419799063-Provisional-Discord-Accounts-FAQ",
-      "updatedAt": "2026-09-22T21:39:15Z",
-      "createdAt": "2025-01-31T21:47:12Z",
-      "sectionId": "360007770532",
-      "bodyHash": "e84206180b1c87a723be5064fd382c959475404675b1a8f4846a86124cb2dc1a",
-      "bodyPreview": "Provisional accounts let you use Discord's voice and text chat features while playing Discord-integrated games, without needing to create a Discord account first. This means you can jump straight into playing without any extra steps. Note: This article is under construction. Stay tuned for more details soon!",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -2104,19 +2143,6 @@
       "bodyHash": "bcbf7b5dd7bd9458c4a0d89edc77927acbff07b1778b5f8ff52ebc639ad27045",
       "bodyPreview": "Friends? Friends are great. Communities too. But, maybe not everyone in your Discord world is your cup of tea. Luckily, we've updated Discord's privacy settings to give you more control over your experience. What this article covers: Blocking Direct Messages On Desktop/Browser On Mobile Blocking Users On Desktop/Browser: Using Members List On Mobile: Using Members List On Friend Requests Allowed …",
       "thumb": "https://support.discord.com/hc/article_attachments/27643914879383",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "14155043715735",
-      "title": "Family Center for Parents and Guardians",
-      "link": "https://support.discord.com/hc/en-us/articles/14155043715735-Family-Center-for-Parents-and-Guardians",
-      "updatedAt": "2026-09-22T18:03:38Z",
-      "createdAt": "2023-04-25T21:55:08Z",
-      "sectionId": "24453355187607",
-      "bodyHash": "09e36a8d8ad7d418739c53f01da92f45bb3400dcb51ca3b8efae665a366fc108",
-      "bodyPreview": "Discord is a place where friends, family, and communities come together to make connections and hangout. Every day, people on Discord build communities and discuss all sorts of topics, play both casual and competitive games, and sometimes even learn something new! Want to learn more? For a more in depth look into how Discord works, please check out our article on a Beginner’s Guide to Discord. Fa…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43515234093975",
       "source": "support",
       "label": "Support"
     },
@@ -2884,19 +2910,6 @@
       "bodyHash": "4c5a8cea1f9917f3d63ec4faae961d646bfb6f3497998f37b7b2a7090923fb3a",
       "bodyPreview": "If you ever want to take a break away from Discord, instead of permanently deleting your account, you can disable the account until you're ready to come back. What this article covers: What is the difference between disabling and deleting your account? How do I disable my account? Desktop/Browser iOS Android How do I restore my account? Desktop/Browser Mobile Note: If you have an active Discord s…",
       "thumb": "https://support.discord.com/hc/article_attachments/35064558246679",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "30952914470807",
-      "title": "Discord Audio and Video Error Codes: Troubleshooting Guide",
-      "link": "https://support.discord.com/hc/en-us/articles/30952914470807-Discord-Audio-and-Video-Error-Codes-Troubleshooting-Guide",
-      "updatedAt": "2026-09-22T13:06:16Z",
-      "createdAt": "2025-03-26T22:02:36Z",
-      "sectionId": "360007770612",
-      "bodyHash": "d68e0f51a056b509728ae66e1120021d688b0a112b72a8728c597f03abed48b3",
-      "bodyPreview": "Having trouble with Discord? Here's a comprehensive guide to common audio and video error codes and how to resolve them. To learn more about troubleshooting audio and video issues on Discord, make sure to check out our Discord Voice and Video Troubleshooting Guide ! What this article covers: Streaming Issues Audio Issues Debug Logs Quick Reference Error Table Still Need Support? Streaming Issues …",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -6120,19 +6133,6 @@
       "sectionId": "360002436411",
       "bodyHash": "7a8704b044ca6bc6faf3bebe46aa6416145176bb14dd86df0c84fe4fb3bbc876",
       "bodyPreview": "Abusing or defrauding Discord or our payment system violates our Terms of Service . When we receive a fraud report from your financial institution about a purchase made on Discord, we may suspend your account to protect you, our community, and our payment systems from potential abuse. To avoid violating this policy, please direct all refund, fraud, or billing inquiries to our support team at dis.…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115001239472",
-      "title": "Troubleshooting Console Log Errors",
-      "link": "https://support.discord.com/hc/en-us/articles/115001239472-Troubleshooting-Console-Log-Errors",
-      "updatedAt": "2026-09-13T15:00:38Z",
-      "createdAt": "2017-08-22T23:11:36Z",
-      "sectionId": "360007770612",
-      "bodyHash": "976b3d441e4c117b55d30d581f493278798f3774c5ab509dcff7bd6f97205bb9",
-      "bodyPreview": "Sometimes, Discord behaves badly, and the only way to troubleshoot is to start digging into the Console Log. Opening the Console In order to get the console tab in Developer Tools, you first need to install either the PTB client or Canary client: Windows Canary MacOS Canary Opening the console on Windows and Mac is slightly different for each platform: Windows Press Ctrl+Shift+I to open the Devel…",
       "thumb": null,
       "source": "support",
       "label": "Support"
