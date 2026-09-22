@@ -47,30 +47,57 @@ jobs:
           ORBIT_AVATAR_URL: https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg
         run: node src/shop.js
 
-      - name: Save shop state
+      - name: Save shop state (conflict-proof)
         if: always() && steps.shop.outcome != 'cancelled'
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f data/shop_items.json 2>/dev/null || true
+
+          if [ ! -f data/shop_items.json ]; then
+            echo "no shop_items.json"
+            exit 0
+          fi
+
+          # Keep this run's state safe across rebases
+          cp data/shop_items.json /tmp/shop_this_run.json
+
+          git add -f data/shop_items.json
           if git diff --staged --quiet; then
             echo "No shop state changes"
             exit 0
           fi
-          git commit -m "shop: state"
+          git commit -m "shop: state" || true
+
           PUSHED=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
-              PUSHED=1
-              break
+          for i in 1 2 3 4 5 6 7 8; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                PUSHED=1
+                break
+              fi
+            else
+              # Conflict: always prefer THIS run's shop_items.json
+              git rebase --abort 2>/dev/null || true
+              git fetch origin main
+              git reset --soft origin/main
+              cp /tmp/shop_this_run.json data/shop_items.json
+              git add -f data/shop_items.json
+              git commit -m "shop: state" || true
+              if git push origin HEAD:main; then
+                PUSHED=1
+                break
+              fi
             fi
-            sleep 2
+            sleep $((i))
           done
+
           if [ "$PUSHED" -ne 1 ]; then
-            echo "ERROR: could not push shop_items.json"
-            exit 1
+            echo "WARN: could not push shop_items.json — next run retries"
+            exit 0
           fi
+          echo STATE_PUSH_OK
 
       - name: Fail if shop step failed
         if: always() && steps.shop.outcome == 'failure'
