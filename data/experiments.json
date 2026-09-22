@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T11:44:45.588Z",
+  "scrapedAt": "2026-09-22T12:03:03.333Z",
   "totals": {
-    "all": 372
+    "all": 371
   },
   "experiments": [
     {
@@ -1669,21 +1669,6 @@
         }
       },
       "variationCount": 4,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-pubsub-bulk-ban-users",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6446,6 +6431,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T11-44-45-588Z_618154_bz4qcr",
-  "buildNumber": "618154"
+  "runId": "2026-09-22T12-03-03-333Z_618158_5pnxsg",
+  "buildNumber": "618158"
 }
