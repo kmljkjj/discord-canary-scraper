@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-22T21:06:58.898Z",
+  "scrapedAt": "2026-09-22T21:17:47.594Z",
   "totals": {
-    "all": 372
+    "all": 373
   },
   "experiments": [
     {
@@ -5978,6 +5978,24 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-build-a-bear",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-clips-editor-image-track",
       "type": "user",
       "kind": "user",
@@ -6448,6 +6466,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-22T21-06-58-897Z_618694_1xo8qb",
-  "buildNumber": "618694"
+  "runId": "2026-09-22T21-17-47-593Z_618713_s0fg8h",
+  "buildNumber": "618713"
 }
