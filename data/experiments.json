@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-23T20:58:57.526Z",
+  "scrapedAt": "2026-09-23T21:02:19.663Z",
   "totals": {
-    "all": 375
+    "all": 376
   },
   "experiments": [
     {
@@ -6281,6 +6281,21 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-quest-mobile-bar-secondary-cta",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-referral-trial-cta",
       "type": "user",
       "kind": "user",
@@ -6516,6 +6531,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-23T20-58-57-525Z_619579_a23psk",
-  "buildNumber": "619579"
+  "runId": "2026-09-23T21-02-19-663Z_619585_18bg39",
+  "buildNumber": "619585"
 }
