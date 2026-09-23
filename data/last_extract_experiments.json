@@ -1,6 +1,6 @@
 {
-  "buildNumber": "619574",
-  "updatedAt": "2026-09-23T20:50:19.011Z",
+  "buildNumber": "619582",
+  "updatedAt": "2026-09-23T20:54:35.325Z",
   "count": 359,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -2249,10 +2249,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cfd4c1909c41a936eb9ca1f2"
     },
     "2026-04-icymi-staff-only": {
       "id": "2026-04-icymi-staff-only",
@@ -2581,13 +2582,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 3
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 25
         }
       },
-      "fp": "3c669fe63a6fd0e756fc4b11"
+      "fp": "c63ea227a5e17077acd71847"
     },
     "2026-05-badge-discovery-milestone-2": {
       "id": "2026-05-badge-discovery-milestone-2",
@@ -2755,19 +2758,23 @@
       "variationCount": 4,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 5
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "percentage": 35
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "percentage": 5
         }
       },
-      "fp": "39da7bf1bf63fafd5b69caa5"
+      "fp": "6c01a1d585eb4afe80d10232"
     },
     "2026-05-global-soundboard-wheel-popout": {
       "id": "2026-05-global-soundboard-wheel-popout",
@@ -3403,10 +3410,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "dd7cb95a2d1307f187b5c464"
     },
     "2026-06-server-theme-apex-shadow": {
       "id": "2026-06-server-theme-apex-shadow",
@@ -3522,13 +3530,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 0.05
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 1
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "8c05ac108a20c0c44c308310"
     },
     "2026-06-wmf-cpu-encode-intel": {
       "id": "2026-06-wmf-cpu-encode-intel",

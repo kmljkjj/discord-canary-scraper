@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-09-23T20:50:19.045Z",
-  "buildNumber": "619574",
+  "updatedAt": "2026-09-23T20:54:35.358Z",
+  "buildNumber": "619582",
   "count": 359,
   "experiments": [
     {
@@ -19,7 +19,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6ab4992cdd86db2152a3731f0b01f46e16ae6d05f8439bbe277a7598d9e98fef"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1871a78cccc26a7e4a9054b1208a31e1c92b938af09ec0d2d52cade36ef9663d"
     },
     {
       "id": "2021-10_runtime_accessibility_system",
@@ -40,7 +48,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7c4bdcd6bdb112d48b9b912771c48d05c4dccea3ad0bfcdae9e10212b97d41af"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d44331f4d6964e3452baecce99abe938d37f4f1ee80962816d3b2ebd17912dc5"
     },
     {
       "id": "2021-10_study_group",
@@ -58,7 +74,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6e985bd8ee607ed9b45df64f0b052c05bed39dba313801199ab323c95d0b09a3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8aace817e4e3617a8971bf0181c6bc14e9c224d5f2e2447a7c54722ba0842a78"
     },
     {
       "id": "2021-12_inferno_spam_redaction",
@@ -76,7 +100,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "d91457abd69e5e98fa64305e6780090dc88062fe42b74cfbb397830a3bb57c21"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "87ac5ae1bb44279281c6f23fa60c7c575d368daffc1363165742af575033f712"
     },
     {
       "id": "2022-01_threads",
@@ -90,7 +122,15 @@
       "variations": null,
       "treatments": null,
       "variationCount": 0,
-      "fingerprint": "85b92ba88efa72ee5a069263f71be13e9dd242bff28b32f07e346e453538e453"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "04d11517153a08fe54b87f0e282cb127094f603398f36efb0332a4c7fedebe4b"
     },
     {
       "id": "2022-07_voice_in_threads",
@@ -108,7 +148,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5e3aef4f4ea714fdf288c48284c4e3e0755d22e92d6533f9214703b9b5300054"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "252d9f8b7aa71e76fd070a5f0d804d84c47301b14fe10162e9666c44dc24cac8"
     },
     {
       "id": "2022-11_default_disable_mass_mention",
@@ -126,7 +174,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "52c6236987124fd7ec7d0b1939eb9e157f9973ded3893f4f2dcb2ca8ab16eda9"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b108505d321521f1bc8c57a1a9fc7e32344829b6af185b0eb1507a23f6285a08"
     },
     {
       "id": "2022-12_mention_raid_limit",
@@ -144,7 +200,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "002bff3e9b7e346e2fb55214c3ec6fa5cdb2f8c914bf51a3f6e539ea22796920"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6da330b15ef27402563494e4e7e4d46666d20fd2b91f10f38d2e6f9e5b3fbdf9"
     },
     {
       "id": "2023-02_guest_voice_invites",
@@ -162,7 +226,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e032f581398af73bbe924e0441b299a4e8a8a927482e9ac779737247f375d109"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "bb60f42a159ee906e0e96270915949aa948b8a416f2924dd0af93951cb0b2ba5"
     },
     {
       "id": "2023-09_iar_dsa_webform",
@@ -183,7 +255,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "80c4abfc0cb40cb32e78e06713bbb6b0810cf54bdaa18c458543172be83c8fce"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c0645cd3f1a3cd09a0f6eb59234f5c03116e40136f5765635673c4f7cefb50aa"
     },
     {
       "id": "2023-09_iar_user_reporting",
@@ -201,7 +281,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9d179b365a8fa420f9c7444acbf0307b2c20b5a4d8045fcd4679cfd7b15e258d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e6bb111e4f248b769d7c99a253b165f0809c0eedafac72992134eae8d9f0bcbc"
     },
     {
       "id": "2024-06_rtc_pacer__simulcast",
@@ -221,7 +309,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3f93ccc0323bf6d63b6e9667c80cb9954c6bb543d14f7b7058cee87efaf0eaca"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5e6755b3e67b5fafcbe926bbbce61d7f40be1d5860ed7b182fbf71117061e852"
     },
     {
       "id": "2024-12_guild_voice_channel_ringing",
@@ -239,7 +335,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "c808404c4592f2cf22e605f3eefb95e425afaf2983632297dd05b55c0f1bf596"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0b8f9427112768fb0c2b320ed456270f09edb790b1c9bb795e4d10ef5eb96437"
     },
     {
       "id": "2025-01-allow-nonstaff-to-preview-app-collections",
@@ -257,7 +361,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b30b7ddcc1ff1dc93fc4db16ebd098a2e6b9b0a23444c610e5e5aabebe1a57ef"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "60e35c124b59ed2dcb622189e6956e750166258e69493afde4027f3a99896f92"
     },
     {
       "id": "2025-04-desktop-refresh-fast-follows",
@@ -287,7 +399,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "54958b6a94617354b094cf287781ff20135608c916bfb841841b5d410d917dba"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "bca95b2ad99e539f95d7d56bddae97949b93b76e6c4d87d9787aeff542418507"
     },
     {
       "id": "2025-04-native-markdown",
@@ -308,7 +428,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "66eeb0747b159f7eb509dc43de8e7c277692eb41a10c5021db485cd30f6c38f0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c3a5cdc07849c06eda79fe3fbd374cdb1eaa35a76e9cba91237b6d09f35fa723"
     },
     {
       "id": "2025-05-search-results-feedback",
@@ -326,7 +454,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "06989cafea2bd1cb8de9252e09075be017e3e6f196ae47289081c94e67e87674"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ec83f1ee87cc4c12c22a0d404ab5ed47e93be0c926b74afc4c7912121ea60a23"
     },
     {
       "id": "2025-06_native_intents",
@@ -353,7 +489,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "9ab9184a783f9ab7584603b277d115dc014ca4492613fd11511f624789e9cb02"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "64cf2f5cebf1afa52df81ef2af10ca3269475e8aa8b9971b98e7f607ec8d4ee8"
     },
     {
       "id": "2025-08_default_invite_expiration_guild",
@@ -379,7 +523,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "fde0907ac5f06f54e624b20e9507b52e420709ef7fef03b7032580f378800e27"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0cd60734c2a5d42d084c3e9b993801e7723c74e6aa0633b73f171b8b412bdf7f"
     },
     {
       "id": "2025-08_portkey_enabled",
@@ -403,7 +555,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "764416cd9c6e70dcf38b00286d9eb77fe1350bf4e50a49848fc242aae7b1ba3c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d492d4cbd6e74b6606d7f5e1d64d804335247499e0771720a4d8fd94f5c54ea6"
     },
     {
       "id": "2025-08-browser-hevc",
@@ -421,7 +581,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "39fa73534d82864ca0c368296ba287212a30f0e974be1d671f7ea9ec9f86192c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "efdcca155e73b2d2dc1cec65ae056f43f10c0213fefd4224ee226295c5b13f12"
     },
     {
       "id": "2025-08-voice-user-affinity",
@@ -445,7 +613,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "ff85b045b2de0c7c3a1ecc7e52d79f6deb1c5ea2f3428e8616c37a050b54b249"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d99983b02b0297341da73218a5099c7e6f2762eb74ff7bb2aa4cdd26017bdae1"
     },
     {
       "id": "2025-09_hotwheels_nvidia_boost",
@@ -466,7 +642,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "26bea26aedd3ef34c381eb90b1607b67b0683bcd33349dfbd9fedd6038e46bae"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d04da387128c1c58b879f996078c628035a021293ad08002327faf5754335be6"
     },
     {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -490,7 +674,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "38db38b0d9b7e7e261bd38bfa788998505ef11af1306f8eaabcfe606c89ed810"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "82e8e9aed85867b9da76749bb6bab0841d82a6ffec0b484e1585cbe5d33243ac"
     },
     {
       "id": "2025-09-overlay-state-tracking",
@@ -508,7 +700,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7cad801321413bc04f8c7d7a03811fa1c4121013e318030f70e9856d4356115b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "947e55a24204fa2d0321411c740a6664e34f945b972f993cd9c945e7b9ccbc5d"
     },
     {
       "id": "2025-09-sensitive-content-self-harm",
@@ -526,7 +726,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "79a80038d31817bfe64d50af8b9dd9d383f8ead49c01b7ef1cac841629d398c8"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "658e069c544e295db833cb6e54645b96f54b17973fd824c80ab3e806f9aa0292"
     },
     {
       "id": "2025-09-server-nsfw-level",
@@ -544,7 +752,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2145a0b8833e838e237547a54bea649d299d56da3a950629f16b872908bc3af5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "22259f5e154924a3cad62144bada8e78c578ad0c9c214673eaab9e8eff0c4fe0"
     },
     {
       "id": "2025-09-video-qoe-metrics-tracking",
@@ -565,7 +781,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9ff31aa28ae068d42e5086d6b774662f63a553f404cd2de316414a8c63b1394d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a31b51bd02ef622045da728a8b7ddff43e58a910888b5fe75537059a8da96ec6"
     },
     {
       "id": "2025-10_community_account_link_onboarding",
@@ -583,7 +807,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "48479272a3e0c3a7ce4790b1361ad4196693f1e895d33a234239213d8ebb391f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "966b8df0e56d9c5c632601e4fb1d2a74d4fc7864893daecd810d7e4912b43f39"
     },
     {
       "id": "2025-10-collectibles-custom-cursors",
@@ -604,7 +836,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "4d00faebbccc071927f070ae866fba81fcf10b4db854f92a5e5ec01229929a91"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d8b3af1cf064863ebffe871da1a3f0ff120fc4b3f26a1b70994ed0172880499e"
     },
     {
       "id": "2025-10-desktop-communication-notifications-emoji",
@@ -622,7 +862,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6127bf3ada036729773f374097be0f2514bcd7140ea6710071aebc0505c8d15e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ab0185e7f1f9e8b8d728df33b0b7727d4e1fa6dc9019f4305eb8ddf6b27df0ce"
     },
     {
       "id": "2025-10-force-sdr-emojis-stickers",
@@ -643,7 +891,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "b7af9e165d3172fb70a27fadddca0cafb83df1792ddadaaf87e3e9303e892821"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5cb5be6558619622773e152816b8388e13a6b9b50eb1d67d3b9acb3b76532ea7"
     },
     {
       "id": "2025-10-friend-request-alerts-v2",
@@ -661,7 +917,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "54b12954fe7f541a69e19929c775c1fc06c1b082ab4ae2655cfdf8e0a2c72b88"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c61627f702f399d083cd7942ce13ce5ce124c0a5f152293903df41a98471a64f"
     },
     {
       "id": "2025-10-go-live-auto-quality",
@@ -682,7 +946,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d63facee7a7fa54ac615bba3731970eceb0e9d10c3c0a11b889c2902c37b1ad7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "aa5c52ced3cbbb32775ead52a6ceaddf008370d5e6f7508679095ed9202c4055"
     },
     {
       "id": "2025-10-low-latency-rate-control",
@@ -700,7 +972,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "01304b113c1e7cf2e164c15719a2fb95ed9172f715f3cfd6345cf9d7a1de0b4e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "154e7333714898d590b26945436692d3436aed150eed0e45f5aba2b3c7d7046b"
     },
     {
       "id": "2025-10-mana-date-inputs",
@@ -718,7 +998,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4384d6e6bd445271a673efa382352e07d7e1635b6e85e0d7b503de44c9f3a7fa"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "015c0303c0fe080c5606824f034070fc2d1af6f8cc710d5e5ccf59be9214ddba"
     },
     {
       "id": "2025-11_tida_webform",
@@ -736,7 +1024,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "ee61d8936a706770f0257a0174c5311bd8f759f2e88cd39661b1f13b122bfe78"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "26dc5a5b270c773bceb4dc31e086001dff7572f7eb20224570426c2895a360fe"
     },
     {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -754,7 +1050,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "abe1938f0d582ff024177b8f7002441fdcc3121cef1fc01e6a1b9af0635c2b07"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d0f3534e768744d7ac2e1a593c0f9dfdebfe246f8007a30cb7a7bea39a62051f"
     },
     {
       "id": "2025-11-global-frame-pool-lock",
@@ -772,7 +1076,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7929df950c4abf89e7dc70df9074b0cae767323483b3160e2070fb8febed0dbd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b84a5defbd12fb5605aec6fba2606d61bb2ecbc2e00c80aff5967f2dd0d23a8b"
     },
     {
       "id": "2025-11-hide-manual-link",
@@ -790,7 +1102,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "370fc6da3e363bb68f4a5c07c8febd0b8b6098af8fa76eb8bcde5a2786e6ff36"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f53a6fc4e86393a19247bed335abd29eb1edddc4e49d86bc9de4cee7df303b6a"
     },
     {
       "id": "2025-11-mana-context-menu",
@@ -808,7 +1128,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "17ef2d695f9dc0341b29f801d443df4acf8d70f6ea4aa8e167c1ecdf77aceb53"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fcdf383baee05fb5e56f2e45def25949c09f3bb17d5425de21f22b64268aa3f9"
     },
     {
       "id": "2025-11-overlay-chat",
@@ -832,7 +1160,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "3027e3d7a3db87ee375ae685c35b1536bf3f697fac9a40b127a9b1c667f87646"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6d59766a5c6cd481e51db6274798ee7e13c9f6989a7c888b0542c4427d0233c4"
     },
     {
       "id": "2025-11-rtc-panel-entry-point-new-copy",
@@ -853,7 +1189,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ed024b488e288d00c99c249957812ca6f7e536d728e8fdd6655b32c872075843"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1cae2a1b9b5a15c8d7d62ebe0b9a7e9bfc9c6fd9c38986f42e71697fd751cce2"
     },
     {
       "id": "2025-11-shockbyte-degraded",
@@ -871,7 +1215,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a655a9965d7a9ee397786913bf21c33aff1b5a00632d466df6ea06444cc187bc"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2d798146737cc99af40e1a152d30cee1c244809326f8c015c76fdba88811405c"
     },
     {
       "id": "2025-11-video-end-card-v2",
@@ -889,7 +1241,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4c9b836ac6f87c2bea4e2e65e4988dcf8897a69e7b6c1e4d2bf229a0dfc0ac62"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fdc99d632509387c6aa31e91f34f8c01b17ac37252e7e9b6936a5a3114b80917"
     },
     {
       "id": "2025-12_voice_channel_hoisting",
@@ -910,7 +1270,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9a6ec151de0c3a6284e2ad51e0f8d1c3d476e4b0b82ef854d2cc248ede51b96f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "55ace40062bc60c92a602b790f3ac4de0fd6579159136767433fd1085bc6535c"
     },
     {
       "id": "2025-12-game-invite-account-linking-entry-point",
@@ -931,7 +1299,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "228686e41b30f8e8b5ef131a362204c750f99127a07a89f035be27ed9582bcb3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0487560d69a8fdb23dd5bfe7f406725067d6aa80506c073eff01f4c58d1f1454"
     },
     {
       "id": "2025-12-hdr-accessibility-setting",
@@ -949,7 +1325,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6e502de1a60b51db98a9eda549ab50d8ec8c2dd98d5c3fc1c5d686b6574c933b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c8dc34cc674936cc27aac9fba0bfb34cacb24226577582fd3dff75540d40ad49"
     },
     {
       "id": "2025-12-katsudon",
@@ -970,7 +1354,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ccc32bb4e2a0a9ef24db99d4caa61435a28d83d644336364dabea944db7d30aa"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9f820d539d6e966833df9af3649729b4d1969a59b215d65793771014bf21d34f"
     },
     {
       "id": "2025-12-mana-multistep-community-enabled",
@@ -988,7 +1380,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "69bbf5f3671e3b88b8e9897f47b1001faf7dea89d495dedf3c3ebcbe5b2ced55"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cfe9b152b0842305ade7cce40f5839b11b18d0361424eda030e9b7985e4d0d96"
     },
     {
       "id": "2025-12-nitro-s-rewards",
@@ -1020,7 +1420,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "9b3b700ddae0b2ba40d5543262c68960eceb3a83977ee67cd430d7bb78a52592"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fc95d1a6f2460b9352eb1b2b8be0c2dee9a147eb0ff834cd3cf4876f9d9fa035"
     },
     {
       "id": "2025-12-orb-redemption-thru-orders",
@@ -1038,7 +1446,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5dace62c904d2860e9fc682180e82165945369c6a223e8d2ae4e0af31de54824"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "70ef0790393c02e15e492c1b486ccc4f6bb9b40a315232418688798c5798beac"
     },
     {
       "id": "2025-12-proportional-vad-indicator",
@@ -1065,7 +1481,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "ae0762b4549fff554f00dfa3f1e3203ac0cd7f18b9a187771cd9d39e812b4204"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "754b80323bbc99ef4bb905ebb44ec56cb1df7c9bdfd96db49ab59eee48b8b7e4"
     },
     {
       "id": "2025-12-quest-cta-refactor-rollout",
@@ -1101,7 +1525,15 @@
       },
       "treatments": null,
       "variationCount": 7,
-      "fingerprint": "d377accb023fb53d14dc25e79ac463b06fef7d02d097bc526b2b4d5b5fa619fd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b689358abf82c7f029c4b545214d8e8d555afb4f975014e08488f2dbcf35d2fa"
     },
     {
       "id": "2025-12-windows-audio-effects",
@@ -1119,7 +1551,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "69dfdf3d1a118fb86b949e325db4e8e8e2301c360543d1204f3c49602a1867c2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ce06490f3fadc4a38e98173e3aec5a03c709b1497b076ea6f5324fb9ab0f2311"
     },
     {
       "id": "2025-12-wmf-gpu-encode",
@@ -1137,7 +1577,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "afd1712ffb8c35a182903317f0e25a401134a978a794007a0535db0e71fb31a2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e94ab3ffc742ddcf0b1eb97100c15c818cd080b0def42a56a55f74cdd38b82d0"
     },
     {
       "id": "2026-01-bug-reporter",
@@ -1155,7 +1603,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7fe1eda31322b09a56b32cac594a911d66201a3ad0e4919c16f174e0c2633f0a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a38e3a3c50709f3eb933a9206d7a402d711935bff96f59928c4abe259331cd0e"
     },
     {
       "id": "2026-01-cms-layouts",
@@ -1176,7 +1632,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "b6f52d2f4baa5fca1bb7484947b312ca3ce77cdabf79be4aa699a01f3086a796"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "be2563e75f2b232f50c84e6daf59cc9487939423d95276c68e098b1654b6c4c3"
     },
     {
       "id": "2026-01-favorites-server",
@@ -1197,7 +1661,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "45cce6b39f8142b914eef410efa92aba3a6e8281db931a5c447836fecbc20b2a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f62d8480d454e663da72065d1d258309bb5e59b2c408d1cba284145f5c86322e"
     },
     {
       "id": "2026-01-friends-in-server",
@@ -1215,7 +1687,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "93e145878f49f22c48dd122a3b16bc51d16df5218ca7d1fe69bc80928ef77b66"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fa63d0a2276281691a1620ccda42bc0ff0e5e4162317aadcfe2ce73add195bb7"
     },
     {
       "id": "2026-01-ios-push-notif-json-fix",
@@ -1233,7 +1713,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8530ac389af2a5974e1f1ed0b9579e0e0ccf5ff9e2633867d092bb409a46bd8d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e5b22b75e558e122fd09f00537c71b0c88dfbd3a9294d53e75f240271bd1333d"
     },
     {
       "id": "2026-01-less-personalized-ads",
@@ -1254,7 +1742,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ba5716e253f316b0887682c5e68420ca71285c9a4e0de471f560c2ab6cc7921e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "da89840e53e3197da12daed432b80d8b9d4aa0e3c49e2d3dd42ea8eea3c96914"
     },
     {
       "id": "2026-01-voice-dares-v0",
@@ -1272,7 +1768,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b2dd9b61f11f67d06fa6e49d0938cb65e587b79a599482b54163a0dd4f052506"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b0f7a5e3799bff2f9cf41887662eab3f23b989715415532ccec314b146af1de9"
     },
     {
       "id": "2026-01-wmf-gpu-encode-intel",
@@ -1290,7 +1794,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4d1c81017d4d4c8ea7e9f44105b5881d5266d8666290410dbacf2b8b7305f2db"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6b65c03eb0226b6d5b1c505a9a4cb7109a11d9eea610c4d4a72e2baadc475af3"
     },
     {
       "id": "2026-02_game_claim_coachmark",
@@ -1308,7 +1820,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3b9b8a9ec233dd6ab49a73552e542a9bae8b043629cbb1d4c9a85d3bd1769688"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e6a538f6793939ad3e829f402827d8a656c3719bef87b664f245adad064e5805"
     },
     {
       "id": "2026-02_hangout_window",
@@ -1326,7 +1846,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4faff90b0fea7a0e3bfbe24229f09b3b7b830a3d61ba4d98d516c35f200bc5ee"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f4dda9c9790102e833a743e9e23992c64dc4fabdf0ab42f52c13a8d4753a2ff9"
     },
     {
       "id": "2026-02_past_vc_activity_messages",
@@ -1344,7 +1872,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2d9cee7e299771cfd7a56ebc39723fcff66f1896e09ada74fd93a51f7a34c57f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "488f42818681ee98f69421b2c4719b3b6c061b348daca2cb88e1cd7b4ccebfd1"
     },
     {
       "id": "2026-02-activity-privacy-matching",
@@ -1368,7 +1904,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "20f09305c3f819860dd5c4456c1a69d0dee29867a4a98b13bcd0469c1ea5f948"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2a7b6f68e6dc902ee24d5d6f40720799790339486323046e7f186c850b97a68e"
     },
     {
       "id": "2026-02-announcement-composer",
@@ -1386,7 +1930,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "83cba88175e00e658a580dbc0ba93bd17d09c1fcc60788c4909646cfcb5f9c99"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f1c97c7231f5a7c61e438e6520e4482c1f0cd147f6f79665c007c92f503efabd"
     },
     {
       "id": "2026-02-boosting-refresh-modals",
@@ -1412,7 +1964,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "68e624a11c1e35c8914b9998c7ed44df15273697d75e021438874eb7f434a94d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0cf67f7bf3f8ff0a416a3e7c06396834343bc878d78fe4d0ba417ad7fe7fd70a"
     },
     {
       "id": "2026-02-capture-target-window",
@@ -1430,7 +1990,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4458bcae5c6b219b2cf3abd7509bca2189698ca51bec3f9bdb691a7f88318153"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "604eadfb0a6b7b95091fba63e0e661ce532b877d8ebcaa517a645199ec47eeb0"
     },
     {
       "id": "2026-02-content-classification-presence-filter",
@@ -1451,7 +2019,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9cc71697798efa3da439aa892be1be62e94b9f4a220c53a4374dbcfd722de673"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "35948029f559fd8487dd72a72a533a6fe0b8fb633f1288b60d9742d24b3dd0e6"
     },
     {
       "id": "2026-02-desktop-new-user-onboarding",
@@ -1469,7 +2045,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f5a2840b526ab3004f2f759f445199dea8d069fe7f2aa87486cc2c925b470330"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "344eee5d3d58b56203411af05a5ec20f5fdbc925ef3fe2a5f4899e72d9c2c7cb"
     },
     {
       "id": "2026-02-expiring-powerup-coachmark",
@@ -1490,7 +2074,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d35fe3fdf500b1ddf10e02ca9b45ce0b321d29b57e6446131be67fe8df94fc39"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "53404f9a7e24ba038b62ad2adb34be34b05ef6cf131b6aa10b5600e8f337e1a1"
     },
     {
       "id": "2026-02-friends-list",
@@ -1508,7 +2100,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3f4373264045b5888d388730751037ebd876c337c5732861ad6d5fad40709d1c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f1433ac882caac98e41f8f950dbfc871b7ca594821a5ab2af9e9f6b688b2cd58"
     },
     {
       "id": "2026-02-game-server-tab-always-on",
@@ -1526,7 +2126,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "299e46648a23b308a974eb8377590be63a5b8aedf2d1d06506a94cd3c823d5ca"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c2d44f3fac70b97c11b963fbb98a3fc36cf9a3519b0099fa5089d5367bc10d5f"
     },
     {
       "id": "2026-02-gift-cards",
@@ -1544,7 +2152,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "daca77626422240dc2ed35f967bace53056799c47546b3caf4107870a4aec5a8"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c7fef8e527bcfccfb47b18160fa077520e8896e4c564ced5d88733cac262cdff"
     },
     {
       "id": "2026-02-gifting-modal-redesign",
@@ -1562,7 +2178,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9021a7ab874c2ec48ddc708c12292fbfafa542882c72f868f2b82b876aab4304"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9ffbf76d8e4292005dc3699584cb06c77febfa5156fd7aeae1caf4aac801a3e8"
     },
     {
       "id": "2026-02-go-live-hdr",
@@ -1585,7 +2209,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "742cb11ac8325e81fd607d53d6861f842f2aaf897789a6bdf405884cb18bab67"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "30acd12776e1602d5e2aa71993606e645b241f45e5adf6f0f97bc5b927357e75"
     },
     {
       "id": "2026-02-gsh-game-detection-upsell",
@@ -1603,7 +2235,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4b54fe7077a2fa84cc1e4e2e72e7d73cd0167a79bd1833b1ef2d11d3bec03937"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2f4938337dee37c72b697253f1390ba9f0114808b5b6c2ce37e3576aefa599c1"
     },
     {
       "id": "2026-02-join-game-community-cta",
@@ -1621,7 +2261,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3d8dd9fee56167f889245629ac423569e32e622db0262b793d0d0675d0dbccdf"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "89b87e98692d3f97e76d980ba67e93caa278c4170d515f07e4630a1dfd11c130"
     },
     {
       "id": "2026-02-lazy-load-all-images",
@@ -1639,7 +2287,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "341a22a97dc87837c68fae0e3bd4108b8ded8ac3673f631d4ac11c26925ebf03"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3eb2898508a2cad80ae0e02a74af4cc581cd2f2e0f196fcbd964f8f15fbdd6cb"
     },
     {
       "id": "2026-02-longer-group-dm-invites",
@@ -1662,7 +2318,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "c88e69bada653a327304fd0ec699f4a92b4450c56b28063d79af0508d5cdaf3a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "82ed9f3ad94604ad646a571861bd9072be47ff24fc5b756d100fefdb9be3c83c"
     },
     {
       "id": "2026-02-mana-playground-access",
@@ -1680,7 +2344,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b5f8e2957fd05d087f024f82c66c30a12d7f4c8c832a60e64bf1ac0b6184e8bb"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6bd69a3aa54eff2bb60ec9537ac7c833bf0940189ed835f48aff23ef556db629"
     },
     {
       "id": "2026-02-mobile-volume-output-slider-removal",
@@ -1698,7 +2370,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "887cfcc25829d0b2f2f6d5c80b90f332c7842519b6dcb03905564176f8dc2661"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a5e4d9d137d47ad15ace14e66c80426a4ac02990a27c4b81e19e09f13aa03638"
     },
     {
       "id": "2026-02-mute-tutorial",
@@ -1716,7 +2396,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "dfcebd119298fd6467bba7c044668e33bd014bce5950906a34d4ac48790d3b47"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0df0def4f04a1932a23260f8f75f2e78ebcf7620fbf07d9b32eaa6f012fefa2c"
     },
     {
       "id": "2026-02-non-dm-gifting-modal-redesign",
@@ -1734,7 +2422,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bbb93cfe49f0b9402e7344b84b094ad232f70aee53d364378ddb688a04a59a85"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e48da4fe3b954df178813bc8f94cfb0c31561940f445a1105db7b86485681640"
     },
     {
       "id": "2026-02-premium-offer-reminder-xp",
@@ -1752,7 +2448,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "26138b2d2d9aa5091c72dcf68bcd430955c94dccc14a15267c3f23b4ef754899"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "adab676f6f49b0f8be05e7aaea40afc2a6554dfbc9e31266dc59b4a6f3d107c6"
     },
     {
       "id": "2026-02-private-channel-hiding",
@@ -1776,7 +2480,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "d59dc007be8307c5c637b57b1e7e1a9b0be4013792557444271cbaa3daf078d7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cf07dcd956d0be9428bb806cb7fda29460ef48ee58725bb742aa1ba43032091a"
     },
     {
       "id": "2026-02-private-profiles",
@@ -1797,7 +2509,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "96fb7ebdfa334e5a819ef78cc24074eca2189a344c143213e58b96adeafb465e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c7fe7a4677dfd57979b91fe2ada7c529de0a372b173f7113d942e861be1d10a"
     },
     {
       "id": "2026-02-process-boost-on-voice",
@@ -1826,7 +2546,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "a0eb69cb13e4486151c85c92aecd4f0fcfdd7360396305f07dadd0f71a5c1c37"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7cf6a7f1fc9feb3dae3d181a868ab5611a7689a6cc239409e741c5be273d0431"
     },
     {
       "id": "2026-02-sticker-padding",
@@ -1846,7 +2574,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bc4856c7ee44ee5923120ecede32a031887829f5a59ff2e68c1593f1c72fb192"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "be345e8775fba72be1c3c7df1144522c60a04f8a7b8e8619133bdf562a727a40"
     },
     {
       "id": "2026-02-voice-channel-link-click",
@@ -1864,7 +2600,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "418deb2164f85ce2a4ff02a7ef36077d82cab645df508df5d676ace91ed16f9b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ff3d058ac76134f13fef58f5fa094087fd806b5b3e3752006a4d4f3920174476"
     },
     {
       "id": "2026-02-wgc-dirty-regions-all",
@@ -1882,7 +2626,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f87b2b822915b292fd786aeca0abeca2109acc8c3a64841669b2d0d3f75d491c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b574600c3c2a3580485b65f1631edb561bd3dd56ce1ac2bb8881b73f027d9f0b"
     },
     {
       "id": "2026-03_file_upload_250_mb_powerup",
@@ -1900,7 +2652,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "21c90f5215a87c1f2f98d496dd35f69c4ce1161391dba3890402359172fd20fc"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d427906c8c34438cebb92557c121d71d605ab79a5ab83e5d43017e6e328ed012"
     },
     {
       "id": "2026-03_game_server_pricing",
@@ -1918,7 +2678,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "82f513d225db11a3e83a2415b3c497133c396e930a21c8e1eb9f2f563b904c9f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fff31ad84822faef7aea6ec7d0f3cb660242bd97423b139e95ecf9d6c9fa9c66"
     },
     {
       "id": "2026-03_guild_official_messages",
@@ -1936,7 +2704,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2b8eb7e276072066143ee7126387b8c63cb1502892c9acacfa3cbbdacf7444a2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c8916f08181e927c3996ecbe0350731d83d04c64e55bc3e0ace126b0607e3f33"
     },
     {
       "id": "2026-03_voice_badge",
@@ -1957,7 +2733,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9c9be80751f38a1d539019134cc4943f70cc8853d8bd89fd20e228126e24bb23"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "836b874416654695850ff85c2d6fb644dbee61212df2c9ac48cf9f512c2aa97e"
     },
     {
       "id": "2026-03-age-verification-google-wallet",
@@ -1975,7 +2759,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9865e27e9fcaa659927a5e00071bba32f6cde03e3c00c45157c71944ee0208df"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6559b738bd9b636a3d1ed36a47322d39761c6b04bcaf22cff2e8556aa9f68369"
     },
     {
       "id": "2026-03-app-guild-validation",
@@ -1996,7 +2788,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a3e505ab7522f7d4213e2c86a9f6df04598c1d05b49efc0bee0f9a93c79fc03c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ad97f5642a44131b37f4fbc692e09d61318bc8afb5fc7c11d38f200e67fd2a0a"
     },
     {
       "id": "2026-03-application-widget-v2-add-tweak",
@@ -2017,7 +2817,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "17a2dc8e899b2c56e9408476b9cec018b445886698493474a482745968a4181d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "45959156e49707b9c024837a534c338e7648ae2981f3947bf3094206f61113cc"
     },
     {
       "id": "2026-03-arborium-highlight",
@@ -2035,7 +2843,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bcb37c020c30c61138a398fd52be8f5d7df3c6c68e025baf329249506de31af1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8f85f4e7c8710febfab8b4be27760e1a9a3438f6d51cf18e12bd1fd82bd9439f"
     },
     {
       "id": "2026-03-audio-effects-probe",
@@ -2055,7 +2871,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5ac1987e144a219ccae353f5aeb563a505a598fec9f50f0e493829b43be7165c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "21c67740dbc1cc80f57630c6277f4fd9c55754c0b00535cb47c718c0dcece9d6"
     },
     {
       "id": "2026-03-block-purchases",
@@ -2073,7 +2897,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "97eb89acbdd16ea1c9252cf26190c354dd0e42709ff092388fe1adf9f7f47874"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c5cb5eb743d72ee38f310296209f6a9046d7209d0643e723acd42e063ab5054f"
     },
     {
       "id": "2026-03-churro",
@@ -2091,7 +2923,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e25d1923329d844cc8a655ec2d5b337fe25c719e78d2cc3cd5602bdefd73bfee"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e6293a9f7e13101eee5a85b284d5aff9e949761946af21aea6a955385be15035"
     },
     {
       "id": "2026-03-clips-experiment",
@@ -2112,7 +2952,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "e23ad760a595834357106baf9e9126a07fc15a06359b79e167062e752a7acd65"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c43487cfe339f50b09ce0cdfe33b3886c670f96f4e5b94fd9e26c721437075ff"
     },
     {
       "id": "2026-03-content-inventory-memberlist-and-ranker",
@@ -2130,7 +2978,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "965c6623fbc708378d05d66c6635dae90e8a3aba3802db54ac82a8e8ebc8d2bf"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "34ca5960dccf1aa3498dc8586023270971ee400eb33d0c6db635a9cada790159"
     },
     {
       "id": "2026-03-conversation-highlighting-utility",
@@ -2151,7 +3007,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "21cb0a18bbf57722efb0d2ba21fb2886a666b1b711c57f419e2713cf99ab32c2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9bd090383ba3e79001cc40e30c3722e47d8c1f85cc9f4229055fbfdcfe982995"
     },
     {
       "id": "2026-03-croissant",
@@ -2172,7 +3036,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ad51ca11b6490672a1a824c7c79d0e8cf518b4d8c377548d1f08c9050981bbdf"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9d423872e4446ef31a80bef6d45b15af58591c6cdaec29e3ef89b67ad001651e"
     },
     {
       "id": "2026-03-debug-experiment",
@@ -2193,7 +3065,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "e228641609e88153bc3c2c4131d8b8c2639949ce22f314fbb45d9fc81d041d01"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "303ceb43b29d11118dc904593103c8f0d0809505169beee7dc75e8556727d1e1"
     },
     {
       "id": "2026-03-denormalized-perks-access-read",
@@ -2217,7 +3097,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "6f81c4bf63d1a33b433faeffa5ce6a081742e55a89fd6c74e932769970aae636"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f2039e98dcd21da07dab7239a9b879fad80e24def508ca0ed3a6f3f723f3a835"
     },
     {
       "id": "2026-03-file-upload-powerup-holdout",
@@ -2235,7 +3123,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5735e03c455f4aae8a34ec25270ef31fa31ed5ee81036c3ad0f107dc6c95d0fb"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4b28a5cab123de0e98e453025949ecc86e96e7f22adaa4b705e233461cf5ea8d"
     },
     {
       "id": "2026-03-friend-request-message",
@@ -2253,7 +3149,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9c73e392009ee944bd66d62a8445e711eeceb6f9d5e32b256dc240dec81a7f0f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8bb9d8c73a114a72dd2342b6d3eab07e3641c679a0263c080b06c1d462d6ff0e"
     },
     {
       "id": "2026-03-icymi-desktop",
@@ -2271,7 +3175,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b6ccb072b63f64f05b72df17634fa455e593d663cbfa57c8f38bc075204ce7a4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ebf482f59eed7ca61a783362581a37072d4493517d3c62414d682607754e706a"
     },
     {
       "id": "2026-03-icymi-staff-debugging-utility",
@@ -2289,7 +3201,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3894cf34b6b4a36dc74595e2075f2381f874dee4f4e7a4ef6370a4cda5b8e412"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "33aae08902bf979357967806e933f279bc4fc1fd7d0b0076b693e55d6bf424a1"
     },
     {
       "id": "2026-03-image-load-metrics",
@@ -2313,7 +3233,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "ce06f43b6bdcd4416c090e00b86ebc79df8148160ab386bf3b18577ce7b7d073"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7b78d1fc9edaab8d305a17ac9355196e336bbeae2f5c717f71c8dbdd146fe3c2"
     },
     {
       "id": "2026-03-ios-audio-interrupt-handling",
@@ -2331,7 +3259,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bbbf13ada98d0137291189a5d8268e01d57700e43e1dfe1c85e54ca0727c565c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a6c9f25d411bf194120b5035c64d424c6f521ed9fd8e6e254e478f6b19920e59"
     },
     {
       "id": "2026-03-krisp-stats-collection",
@@ -2349,7 +3285,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "90fbae338b01dc2504e5c6c8e020cac02a085d53901469141d9edda9e4e6f6ba"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "eca7b0da640ff3b67298cce8b414f0376332a5e65a62a4f1ae58b12c1567f95d"
     },
     {
       "id": "2026-03-l-3pp",
@@ -2370,7 +3314,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "19c6de8b3dd9829ec396e528aa8e87b9eb7207b40e2c76c6d35485519ae38622"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c71e4a224b0e08db9d69f88dfec42f89a0eaa831a129c109302154bf65fb07cc"
     },
     {
       "id": "2026-03-media-play-metrics",
@@ -2391,7 +3343,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "8675152d5422d24700c13c03f42387f7edbf5c8b68605b36e2f8f9bf82d9efaa"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ce05143a66e83294a377580658d3f59d9781790996ad52aa0275ff721cdc5dd2"
     },
     {
       "id": "2026-03-message-bookmarks",
@@ -2412,7 +3372,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "70610f27c7b6b1c3fcfb261be5f57e4050a60f962ab808058c9860cc5582de06"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "70fb8aaa0f7b84b03835ae5a859c318088a2376fef2af7069fe214e996cb076d"
     },
     {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
@@ -2433,7 +3401,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a38b6d9fc88fb505cbfeb39da7bdb6b80f61d77625893c81c262269d04302a20"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3030f9970b1023aea1fe6eaac92c95f0c547e2daacfc277c7cd3b9d7d96a12a0"
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
@@ -2459,7 +3435,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "9a7a80fd552f151852d526d9d298d23e6e944504e99aefde75cbccfc7d648a51"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ba04a03ea7537d1f2a68491b709ff5a6c70e13361bb9b2c907042ebd74355616"
     },
     {
       "id": "2026-03-new-server-boost-system-messages",
@@ -2480,7 +3464,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "852fb53c48b90d4e3a80fc0be058daa80be625229bb1f4858f34d7ebdb489af7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "40d37b54b3375a818c7dbb0291f983a070039d2b068bc4f96488de4a09da7fd6"
     },
     {
       "id": "2026-03-overlay-default-keybind",
@@ -2504,7 +3496,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "ad7356f9fe261b33e342e9a618326007804c62fd06d7e3ed55f19f8920f88b05"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b8383d11ec25267eb0df99aac5c40bd5df7a67e0cc7c423019e4852b64b4e93b"
     },
     {
       "id": "2026-03-private-profiles-strict",
@@ -2531,7 +3531,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "f4e719c9ffa7929b8ba1a18509a0850198bf1d42382aad037bef39f3743b4bb3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5840b8964dcfa883adbbf9127c8f1134768e2507fe58f06d8b5d5c434ca76f21"
     },
     {
       "id": "2026-03-private-profiles-strict-gb",
@@ -2558,7 +3566,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "4af9b3116dbfaa5ab978f62fc15e8c0e0478fa6efbac95939471496f6319649a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d5b8866004e7ca12360d06d18cdc597fa31699cdf73835a6216daf4fe7af9bd3"
     },
     {
       "id": "2026-03-soundmoji-rendering",
@@ -2576,7 +3592,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "da7e65a9fd86dcc28e043a1e0e43bfb1e6fdfeeca069b85f7f92456df954df91"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "07a364c38f97c6639987adf25e5b6bf7be2036500926bb5bad15c8918c90feb6"
     },
     {
       "id": "2026-03-soundmoji-sending",
@@ -2597,7 +3621,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "abdcffdd85f9940d2a49914111626ff146dfdffed5728232b6eee84e03a0c267"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "07e1d71d588be6480504204f0fd114edf02143ffc34bedba4ee728e8d3947abd"
     },
     {
       "id": "2026-03-steelseries-3p-recurring",
@@ -2618,7 +3650,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "91322dfd11593e36c63f086b2cc44079cf103fbe15cef777f3c35ad0fc6511b8"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "bed5649688260642c00a01ea2293e9b4a4bd952cf46e7b6b0fd4386a25e211fb"
     },
     {
       "id": "2026-03-surface-direct-renderer",
@@ -2636,7 +3676,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f93b3bda4dad89048777f437a99276ff218127d936b90456aaa632c3cc5eed30"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "67ac45cbc5ca3a6150d9b78e3b0d28cdf9ac9fc01f234c333a75d5c0869bc781"
     },
     {
       "id": "2026-03-video-capture-device-no-reuse",
@@ -2654,7 +3702,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9cb501007c987f9a1b7d9ab42697accd8fdb1e4df3676ddd2163523fcc8ecb29"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5072c35162e87bca58994de7257fa5329e0e7061a8ff760ef4a2f2ceaa9d5400"
     },
     {
       "id": "2026-03-wysiwyg-user-profile-editing",
@@ -2672,7 +3728,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8ebc16f20405c56128dbee8a43c97ab543d38755bd7f30f28ee38f7cd8453ca7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7f2125c24a2c76de5f41539e68ac93eb63c4d74bc29ac9bb60944e5fcf8938cf"
     },
     {
       "id": "2026-04_application_identity_linked_roles",
@@ -2690,7 +3754,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "610e5fbcf510c334b1e44d7398cec83db8286b7147b81af84a3837269f771f3e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d79ede4deb4ed3a65bc5693d1bc387e4b44c8839b803ef749d676480229c2063"
     },
     {
       "id": "2026-04_guild_verification_role",
@@ -2708,7 +3780,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8ffdbc048897643a65cebf9d94c3d17b21dbe81eaa2f18be33496ab92a0f66a1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7f447ef861099b88ace413dd612e671578e094b1a5ffc9d2c5b366b339bf0caf"
     },
     {
       "id": "2026-04_server_theme",
@@ -2726,7 +3806,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b759183cb09c9b1e76a3349a2275a5bd0221d3d0c243fd369fc9f9a6a81c2e3f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "831cb4d09031491019e2ee778604ab89196583ed2279cc1f6be088f4a4e78c2a"
     },
     {
       "id": "2026-04_voice_call_trigger_point",
@@ -2744,7 +3832,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "38acdfe375dc640217a76af8fc41808cc0bfebd1ef5995157dae0d16438ff52f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3ae044fedc64d33c5729416098fbac0ee7c3cda40f2ab38c2c222ba08320d9e5"
     },
     {
       "id": "2026-04_voice_user_duration",
@@ -2762,7 +3858,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f7da46a18cf94092d0fce8b50cfff5a0f4b24edee4981b34c2cc8d9f2108ecc7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fbdcf825fd329009603b99f0cd9c08771a5260c6f9dbfc4c0a2c7ec3f93f5e79"
     },
     {
       "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
@@ -2783,7 +3887,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "beb143b725e9ad02b08f0f26b94ec9d1b6f8516812f5e81be07dba7eb9104864"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "41ee40fedd92b8c37e185e3d8049f1aff19ce48417ae3474e0441163985d73f6"
     },
     {
       "id": "2026-04-browser-transceiver-padding-removal",
@@ -2801,7 +3913,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "513c4047d798c33d9d73910018f94811190f55529d457b1e3d8862af3cdc2168"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2303c8559fe6aa7aa6fb6b9898352973ca3b013ec3975484fa7ac152568d6091"
     },
     {
       "id": "2026-04-clips-v3-runtime",
@@ -2822,7 +3942,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "976a8c7f2afe16028a90fb65157c332d9f0955beba078784320a6d146f1bdf78"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2505c290a1d9ae31a41491f54bf6aafe9ab5ab591cb3df8c72fb9204be4a0eb8"
     },
     {
       "id": "2026-04-composed-quest-player",
@@ -2840,7 +3968,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9d1cb0174fae43d759aece44137c35666bb7174eaf41fdd22b38714ded910717"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "787be6b796b77215c4daa3cd71ba9f8e11f34c3ad68e384e1f37a09db4b249b0"
     },
     {
       "id": "2026-04-desktop-notification-center",
@@ -2868,7 +4004,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "67046e28476072b26239a0b17bfef12553770e800cb166097f719834eaf6e34c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a9cf74ed2567d2dec096aa07be17bcce6ff3e99feefc5b871f9520fe759887e4"
     },
     {
       "id": "2026-04-desktop-tti-dnstcp-warmup",
@@ -2886,7 +4030,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b1ac2918b31da6d4b200a813bdd584b5c1f9a86f4dc2f9b388e8eebe765100f0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "03eff64f2ff12bfa636c533fc1e94829c265ceb8eb5b0c5cad64dd2b9df42acd"
     },
     {
       "id": "2026-04-desktop-tti-early-update-check",
@@ -2904,7 +4056,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "762d9dd750fbdcfdae5fb9d07c5975eec648b4e51e14c395e81575275cbb7e5b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b36e54446bfb2087b3a9a3ff2531e2b844bc5104c95ef6ab41bfea1a620a7629"
     },
     {
       "id": "2026-04-desktop-tti-update-backoff",
@@ -2930,7 +4090,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "7e9606d054525a998b0bbf211d841c521c839d739cede5f7be5ef0bc67244d8f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6a7c4811eb893975420099158cd8981857650af9cedfa1ab73ab56384d1dec5d"
     },
     {
       "id": "2026-04-desktop-tti-v8-cache",
@@ -2948,7 +4116,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f65781b0a9b8ebe4616630d02564f9f890daf963464d61e08aa0a0b786b61de4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "489fc66c30b9b5a16842d188fb8119c983b5c5e5911318be0098abd83e9b35a7"
     },
     {
       "id": "2026-04-ensure-received-messages-added-in-order",
@@ -2966,7 +4142,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7cf99c2c6496b5ecb33b3f8fd1c072a4fb92b792e3a41a4d9ddb56bbe8bd37ca"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5c708493b52dbb09d0f99d5a945fdd0138540d38179da9afa125b72c382b8e33"
     },
     {
       "id": "2026-04-gift-promotion-reminder",
@@ -2984,7 +4168,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "59e1108b4e3826b49ad5dc232852e54483b4bb88f38ddc763c61da275c554b64"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3a5d40186b8845a2e570028a4e6f456e88ce451d2524b05006bcd373ad60fbb7"
     },
     {
       "id": "2026-04-gifting-badge",
@@ -3002,7 +4194,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3af4d81adbdbb7392540211d58b236606d57e4f349795c690ce454498d330bd1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5aeeca1926cbbd66a271a23c3f9dc5138e1d5a1bc916ca68787cefa7af630578"
     },
     {
       "id": "2026-04-hide-view-full-profile-button",
@@ -3020,7 +4220,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2aafb5cee9f1049107bd231328c51f44651a0c920b979d3227cf6a3136185a27"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4e3160b680b918456559c8b371af687707494d95163c50b10ad8d5417ce25f4e"
     },
     {
       "id": "2026-04-http-request-sample",
@@ -3035,12 +4243,22 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 1
         }
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b3d4711f887aaad9765d44d83ed647e90ab5f02e831a48e45588402241614fd9"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "provided",
+        "value": 100,
+        "source": "payload"
+      },
+      "fingerprint": "46e582771df4a1d6c9195926f6d961113ea55f773c9640839281c11b28071ba3"
     },
     {
       "id": "2026-04-icymi-staff-only",
@@ -3058,7 +4276,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2e37586e815b087cfa9c39772c11d27da976daf7cc450deb9f0bc23a440f1870"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f2c955fa78cad40bd7b96c7714d57eb25a5069c8818cb1fbc95a97a467be8df0"
     },
     {
       "id": "2026-04-inappropriate-conversations-default-on",
@@ -3079,7 +4305,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "825255ae83a0d5805dbd5b4f7ce04158a13c349cf57e023d1e56ec3bfb812622"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f1355e06fcc35b9892fabc6bcc0fbdc64e64168d80981d8b527e172d8b5dcb62"
     },
     {
       "id": "2026-04-inappropriate-conversations-prescan",
@@ -3100,7 +4334,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "f0694237f6a327068fd3f3613d69f5245ec4ed834f1c1616ed8785858995196a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "32e5e9c408cd1fd0fbe0dcb05e07a2f15663dd3e1e7d252286ae2dfa1d131f07"
     },
     {
       "id": "2026-04-mobile-boost-progress-bar",
@@ -3118,7 +4360,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "fe09a805e1ddf4723c4119b6072e499404ad309e7368955dd9e934a650225180"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b004ac95eb39717548b7913549796378bc65f2fee805f37a73ab43eb3b24557a"
     },
     {
       "id": "2026-04-new-games-coachmark",
@@ -3136,7 +4386,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e90d85ed8cfee2c426f68d2b9c8263becb4ef3016babf4c3a7adb082a40b9607"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5d990698bdf937d7ae2541d7c19c74de464f68f9a163e9de89f885d2d37ecd34"
     },
     {
       "id": "2026-04-one-day-fractional-nitro",
@@ -3154,7 +4412,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "1dc82095fb1cc1708f895df8a219a01df22ab2d6ce57be8b86a717b4957ce79e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "61d19b80132c60699aaac1165786eb476ed5cf961cb6a7962d15c3731bc7b9f8"
     },
     {
       "id": "2026-04-overlay-fps-limit",
@@ -3178,7 +4444,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "9b4c6409049d302e1202a3768410d4a0f96c15f3d3d1c4dcb50007f591d1731a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "50af947109fbfdd77d80b28aa3c7ba4cc68c88d45371d3ad5cadef84bb293554"
     },
     {
       "id": "2026-04-overlay-streamer-mode",
@@ -3196,7 +4470,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9f03f0c801cc8d61f75f0ffb86532bfc0b8abc0c9a7ad8489a472cd5eda05b1f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e5cda5567a41702b821a035b90a4997c526abbda89778636d1ca0a70692326b4"
     },
     {
       "id": "2026-04-quests-premium-orb-multiplier-marketing",
@@ -3217,7 +4499,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9720a6437c99ecd515af95e6765756c9e4f9f74266e9f7a8a4c15808e33dd83b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8913607d403c451ca5355b72f12096538f32bfd54571f2c2fdca737285bcb32e"
     },
     {
       "id": "2026-04-safety-flows",
@@ -3238,7 +4528,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "157fb524964eeccf42258805adb15ac3fdabeab199633aa5f5bc799959f7ab7c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9f8f61d414f206f90a935ed6a16651097609a2116674f6311d76b0803d2ce5d4"
     },
     {
       "id": "2026-04-server-boost-copy-1440p",
@@ -3256,7 +4554,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "596aa3571d4b6eaae1015fb8f7335e39611e8a8cb360603db60abaae44cbca28"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "60167baa6cd25fa0ad92eedc7fa5d5858baf8d6aad6891e2d61889ac400ca5f9"
     },
     {
       "id": "2026-04-topical-navigation-staff-control",
@@ -3274,7 +4580,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "13c6eba8f4d3e3c0937f12360ddb1766dc800f31895eb53a0f67b6dcb63ef6be"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b62c6857cedcf6c393a8f1b71e9c9bd1f1203e37190c93f26f7329e21409b565"
     },
     {
       "id": "2026-04-upcoming-server-event",
@@ -3298,7 +4612,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "b55c68d3f48369648109beccc073c3eae46eaa6b11004f2848a28e9f7e0b2e10"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "07e36b8f5153eff96f7ae9df2fa8a9e33705c651185cb470ac28539827b2b604"
     },
     {
       "id": "2026-04-user-profile-performance-analytics",
@@ -3319,7 +4641,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a973b3b36b4b9bf6880560c8de56f3699b5885f7e9215931505c65041379e78e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c82beeeb71525d3003015c8940a59d29a39c8a6b7493c693670359035ed7c195"
     },
     {
       "id": "2026-04-video-hook-dx12",
@@ -3337,7 +4667,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "19207d8d94039e6a2f843d8e2bd02518534fa8003d00338b6367b16d0d722428"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0f3403b6664bc305849f1d2d8c599f843ad1688963b9622196e53709733155e6"
     },
     {
       "id": "2026-04-voice-gateway-protocol-version",
@@ -3355,7 +4693,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4725d4fc83cc684724e39a016cf426123e98523fc07a4766157136009a149cd0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "25907e5946e51c5755d57b5d515ff2215e14d43a2bf1538b49d90df875de32eb"
     },
     {
       "id": "2026-04-wetf-parser",
@@ -3373,7 +4719,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5f16de1f730352fcd031d64b5a80d4e9672e427848d9e0158b7cdc61c4c9d626"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e4896c5571020a652b892fc1ad53b9041b388de2c6956e8e20365f31e61bd787"
     },
     {
       "id": "2026-05_default_invite_expiration_guild_web",
@@ -3399,7 +4753,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "f839eb6d5709db63e4a0d45d6ecae6e16e6d67b6fd7af0e776b6cd3e3f6df915"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5caacf95e6ad2364ba066fbd2e49613adcba37fd499b4e196cdc508c6bf5b8ec"
     },
     {
       "id": "2026-05_voice_channel_list_invite_embed",
@@ -3417,7 +4779,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7c8fbc5fd7a605f5fa5931a6734f8d48c03b68576dd2b33e3725c326f51f77af"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c2715b4590bc1af64f78f4839fd1c19913716f9f5ae413fb52262f5ca05c7f2"
     },
     {
       "id": "2026-05-age-restricted-application-commands",
@@ -3435,7 +4805,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e407bcc48e621fd9562d53dbf7dcbd715c17b336f774d88e1bab68e546ea98c5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c0012a20c1891d52ab72fba2213c4ca906703f9856227a631b712288d8d989a"
     },
     {
       "id": "2026-05-app-store-overlay-feature-gate",
@@ -3453,7 +4831,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e06fa4218e6f48981095a7f2780c74fc4188111046eec0a39ff69bf5bc3ece0f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0d80289d3fc85c35975652307127b72925f69f905f2a205d5a9d7807c57aa7e7"
     },
     {
       "id": "2026-05-auto-clips-review",
@@ -3471,7 +4857,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e2b2704fcbad086bafecadfab744c572546460d400c33e2afe24905786c90522"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7dfd6a7bee2c16607fe551a458a56ed0275630f6bc3839cb267ce7958232e11c"
     },
     {
       "id": "2026-05-av1-bitrate-tuning",
@@ -3486,15 +4880,25 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 3
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 25
         }
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "0597e665b7de2b7954bff19ee9d40bfba07a342cd390535e51c57620e360f6e5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1d5138ec2d286d5db1b43c2865bca52872d3f191462349ca836671275aee68ab"
     },
     {
       "id": "2026-05-badge-discovery-milestone-2",
@@ -3515,7 +4919,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "4c651262a575c5e77b8e803ac78a0ce53c4ce9bb87ceae8e870f3ad04c0b1c37"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "331bd42e928612c23804061c0e119e0ba51a2e1f260a7cdba2fa5c305b66173b"
     },
     {
       "id": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
@@ -3536,7 +4948,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "c8abe6ed1728bab1b99b69cfc5902243fdda6820b42bc51c09a3cb309b33c8a0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "345585eb49f104bb9026c3f0a05cf3e5f3c1b18292059653fc5b3ea6ff6aceca"
     },
     {
       "id": "2026-05-bounty-stale-refresh-quest-home",
@@ -3557,7 +4977,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "77ffa6768cadc1136074155a14f3b8cffa822edea1fcb8445dfe6ddc14c1186a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1c5ae3c1231f9f2a64b76def5b758dfc1c7c55c45db263480fafe1b738bbf74b"
     },
     {
       "id": "2026-05-clips-media-comments",
@@ -3575,7 +5003,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "16ef9b5d0dc9a13d57de59aa740e756d8f0d16b004c70219083b87f8fdaa6e4e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6b8641f165f07faff0334582dcce47b2baa39d5e71c1702c7d60f206b1a0df06"
     },
     {
       "id": "2026-05-collectibles-collection-page",
@@ -3596,7 +5032,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7f059b69d6f5b53e0dea2bcb82940bf73f14d4f8a52c818d91b46e32049f6d99"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f9231beee0bfb4e3d0788d6e2b089946eacbcfd3f3c9be28d0184973d59ade13"
     },
     {
       "id": "2026-05-device-form-factor-indicators",
@@ -3614,7 +5058,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "ebf637aeb002735e80bfadcb11d1acd1379673101cbf475460cf4c8b31a612e6"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cd41bb80f2f59194c32652164c85fe1f303374be5862cb6179b3336c7b2615dc"
     },
     {
       "id": "2026-05-dice-roll-slash-command",
@@ -3632,7 +5084,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "617031e16d30e609d587d36f2dff33524c9ae1de5283609eff3bcda1f2df8081"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "07d37bccbbbe806a316dfb19292ab228419d1b70418efe3564830be3fa2a5c93"
     },
     {
       "id": "2026-05-disable-camera-simulcast",
@@ -3650,7 +5110,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6ef79f3aa55af7cdf38ef4c3cd77a239dc2cb9d3c8708688cabbdb87322d4750"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "dbf7646f5da70223692b4b0bf07b09bdebf08f99fa59cc9bb273d178897f142a"
     },
     {
       "id": "2026-05-distributed-clips",
@@ -3668,7 +5136,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4a22d342b7b09db5b2901da2b061ac3a71f93b6ae6324fdc770a08ca44bd0521"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6ae4a362ef76a7f585825feed17bbc8d0eca244efccc97104fb3b6523898d937"
     },
     {
       "id": "2026-05-dvp-for-attachments",
@@ -3689,7 +5165,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "0d2dea79cf12721b4e6dfdd32e9e96a682cbe9cca07271445ad28a1dadb05b39"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e34fa5f777682f474a0fc01691e1b12226d9c9fd4606663752538a54a61a26c9"
     },
     {
       "id": "2026-05-electron-multilang-spellcheck",
@@ -3707,7 +5191,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "afc9d64cacb71a717d467bd6750480879093160ebd98053fdfe1e5e93cb1d6cc"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2cf4ff61ed6a382ec3a12c24e6a09048de6b06a25c7a2600b0a97a4e49b25244"
     },
     {
       "id": "2026-05-frontier-tuning",
@@ -3720,21 +5212,33 @@
       "defaultConfig": null,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 5
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "percentage": 35
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "percentage": 5
         }
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "6ee50e7eddd73d06e6df6f246330e520ed0ba9f9900764ab0ff9761e1b2dccc2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a967696713f1026343c27c3eccda449046972e06e410bc89a54afbf7f1aecdbf"
     },
     {
       "id": "2026-05-global-soundboard-wheel-popout",
@@ -3752,7 +5256,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f4742eb6388f607a658f1ba7a9cdd05a5ab676f8a3b2efc428daacce6b73b8dd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4ff075bbdbe1160fdb67cc6de2a5c11faea713e3291714775c89c3fb61c76f0d"
     },
     {
       "id": "2026-05-ios-video-stabilization",
@@ -3775,7 +5287,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d7d0cb914d80bbb63f8d31a8e0cdf6208d2c53e06fba8b914593a32198ab5e9c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "636d4adc13620343bfed821d346455ac62fbe93473b6da3194b18cfd32df4185"
     },
     {
       "id": "2026-05-mana-type-consolidation",
@@ -3793,7 +5313,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "94a3fa9598a330cabedc4b69cad8c53a6de3e745d46c916d132ad2accad6f8f4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "43851c917c0b8669036b651d1a3ecb6b1d7accd7ba74a9c153d338d3ea0c40e9"
     },
     {
       "id": "2026-05-quest-home-tile-redesign",
@@ -3823,7 +5351,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "7caa3d6a8e28d81c527f6b38d29293eccb5071955db38a4048067feab54181d7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6418cf1bb30456b4c2fd2304273d8db9f07fae35e63b5488bd5dace79d5490ec"
     },
     {
       "id": "2026-05-screenshare-picker-wgc",
@@ -3841,7 +5377,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "dad2400a3d8aa6a1b418de171e6a554322ad6e691c21392a8b8bff22e4427941"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8dc1722a05d93dcdeb253c927d703f4c3f462fabc288534a9a654bb824338f0a"
     },
     {
       "id": "2026-05-server-theme-user",
@@ -3859,7 +5403,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "1f7ce73d06873125d4458bc905c407d4ea029b19e3cd68e5f8d6744bb94aa997"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b6b13f24ab05345b2853376fb03e88632d7d143b7ab66a2786005a60c9b4e3fe"
     },
     {
       "id": "2026-05-slayer-storefront-hide-leaderboard",
@@ -3880,7 +5432,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "345115f2950558621a18348ab46affcd1f81df2a816c1d65fcb217de46f25c68"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4078131f6d407e32679e08812269ee421f7c40e2eab6c075ad0797735ea1b208"
     },
     {
       "id": "2026-05-social-layer-storefront-game-shops-dropdown",
@@ -3901,7 +5461,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a15881c9f57aceda8c717c42ea12cb495a94dfc128769d47063f0051f881d64f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "337d95cb773d9c4c1e3ab7281bf1168c15d20bd9f95a04c20ac6fe98a22be130"
     },
     {
       "id": "2026-05-spatial-audio-for-voice",
@@ -3919,7 +5487,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e730ec8804d48cc1fb342f592a54300eb04b5da37485fb443eae386c6ba52a98"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c12bc9a19e19d6816ddb06c6232332a540cc92ad7dbb1c4aa2272914dc1cdfc2"
     },
     {
       "id": "2026-05-use-ad-analytics-interface",
@@ -3952,7 +5528,15 @@
       },
       "treatments": null,
       "variationCount": 6,
-      "fingerprint": "47a3d72c5aaaec137b83313fab0d62867eaaf36eeb0688a8c9b7466ad2cc548f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e4e956b59a62d694d2e2c223171fc96b5cd7ca1cf6ca5b701b51639dce762149"
     },
     {
       "id": "2026-06_guild_rooms",
@@ -3982,7 +5566,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "2f5e75f2e0fdb29749e7f29ccdcb6d28c06d5e052609412f47b32645b7c696b1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cdc6b07787f0f821722ec3673a4d5aa6be221c2017a2d7eb57ca129f6998519c"
     },
     {
       "id": "2026-06_guild_spaces",
@@ -4000,7 +5592,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "68f675d56377e8a6a2b4af449561ca1476001218203c47d899d3ad7772d9e3eb"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a5b860640835c3c955d843824ebac97cc176fa438c088ae8abfa7930b675d96d"
     },
     {
       "id": "2026-06-age-verification-incode",
@@ -4018,7 +5618,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bec3914c6ff228faf9557d655cf4cde47c239da8a14770d8deac2c76a0da073a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "10b7d671753f295f5e9901616bc7dc2a182cc497257c526faabf6bb44b9de008"
     },
     {
       "id": "2026-06-av1-encode-linux",
@@ -4036,7 +5644,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "daafe11732cf299398d73d56751a742bba16aec05478d2ceca3d0b8b1d5e633d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5f300043cbfb47bcc0e3acd0ba6d7bc46b41f6abe14f2976e3e14aedfb83ba5d"
     },
     {
       "id": "2026-06-battlenet-social-sdk-migration",
@@ -4057,7 +5673,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "8a13316f9b6d4600a2fd6467448885770347dd042f23a74f4b592ca25b81c668"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1474abd3aeb41b175d270444c9c17c184b7ea1fb15f261e8a3fd850672487190"
     },
     {
       "id": "2026-06-bulk-nitro-gifting",
@@ -4081,7 +5705,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "f99c682ef5e8c60b531eb329d2ea75a4fa9a03f6ccb5af37961cd3c7b861ea20"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "01d1a2846eed01034f23a9036688f27570ca8d5022a53532737db5e6cc6b4ed0"
     },
     {
       "id": "2026-06-chat-bar-customization",
@@ -4099,7 +5731,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4ad90a7e06e62afc43d2f78570e1d78a918d25f2bb39b1c70f5a08d586a8ef28"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1e204086fbf5368a5c660e4522ca237fc5cbaa88bf18fffb31dabed52dd7330f"
     },
     {
       "id": "2026-06-clickstream-analytics",
@@ -4117,7 +5757,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4ba80b260c4a7091c3d8800de1b0a52092394cd98f741a763041c91185a01e94"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "91599a00a12cf5fbcc047eba89be07c6119a4da8b0809f4d3ab65cb7717dfcbc"
     },
     {
       "id": "2026-06-clips-league-events",
@@ -4135,7 +5783,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "60a6234c6c3f5fe1182af1fd7525e915eb824a88e40b3737a0ff271961dc5162"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cc8305bd3a54939838d52fe9c12b7839b06c9e9892ad783b82c771b952bb1ecd"
     },
     {
       "id": "2026-06-clips-secondary-entrypoints",
@@ -4153,7 +5809,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4c465270e26ac904f14f087803ad9d02a53fce1ceb3771deaebb4d978cdd82ef"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c4b0558d6575f57136551c41bfa23d9360505664435a9bce342b9ca3674352f3"
     },
     {
       "id": "2026-06-content-classification-embedded-activity-filter",
@@ -4174,7 +5838,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "44e6b967ddd426b1833c6d6f082602ff4681ad322da98b627446b36bb0eb7252"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "362810600c8c52517af5dbcb0dcc9b24e8239d21b3a4a6a821283a22a02c1bf9"
     },
     {
       "id": "2026-06-desktop-tti-http-cdt",
@@ -4192,7 +5864,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "123ee5a3c2aa36194923a834630d6ae08fa70fcf3146a4998ac4ef216bc9b507"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c0beb574367ce288ea703a7919b4409c175d9a13561a7afad66c436351308544"
     },
     {
       "id": "2026-06-desktop-tti-splash-asset",
@@ -4210,7 +5890,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "08b94d8166fffb3985c6672006e34af7feda6794b4024b4fbccf564e66d68cb7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5628e8dbe247e1f1a36575b6b82e7a61c70e9bb42200f9128eb0695fbfbb2ba8"
     },
     {
       "id": "2026-06-dont-badge-muted-vcs",
@@ -4231,7 +5919,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7df358d6fe697282360b89c2370b0179715b07461468255118fa901db8df0244"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7f8eb4eadba7e59db319647038d9ba7468d24a7b6aaae4d71dc7e3ecfb43cfd6"
     },
     {
       "id": "2026-06-game-invites-channel",
@@ -4249,7 +5945,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8b1287bb6a0f579ed21fbd43e6824816ccb72831147cd4c98d3f91e3c4944f76"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5b7f38d57f91e382e9a9bd507b0d030c8ae61d1f988e3546d3ca0abc312201f6"
     },
     {
       "id": "2026-06-game-server-hosting-in-shop",
@@ -4273,7 +5977,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "98ee8bd5022e5c1a9f7bffeb1301666d8abeff9aee3ddf165a6b89e00f27eee0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b61e5b4d50e1b7299aac64e3a0147817d9c1aab2e0088e92462c48ab4f050fe9"
     },
     {
       "id": "2026-06-gifting-badge-desktop",
@@ -4291,7 +6003,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "0504eb1515c6e44f464508784fd71b6066d719bdbb077b68b921c35014c06f76"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6ae2bf55f924e1f8bfd605ce8a871846bddf8379109fab9445d4bcc9869919f7"
     },
     {
       "id": "2026-06-guild-profile-server-tag",
@@ -4309,7 +6029,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "bc5bcfdb32e08fd27549fe23ea7a99d15b6f90183be93c9bf3fd7599060cde57"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "780b4db30bbad6370522bc06eed048525fdb155d9cef1ea69dc171c23cee5d88"
     },
     {
       "id": "2026-06-gummy-bears",
@@ -4327,7 +6055,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2d95c7683774fe2b15462e30f5a16a1436e35a35fa7f91713707e009b6ef6706"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "421409eea5d5f86a888e291460a8f421f677ffe20f005016059414ea3eed6dd8"
     },
     {
       "id": "2026-06-gummy-viewers",
@@ -4345,7 +6081,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "96e116049e53554a2f2a73118ac5d8ee69a98a2638050de9bbd4208b4dff5cb3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ae070727c1dbda5879bd78ad9f21d7c5ce488f556f7f85c1301fe73b5624dff6"
     },
     {
       "id": "2026-06-hero-shelf-ad-tile",
@@ -4363,7 +6107,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "22bab4472cdfeccbbc2d2cde25a23aad4c61aea338cf113565e5ddaa200278e1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "884b6c29816bb5bd9996bf782b9530a33246f1da49c1c530a5a04b885a82a1e4"
     },
     {
       "id": "2026-06-improved-shop-loading",
@@ -4384,7 +6136,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "3f73336197b5d3d8332dc9fa8b7d54f8d113d43133d184a3cddbab8ca2ab09c5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4d9aa5f84fc1f3e3317ef0df1cce6e579a58a3d98309bddd9a94d61743706e55"
     },
     {
       "id": "2026-06-magic-scoring",
@@ -4402,7 +6162,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a4f0669d7cf4f3168047d6662c622ac9f59bf6fa502745b09a6143d74949d55f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8d18c391d38f8940d12392215c871611c1bd4b7d5e4ab88617f32abad67f75e0"
     },
     {
       "id": "2026-06-mobile-server-tag",
@@ -4420,7 +6188,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "279ace79c6899ca3c9655d89b6cd5821f2b16399b9c9d4bf0e37ba42404498e1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "51cf3e4f8f2def65c39704881eea909eda6cc822c65a32cc676a31b52001f1ec"
     },
     {
       "id": "2026-06-nitro-gdm-cap-increase",
@@ -4441,7 +6217,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "f0e3bf1a60f2e4c1a6f00dc5caf87c4bda8ec762b8c998423aa7eaef7d0a3033"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8f0eeb7d47d26f86805b03c168bf085f2f2e6ed9919ce7d3af87e44ae6684a12"
     },
     {
       "id": "2026-06-non-friend-messages-requests-in-uk",
@@ -4459,7 +6243,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5894569235ac43dc68ed088079c2f64e07f7db0b40fb18d3e949d482290cbb4b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97c52823360c1bd26bac680a1201dda8d41d7ba278580837211c5739e1aaceae"
     },
     {
       "id": "2026-06-orbs-holdout",
@@ -4480,7 +6272,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ecb604ed196c9ba1a4631a756f1ef27d07e728656644240d632a2c768e391029"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f5349d863edccd5cac18d836924ef34ffe475098c75513f7427d7eb4b8629c80"
     },
     {
       "id": "2026-06-otp-orders-phase-1",
@@ -4498,7 +6298,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f11e100358d1071bdc6de99e865fcc87d931885a5b4f5af86232698f5b16b1f0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "0abde32d8504325edbdc7754d6232bd8dac2b5e774370ae86e80d0d47fda87bd"
     },
     {
       "id": "2026-06-post-call-survey-assets",
@@ -4521,7 +6329,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "0ded9adcb48020188588a73ff00b890ad8b6b7e3c089ea6f12434ccfba796f90"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f3378e341f2063222dde888d57dac215cc21735f7e8f4a17e6a8fe0c84900a7f"
     },
     {
       "id": "2026-06-quest-fetch-reconnect-jitter",
@@ -4539,7 +6355,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "1244a8f3458db136e5d6cc5884b76018ec2193e6814d7b5209b653240b5d53cc"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5f043161c19acf6b982f1732e3059bf3c666db3fb29fb3fbd2d53f04de5f4a98"
     },
     {
       "id": "2026-06-quest-home-layout-visual-tweaks",
@@ -4571,7 +6395,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "2a90eafc2409f84e76a5b42ae163ff4f5158755e53d76dd277716f1c081a8ef9"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "db53448203c3ead9edda5bf92af866a1a662721b349d4a42b9470d67173afe54"
     },
     {
       "id": "2026-06-server-ladder",
@@ -4586,12 +6418,22 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         }
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4488fc5689d38ff5fac7873b7cac4f0344c4b995a0758e394a6bf9bc5698c719"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "provided",
+        "value": 35,
+        "source": "payload"
+      },
+      "fingerprint": "76887bf7aee53c89996e7f5fa83eb0fcda866ff54b352121ad9030ab30eb81cf"
     },
     {
       "id": "2026-06-server-theme-apex-shadow",
@@ -4621,7 +6463,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "2d40c0b0ee5ff5112e1587003852c6215bbe2d9fff411ba42c4e7299066995f1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e7a58038d35681c7c970a1ef2a1b606f3e32f84d014bd71f6ecaf18d6264210c"
     },
     {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
@@ -4641,7 +6491,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "d2041ab999a8f4caf890fc552f9d231d41a0853c1840d36c1cbc95e9fe3aa86c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d29b22575c7dd8496bfe5557912fbb2068f72d67aeae1d464ceff84880d3a7cd"
     },
     {
       "id": "2026-06-topical-navigation-guild",
@@ -4659,7 +6517,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6f6a123e12cd74f09a01c5c3b39ebc62c30a7f838d2717513b5532155111dd54"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1545d4e848a2044dbdcb1101a2ee754e15606eba538eb354cfbc2ec652c2b505"
     },
     {
       "id": "2026-06-upscale-small-captured-frames",
@@ -4680,7 +6546,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b50a725bae142f5b1cf1505a3cd391309bf98133e679a6654ec9a196df00edb0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "706399c8dea038f96b95c98c01292837220d9ee61afa32ffeffdb6d600fb4a23"
     },
     {
       "id": "2026-06-use-new-badge-image-source",
@@ -4701,7 +6575,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "74b90fc6ed0e11e5d87d415b5529f3572b71423707552f5ce42d9c9452de3d65"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "42c5fe1af1b500798a776e6571531d7a25510db768f7ebddda22d0cebef8c7a8"
     },
     {
       "id": "2026-06-user-profile-sidebar-redesign",
@@ -4719,7 +6601,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "ea6627053210ce5da39e410f922f74c95ae91e3a09bca256d909728f7dc6153d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4726ec32655ab462d077c3a92c9dcbf2dcba98d4559bba99cccaee84c08c89cb"
     },
     {
       "id": "2026-06-web-translate-dom-guard",
@@ -4737,7 +6627,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "badf5f6a45c904d564f8085c19fc09623c410ed7514551152a4aa24f2607dff9"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2b59b9e7730e973ef951865c1431ee8bf65ff36247ae6d4f3ebabe48b345207b"
     },
     {
       "id": "2026-06-web-vitals-monitoring",
@@ -4752,15 +6650,25 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 0.05
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 1
         }
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "174a28325641bab885ff94a2dba32a075bdbcd026ff48d443005975ce528799e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "99011f0572c2b19ceea2241c6cfbf7b49e5c84f5060e8503da48e65266a01768"
     },
     {
       "id": "2026-06-wmf-cpu-encode-intel",
@@ -4778,7 +6686,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "ddf25064bc79f22bcd6154bbfe50285ce75ed227c1ae4d96f8b695d45dc032a2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c52c16fe67a661436efb0c8d1c49cad5894a97a9ac6bc877e132c32cb75b20b"
     },
     {
       "id": "2026-06-wysiwyg-show-dns-to-non-nitro",
@@ -4796,7 +6712,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9260f97222aa0f093173b2217d7f7f47738f7a3e2800caedc362a4e1c7ee01fd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "20d2fea1ab848e504c68e481663a03d6516bdb7dc74bba744a8d5075e4525bdd"
     },
     {
       "id": "2026-06-wysiwyg-user-profile-premium-try-it-out",
@@ -4817,7 +6741,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "5f094459196e73bbb8e767d1bbdddaf480149bcd0270bba2c31263e1dbb0eb36"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b07805968bcb98bfe3534fce32ff2c0a180f46503ddc905619875f060f79312a"
     },
     {
       "id": "2026-07-ad-recheck-interval-experiment",
@@ -4847,7 +6779,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "26061b17e02c2d4e21978f56dce572adab9b94d2d4366edb4c7741f30f1943ba"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8a37a95b50ac0f5f715d397867bb714fd8838d3153e5fae6f1ebbfdf86d0ccde"
     },
     {
       "id": "2026-07-app-channels",
@@ -4865,7 +6805,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "5656d0a6a19fd20a1a0639081eb2ec2ec29ec9c311cc02c90d366c5e4164e107"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c0699896fc272e7e2ffce731c9b4ceb738446d5cffa16416b371f0946660b8fd"
     },
     {
       "id": "2026-07-attachment-image-ladder",
@@ -4886,7 +6834,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "e51addb474356ede0893fef89b14d53ecf8aa246445f2b2e927f89080c742af0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6ffcec36847f03cf2b040ff2e3efea18b5d0d86576b44abd752a8feee40ae43d"
     },
     {
       "id": "2026-07-autoclipping-default-override",
@@ -4904,7 +6860,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a8b2d2319188d04c46781f15ee52bf646f5a05b21763c09bc0c08c3f1a6af4bb"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9115ee4e551d242c26bf5b1bf281872db2a400962d3a99e048d1bdf6c412aaf2"
     },
     {
       "id": "2026-07-autoclipping-marketing",
@@ -4922,7 +6886,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "07c72526ce8672985bdd30653aef3dfd2df8386b5f60c5c5ad3a49262169a944"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97b411759cb219545758aca43b545acf61d507895e549a3e20a228592041c1da"
     },
     {
       "id": "2026-07-aws-gateway",
@@ -4943,7 +6915,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "673473d9cdff479a89b9ed66f0122e5b406d48f46eaa9f600c0333d3cf56dc59"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "40631eeabf20dfebd37950a94ced9309a8bf12b940a1e0967075834428cadc99"
     },
     {
       "id": "2026-07-call-of-duty-3pp-expired",
@@ -4964,7 +6944,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "984d9f95e9915816bf4d5bd3404070715f3b9567ef9a7df469147e00aa4a7bae"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cbe0bfc8e01ddb696c00185df5964189423264473453e6cc57b1c0e2bf1e6b0f"
     },
     {
       "id": "2026-07-call-of-duty-3pp-marketing",
@@ -4985,7 +6973,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9af011b04f50d34314691a4b5e8b77c5656faa2026d60ba49cb90381f04ef06d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3ec4e0eee384895c486c15f06b473a6d27fab424b38da1dfb746cb29da4c6f54"
     },
     {
       "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
@@ -5006,7 +7002,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "8d41e0054d0559723ef8c9cf7b33b27566bb24fb54b1be18a62c7675e8e4a4e4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "084c9a72af735c1cea48b2b5b8def686702da6256a3458c7ddee175f1191a471"
     },
     {
       "id": "2026-07-clips-game-events-on-player",
@@ -5024,7 +7028,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "d515d8b3609b25484869b77d1ee58bb9dd213d60f8ddbb92c4382b83c91d4b51"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a9eb878466ca59e243b3ce8797c8fe39e44733a469dcd58b5f2fd76ca1f1f217"
     },
     {
       "id": "2026-07-clips-ntp-clock",
@@ -5042,7 +7054,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "cef2adb86f4fe02463639f686fc7821b1df8170dccc2e7ee72a9ae34b4867d1f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "dc067897d2b9fbc4e0db6974de997373d7ff8c784de8d8644165eb473dfb53a3"
     },
     {
       "id": "2026-07-clips-on-profile-setter",
@@ -5063,7 +7083,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "4a82f7d5c4aa6db38e938c5783c69926f3872975f77efe76f5c8266034e382d8"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6ef71efb9bbbb3c3085e35cb7a661931aebe7a9462e189abb4fa2182f18d4671"
     },
     {
       "id": "2026-07-clips-on-profile-viewer",
@@ -5084,7 +7112,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a5d12e97c158cb9034039fde2d5fddf73069e56944c8b76cc2669cbfd666171c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d78c3301842b14dec62accab0c00da8638fb48666bd15e6b99f5dec5a018e290"
     },
     {
       "id": "2026-07-cobalt",
@@ -5105,7 +7141,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9922cf4a1a1d728a2aaa0e2d845142cc8fb5b7432b97b42edc6eaa8d46740b2e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1752d1d983187c782609fd7a3c06d69a805a4305163c1f47ad6a7a2f350b8803"
     },
     {
       "id": "2026-07-cod-3pp",
@@ -5126,7 +7170,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d59cbbf09739094cf3fdf9c97f39bcac359cbbe8f9d3d719a2bae901446dfdbe"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3550526a3d1f06ad51eb9ebe34b432f294a62546b4b43857151de7c9f5ffe500"
     },
     {
       "id": "2026-07-custom-app-store-overlay",
@@ -5144,7 +7196,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "0ca36b2490ae762014fb9585db1a222598bae9fe4ee226b4ea67f29de1a3bae0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "51cba62dc584a483e23419e5aed3c18e2538e7a47ad63e95f3221be89888e4b8"
     },
     {
       "id": "2026-07-desktop-channel-tabs",
@@ -5162,7 +7222,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a4979cb4b2ecbbfe5a771cdb511b90199963d74a98cfa76487c4d39923c12196"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c90f0a43945327a0de8c46a6a1827a35d28c0e6f6b60c068adef24498683de3d"
     },
     {
       "id": "2026-07-desktop-tti-update-backoff-algo",
@@ -5182,7 +7250,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "04524ee0692993144627ee68660243fc5ff4dfd1866c6ea17a7fd85773c74f7f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e0c6fd54855804a782ad853f832f1edf46f05c6f1ae75b1b9f162512b3013537"
     },
     {
       "id": "2026-07-expressive-modal-v2",
@@ -5203,7 +7279,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ddd3f3d1dd53a6c7afa7ba4a4f961b122de75a8fb929661a1d89d442bc7654e4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d76a685ed8be631647999a75c95f223d56bdf5f1793d12884b05e2aee7f24a96"
     },
     {
       "id": "2026-07-gsimagic",
@@ -5221,7 +7305,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a7a98b97d16044342221ce0d3e8c7b962013022bc7e8eb7656359bc93c3e4461"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "222838b3b9f92364d21a9517b4dbd299d5865a1c9d5a058db201bc0207fec618"
     },
     {
       "id": "2026-07-ios-attribution",
@@ -5239,7 +7331,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "46752e48e99908050cde8cbbc0b11b6f2f987bb1f5fbb171a54e8dcdc9688d0d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c37f27a8b3f7d912d1991e0f5a0e717e23a91460935d9f0bf3324b5ba178af4"
     },
     {
       "id": "2026-07-manual-age-assurance-fallback",
@@ -5257,7 +7357,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "515e113e4ae5c0112c8af0436c8a4f1751febbf0832d3c7202a07b8c8a1ac6ac"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fd10979fca308186342060648bbc0f20584c7e7fce2229d796fa4a4dc284d27e"
     },
     {
       "id": "2026-07-message-bookmarks-v2",
@@ -5278,7 +7386,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "2ff3d2177d464c2f69031c1fca9fce6a3d57efa3c76e582d7e0410c5681cbcef"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "64b2c04feaf9716aa13c2dc7201ac6ba755d9e22c9ee237aca9eaf235f4a48d7"
     },
     {
       "id": "2026-07-nvenc-reconstructed-frames",
@@ -5296,7 +7412,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "3980c97359ca4f9533bcd91c66653e03a8398cdf3d9b7527fd15c69fe5f7f358"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a28c73a4907546c8fd4bca97b7811086afca46d7e849ce2e6a77eef7bde3c2ed"
     },
     {
       "id": "2026-07-onyx",
@@ -5317,7 +7441,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "ee4e521b7d1c46fc58b2640ca44a399f8f72023a0e6f37a6081a6fcdaa2946dd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7c68a77750b1060cb10c3ffa0d55e081045c683ae1f09650f20c1a73f10b9787"
     },
     {
       "id": "2026-07-orbchievements",
@@ -5335,7 +7467,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e6d563b1bd0dd560725a47c5fadde89aac00af4c76db0fa466c364337c60b890"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2baabab6b9dd0819ae6b6d97b1b846d0305f74907ff82a14fd562758ba1bdc8f"
     },
     {
       "id": "2026-07-parental-consent-warning-fetch",
@@ -5353,7 +7493,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8e264ebf716f37bc228618a5830e349e9c59ea13877551e10640e969696910ec"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6abb69980cb94d6668edd629017e749866f5bc279f5ebd88dd12e999e0199ab3"
     },
     {
       "id": "2026-07-personal-widget",
@@ -5377,7 +7525,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "bfbf4d02c143b0ec682948d3352c91f7454d7b95dcea35d094c72f7a9a229a49"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "15bfa90c96f73028c923d05f373c6bc80f234246a69992ab6e8827eb612f1a32"
     },
     {
       "id": "2026-07-plan-select-ui-redesign",
@@ -5398,7 +7554,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "0a4440f2c7e363cab6d936ef1033ce92cdfc27cce7e9fcdb387e6a9cbdc450b4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f429151c68b27d0f27bf221f0f5a98943d4ef5b6aca254047430c627f250cc65"
     },
     {
       "id": "2026-07-powerups-coachmark-scroll-close",
@@ -5419,7 +7583,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d23c5fd318981fb7c105bd5421b5ca7d03a7811a319a8b8c0413390ddba223b8"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a2cbd09212914c44b0714c2eab6975fc129868e2db2e91179b51a1e13d276391"
     },
     {
       "id": "2026-07-premium-group-expansion-announcement",
@@ -5440,7 +7612,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "4ae80f8306bb05dbcb3292bac186912ddc264c3886234f9d958b56465085415f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cc4154430410765b41337ea44113320d27ada211fe980fa39adb6a6da5fbc755"
     },
     {
       "id": "2026-07-premium-referral-incentives",
@@ -5472,7 +7652,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "9489841c5d87d9e7e18647d0c586f76e3dc8e20fce5b398de2f80872d3169958"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "589e6f98cb4816a5fbb91ea49b54f99f40bb7a3658fa8039bbe7d63ed055693c"
     },
     {
       "id": "2026-07-quest-home-default-banner-removal",
@@ -5490,7 +7678,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "384c63ffe083937b24a0785f5f4278d711ca32c65168e4fd47510d60ba9ee5a6"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2a1869dfa6e1f534dbbde8945276284666e5dc6804a35f7f376f724dd7c1d8fc"
     },
     {
       "id": "2026-07-reduce-leave-call-gpu",
@@ -5508,7 +7704,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "0322423875fe71b6a9c9f993186ffcf6572c39e3a0a014f6a1ca320c2cb34350"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b5a7b17aabd406ae02c27868a5772487fc8a5d103a568e12fa820a913535d282"
     },
     {
       "id": "2026-07-reject-with-error-kill-switch",
@@ -5526,7 +7730,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "37dc883a25941235b56d12281a5e24517636558a06016d46e998753186e966c5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1734dcf4f0101edde0b21ec099d2ccda8b55e8dcaa22520b69cbdad5d6fb5df5"
     },
     {
       "id": "2026-07-renewable-end-date-sort",
@@ -5547,7 +7759,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9188559ec7338e7388979b70f433af05e29f35692c47aac9da627ec2ace8a917"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "20a857d97600f9e65a4ffc084593bfbe7b69626c8b56d9758c0789e8336dc24d"
     },
     {
       "id": "2026-07-shop-this-look",
@@ -5568,7 +7788,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "959654d8f442b98ebf84a13477b5bb0ddb19e8cee575b0ac94b02e703cc3eef0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "454b759e8c17c0003d406937ab2de8fa33e797690a9cd9634ea83278c73db0a5"
     },
     {
       "id": "2026-07-smag-dm-sidebar-nitro-recommendation",
@@ -5589,7 +7817,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "6e11ad51535565b037cf435d26768ed1a145fa9033c34689a4c53c1fc888e6fd"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ca56d956242352507be4f677b28ae54a0a1eccc7e3248e283f74aa6ea686b03a"
     },
     {
       "id": "2026-07-typing-users-css-dots",
@@ -5607,7 +7843,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e61a6bb3b6394d537428e60dcfe3565598300ba4899636255125e786bd8fa563"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7737de41f58030ec38815bd1c004be1e43a94ae0440256dda3fb75e212ca223f"
     },
     {
       "id": "2026-07-unobtrusive-device-suggestions",
@@ -5625,7 +7869,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "a4ab0deac509d98c52778697464f8a5951ed11406ed66de3e206178795903f5c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "34fde0d9f471f8ec83c1d1fa71a6656324e3a58fe90f775ac0f63dcb92a0e71e"
     },
     {
       "id": "2026-07-vibegrations-guild",
@@ -5646,7 +7898,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "47b0ea6034c80a5dbca553f1c9d2c8a607064291fc5622680080406a86112800"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e63dcf06911eeb7b08c896dbc671fd9ce0450240ff621341b2e504adff03e9f6"
     },
     {
       "id": "2026-07-wishlist-direct-to-gifting",
@@ -5667,7 +7927,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "53d7b8b956dce45426873cbeb81891aae0a117ce0b7c46bbe5319e9d3f9b1735"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "589482bcd51d3a23b9b54d535d2315f492c27c8fe5c0df5125aba135b3158609"
     },
     {
       "id": "2026-08-ad-topic-opt-out-client",
@@ -5697,7 +7965,15 @@
       },
       "treatments": null,
       "variationCount": 5,
-      "fingerprint": "49d465a146f062117b18394c8f588779f84e67c8b504f6bf4b4828c968c97df5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "43d2073cbd5c6edb41d59273e56b03d92889f5c14b695fd2c268921daf5ebb9a"
     },
     {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -5711,7 +7987,15 @@
       "variations": null,
       "treatments": null,
       "variationCount": 0,
-      "fingerprint": "779a4a3e6e879d8d22fb77e82fe3452e3089a9cc0af21609f1e3ac633a32a91b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e5d14edd25ef2e41949cda4fd949ca1fa57cd099211f6021ce6c8ea51732a51a"
     },
     {
       "id": "2026-08-audio-fidelity",
@@ -5752,7 +8036,15 @@
       },
       "treatments": null,
       "variationCount": 8,
-      "fingerprint": "8c48f2bd62ea6ae0ed1ec8eb40b701ab17ed998167d544dc051cff2cbd9c9123"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "de43bf4fe593a3de3c9228f91aff9376acdb1b6aa239ca17fb88fceb21db2060"
     },
     {
       "id": "2026-08-automontage",
@@ -5770,7 +8062,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "c5bc4a2820186b4303d1c5be60181cb73dad59c3f93cae565709dca3fff42da7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ec29e895bd148579508155affca7e886ff9e4ab952713b9feba57d87a07d75b9"
     },
     {
       "id": "2026-08-badge-management",
@@ -5791,7 +8091,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "1a25888933729917ff4c75ceda626a9bb48b2a72fc2c0bec9b395abe0a91f8e0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ef605b45060e9d9e4ecf551a05b31c2d72e199e64ecee867b9ce27f47219466c"
     },
     {
       "id": "2026-08-bounties-mobile-quest-bar",
@@ -5829,7 +8137,15 @@
       },
       "treatments": null,
       "variationCount": 7,
-      "fingerprint": "9b7eee32fe7f4f78588d0d797b7423418dea30a3742703c7cfcbebf8e00b1cdb"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "174081993a77237dc90219be09c23d3e03b813c729035e26ded993d99b25a55f"
     },
     {
       "id": "2026-08-call-of-duty-3pp-nagbar",
@@ -5850,7 +8166,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "963205d8666afee0d59913e99d596da7388511dcf493950605370e3e52ba161e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b6a1c67031fff91294cb87f6bb90668091e84146394ac12da80149520e8d6509"
     },
     {
       "id": "2026-08-compress-logs",
@@ -5868,7 +8192,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "135f44e94d848f2f7d399df28263b68300d351e1e55b3948f599c98c0f7d087b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9084111b9301de5605cf8551534f312e944c2cff8c6b3943e55e3b437eb42c30"
     },
     {
       "id": "2026-08-dcf-new-user-cooldown",
@@ -5892,7 +8224,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "c7943dd784b8ba10c7f1af9bad8d7b4d5ea404bd99a11bba4bf6266e5f4c0301"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3d4cda75bc8a4bc5f4ffff9c1324b3463f043b17f26c1b058ce1c5fad7d689ad"
     },
     {
       "id": "2026-08-dont-close-chat",
@@ -5910,7 +8250,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "b51431bf01c4e8970890b7cccae6e878b8e3672ce69c87c3303627dd8ea5e9fa"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "da638ff9200f1df529f4fa8eded765c408d29b623135ca6c02da7616be3b6102"
     },
     {
       "id": "2026-08-favorites-server",
@@ -5928,7 +8276,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "af1e9c1e50b3799be1597c0ea17d0bf0b41f61a333c41ac25a9fa105b070af13"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1fbf3a2fb4659dc7f40d2fcdff8e9b9f4ab462d8cc1f5d8857dd9603fc2b99d1"
     },
     {
       "id": "2026-08-forward-age-restricted-destinations",
@@ -5946,7 +8302,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "081fcf70150c767c57c1b4512f197d6b8571403a616ca9a182c160eba7cfdf36"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fedbb417ff17440c91c0965b582419bbfd0c3588a5d53e242c91e73056d3ee09"
     },
     {
       "id": "2026-08-game-profiles-vc",
@@ -5967,7 +8331,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "bc265a38a9f2976795826ad03c63e61ea63e908e9c0a4be19fd0aacf40a39006"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "50387e5924204ce9429da89dffce39bd427fb16f4c9adb3a404ff2c8f54afbcf"
     },
     {
       "id": "2026-08-gift-recipient-display-name-search",
@@ -5994,7 +8366,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "f41167fe9758d21d72ba880a2334c1367c1bcd1904fbcc5b474b99af27401404"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "bb36435242afe18eae7b1201444f49ce3fc44343f67e974a234415f479f19b32"
     },
     {
       "id": "2026-08-gsh-subs-activity-bar",
@@ -6015,7 +8395,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "c87ff6e66f5f62d060752ee6ef0c77ae9dbca27b9cc50ff211abda0d3ba6f651"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "714baf74fd273f89c0840ec6df54fe8d8c54637e5591f67fb009cd13046cb521"
     },
     {
       "id": "2026-08-guilds-bar-media-state-store",
@@ -6041,7 +8429,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "79e2692a5c9cae94a7599e9c96b1243fbe71cc8bf4cb573f65049091ac81f93d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "84b3605f78e8ed575704cf14885c5c280569b0b1371ca072b65d6df6c1c5b317"
     },
     {
       "id": "2026-08-heic-upload-conversion",
@@ -6067,7 +8463,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "186dbd83de13aa959d6d3bb02c5bf6deb0751a2c0cf3c48952bb45f21c9f5732"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "65db34c2618f3ba9fdbff3fee9c51dd93df9869bd6ed5a8ab17154fba4362997"
     },
     {
       "id": "2026-08-hide-gift-shop-upsell",
@@ -6088,7 +8492,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "4857ebbd787caf1a778fee46024dbc1fff2cab74a5af0b0f2d64d0823a836e99"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "86c714a637cce6102d98b803e05ab9be659877c176ed21b31a1e1836ac75adcd"
     },
     {
       "id": "2026-08-ios-objc-composed-image-cache",
@@ -6102,7 +8514,15 @@
       "variations": null,
       "treatments": null,
       "variationCount": 0,
-      "fingerprint": "5c27be86505648106e915c8065918815620e07cd6c900d5e3085d5ddbd6c6de3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97946e6b475d88659db0fea16694f16699c0543d83597fe53afddb5435237c99"
     },
     {
       "id": "2026-08-mark-channel-unread",
@@ -6120,7 +8540,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "cb1b3db8533333729c0fa93fbfee12788a8e4eab9fedad354722e0bcb76e0515"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b027cb6144ff9e354dd5f68cae6d9c84459b7aafce0864e7cff2b7a564ca58db"
     },
     {
       "id": "2026-08-mute-aware-noise-cancellation",
@@ -6141,7 +8569,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "9beef381e8de2dbc1dbeaf6a79915003849020288090ac3f1e55aaeb9501cc79"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "94912f72ea0f4a02fa2942d11e0ba8e2dc78bc2a974883f2f1a8d3fd17388008"
     },
     {
       "id": "2026-08-nitro-tenure-badge-total-progress",
@@ -6162,7 +8598,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "e05e164a7ad88764d2f257b8a7c2488148230f205ec5c18c6fb525f971bfa1de"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c9528ee554373c7d6552ef17dd055bb129459228707f64f75269a22d241bd5f6"
     },
     {
       "id": "2026-08-nitro-tenure-badge-withheld-state",
@@ -6183,7 +8627,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "6c2fccb7f4e9fb4d036596b92b60b1f815b3674c4f0fbe32417a6fd242752712"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "099ad843bd2878f3db86025a3bad55630b414969545570384374cb75f2f39cb6"
     },
     {
       "id": "2026-08-no-fill-logging",
@@ -6204,7 +8656,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "02be122eb58124100d5edbb8563ae22815164166142afe9c204ea5505bbc64e1"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cf35f649172884616229e61b87edfda1bb9dfc153a9fdb0c90b686b31c7faa32"
     },
     {
       "id": "2026-08-profile-embed-rendering",
@@ -6222,7 +8682,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "ce82c4e7df9c279ae1bcd8d9c91e928fadf65ad460357336ca4a579c47d2b3ab"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "52d4f2b3ec637441a5a43cedf45f03c8e8113c88417a24c3a1289d73b30da66e"
     },
     {
       "id": "2026-08-profile-embed-share-button",
@@ -6240,7 +8708,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "7389a68673e25ecc5ce11ee6283fe1a9b79acbe5c161c8bb771b4bb96e6ff43b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "51d6942dd42d105605571deaf5afa2231fe94f3f5605a785787b58f12896a7fd"
     },
     {
       "id": "2026-08-profile-read-state-v1",
@@ -6254,7 +8730,15 @@
       "variations": null,
       "treatments": null,
       "variationCount": 0,
-      "fingerprint": "926aef06f9b0728092f367900267a90ed8079700afcdf23335dcce39f5043102"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9e65847f5669a7d17193e5ec4be13ab78bc6b1b5bee010531e54ac0d8ff0400e"
     },
     {
       "id": "2026-08-rocketleague-events",
@@ -6272,7 +8756,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "8be0053648f6859d4bfbb5dcf1b4cd47552975b10a081697a64f77e18676bb0c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b925a1793ac7641a693a08abd33a08467c52603045efd2186feedcbcfb973d67"
     },
     {
       "id": "2026-08-scheduled-messages",
@@ -6293,7 +8785,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "905db1f1ec335be18991716c6394682bb3543088d0c07e78f1345ba55a0e9aa5"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6760c5de017410f1b25008a66a9ec9ec19fa3c472219e0a2b040f5ef4ef446b0"
     },
     {
       "id": "2026-08-show-expressive-modal-subtitle-alt",
@@ -6311,7 +8811,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "d3c5f75f0b22ffdf329e774da725443b8ba88ca88dc553c0e519b7ac59fd17a0"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "684bfc89e327a91772bce4bd98b7c617e78dc7a35739e4238bd3f407b2279dc6"
     },
     {
       "id": "2026-08-timestamp-autocomplete-mobile",
@@ -6332,7 +8840,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d8c2c162ac2d5c3e56b2afcebc54d2df1c5500fe5cc048ee90c6f2915965f04a"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "568f8819d8cfd0dd118e3bd5adde8739d56523d9fb22c2a0331d2df1bc29e5f7"
     },
     {
       "id": "2026-08-tiny-bronco",
@@ -6353,7 +8869,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "39ad120e581cf0e3f47bb6f2c6121043a75b7c8efebef63bd22989548e48eb97"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "474dcf989735cdd346c9ada46c7f841f292558778792188c88026e233942ad17"
     },
     {
       "id": "2026-08-top-soundboard-sounds",
@@ -6374,7 +8898,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "a343247ba9364451f1e1496e7600d2640d24b2b13b9f91fc63ca366b6dfdd528"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "83ff86c3c841a027f2f639a304da9f21c0136c9d4522b903861d0268dea572dd"
     },
     {
       "id": "2026-08-top-soundboard-sounds-mobile",
@@ -6395,7 +8927,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "b8365088d31838d0fd93be8b60a32665da0354507e2daeab2675975f69f5b348"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "7a14e2167b31d300ff78f16e24e7d9d98da737f7ae6727e2cf2ed93fe1d39bbb"
     },
     {
       "id": "2026-08-user-bio-max-length",
@@ -6416,7 +8956,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "fe154066dbf4020526440a47740117e57226c3a0dd88653d486310393c61225b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "12a9b28a1beccff2c12cd0777981e6f90b2dcc2b32009a736212556d5014199b"
     },
     {
       "id": "2026-08-user-profile-server-tag-style",
@@ -6434,7 +8982,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "c0400c1cfa750f0cedeca3d8ef96e3150aeb29aa7ddfa23ad4f8f60b2be7b91e"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6970c29ae6f5d04a6f07f668cd2ca66647aebab96ae58c199f9bcec0b94f988b"
     },
     {
       "id": "2026-08-video-guard",
@@ -6455,7 +9011,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7cadc16109239745d6ed5cdc251d68df1e82d7e71f8f6816678b1f4697b2bd5b"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97f58e0bc09710f63b483843711e3379548b600d978e00d26269fc7c875ae61b"
     },
     {
       "id": "2026-08-virtual-backgrounds-ios",
@@ -6473,7 +9037,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e5918912ad74d8397e9f83ec51bba48c57a5bbc7d8b3c6cf79dab2b02cbd0fe9"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2416f1f9114141e1eee25f1909f9d545cb895ab901742c9f733ceaa72da4f157"
     },
     {
       "id": "2026-08-voice-server-update-immediate",
@@ -6491,7 +9063,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "4d0d6b2e9b48337a5c3384a14e2ec275f828e71dae590e1c7d432bd80056c787"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "da8592b64f4724b0bee64011ccc9c1286629fe942edfa9622c81282788ef4c70"
     },
     {
       "id": "2026-08-vq-remaining-time-truncation",
@@ -6514,7 +9094,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "90d2617cab154d41217846cb5ab14b16c28b3ffd09c27c10c5d95bd11c92f047"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6482b99cd99c8f091a81c6600a0b0f1f46fe6d0cd4a70fc563b79214b0e39dec"
     },
     {
       "id": "2026-08-web-filter-tag-group-migration",
@@ -6532,7 +9120,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "9151945de6bebb5d9800d64bf3a26aea82a19d574381a10aa2753c29416f0f30"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f3449b2f4dc5c37f7c4c4422f2163ae3c9a6df68062924a8615f52e27e55802e"
     },
     {
       "id": "2026-09-agc2-mobile",
@@ -6559,7 +9155,15 @@
       },
       "treatments": null,
       "variationCount": 4,
-      "fingerprint": "54c6595c00781ec807b24f8f0a05dfe1d129e9ffcb4cc667a61cfbeed8a901c6"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "14c2d8a273f9fc356bc4ae79351f1258998944072d4bb3b0f15ac78251b0639a"
     },
     {
       "id": "2026-09-automod-application-rules",
@@ -6577,7 +9181,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f1d6b0db597184d1b96a9ef76a3f4e75e488c33a09125723ad710f300ae57741"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b54152bb74b530a67f5d669ef52eba50c5d884352ff90a5d29cf362da66568d4"
     },
     {
       "id": "2026-09-build-a-bear",
@@ -6598,7 +9210,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "219f6e922e504dee928a7a3fb719f9c9273d87309ea221d274a1bd4905b17557"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "862718a5aecbf422d2e0e0be60bedd716a16f039aad9a23ad334a0df6778698a"
     },
     {
       "id": "2026-09-clips-editor-image-track",
@@ -6616,7 +9236,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "e0d245a07cd2a68eba7f9c77eb0860dcf6e721fb8b110abc4a939365c04e76f2"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4614be642d0a3461ce06a01d272e1dc10e088ba6c864d468e5b6d5e980f9b736"
     },
     {
       "id": "2026-09-connected-thread-sidebar",
@@ -6637,7 +9265,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "8218f689e0f155fa21c299cadddb0c5df9830871a425113bbb3273f6bc463e86"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "90bfdbefe15145e44866ebad6e8cd9bf1a26cd04ccf0db32c673f1b215ac9611"
     },
     {
       "id": "2026-09-conversation-topic-header",
@@ -6655,7 +9291,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "6d67419dbe9f10ac0ce8a3809e12c9bf63b85ae879f460e23a2ce1c642f85fce"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fe2c937ec8e118557e223e7f45047a9ae321b835a98d84f0870fc8631ec17193"
     },
     {
       "id": "2026-09-desktop-tti-shader-cache",
@@ -6673,7 +9317,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "29572d91e7c66536ba8f0633c89ea490b9c12378e2b67c1e350164b342ef2edc"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3f8b9b8cf9ee4589fdccb54875974623597336921863d4955a51a9db3ddeeaa9"
     },
     {
       "id": "2026-09-dismissible-content-server-arbitration",
@@ -6694,7 +9346,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "f792805378b81bea5c2456661404f17d5ad65f47c83a9a8855cc9aa399cf9960"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3966ce312a9d4c30e886d17d6a4c6bec5b75f8ba9cce36510a137d83ad62d3dc"
     },
     {
       "id": "2026-09-friends-sidebar",
@@ -6718,7 +9378,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "2ac824299686e3095ac6dc605f8e3e39f14d12c44afe0c93dfddb36dc21eb082"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97e0c6a889002c9d94ec52e7ff87e51d470304c880b5a4c0405319843d4ed332"
     },
     {
       "id": "2026-09-gifting-badge-complex-art",
@@ -6739,7 +9407,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "1f5c437829bd3a3c0313794d57d2377713400c2e7863d0355d43fe9ecc438e35"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "85e2ed3ea471fa2d1005f8215a136018892f41b6cb4b95a40f9cd05742ca689f"
     },
     {
       "id": "2026-09-halloween-holiday",
@@ -6760,7 +9436,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "d429c20220376534f419f44959cc8065e99af4310f73e12ca4afa092e06b0293"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "49455a13c519bce4223a1d665f42391f1423ffaffc8e1c9fcc6f99cccd2f28bc"
     },
     {
       "id": "2026-09-halloween-wishlisting-animation",
@@ -6781,7 +9465,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7cbbe56dbffb7dbdb805dc80f4994727149c35fffab8325f7d7e73b7b0ec94e3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d46a4902da9d4d5c082173eadf8ac1c20aa02d59192947ba286533e3954c675f"
     },
     {
       "id": "2026-09-invite-silp-education",
@@ -6804,7 +9496,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "8cbdb4da35e2b5c062be0400afaa5b03c7270c9b5de16bc48589d7ce4b723311"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1ad3703ba0f4fafabd9899d2c9d20bfc550598608176d2cc1bb1fa78d04cc260"
     },
     {
       "id": "2026-09-jxr-upload-conversion",
@@ -6827,7 +9527,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "269b85b45239048b9161e4c22a7f58f02d48d6684bcda9ccae9636201dcaf735"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1aa0b1d01cfc3c446f05b027a14d9142b94dd206777c57b47b22aaacc23eceac"
     },
     {
       "id": "2026-09-markdown-file-preview",
@@ -6848,7 +9556,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "7f155015861c140602a6330c8c7ecfe42aa0163be0405f1ac449bca877141013"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "365cef1457f6df417e7216ebbc81cade75de4b3547ae706d9e71eff789dc958a"
     },
     {
       "id": "2026-09-multisku-embed-builder",
@@ -6866,7 +9582,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "c5cbe1a60de2f09eaba7f2126f1b9c84a12f4bdd199581c7a86f1641d6febe47"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e9b8c14f0079732064c76e9c8e2bae0954bc5bc2caaa8f05dea9f0110415d10e"
     },
     {
       "id": "2026-09-nameplate-video-preload-none",
@@ -6886,7 +9610,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "f4f541329b27b563803c4c031fbd993ac64edf911eb70b4ca254f2a5ecca6418"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "84bae7c5dcb1d360e317cbccc7c7bce1c2a79fbbc0191dc9f0f980c4a747fa05"
     },
     {
       "id": "2026-09-new-hscroll",
@@ -6907,7 +9639,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "b6d097c9ea92ecdbbbebed4a2f21f168337ead2f84ca4adbeadc352d2c91f3b7"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5d60586c3a53af8075a5f9193e4fec865953660bab19ba5b34a7b162421d5c12"
     },
     {
       "id": "2026-09-nitro-file-upload-rollout",
@@ -6925,7 +9665,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "435779acf89cb8f2cdd73f60a876cba61f9c7b9b6fd63bad7cdd03494749e3e4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5f5c76a34a48463a74c0d71ce268535196236e9d4161ba03651a7921643f0c0a"
     },
     {
       "id": "2026-09-non-nitro-file-upload-marketing",
@@ -6946,7 +9694,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "c8d5a5235ea86d0f7c70d0a08ff2a11ad5e39920bbcae5123c9200979a94a627"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d9124829cc20309a28b6b09ef6a4088968274c8a5f84a43abb19801bf39cb184"
     },
     {
       "id": "2026-09-profile-link-fetch",
@@ -6964,7 +9720,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "40a6db9ed3c2bda93fa8836960003a712debfd209e464bc00b296af3a1d3bc33"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b743c641eda682fa601a92a74cd4048edc2bc351c3fa98837c7ca52785c3418a"
     },
     {
       "id": "2026-09-profile-widget-empty-state-suggestions",
@@ -6987,7 +9751,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "264757e87711f664d797eea4e277587a3e78b14f826d73b58169186207f5f5f3"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a0ab548917201fdf54c83d19e23309bb549027c75305dbfcd6b5050ec11a6f95"
     },
     {
       "id": "2026-09-quest-home-bounties-feature-gate",
@@ -7005,7 +9777,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "2345c1915515d94e3765ff266a74909dbd0e901be2069801aa01cdbde920edfa"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3d7e50e073638e4a74b42de9de5b3d8fa4276b266374e3815cf880fc0767a312"
     },
     {
       "id": "2026-09-referral-trial-cta",
@@ -7026,7 +9806,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "92deafa3d66c9dbbb46dbace5ab4b27f15e50e9576e4d9e8ca718c3a41d9b170"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "2e4f62665c4cf1f248458194c59b9d6e097ee3cf5ddb83d37a14414f70252261"
     },
     {
       "id": "2026-09-registration-email-opt-in-copy",
@@ -7044,7 +9832,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "028f7ec4c1e9f12d8530626128addd78581389214496dd806df729d3fe9ab030"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "12689b6af7f0bbfc50150d5d62c1fd9bddb2083a702c861d6e010187aa36ea4c"
     },
     {
       "id": "2026-09-silp-cta-copy-tests",
@@ -7070,7 +9866,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "efeafda8d9abce455f3b01a4124ed6b5fe25fcff6dcc01b348d586c2811f442d"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "152522c277a4d477c91eb730b5068d59bc0126fe1619fed0a48c2d09ff84bf54"
     },
     {
       "id": "2026-09-silp-direct-to-discoverable",
@@ -7096,7 +9900,15 @@
       },
       "treatments": null,
       "variationCount": 3,
-      "fingerprint": "b7e6f3f6e5a042c6d205385ebf26c6b898c516aadd0b9f7eaa7c213e2fc9104f"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "638f69caaef666b0270a920ce6772084bda05b5d92c7a136e7e34118af4b21c6"
     },
     {
       "id": "2026-09-single-cpu-copy",
@@ -7114,7 +9926,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "73f4c2c00f718ee494a32c6289ee9ddb93e3ccd41748e6adf9a97f93c32a0634"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "97ae9c842867de896262062b8caf1dea768e12b6342d01df7403402f32adf1bf"
     },
     {
       "id": "2026-09-smag-nitro-gifting-lightning-checkout",
@@ -7135,7 +9955,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "78ec569b18e2b7cfdf64717af81d50d82269e74a10b880202d1f14bd93397657"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "bde2ae72943d85171d0f6e08c1ae09f3ba0f08ca0a8af9622abb6eb3b1c88967"
     },
     {
       "id": "2026-09-soundboard-favorites",
@@ -7158,7 +9986,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "e2aeafebd9c4f055c28878bfd5976d284abbb060e2c05de0d8397eaa144fb425"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a13ad70aceb35ce84b83ccbb3871f3280ce15ae2c753da0725ef8ad3cbfc1c01"
     },
     {
       "id": "2026-09-soundboard-quick-action",
@@ -7179,7 +10015,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "38c5eb52461ff82a19dcd56890853d16f817730af9da92ae68ebf1c36911f463"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "aa29a7e1a125e61b4ec5b2db16f1d8f10b64c5e3c8f6030e60f0e808ccc70a8f"
     },
     {
       "id": "2026-09-stream-zero-vad-leading",
@@ -7197,7 +10041,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "d821dbcc9bdccc24c4ae8d13fefcd4d7cbce87689f54af0ba1e4ba1916cf32ae"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b60762d51de12ffa1e94bdec28b6ac7887cc5abb8baf08332926d421bfde8a63"
     },
     {
       "id": "2026-09-update-email-settings-copy-subtext",
@@ -7215,7 +10067,15 @@
       },
       "treatments": null,
       "variationCount": 1,
-      "fingerprint": "48ad7498255f693601d24aa4f9bcaea1fab0f2cd32034190bb4a2fddaf85b935"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d24f457c9a722ec51e8184f0362ff8cee79210f7fe7473737218cd6eabe8ef35"
     },
     {
       "id": "2026-09-video-background-profile-fetch",
@@ -7236,7 +10096,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "f57067ee48e19e79de9283d73b62b5eac57b3a103831daaa3ead4a3c2abb7268"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e4ec80ba02d04b497b4664159167ada98ee3d0fe1c7f895310159a0db0dcd4db"
     },
     {
       "id": "2026-09-youtube-3p",
@@ -7257,7 +10125,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "af1cfc129e838c9dd48fd7dd39ecc151eca4fd2f73e0efabfd2ae63782568ba4"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5e8db6c74890ce0ea559ea7b30938745830e7132bbdc28ac7dc4224f88501641"
     },
     {
       "id": "2026-10-badge-directory-updates",
@@ -7278,7 +10154,15 @@
       },
       "treatments": null,
       "variationCount": 2,
-      "fingerprint": "b3a25a2832586ed0ff946821a497cce6f94699ffffe963d48fd88ee02354198c"
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8716374f08c3a71edd75607bbdff319f01f1e880692e32977767fc669b6868aa"
     }
   ]
 }

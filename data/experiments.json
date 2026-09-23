@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-23T20:50:19.082Z",
+  "scrapedAt": "2026-09-23T20:54:35.394Z",
   "totals": {
     "all": 375
   },
@@ -2711,7 +2711,8 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 1
         }
       },
       "variationCount": 1,
@@ -3127,10 +3128,12 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 3
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 25
         }
       },
       "variationCount": 2,
@@ -3325,16 +3328,20 @@
       "defaultConfig": null,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 5
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "percentage": 35
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "percentage": 5
         }
       },
       "variationCount": 4,
@@ -4097,7 +4104,8 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 35
         }
       },
       "variationCount": 1,
@@ -4239,10 +4247,12 @@
       },
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "percentage": 0.05
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "percentage": 1
         }
       },
       "variationCount": 2,
@@ -6506,6 +6516,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-23T20-50-19-081Z_619574_otam65",
-  "buildNumber": "619574"
+  "runId": "2026-09-23T20-54-35-394Z_619582_pcq3bs",
+  "buildNumber": "619582"
 }

@@ -1947,7 +1947,8 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "percentage": 1
       }
     },
     "label": null
@@ -2360,16 +2361,20 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "percentage": 35
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "percentage": 5
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "percentage": 35
       },
       "4": {
-        "id": 4
+        "id": 4,
+        "percentage": 5
       }
     },
     "label": null
@@ -2916,7 +2921,8 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "percentage": 35
       }
     },
     "label": null
@@ -3003,10 +3009,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "percentage": 0.05
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "percentage": 1
       }
     },
     "label": null
