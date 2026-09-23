@@ -1,45 +1,66 @@
 name: Restore Index Publish
+
 on:
   workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
   restore:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 40
+          fetch-depth: 0
+
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Restore + wire + test + push
+
+      - name: Restore from 7987da3 + wire + Contents API put
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          git log --oneline -15 -- src/index.js
-          # Prefer parent of SEE_FILE commit
-          if grep -q 'SEE_FILE' src/index.js 2>/dev/null; then
-            echo CORRUPT detected
-            git show 'HEAD~1:src/index.js' > src/index.js || git show 'HEAD~2:src/index.js' > src/index.js
-          fi
+          git checkout 7987da3b32a7 -- src/index.js
           wc -c src/index.js
           head -2 src/index.js
-          test $(wc -c < src/index.js) -gt 1000
+          test $(wc -c < src/index.js) -gt 10000
           if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
           python3 scripts/wire_publish.py
-          python3 scripts/update_publish_meta.py || true
           node --check src/index.js
           node --check src/lib/publish_data.js
           npm test
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/index.js package.json .github/workflows/scrape.yml
-          git status
-          git commit -m "feat(data): restore index + atomic publish after notify" || true
-          for i in $(seq 1 15); do
-            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
-              echo OK; exit 0
-            fi
-            sleep 4
-          done
-          exit 1
+          SHA=$(curl -sS -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/contents/src/index.js?ref=main" \
+            | python3 -c "import sys,json; print(json.load(sys.stdin)['sha'])")
+          echo "current blob sha $SHA"
+          python3 - <<'PY'
+import base64, json, os, urllib.request
+path = "src/index.js"
+with open(path, "rb") as f:
+    content = base64.b64encode(f.read()).decode()
+sha = os.environ["SHA"]
+token = os.environ["GH_TOKEN"]
+repo = os.environ["GITHUB_REPOSITORY"]
+body = json.dumps({
+    "message": "feat(data): restore index + atomic multi-file publish after notify",
+    "content": content,
+    "sha": sha,
+    "branch": "main",
+}).encode()
+req = urllib.request.Request(
+    f"https://api.github.com/repos/{repo}/contents/src/index.js",
+    data=body,
+    method="PUT",
+    headers={
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
+    },
+)
+with urllib.request.urlopen(req) as resp:
+    data = json.load(resp)
+    print("ok", data.get("content", {}).get("path"), data.get("commit", {}).get("sha"))
+PY
