@@ -1,7 +1,7 @@
 {
-  "runId": "2026-09-23T21-58-29-139Z_619718_422aif",
-  "buildNumber": "619718",
-  "scrapedAt": "2026-09-23T21:58:29.139Z",
+  "runId": "2026-09-23T22-01-47-344Z_619719_bz4mzo",
+  "buildNumber": "619719",
+  "scrapedAt": "2026-09-23T22:01:47.344Z",
   "totals": {
     "all": 359
   },
@@ -3386,21 +3386,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-06_guild_spaces",
-      "type": "guild",
-      "kind": "guild",
-      "label": "Guild Space",
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-06-age-verification-incode",
       "type": "user",
       "kind": "user",
@@ -5726,6 +5711,24 @@
       "id": "2026-09-gifting-badge-complex-art",
       "type": "user",
       "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-guild-spaces",
+      "type": "guild",
+      "kind": "guild",
       "label": null,
       "system": "apex",
       "defaultConfig": null,

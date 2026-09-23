@@ -1,7 +1,7 @@
 {
-  "runId": "2026-09-23T21-58-29-139Z_619718_422aif",
-  "buildNumber": "619718",
-  "updatedAt": "2026-09-23T21:58:29.139Z",
+  "runId": "2026-09-23T22-01-47-344Z_619719_bz4mzo",
+  "buildNumber": "619719",
+  "updatedAt": "2026-09-23T22:01:47.344Z",
   "count": 359,
   "experiments": [
     {
@@ -5552,32 +5552,6 @@
       "fingerprint": "cdc6b07787f0f821722ec3673a4d5aa6be221c2017a2d7eb57ca129f6998519c"
     },
     {
-      "id": "2026-06_guild_spaces",
-      "kind": "guild",
-      "type": "guild",
-      "system": "apex",
-      "label": "Guild Space",
-      "title": "Guild Space",
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "a5b860640835c3c955d843824ebac97cc176fa438c088ae8abfa7930b675d96d"
-    },
-    {
       "id": "2026-06-age-verification-incode",
       "kind": "user",
       "type": "user",
@@ -9391,6 +9365,35 @@
         "value": null
       },
       "fingerprint": "85e2ed3ea471fa2d1005f8215a136018892f41b6cb4b95a40f9cd05742ca689f"
+    },
+    {
+      "id": "2026-09-guild-spaces",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "458058bc3375c0f0ecbf9ebdad8fb91dcb4dd7fed90d086d122f69dce5104dfb"
     },
     {
       "id": "2026-09-halloween-holiday",

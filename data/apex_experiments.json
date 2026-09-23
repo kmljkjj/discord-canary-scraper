@@ -2524,17 +2524,6 @@
     "label": "Guild Rooms"
   },
   {
-    "kind": "guild",
-    "name": "2026-06_guild_spaces",
-    "defaultConfig": null,
-    "variations": {
-      "1": {
-        "id": 1
-      }
-    },
-    "label": "Guild Space"
-  },
-  {
     "kind": "user",
     "name": "2026-06-age-verification-incode",
     "defaultConfig": null,
@@ -4304,6 +4293,20 @@
   {
     "kind": "user",
     "name": "2026-09-gifting-badge-complex-art",
+    "defaultConfig": null,
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "guild",
+    "name": "2026-09-guild-spaces",
     "defaultConfig": null,
     "variations": {
       "0": {
