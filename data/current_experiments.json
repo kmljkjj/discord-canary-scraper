@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-23T21-55-21-645Z_619712_zvosex",
-  "buildNumber": "619712",
-  "updatedAt": "2026-09-23T21:55:21.645Z",
-  "count": 360,
+  "runId": "2026-09-23T21-58-29-139Z_619718_422aif",
+  "buildNumber": "619718",
+  "updatedAt": "2026-09-23T21:58:29.139Z",
+  "count": 359,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -2380,32 +2380,6 @@
         "value": null
       },
       "fingerprint": "a5e4d9d137d47ad15ace14e66c80426a4ac02990a27c4b81e19e09f13aa03638"
-    },
-    {
-      "id": "2026-02-mute-tutorial",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "0df0def4f04a1932a23260f8f75f2e78ebcf7620fbf07d9b32eaa6f012fefa2c"
     },
     {
       "id": "2026-02-non-dm-gifting-modal-redesign",
