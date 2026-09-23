@@ -9,7 +9,8 @@
     "scrape": "node src/index.js",
     "quests": "node src/quests.js",
     "mobile": "node src/mobile_versions.js",
-    "check": "node --check src/index.js && node --check src/lib/extract.js && node --check src/lib/notify.js && node --check src/lib/state.js && node --check src/lib/download.js && node --check src/lib/canary.js && node --check src/lib/webhook_dedupe.js && node --check src/quests.js && node --check src/apex_rollouts.js && node --check src/x_watch.js && node --check src/mobile_versions.js && node --check src/mobile_from_files.js"
+    "check": "node --check src/index.js && node --check src/lib/extract.js && node --check src/lib/notify.js && node --check src/lib/state.js && node --check src/lib/download.js && node --check src/lib/canary.js && node --check src/lib/webhook_dedupe.js && node --check src/lib/experiment_state.js && node --check src/quests.js && node --check src/apex_rollouts.js && node --check src/x_watch.js && node --check src/mobile_versions.js && node --check src/mobile_from_files.js",
+    "test": "node --test test/experiment_state.test.js"
   },
   "engines": {
     "node": ">=20.18.1"
