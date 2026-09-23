@@ -3,6 +3,7 @@
  * - atomic .part → final
  * - retries + Retry-After on 429
  * - timeouts, integrity summary
+ * - hard max body size (memory safety)
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -43,6 +44,31 @@ function resetDownloadStats() {
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
+}
+
+async function readBodyWithLimit(res, maxBytes) {
+  const cl = Number(res.headers.get('content-length') || 0);
+  if (cl > 0 && cl > maxBytes) {
+    throw new Error('content-length too large: ' + cl);
+  }
+  if (res.body && typeof res.body[Symbol.asyncIterator] === 'function') {
+    const chunks = [];
+    let total = 0;
+    for await (const chunk of res.body) {
+      const buf = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+      total += buf.length;
+      if (total > maxBytes) {
+        throw new Error('response too large: ' + total + ' > ' + maxBytes);
+      }
+      chunks.push(buf);
+    }
+    return Buffer.concat(chunks);
+  }
+  const buf = await res.buffer();
+  if (buf && buf.length > maxBytes) {
+    throw new Error('response too large: ' + buf.length + ' > ' + maxBytes);
+  }
+  return buf;
 }
 
 async function clearAssetsDir(assetsDir) {
@@ -102,8 +128,26 @@ async function downloadList(urls, assetsDir, force) {
     if (!force && (await fs.pathExists(fp))) {
       const st = await fs.stat(fp);
       if (st.size > 64) {
-        skip++;
-        return true;
+        if (job.name.endsWith('.js')) {
+          try {
+            const fd = await fs.open(fp, 'r');
+            const headBuf = Buffer.alloc(80);
+            await fd.read(headBuf, 0, 80, 0);
+            await fd.close();
+            if (/^\s*<(!DOCTYPE|html|HTML)/.test(headBuf.toString('utf8'))) {
+              // corrupt HTML cache — re-download
+            } else {
+              skip++;
+              return true;
+            }
+          } catch {
+            skip++;
+            return true;
+          }
+        } else {
+          skip++;
+          return true;
+        }
       }
     }
 
@@ -138,13 +182,21 @@ async function downloadList(urls, assetsDir, force) {
           await sleep(300 * 2 ** attempt);
           continue;
         }
-        const buf = await res.buffer();
+        const maxBytes = /\bweb\./i.test(job.name)
+          ? Number(process.env.MAX_WEB_BYTES || 30 * 1024 * 1024)
+          : Number(process.env.MAX_ASSET_BYTES || 12 * 1024 * 1024);
+        const buf = await readBodyWithLimit(res, maxBytes);
         if (!buf || buf.length < 16) {
           lastErr = 'empty body';
           await sleep(200 * 2 ** attempt);
           continue;
         }
         if (job.name.endsWith('.js')) {
+          if (buf.length < 64) {
+            lastErr = 'js too small (' + buf.length + 'B)';
+            await sleep(200 * 2 ** attempt);
+            continue;
+          }
           const head = buf.slice(0, 80).toString('utf8');
           if (/^\s*<(!DOCTYPE|html|HTML)/.test(head)) {
             lastErr = 'HTML instead of JS';
