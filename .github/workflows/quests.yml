@@ -21,152 +21,22 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
 
-      - name: Heal quests.js if corrupted + apply speed patch
+      - name: Guard quests.js not corrupted
         run: |
           set -euo pipefail
-          SZ=$(wc -c < src/quests.js || echo 0)
+          SZ=$(wc -c < src/quests.js)
           echo "quests.js size=$SZ"
-          if [ "$SZ" -lt 5000 ] || grep -q 'PLACEHOLDER' src/quests.js 2>/dev/null; then
-            echo "CORRUPTED — restoring from history"
-            GOOD=""
-            for c in $(git log --pretty=format:%H -50 -- src/quests.js); do
-              csz=$(git show "$c:src/quests.js" 2>/dev/null | wc -c || echo 0)
-              if [ "$csz" -gt 15000 ] && ! git show "$c:src/quests.js" 2>/dev/null | grep -q PLACEHOLDER; then
-                GOOD=$c
-                break
-              fi
-            done
-            echo "GOOD=$GOOD"
-            test -n "$GOOD"
-            git show "$GOOD:src/quests.js" > src/quests.js
-            echo "restored size=$(wc -c < src/quests.js)"
+          if [ "$SZ" -lt 15000 ] || grep -q PLACEHOLDER src/quests.js; then
+            echo "FATAL: src/quests.js is corrupted on main — restore it before running"
+            exit 1
           fi
-
-          python3 << 'PY'
-          from pathlib import Path
-          import re
-          p = Path('src/quests.js')
-          src = p.read_text()
-          if 'QUEST_TOKENS' in src and 'Promise.all' in src:
-              print('speed patch already present')
-              raise SystemExit(0)
-          old_token = '''const DISCORD_TOKEN =
-  process.env.DISCORD_TOKEN ||
-  process.env.DISCORD_USER_TOKEN ||
-  process.env.DISCORD_USER_TOKEN_1 ||
-  null;'''
-          new_token = '''function loadQuestTokens() {
-  const out = [];
-  const seen = new Set();
-  const push = (t) => {
-    const s = String(t || '').trim();
-    if (!s || seen.has(s)) return;
-    seen.add(s);
-    out.push(s);
-  };
-  push(process.env.DISCORD_TOKEN);
-  push(process.env.DISCORD_USER_TOKEN);
-  for (let i = 1; i <= 8; i++) {
-    push(process.env['DISCORD_USER_TOKEN_' + i]);
-    push(process.env['DISCORD_USER_TOKENS' + i]);
-  }
-  const multi = process.env.DISCORD_USER_TOKENS || '';
-  if (multi) multi.split(/[,\\n;]+/).forEach(push);
-  return out;
-}
-const QUEST_TOKENS = loadQuestTokens();
-const DISCORD_TOKEN = QUEST_TOKENS[0] || null;'''
-          if old_token not in src:
-              print('token block missing — skip speed patch')
-              raise SystemExit(0)
-          src = src.replace(old_token, new_token, 1)
-          m = re.search(r"  let quests = \[\];\n  let official = \[\];\n  let publicList = \[\];\n\n  if \(DISCORD_TOKEN\) \{[\s\S]*?if \(!official\.length\) process\.exitCode = 1;\n  \}", src)
-          if m:
-              new_main = '''  let quests = [];
-  let official = [];
-  let publicList = [];
-  console.log('Tokens quest:', QUEST_TOKENS.length);
-  const [officialRes, publicRes] = await Promise.all([
-    QUEST_TOKENS.length ? fetchOfficialQuests().catch((e) => { console.warn('Quetes officielles:', String(e.message || e).slice(0, 120)); return []; }) : Promise.resolve([]),
-    fetchPublicQuests().catch((e) => { console.error('API publique echouee:', e.message); return []; }),
-  ]);
-  official = officialRes || [];
-  publicList = publicRes || [];
-  console.log('API publique:', publicList.length, 'quetes');
-  if (!official.length && !publicList.length) process.exitCode = 1;'''
-              src = src[:m.start()] + new_main + src[m.end():]
-              print('parallel OK')
-          m2 = re.search(r'async function fetchOfficialQuests\(\) \{[\s\S]*?\n\}\n\nasync function main', src)
-          if m2 and 'QUEST_TOKENS.slice' not in src:
-              new_off = '''async function fetchOfficialQuests() {
-  if (!QUEST_TOKENS.length) { console.log('No token — official skipped'); return []; }
-  const endpoints = ['https://canary.discord.com/api/v10/quests/@me', 'https://discord.com/api/v10/quests/@me'];
-  const byId = new Map();
-  for (const token of QUEST_TOKENS.slice(0, 5)) {
-    for (const url of endpoints) {
-      try {
-        const res = await fetch(url, { headers: { Authorization: token, 'User-Agent': UA, Accept: 'application/json' }, timeout: 20000 });
-        if (res.status === 401 || res.status === 403) { console.warn('official auth failed HTTP', res.status); break; }
-        if (res.status === 429) { await new Promise((r) => setTimeout(r, 3000)); continue; }
-        if (!res.ok) continue;
-        const data = await res.json();
-        const list = Array.isArray(data) ? data : data.quests || data.data || [];
-        for (const raw of list) { const q = normalizeQuest(raw); if (q && q.id) byId.set(q.id, q); }
-        console.log('Official quests:', list.length, 'unique', byId.size);
-        break;
-      } catch (e) { console.warn('official err', String(e.message || e).slice(0, 100)); }
-    }
-  }
-  return [...byId.values()];
-}
-
-async function main'''
-              src = src[:m2.start()] + new_off + src[m2.end():]
-              print('official multi OK')
-          old_nq = '  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));'
-          if old_nq in src:
-              src = src.replace(old_nq, '''  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id)).sort((a, b) => {
-          try { const ia = BigInt(String(a.id).replace(/\\D/g, '') || '0'); const ib = BigInt(String(b.id).replace(/\\D/g, '') || '0'); if (ib > ia) return 1; if (ib < ia) return -1; } catch (_) {}
-          return 0; });''', 1)
-              print('newest-first OK')
-          if 'pending.slice(0, 15)' in src:
-              src = src.replace('pending.slice(0, 15)', 'pending.slice(0, 25)', 1)
-          p.write_text(src)
-          print('wrote', len(src))
-          PY
           node --check src/quests.js
-
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/quests.js
-          if git diff --staged --quiet; then
-            echo "quests.js already up to date on disk"
-          else
-            git commit -m "fix+feat(quests): heal + speed patch" || true
-            for i in 1 2 3 4 5 6 7 8; do
-              git fetch origin main
-              # Prefer our healed quests.js over anything on remote
-              if git rebase origin/main; then
-                if git push origin HEAD:main; then
-                  echo "HEAL_PUSH_OK"
-                  break
-                fi
-              else
-                # conflict: keep OUR src/quests.js
-                git checkout --ours src/quests.js 2>/dev/null || true
-                git add src/quests.js
-                git -c core.editor=true rebase --continue || git rebase --abort || true
-                git push origin HEAD:main && echo "HEAL_PUSH_OK after conflict" && break || true
-              fi
-              sleep $((i))
-            done
-          fi
 
       - name: Install dependencies
         run: |
@@ -192,7 +62,7 @@ async function main'''
           ORBIT_BOT_NAME: Datamining
         run: node src/quests.js
 
-      - name: Save quest state (conflict-proof)
+      - name: Save quest state
         if: always() && steps.quests.outcome != 'cancelled'
         run: |
           set -euo pipefail
@@ -204,56 +74,39 @@ async function main'''
             exit 0
           fi
 
-          # Copy aside so we never lose this run's state
-          cp data/quests.json /tmp/quests_this_run.json
+          python3 - << 'PY'
+          import json
+          from pathlib import Path
+          p = Path('data/quests.json')
+          d = json.loads(p.read_text())
+          ids = [str(x) for x in (d.get('ids') or [])]
+          d['ids'] = list(dict.fromkeys(ids))
+          p.write_text(json.dumps(d, indent=2, ensure_ascii=False) + '\n')
+          print('state ids', len(d['ids']))
+          PY
 
           git add -f data/quests.json
           if git diff --staged --quiet; then
             echo "No quest state changes"
             exit 0
           fi
-          git commit -m "quests: state" || true
+          git commit -m "quests: state"
 
           PUSHED=0
           for i in 1 2 3 4 5 6 7 8; do
-            git fetch origin main
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then
-                PUSHED=1
-                break
-              fi
-            else
-              # On conflict: always keep THIS run's quests.json (newest scrape)
-              cp /tmp/quests_this_run.json data/quests.json
-              git add -f data/quests.json
-              # drop other conflicted files in favor of ours if any
-              git checkout --ours src/quests.js 2>/dev/null || true
-              git add src/quests.js 2>/dev/null || true
-              GIT_EDITOR=true git rebase --continue || {
-                git rebase --abort || true
-                # fallback: soft reset onto origin and recommit only our state
-                git fetch origin main
-                git reset --soft origin/main
-                cp /tmp/quests_this_run.json data/quests.json
-                git add -f data/quests.json
-                git commit -m "quests: state" || true
-              }
-              if git push origin HEAD:main; then
-                PUSHED=1
-                break
-              fi
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              PUSHED=1
+              break
             fi
-            sleep $((i))
+            sleep $((i + 1))
           done
 
           if [ "$PUSHED" -ne 1 ]; then
-            echo "WARN: could not push quests.json — next run retries"
-            exit 0
+            echo "ERROR: could not push quests.json"
+            exit 1
           fi
           echo "STATE_PUSH_OK"
 
       - name: Fail if quests scraper failed
         if: always() && steps.quests.outcome == 'failure'
-        run: |
-          echo "quests step outcome=${{ steps.quests.outcome }}"
-          exit 1
+        run: exit 1
