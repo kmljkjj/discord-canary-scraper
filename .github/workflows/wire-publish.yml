@@ -1,11 +1,15 @@
 name: Wire Atomic Publish
+
 on:
   workflow_dispatch:
+
 permissions:
   contents: write
+
 concurrency:
   group: wire-publish
   cancel-in-progress: false
+
 jobs:
   wire:
     runs-on: ubuntu-latest
@@ -13,12 +17,15 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
+
       - name: Install
         run: |
           if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+
       - name: Wire + test
         run: |
           set -euo pipefail
@@ -26,38 +33,16 @@ jobs:
           node --check src/index.js
           node --check src/lib/publish_data.js
           npm test
+
       - name: Update package + scrape whitelist
-        run: |
-          set -euo pipefail
-          node -e "
-            const fs=require('fs');
-            const p=JSON.parse(fs.readFileSync('package.json','utf8'));
-            if(!p.scripts.check.includes('publish_data'))
-              p.scripts.check += ' && node --check src/lib/publish_data.js';
-            if(!p.scripts.test.includes('publish_data'))
-              p.scripts.test += ' test/publish_data.test.js';
-            fs.writeFileSync('package.json', JSON.stringify(p,null,2)+'\n');
-          "
-          python3 - <<'PY'
-from pathlib import Path
-p = Path('.github/workflows/scrape.yml')
-t = p.read_text()
-if 'generation.json' not in t:
-    t = t.replace(
-        '            data/meta.json \\\n',
-        '            data/meta.json \\\n            data/generation.json \\\n',
-    )
-    p.write_text(t)
-    print('scrape whitelist updated')
-else:
-    print('scrape already has generation.json')
-PY
+        run: python3 scripts/update_publish_meta.py
+
       - name: Commit
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A src/index.js package.json .github/workflows/scrape.yml
+          git add src/index.js package.json .github/workflows/scrape.yml
           git status
           if git diff --staged --quiet; then echo nothing to commit; exit 0; fi
           git commit -m "feat(data): atomic multi-file publish after notify success"
