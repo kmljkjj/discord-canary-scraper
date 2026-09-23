@@ -142,6 +142,7 @@ function stableExpKey(bn, exp) {
     'a:' + pack(exp.added),
     'm:' + pack(exp.modified),
     'r:' + pack(exp.removed),
+    'c:' + pack(exp.categoryChanged),
   ].join('|');
   return crypto.createHash('sha256').update(raw).digest('hex').slice(0, 24);
 }
