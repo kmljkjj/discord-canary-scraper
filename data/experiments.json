@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-23T17:19:04.214Z",
+  "scrapedAt": "2026-09-23T17:22:16.511Z",
   "totals": {
-    "all": 372
+    "all": 373
   },
   "experiments": [
     {
@@ -5987,6 +5987,24 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-dismissible-content-server-arbitration",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-friends-sidebar",
       "type": "user",
       "kind": "user",
@@ -6455,6 +6473,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-23T17-19-04-213Z_619265_qili28",
-  "buildNumber": "619265"
+  "runId": "2026-09-23T17-22-16-511Z_619270_gg9t50",
+  "buildNumber": "619270"
 }
