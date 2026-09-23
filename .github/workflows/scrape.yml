@@ -69,6 +69,8 @@ jobs:
             data/last_extract_strings.json \
             data/last_extract_routes.json \
             data/last_extract_experiments.json \
+            data/current_experiments.json \
+            data/removed_experiments.json \
             data/announced_builds.json \
             data/notify_dedupe.json \
             data/last_run_meta.json \
