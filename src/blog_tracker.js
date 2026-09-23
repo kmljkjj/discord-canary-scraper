@@ -47,10 +47,10 @@ function stripHtml(html) {
     .replace(/<style[\s\S]*?<\/style>/gi, '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/\s+/g, ' ')
     .trim();
@@ -288,51 +288,121 @@ function computeDiff(oldList, newList, source) {
   return { added, updated, removed };
 }
 
-function actionMeta(action) {
-  if (action === 'added') return { emoji: '🆕', label: 'Nouveau', color: COLORS.added };
-  if (action === 'updated') return { emoji: '📝', label: 'Mis à jour', color: COLORS.updated };
-  return { emoji: '🗑️', label: 'Supprimé', color: COLORS.removed };
+function actionMeta(action, isBlog) {
+  if (action === 'added') {
+    return {
+      emoji: '🆕',
+      color: isBlog ? COLORS.blog : COLORS.added,
+      headline: isBlog
+        ? 'Nouvel article sur le blog Discord'
+        : 'Nouvel article dans le centre d\'aide',
+      what: isBlog
+        ? 'Un nouvel article vient d\'être publié sur discord.com/blog.'
+        : 'Un nouvel article d\'aide a été publié sur le support Discord.',
+    };
+  }
+  if (action === 'updated') {
+    return {
+      emoji: '📝',
+      color: COLORS.updated,
+      headline: isBlog ? 'Article blog modifié' : 'Article d\'aide mis à jour',
+      what: isBlog
+        ? 'Le contenu ou le titre de cet article blog a changé.'
+        : 'Le contenu ou le titre de cet article d\'aide a été modifié.',
+    };
+  }
+  return {
+    emoji: '🗑️',
+    color: COLORS.removed,
+    headline: isBlog
+      ? 'Article blog retiré du flux'
+      : 'Article d\'aide retiré',
+    what: isBlog
+      ? 'Cet article n\'apparaît plus dans le suivi (retiré du RSS ou du catalogue).'
+      : 'Cet article n\'est plus listé dans le centre d\'aide Discord.',
+  };
+}
+
+function formatDateFr(iso) {
+  if (!iso) return null;
+  try {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return String(iso).slice(0, 40);
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const yyyy = d.getUTCFullYear();
+    const hh = String(d.getUTCHours()).padStart(2, '0');
+    const mi = String(d.getUTCMinutes()).padStart(2, '0');
+    return dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mi + ' UTC';
+  } catch (_) {
+    return String(iso).slice(0, 40);
+  }
 }
 
 function buildEmbed(entry, action) {
-  const meta = actionMeta(action);
   const isBlog = entry.source === 'blog';
-  const title = truncate(
-    meta.emoji +
-      ' ' +
-      meta.label +
-      ' · ' +
-      (isBlog ? 'Blog' : entry.label || 'Zendesk') +
-      ' · ' +
-      entry.title,
-    256,
-  );
-  const descParts = [];
-  if (entry.bodyPreview) descParts.push(truncate(entry.bodyPreview, 800));
-  else if (entry.description) descParts.push(truncate(entry.description, 800));
-  if (entry.link) descParts.push('\n[Ouvrir](' + entry.link + ')');
+  const meta = actionMeta(action, isBlog);
+  const sourceLabel = isBlog ? 'Blog Discord' : entry.label || 'Centre d\'aide Discord';
+
+  const title = truncate(meta.emoji + ' ' + (entry.title || 'Sans titre'), 256);
+
+  const lines = [];
+  lines.push('**' + meta.headline + '**');
+  lines.push(meta.what);
+  lines.push('');
+  lines.push('**Source** · ' + sourceLabel);
+  if (entry.link) lines.push('**Lien** · [Ouvrir l\'article](' + entry.link + ')');
+
+  const preview = entry.bodyPreview || entry.description || null;
+  if (preview) {
+    lines.push('');
+    lines.push('**Aperçu**');
+    lines.push(truncate(preview, 900));
+  }
 
   const fields = [];
-  if (entry.pubDate)
-    fields.push({ name: 'Publication', value: String(entry.pubDate).slice(0, 40), inline: true });
-  if (entry.updatedAt)
-    fields.push({ name: 'MAJ', value: String(entry.updatedAt).slice(0, 40), inline: true });
-  if (entry.id)
-    fields.push({ name: 'ID', value: '`' + String(entry.id).slice(0, 40) + '`', inline: true });
+  fields.push({
+    name: 'Type de changement',
+    value:
+      action === 'added'
+        ? '🟢 Ajout (nouveau contenu)'
+        : action === 'updated'
+          ? '🟡 Mise à jour (contenu ou titre modifié)'
+          : '🔴 Suppression (plus listé)',
+    inline: false,
+  });
+  const pub = formatDateFr(entry.pubDate);
+  const upd = formatDateFr(entry.updatedAt);
+  if (pub) fields.push({ name: 'Date de publication', value: pub, inline: true });
+  if (upd) fields.push({ name: 'Dernière modification', value: upd, inline: true });
+  if (entry.sectionId)
+    fields.push({ name: 'Section', value: '`' + entry.sectionId + '`', inline: true });
+  if (entry.id) {
+    const idShow = String(entry.id);
+    fields.push({
+      name: isBlog ? 'URL / ID' : 'ID article',
+      value: '`' + truncate(idShow, 60) + '`',
+      inline: false,
+    });
+  }
 
   return {
     author: {
-      name: isBlog ? 'Discord Blog' : 'Discord Help Center',
+      name: 'Datamining · ' + sourceLabel,
       icon_url: AVATAR,
     },
     title,
     url: entry.link || undefined,
-    description: descParts.join('\n').slice(0, 4090) || undefined,
-    color: isBlog && action === 'added' ? COLORS.blog : meta.color,
-    fields: fields.slice(0, 6),
+    description: lines.join('\n').slice(0, 4090),
+    color: meta.color,
+    fields: fields.slice(0, 8),
     image: entry.thumb ? { url: entry.thumb } : undefined,
     footer: {
-      text: 'Datamining · ' + (isBlog ? 'Blog' : 'Zendesk') + ' · ' + action,
+      text:
+        'Datamining · ' +
+        sourceLabel +
+        ' · ' +
+        (action === 'added' ? 'ajout' : action === 'updated' ? 'mise à jour' : 'suppression'),
     },
     timestamp: new Date().toISOString(),
   };
