@@ -765,7 +765,8 @@ async function main() {
     } catch (e) {}
   }
   // Always compare as strings (snowflake id type mismatch caused re-notifies)
-  const prevIds = new Set((previous.ids || []).map(String));
+  const prevIds = new Set((previous.ids || []).map((x) => String(x)));
+  console.log('Known ids loaded:', prevIds.size, 'from', STATE_FILE);
   const isFirstRun = prevIds.size === 0;
 
   const newQuests = isFirstRun
