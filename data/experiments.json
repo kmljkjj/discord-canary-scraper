@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-23T18:58:39.839Z",
+  "scrapedAt": "2026-09-23T19:00:42.450Z",
   "totals": {
-    "all": 375
+    "all": 374
   },
   "experiments": [
     {
@@ -6289,21 +6289,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-09-registration-email-opt-in-copy",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-09-silp-cta-copy-tests",
       "type": "user",
       "kind": "user",
@@ -6506,6 +6491,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-23T18-58-39-839Z_619407_w9ljpw",
-  "buildNumber": "619407"
+  "runId": "2026-09-23T19-00-42-450Z_619408_lvypwv",
+  "buildNumber": "619408"
 }
