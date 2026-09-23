@@ -1,7 +1,7 @@
 {
-  "scrapedAt": "2026-09-23T18:55:29.531Z",
+  "scrapedAt": "2026-09-23T18:58:39.839Z",
   "totals": {
-    "all": 373
+    "all": 375
   },
   "experiments": [
     {
@@ -6062,6 +6062,24 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-halloween-wishlisting-animation",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-invite-silp-education",
       "type": "user",
       "kind": "user",
@@ -6271,6 +6289,21 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-registration-email-opt-in-copy",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-silp-cta-copy-tests",
       "type": "user",
       "kind": "user",
@@ -6473,6 +6506,6 @@
     }
   ],
   "schemaVersion": 2,
-  "runId": "2026-09-23T18-55-29-530Z_619402_ha2kc6",
-  "buildNumber": "619402"
+  "runId": "2026-09-23T18-58-39-839Z_619407_w9ljpw",
+  "buildNumber": "619407"
 }
