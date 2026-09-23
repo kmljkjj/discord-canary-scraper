@@ -81,6 +81,7 @@ jobs:
             data/strings.json \
             data/routes.json \
             data/meta.json \
+            data/generation.json \
             data/cache/ 2>/dev/null || true
           for d in data/builds/*/; do
             [ -d "$d" ] || continue
