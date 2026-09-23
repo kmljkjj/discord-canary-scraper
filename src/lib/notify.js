@@ -15,6 +15,7 @@ const AVATAR =
 const {
   wasPosted,
   markPosted,
+  markFailed,
   claimPosted,
   payloadFingerprint,
   stableExpKey,
@@ -295,7 +296,10 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
   // Only lock the batch after a successful send (or nothing to send)
   if (ok) await markPosted(batchKey);
-  else console.warn('Experiments webhook failed — batch NOT locked');
+  else {
+    console.warn('Experiments webhook failed — batch NOT locked');
+    await markFailed(batchKey, 'experiments batch send failed');
+  }
 
   console.log('Sent experiments', {
     ok,
@@ -376,7 +380,10 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   });
 
   if (ok) await markPosted(batchKey);
-  else console.warn(kind, 'webhook failed — batch NOT locked');
+  else {
+    console.warn(kind, 'webhook failed — batch NOT locked');
+    await markFailed(batchKey, kind + ' batch send failed');
+  }
 
   console.log('Sent', kind, {
     ok,
@@ -422,6 +429,7 @@ async function post(url, body) {
         continue;
       }
       console.warn('webhook fail', lastErr);
+      await markFailed(fp, lastErr);
       return false;
     } catch (e) {
       lastErr = e.message;
@@ -430,6 +438,7 @@ async function post(url, body) {
     }
   }
   console.warn('webhook gave up', lastErr);
+  await markFailed(fp, lastErr);
   return false;
 }
 
