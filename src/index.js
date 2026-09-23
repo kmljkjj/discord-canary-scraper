@@ -11,6 +11,7 @@ const { loadState, saveState } = require('./lib/state');
 const { notifyUrgent, notifyNormal } = require('./lib/notify');
 const { archiveBuildChunks, writeZipHint } = require('./lib/archive_chunks');
 const { writeJsonAtomic } = require('./lib/atomic');
+const experimentState = require('./lib/experiment_state');
 const ALREADY_NOTIFIED = require('./lib/already_notified');
 
 const DATA = path.join(__dirname, '..', 'data');
@@ -157,6 +158,14 @@ function variationKeySet(obj) {
 
 function isMeaningfulExpMod(prev, next) {
   if (!prev || !next) return false;
+  const prevFp = prev.fp || prev.fingerprint;
+  const nextFp = next.fp || next.fingerprint || expFingerprint(next);
+  if (prevFp && nextFp && prevFp !== nextFp) {
+    const prevKeys = variationKeySet(prev);
+    const nextKeys = variationKeySet(next);
+    if (!prevKeys && !nextKeys) return false;
+    return true;
+  }
   const prevKeys = variationKeySet(prev);
   const nextKeys = variationKeySet(next);
   const prevN = prevKeys ? prevKeys.split(',').filter(Boolean).length : 0;
@@ -166,6 +175,9 @@ function isMeaningfulExpMod(prev, next) {
   const prevLabel = (prev.label || '').trim();
   const nextLabel = (next.label || '').trim();
   if (prevLabel && nextLabel && prevLabel !== nextLabel) return true;
+  const pk = (prev.kind || prev.type || '').toLowerCase();
+  const nk = (next.kind || next.type || '').toLowerCase();
+  if (pk && nk && pk !== nk) return true;
   return false;
 }
 
@@ -679,6 +691,43 @@ async function main() {
     saveLastMap(LAST_EXTRACT_RT, nextRt, build.buildNumber),
   ];
   await Promise.all(tasks);
+
+  // current / known / removed (only after successful notify gate)
+  try {
+    const normalized = (findings.experiments || [])
+      .map(experimentState.normalizeExperiment)
+      .filter(Boolean);
+    const previousCurrent = await experimentState.loadCurrentExperiments(DATA);
+    const previousRemoved = await experimentState.loadRemovedExperiments(DATA);
+    const cov = experimentState.assessCoverage({
+      currentCount: normalized.length,
+      previousCount: previousCurrent.length,
+      extractionStatus: 'complete',
+    });
+    console.log('EXP_STATE coverage', cov);
+    const nextKnown = experimentState.mergeKnownIds([...knownExp], normalized);
+    const nextRemoved = experimentState.updateRemovedExperiments({
+      previousCurrent,
+      current: normalized,
+      existingRemoved: previousRemoved,
+      allowRemovals: cov.reliable && expDiff.removed.length > 0,
+      buildNumber: build.buildNumber,
+    });
+    await experimentState.writeExperimentState(DATA, {
+      current: normalized,
+      knownIds: nextKnown,
+      removed: nextRemoved,
+      buildNumber: build.buildNumber,
+    });
+    console.log('EXP_STATE written', {
+      current: normalized.length,
+      known: nextKnown.length,
+      removed: nextRemoved.length,
+      reliable: cov.reliable,
+    });
+  } catch (e) {
+    console.warn('EXP_STATE write failed', e.message);
+  }
 
   try {
     const allExps = findings.experiments || [];
