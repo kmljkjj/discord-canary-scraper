@@ -1,6 +1,10 @@
 /**
  * Webhook dedupe — claim BEFORE HTTP so concurrent GHA runs cannot double-post.
- * Under FORCE_ALWAYS (cog ~65s) several workflows may finish with the same diff.
+ * States: pending | sent | failed
+ * - pending: in-flight (stale after CLAIM_STALE_MS → re-claimable)
+ * - sent: delivered OK (blocked for WINDOW_MS)
+ * - failed: HTTP failed → immediately re-claimable
+ * Legacy status "done" is treated as "sent".
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -55,40 +59,48 @@ function entryTs(v) {
 
 function entryStatus(v) {
   if (v == null) return null;
-  if (typeof v === 'object') return v.status || 'done';
-  return 'done';
+  if (typeof v === 'object') {
+    const s = v.status || 'sent';
+    if (s === 'done') return 'sent';
+    return s;
+  }
+  return 'sent';
 }
 
+/** True only if successfully sent within window — NOT pending/failed. */
 async function wasPosted(fp) {
   try {
     const d = await load();
     const v = d.fps[fp];
     if (!v) return false;
+    if (entryStatus(v) !== 'sent') return false;
     const age = Date.now() - entryTs(v);
-    if (entryStatus(v) === 'pending' && age > CLAIM_STALE_MS) return false;
     return age < WINDOW_MS;
   } catch {
     return false;
   }
 }
 
+/**
+ * Claim fingerprint for sending.
+ * Returns false if already sent (within window) or pending (not stale).
+ * failed and stale pending are re-claimable.
+ */
 async function claimPosted(fp) {
   try {
     const d = await load();
     const v = d.fps[fp];
     if (v) {
       const age = Date.now() - entryTs(v);
-      if (entryStatus(v) === 'pending' && age > CLAIM_STALE_MS) {
-        // stale pending — re-claim
-      } else if (age < WINDOW_MS) {
-        return false;
-      }
+      const st = entryStatus(v);
+      if (st === 'sent' && age < WINDOW_MS) return false;
+      if (st === 'pending' && age < CLAIM_STALE_MS) return false;
     }
     d.fps[fp] = { ts: Date.now(), status: 'pending' };
     await save(d);
     return true;
   } catch (e) {
-    console.warn('dedupe claim fail', e.message);
+    console.warn('claimPosted fail (allow send)', e.message);
     return true;
   }
 }
@@ -96,10 +108,24 @@ async function claimPosted(fp) {
 async function markPosted(fp) {
   try {
     const d = await load();
-    d.fps[fp] = { ts: Date.now(), status: 'done' };
+    d.fps[fp] = { ts: Date.now(), status: 'sent' };
     await save(d);
   } catch (e) {
-    console.warn('dedupe mark fail', e.message);
+    console.warn('markPosted fail', e.message);
+  }
+}
+
+async function markFailed(fp, error) {
+  try {
+    const d = await load();
+    d.fps[fp] = {
+      ts: Date.now(),
+      status: 'failed',
+      error: String(error || '').slice(0, 500),
+    };
+    await save(d);
+  } catch (e) {
+    console.warn('markFailed fail', e.message);
   }
 }
 
@@ -152,8 +178,11 @@ function payloadFingerprint(body) {
 module.exports = {
   wasPosted,
   markPosted,
+  markFailed,
   claimPosted,
   payloadFingerprint,
   stableExpKey,
   stableMapKey,
+  WINDOW_MS,
+  CLAIM_STALE_MS,
 };
