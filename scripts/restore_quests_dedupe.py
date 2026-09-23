@@ -1,60 +1,67 @@
 #!/usr/bin/env python3
-"""Restore src/quests.js from last good commit and fix String(id) state persistence."""
 import json
 import subprocess
 from pathlib import Path
 
-ROOT = Path('.')
-QUESTS = ROOT / 'src' / 'quests.js'
-STATE = ROOT / 'data' / 'quests.json'
+QUESTS = Path('src/quests.js')
+STATE = Path('data/quests.json')
 
-# Prefer a known-good commit; fall back to git history scan
-GOOD_SHAS = [
-    '79727f1ff3c8e1e0e0e0e0e0e0e0e0e0e0e0e0e0',  # placeholder invalid
-]
-
-def git_show(path, rev):
+def git_show(rev):
     try:
-        return subprocess.check_output(['git', 'show', f'{rev}:{path}'], text=True, stderr=subprocess.DEVNULL)
+        return subprocess.check_output(
+            ['git', 'show', f'{rev}:src/quests.js'],
+            stderr=subprocess.DEVNULL,
+        ).decode('utf-8', errors='replace')
     except Exception:
         return None
 
-def find_good_quests():
-    # scan recent commits
-    try:
-        log = subprocess.check_output(
-            ['git', 'log', '--pretty=format:%H', '-80', '--', 'src/quests.js'],
-            text=True,
-        ).strip().splitlines()
-    except Exception:
-        log = []
+def find_good():
+    log = subprocess.check_output(
+        ['git', 'log', '--pretty=format:%H', '-100', '--', 'src/quests.js'],
+        text=True,
+    ).strip().splitlines()
     for sha in log:
-        body = git_show('src/quests.js', sha)
+        body = git_show(sha)
         if not body:
             continue
         if 'PLACEHOLDER' in body or len(body) < 15000:
             continue
-        if 'function normalizeQuest' in body and 'writeQuestState' in body:
-            print('using', sha, 'len', len(body))
+        if 'function normalizeQuest' in body and 'sendQuestWebhook' in body:
+            print('GOOD', sha, len(body))
             return body
-    raise SystemExit('no good quests.js in history')
+    raise SystemExit('no good quests.js found in git history')
 
-src = find_good_quests()
+src = find_good()
 
+# Patch persistence block if still old style
 old = '''  const prevIds = new Set(previous.ids || []);
   const isFirstRun = prevIds.size === 0;
 
-  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));
-  const questSnapshot = active.map((q) => ({
-    id: q.id,
-    name: q.name,
-    expiresAt: q.expiresAt,
-    videoUrl: q.videoUrl || null,
-    heroImage: q.heroImage || null,
-    rewardCount: (q.rewards || []).length,
-  }));
+  const newQuests = isFirstRun ? [] : active.filter((q) => !prevIds.has(q.id));'''
 
-  async function writeQuestState(ids) {
+if old in src and 'State written: ids=' not in src:
+    src = src.replace(
+        'const prevIds = new Set(previous.ids || []);',
+        'const prevIds = new Set((previous.ids || []).map(String));',
+        1,
+    )
+    src = src.replace(
+        'active.filter((q) => !prevIds.has(q.id))',
+        'active.filter((q) => q && q.id && !prevIds.has(String(q.id)))',
+        1,
+    )
+    src = src.replace(
+        'known.add(q.id);',
+        'known.add(String(q.id));',
+        1,
+    )
+    src = src.replace(
+        'await writeQuestState(active.map((q) => q.id));',
+        'await writeQuestState(active.map((q) => String(q.id)));',
+        1,
+    )
+    src = src.replace(
+        '''async function writeQuestState(ids) {
     await fs.writeJson(
       STATE_FILE,
       {
@@ -65,60 +72,8 @@ old = '''  const prevIds = new Set(previous.ids || []);
       },
       { spaces: 2 },
     );
-  }
-
-  if (isFirstRun) {
-    await writeQuestState(active.map((q) => q.id));
-    console.log('Premier run - seed de', active.length, 'ids (pas de flood)');
-    return;
-  }
-
-  const known = new Set(prevIds);
-  const pending = newQuests.slice();
-  const batch = pending.slice(0, 15);
-  console.log('Nouvelles quetes:', pending.length, '| notify batch:', batch.length);
-
-  let sentOk = 0;
-  let sentFail = 0;
-  for (const q of batch) {
-    const ok = await sendQuestWebhook(q);
-    if (ok) {
-      known.add(q.id);
-      sentOk++;
-    } else {
-      sentFail++;
-      console.warn('NOTIFY_FAIL quest', q.id, '- will retry next run');
-    }
-  }
-
-  for (const q of active) {
-    if (prevIds.has(q.id)) known.add(q.id);
-  }
-
-  await writeQuestState(Array.from(known));
-  console.log('Quetes termine - sent', sentOk, 'failed', sentFail, 'still pending', pending.length - sentOk);
-  if (sentFail > 0 && sentOk === 0 && batch.length > 0) {
-    process.exitCode = 2;
-  }
-}'''
-
-new = '''  // Always compare as strings (snowflake id type mismatch caused re-notifies)
-  const prevIds = new Set((previous.ids || []).map(String));
-  const isFirstRun = prevIds.size === 0;
-
-  const newQuests = isFirstRun
-    ? []
-    : active.filter((q) => q && q.id && !prevIds.has(String(q.id)));
-  const questSnapshot = active.map((q) => ({
-    id: String(q.id),
-    name: q.name,
-    expiresAt: q.expiresAt,
-    videoUrl: q.videoUrl || null,
-    heroImage: q.heroImage || null,
-    rewardCount: (q.rewards || []).length,
-  }));
-
-  async function writeQuestState(ids) {
+  }''',
+        '''async function writeQuestState(ids) {
     const unique = [...new Set((ids || []).map(String))];
     await fs.writeJson(
       STATE_FILE,
@@ -131,60 +86,26 @@ new = '''  // Always compare as strings (snowflake id type mismatch caused re-no
       { spaces: 2 },
     );
     console.log('State written: ids=', unique.length, 'active=', active.length);
+  }''',
+        1,
+    )
+    # remove the loop that only re-adds prev active (redundant with Set(prevIds))
+    src = src.replace(
+        '''  for (const q of active) {
+    if (prevIds.has(q.id)) known.add(q.id);
   }
 
-  if (isFirstRun) {
-    await writeQuestState(active.map((q) => String(q.id)));
-    console.log('Premier run - seed de', active.length, 'ids (pas de flood)');
-    return;
-  }
-
-  // Keep full history of known ids — never drop (prevents re-spam after failed pushes)
-  const known = new Set(prevIds);
-  const pending = newQuests.slice();
-  const batch = pending.slice(0, 15);
-  console.log('Nouvelles quetes:', pending.length, '| notify batch:', batch.length);
-
-  let sentOk = 0;
-  let sentFail = 0;
-  for (const q of batch) {
-    const ok = await sendQuestWebhook(q);
-    if (ok) {
-      known.add(String(q.id));
-      sentOk++;
-    } else {
-      sentFail++;
-      console.warn('NOTIFY_FAIL quest', q.id, '- will retry next run');
-    }
-  }
-
-  await writeQuestState(Array.from(known));
-  console.log(
-    'Quetes termine - sent',
-    sentOk,
-    'failed',
-    sentFail,
-    'still pending',
-    Math.max(0, pending.length - sentOk),
-  );
-  if (sentFail > 0 && sentOk === 0 && batch.length > 0) {
-    process.exitCode = 2;
-  }
-}'''
-
-if 'State written: ids=' in src:
-    print('already patched persistence')
-elif old in src:
-    src = src.replace(old, new)
-    print('persistence patched')
+  await writeQuestState(Array.from(known));''',
+        '  await writeQuestState(Array.from(known));',
+        1,
+    )
+    print('patched String(id) persistence')
 else:
-    # already different — write restored body as-is if large enough
-    print('WARN: exact block not found, writing restored body without patch')
+    print('persistence already ok or different shape')
 
 QUESTS.write_text(src)
-print('quests.js', QUESTS.stat().st_size)
+print('wrote', QUESTS.stat().st_size)
 
-# Merge known-notified IDs into state to stop immediate re-spam
 EXTRA = [
     '1539421708417765386',
     '1549171029241233449',
@@ -197,14 +118,15 @@ if STATE.exists():
     try:
         data = json.loads(STATE.read_text())
     except Exception:
-        data = {'ids': [], 'quests': []}
+        data = {'ids': []}
 else:
-    data = {'ids': [], 'quests': []}
+    data = {'ids': []}
 ids = set(map(str, data.get('ids') or []))
 for x in EXTRA:
     ids.add(x)
 data['ids'] = sorted(ids, key=lambda s: int(s) if s.isdigit() else 0)
-data['scrapedAt'] = data.get('scrapedAt') or '2026-09-23T13:30:00.000Z'
 STATE.parent.mkdir(parents=True, exist_ok=True)
 STATE.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n')
 print('state ids', len(data['ids']))
+for x in EXTRA:
+    assert x in ids
