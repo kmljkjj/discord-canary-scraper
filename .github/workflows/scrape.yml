@@ -35,6 +35,9 @@ jobs:
           fi
           npm ci --no-audit --no-fund
 
+      - name: Syntax check
+        run: npm run check
+
       - name: Scrape + notify + archive chunks
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -58,6 +61,7 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Whitelist only — never bare `git add -f data/`
           git add -f \
             data/known_experiment_ids.json \
             data/known_string_keys.json \
@@ -75,8 +79,7 @@ jobs:
             data/strings.json \
             data/routes.json \
             data/meta.json \
-            data/cache/ \
-            data/ || true
+            data/cache/ 2>/dev/null || true
           for d in data/builds/*/; do
             [ -d "$d" ] || continue
             git add -f "${d}manifest.json" 2>/dev/null || true
