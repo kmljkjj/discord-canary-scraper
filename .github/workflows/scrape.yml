@@ -29,15 +29,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund || {
-              echo "npm ci failed — falling back to npm install"
-              rm -rf node_modules
-              npm install --no-audit --no-fund
-            }
-          else
-            npm install --no-audit --no-fund
+          if [ ! -f package-lock.json ]; then
+            echo "FATAL: package-lock.json missing — refuse non-reproducible install"
+            exit 1
           fi
+          npm ci --no-audit --no-fund
 
       - name: Scrape + notify + archive chunks
         env:
