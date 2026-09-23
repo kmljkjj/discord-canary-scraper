@@ -33,10 +33,12 @@ jobs:
           SZ=$(wc -c < src/quests.js)
           echo "quests.js size=$SZ"
           if [ "$SZ" -lt 15000 ] || grep -q PLACEHOLDER src/quests.js; then
-            echo "FATAL: src/quests.js is corrupted on main — restore it before running"
+            echo "FATAL: src/quests.js corrupted on main"
             exit 1
           fi
           node --check src/quests.js
+          echo "Known ids sample:"
+          python3 -c "import json;d=json.load(open('data/quests.json'));print('ids',len(d.get('ids')or[]))"
 
       - name: Install dependencies
         run: |
@@ -80,6 +82,13 @@ jobs:
           p = Path('data/quests.json')
           d = json.loads(p.read_text())
           ids = [str(x) for x in (d.get('ids') or [])]
+          # hard-mark already announced spam set
+          for x in [
+            '1539421708417765386','1549171029241233449','1551999809626439731',
+            '1552002448975994942','1552010656952356925','1550379237335367680',
+          ]:
+            if x not in ids:
+              ids.append(x)
           d['ids'] = list(dict.fromkeys(ids))
           p.write_text(json.dumps(d, indent=2, ensure_ascii=False) + '\n')
           print('state ids', len(d['ids']))
