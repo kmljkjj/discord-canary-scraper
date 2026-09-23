@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-23T21-17-18-713Z_619615_5gu500",
-  "buildNumber": "619615",
-  "scrapedAt": "2026-09-23T21:17:18.714Z",
+  "runId": "2026-09-23T21-19-36-361Z_619623_kbu1ra",
+  "buildNumber": "619623",
+  "scrapedAt": "2026-09-23T21:19:36.361Z",
   "totals": {
-    "all": 376
+    "all": 360
   },
   "experiments": [
     {
@@ -401,50 +401,6 @@
       },
       "variationCount": 2,
       "source": "discord"
-    },
-    {
-      "id": "2025-09-agc2-v2",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": {
-            "useAGC2": false
-          }
-        },
-        "2": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": null,
-          "vadKrispActivationThreshold": 0.5
-        },
-        "3": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": null,
-          "vadKrispActivationThreshold": 0.7
-        },
-        "4": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": null,
-          "vadKrispActivationThreshold": 0.8
-        },
-        "5": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": null,
-          "vadKrispActivationThreshold": 0.9
-        },
-        "6": {
-          "noiseCancellationDuringProcessing": true,
-          "noiseCancellationConfig": null,
-          "vadKrispActivationThreshold": 0.95
-        }
-      }
     },
     {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -989,22 +945,6 @@
       "source": "discord"
     },
     {
-      "id": "2025-12-social-layer-storefront-wishlist-user-account-popout",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
-    },
-    {
       "id": "2025-12-windows-audio-effects",
       "type": "user",
       "kind": "user",
@@ -1132,25 +1072,6 @@
       },
       "variationCount": 2,
       "source": "discord"
-    },
-    {
-      "id": "2026-01-profile-updates-notification",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "showSettingsToggle": true
-        },
-        "2": {
-          "showSettingsToggle": true
-        }
-      }
     },
     {
       "id": "2026-01-voice-dares-v0",
@@ -1912,22 +1833,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03-crepe",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
-    },
-    {
       "id": "2026-03-croissant",
       "type": "user",
       "kind": "user",
@@ -2166,22 +2071,6 @@
       },
       "variationCount": 2,
       "source": "discord"
-    },
-    {
-      "id": "2026-03-mobile-web-invite-server-profile",
-      "type": "guild",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
@@ -2516,25 +2405,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-collectibles-profile-frames-purchase",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "bucket": 1
-        },
-        "2": {
-          "bucket": 2
-        }
-      }
-    },
-    {
       "id": "2026-04-composed-quest-player",
       "type": "user",
       "kind": "user",
@@ -2772,18 +2642,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-krisp-v9-ios",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      }
-    },
-    {
       "id": "2026-04-mobile-boost-progress-bar",
       "type": "user",
       "kind": "user",
@@ -2914,28 +2772,6 @@
       },
       "variationCount": 1,
       "source": "discord"
-    },
-    {
-      "id": "2026-04-slayer-storefront-orbs",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        },
-        "2": {
-          "enabled": true
-        },
-        "3": {
-          "enabled": true
-        }
-      }
     },
     {
       "id": "2026-04-topical-navigation-staff-control",
@@ -3385,22 +3221,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-05-kontrolfreek-deprecated-ff",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
-    },
-    {
       "id": "2026-05-mana-type-consolidation",
       "type": "user",
       "kind": "user",
@@ -3522,22 +3342,6 @@
       },
       "variationCount": 1,
       "source": "discord"
-    },
-    {
-      "id": "2026-05-steelseries-higher-discount-ff",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
     },
     {
       "id": "2026-05-use-ad-analytics-interface",
@@ -4573,22 +4377,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-07-create-gdm-title",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
-    },
-    {
       "id": "2026-07-custom-app-store-overlay",
       "type": "user",
       "kind": "user",
@@ -4667,27 +4455,6 @@
       },
       "variationCount": 1,
       "source": "discord"
-    },
-    {
-      "id": "2026-07-invite-server-liveliness",
-      "type": "guild",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true,
-          "variant": "chart"
-        },
-        "2": {
-          "enabled": true,
-          "variant": "highlights"
-        }
-      }
     },
     {
       "id": "2026-07-ios-attribution",
@@ -4905,27 +4672,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-07-quest-bar-secondary-cta",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true,
-          "showPlayInstantlyLabel": false
-        },
-        "2": {
-          "enabled": true,
-          "showPlayInstantlyLabel": true
-        }
-      }
-    },
-    {
       "id": "2026-07-quest-home-default-banner-removal",
       "type": "user",
       "kind": "user",
@@ -5023,22 +4769,6 @@
       },
       "variationCount": 2,
       "source": "discord"
-    },
-    {
-      "id": "2026-07-social-layer-storefront-spend-orbs-banner-copy",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "whileSuppliesLast": true
-        }
-      }
     },
     {
       "id": "2026-07-typing-users-css-dots",
@@ -5572,20 +5302,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-08-premium-group-perk-check",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": true
-      }
-    },
-    {
       "id": "2026-08-profile-embed-rendering",
       "type": "user",
       "kind": "user",
@@ -5673,22 +5389,6 @@
       },
       "variationCount": 1,
       "source": "discord"
-    },
-    {
-      "id": "2026-08-soundboard-desktop-nux",
-      "type": "user",
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "enabled": false,
-          "variant": 0
-        },
-        "1": {
-          "enabled": true
-        }
-      }
     },
     {
       "id": "2026-08-timestamp-autocomplete-mobile",
