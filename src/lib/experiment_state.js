@@ -3,6 +3,7 @@
  * - current: last validated extract snapshot (full objects)
  * - known: ids seen at least once (append-only)
  * - removed: confirmed disappearances when coverage is reliable
+ * - diffExperiments: unique source for added/removed/modified/category_changed
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -106,11 +107,26 @@ function assessCoverage({ currentCount, previousCount, extractionStatus }) {
   };
 }
 
-function diffExperiments(previousList, currentList, allowRemovals) {
-  const previous = Array.isArray(previousList) ? previousList : [];
-  const current = Array.isArray(currentList) ? currentList : [];
+/**
+ * Single source of truth for experiment deltas.
+ * category_changed is exclusive of modified.
+ */
+function diffExperiments(previousList, currentList, allowRemovals, opts = {}) {
+  const previous = (Array.isArray(previousList) ? previousList : [])
+    .map((e) => (e && e.fingerprint ? e : normalizeExperiment(e)))
+    .filter(Boolean);
+  const current = (Array.isArray(currentList) ? currentList : [])
+    .map((e) => (e && e.fingerprint ? e : normalizeExperiment(e)))
+    .filter(Boolean);
+
   const previousById = new Map(previous.map((e) => [String(e.id), e]));
   const currentById = new Map(current.map((e) => [String(e.id), e]));
+
+  const known =
+    opts.knownIds instanceof Set
+      ? opts.knownIds
+      : new Set((opts.knownIds || []).map(String));
+  const filterKnown = known.size > 0 || opts.knownIds != null;
 
   const added = [];
   const removed = [];
@@ -120,18 +136,42 @@ function diffExperiments(previousList, currentList, allowRemovals) {
   for (const [id, cur] of currentById) {
     const prev = previousById.get(id);
     if (!prev) {
+      if (filterKnown && known.has(id)) continue;
       added.push(cur);
       continue;
     }
-    const prevKind = prev.kind || prev.type;
-    const curKind = cur.kind || cur.type;
+
+    const prevKind = String(prev.kind || prev.type || '').toLowerCase() || null;
+    const curKind = String(cur.kind || cur.type || '').toLowerCase() || null;
+
     if (prevKind && curKind && prevKind !== curKind) {
-      categoryChanged.push({ before: prev, after: cur });
+      categoryChanged.push({
+        before: prev,
+        after: cur,
+        from: prevKind,
+        to: curKind,
+      });
       continue;
     }
+
     const prevFp = prev.fingerprint || prev.fp;
     const curFp = cur.fingerprint || cur.fp;
-    if (prevFp && curFp && prevFp !== curFp) {
+    if (prevFp && curFp) {
+      if (prevFp !== curFp) {
+        modified.push({ before: prev, after: cur });
+      }
+      continue;
+    }
+
+    const prevKeys = Object.keys(prev.variations || {}).sort().join(',');
+    const curKeys = Object.keys(cur.variations || {}).sort().join(',');
+    if (prevKeys && curKeys && prevKeys !== curKeys) {
+      modified.push({ before: prev, after: cur });
+      continue;
+    }
+    const pl = (prev.label || '').trim();
+    const cl = (cur.label || '').trim();
+    if (pl && cl && pl !== cl) {
       modified.push({ before: prev, after: cur });
     }
   }
@@ -142,7 +182,55 @@ function diffExperiments(previousList, currentList, allowRemovals) {
     }
   }
 
-  return { added, removed, modified, categoryChanged };
+  const maxAdded = opts.maxAdded != null ? opts.maxAdded : Infinity;
+  const maxModified = opts.maxModified != null ? opts.maxModified : Infinity;
+  const maxRemoved = opts.maxRemoved != null ? opts.maxRemoved : Infinity;
+  const maxCat = opts.maxCategoryChanged != null ? opts.maxCategoryChanged : Infinity;
+
+  return {
+    added: added.slice(0, maxAdded),
+    removed:
+      removed.length > maxRemoved && maxRemoved < Infinity
+        ? []
+        : removed.slice(0, maxRemoved),
+    modified: modified.slice(0, maxModified),
+    categoryChanged: categoryChanged.slice(0, maxCat),
+  };
+}
+
+/** Flatten for Discord notify (expects objects with id). */
+function toNotifyExpDiff(diff) {
+  const d = diff || {};
+  return {
+    added: d.added || [],
+    modified: (d.modified || []).map((row) => {
+      if (row && row.after) {
+        return {
+          ...row.after,
+          _prevKeys: Object.keys((row.before && row.before.variations) || {})
+            .sort()
+            .join(','),
+          _nextKeys: Object.keys((row.after && row.after.variations) || {})
+            .sort()
+            .join(','),
+        };
+      }
+      return row;
+    }),
+    removed: (d.removed || []).map((e) =>
+      e && e.id != null ? { id: String(e.id), kind: e.kind || e.type || null } : e,
+    ),
+    categoryChanged: (d.categoryChanged || []).map((row) => ({
+      id: String(row.after?.id || row.before?.id || ''),
+      kind: row.after?.kind || row.to,
+      type: row.after?.kind || row.to,
+      label: row.after?.label || null,
+      from: row.from || row.before?.kind,
+      to: row.to || row.after?.kind,
+      before: row.before || null,
+      after: row.after || null,
+    })),
+  };
 }
 
 async function loadCurrentExperiments(dataDir) {
@@ -236,6 +324,7 @@ module.exports = {
   createExperimentFingerprint,
   assessCoverage,
   diffExperiments,
+  toNotifyExpDiff,
   loadCurrentExperiments,
   loadRemovedExperiments,
   mergeKnownIds,
