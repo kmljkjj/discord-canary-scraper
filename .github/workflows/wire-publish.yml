@@ -3,11 +3,16 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: wire-publish
+  cancel-in-progress: false
 jobs:
   wire:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
@@ -33,21 +38,35 @@ jobs:
               p.scripts.test += ' test/publish_data.test.js';
             fs.writeFileSync('package.json', JSON.stringify(p,null,2)+'\n');
           "
-          if ! grep -q 'data/generation.json' .github/workflows/scrape.yml; then
-            sed -i 's|data/meta.json \\|data/meta.json \\\n            data/generation.json \\|' .github/workflows/scrape.yml
-          fi
+          python3 - <<'PY'
+from pathlib import Path
+p = Path('.github/workflows/scrape.yml')
+t = p.read_text()
+if 'generation.json' not in t:
+    t = t.replace(
+        '            data/meta.json \\\n',
+        '            data/meta.json \\\n            data/generation.json \\\n',
+    )
+    p.write_text(t)
+    print('scrape whitelist updated')
+else:
+    print('scrape already has generation.json')
+PY
       - name: Commit
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/index.js src/lib/publish_data.js test/publish_data.test.js \
-            scripts/wire_publish.py scripts/publish_success_block.js \
-            package.json .github/workflows/scrape.yml
-          if git diff --staged --quiet; then echo nothing; exit 0; fi
+          git add -A src/index.js package.json .github/workflows/scrape.yml
+          git status
+          if git diff --staged --quiet; then echo nothing to commit; exit 0; fi
           git commit -m "feat(data): atomic multi-file publish after notify success"
-          for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin main && git push origin HEAD:main && exit 0
-            sleep 2
+          for i in $(seq 1 10); do
+            if git pull --rebase --autostash origin main && git push origin HEAD:main; then
+              echo pushed
+              exit 0
+            fi
+            echo "retry $i"
+            sleep 5
           done
           exit 1
