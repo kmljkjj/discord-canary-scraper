@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-23T03:39:48.173Z",
+  "scrapedAt": "2026-09-23T03:40:52.809Z",
   "blog": [
     {
       "id": "https://discord.com/blog/safer-for-teens-same-discord-for-adults",
@@ -444,10 +444,36 @@
   ],
   "zendesk": [
     {
+      "id": "360001556852",
+      "title": "Invalid Invite Links",
+      "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
+      "updatedAt": "2026-09-23T03:40:06Z",
+      "createdAt": "2018-03-08T19:29:03Z",
+      "sectionId": "201131298",
+      "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
+      "bodyPreview": "Let me innnnnnn! You finally got an invite to a server, but you’re getting hit with an error message and can’t join. What does it mean? Why can’t you join? Let’s go over the possible error messages that you might see, what they mean, and what you can do if you’re seeing them. Invalid Error Messages Unknown/Expired Invite: Your invite link may have expired. In this case, please ask for a new invit…",
+      "thumb": "https://support.discord.com/hc/article_attachments/16951605041047",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360040724612",
+      "title": "Why is Discord asking for my birthday?",
+      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
+      "updatedAt": "2026-09-23T03:39:50Z",
+      "createdAt": "2020-03-19T00:18:15Z",
+      "sectionId": "360007875171",
+      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
+      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "6181726888215",
       "title": "How to Verify Your Discord Account",
       "link": "https://support.discord.com/hc/en-us/articles/6181726888215-How-to-Verify-Your-Discord-Account",
-      "updatedAt": "2026-09-23T03:37:19Z",
+      "updatedAt": "2026-09-23T03:39:46Z",
       "createdAt": "2022-05-18T23:56:20Z",
       "sectionId": "360009072571",
       "bodyHash": "a69ef961082850eae28c85f96496847a4d51a3884bfaf2ad1a9be56d7828c796",
@@ -457,15 +483,54 @@
       "label": "Support"
     },
     {
+      "id": "18210965981847",
+      "title": "Discord Warning System",
+      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
+      "updatedAt": "2026-09-23T03:39:34Z",
+      "createdAt": "2023-10-12T01:36:18Z",
+      "sectionId": "360007875171",
+      "bodyHash": "997f8fd3c440c1d15b13072e31dcbee3a090519b44dbbae9414d72875f433eba",
+      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360060145013",
       "title": "Why isn't my DM going through?",
       "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-23T03:36:58Z",
+      "updatedAt": "2026-09-23T03:39:28Z",
       "createdAt": "2020-11-30T20:42:12Z",
       "sectionId": "115000458672",
       "bodyHash": "769ce66273b71982e2633f2e9b83e57e0b6156886faaca7d89ef748c4d3ddb41",
       "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
       "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "25966860846231",
+      "title": "Security Keys, Passkeys, and Passwordless Login on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/25966860846231-Security-Keys-Passkeys-and-Passwordless-Login-on-Discord",
+      "updatedAt": "2026-09-23T03:38:20Z",
+      "createdAt": "2024-08-28T14:36:55Z",
+      "sectionId": "360009072571",
+      "bodyHash": "00a26af47841d1c38813e9415cdb3a2ba8c540b4674396f5d5da1c5c3b77f22c",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: How to Register Passkey Mobile Desktop/Browser Passwordless Login with Passkeys How to Use Security Keys Discord supports the newest standards for authentication: Passkeys and Security Keys, an easier to use and m…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26429365112215",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "27893392334359",
+      "title": "How Games Integrate Discord-Powered Features",
+      "link": "https://support.discord.com/hc/en-us/articles/27893392334359-How-Games-Integrate-Discord-Powered-Features",
+      "updatedAt": "2026-09-23T03:37:39Z",
+      "createdAt": "2024-11-18T21:48:12Z",
+      "sectionId": "360007770552",
+      "bodyHash": "8bb3b62eda27195f89aca56d9ff9432d11260bbb9add1fdd0bbcff88b97457b6",
+      "bodyPreview": "Discord offers tools that game developers can use to power various social and communication features within their games. For you as a player, this means some aspects of your in-game experience will be powered by Discord—which can include in-game voice chat and friends lists, as well as the ability to directly link your Discord account to unlock additional features (such as a combined friends list…",
+      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -509,19 +574,6 @@
       "label": "Support"
     },
     {
-      "id": "360040724612",
-      "title": "Why is Discord asking for my birthday?",
-      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-23T03:35:39Z",
-      "createdAt": "2020-03-19T00:18:15Z",
-      "sectionId": "360007875171",
-      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
-      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "24160905919511",
       "title": "My Discord Account was Hacked or Compromised",
       "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
@@ -548,19 +600,6 @@
       "label": "Support"
     },
     {
-      "id": "27893392334359",
-      "title": "How Games Integrate Discord-Powered Features",
-      "link": "https://support.discord.com/hc/en-us/articles/27893392334359-How-Games-Integrate-Discord-Powered-Features",
-      "updatedAt": "2026-09-23T03:33:05Z",
-      "createdAt": "2024-11-18T21:48:12Z",
-      "sectionId": "360007770552",
-      "bodyHash": "8bb3b62eda27195f89aca56d9ff9432d11260bbb9add1fdd0bbcff88b97457b6",
-      "bodyPreview": "Discord offers tools that game developers can use to power various social and communication features within their games. For you as a player, this means some aspects of your in-game experience will be powered by Discord—which can include in-game voice chat and friends lists, as well as the ability to directly link your Discord account to unlock additional features (such as a combined friends list…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "22567595858327",
       "title": "Share Nitro",
       "link": "https://support.discord.com/hc/en-us/articles/22567595858327-Share-Nitro",
@@ -570,19 +609,6 @@
       "bodyHash": "916d5645db2c2022353e59203c13995f46300cc572e733ad897af4740f6e2721",
       "bodyPreview": "As someone who enjoys Nitro, do you ever wish you could share the fun and joy of your favorite perks with friends? As part of their membership, Nitro members can share up to three friend passes (2-week trials of Nitro ) with their friends! Sharing Nitro with friends can be a fun way to discover how they might style their profile and which custom emojis become their favorite to use in daily conver…",
       "thumb": "https://support.discord.com/hc/article_attachments/24143904581655",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "18210965981847",
-      "title": "Discord Warning System",
-      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
-      "updatedAt": "2026-09-23T03:31:41Z",
-      "createdAt": "2023-10-12T01:36:18Z",
-      "sectionId": "360007875171",
-      "bodyHash": "997f8fd3c440c1d15b13072e31dcbee3a090519b44dbbae9414d72875f433eba",
-      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
       "source": "support",
       "label": "Support"
     },
@@ -778,19 +804,6 @@
       "bodyHash": "bd03232904c2ab718118388900dd2b3cd1c247f1449bbda457f4849ebbf3c43a",
       "bodyPreview": "Creating a Discord account is quick and easy! This guide walks you through the sign-up process and helps resolve common registration issues so that you can start chatting with friends as soon as possible! What this article covers: How to Sign Up for Discord Desktop/Browser Mobile How to Register or Sign Up via Discord Invite How to Troubleshoot Registration Errors Email is Already Registered Othe…",
       "thumb": "https://support.discord.com/hc/article_attachments/31676852324247",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360001556852",
-      "title": "Invalid Invite Links",
-      "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
-      "updatedAt": "2026-09-23T03:09:18Z",
-      "createdAt": "2018-03-08T19:29:03Z",
-      "sectionId": "201131298",
-      "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
-      "bodyPreview": "Let me innnnnnn! You finally got an invite to a server, but you’re getting hit with an error message and can’t join. What does it mean? Why can’t you join? Let’s go over the possible error messages that you might see, what they mean, and what you can do if you’re seeing them. Invalid Error Messages Unknown/Expired Invite: Your invite link may have expired. In this case, please ask for a new invit…",
-      "thumb": "https://support.discord.com/hc/article_attachments/16951605041047",
       "source": "support",
       "label": "Support"
     },
@@ -1363,19 +1376,6 @@
       "bodyHash": "70087ed63012f591c47700135b83dc71f504fd111dee81163bec1991967c3eb1",
       "bodyPreview": "Helping to keep teens safer on Discord means making sure the right protections apply to the right accounts. When Discord knows your account belongs to a teen (13-17), we apply additional safety protections automatically, things like filtering sensitive content and restricting access to age-restricted spaces. You can read more about what those protections cover here . For most users, our age estim…",
       "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "25966860846231",
-      "title": "Security Keys, Passkeys, and Passwordless Login on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/25966860846231-Security-Keys-Passkeys-and-Passwordless-Login-on-Discord",
-      "updatedAt": "2026-09-23T01:42:11Z",
-      "createdAt": "2024-08-28T14:36:55Z",
-      "sectionId": "360009072571",
-      "bodyHash": "00a26af47841d1c38813e9415cdb3a2ba8c540b4674396f5d5da1c5c3b77f22c",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: How to Register Passkey Mobile Desktop/Browser Passwordless Login with Passkeys How to Use Security Keys Discord supports the newest standards for authentication: Passkeys and Security Keys, an easier to use and m…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26429365112215",
       "source": "support",
       "label": "Support"
     },
