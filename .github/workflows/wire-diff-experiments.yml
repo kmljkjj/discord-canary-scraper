@@ -11,14 +11,19 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - run: |
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund; else npm install --no-audit --no-fund; fi
+      - name: Wire + validate
+        run: |
           set -euo pipefail
           python3 scripts/wire_diff_experiments.py
           node --check src/index.js
           node --check src/lib/notify.js
           node --check src/lib/experiment_state.js
           npm test
-      - run: |
+      - name: Commit
+        run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
