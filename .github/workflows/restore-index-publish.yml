@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Restore from 7987da3 + wire + Contents API put
+      - name: Restore from known-good + wire + API put
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -37,30 +37,4 @@ jobs:
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/src/index.js?ref=main" \
             | python3 -c "import sys,json; print(json.load(sys.stdin)['sha'])")
           echo "current blob sha $SHA"
-          python3 - <<'PY'
-import base64, json, os, urllib.request
-with open("src/index.js", "rb") as f:
-    content = base64.b64encode(f.read()).decode()
-sha = os.environ["SHA"]
-token = os.environ["GH_TOKEN"]
-repo = os.environ["GITHUB_REPOSITORY"]
-body = json.dumps({
-    "message": "feat(data): restore index + atomic multi-file publish after notify",
-    "content": content,
-    "sha": sha,
-    "branch": "main",
-}).encode()
-req = urllib.request.Request(
-    f"https://api.github.com/repos/{repo}/contents/src/index.js",
-    data=body,
-    method="PUT",
-    headers={
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/vnd.github+json",
-        "Content-Type": "application/json",
-    },
-)
-with urllib.request.urlopen(req) as resp:
-    data = json.load(resp)
-    print("ok", data.get("content", {}).get("path"), data.get("commit", {}).get("sha"))
-PY
+          python3 scripts/put_index_api.py
