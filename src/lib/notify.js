@@ -67,7 +67,7 @@ async function notifyUrgent({ build, expDiff, webhookUrl }) {
   const ts = new Date().toISOString();
   const exp = normalizeExpDiff(expDiff);
   const nExp =
-    exp.added.length + exp.modified.length + exp.removed.length;
+    exp.added.length + exp.modified.length + exp.removed.length + (exp.categoryChanged || []).length;
   if (!nExp) {
     console.log('Urgent: no experiment diff');
     return true;
@@ -103,14 +103,17 @@ async function notifyNormal({ build, strDiff, rtDiff, webhookUrl }) {
 }
 
 function normalizeExpDiff(diff) {
-  if (diff && (diff.added || diff.modified || diff.removed)) {
+  if (diff && (diff.added || diff.modified || diff.removed || diff.categoryChanged)) {
     return {
       added: Array.isArray(diff.added) ? diff.added : [],
       modified: Array.isArray(diff.modified) ? diff.modified : [],
       removed: Array.isArray(diff.removed) ? diff.removed : [],
+      categoryChanged: Array.isArray(diff.categoryChanged)
+        ? diff.categoryChanged
+        : [],
     };
   }
-  return { added: [], modified: [], removed: [] };
+  return { added: [], modified: [], removed: [], categoryChanged: [] };
 }
 
 function normalizeMapDiff(diff) {
@@ -271,6 +274,22 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
       lines,
     });
   }
+  if ((exp.categoryChanged || []).length) {
+    const lines = exp.categoryChanged.slice(0, 40).map((e) => {
+      const id = e.id || '?';
+      const from = e.from || '?';
+      const to = e.to || e.kind || '?';
+      return `~ ${id} · ${from} → ${to}`;
+    });
+    if (exp.categoryChanged.length > 40)
+      lines.push(`… +${exp.categoryChanged.length - 40} more`);
+    sections.push({
+      label: label(E.modified, `Category · ${exp.categoryChanged.length}`),
+      color: COLOR.modified,
+      count: exp.categoryChanged.length,
+      lines,
+    });
+  }
   if (exp.removed.length) {
     const lines = exp.removed.slice(0, 40).map((e) => {
       const id = typeof e === 'string' ? e : e.id;
@@ -306,6 +325,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     added: exp.added.length,
     modified: exp.modified.length,
     removed: exp.removed.length,
+    categoryChanged: (exp.categoryChanged || []).length,
   });
   return ok;
 }

@@ -182,42 +182,76 @@ function isMeaningfulExpMod(prev, next) {
 }
 
 function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
-  const nextExpMap = new Map();
+  // Build next snapshots for last_extract persistence
   const nextExpSnap = {};
+  const currentRaw = [];
   for (const e of findingsExps || []) {
     if (!e || !e.id || String(e.id).startsWith('hash:')) continue;
     const id = String(e.id);
-    nextExpMap.set(id, e);
     nextExpSnap[id] = expSnapshot(e);
+    currentRaw.push(e);
   }
-  const lastExpCount = Object.keys(lastExp).length;
-  const extractedExpCount = nextExpMap.size;
-  const expDiff = { added: [], modified: [], removed: [] };
-  if (extractedExpCount >= MIN_EXP_FOR_DIFF && lastExpCount >= 40) {
-    for (const [id, e] of nextExpMap) {
-      if (!(id in lastExp)) {
-        if (!knownExp.has(id)) expDiff.added.push(e);
-      } else if (isMeaningfulExpMod(lastExp[id], e)) {
-        expDiff.modified.push({
-          ...e,
-          _prevKeys: variationKeySet(lastExp[id]),
-          _nextKeys: variationKeySet(e),
-        });
-      }
-    }
-    const coverage = extractedExpCount / lastExpCount;
-    if (coverage >= 0.85 && coverage <= 1.2) {
-      for (const id of Object.keys(lastExp)) {
-        if (!nextExpMap.has(id)) expDiff.removed.push({ id });
-      }
-      if (expDiff.removed.length > 15) expDiff.removed = [];
-    }
-    if (expDiff.modified.length > 20) expDiff.modified = [];
-    if (expDiff.added.length > MAX_NOTIFY_EXP)
-      expDiff.added = expDiff.added.slice(0, MAX_NOTIFY_EXP);
+
+  const previousList = [];
+  for (const [id, e] of Object.entries(lastExp || {})) {
+    if (!e) continue;
+    previousList.push(
+      experimentState.normalizeExperiment({
+        ...(typeof e === 'object' ? e : {}),
+        id: (e && e.id) || id,
+      }),
+    );
   }
-  return { expDiff, nextExpSnap };
+  const previous = previousList.filter(Boolean);
+  const current = currentRaw
+    .map((e) => experimentState.normalizeExperiment(e))
+    .filter(Boolean);
+
+  const lastExpCount = previous.length;
+  const extractedExpCount = current.length;
+
+  // Guard: not enough data for a reliable diff (same thresholds as before)
+  if (extractedExpCount < MIN_EXP_FOR_DIFF || lastExpCount < 40) {
+    return {
+      expDiff: {
+        added: [],
+        modified: [],
+        removed: [],
+        categoryChanged: [],
+      },
+      nextExpSnap,
+      coverage: experimentState.assessCoverage({
+        currentCount: extractedExpCount,
+        previousCount: lastExpCount,
+        extractionStatus: 'incomplete',
+      }),
+    };
+  }
+
+  const coverage = experimentState.assessCoverage({
+    currentCount: extractedExpCount,
+    previousCount: lastExpCount,
+    extractionStatus: 'complete',
+  });
+
+  // Unique source of truth
+  const rawDiff = experimentState.diffExperiments(
+    previous,
+    current,
+    coverage.reliable,
+    {
+      knownIds: knownExp,
+      maxAdded: MAX_NOTIFY_EXP,
+      maxModified: 20,
+      maxRemoved: 15,
+      maxCategoryChanged: 20,
+    },
+  );
+
+  const expDiff = experimentState.toNotifyExpDiff(rawDiff);
+  return { expDiff, nextExpSnap, coverage, rawDiff };
 }
+
 
 async function main() {
   const t0 = Date.now();
@@ -553,6 +587,7 @@ async function main() {
     expDiff.added = [];
     expDiff.modified = [];
     expDiff.removed = [];
+    expDiff.categoryChanged = [];
     strDiff.added = {};
     strDiff.modified = {};
     strDiff.removed = {};
@@ -567,6 +602,7 @@ async function main() {
       added: expDiff.added.length,
       modified: expDiff.modified.length,
       removed: expDiff.removed.length,
+      categoryChanged: (expDiff.categoryChanged || []).length,
     },
     str: {
       added: Object.keys(strDiff.added).length,
