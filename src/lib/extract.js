@@ -634,7 +634,35 @@ function countVariationsNear(content, from) {
   } else {
     const keys = [...body.matchAll(/(?:^|[,{])\s*(\d+)\s*:/g)].map((x) => x[1]);
     if (!keys.length) return null;
-    for (const k of keys) out[k] = { id: Number(k) };
+    for (const k of keys) {
+      const entry = { id: Number(k) };
+      const re = new RegExp('(?:^|[,{])\s*' + k + '\s*:\s*\{([^}]{0,400})\}');
+      const block = body.match(re);
+      if (block) {
+        const inner = block[1];
+        const pct =
+          inner.match(/percentage\s*:\s*([0-9.]+)/i) ||
+          inner.match(/percent\s*:\s*([0-9.]+)/i) ||
+          inner.match(/rate\s*:\s*([0-9.]+)/i);
+        if (pct) {
+          const n = Number(pct[1]);
+          if (Number.isFinite(n)) entry.percentage = n;
+        }
+        const start = inner.match(/(?:start|min|from)\s*:\s*([0-9.]+)/i);
+        const end = inner.match(/(?:end|max|to)\s*:\s*([0-9.]+)/i);
+        if (start && end) {
+          entry.start = Number(start[1]);
+          entry.end = Number(end[1]);
+        }
+        const enabled = inner.match(/enabled\s*:\s*([0-9.]+)/i);
+        const total = inner.match(/total\s*:\s*([0-9.]+)/i);
+        if (enabled && total) {
+          entry.enabled = Number(enabled[1]);
+          entry.total = Number(total[1]);
+        }
+      }
+      out[k] = entry;
+    }
   }
   return Object.keys(out).length ? out : null;
 }

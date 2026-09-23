@@ -9,6 +9,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
 const { writeJsonAtomic } = require('./atomic');
+const { attachPercentages } = require('./experiment_percentages');
 
 const CURRENT_FILE = 'current_experiments.json';
 const KNOWN_FILE = 'known_experiment_ids.json';
@@ -37,6 +38,10 @@ function normalizeKind(raw) {
 }
 
 function createExperimentFingerprint(exp) {
+  const pctKey = (p) => {
+    if (!p || p.status === 'unknown' || p.value == null) return null;
+    return { status: p.status, value: p.value };
+  };
   const payload = stableObject({
     id: String(exp.id || ''),
     kind: exp.kind || exp.type || null,
@@ -45,6 +50,8 @@ function createExperimentFingerprint(exp) {
     variations: exp.variations || null,
     treatments: exp.treatments || null,
     defaultConfig: exp.defaultConfig || null,
+    guildPercentage: pctKey(exp.guildPercentage),
+    userPercentage: pctKey(exp.userPercentage),
   });
   return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
@@ -74,9 +81,16 @@ function normalizeExperiment(raw) {
         ? Object.keys(variations).length
         : 0) ||
       0,
+    percentage: raw.percentage,
+    percent: raw.percent,
+    rate: raw.rate,
+    rollout: raw.rollout,
+    rolloutPercentage: raw.rolloutPercentage,
+    pct: raw.pct,
   };
-  base.fingerprint = createExperimentFingerprint(base);
-  return base;
+  const withPct = attachPercentages(base);
+  withPct.fingerprint = createExperimentFingerprint(withPct);
+  return withPct;
 }
 
 function assessCoverage({ currentCount, previousCount, extractionStatus }) {

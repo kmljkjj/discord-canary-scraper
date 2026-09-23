@@ -171,6 +171,16 @@ function expLine(e, prefix) {
   if (system) meta.push(system);
   if (nVar != null)
     meta.push(`${nVar} variation${nVar === 1 ? '' : 's'}`);
+  const pct =
+    (e && e.guildPercentage && e.guildPercentage.status !== 'unknown'
+      ? e.guildPercentage
+      : null) ||
+    (e && e.userPercentage && e.userPercentage.status !== 'unknown'
+      ? e.userPercentage
+      : null);
+  if (pct && pct.value != null) {
+    meta.push(`${pct.value}% (${pct.status})`);
+  }
   if (meta.length) line += `\n${meta.join(' · ')}`;
   if (labelTxt) line += `\n${labelTxt}`;
   return line;
