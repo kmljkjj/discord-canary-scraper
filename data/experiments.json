@@ -1,11 +1,11 @@
 {
-  "runId": "2026-09-24T21-12-47-335Z_620757_f5a5gz",
-  "buildNumber": "620757",
-  "scrapedAt": "2026-09-24T21:12:47.335Z",
+  "runId": "2026-09-24T21-14-56-560Z_620763_zr3fno",
+  "buildNumber": "620763",
+  "scrapedAt": "2026-09-24T21:14:56.560Z",
   "totals": {
-    "all": 360,
+    "all": 361,
     "legacy": 5,
-    "apex": 355
+    "apex": 356
   },
   "experiments": [
     {
@@ -5872,6 +5872,24 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-new-horizontal-scroll-shared",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {

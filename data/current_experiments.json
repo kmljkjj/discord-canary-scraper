@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T21-12-47-335Z_620757_f5a5gz",
-  "buildNumber": "620757",
-  "updatedAt": "2026-09-24T21:12:47.335Z",
-  "count": 360,
+  "runId": "2026-09-24T21-14-56-560Z_620763_zr3fno",
+  "buildNumber": "620763",
+  "updatedAt": "2026-09-24T21:14:56.560Z",
+  "count": 361,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9600,6 +9600,35 @@
         "value": null
       },
       "fingerprint": "6603c525d59713ef5a60c98aa58a1de3a2668cca77457399c042b6aa1af1f770"
+    },
+    {
+      "id": "2026-09-new-horizontal-scroll-shared",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3155b47abf2b3211e817804d3da3a92a9454d34bd0088ca019a0d1a5e6b69b8b"
     },
     {
       "id": "2026-09-new-hscroll",
