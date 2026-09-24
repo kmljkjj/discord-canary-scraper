@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T00-25-49-848Z_619942_06l5ih",
-  "buildNumber": "619942",
-  "updatedAt": "2026-09-24T00:25:49.849Z",
-  "count": 360,
+  "runId": "2026-09-24T00-32-18-030Z_619944_eywilv",
+  "buildNumber": "619944",
+  "updatedAt": "2026-09-24T00:32:18.031Z",
+  "count": 361,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9543,6 +9543,35 @@
         "value": null
       },
       "fingerprint": "365cef1457f6df417e7216ebbc81cade75de4b3547ae706d9e71eff789dc958a"
+    },
+    {
+      "id": "2026-09-mobile-quest-home-sort-priority",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "95f1689eff8232f61f325a047df7fdb5177da500bd92e4959d8742583c1ae5fa"
     },
     {
       "id": "2026-09-multisku-embed-builder",
