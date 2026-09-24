@@ -37,23 +37,71 @@ function normalizeKind(raw) {
   return t || 'unknown';
 }
 
+function variationKeysOnly(exp) {
+  if (!exp || typeof exp !== 'object') return [];
+  if (exp.variations && typeof exp.variations === 'object' && !Array.isArray(exp.variations)) {
+    return Object.keys(exp.variations)
+      .map(String)
+      .sort((a, b) => Number(a) - Number(b) || String(a).localeCompare(String(b)));
+  }
+  if (Array.isArray(exp.treatments)) {
+    return exp.treatments.map((_, i) => String(i));
+  }
+  const n = Number(exp.variationCount || 0);
+  if (Number.isFinite(n) && n > 0) {
+    return Array.from({ length: n }, (_, i) => String(i));
+  }
+  return [];
+}
+
+/**
+ * STRUCTURAL fingerprint only — never hash full variation bodies / defaultConfig.
+ * Deep object noise between builds was producing ~20 false "modified" every scrape.
+ */
 function createExperimentFingerprint(exp) {
-  const pctKey = (p) => {
+  const keys = variationKeysOnly(exp);
+  const pctVal = (p) => {
     if (!p || p.status === 'unknown' || p.value == null) return null;
-    return { status: p.status, value: p.value };
+    const n = Number(p.value);
+    if (!Number.isFinite(n)) return null;
+    return Math.round(n * 100) / 100;
   };
   const payload = stableObject({
     id: String(exp.id || ''),
-    kind: exp.kind || exp.type || null,
-    system: exp.system || null,
-    label: exp.label || exp.title || null,
-    variations: exp.variations || null,
-    treatments: exp.treatments || null,
-    defaultConfig: exp.defaultConfig || null,
-    guildPercentage: pctKey(exp.guildPercentage),
-    userPercentage: pctKey(exp.userPercentage),
+    kind: String(exp.kind || exp.type || '').toLowerCase() || null,
+    label: (exp.label || exp.title || null) && String(exp.label || exp.title).trim() || null,
+    keys,
+    variationCount: keys.length,
+    guildPct: pctVal(exp.guildPercentage),
+    userPct: pctVal(exp.userPercentage),
   });
   return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
+}
+
+function isMeaningfulModification(prev, cur) {
+  if (!prev || !cur) return false;
+  const prevKeys = variationKeysOnly(prev).join(',');
+  const curKeys = variationKeysOnly(cur).join(',');
+  if (prevKeys && curKeys && prevKeys !== curKeys) return true;
+  const pk = String(prev.kind || prev.type || '').toLowerCase();
+  const ck = String(cur.kind || cur.type || '').toLowerCase();
+  if (pk && ck && pk !== ck) return true;
+  const pl = (prev.label || prev.title || '').trim();
+  const cl = (cur.label || cur.title || '').trim();
+  if (pl && cl && pl !== cl) return true;
+  // Percentage change only when both sides have a known numeric value
+  const num = (p) => {
+    if (!p || p.status === 'unknown' || p.value == null) return null;
+    const n = Number(p.value);
+    return Number.isFinite(n) ? n : null;
+  };
+  const pg = num(prev.guildPercentage);
+  const cg = num(cur.guildPercentage);
+  if (pg != null && cg != null && Math.abs(pg - cg) >= 0.5) return true;
+  const pu = num(prev.userPercentage);
+  const cu = num(cur.userPercentage);
+  if (pu != null && cu != null && Math.abs(pu - cu) >= 0.5) return true;
+  return false;
 }
 
 function normalizeExperiment(raw) {
@@ -168,24 +216,8 @@ function diffExperiments(previousList, currentList, allowRemovals, opts = {}) {
       continue;
     }
 
-    const prevFp = prev.fingerprint || prev.fp;
-    const curFp = cur.fingerprint || cur.fp;
-    if (prevFp && curFp) {
-      if (prevFp !== curFp) {
-        modified.push({ before: prev, after: cur });
-      }
-      continue;
-    }
-
-    const prevKeys = Object.keys(prev.variations || {}).sort().join(',');
-    const curKeys = Object.keys(cur.variations || {}).sort().join(',');
-    if (prevKeys && curKeys && prevKeys !== curKeys) {
-      modified.push({ before: prev, after: cur });
-      continue;
-    }
-    const pl = (prev.label || '').trim();
-    const cl = (cur.label || '').trim();
-    if (pl && cl && pl !== cl) {
+    // Meaningful structural change only (keys / kind / label / pct)
+    if (isMeaningfulModification(prev, cur)) {
       modified.push({ before: prev, after: cur });
     }
   }
@@ -336,6 +368,8 @@ module.exports = {
   REMOVED_FILE,
   normalizeExperiment,
   createExperimentFingerprint,
+  isMeaningfulModification,
+  variationKeysOnly,
   assessCoverage,
   diffExperiments,
   toNotifyExpDiff,
