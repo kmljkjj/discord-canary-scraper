@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T22-17-46-466Z_620902_ekmvmu",
-  "buildNumber": "620902",
-  "updatedAt": "2026-09-24T22:17:46.466Z",
-  "count": 8,
+  "runId": "2026-09-24T22-22-07-208Z_620909_evw7oi",
+  "buildNumber": "620909",
+  "updatedAt": "2026-09-24T22:22:07.208Z",
+  "count": 9,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -59,6 +59,13 @@
       "label": null,
       "removedAt": "2026-09-24T21:12:47.344Z",
       "lastBuild": "620757"
+    },
+    {
+      "id": "2024-12_guild_voice_channel_ringing",
+      "kind": "guild",
+      "label": "Guild Voice Ringing",
+      "removedAt": "2026-09-24T22:22:07.218Z",
+      "lastBuild": "620909"
     }
   ]
 }

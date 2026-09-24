@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-24T22-17-46-466Z_620902_ekmvmu",
-  "buildNumber": "620902",
-  "scrapedAt": "2026-09-24T22:17:46.466Z",
+  "runId": "2026-09-24T22-22-07-208Z_620909_evw7oi",
+  "buildNumber": "620909",
+  "scrapedAt": "2026-09-24T22:22:07.208Z",
   "totals": {
-    "all": 361
+    "all": 360
   },
   "experiments": [
     {
@@ -182,21 +182,6 @@
       "defaultConfig": {
         "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/"
       },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2024-12_guild_voice_channel_ringing",
-      "type": "guild",
-      "kind": "guild",
-      "label": "Guild Voice Ringing",
-      "system": "apex",
-      "defaultConfig": null,
       "variations": {
         "1": {
           "id": 1

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T22-17-46-466Z_620902_ekmvmu",
-  "buildNumber": "620902",
-  "updatedAt": "2026-09-24T22:17:46.466Z",
-  "count": 361,
+  "runId": "2026-09-24T22-22-07-208Z_620909_evw7oi",
+  "buildNumber": "620909",
+  "updatedAt": "2026-09-24T22:22:07.208Z",
+  "count": 360,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -319,32 +319,6 @@
         "value": null
       },
       "fingerprint": "7edeb70e1df04e9baf819e1e96e5cbbfb4a569317c7e329b632f25dd4f69dd17"
-    },
-    {
-      "id": "2024-12_guild_voice_channel_ringing",
-      "kind": "guild",
-      "type": "guild",
-      "system": "apex",
-      "label": "Guild Voice Ringing",
-      "title": "Guild Voice Ringing",
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "a8e23b82340e9ab93bf5c94e645a22a857eb7d276545cd2f776aaf442e31c85d"
     },
     {
       "id": "2025-01-allow-nonstaff-to-preview-app-collections",
