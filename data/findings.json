@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-24T00-17-11-940Z_619931_s6wrcq",
-  "buildNumber": "619931",
-  "scrapedAt": "2026-09-24T00:17:11.940Z",
+  "runId": "2026-09-24T00-19-22-430Z_619933_t7gb8c",
+  "buildNumber": "619933",
+  "scrapedAt": "2026-09-24T00:19:22.431Z",
   "totals": {
-    "all": 359
+    "all": 360
   },
   "experiments": [
     {
@@ -6167,6 +6167,24 @@
     },
     {
       "id": "2026-09-video-background-profile-fetch",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-web-sticker-picker-upsell-restyle",
       "type": "user",
       "kind": "user",
       "label": null,

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T00-17-11-940Z_619931_s6wrcq",
-  "buildNumber": "619931",
-  "updatedAt": "2026-09-24T00:17:11.940Z",
-  "count": 359,
+  "runId": "2026-09-24T00-19-22-430Z_619933_t7gb8c",
+  "buildNumber": "619933",
+  "updatedAt": "2026-09-24T00:19:22.431Z",
+  "count": 360,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10109,6 +10109,35 @@
         "value": null
       },
       "fingerprint": "e4ec80ba02d04b497b4664159167ada98ee3d0fe1c7f895310159a0db0dcd4db"
+    },
+    {
+      "id": "2026-09-web-sticker-picker-upsell-restyle",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6b511d18ad3a7904f34c26263c90ea6b370ccbd869cf6e217064d9660cfea184"
     },
     {
       "id": "2026-09-youtube-3p",
