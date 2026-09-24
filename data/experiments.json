@@ -1,11 +1,11 @@
 {
-  "runId": "2026-09-24T18-03-10-168Z_620418_sde4qx",
-  "buildNumber": "620418",
-  "scrapedAt": "2026-09-24T18:03:10.168Z",
+  "runId": "2026-09-24T18-07-32-139Z_620421_viwbtf",
+  "buildNumber": "620421",
+  "scrapedAt": "2026-09-24T18:07:32.139Z",
   "totals": {
-    "all": 361,
-    "legacy": 6,
-    "apex": 355
+    "all": 359,
+    "legacy": 5,
+    "apex": 354
   },
   "experiments": [
     {
@@ -1593,21 +1593,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03_file_upload_250_mb_powerup",
-      "type": "guild",
-      "kind": "guild",
-      "label": "File Upload 250MB Powerup",
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-03_game_server_pricing",
       "type": "guild",
       "kind": "guild",
@@ -1874,21 +1859,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-file-upload-powerup-holdout",
-      "type": "user",
-      "kind": "user",
-      "label": "Server Theme",
-      "system": "legacy",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6269,21 +6239,6 @@
       "variations": {
         "0": {
           "id": 0
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-file-upload-powerup-holdout",
-      "type": "user",
-      "kind": "user",
-      "label": "Server Theme",
-      "system": "legacy",
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
         }
       },
       "variationCount": 1,

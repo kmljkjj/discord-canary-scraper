@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T18-03-10-168Z_620418_sde4qx",
-  "buildNumber": "620418",
-  "updatedAt": "2026-09-24T18:03:10.168Z",
-  "count": 361,
+  "runId": "2026-09-24T18-07-32-139Z_620421_viwbtf",
+  "buildNumber": "620421",
+  "updatedAt": "2026-09-24T18:07:32.139Z",
+  "count": 359,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -2612,32 +2612,6 @@
       "fingerprint": "b574600c3c2a3580485b65f1631edb561bd3dd56ce1ac2bb8881b73f027d9f0b"
     },
     {
-      "id": "2026-03_file_upload_250_mb_powerup",
-      "kind": "guild",
-      "type": "guild",
-      "system": "apex",
-      "label": "File Upload 250MB Powerup",
-      "title": "File Upload 250MB Powerup",
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "d427906c8c34438cebb92557c121d71d605ab79a5ab83e5d43017e6e328ed012"
-    },
-    {
       "id": "2026-03_game_server_pricing",
       "kind": "guild",
       "type": "guild",
@@ -3081,32 +3055,6 @@
         "value": null
       },
       "fingerprint": "f2039e98dcd21da07dab7239a9b879fad80e24def508ca0ed3a6f3f723f3a835"
-    },
-    {
-      "id": "2026-03-file-upload-powerup-holdout",
-      "kind": "user",
-      "type": "user",
-      "system": "legacy",
-      "label": "Server Theme",
-      "title": "Server Theme",
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "4b28a5cab123de0e98e453025949ecc86e96e7f22adaa4b705e233461cf5ea8d"
     },
     {
       "id": "2026-03-friend-request-message",
