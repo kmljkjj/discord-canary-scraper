@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-24T05:13:43.440Z",
+  "scrapedAt": "2026-09-24T05:14:54.614Z",
   "blog": [
     {
       "id": "https://discord.com/blog/safer-for-teens-same-discord-for-adults",
@@ -444,6 +444,97 @@
   ],
   "zendesk": [
     {
+      "id": "219576828",
+      "title": "Setting up Multi-Factor Authentication",
+      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
+      "updatedAt": "2026-09-24T05:14:42Z",
+      "createdAt": "2016-05-26T17:18:00Z",
+      "sectionId": "360009072571",
+      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
+      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "18210965981847",
+      "title": "Discord Warning System",
+      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
+      "updatedAt": "2026-09-24T05:14:38Z",
+      "createdAt": "2023-10-12T01:36:18Z",
+      "sectionId": "360007875171",
+      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
+      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "42653320919447",
+      "title": "Getting the Right Experience for Your Age Group: Find Your Region",
+      "link": "https://support.discord.com/hc/en-us/articles/42653320919447-Getting-the-Right-Experience-for-Your-Age-Group-Find-Your-Region",
+      "updatedAt": "2026-09-24T05:14:35Z",
+      "createdAt": "2026-08-12T00:49:03Z",
+      "sectionId": "360009072571",
+      "bodyHash": "96e5eb086e973e72a8a31fa7986db354812a0621bf4594eef3a49e2130759295",
+      "bodyPreview": "How age groups work and are determined may vary depending on where you live. Use this page to find the article that applies to your region. What this article covers: Find Your Region Frequently Asked Questions Note: If you don't see an article for your specific region below, your experience is covered here , our global teen safety protections article. For details on how to confirm your age group,…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360040724612",
+      "title": "Why is Discord asking for my birthday?",
+      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
+      "updatedAt": "2026-09-24T05:14:19Z",
+      "createdAt": "2020-03-19T00:18:15Z",
+      "sectionId": "360007875171",
+      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
+      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "26680694104215",
+      "title": "How to Fix Phone Errors on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
+      "updatedAt": "2026-09-24T05:14:10Z",
+      "createdAt": "2024-09-27T20:04:46Z",
+      "sectionId": "360009072571",
+      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
+      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "30326565624343",
+      "title": "How to Confirm Your Age Group on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
+      "updatedAt": "2026-09-24T05:12:59Z",
+      "createdAt": "2025-02-28T23:11:37Z",
+      "sectionId": "360009072571",
+      "bodyHash": "342ad41db15feeff4049f0b3dc663f3087b80df496180dc3a60e13abcaf7036d",
+      "bodyPreview": "Update as of Sep 23, 6:30PM PST - Some of you may be seeing mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. Updating your mobile app to the latest version normally fixes this, but we've also identified a bug blocking it. - Our team is actively working on a fix. Foll…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "4423385681175",
+      "title": "How to Change your Discord Account's Email",
+      "link": "https://support.discord.com/hc/en-us/articles/4423385681175-How-to-Change-your-Discord-Account-s-Email",
+      "updatedAt": "2026-09-24T05:12:48Z",
+      "createdAt": "2022-02-10T23:26:28Z",
+      "sectionId": "360007770532",
+      "bodyHash": "bea2a20cfd201d663207081a971c4f361caa9e2dbb7d18d17a4cf8372dd5eafa",
+      "bodyPreview": "What this article covers: Desktop/Browser Mobile Note: The Discord Support Team cannot change the email address associated with your account. To update your email, you'll need access to the inbox of your current email address. Desktop/Browser 1. Tap on the cogwheel [ ] next to your Discord username to access your User Settings . Example of the cogwheel icon through Discord desktop/browser 2. Make…",
+      "thumb": "https://support.discord.com/hc/article_attachments/29223522008727",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360012668071",
       "title": "Refund Policy",
       "link": "https://support.discord.com/hc/en-us/articles/360012668071-Refund-Policy",
@@ -509,19 +600,6 @@
       "label": "Support"
     },
     {
-      "id": "360040724612",
-      "title": "Why is Discord asking for my birthday?",
-      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-24T05:10:54Z",
-      "createdAt": "2020-03-19T00:18:15Z",
-      "sectionId": "360007875171",
-      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
-      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "24160905919511",
       "title": "My Discord Account was Hacked or Compromised",
       "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
@@ -531,32 +609,6 @@
       "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
       "bodyPreview": "Important: Discord Staff will never contact users directly through the Discord app for support-related matters. If someone requests personal information, asks for payment, or urges you to change your login credentials, please do not comply and avoid further interaction. As per our Terms of Service , you are responsible for the security of your account. Please note that if you fail to secure your …",
       "thumb": "https://support.discord.com/hc/article_attachments/32331211229463",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "30326565624343",
-      "title": "How to Confirm Your Age Group on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
-      "updatedAt": "2026-09-24T05:10:11Z",
-      "createdAt": "2025-02-28T23:11:37Z",
-      "sectionId": "360009072571",
-      "bodyHash": "342ad41db15feeff4049f0b3dc663f3087b80df496180dc3a60e13abcaf7036d",
-      "bodyPreview": "Update as of Sep 23, 6:30PM PST - Some of you may be seeing mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. Updating your mobile app to the latest version normally fixes this, but we've also identified a bug blocking it. - Our team is actively working on a fix. Foll…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "18210965981847",
-      "title": "Discord Warning System",
-      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
-      "updatedAt": "2026-09-24T05:10:08Z",
-      "createdAt": "2023-10-12T01:36:18Z",
-      "sectionId": "360007875171",
-      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
-      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
       "source": "support",
       "label": "Support"
     },
@@ -622,19 +674,6 @@
       "bodyHash": "b658f6de02f7c026c0dbe26989b4e8a7002868dcf7a47e2af35b6d6894b98a44",
       "bodyPreview": "In order to use Discord voice chat on PS5®, please make sure to relink your Discord account and your account for PlayStation™Network if you did not participate in the PS5 beta for Discord voice transfer. - Your PS5 must be on the latest system version to utilize Discord voice chat! Connect your Discord account to your account for PlayStation Network and display your game activity in your user pro…",
       "thumb": "https://support.discord.com/hc/article_attachments/12116816701079",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "26680694104215",
-      "title": "How to Fix Phone Errors on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
-      "updatedAt": "2026-09-24T05:03:24Z",
-      "createdAt": "2024-09-27T20:04:46Z",
-      "sectionId": "360009072571",
-      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
-      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
       "source": "support",
       "label": "Support"
     },
@@ -960,19 +999,6 @@
       "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
       "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
       "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "219576828",
-      "title": "Setting up Multi-Factor Authentication",
-      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
-      "updatedAt": "2026-09-24T04:34:13Z",
-      "createdAt": "2016-05-26T17:18:00Z",
-      "sectionId": "360009072571",
-      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
-      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
       "source": "support",
       "label": "Support"
     },
@@ -1505,19 +1531,6 @@
       "sectionId": "115000352292",
       "bodyHash": "e05b07b5e2afce4c875406f2ebbab8b8d37f0ddb7bf3e38038cdc1071347da2f",
       "bodyPreview": "Update as of February 19, 2026 (3:50PM PST): This outage is now resolved . We were investigating reports that users were being asked to perform age verification again and that some verifications were not completing successfully. This was unintentional behavior and our team has deployed a fix for this issue. What if I'm Still Running into Issues? Please refresh and restart your Discord application…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "42653320919447",
-      "title": "Getting the Right Experience for Your Age Group: Find Your Region",
-      "link": "https://support.discord.com/hc/en-us/articles/42653320919447-Getting-the-Right-Experience-for-Your-Age-Group-Find-Your-Region",
-      "updatedAt": "2026-09-24T02:49:20Z",
-      "createdAt": "2026-08-12T00:49:03Z",
-      "sectionId": "360009072571",
-      "bodyHash": "96e5eb086e973e72a8a31fa7986db354812a0621bf4594eef3a49e2130759295",
-      "bodyPreview": "How age groups work and are determined may vary depending on where you live. Use this page to find the article that applies to your region. What this article covers: Find Your Region Frequently Asked Questions Note: If you don't see an article for your specific region below, your experience is covered here , our global teen safety protections article. For details on how to confirm your age group,…",
       "thumb": null,
       "source": "support",
       "label": "Support"
@@ -2182,19 +2195,6 @@
       "bodyHash": "3f349d3f7e1491a140bb90b16e4de493ecfb8fcebdca70c2e601f1b2c331ca85",
       "bodyPreview": "Learn how to request your personal Discord data with these easy steps. Whether you're using Discord on desktop, browser, or mobile, we'll show you the step-by-step process to request and receive your account information. This article covers everything you need to know about data requests, processing times, and important considerations to keep in mind. What this article covers: Requesting Your Dat…",
       "thumb": "https://support.discord.com/hc/article_attachments/30074476223255",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "4423385681175",
-      "title": "How to Change your Discord Account's Email",
-      "link": "https://support.discord.com/hc/en-us/articles/4423385681175-How-to-Change-your-Discord-Account-s-Email",
-      "updatedAt": "2026-09-23T23:42:13Z",
-      "createdAt": "2022-02-10T23:26:28Z",
-      "sectionId": "360007770532",
-      "bodyHash": "bea2a20cfd201d663207081a971c4f361caa9e2dbb7d18d17a4cf8372dd5eafa",
-      "bodyPreview": "What this article covers: Desktop/Browser Mobile Note: The Discord Support Team cannot change the email address associated with your account. To update your email, you'll need access to the inbox of your current email address. Desktop/Browser 1. Tap on the cogwheel [ ] next to your Discord username to access your User Settings . Example of the cogwheel icon through Discord desktop/browser 2. Make…",
-      "thumb": "https://support.discord.com/hc/article_attachments/29223522008727",
       "source": "support",
       "label": "Support"
     },
