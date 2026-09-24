@@ -358,26 +358,48 @@ async function main() {
       onCore: async ({ experiments }) => {
         if (needsExtractSeed && !isNewBuild) return;
         if (!process.env.DISCORD_WEBHOOK_URL) return;
+        const coreCount = (experiments || []).length;
+        const lastCount = Object.keys(lastExp || {}).length;
+        // CORE is web.* only — never treat incomplete CORE as a full diff.
+        // Only pure ADDS (id absent from lastExp) are safe here.
+        // Modified/removed wait for the full chunk extract.
         const { expDiff } = computeExpDiff(experiments, lastExp, knownExp, {
           skipKnownFilter: isCatchUp,
         });
-        const n =
-          expDiff.added.length +
-          expDiff.modified.length +
-          expDiff.removed.length;
-        if (!n) {
-          console.log('URGENT: no exp delta', Date.now() - t0 + 'ms');
+        const pureAdded = (expDiff.added || []).filter((e) => {
+          const id = String(e && e.id != null ? e.id : e);
+          return id && !(id in (lastExp || {}));
+        });
+        if (lastCount >= 40 && coreCount < lastCount * 0.85) {
+          console.log('URGENT: CORE incomplete vs lastExp — adds only', {
+            coreCount,
+            lastCount,
+            ratio: Math.round((coreCount / Math.max(lastCount, 1)) * 1000) / 1000,
+            pureAdded: pureAdded.length,
+            strippedModified: (expDiff.modified || []).length,
+            strippedRemoved: (expDiff.removed || []).length,
+          });
+        }
+        const urgentDiff = {
+          added: pureAdded,
+          modified: [],
+          removed: [],
+          categoryChanged: [],
+        };
+        if (!urgentDiff.added.length) {
+          console.log('URGENT: no safe pure-add delta', Date.now() - t0 + 'ms');
           return;
         }
         console.log('URGENT experiments', {
-          added: expDiff.added.length,
-          modified: expDiff.modified.length,
-          removed: expDiff.removed.length,
+          added: urgentDiff.added.length,
+          modified: 0,
+          removed: 0,
+          coreOnly: true,
           t: Date.now() - t0 + 'ms',
         });
         const ok = await notifyUrgent({
           build,
-          expDiff,
+          expDiff: urgentDiff,
           webhookUrl: process.env.DISCORD_WEBHOOK_URL,
           isNewBuild,
           catchUp: isCatchUp,
@@ -385,7 +407,7 @@ async function main() {
         });
         if (ok) {
           urgentSent = true;
-          for (const e of expDiff.added) knownExp.add(String(e.id || e));
+          for (const e of urgentDiff.added) knownExp.add(String(e.id || e));
           try {
             await saveKnownIds(KNOWN_EXP, knownExp, 8000);
           } catch (e) {
@@ -639,7 +661,38 @@ async function main() {
           console.warn('URGENT retry path failed — NOT marking known exp');
         }
       } else {
-        console.log('URGENT already sent');
+        // CORE already announced pure adds — still send full-extract residual
+        // (modified / removed / category) without re-sending added.
+        const residual = {
+          added: [],
+          modified: expDiff.modified || [],
+          removed: expDiff.removed || [],
+          categoryChanged: expDiff.categoryChanged || [],
+        };
+        const nRes =
+          residual.modified.length +
+          residual.removed.length +
+          residual.categoryChanged.length;
+        if (nRes) {
+          console.log('URGENT residual after CORE', {
+            modified: residual.modified.length,
+            removed: residual.removed.length,
+            categoryChanged: residual.categoryChanged.length,
+          });
+          const okR = await notifyUrgent({
+            build,
+            expDiff: residual,
+            webhookUrl: process.env.DISCORD_WEBHOOK_URL,
+            isNewBuild,
+            catchUp: isCatchUp,
+            prevBuild: prevBuildNum,
+          });
+          if (!okR) {
+            console.warn('URGENT residual webhook failed');
+          }
+        } else {
+          console.log('URGENT already sent — no residual mod/removed');
+        }
       }
 
       okN = await notifyNormal({
@@ -825,8 +878,14 @@ async function main() {
     'experiments.json': {
       ...stamp,
       scrapedAt: tsIso,
-      totals: { all: mergedExps.length },
-      experiments: legacyList.length ? legacyList : mergedExps,
+      totals: {
+        all: mergedExps.length,
+        legacy: legacyList.length,
+        apex: apexList.length,
+      },
+      // Always full merge — legacy-only broke baseline load (6 vs 360)
+      experiments: mergedExps,
+      legacyExperiments: legacyList,
     },
     'build.json': {
       ...stamp,
