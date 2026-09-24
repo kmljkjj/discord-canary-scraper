@@ -124,3 +124,21 @@ test('createExperimentFingerprint is stable', () => {
     createExperimentFingerprint(normalizeExperiment(e2)),
   );
 });
+
+test('deep variation body change does NOT produce modified', () => {
+  const a = normalizeExperiment({
+    id: 'noise',
+    kind: 'user',
+    variations: { 0: { heavy: 'aaa' }, 1: { heavy: 'bbb' } },
+  });
+  const b = normalizeExperiment({
+    id: 'noise',
+    kind: 'user',
+    variations: { 0: { heavy: 'zzz' }, 1: { heavy: 'yyy' } },
+  });
+  assert.equal(a.fingerprint, b.fingerprint);
+  const d = diffExperiments([a], [b], true);
+  assert.equal(d.modified.length, 0);
+  assert.equal(d.added.length, 0);
+  assert.equal(d.removed.length, 0);
+});
