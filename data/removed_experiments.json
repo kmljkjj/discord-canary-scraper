@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T15-04-30-402Z_620224_7iarah",
-  "buildNumber": "620224",
-  "updatedAt": "2026-09-24T15:04:30.402Z",
-  "count": 3,
+  "runId": "2026-09-24T15-54-20-847Z_620241_31lzqy",
+  "buildNumber": "620241",
+  "updatedAt": "2026-09-24T15:54:20.847Z",
+  "count": 4,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -24,6 +24,13 @@
       "label": null,
       "removedAt": "2026-09-24T14:12:24.016Z",
       "lastBuild": "620213"
+    },
+    {
+      "id": "2026-06-magic-scoring",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-24T15:54:20.860Z",
+      "lastBuild": "620241"
     }
   ]
 }

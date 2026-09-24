@@ -1,7 +1,7 @@
 {
-  "runId": "2026-09-24T15-04-30-402Z_620224_7iarah",
-  "buildNumber": "620224",
-  "updatedAt": "2026-09-24T15:04:30.402Z",
+  "runId": "2026-09-24T15-54-20-847Z_620241_31lzqy",
+  "buildNumber": "620241",
+  "updatedAt": "2026-09-24T15:54:20.847Z",
   "count": 360,
   "experiments": [
     {
@@ -6067,32 +6067,6 @@
       "fingerprint": "4d9aa5f84fc1f3e3317ef0df1cce6e579a58a3d98309bddd9a94d61743706e55"
     },
     {
-      "id": "2026-06-magic-scoring",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "8d18c391d38f8940d12392215c871611c1bd4b7d5e4ab88617f32abad67f75e0"
-    },
-    {
       "id": "2026-06-mobile-server-tag",
       "kind": "user",
       "type": "user",
@@ -9336,6 +9310,32 @@
         "value": null
       },
       "fingerprint": "85e2ed3ea471fa2d1005f8215a136018892f41b6cb4b95a40f9cd05742ca689f"
+    },
+    {
+      "id": "2026-09-gsimagic2",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c1c7b2c462dae55441bbdf53852530e90ea9a078be627b52aecce57fefaaa740"
     },
     {
       "id": "2026-09-guild-spaces",
