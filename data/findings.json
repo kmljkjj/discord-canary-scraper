@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-24T20-37-02-519Z_620676_umuofk",
-  "buildNumber": "620676",
-  "scrapedAt": "2026-09-24T20:37:02.519Z",
+  "runId": "2026-09-24T20-39-14-618Z_620689_66vqua",
+  "buildNumber": "620689",
+  "scrapedAt": "2026-09-24T20:39:14.618Z",
   "totals": {
-    "all": 359
+    "all": 360
   },
   "experiments": [
     {
@@ -5642,6 +5642,21 @@
         }
       },
       "variationCount": 3,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-gifting-badge-coachmark-audience",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
