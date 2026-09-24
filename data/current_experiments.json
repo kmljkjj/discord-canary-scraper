@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-24T17-19-51-510Z_620328_9hdniu",
-  "buildNumber": "620328",
-  "updatedAt": "2026-09-24T17:19:51.510Z",
-  "count": 360,
+  "runId": "2026-09-24T17-25-21-123Z_620346_1vmu00",
+  "buildNumber": "620346",
+  "updatedAt": "2026-09-24T17:25:21.123Z",
+  "count": 361,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9423,6 +9423,35 @@
         "value": null
       },
       "fingerprint": "d46a4902da9d4d5c082173eadf8ac1c20aa02d59192947ba286533e3954c675f"
+    },
+    {
+      "id": "2026-09-invite-expiring-soon",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a62f7ad4b6c3d94fffa606e92ea853ac13dfcd2ef9ce5b2a225037f7495efa0f"
     },
     {
       "id": "2026-09-invite-silp-education",
