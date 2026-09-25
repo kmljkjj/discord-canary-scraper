@@ -5062,6 +5062,25 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-linux-gpu-decode",
+    "defaultConfig": {
+      "mode": "all"
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-markdown-file-preview",
     "defaultConfig": {
       "enabled": false

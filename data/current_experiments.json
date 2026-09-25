@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-25T23-47-22-446Z_622081_brwdcl",
-  "buildNumber": "622081",
-  "updatedAt": "2026-09-25T23:47:22.446Z",
-  "count": 361,
+  "runId": "2026-09-25T23-50-41-978Z_622086_i6r5xv",
+  "buildNumber": "622086",
+  "updatedAt": "2026-09-25T23:50:41.978Z",
+  "count": 362,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10077,6 +10077,40 @@
         "value": null
       },
       "fingerprint": "47e9c46827ce6f4fc505b529b1ec49184036f265ef0ff3b2ce63eb1b41afc02f"
+    },
+    {
+      "id": "2026-09-linux-gpu-decode",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "mode": "all"
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "treatments": null,
+      "variationCount": 3,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e61e4aacc46f26240161094e4ca47a7772bf24fe68ddcdc9a2bffec21fc23dcc"
     },
     {
       "id": "2026-09-markdown-file-preview",

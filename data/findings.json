@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-25T23-47-22-446Z_622081_brwdcl",
-  "buildNumber": "622081",
-  "scrapedAt": "2026-09-25T23:47:22.446Z",
+  "runId": "2026-09-25T23-50-41-978Z_622086_i6r5xv",
+  "buildNumber": "622086",
+  "scrapedAt": "2026-09-25T23:50:41.978Z",
   "totals": {
-    "all": 361
+    "all": 362
   },
   "experiments": [
     {
@@ -6401,6 +6401,29 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-linux-gpu-decode",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "mode": "all"
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
