@@ -11,23 +11,22 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Assemble + put blog_tracker.js
+      - name: Decompress + put blog_tracker.js
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
           python3 << 'PY'
-          import base64, pathlib
-          b64 = ''.join(pathlib.Path(f'scripts/blog_v2/p{i}.b64').read_text() for i in range(4))
-          data = base64.b64decode(b64)
+          import base64, pathlib, zlib
+          b64 = pathlib.Path('scripts/blog_v2/blog_tracker.zlib.b64').read_text().strip()
+          data = zlib.decompress(base64.b64decode(b64))
           pathlib.Path('src/blog_tracker.js').write_bytes(data)
           print('wrote', len(data))
           PY
           node --check src/blog_tracker.js
           grep -q 'buildBlogMessage' src/blog_tracker.js
           grep -q 'IS_COMPONENTS_V2' src/blog_tracker.js
-          grep -qv "emoji:" src/blog_tracker.js || true
           SHA=$(curl -sS -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/src/blog_tracker.js?ref=main" \
             | python3 -c "import sys,json; print(json.load(sys.stdin).get('sha',''))")
