@@ -1,7 +1,7 @@
 {
-  "runId": "2026-09-25T00-44-15-067Z_621099_shiry6",
-  "buildNumber": "621099",
-  "updatedAt": "2026-09-25T00:44:15.067Z",
+  "runId": "2026-09-25T01-59-52-088Z_621138_nj2k0a",
+  "buildNumber": "621138",
+  "updatedAt": "2026-09-25T01:59:52.088Z",
   "count": 360,
   "experiments": [
     {
@@ -4152,10 +4152,10 @@
       },
       "userPercentage": {
         "status": "provided",
-        "value": 100,
+        "value": 1,
         "source": "payload"
       },
-      "fingerprint": "2925f75cfa244eff148164128a6fbea4acdfe55cf823024e55a3157c3b802e23"
+      "fingerprint": "baf4d2b81a49c69743cf55c539f6d9b89aeef7d9f0e55105f20b81ecd743f1a1"
     },
     {
       "id": "2026-04-icymi-staff-only",
@@ -6481,10 +6481,11 @@
         "value": null
       },
       "userPercentage": {
-        "status": "unknown",
-        "value": null
+        "status": "provided",
+        "value": 1,
+        "source": "payload"
       },
-      "fingerprint": "b03bd343d1955d172e195050e8a840e9a8bcd4c1117cd4b9a3f3f1bd3e669a78"
+      "fingerprint": "14651f1802380e30aaaf2bad5cef33de3e3c5f4974525dce343e6d8e21222a7a"
     },
     {
       "id": "2026-06-wmf-cpu-encode-intel",
