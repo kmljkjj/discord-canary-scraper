@@ -407,12 +407,8 @@ async function main() {
         });
         if (ok) {
           urgentSent = true;
+          // In-memory only until publishDataGeneration — no early disk write
           for (const e of urgentDiff.added) knownExp.add(String(e.id || e));
-          try {
-            await saveKnownIds(KNOWN_EXP, knownExp, 8000);
-          } catch (e) {
-            console.warn('early knownExp save', e.message);
-          }
         } else {
           console.warn('URGENT webhook failed — NOT marking known exp');
         }
@@ -559,7 +555,12 @@ async function main() {
     process.exit(1);
   }
 
-  const { expDiff, nextExpSnap } = computeExpDiff(
+  const {
+    expDiff,
+    nextExpSnap,
+    coverage: expCoverage,
+    rawDiff,
+  } = computeExpDiff(
     findings.experiments,
     lastExp,
     knownExp,
@@ -778,7 +779,7 @@ async function main() {
     .sort();
   const knownStrIds = [...knownStr].filter(Boolean).sort();
   const knownRtIds = [...knownRt].filter(Boolean).sort();
-  if (knownExpIds.length > 8000) knownExpIds.splice(0, knownExpIds.length - 8000);
+  // knownExp is append-only — never truncate
   if (knownStrIds.length > 50000) knownStrIds.splice(0, knownStrIds.length - 50000);
   if (knownRtIds.length > 10000) knownRtIds.splice(0, knownRtIds.length - 10000);
 
@@ -798,8 +799,13 @@ async function main() {
     previousCurrent,
     current: normalized,
     existingRemoved: previousRemoved,
-    allowRemovals: cov.reliable && expDiff.removed.length > 0,
+    allowRemovals: !!cov.reliable,
     buildNumber: bn,
+    confirmedRemovedIds: (
+      (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
+      expDiff.removed ||
+      []
+    ).map((e) => String(typeof e === 'string' ? e : e && e.id)),
   });
 
   const allExps = findings.experiments || [];
