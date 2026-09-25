@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-25T05-58-11-700Z_621184_vnmodo",
-  "buildNumber": "621184",
-  "updatedAt": "2026-09-25T05:58:11.700Z",
-  "count": 9,
+  "runId": "2026-09-25T09-28-17-980Z_621208_jpnlg3",
+  "buildNumber": "621208",
+  "updatedAt": "2026-09-25T09:28:17.980Z",
+  "count": 10,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -66,6 +66,13 @@
       "label": "Guild Voice Ringing",
       "removedAt": "2026-09-24T22:22:07.218Z",
       "lastBuild": "620909"
+    },
+    {
+      "id": "2025-10-friend-request-alerts-v2",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-25T09:28:17.988Z",
+      "lastBuild": "621208"
     }
   ]
 }
