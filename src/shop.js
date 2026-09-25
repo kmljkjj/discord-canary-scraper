@@ -11,6 +11,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
+const { sendEmbeds } = require('./lib/webhook');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'shop_items.json');
@@ -73,7 +74,7 @@ const TOKEN = loadToken();
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
 const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg';
+  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -199,7 +200,10 @@ async function apiGet(pathAndQuery) {
         continue;
       }
       if (!res.ok) {
-        lastErr = 'HTTP ' + res.status;
+        const body = await res.text().catch(() => '');
+        lastErr = 'HTTP ' + res.status + (body ? ' ' + body.slice(0, 160) : '');
+        // 4xx = requête refusée : inutile d'essayer les autres hôtes
+        if (res.status >= 400 && res.status < 500) break;
         continue;
       }
       return await res.json();
@@ -337,6 +341,11 @@ async function fetchShopCatalog() {
       await sleep(250);
     } catch (e) {
       console.warn('shop/search type', itype, redact(e.message));
+      // endpoint refusé (400) → les autres types échoueront pareil
+      if (/HTTP 400/.test(String(e.message))) {
+        console.warn('shop/search désactivé pour ce run (HTTP 400)');
+        break;
+      }
     }
   }
 
@@ -374,23 +383,12 @@ function buildEmbed(item) {
 
 async function postWebhook(embeds) {
   if (!WEBHOOK || !embeds.length) return { ok: false, status: 0, text: 'skip' };
-  let last = { ok: true, status: 204, text: '' };
-  for (let i = 0; i < embeds.length; i += 10) {
-    const res = await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: BOT.slice(0, 80),
-        avatar_url: AVATAR,
-        embeds: embeds.slice(i, i + 10),
-      }),
-    });
-    const text = await res.text().catch(() => '');
-    last = { ok: res.ok, status: res.status, text: text.slice(0, 300) };
-    if (!res.ok) return last;
-    await sleep(500);
-  }
-  return last;
+  return sendEmbeds(
+    WEBHOOK,
+    { username: BOT.slice(0, 80), avatar_url: AVATAR },
+    embeds,
+    { label: 'shop' },
+  );
 }
 
 async function main() {

@@ -11,7 +11,6 @@
  */
 const fs = require('fs-extra');
 const path = require('path');
-const fetch = require('node-fetch');
 const {
   downloadList,
   assertWebBundle,
@@ -21,13 +20,11 @@ const {
   DOWNLOAD_CONCURRENCY,
 } = require('./download');
 
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-
 // Priority path still starts with web.*; full chunks after unless disabled
 const FULL_CHUNKS = process.env.SCRAPE_FULL_CHUNKS !== '0';
 const DOWNLOAD_CSS = process.env.SCRAPE_CSS === '1';
-const MAX_CHUNK_SCAN_BYTES = Number(process.env.MAX_CHUNK_SCAN_BYTES || 6_000_000);
+// 16 Mo : un chunk de 6,15 Mo était ignoré avec l'ancienne limite (6 Mo)
+const MAX_CHUNK_SCAN_BYTES = Number(process.env.MAX_CHUNK_SCAN_BYTES || 16_000_000);
 const ASSET_BASE = 'https://canary.discord.com/assets/';
 
 function matchEnd(m) {
@@ -260,6 +257,7 @@ function resolveAllChunkUrls(webContent) {
   const re1 = /(\d{1,7}):["']([a-f0-9]{16,22})["']/g;
   let m;
   while ((m = re1.exec(webContent)) !== null) {
+    if (/^\d+$/.test(m[2])) continue;
     hashById.set(m[1], m[2]);
   }
   const reSci = /(\d+e\d+):["']([a-f0-9]{16,22})["']/gi;
@@ -269,7 +267,11 @@ function resolveAllChunkUrls(webContent) {
   }
   const reFile = /["']([a-f0-9]{16,22})\.js["']/g;
   const looseHashes = new Set();
-  while ((m = reFile.exec(webContent)) !== null) looseHashes.add(m[1]);
+  while ((m = reFile.exec(webContent)) !== null) {
+    // 100 % chiffres = ID Discord (snowflake), pas un hash de chunk → 404 garanti
+    if (/^\d+$/.test(m[1])) continue;
+    looseHashes.add(m[1]);
+  }
   const urls = [];
   const seen = new Set();
   for (const hash of hashById.values()) {
@@ -500,9 +502,14 @@ function extractExperiments(content, map) {
       /variations\s*:/i.test(ctx) ||
       /treatments\s*:/i.test(ctx);
     if (!looksExp) continue;
+    // kind : uniquement dans l'objet courant (pas celui de la voisine)
+    let back = content.slice(start, m.index);
+    const lastClose = back.lastIndexOf('}');
+    if (lastClose >= 0) back = back.slice(lastClose + 1);
+    const own = back + expWindow(content, m.index, 280);
     let type = null;
-    if (/kind\s*:\s*["']guild["']/i.test(ctx)) type = 'guild';
-    else if (/kind\s*:\s*["']user["']/i.test(ctx)) type = 'user';
+    if (/kind\s*:\s*["']guild["']/i.test(own)) type = 'guild';
+    else if (/kind\s*:\s*["']user["']/i.test(own)) type = 'user';
     else type = inferType(id);
     const variations = countVariationsNear(content, m.index);
     map.set(id, {
@@ -520,7 +527,7 @@ function extractExperiments(content, map) {
 }
 
 function extractDefaultConfigNear(content, from) {
-  const window = content.slice(from, from + 2800);
+  const window = expWindow(content, from, 2800);
   const m = window.match(/defaultConfig\s*:\s*\{/);
   if (!m) return null;
   const start = m.index + m[0].length;
@@ -532,12 +539,13 @@ function extractDefaultConfigNear(content, from) {
   }
   const body = window.slice(start, i - 1);
   const out = {};
-  const re = /([A-Za-z_][\w]*)\s*:\s*(true|false|null|\d+|["'][^"']*["'])/g;
+  // accepte aussi la forme minifiée !0 (true) / !1 (false)
+  const re = /([A-Za-z_][\w]*)\s*:\s*(true|false|!0|!1|null|\d+|["'][^"']*["'])/g;
   let x;
   while ((x = re.exec(body)) !== null) {
     let v = x[2];
-    if (v === 'true') v = true;
-    else if (v === 'false') v = false;
+    if (v === 'true' || v === '!0') v = true;
+    else if (v === 'false' || v === '!1') v = false;
     else if (v === 'null') v = null;
     else if (/^\d+$/.test(v)) v = Number(v);
     else v = v.replace(/^["']|["']$/g, '');
@@ -546,12 +554,40 @@ function extractDefaultConfigNear(content, from) {
   return Object.keys(out).length ? out : null;
 }
 
+// Id d'expérience (ex. "2026-09_feature") — sert à borner la fenêtre de recherche
+const EXP_ID_RE_G = /["']20[2-3]\d-(?:0[1-9]|1[0-2])[_-][a-z0-9][a-z0-9_\-]{2,90}["']/gi;
+
+/**
+ * Fenêtre de `len` caractères à partir de `from`, coupée à l'expérience suivante
+ * (l'id courant peut être en tête). Évite d'attribuer à une expérience les
+ * variations / defaultConfig / label de sa voisine.
+ */
+function expWindow(content, from, len) {
+  let w = content.slice(from, from + len);
+  EXP_ID_RE_G.lastIndex = 0;
+  let m;
+  while ((m = EXP_ID_RE_G.exec(w)) !== null) {
+    if (m.index > 1) {
+      w = w.slice(0, m.index);
+      break;
+    }
+  }
+  return w;
+}
+
 function extractLabelNear(content, from) {
-  const window = content.slice(Math.max(0, from - 200), from + 1200);
-  const m =
+  // Arrière : seulement l'objet courant (après le dernier « } »), pour ne pas
+  // voler le label de l'expérience précédente.
+  let back = content.slice(Math.max(0, from - 200), from);
+  const lastClose = back.lastIndexOf('}');
+  if (lastClose >= 0) back = back.slice(lastClose + 1);
+  // Avant : s'arrêter à l'expérience suivante.
+  const fwd = expWindow(content, from, 1200);
+  const window = back + fwd;
+  const found =
     window.match(/label\s*:\s*["']([^"']{3,120})["']/) ||
     window.match(/title\s*:\s*["']([^"']{3,120})["']/);
-  return m ? m[1] : null;
+  return found ? found[1] : null;
 }
 
 function upsertExp(map, id, kind, content, posAfter) {
@@ -560,7 +596,7 @@ function upsertExp(map, id, kind, content, posAfter) {
   const defaultConfig = extractDefaultConfigNear(content, posAfter);
   const label = extractLabelNear(content, posAfter);
   const hasTreatmentsArray = /treatments\s*:\s*\[/.test(
-    content.slice(posAfter, posAfter + 2800),
+    expWindow(content, posAfter, 2800),
   );
   const system = hasTreatmentsArray ? 'legacy' : 'apex';
   const existing = map.get(id);
@@ -597,10 +633,16 @@ function upsertExp(map, id, kind, content, posAfter) {
 }
 
 function countVariationsNear(content, from) {
-  const window = content.slice(from, from + 2800);
-  let m = window.match(/variations\s*:\s*\{/);
-  if (!m) m = window.match(/treatments\s*:\s*\[/);
-  if (!m) m = window.match(/treatments\s*:\s*\{/);
+  const window = expWindow(content, from, 2800);
+  // la PREMIÈRE occurrence gagne (avant : « variations » prioritaire même s'il
+  // appartenait à une expérience plus loin)
+  const m = [
+    window.match(/variations\s*:\s*\{/),
+    window.match(/treatments\s*:\s*\[/),
+    window.match(/treatments\s*:\s*\{/),
+  ]
+    .filter(Boolean)
+    .sort((a, b) => a.index - b.index)[0];
   if (!m) return null;
 
   const isArray = /treatments\s*:\s*\[/.test(m[0]);

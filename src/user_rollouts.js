@@ -25,12 +25,12 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
+const { sendEmbeds } = require('./lib/webhook');
 const {
   mergeIntervals,
-  intervalsCoverage,
-  pointsToIntervals,
   estimateFromPoints,
   classifyChange,
+  noiseMargin,
   stableChangeFingerprint,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
@@ -71,10 +71,12 @@ const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DEL
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);
 const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
+// z du seuil de bruit statistique (0 = désactivé). Évite les annonces 10 % → 12 % → 10 %.
+const NOISE_Z = Math.max(0, Number(process.env.USER_ROLLOUT_NOISE_Z ?? 2));
 const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
 const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/assets/datamining-avatar.jpg';
+  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const SCALE = DEFAULT_SCALE;
@@ -345,19 +347,8 @@ async function fetchTokenSnapshot(hashMap) {
   const out = [];
   for (const token of TOKENS.slice(0, 5)) {
     try {
-      const res = await fetch('https://canary.discord.com/api/v10/experiments', {
-        headers: {
-          'User-Agent': UA,
-          Authorization: token,
-          Accept: '*/*',
-        },
-        timeout: 25000,
-      });
-      if (!res.ok) {
-        console.warn('Token snapshot', res.status);
-        continue;
-      }
-      const data = await res.json();
+      // fetchAssignments gère les 429 (Retry-After) — avant : 1 seul essai, perdu après l'échantillonnage
+      const data = await fetchAssignments({ Authorization: token });
       for (const a of data.assignments || []) {
         if (!Array.isArray(a) || a.length < 3) continue;
         const hash = Number(a[0]);
@@ -451,23 +442,12 @@ function buildEmbeds(changes) {
 
 async function postWebhook(embeds) {
   if (!WEBHOOK || !embeds.length) return { ok: false, status: 0, text: 'skip' };
-  let last = { ok: true, status: 204, text: '' };
-  for (let i = 0; i < embeds.length; i += 10) {
-    const res = await fetch(WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: BOT.slice(0, 80),
-        avatar_url: AVATAR,
-        embeds: embeds.slice(i, i + 10),
-      }),
-    });
-    const text = await res.text().catch(() => '');
-    last = { ok: res.ok, status: res.status, text: text.slice(0, 300) };
-    if (!res.ok) return last;
-    await sleep(450);
-  }
-  return last;
+  return sendEmbeds(
+    WEBHOOK,
+    { username: BOT.slice(0, 80), avatar_url: AVATAR },
+    embeds,
+    { label: 'user-rollouts' },
+  );
 }
 
 function hasName(id) {
@@ -573,7 +553,10 @@ async function main() {
         if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
         const from = Number(oldT.pct);
         const to = Number(t.pct);
-        const { changeType, change } = classifyChange(from, to, MIN_DELTA);
+        // Estimation par échantillonnage : ignorer les écarts sous la marge de bruit
+        const n = Math.min(Number(t.sampleCount || t.samples || 0), Number(oldT.sampleCount || oldT.samples || 0)) || Number(t.sampleCount || 0);
+        const margin = t.status === 'estimated' ? noiseMargin(Math.max(from, to), n, NOISE_Z) : 0;
+        const { changeType, change } = classifyChange(from, to, Math.max(MIN_DELTA, margin));
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
         deltas.push({
           label: t.label,

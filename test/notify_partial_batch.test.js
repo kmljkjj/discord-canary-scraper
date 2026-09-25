@@ -11,8 +11,12 @@ const path = require('path');
 const fs = require('fs-extra');
 const Module = require('module');
 
-const DATA = path.join(__dirname, '..', 'data');
+const os = require('os');
+
+// Répertoire temporaire isolé : ne JAMAIS toucher au vrai data/notify_dedupe.json
+const DATA = fs.mkdtempSync(path.join(os.tmpdir(), 'dedupe-test-'));
 const DEDUPE = path.join(DATA, 'notify_dedupe.json');
+process.env.NOTIFY_DEDUPE_FILE = DEDUPE;
 
 let fetchImpl = null;
 const originalLoad = Module._load;
@@ -40,7 +44,7 @@ function uninstallFetchMock() {
 
 function clearNotifyModules() {
   for (const key of Object.keys(require.cache)) {
-    if (key.includes('webhook_dedupe') || key.includes('notify.js')) {
+    if (key.includes('webhook_dedupe') || key.includes('notify.js') || key.endsWith('webhook.js')) {
       delete require.cache[key];
     }
   }

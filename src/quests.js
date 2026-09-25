@@ -11,6 +11,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
+const { sendWebhook } = require('./lib/webhook');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'quests.json');
@@ -25,7 +26,6 @@ const DISCORD_TOKEN =
   process.env.DISCORD_USER_TOKEN_1 ||
   null;
 const PUBLIC_QUESTS_URL = 'https://api.discordquest.com/api/quests';
-const OFFICIAL_QUESTS_URL = 'https://discord.com/api/v10/quests/@me';
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
@@ -300,12 +300,6 @@ function normalizeQuest(raw) {
   };
 }
 
-function parseColor(hex) {
-  if (!hex) return 0x5865f2;
-  const s = String(hex).replace('#', '');
-  const n = parseInt(s.slice(0, 6), 16);
-  return Number.isFinite(n) ? n : 0x5865f2;
-}
 
 function isVideoUrl(url) {
   return /\.(mp4|webm|mov)(\?|$)/i.test(url || '');
@@ -559,13 +553,7 @@ async function postWebhook(url, body) {
   if (!url) return { ok: false, status: 0, text: 'no webhook' };
   body.username = BOT_NAME;
   body.avatar_url = AVATAR;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  const text = await res.text().catch(() => '');
-  return { ok: res.ok, status: res.status, text: text.slice(0, 500) };
+  return sendWebhook(url, body, { label: 'quests' });
 }
 
 async function sendQuestWebhook(quest) {
