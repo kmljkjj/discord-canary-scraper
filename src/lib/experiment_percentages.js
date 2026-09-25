@@ -31,30 +31,49 @@ function normalizeStatusValue(status, value, extra) {
   return out;
 }
 
+/**
+ * Coerce a numeric percentage without inventing units.
+ * - rate/fraction fields: 0..1 → *100
+ * - percentage/percent/pct/rollout*: (0,1) exclusive → null (ambiguous)
+ *   0 and 1 and 2..100 accepted as literal percent values
+ */
+function coerceProvidedNumber(n, { isRate } = {}) {
+  if (!isFiniteNumber(n)) return null;
+  if (isRate) {
+    if (n >= 0 && n <= 1) return clampPct(n * 100);
+    return clampPct(n);
+  }
+  if (n > 0 && n < 1) return null;
+  return clampPct(n);
+}
+
 function readProvidedPercentage(obj) {
   if (!obj || typeof obj !== 'object') return null;
-  const candidates = [
+
+  for (const c of [obj.rate, obj.fraction]) {
+    if (isFiniteNumber(c)) {
+      const v = coerceProvidedNumber(c, { isRate: true });
+      if (v != null) return v;
+    } else if (typeof c === 'string' && c.trim() !== '' && !Number.isNaN(Number(c))) {
+      const v = coerceProvidedNumber(Number(c), { isRate: true });
+      if (v != null) return v;
+    }
+  }
+
+  for (const c of [
     obj.percentage,
     obj.percent,
     obj.rollout,
     obj.rolloutPercentage,
     obj.pct,
-  ];
-  for (const c of candidates) {
+  ]) {
     if (isFiniteNumber(c)) {
-      if (c >= 0 && c <= 1) return clampPct(c * 100);
-      return clampPct(c);
+      const v = coerceProvidedNumber(c, { isRate: false });
+      if (v != null) return v;
+    } else if (typeof c === 'string' && c.trim() !== '' && !Number.isNaN(Number(c))) {
+      const v = coerceProvidedNumber(Number(c), { isRate: false });
+      if (v != null) return v;
     }
-    if (typeof c === 'string' && c.trim() !== '' && !Number.isNaN(Number(c))) {
-      const n = Number(c);
-      if (n >= 0 && n <= 1) return clampPct(n * 100);
-      return clampPct(n);
-    }
-  }
-  if (isFiniteNumber(obj.rate)) {
-    const r = obj.rate;
-    if (r >= 0 && r <= 1) return clampPct(r * 100);
-    return clampPct(r);
   }
   return null;
 }
@@ -86,8 +105,14 @@ function calculateFromRanges(variations) {
       merged[merged.length - 1][1] = Math.max(merged[merged.length - 1][1], e);
     }
   }
+
   let covered = 0;
-  for (const [s, e] of merged) covered += e - s;
+  for (const [s, e] of merged) {
+    const a = Math.max(0, Math.min(scale, s));
+    const b = Math.max(0, Math.min(scale, e));
+    if (b > a) covered += b - a;
+  }
+  if (covered <= 0) return null;
   return clampPct((covered / scale) * 100);
 }
 
@@ -134,6 +159,7 @@ function readRootProvided(experiment) {
 
 function computeAudiencePercentage(experiment, audience) {
   const kind = String(experiment?.kind || experiment?.type || '').toLowerCase();
+  // Strict audience isolation: never attribute a % to the wrong kind
   if (audience === 'guild' && kind && kind !== 'guild' && kind !== 'server') {
     return normalizeStatusValue('unknown', null);
   }
@@ -141,11 +167,26 @@ function computeAudiencePercentage(experiment, audience) {
     return normalizeStatusValue('unknown', null);
   }
 
+  // Nested audience payload first (guild.rollout / user.percentage, etc.)
+  const nest =
+    audience === 'guild'
+      ? experiment?.guild || experiment?.server || null
+      : audience === 'user'
+        ? experiment?.user || null
+        : null;
+  if (nest && typeof nest === 'object') {
+    const nested = readProvidedPercentage(nest);
+    if (nested != null) {
+      return normalizeStatusValue('provided', nested, { source: 'audience_nested' });
+    }
+  }
+
   const provided = readRootProvided(experiment);
   if (provided != null) {
     return normalizeStatusValue('provided', provided, { source: 'payload' });
   }
 
+  // Calculated only when kind matches the requested audience (or kind unknown)
   const vars = experiment?.variations || experiment?.treatments;
   const fromPop = calculateFromPopulations(vars);
   if (fromPop != null) {
@@ -177,9 +218,9 @@ module.exports = {
   isFiniteNumber,
   clampPct,
   readProvidedPercentage,
+  coerceProvidedNumber,
   calculateFromRanges,
   calculateFromPopulations,
   computeAudiencePercentage,
   attachPercentages,
-  normalizeStatusValue,
 };
