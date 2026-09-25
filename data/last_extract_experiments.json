@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-25T21-51-33-145Z_621877_t5bs9g",
-  "buildNumber": "621877",
-  "updatedAt": "2026-09-25T21:51:33.145Z",
-  "count": 359,
+  "runId": "2026-09-25T21-53-49-019Z_621880_pittin",
+  "buildNumber": "621880",
+  "updatedAt": "2026-09-25T21:53:49.019Z",
+  "count": 360,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5013,7 +5013,7 @@
       "id": "2026-09-invite-silp-education",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "download_discord_app",
       "variationCount": 2,
       "variations": {
         "1": {
@@ -5023,7 +5023,7 @@
           "id": 2
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "34ba94e9908e5dd037756b65"
     },
     "2026-09-jxr-upload-conversion": {
       "id": "2026-09-jxr-upload-conversion",
@@ -5263,11 +5263,30 @@
       },
       "fp": "36041cccbf4c0138483fb586"
     },
+    "2026-09-silp-desktop-app-upsell": {
+      "id": "2026-09-silp-desktop-app-upsell",
+      "type": "user",
+      "kind": "user",
+      "label": "download_discord_app",
+      "variationCount": 3,
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "fp": "b08ec5e5832d933e7840b887"
+    },
     "2026-09-silp-direct-to-discoverable": {
       "id": "2026-09-silp-direct-to-discoverable",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "download_discord_app",
       "variationCount": 3,
       "variations": {
         "0": {
@@ -5280,7 +5299,7 @@
           "id": 2
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "96256d7b5be103294d133c7d"
     },
     "2026-09-single-cpu-copy": {
       "id": "2026-09-single-cpu-copy",

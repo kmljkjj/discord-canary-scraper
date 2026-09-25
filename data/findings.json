@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-25T21-51-33-145Z_621877_t5bs9g",
-  "buildNumber": "621877",
-  "scrapedAt": "2026-09-25T21:51:33.145Z",
+  "runId": "2026-09-25T21-53-49-019Z_621880_pittin",
+  "buildNumber": "621880",
+  "scrapedAt": "2026-09-25T21:53:49.019Z",
   "totals": {
-    "all": 359
+    "all": 360
   },
   "experiments": [
     {
@@ -5738,7 +5738,7 @@
       "id": "2026-09-invite-silp-education",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "download_discord_app",
       "system": "apex",
       "defaultConfig": {
         "variant": null
@@ -6033,10 +6033,33 @@
       "source": "discord"
     },
     {
+      "id": "2026-09-silp-desktop-app-upsell",
+      "type": "user",
+      "kind": "user",
+      "label": "download_discord_app",
+      "system": "apex",
+      "defaultConfig": {
+        "label": null
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "variationCount": 3,
+      "source": "discord"
+    },
+    {
       "id": "2026-09-silp-direct-to-discoverable",
       "type": "user",
       "kind": "user",
-      "label": null,
+      "label": "download_discord_app",
       "system": "apex",
       "defaultConfig": {
         "placement": null

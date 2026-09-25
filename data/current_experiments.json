@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-25T21-51-33-145Z_621877_t5bs9g",
-  "buildNumber": "621877",
-  "updatedAt": "2026-09-25T21:51:33.145Z",
-  "count": 359,
+  "runId": "2026-09-25T21-53-49-019Z_621880_pittin",
+  "buildNumber": "621880",
+  "updatedAt": "2026-09-25T21:53:49.019Z",
+  "count": 360,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9381,8 +9381,8 @@
       "kind": "user",
       "type": "user",
       "system": "apex",
-      "label": null,
-      "title": null,
+      "label": "download_discord_app",
+      "title": "download_discord_app",
       "description": null,
       "defaultConfig": {
         "variant": null
@@ -9405,7 +9405,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "b9a48e844fa45f96fa327d8adeaf39b6fd486ae2e942888536ba628bc2c1903b"
+      "fingerprint": "6e246ffb62fc0c77415ede95d456304031ffd7e1296e91645a18ed71c1bba456"
     },
     {
       "id": "2026-09-jxr-upload-conversion",
@@ -9862,12 +9862,46 @@
       "fingerprint": "4571fa84138dd3e718ce8f0aa92a8dd4a42135c6ba0dae24014418ea56a66424"
     },
     {
+      "id": "2026-09-silp-desktop-app-upsell",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": "download_discord_app",
+      "title": "download_discord_app",
+      "description": null,
+      "defaultConfig": {
+        "label": null
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        },
+        "3": {
+          "id": 3
+        }
+      },
+      "treatments": null,
+      "variationCount": 3,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "629c6fe91b24739b3a198bf687cb0320b1704dc5b934ed3446ab9dd62098b637"
+    },
+    {
       "id": "2026-09-silp-direct-to-discoverable",
       "kind": "user",
       "type": "user",
       "system": "apex",
-      "label": null,
-      "title": null,
+      "label": "download_discord_app",
+      "title": "download_discord_app",
       "description": null,
       "defaultConfig": {
         "placement": null
@@ -9893,7 +9927,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "20fb893b9d0ae75c6ae84f50434b02694b83fa9b2b67b0f61a27d6eb1bac6c18"
+      "fingerprint": "60a2a0ef453ca07846368b7aeb2998cb98992bd57cd03baae580d44cf5b494e4"
     },
     {
       "id": "2026-09-single-cpu-copy",
