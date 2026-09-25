@@ -1,11 +1,11 @@
 {
-  "runId": "2026-09-25T21-55-53-680Z_621881_x37z9g",
-  "buildNumber": "621881",
-  "scrapedAt": "2026-09-25T21:55:53.680Z",
+  "runId": "2026-09-25T21-58-01-364Z_621882_a79p66",
+  "buildNumber": "621882",
+  "scrapedAt": "2026-09-25T21:58:01.364Z",
   "totals": {
-    "all": 360,
+    "all": 361,
     "legacy": 5,
-    "apex": 355
+    "apex": 356
   },
   "experiments": [
     {
@@ -5614,6 +5614,21 @@
         }
       },
       "variationCount": 3,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-game-search-row",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
