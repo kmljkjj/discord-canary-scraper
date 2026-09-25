@@ -233,12 +233,17 @@ function diffExperiments(previousList, currentList, allowRemovals, opts = {}) {
   const maxRemoved = opts.maxRemoved != null ? opts.maxRemoved : Infinity;
   const maxCat = opts.maxCategoryChanged != null ? opts.maxCategoryChanged : Infinity;
 
+  const removedAll = removed;
+  if (removedAll.length > maxRemoved && maxRemoved < Infinity) {
+    console.warn('EXP_DIFF: removed capped for notify', {
+      observed: removedAll.length,
+      notified: maxRemoved,
+    });
+  }
   return {
     added: added.slice(0, maxAdded),
-    removed:
-      removed.length > maxRemoved && maxRemoved < Infinity
-        ? []
-        : removed.slice(0, maxRemoved),
+    removed: removedAll.slice(0, maxRemoved),
+    removedAll,
     modified: modified.slice(0, maxModified),
     categoryChanged: categoryChanged.slice(0, maxCat),
   };
@@ -316,6 +321,7 @@ function updateRemovedExperiments({
   existingRemoved,
   allowRemovals,
   buildNumber,
+  confirmedRemovedIds,
 }) {
   const out = [...(existingRemoved || [])];
   const seen = new Set(out.map((e) => String(e.id || e)));
@@ -323,20 +329,40 @@ function updateRemovedExperiments({
 
   const currentIds = new Set((current || []).map((e) => String(e.id)));
   const ts = new Date().toISOString();
+  const confirmed =
+    Array.isArray(confirmedRemovedIds) && confirmedRemovedIds.length
+      ? new Set(confirmedRemovedIds.map(String))
+      : null;
+
   for (const prev of previousCurrent || []) {
     const id = String(prev.id);
-    if (!currentIds.has(id) && !seen.has(id)) {
+    if (currentIds.has(id) || seen.has(id)) continue;
+    if (confirmed && !confirmed.has(id)) continue;
+    out.push({
+      id,
+      kind: prev.kind || prev.type || null,
+      label: prev.label || null,
+      removedAt: ts,
+      lastBuild: buildNumber != null ? String(buildNumber) : null,
+    });
+    seen.add(id);
+  }
+
+  if (confirmed) {
+    for (const id of confirmed) {
+      if (!id || seen.has(id) || currentIds.has(id)) continue;
       out.push({
         id,
-        kind: prev.kind || prev.type || null,
-        label: prev.label || null,
+        kind: null,
+        label: null,
         removedAt: ts,
         lastBuild: buildNumber != null ? String(buildNumber) : null,
       });
       seen.add(id);
     }
   }
-  if (out.length > 5000) return out.slice(-5000);
+
+  if (out.length > 10000) return out.slice(-10000);
   return out;
 }
 
