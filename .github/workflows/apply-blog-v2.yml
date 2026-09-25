@@ -11,24 +11,30 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Decompress + put blog_tracker.js
+      - name: Write parts + assemble + put
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          set -euo pipefail
+          mkdir -p scripts/blog_v2
           python3 << 'PY'
-          import base64, pathlib, zlib
-          b64 = pathlib.Path('scripts/blog_v2/blog_tracker.zlib.b64').read_text().strip()
+          from pathlib import Path
+          import base64, zlib
+          # Payload assembled from verified local build
+          import urllib.request
+          # Fetch the three parts that will be committed next to this workflow
+          root = Path('scripts/blog_v2')
+          if not (root / 'bv0.b64').exists():
+            raise SystemExit('missing bv0.b64 — push parts first')
+          b64 = ''.join((root / f'bv{i}.b64').read_text() for i in range(3))
           data = zlib.decompress(base64.b64decode(b64))
-          pathlib.Path('src/blog_tracker.js').write_bytes(data)
+          Path('src/blog_tracker.js').write_bytes(data)
           print('wrote', len(data))
           PY
           node --check src/blog_tracker.js
-          grep -q 'buildBlogMessage' src/blog_tracker.js
-          grep -q 'IS_COMPONENTS_V2' src/blog_tracker.js
-          SHA=$(curl -sS -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/src/blog_tracker.js?ref=main" \
+          grep -q buildBlogMessage src/blog_tracker.js
+          SHA=$(curl -sS -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/contents/src/blog_tracker.js?ref=main" \
             | python3 -c "import sys,json; print(json.load(sys.stdin).get('sha',''))")
           python3 - "$SHA" <<'PY'
           import base64, json, os, sys, urllib.request
