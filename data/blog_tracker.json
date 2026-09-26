@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-26T11:00:56.766Z",
+  "scrapedAt": "2026-09-26T11:02:08.616Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,88 @@
   ],
   "zendesk": [
     {
+      "id": "360041820932",
+      "title": "Help! I'm old enough to use Discord in my country but I got locked out?",
+      "link": "https://support.discord.com/hc/en-us/articles/360041820932-Help-I-m-old-enough-to-use-Discord-in-my-country-but-I-got-locked-out",
+      "updatedAt": "2026-09-26T11:02:00Z",
+      "createdAt": "2020-04-13T20:57:25Z",
+      "sectionId": "360007875171",
+      "bodyHash": "cd4f6cb2654528b4b5bd6fcc1ee65baa1ef87e65444b2272891a720bfa51d453",
+      "bodyPreview": "We require all users to meet the minimum age requirement for their region. If you meet that requirement and have been locked out of Discord, you can appeal your banned account by following the instructions below. \"Your account is suspended\" screen, showing an Active Violations card for a minimum age requirements violation How to Confirm Your Age Group to Unlock Your Account 1. Log in to your lock…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442927639",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-26T11:01:58Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115001221072",
+      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
+      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
+      "updatedAt": "2026-09-26T11:01:42Z",
+      "createdAt": "2017-08-22T01:07:34Z",
+      "sectionId": "360009072571",
+      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
+      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360035675191",
+      "title": "Discord Testing Clients",
+      "link": "https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients",
+      "updatedAt": "2026-09-26T11:01:01Z",
+      "createdAt": "2019-10-29T23:24:20Z",
+      "sectionId": "360007875191",
+      "bodyHash": "07a77c60623127b20749b185966f9db12979c03801e05563885262f044ba4dde",
+      "bodyPreview": "🚧 Article under construction! 🚧 What this article covers: Introduction to Testing Clients Where can I download these clients? Browser Windows MacOS Linux iOS Android Introduction to Testing Clients We have a couple of early access programs for all desktop clients, where you can get a sneak peek at the new features, and you can still do all of the stuff you normally do on Discord. The catch is t…",
+      "thumb": "https://support.discord.com/hc/article_attachments/4405173412375",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "18210995019671",
+      "title": "Discord Sensitive Content Filters",
+      "link": "https://support.discord.com/hc/en-us/articles/18210995019671-Discord-Sensitive-Content-Filters",
+      "updatedAt": "2026-09-26T11:00:51Z",
+      "createdAt": "2023-10-12T01:40:51Z",
+      "sectionId": "360007875171",
+      "bodyHash": "845298ef3ff5784bee13905dd8dc5492cd06c0fdca1d2dc354ca8d5e70298352",
+      "bodyPreview": "At Discord, we're committed to helping create a positive experience for everyone in our community. Our sensitive content filters are one way we work to support our users as they connect and hang out together online. What this article covers: Types of Filters Sensitive Content Filters for the Adult Age Group Sensitive Content Filters for the Teen Age Group Why We Hide Some Media? What If Media is …",
+      "thumb": "https://support.discord.com/hc/article_attachments/43516520209943",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360036118732",
+      "title": "Discord Official Messages",
+      "link": "https://support.discord.com/hc/en-us/articles/360036118732-Discord-Official-Messages",
+      "updatedAt": "2026-09-26T11:00:36Z",
+      "createdAt": "2019-11-21T01:14:35Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "0b4c690cc4c65690a219718cc1685be685e527604946d46815eaf6e16b98a515",
+      "bodyPreview": "What this article covers: What are Discord Official Messages? How to Verify the Message is From Discord Urgent Messages What are Discord Official Messages? Discord Official Messages are messages that we send to alert you of an account issue. These messages can range from a variety of Payment issues, Support Ticket Updates, and ToS Violation Warnings. Note : Discord will never ask you for your pas…",
+      "thumb": "https://support.discord.com/hc/article_attachments/24012861138455",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-26T10:59:46Z",
+      "updatedAt": "2026-09-26T11:00:27Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
@@ -468,15 +546,15 @@
       "label": "Support"
     },
     {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-26T10:59:16Z",
-      "createdAt": "2020-11-30T20:42:12Z",
-      "sectionId": "115000458672",
-      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "id": "30326565624343",
+      "title": "How to Confirm Your Age Group on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
+      "updatedAt": "2026-09-26T11:00:07Z",
+      "createdAt": "2025-02-28T23:11:37Z",
+      "sectionId": "360009072571",
+      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
+      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
       "source": "support",
       "label": "Support"
     },
@@ -503,19 +581,6 @@
       "bodyHash": "244af683754f5a308dd149bd21c72ea6e87b32214d9d5b6a71cd207c1c64f3f5",
       "bodyPreview": "Need help from our support team? This guide will walk you through submitting a support ticket through Discord's Help Center. What this article covers: Support Account vs Discord Account Submitting Your First Ticket Create Your Discord Support Account Submit your Discord Support Ticket Submitting Additional Tickets If You've Submitted Tickets Before But Never Set Up Your Support Account Sending an…",
       "thumb": "https://support.discord.com/hc/article_attachments/35715306915479",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "18210995019671",
-      "title": "Discord Sensitive Content Filters",
-      "link": "https://support.discord.com/hc/en-us/articles/18210995019671-Discord-Sensitive-Content-Filters",
-      "updatedAt": "2026-09-26T10:58:53Z",
-      "createdAt": "2023-10-12T01:40:51Z",
-      "sectionId": "360007875171",
-      "bodyHash": "845298ef3ff5784bee13905dd8dc5492cd06c0fdca1d2dc354ca8d5e70298352",
-      "bodyPreview": "At Discord, we're committed to helping create a positive experience for everyone in our community. Our sensitive content filters are one way we work to support our users as they connect and hang out together online. What this article covers: Types of Filters Sensitive Content Filters for the Adult Age Group Sensitive Content Filters for the Teen Age Group Why We Hide Some Media? What If Media is …",
-      "thumb": "https://support.discord.com/hc/article_attachments/43516520209943",
       "source": "support",
       "label": "Support"
     },
@@ -624,19 +689,6 @@
       "label": "Support"
     },
     {
-      "id": "30326565624343",
-      "title": "How to Confirm Your Age Group on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
-      "updatedAt": "2026-09-26T10:54:52Z",
-      "createdAt": "2025-02-28T23:11:37Z",
-      "sectionId": "360009072571",
-      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
-      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360033931551",
       "title": "Getting Started",
       "link": "https://support.discord.com/hc/en-us/articles/360033931551-Getting-Started",
@@ -685,19 +737,6 @@
       "bodyHash": "e05b07b5e2afce4c875406f2ebbab8b8d37f0ddb7bf3e38038cdc1071347da2f",
       "bodyPreview": "Update as of February 19, 2026 (3:50PM PST): This outage is now resolved . We were investigating reports that users were being asked to perform age verification again and that some verifications were not completing successfully. This was unintentional behavior and our team has deployed a fix for this issue. What if I'm Still Running into Issues? Please refresh and restart your Discord application…",
       "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360041820932",
-      "title": "Help! I'm old enough to use Discord in my country but I got locked out?",
-      "link": "https://support.discord.com/hc/en-us/articles/360041820932-Help-I-m-old-enough-to-use-Discord-in-my-country-but-I-got-locked-out",
-      "updatedAt": "2026-09-26T10:53:23Z",
-      "createdAt": "2020-04-13T20:57:25Z",
-      "sectionId": "360007875171",
-      "bodyHash": "cd4f6cb2654528b4b5bd6fcc1ee65baa1ef87e65444b2272891a720bfa51d453",
-      "bodyPreview": "We require all users to meet the minimum age requirement for their region. If you meet that requirement and have been locked out of Discord, you can appeal your banned account by following the instructions below. \"Your account is suspended\" screen, showing an Active Violations card for a minimum age requirements violation How to Confirm Your Age Group to Unlock Your Account 1. Log in to your lock…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442927639",
       "source": "support",
       "label": "Support"
     },
@@ -1261,19 +1300,6 @@
       "label": "Support"
     },
     {
-      "id": "360036118732",
-      "title": "Discord Official Messages",
-      "link": "https://support.discord.com/hc/en-us/articles/360036118732-Discord-Official-Messages",
-      "updatedAt": "2026-09-26T10:15:33Z",
-      "createdAt": "2019-11-21T01:14:35Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "0b4c690cc4c65690a219718cc1685be685e527604946d46815eaf6e16b98a515",
-      "bodyPreview": "What this article covers: What are Discord Official Messages? How to Verify the Message is From Discord Urgent Messages What are Discord Official Messages? Discord Official Messages are messages that we send to alert you of an account issue. These messages can range from a variety of Payment issues, Support Ticket Updates, and ToS Violation Warnings. Note : Discord will never ask you for your pas…",
-      "thumb": "https://support.discord.com/hc/article_attachments/24012861138455",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360023968311",
       "title": "Server Discovery",
       "link": "https://support.discord.com/hc/en-us/articles/360023968311-Server-Discovery",
@@ -1322,19 +1348,6 @@
       "bodyHash": "22b6fe765dcca0590349ed568c9398c34d86f9fe23723723f56ad70ea8efa72f",
       "bodyPreview": "When you're meeting new people through the games you play, you can now choose between two options when adding someone as your friend on Discord: you can either add them as a Game Friend for a specific game, or you can add them as a Discord Friend ! Note: This article is under construction. Stay tuned for more details soon!",
       "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115001221072",
-      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
-      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
-      "updatedAt": "2026-09-26T10:07:32Z",
-      "createdAt": "2017-08-22T01:07:34Z",
-      "sectionId": "360009072571",
-      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
-      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
       "source": "support",
       "label": "Support"
     },
@@ -2687,19 +2700,6 @@
       "bodyHash": "28aa8320e2a3aff2f2afe436ecf7cb337405e145841da553ada028eed53660ab",
       "bodyPreview": "What this article covers: What is message forwarding? How to Forward a Message Desktop/Browser Mobile Frequently Asked Questions What is message forwarding? Have you ever wanted to send your friends that cool thing you saw on another server or send them a funny meme from another channel? Forwarding will let you to select any message or piece of media and send it to another place in Discord. A for…",
       "thumb": "https://support.discord.com/hc/article_attachments/26759892856983",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360035675191",
-      "title": "Discord Testing Clients",
-      "link": "https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients",
-      "updatedAt": "2026-09-26T01:42:21Z",
-      "createdAt": "2019-10-29T23:24:20Z",
-      "sectionId": "360007875191",
-      "bodyHash": "07a77c60623127b20749b185966f9db12979c03801e05563885262f044ba4dde",
-      "bodyPreview": "🚧 Article under construction! 🚧 What this article covers: Introduction to Testing Clients Where can I download these clients? Browser Windows MacOS Linux iOS Android Introduction to Testing Clients We have a couple of early access programs for all desktop clients, where you can get a sneak peek at the new features, and you can still do all of the stuff you normally do on Discord. The catch is t…",
-      "thumb": "https://support.discord.com/hc/article_attachments/4405173412375",
       "source": "support",
       "label": "Support"
     },
