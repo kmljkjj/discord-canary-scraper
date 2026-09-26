@@ -2293,23 +2293,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-04-overlay-fps-limit",
-    "defaultConfig": null,
-    "variations": {
-      "1": {
-        "id": 1
-      },
-      "2": {
-        "id": 2
-      },
-      "3": {
-        "id": 3
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-04-overlay-streamer-mode",
     "defaultConfig": {
       "enabled": false
@@ -4328,6 +4311,19 @@
     "name": "2026-08-forward-age-restricted-destinations",
     "defaultConfig": {
       "disableAgeRestrictedDestinations": false
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-game-mode",
+    "defaultConfig": {
+      "enabled": false
     },
     "variations": {
       "1": {
