@@ -1,0 +1,42 @@
+name: Apply Blog with_components Main
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble blog_tracker.js
+        run: |
+          set -euo pipefail
+          python3 << 'EOF'
+          import base64, zlib, pathlib
+          parts = []
+          for i in range(4):
+              parts.append(pathlib.Path(f".github/payloads/main_blog_wc_{i}.b64").read_text().strip())
+          data = zlib.decompress(base64.b64decode("".join(parts)))
+          path = pathlib.Path("src/blog_tracker.js")
+          path.write_bytes(data)
+          text = data.decode()
+          assert "webhookUrlWithComponents" in text
+          assert "with_components" in text
+          print("wrote", path, len(data))
+          EOF
+          node --check src/blog_tracker.js
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/blog_tracker.js
+          git diff --cached --stat
+          git commit -m "fix(blog): require ?with_components=true for Components V2 webhooks
+
+Sans with_components, Discord ignore silencieusement les components V2
+sur les webhooks non-application. Aligné sur quests.js." || echo "nothing"
+          git push
