@@ -1,0 +1,45 @@
+name: Blog WC Fix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch blog_tracker.js
+        run: |
+          set -euo pipefail
+          python3 -c '
+          import base64, pathlib, re
+          path = pathlib.Path("src/blog_tracker.js")
+          text = path.read_text()
+          new = base64.b64decode("LyoqCiAqIFBvc3Qgd2ViaG9vayBwYXlsb2FkLgogKiAtIEJsb2c6IHsgZmxhZ3MsIGNvbXBvbmVudHMgfSAoQ29tcG9uZW50cyBWMikgLSByZXF1aXJlcyA/d2l0aF9jb21wb25lbnRzPXRydWUKICogLSBaZW5kZXNrOiB7IGVtYmVkczogWy4uLl0gfQogKgogKiBTYW5zIHdpdGhfY29tcG9uZW50cywgRGlzY29yZCBpZ25vcmUgc2lsZW5jaWV1c2VtZW50IGxlcyBjb21wb25lbnRzIFYyCiAqIHN1ciBsZXMgd2ViaG9va3Mgbm9uLWFwcGxpY2F0aW9uIChtZXNzYWdlIHZpZGUgLyBlY2hlYykuCiAqLwpmdW5jdGlvbiB3ZWJob29rVXJsV2l0aENvbXBvbmVudHMoYmFzZVVybCkgewogIGlmICghYmFzZVVybCkgcmV0dXJuIG51bGw7CiAgdHJ5IHsKICAgIGNvbnN0IHUgPSBuZXcgVVJMKGJhc2VVcmwpOwogICAgdS5zZWFyY2hQYXJhbXMuc2V0KCd3aXRoX2NvbXBvbmVudHMnLCAndHJ1ZScpOwogICAgdS5zZWFyY2hQYXJhbXMuc2V0KCd3YWl0JywgJ3RydWUnKTsKICAgIHJldHVybiB1LnRvU3RyaW5nKCk7CiAgfSBjYXRjaCAoXykgewogICAgY29uc3Qgc2VwID0gU3RyaW5nKGJhc2VVcmwpLmluY2x1ZGVzKCc/JykgPyAnJicgOiAnPyc7CiAgICByZXR1cm4gYmFzZVVybCArIHNlcCArICd3aXRoX2NvbXBvbmVudHM9dHJ1ZSZ3YWl0PXRydWUnOwogIH0KfQoKYXN5bmMgZnVuY3Rpb24gcG9zdFdlYmhvb2socGF5bG9hZCkgewogIGlmICghV0VCSE9PSykgewogICAgY29uc29sZS53YXJuKCdObyBCTE9HX1dFQkhPT0tfVVJMIC8gRElTQ09SRF9XRUJIT09LX1VSTCcpOwogICAgcmV0dXJuIGZhbHNlOwogIH0KICBjb25zdCBib2R5ID0gewogICAgdXNlcm5hbWU6IEJPVF9OQU1FLAogICAgYXZhdGFyX3VybDogQVZBVEFSLAogICAgLi4ucGF5bG9hZCwKICB9OwogIC8vIENvbXBvbmVudHMgVjI6IG9ibGlnYXRvaXJlIHBvdXIgbGVzIHdlYmhvb2tzIG5vbi1hcHAKICBjb25zdCB1cmwgPQogICAgcGF5bG9hZCAmJiBwYXlsb2FkLmZsYWdzID09PSBJU19DT01QT05FTlRTX1YyCiAgICAgID8gd2ViaG9va1VybFdpdGhDb21wb25lbnRzKFdFQkhPT0spCiAgICAgIDogV0VCSE9PSzsKICBjb25zdCByID0gYXdhaXQgc2VuZFdlYmhvb2sodXJsLCBib2R5LCB7IGxhYmVsOiAnYmxvZycgfSk7CiAgaWYgKCFyLm9rKSB7CiAgICBjb25zb2xlLndhcm4oJ2Jsb2cgd2ViaG9vayBmYWlsJywgci5zdGF0dXMsIChyLnRleHQgfHwgJycpLnNsaWNlKDAsIDIwMCkpOwogIH0KICByZXR1cm4gci5vazsKfQo=").decode()
+          pat = re.compile(
+              r"/\*\*\n \* Post webhook payload\.[\s\S]*?\nasync function postWebhook\(payload\) \{[\s\S]*?\n\}\n(?=\nasync function notifyAll)",
+          )
+          m = pat.search(text)
+          if not m:
+              i = text.find("async function postWebhook")
+              print("FAIL", i)
+              print(repr(text[max(0,i-100):i+350]))
+              raise SystemExit(1)
+          text2 = text[: m.start()] + new.rstrip() + "\n" + text[m.end() :]
+          path.write_text(text2)
+          assert "webhookUrlWithComponents" in path.read_text()
+          print("patched ok", len(text2))
+          '
+          node --check src/blog_tracker.js
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/blog_tracker.js
+          git diff --cached --stat
+          git commit -m "fix(blog): require ?with_components=true for Components V2 webhooks"
+          git push
