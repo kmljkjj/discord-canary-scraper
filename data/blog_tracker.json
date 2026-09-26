@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-26T11:49:45.137Z",
+  "scrapedAt": "2026-09-26T11:50:52.874Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,23 @@
   ],
   "zendesk": [
     {
+      "id": "18210965981847",
+      "title": "Discord Warning System",
+      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
+      "updatedAt": "2026-09-26T11:50:41Z",
+      "createdAt": "2023-10-12T01:36:18Z",
+      "sectionId": "360007875171",
+      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
+      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360001556852",
       "title": "Invalid Invite Links",
       "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
-      "updatedAt": "2026-09-26T11:49:40Z",
+      "updatedAt": "2026-09-26T11:50:39Z",
       "createdAt": "2018-03-08T19:29:03Z",
       "sectionId": "201131298",
       "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
@@ -468,14 +481,53 @@
       "label": "Support"
     },
     {
+      "id": "5106714856215",
+      "title": "Inactive Account Deletion",
+      "link": "https://support.discord.com/hc/en-us/articles/5106714856215-Inactive-Account-Deletion",
+      "updatedAt": "2026-09-26T11:50:36Z",
+      "createdAt": "2022-03-29T20:57:58Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "6f2d29ef0b7ffc2e16789159168edd04d4804737d060fb1829071ce3bcee0308",
+      "bodyPreview": "If you have not been on Discord for a couple of years, you may have received an email or text to let you know your account is going to be deleted. Oh no! On Discord, accounts that have not been used for 2 years or more may be scheduled to be deleted. As your account nears the 2 years mark you may get an email or text message warning you that your account is scheduled to be deleted. How Do I Preve…",
+      "thumb": "https://support.discord.com/hc/article_attachments/5304409745047",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-26T11:49:30Z",
+      "updatedAt": "2026-09-26T11:50:22Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
       "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-26T11:50:20Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "4708041338391",
+      "title": "Update on Premium Services in Russia",
+      "link": "https://support.discord.com/hc/en-us/articles/4708041338391-Update-on-Premium-Services-in-Russia",
+      "updatedAt": "2026-09-26T11:50:07Z",
+      "createdAt": "2022-03-11T18:53:09Z",
+      "sectionId": "115000457731",
+      "bodyHash": "b72fe0ad3eb7f9024914532d16e57b16000880e019af73ed2fb80ee726d6837e",
+      "bodyPreview": "What this article covers: Recurring Memberships Nitro Boosting Gifting and Gift Redemptions Refunds Purchases and recurring subscriptions for our paid services in Russia have been suspended. We are also no longer accepting Russian payment methods. We will continue to offer the free Discord experience to all users, including those in Russia. Recurring Memberships If you are located in Russia or us…",
       "thumb": null,
       "source": "support",
       "label": "Support"
@@ -490,19 +542,6 @@
       "bodyHash": "c7f3d5654175b4ca8222f11c374b1763e81656fdbaf3cdce01b6ea14f61cb4ee",
       "bodyPreview": "Interested in boosting Discord’s video performance on your Windows N/Window KN desktop? You could install Microsoft’s Media Feature Pack for additional Discord functionality, which is covered below. What this article covers: What is the Media Feature Pack How to Install the Media Feature Pack Frequently Asked Questions What is the Media Feature Pack? Microsoft’s Media Feature Pack is a free colle…",
       "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-26T11:49:15Z",
-      "createdAt": "2020-11-30T20:42:12Z",
-      "sectionId": "115000458672",
-      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
       "source": "support",
       "label": "Support"
     },
@@ -689,19 +728,6 @@
       "label": "Support"
     },
     {
-      "id": "18210965981847",
-      "title": "Discord Warning System",
-      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
-      "updatedAt": "2026-09-26T11:45:05Z",
-      "createdAt": "2023-10-12T01:36:18Z",
-      "sectionId": "360007875171",
-      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
-      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "26680694104215",
       "title": "How to Fix Phone Errors on Discord",
       "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
@@ -750,19 +776,6 @@
       "bodyHash": "8560be3a4ccdf1bccf75ecc1be2d3d6a5adbb1d553df247fba3c2c54d17a2a5b",
       "bodyPreview": "Oh no! Spotify keeps pausing while you're listening, but why?! If you are transmitting with your mic in voice chat for 30 seconds while Spotify is playing, Spotify will stop playing , and you'll get this error bar at the top of your app: This autopause error may also appear when using the following features with Spotify: - Voice Chat - Screenshare - Go Live Because Spotify is intended for persona…",
       "thumb": "https://support.discord.com/hc/article_attachments/360000253872/mceclip0.png",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "4708041338391",
-      "title": "Update on Premium Services in Russia",
-      "link": "https://support.discord.com/hc/en-us/articles/4708041338391-Update-on-Premium-Services-in-Russia",
-      "updatedAt": "2026-09-26T11:37:48Z",
-      "createdAt": "2022-03-11T18:53:09Z",
-      "sectionId": "115000457731",
-      "bodyHash": "b72fe0ad3eb7f9024914532d16e57b16000880e019af73ed2fb80ee726d6837e",
-      "bodyPreview": "What this article covers: Recurring Memberships Nitro Boosting Gifting and Gift Redemptions Refunds Purchases and recurring subscriptions for our paid services in Russia have been suspended. We are also no longer accepting Russian payment methods. We will continue to offer the free Discord experience to all users, including those in Russia. Recurring Memberships If you are located in Russia or us…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -3259,19 +3272,6 @@
       "bodyHash": "474f3fe1b0deac2ca819174c94fe35f4bd0e193ba792a625cba675afe6781d4a",
       "bodyPreview": "Note: If you’re looking to cancel a different subscription. Please check out the corresponding article: Nitro subscription , Server Boost , or Server subscription . What this article covers: How to Cancel Premium App Subscription on Desktop/Browser How to Upgrade or Downgrade your Premium App Subscription How Do I Re-Subscribe After Canceling My Subscription? What if I Can’t Access My Discord and…",
       "thumb": "https://support.discord.com/hc/article_attachments/26729692293911",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "5106714856215",
-      "title": "Inactive Account Deletion",
-      "link": "https://support.discord.com/hc/en-us/articles/5106714856215-Inactive-Account-Deletion",
-      "updatedAt": "2026-09-25T21:55:00Z",
-      "createdAt": "2022-03-29T20:57:58Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "6f2d29ef0b7ffc2e16789159168edd04d4804737d060fb1829071ce3bcee0308",
-      "bodyPreview": "If you have not been on Discord for a couple of years, you may have received an email or text to let you know your account is going to be deleted. Oh no! On Discord, accounts that have not been used for 2 years or more may be scheduled to be deleted. As your account nears the 2 years mark you may get an email or text message warning you that your account is scheduled to be deleted. How Do I Preve…",
-      "thumb": "https://support.discord.com/hc/article_attachments/5304409745047",
       "source": "support",
       "label": "Support"
     },
