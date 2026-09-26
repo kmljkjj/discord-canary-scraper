@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-26T20:09:19.942Z",
+  "scrapedAt": "2026-09-26T20:10:18.466Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,36 @@
   ],
   "zendesk": [
     {
+      "id": "360004159932",
+      "title": "[Windows 10] Allowing Access for Microphone & Camera",
+      "link": "https://support.discord.com/hc/en-us/articles/360004159932--Windows-10-Allowing-Access-for-Microphone-Camera",
+      "updatedAt": "2026-09-26T20:10:02Z",
+      "createdAt": "2018-05-24T03:17:59Z",
+      "sectionId": "360007770612",
+      "bodyHash": "4123cf4e1b00e043f44a25b40b7ac9f44f3f7ff4fc437e02ff78cb947447c083",
+      "bodyPreview": "Before using your Microphone for Voice Calls, and your Camera for Video Calls, you may have to grant permission for apps to access your Microphone and Camera. This guide will show you how! To get started, go into Windows Settings &gt; Privacy &gt; Microphone AND Camera . You'll see two toggles under the \" Allow apps to access your camera/microphone ,\" turn both of these to \" On \" and voilà! &amp;…",
+      "thumb": "https://support.discord.com/hc/article_attachments/360005226592/Micro_final.png",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-26T20:09:56Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-26T20:07:48Z",
+      "updatedAt": "2026-09-26T20:09:56Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
@@ -468,15 +494,67 @@
       "label": "Support"
     },
     {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-26T20:07:06Z",
-      "createdAt": "2020-11-30T20:42:12Z",
+      "id": "210298617",
+      "title": "Markdown Text 101 (Chat Formatting: Bold, Italic, Underline)",
+      "link": "https://support.discord.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline",
+      "updatedAt": "2026-09-26T20:09:53Z",
+      "createdAt": "2015-09-17T03:38:26Z",
       "sectionId": "115000458672",
-      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "bodyHash": "b61427d6fad0bba8e69777f44829b00798fa538046b6c4300c560a7272600cb0",
+      "bodyPreview": "Want to inject some flavor into your everyday text chat? You're in luck! Discord uses Markdown, a simple plain text formatting system that'll help you make your sentences stand out. Here's how to do it! Just add a few characters before &amp; after your desired text to change your text! Let’s go over some examples. What this article covers: Text Formatting Organizational Text Formatting Headers Su…",
+      "thumb": "https://support.discord.com/hc/article_attachments/13850284963735",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360036118732",
+      "title": "Discord Official Messages",
+      "link": "https://support.discord.com/hc/en-us/articles/360036118732-Discord-Official-Messages",
+      "updatedAt": "2026-09-26T20:09:24Z",
+      "createdAt": "2019-11-21T01:14:35Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "0b4c690cc4c65690a219718cc1685be685e527604946d46815eaf6e16b98a515",
+      "bodyPreview": "What this article covers: What are Discord Official Messages? How to Verify the Message is From Discord Urgent Messages What are Discord Official Messages? Discord Official Messages are messages that we send to alert you of an account issue. These messages can range from a variety of Payment issues, Support Ticket Updates, and ToS Violation Warnings. Note : Discord will never ask you for your pas…",
+      "thumb": "https://support.discord.com/hc/article_attachments/24012861138455",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115004307527",
+      "title": "[Windows] Corrupt Installation",
+      "link": "https://support.discord.com/hc/en-us/articles/115004307527--Windows-Corrupt-Installation",
+      "updatedAt": "2026-09-26T20:08:42Z",
+      "createdAt": "2017-03-13T22:06:03Z",
+      "sectionId": "360007770612",
+      "bodyHash": "ea6c3846de85dff4507e6de75698c2edaffd836086cfc16d0e371a800a2b6e25",
+      "bodyPreview": "We're constantly working on improving Discord's infrastructure to make your chat &amp; voice experience as seamless as possible, but sometimes we confuse this with that and as a result, your version of Discord might not be completely up to date. If you clicked the \"Well, it looks like your Discord installation is corrupt.\" banner, reinstall Discord using the following steps to get all caught up: …",
+      "thumb": "https://support.discord.com/hc/en-us/article_attachments/209205268/RunDat.png",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "35714463749015",
+      "title": "How to Submit a Support Ticket to Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/35714463749015-How-to-Submit-a-Support-Ticket-to-Discord",
+      "updatedAt": "2026-09-26T20:08:37Z",
+      "createdAt": "2025-10-17T21:29:26Z",
+      "sectionId": "24453860938135",
+      "bodyHash": "244af683754f5a308dd149bd21c72ea6e87b32214d9d5b6a71cd207c1c64f3f5",
+      "bodyPreview": "Need help from our support team? This guide will walk you through submitting a support ticket through Discord's Help Center. What this article covers: Support Account vs Discord Account Submitting Your First Ticket Create Your Discord Support Account Submit your Discord Support Ticket Submitting Additional Tickets If You've Submitted Tickets Before But Never Set Up Your Support Account Sending an…",
+      "thumb": "https://support.discord.com/hc/article_attachments/35715306915479",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360045138471",
+      "title": "Discord Voice and Video Troubleshooting Guide",
+      "link": "https://support.discord.com/hc/en-us/articles/360045138471-Discord-Voice-and-Video-Troubleshooting-Guide",
+      "updatedAt": "2026-09-26T20:08:10Z",
+      "createdAt": "2020-06-17T23:07:39Z",
+      "sectionId": "360007770612",
+      "bodyHash": "6e8132b3e761e120a18c266a06d2f75d210cac0f978fa49a785f79d0d0b22691",
+      "bodyPreview": "Having trouble with Discord voice or video? Whether you can't hear others, they can't hear you, or your video isn't working - we're here to help. This troubleshooting guide will walk you through common solutions for audio and video issues to get you back to chatting with your friends in no time. What this article covers: Essential Discord Settings to Check First Mute or Deafen Channel or Role Per…",
+      "thumb": "https://support.discord.com/hc/article_attachments/30984507032727",
       "source": "support",
       "label": "Support"
     },
@@ -819,32 +897,6 @@
       "label": "Support"
     },
     {
-      "id": "360036118732",
-      "title": "Discord Official Messages",
-      "link": "https://support.discord.com/hc/en-us/articles/360036118732-Discord-Official-Messages",
-      "updatedAt": "2026-09-26T19:49:23Z",
-      "createdAt": "2019-11-21T01:14:35Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "0b4c690cc4c65690a219718cc1685be685e527604946d46815eaf6e16b98a515",
-      "bodyPreview": "What this article covers: What are Discord Official Messages? How to Verify the Message is From Discord Urgent Messages What are Discord Official Messages? Discord Official Messages are messages that we send to alert you of an account issue. These messages can range from a variety of Payment issues, Support Ticket Updates, and ToS Violation Warnings. Note : Discord will never ask you for your pas…",
-      "thumb": "https://support.discord.com/hc/article_attachments/24012861138455",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "35714463749015",
-      "title": "How to Submit a Support Ticket to Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/35714463749015-How-to-Submit-a-Support-Ticket-to-Discord",
-      "updatedAt": "2026-09-26T19:48:59Z",
-      "createdAt": "2025-10-17T21:29:26Z",
-      "sectionId": "24453860938135",
-      "bodyHash": "244af683754f5a308dd149bd21c72ea6e87b32214d9d5b6a71cd207c1c64f3f5",
-      "bodyPreview": "Need help from our support team? This guide will walk you through submitting a support ticket through Discord's Help Center. What this article covers: Support Account vs Discord Account Submitting Your First Ticket Create Your Discord Support Account Submit your Discord Support Ticket Submitting Additional Tickets If You've Submitted Tickets Before But Never Set Up Your Support Account Sending an…",
-      "thumb": "https://support.discord.com/hc/article_attachments/35715306915479",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360045138571",
       "title": "Beginner's Guide to Discord",
       "link": "https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord",
@@ -1183,32 +1235,6 @@
       "label": "Support"
     },
     {
-      "id": "210298617",
-      "title": "Markdown Text 101 (Chat Formatting: Bold, Italic, Underline)",
-      "link": "https://support.discord.com/hc/en-us/articles/210298617-Markdown-Text-101-Chat-Formatting-Bold-Italic-Underline",
-      "updatedAt": "2026-09-26T19:13:15Z",
-      "createdAt": "2015-09-17T03:38:26Z",
-      "sectionId": "115000458672",
-      "bodyHash": "b61427d6fad0bba8e69777f44829b00798fa538046b6c4300c560a7272600cb0",
-      "bodyPreview": "Want to inject some flavor into your everyday text chat? You're in luck! Discord uses Markdown, a simple plain text formatting system that'll help you make your sentences stand out. Here's how to do it! Just add a few characters before &amp; after your desired text to change your text! Let’s go over some examples. What this article covers: Text Formatting Organizational Text Formatting Headers Su…",
-      "thumb": "https://support.discord.com/hc/article_attachments/13850284963735",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360045138471",
-      "title": "Discord Voice and Video Troubleshooting Guide",
-      "link": "https://support.discord.com/hc/en-us/articles/360045138471-Discord-Voice-and-Video-Troubleshooting-Guide",
-      "updatedAt": "2026-09-26T19:12:00Z",
-      "createdAt": "2020-06-17T23:07:39Z",
-      "sectionId": "360007770612",
-      "bodyHash": "6e8132b3e761e120a18c266a06d2f75d210cac0f978fa49a785f79d0d0b22691",
-      "bodyPreview": "Having trouble with Discord voice or video? Whether you can't hear others, they can't hear you, or your video isn't working - we're here to help. This troubleshooting guide will walk you through common solutions for audio and video issues to get you back to chatting with your friends in no time. What this article covers: Essential Discord Settings to Check First Mute or Deafen Channel or Role Per…",
-      "thumb": "https://support.discord.com/hc/article_attachments/30984507032727",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "4410339349655",
       "title": "Discord’s Copyright & IP Policy",
       "link": "https://support.discord.com/hc/en-us/articles/4410339349655-Discord-s-Copyright-IP-Policy",
@@ -1270,19 +1296,6 @@
       "bodyHash": "beb91451df5e5feec9a4dec83675794b68d11080f52f4fda96b829cc236980c7",
       "bodyPreview": "Represent your server with Server Tags - 4-character identifiers that members can display proudly on their profiles, anywhere. What this article covers: What are Server Tags? How to Use Server Boosts for Server Tags as a Server Owner/Admin How to Select or Customize Your Server Tag as a Server Owner/Admin How to Set or Remove a Server Tag as a Server Member Desktop/Browser Mobile What are Server …",
       "thumb": "https://support.discord.com/hc/article_attachments/31809665343383",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115004307527",
-      "title": "[Windows] Corrupt Installation",
-      "link": "https://support.discord.com/hc/en-us/articles/115004307527--Windows-Corrupt-Installation",
-      "updatedAt": "2026-09-26T19:00:12Z",
-      "createdAt": "2017-03-13T22:06:03Z",
-      "sectionId": "360007770612",
-      "bodyHash": "ea6c3846de85dff4507e6de75698c2edaffd836086cfc16d0e371a800a2b6e25",
-      "bodyPreview": "We're constantly working on improving Discord's infrastructure to make your chat &amp; voice experience as seamless as possible, but sometimes we confuse this with that and as a result, your version of Discord might not be completely up to date. If you clicked the \"Well, it looks like your Discord installation is corrupt.\" banner, reinstall Discord using the following steps to get all caught up: …",
-      "thumb": "https://support.discord.com/hc/en-us/article_attachments/209205268/RunDat.png",
       "source": "support",
       "label": "Support"
     },
@@ -1842,19 +1855,6 @@
       "bodyHash": "14a3284aca8194c3af6bc0070a2a491f4c05a2db8926bf2bd58527d3038fc98a",
       "bodyPreview": "Signing in to your Discord account is quick and easy, whether you're using the desktop app, mobile app, or web browser. With the Discord sign-in process, you can securely access your account and connect with your communities in just a few steps. This guide will walk you through the different ways to log in, including using your email and password or QR code sign in. Follow along to ensure a smoot…",
       "thumb": "https://support.discord.com/hc/article_attachments/27098861617687",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360004159932",
-      "title": "[Windows 10] Allowing Access for Microphone & Camera",
-      "link": "https://support.discord.com/hc/en-us/articles/360004159932--Windows-10-Allowing-Access-for-Microphone-Camera",
-      "updatedAt": "2026-09-26T17:38:41Z",
-      "createdAt": "2018-05-24T03:17:59Z",
-      "sectionId": "360007770612",
-      "bodyHash": "4123cf4e1b00e043f44a25b40b7ac9f44f3f7ff4fc437e02ff78cb947447c083",
-      "bodyPreview": "Before using your Microphone for Voice Calls, and your Camera for Video Calls, you may have to grant permission for apps to access your Microphone and Camera. This guide will show you how! To get started, go into Windows Settings &gt; Privacy &gt; Microphone AND Camera . You'll see two toggles under the \" Allow apps to access your camera/microphone ,\" turn both of these to \" On \" and voilà! &amp;…",
-      "thumb": "https://support.discord.com/hc/article_attachments/360005226592/Micro_final.png",
       "source": "support",
       "label": "Support"
     },
