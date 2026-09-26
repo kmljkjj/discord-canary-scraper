@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-26T22:44:08.994Z",
+  "scrapedAt": "2026-09-26T22:45:10.713Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,36 @@
   ],
   "zendesk": [
     {
+      "id": "209004908",
+      "title": "[iOS] How do I create an Invite link on my iOS device?",
+      "link": "https://support.discord.com/hc/en-us/articles/209004908--iOS-How-do-I-create-an-Invite-link-on-my-iOS-device",
+      "updatedAt": "2026-09-26T22:44:38Z",
+      "createdAt": "2015-09-12T00:55:45Z",
+      "sectionId": "201131298",
+      "bodyHash": "42953ad6e098d15cdc3c66c64d12fbe34b76d0142f9739c160e6e69aacfbca82",
+      "bodyPreview": "Push and hold the channel that you would like to create an invite for. After a couple of seconds a mini menu from the bottom will appear. Tap \"Invite\" and don't forget to set your advanced settings, if you're fancy like that.",
+      "thumb": "https://support.discord.com/hc/article_attachments/360058238731",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-26T22:44:32Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "26680694104215",
       "title": "How to Fix Phone Errors on Discord",
       "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
-      "updatedAt": "2026-09-26T22:44:01Z",
+      "updatedAt": "2026-09-26T22:44:18Z",
       "createdAt": "2024-09-27T20:04:46Z",
       "sectionId": "360009072571",
       "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
@@ -468,15 +494,15 @@
       "label": "Support"
     },
     {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-26T22:43:14Z",
-      "createdAt": "2020-11-30T20:42:12Z",
-      "sectionId": "115000458672",
-      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "id": "219576828",
+      "title": "Setting up Multi-Factor Authentication",
+      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
+      "updatedAt": "2026-09-26T22:44:10Z",
+      "createdAt": "2016-05-26T17:18:00Z",
+      "sectionId": "360009072571",
+      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
+      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
       "source": "support",
       "label": "Support"
     },
@@ -1036,19 +1062,6 @@
       "bodyHash": "845298ef3ff5784bee13905dd8dc5492cd06c0fdca1d2dc354ca8d5e70298352",
       "bodyPreview": "At Discord, we're committed to helping create a positive experience for everyone in our community. Our sensitive content filters are one way we work to support our users as they connect and hang out together online. What this article covers: Types of Filters Sensitive Content Filters for the Adult Age Group Sensitive Content Filters for the Teen Age Group Why We Hide Some Media? What If Media is …",
       "thumb": "https://support.discord.com/hc/article_attachments/43516520209943",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "219576828",
-      "title": "Setting up Multi-Factor Authentication",
-      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
-      "updatedAt": "2026-09-26T22:10:50Z",
-      "createdAt": "2016-05-26T17:18:00Z",
-      "sectionId": "360009072571",
-      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
-      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
       "source": "support",
       "label": "Support"
     },
@@ -3415,19 +3428,6 @@
       "bodyHash": "16a14426d9d0302f14240ca8f45c207783a3a23facb963abec65b993d4aaca83",
       "bodyPreview": "Widgets are customizable sections on your Profile Board that allow you to showcase your interests to other users, enabling you to express your identity in different ways. Discover how to personalize your profile, rearrange Widgets, and share your interests with others. What this article covers: What are Widgets? Game Stats Widgets How to Add Widgets to Your Profile Board In Profile Board In Profi…",
       "thumb": "https://support.discord.com/hc/article_attachments/35372922066711",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "209004908",
-      "title": "[iOS] How do I create an Invite link on my iOS device?",
-      "link": "https://support.discord.com/hc/en-us/articles/209004908--iOS-How-do-I-create-an-Invite-link-on-my-iOS-device",
-      "updatedAt": "2026-09-26T10:45:47Z",
-      "createdAt": "2015-09-12T00:55:45Z",
-      "sectionId": "201131298",
-      "bodyHash": "42953ad6e098d15cdc3c66c64d12fbe34b76d0142f9739c160e6e69aacfbca82",
-      "bodyPreview": "Push and hold the channel that you would like to create an invite for. After a couple of seconds a mini menu from the bottom will appear. Tap \"Invite\" and don't forget to set your advanced settings, if you're fancy like that.",
-      "thumb": "https://support.discord.com/hc/article_attachments/360058238731",
       "source": "support",
       "label": "Support"
     },
