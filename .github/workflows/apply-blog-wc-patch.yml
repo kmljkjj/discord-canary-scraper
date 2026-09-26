@@ -1,0 +1,102 @@
+name: Apply Blog WC Patch
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch postWebhook for with_components
+        run: |
+          set -euo pipefail
+          python3 << 'EOF'
+          from pathlib import Path
+          path = Path("src/blog_tracker.js")
+          text = path.read_text()
+          old2 = """/**
+ * Post webhook payload.
+ * - Blog: { flags, components } (Components V2)
+ * - Zendesk: { embeds: [...] }
+ */
+async function postWebhook(payload) {
+  if (!WEBHOOK) {
+    console.warn('No BLOG_WEBHOOK_URL / DISCORD_WEBHOOK_URL');
+    return false;
+  }
+  const body = {
+    username: BOT_NAME,
+    avatar_url: AVATAR,
+    ...payload,
+  };
+  const r = await sendWebhook(WEBHOOK, body, { label: 'blog' });
+  return r.ok;
+}"""
+          new = """/**
+ * Post webhook payload.
+ * - Blog: { flags, components } (Components V2) — requires ?with_components=true
+ * - Zendesk: { embeds: [...] }
+ *
+ * Sans with_components, Discord ignore silencieusement les components V2
+ * sur les webhooks non-application (message vide / échec).
+ */
+function webhookUrlWithComponents(baseUrl) {
+  if (!baseUrl) return null;
+  try {
+    const u = new URL(baseUrl);
+    u.searchParams.set('with_components', 'true');
+    u.searchParams.set('wait', 'true');
+    return u.toString();
+  } catch (_) {
+    const sep = String(baseUrl).includes('?') ? '&' : '?';
+    return baseUrl + sep + 'with_components=true&wait=true';
+  }
+}
+
+async function postWebhook(payload) {
+  if (!WEBHOOK) {
+    console.warn('No BLOG_WEBHOOK_URL / DISCORD_WEBHOOK_URL');
+    return false;
+  }
+  const body = {
+    username: BOT_NAME,
+    avatar_url: AVATAR,
+    ...payload,
+  };
+  // Components V2: obligatoire pour les webhooks non-app
+  const url =
+    payload && payload.flags === IS_COMPONENTS_V2
+      ? webhookUrlWithComponents(WEBHOOK)
+      : WEBHOOK;
+  const r = await sendWebhook(url, body, { label: 'blog' });
+  if (!r.ok) {
+    console.warn('blog webhook fail', r.status, (r.text || '').slice(0, 200));
+  }
+  return r.ok;
+}"""
+          if old2 not in text:
+            idx = text.find('async function postWebhook')
+            print('FOUND at', idx)
+            print(repr(text[idx-120:idx+400]))
+            raise SystemExit('OLD BLOCK NOT FOUND')
+          path.write_text(text.replace(old2, new, 1))
+          assert 'webhookUrlWithComponents' in path.read_text()
+          print('patched ok')
+          EOF
+          node --check src/blog_tracker.js
+      - name: Commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/blog_tracker.js
+          git diff --cached --stat
+          git commit -m "fix(blog): require ?with_components=true for Components V2 webhooks
+
+Sans with_components, Discord ignore silencieusement les components V2
+sur les webhooks non-application. Aligné sur quests.js."
+          git push
