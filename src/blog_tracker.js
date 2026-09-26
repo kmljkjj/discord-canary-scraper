@@ -575,9 +575,25 @@ function buildEmbed(entry, action) {
 
 /**
  * Post webhook payload.
- * - Blog: { flags, components } (Components V2)
+ * - Blog: { flags, components } (Components V2) - requires ?with_components=true
  * - Zendesk: { embeds: [...] }
+ *
+ * Sans with_components, Discord ignore silencieusement les components V2
+ * sur les webhooks non-application (message vide / echec).
  */
+function webhookUrlWithComponents(baseUrl) {
+  if (!baseUrl) return null;
+  try {
+    const u = new URL(baseUrl);
+    u.searchParams.set('with_components', 'true');
+    u.searchParams.set('wait', 'true');
+    return u.toString();
+  } catch (_) {
+    const sep = String(baseUrl).includes('?') ? '&' : '?';
+    return baseUrl + sep + 'with_components=true&wait=true';
+  }
+}
+
 async function postWebhook(payload) {
   if (!WEBHOOK) {
     console.warn('No BLOG_WEBHOOK_URL / DISCORD_WEBHOOK_URL');
@@ -588,7 +604,15 @@ async function postWebhook(payload) {
     avatar_url: AVATAR,
     ...payload,
   };
-  const r = await sendWebhook(WEBHOOK, body, { label: 'blog' });
+  // Components V2: obligatoire pour les webhooks non-app
+  const url =
+    payload && payload.flags === IS_COMPONENTS_V2
+      ? webhookUrlWithComponents(WEBHOOK)
+      : WEBHOOK;
+  const r = await sendWebhook(url, body, { label: 'blog' });
+  if (!r.ok) {
+    console.warn('blog webhook fail', r.status, (r.text || '').slice(0, 200));
+  }
   return r.ok;
 }
 
