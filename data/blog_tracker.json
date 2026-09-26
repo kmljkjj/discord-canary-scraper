@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-26T06:12:49.710Z",
+  "scrapedAt": "2026-09-26T06:13:53.979Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,127 @@
   ],
   "zendesk": [
     {
+      "id": "218410947",
+      "title": "How to Reset or Change Your Forgotten Password on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/218410947-How-to-Reset-or-Change-Your-Forgotten-Password-on-Discord",
+      "updatedAt": "2026-09-26T06:13:48Z",
+      "createdAt": "2016-03-29T22:39:24Z",
+      "sectionId": "360007770532",
+      "bodyHash": "5ea734e8cddb2bc2d8e283a7d85ae7a51fd09ba6283c156292e9f19e6408916d",
+      "bodyPreview": "Hey, we've all been there. Passwords are supposed to be difficult! Whether it’s time to set up a new password or you forget your old one, this guide will help you with navigating all things password-related. What this article covers: Password Requirements How to Change Your Password Desktop/Browser Mobile How to Reset Your Password Desktop/Browser Mobile Password Requirements When making your pas…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32331688455319",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "25968222946071",
+      "title": "End-to-End Encryption for Audio and Video",
+      "link": "https://support.discord.com/hc/en-us/articles/25968222946071-End-to-End-Encryption-for-Audio-and-Video",
+      "updatedAt": "2026-09-26T06:13:20Z",
+      "createdAt": "2024-08-28T15:18:54Z",
+      "sectionId": "24453668939799",
+      "bodyHash": "81cc20b3cddabf2faf7790301bb91920474ac95e9e58f34cfd69fad2fc992560",
+      "bodyPreview": "What this article covers: How to Verify that a Call is End-to-End Encrypted How to Verify Participants on a Call Persistent Verification Keys Managing Verified Devices Frequently Asked Questions Important: All audio and video conversations in direct messages (DMs), group messages (GDMs), voice channels, and Go Live streams on Discord will require end-to-end encryption starting on March 2nd, 2026.…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26336152838167",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "219576828",
+      "title": "Setting up Multi-Factor Authentication",
+      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
+      "updatedAt": "2026-09-26T06:13:03Z",
+      "createdAt": "2016-05-26T17:18:00Z",
+      "sectionId": "360009072571",
+      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
+      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "42178056096663",
+      "title": "What Protections Do You Get in the Teen Age Group?",
+      "link": "https://support.discord.com/hc/en-us/articles/42178056096663-What-Protections-Do-You-Get-in-the-Teen-Age-Group",
+      "updatedAt": "2026-09-26T06:12:36Z",
+      "createdAt": "2026-07-23T20:12:04Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "0e5a14c0009d4a96777c662d054e9683e9b68dd98b2053b77686cf1352466abd",
+      "bodyPreview": "If you have been determined to be in the teen age group (13-17), your account automatically receives certain protections. This article explains what those protections are, what they affect, and what can be changed. We work to place users into the right age group automatically via our age estimation model , so if you're a teen, these settings may already be in place without you having to do anythi…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43482885502231",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "24160905919511",
+      "title": "My Discord Account was Hacked or Compromised",
+      "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
+      "updatedAt": "2026-09-26T06:12:25Z",
+      "createdAt": "2024-06-13T16:51:09Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
+      "bodyPreview": "Important: Discord Staff will never contact users directly through the Discord app for support-related matters. If someone requests personal information, asks for payment, or urges you to change your login credentials, please do not comply and avoid further interaction. As per our Terms of Service , you are responsible for the security of your account. Please note that if you fail to secure your …",
+      "thumb": "https://support.discord.com/hc/article_attachments/32331211229463",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360060145013",
+      "title": "Why isn't my DM going through?",
+      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
+      "updatedAt": "2026-09-26T06:12:15Z",
+      "createdAt": "2020-11-30T20:42:12Z",
+      "sectionId": "115000458672",
+      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
+      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
+      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "212500837",
+      "title": "How to Delete your Discord Account",
+      "link": "https://support.discord.com/hc/en-us/articles/212500837-How-to-Delete-your-Discord-Account",
+      "updatedAt": "2026-09-26T06:12:14Z",
+      "createdAt": "2015-10-12T20:12:31Z",
+      "sectionId": "360007770532",
+      "bodyHash": "a34b6b972637630ac3ea05f85f1ccfe2fe326025ad16cb829048f4d42a281040",
+      "bodyPreview": "If you would like to permanently delete your Discord account, this article goes over how to delete your account and what to consider before deleting your Discord account. What this article covers: How to Delete a Discord Account Desktop/Browser App Mobile App What Happens After I Delete My Discord Account? Having Trouble Deleting Your Discord Account? How to Verify Your Discord Account How to Del…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32402585441943",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360001556852",
+      "title": "Invalid Invite Links",
+      "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
+      "updatedAt": "2026-09-26T06:12:09Z",
+      "createdAt": "2018-03-08T19:29:03Z",
+      "sectionId": "201131298",
+      "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
+      "bodyPreview": "Let me innnnnnn! You finally got an invite to a server, but you’re getting hit with an error message and can’t join. What does it mean? Why can’t you join? Let’s go over the possible error messages that you might see, what they mean, and what you can do if you’re seeing them. Invalid Error Messages Unknown/Expired Invite: Your invite link may have expired. In this case, please ask for a new invit…",
+      "thumb": "https://support.discord.com/hc/article_attachments/16951605041047",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115001221072",
+      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
+      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
+      "updatedAt": "2026-09-26T06:12:04Z",
+      "createdAt": "2017-08-22T01:07:34Z",
+      "sectionId": "360009072571",
+      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
+      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-26T06:10:30Z",
+      "updatedAt": "2026-09-26T06:11:48Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
@@ -529,19 +646,6 @@
       "bodyHash": "4296b468eddb3cbcbc1289987c995a4cd5f89aa423efdc98d3a82547195d268c",
       "bodyPreview": "For more information, check out Google Chrome's official support page here: https://support.google.com/chrome/answer/2693767 If you previously disabled Discord's access to your mic in Chrome, you'll need to enable the permissions in your Google Chrome settings in order to use it once again. Follow these steps below to allow Discord access to your mic in the Chrome browser. What this article cover…",
       "thumb": "https://support.discord.com/hc/article_attachments/32891219438743",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360060145013",
-      "title": "Why isn't my DM going through?",
-      "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-26T06:08:39Z",
-      "createdAt": "2020-11-30T20:42:12Z",
-      "sectionId": "115000458672",
-      "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
-      "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
-      "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
       "source": "support",
       "label": "Support"
     },
@@ -741,19 +845,6 @@
       "label": "Support"
     },
     {
-      "id": "218410947",
-      "title": "How to Reset or Change Your Forgotten Password on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/218410947-How-to-Reset-or-Change-Your-Forgotten-Password-on-Discord",
-      "updatedAt": "2026-09-26T05:56:36Z",
-      "createdAt": "2016-03-29T22:39:24Z",
-      "sectionId": "360007770532",
-      "bodyHash": "5ea734e8cddb2bc2d8e283a7d85ae7a51fd09ba6283c156292e9f19e6408916d",
-      "bodyPreview": "Hey, we've all been there. Passwords are supposed to be difficult! Whether it’s time to set up a new password or you forget your old one, this guide will help you with navigating all things password-related. What this article covers: Password Requirements How to Change Your Password Desktop/Browser Mobile How to Reset Your Password Desktop/Browser Mobile Password Requirements When making your pas…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32331688455319",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360036118732",
       "title": "Discord Official Messages",
       "link": "https://support.discord.com/hc/en-us/articles/360036118732-Discord-Official-Messages",
@@ -802,19 +893,6 @@
       "bodyHash": "107caaef31dfda2b1ee11901d18e4913662be1d3661505a85f6623c3da726e25",
       "bodyPreview": "When using Discord, we recommend using our desktop clients for the best experience. Here's how to install the Discord app on Windows, MacOS, and Linux. What this article covers: Windows MacOS Linux Windows To download the Desktop app for Windows, first head over to the Download Page in your preferred browser. 1. Tap on the Download for Windows button to download the app. 2. Follow your browser's …",
       "thumb": "https://support.discord.com/hc/article_attachments/18368153374359",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "42178056096663",
-      "title": "What Protections Do You Get in the Teen Age Group?",
-      "link": "https://support.discord.com/hc/en-us/articles/42178056096663-What-Protections-Do-You-Get-in-the-Teen-Age-Group",
-      "updatedAt": "2026-09-26T05:53:49Z",
-      "createdAt": "2026-07-23T20:12:04Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "0e5a14c0009d4a96777c662d054e9683e9b68dd98b2053b77686cf1352466abd",
-      "bodyPreview": "If you have been determined to be in the teen age group (13-17), your account automatically receives certain protections. This article explains what those protections are, what they affect, and what can be changed. We work to place users into the right age group automatically via our age estimation model , so if you're a teen, these settings may already be in place without you having to do anythi…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43482885502231",
       "source": "support",
       "label": "Support"
     },
@@ -1014,19 +1092,6 @@
       "label": "Support"
     },
     {
-      "id": "360001556852",
-      "title": "Invalid Invite Links",
-      "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
-      "updatedAt": "2026-09-26T05:36:47Z",
-      "createdAt": "2018-03-08T19:29:03Z",
-      "sectionId": "201131298",
-      "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
-      "bodyPreview": "Let me innnnnnn! You finally got an invite to a server, but you’re getting hit with an error message and can’t join. What does it mean? Why can’t you join? Let’s go over the possible error messages that you might see, what they mean, and what you can do if you’re seeing them. Invalid Error Messages Unknown/Expired Invite: Your invite link may have expired. In this case, please ask for a new invit…",
-      "thumb": "https://support.discord.com/hc/article_attachments/16951605041047",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360061878534",
       "title": "Find Your Friends FAQ",
       "link": "https://support.discord.com/hc/en-us/articles/360061878534-Find-Your-Friends-FAQ",
@@ -1092,19 +1157,6 @@
       "label": "Support"
     },
     {
-      "id": "212500837",
-      "title": "How to Delete your Discord Account",
-      "link": "https://support.discord.com/hc/en-us/articles/212500837-How-to-Delete-your-Discord-Account",
-      "updatedAt": "2026-09-26T05:29:05Z",
-      "createdAt": "2015-10-12T20:12:31Z",
-      "sectionId": "360007770532",
-      "bodyHash": "a34b6b972637630ac3ea05f85f1ccfe2fe326025ad16cb829048f4d42a281040",
-      "bodyPreview": "If you would like to permanently delete your Discord account, this article goes over how to delete your account and what to consider before deleting your Discord account. What this article covers: How to Delete a Discord Account Desktop/Browser App Mobile App What Happens After I Delete My Discord Account? Having Trouble Deleting Your Discord Account? How to Verify Your Discord Account How to Del…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32402585441943",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "37894290456087",
       "title": "Data Security Terms",
       "link": "https://support.discord.com/hc/en-us/articles/37894290456087-Data-Security-Terms",
@@ -1157,19 +1209,6 @@
       "label": "Support"
     },
     {
-      "id": "24160905919511",
-      "title": "My Discord Account was Hacked or Compromised",
-      "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
-      "updatedAt": "2026-09-26T05:16:57Z",
-      "createdAt": "2024-06-13T16:51:09Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
-      "bodyPreview": "Important: Discord Staff will never contact users directly through the Discord app for support-related matters. If someone requests personal information, asks for payment, or urges you to change your login credentials, please do not comply and avoid further interaction. As per our Terms of Service , you are responsible for the security of your account. Please note that if you fail to secure your …",
-      "thumb": "https://support.discord.com/hc/article_attachments/32331211229463",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "115004307527",
       "title": "[Windows] Corrupt Installation",
       "link": "https://support.discord.com/hc/en-us/articles/115004307527--Windows-Corrupt-Installation",
@@ -1183,19 +1222,6 @@
       "label": "Support"
     },
     {
-      "id": "25968222946071",
-      "title": "End-to-End Encryption for Audio and Video",
-      "link": "https://support.discord.com/hc/en-us/articles/25968222946071-End-to-End-Encryption-for-Audio-and-Video",
-      "updatedAt": "2026-09-26T05:13:32Z",
-      "createdAt": "2024-08-28T15:18:54Z",
-      "sectionId": "24453668939799",
-      "bodyHash": "81cc20b3cddabf2faf7790301bb91920474ac95e9e58f34cfd69fad2fc992560",
-      "bodyPreview": "What this article covers: How to Verify that a Call is End-to-End Encrypted How to Verify Participants on a Call Persistent Verification Keys Managing Verified Devices Frequently Asked Questions Important: All audio and video conversations in direct messages (DMs), group messages (GDMs), voice channels, and Go Live streams on Discord will require end-to-end encryption starting on March 2nd, 2026.…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26336152838167",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360045138571",
       "title": "Beginner's Guide to Discord",
       "link": "https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord",
@@ -1205,19 +1231,6 @@
       "bodyHash": "ece1f9359b6a5268c502f9b96a40d9357799a78914a91a941a169ef44f2a3b10",
       "bodyPreview": "Welcome to the comprehensive beginner's guide to Discord! What this article covers: What is Discord? Account Setup and Troubleshooting What is a Discord Server? What are Text and Voice Channels? How to Share your Screen Additional Discord Features Account Connections How to Customize your Discord User Profile What is Discord? Discord is a communication platform that allows users to interact throu…",
       "thumb": "https://support.discord.com/hc/article_attachments/33107296852247",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115001221072",
-      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
-      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
-      "updatedAt": "2026-09-26T05:05:48Z",
-      "createdAt": "2017-08-22T01:07:34Z",
-      "sectionId": "360009072571",
-      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
-      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
       "source": "support",
       "label": "Support"
     },
@@ -1244,19 +1257,6 @@
       "bodyHash": "d35c80b6d756d3d00a806e5689e55504dceb9d2614b7e679596241eff46c80af",
       "bodyPreview": "What this article covers: What Does it mean when my Subscription shows as Past Due? What happens to my subscription when it’s Past Due? Frequently Asked Questions What Does It Mean When My Subscription Shows As Past Due? When taking a look in your Subscriptions tab, you may notice that your Billing Information shows as past due . Examples of a Past Due Subscription on desktop (left) and mobile (r…",
       "thumb": "https://support.discord.com/hc/article_attachments/28561086293271",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "219576828",
-      "title": "Setting up Multi-Factor Authentication",
-      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
-      "updatedAt": "2026-09-26T04:45:07Z",
-      "createdAt": "2016-05-26T17:18:00Z",
-      "sectionId": "360009072571",
-      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
-      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
       "source": "support",
       "label": "Support"
     },
