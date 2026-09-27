@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-27T22:43:48.797Z",
+  "fetchedAt": "2026-09-27T22:50:23.630Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -10,8 +10,8 @@
       "count": 216
     },
     "fingerprintSampling": {
-      "samples": 10,
-      "uniqueHashes": 3,
+      "samples": 50,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -4992,17 +4992,17 @@
       "title": "hash_3013881204",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 10,
-      "enrolled": 10,
+      "samples": 50,
+      "enrolled": 50,
       "treatmentDistribution": {
-        "1": 10
+        "1": 50
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 10,
-      "fpEnrolled": 10,
+      "fpSamples": 50,
+      "fpEnrolled": 50,
       "fpTreatmentDist": {
-        "1": 10
+        "1": 50
       }
     },
     {
@@ -5012,17 +5012,17 @@
       "title": "Safety Experience IAR User Reporting",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 10,
-      "enrolled": 10,
+      "samples": 50,
+      "enrolled": 50,
       "treatmentDistribution": {
-        "4": 10
+        "4": 50
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 10,
-      "fpEnrolled": 10,
+      "fpSamples": 50,
+      "fpEnrolled": 50,
       "fpTreatmentDist": {
-        "4": 10
+        "4": 50
       }
     },
     {
@@ -5032,17 +5032,57 @@
       "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 10,
+      "samples": 50,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 10
+        "0": 50
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 10,
+      "fpSamples": 50,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 10
+        "0": 50
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
       }
     },
     {
@@ -8577,14 +8617,14 @@
     }
   ],
   "summary": {
-    "total": 575,
+    "total": 577,
     "guild": 91,
-    "user": 484,
-    "withPercentage": 222,
+    "user": 486,
+    "withPercentage": 224,
     "withoutPercentage": 353,
     "fullRollout": 39,
     "partial": 8,
-    "notStarted": 175,
-    "fpSampled": 3
+    "notStarted": 177,
+    "fpSampled": 5
   }
 }
