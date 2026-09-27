@@ -165,7 +165,7 @@ async function fetchBlog(oldById) {
       let thumb = old && old.thumb;
       const needBody = !bodyHash || !old;
       if (needBody) {
-        await sleep(200);
+        await sleep(100);
         const b = await fetchBlogPostBody(it.link);
         bodyHash = b.bodyHash || bodyHash;
         bodyPreview = b.bodyPreview || bodyPreview;
@@ -231,7 +231,7 @@ async function fetchZendeskArticles(sourceKey) {
         }
         page = data.next_page || null;
         if (list.length < 30) break;
-        await sleep(150);
+        await sleep(80);
       }
       if (articles.length) {
         console.log('Zendesk', sourceKey, 'articles:', articles.length);
@@ -646,7 +646,7 @@ async function notifyAll(diffs) {
       failKeys.add(key);
       console.warn('NOTIFY_FAIL', item.action, item.source, item.e.id);
     }
-    await sleep(450);
+    await sleep(200);
   }
   return {
     sent,

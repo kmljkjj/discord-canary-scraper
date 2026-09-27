@@ -53,8 +53,13 @@ const MAX_STR_LINES = 80;
 const MAX_RT_LINES = 50;
 
 async function notifyAll(opts) {
-  const a = await notifyUrgent(opts);
-  const b = await notifyNormal(opts);
+  // Urgent (experiments) et Normal (strings/routes) sont indépendants :
+  // on les envoie en parallèle. Le queue interne de webhook.js sérialise
+  // les envois vers le même webhook URL pour éviter les 429.
+  const [a, b] = await Promise.all([
+    notifyUrgent(opts),
+    notifyNormal(opts),
+  ]);
   return a && b;
 }
 
@@ -87,15 +92,12 @@ async function notifyNormal({ build, strDiff, rtDiff, webhookUrl }) {
     Object.keys(rt.modified).length +
     Object.keys(rt.removed).length;
 
+  // Strings et Routes sont indépendants : envoi en parallèle.
   let ok = true;
-  if (nStr) {
-    const r = await sendMapDiff(webhookUrl, bn, str, ts, 'Strings');
-    if (!r) ok = false;
-  }
-  if (nRt) {
-    const r = await sendMapDiff(webhookUrl, bn, rt, ts, 'Routes');
-    if (!r) ok = false;
-  }
+  const promises = [];
+  if (nStr) promises.push(sendMapDiff(webhookUrl, bn, str, ts, 'Strings').then((r) => { if (!r) ok = false; }));
+  if (nRt) promises.push(sendMapDiff(webhookUrl, bn, rt, ts, 'Routes').then((r) => { if (!r) ok = false; }));
+  if (promises.length) await Promise.all(promises);
   return ok;
 }
 
@@ -434,7 +436,7 @@ async function post(url, body) {
     return true;
   }
   const title = body.embeds?.[0]?.title || '';
-  const r = await sendWebhook(url, body, { label: title, minGapMs: 80 });
+  const r = await sendWebhook(url, body, { label: title, minGapMs: 50 });
   console.log('webhook', r.status, title);
   if (r.ok) {
     await markPosted(fp);

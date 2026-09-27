@@ -202,6 +202,10 @@ async function main() {
   await fs.ensureDir(BUILDS);
   await fs.ensureDir(CACHE);
 
+  // fetchBuild ne dépend pas du state : on le lance en parallèle
+  // avec le chargement du state pour gagner ~1-2s.
+  const buildPromise = fetchBuild();
+
   const [prev, knownExp, knownStr, knownRt, lastStr, lastRt, lastExp] =
     await Promise.all([
       loadState(DATA),
@@ -222,7 +226,7 @@ async function main() {
 
   let build;
   try {
-    build = await fetchBuild();
+    build = await buildPromise;
   } catch (e) {
     console.error('fetchBuild failed', e.message);
     process.exit(1);

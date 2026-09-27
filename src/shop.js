@@ -306,7 +306,7 @@ async function fetchShopCatalog() {
           '&offset=0&limit=50&sort_type=1&sort_direction=desc',
       );
       walkCollect(data, map);
-      await sleep(250);
+      await sleep(150);
     } catch (e) {
       console.warn('shop/search type', itype, redactSecrets(e.message));
       // endpoint refusé (400) → les autres types échoueront pareil

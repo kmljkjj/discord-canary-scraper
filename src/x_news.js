@@ -230,7 +230,7 @@ async function main() {
     if (ok) {
       seen.ids.push(String(p.id));
       sent++;
-      await sleep(400);
+      await sleep(200);
     }
   }
 

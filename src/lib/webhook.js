@@ -14,9 +14,9 @@ const { sleep } = require('./utils');
 const DEFAULTS = {
   maxAttempts: Number(process.env.WEBHOOK_MAX_ATTEMPTS || 5),
   timeoutMs: Number(process.env.WEBHOOK_TIMEOUT_MS || 20000),
-  baseDelayMs: 500,
+  baseDelayMs: 300,
   maxDelayMs: 30000,
-  minGapMs: 350,
+  minGapMs: 200,
 };
 
 // Limites officielles Discord
@@ -25,6 +25,21 @@ const MAX_EMBED_CHARS_PER_MESSAGE = 6000;
 
 // Pause partagée si Discord signale un bucket épuisé
 let bucketResetAt = 0;
+
+// File d'attente par URL : sérialise les envois vers le même webhook
+// pour éviter les 429 quand plusieurs appels parallèles ciblent le même webhook.
+const urlQueues = new Map();
+
+/**
+ * Exécute un envoi webhook en respectant l'ordre par URL.
+ * Les appels parallèles vers le même webhook sont automatiquement sérialisés.
+ */
+function enqueue(url, fn) {
+  const prev = urlQueues.get(url) || Promise.resolve();
+  const next = prev.then(fn, fn); // fn s'exécute même si le précédent a échoué
+  urlQueues.set(url, next.catch(() => {})); // ne jamais casser la chaîne
+  return next;
+}
 
 function maskWebhook(url) {
   return String(url || '').replace(
@@ -96,9 +111,15 @@ function chunkEmbeds(embeds, maxPerMsg = MAX_EMBEDS_PER_MESSAGE, maxChars = MAX_
 
 /**
  * Envoie un message webhook.
+ * Les appels parallèles vers la même URL sont automatiquement sérialisés
+ * pour éviter les 429 liés au rate-limiting Discord.
  * @returns {Promise<{ok:boolean,status:number,text:string,attempts:number,json?:any}>}
  */
 async function sendWebhook(url, body, options = {}) {
+  return enqueue(url, () => _sendWebhook(url, body, options));
+}
+
+async function _sendWebhook(url, body, options = {}) {
   const opts = { ...DEFAULTS, ...options };
   if (!url) return { ok: false, status: 0, text: 'no webhook url', attempts: 0 };
   const payload = typeof body === 'string' ? body : JSON.stringify(body);

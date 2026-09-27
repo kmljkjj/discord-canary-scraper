@@ -298,7 +298,7 @@ async function fetchTokenSnapshot(hashMap) {
           hash_result: a[5],
         });
       }
-      await sleep(400);
+      await sleep(200);
     } catch (e) {
       console.warn('Token snapshot fail:', redactSecrets(e.message));
     }

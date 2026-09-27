@@ -10,7 +10,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { sleep, DEFAULT_UA } = require('./utils');
 
-const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 24);
+const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 32);
 const DOWNLOAD_RETRIES = Number(process.env.DOWNLOAD_RETRIES || 4);
 const DOWNLOAD_TIMEOUT_MS = Number(process.env.DOWNLOAD_TIMEOUT_MS || 90000);
 const MIN_WEB_BYTES = Number(process.env.MIN_WEB_BYTES || 500_000);
