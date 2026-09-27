@@ -1,14 +1,19 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
+const { DEFAULT_UA } = require('./utils');
 
 const CANARY_APP = 'https://canary.discord.com/app';
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
+/**
+ * Fetch the Discord Canary web app HTML and extract build metadata + asset URLs.
+ *
+ * @returns {Promise<{buildNumber:string,versionHash:string|null,releaseChannel:string,apiEndpoint:string|null,webappEndpoint:string|null,assets:string[],cssAssets:string[],globalEnv:object,scrapedAt:string}>}
+ * @throws {Error} if BUILD_NUMBER is missing or invalid, or if no JS assets found
+ */
 async function fetchBuild() {
   const res = await fetch(CANARY_APP, {
     headers: {
-      'User-Agent': UA,
+      'User-Agent': DEFAULT_UA,
       Accept: 'text/html,application/xhtml+xml',
     },
     timeout: 25000,
@@ -55,6 +60,12 @@ async function fetchBuild() {
   };
 }
 
+/**
+ * Parse Discord's GLOBAL_ENV object from the HTML to extract build metadata.
+ * Tries quoted, unquoted, and window.GLOBAL_ENV block patterns.
+ * @param {string} html - raw HTML from canary.discord.com/app
+ * @returns {object} parsed environment keys
+ */
 function parseGlobalEnv(html) {
   const out = {};
   const keys = [
@@ -100,6 +111,12 @@ function parseGlobalEnv(html) {
   return out;
 }
 
+/**
+ * Extract all JS and CSS asset URLs from the Discord Canary HTML.
+ * Uses both cheerio DOM parsing and regex fallback for robustness.
+ * @param {string} html - raw HTML
+ * @returns {{js:string[],css:string[]}} arrays of absolute asset URLs
+ */
 function extractAssetUrls(html) {
   const $ = cheerio.load(html);
   const js = new Set();
@@ -134,10 +151,16 @@ function extractAssetUrls(html) {
   return { js: [...js], css: [...css] };
 }
 
+/**
+ * Sort assets by priority: web.* bundles first, then other JS, then sentry.
+ * @param {string[]} assets - asset URLs
+ * @returns {string[]} sorted assets
+ */
 function prioritizeAssets(assets) {
   return [...assets].sort((a, b) => score(b) - score(a));
 }
 
+/** Priority score for an asset URL (higher = more important). */
 function score(url) {
   const u = String(url).toLowerCase();
   if (/\/web\./.test(u)) return 100;
