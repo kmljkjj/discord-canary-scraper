@@ -5,48 +5,9 @@
  */
 'use strict';
 
-const SCALE = 10000;
+const { murmur3 } = require('./murmur3');
 
-function murmur3(key, seed = 0) {
-  let h1 = seed >>> 0;
-  const c1 = 0xcc9e2d51;
-  const c2 = 0x1b873593;
-  const bytes = Buffer.from(String(key), 'utf8');
-  const len = bytes.length;
-  const nblocks = len >> 2;
-  for (let i = 0; i < nblocks; i++) {
-    let k1 =
-      bytes[i * 4] |
-      (bytes[i * 4 + 1] << 8) |
-      (bytes[i * 4 + 2] << 16) |
-      (bytes[i * 4 + 3] << 24);
-    k1 = Math.imul(k1, c1);
-    k1 = (k1 << 15) | (k1 >>> 17);
-    k1 = Math.imul(k1, c2);
-    h1 ^= k1;
-    h1 = (h1 << 13) | (h1 >>> 19);
-    h1 = (Math.imul(h1, 5) + 0xe6546b64) >>> 0;
-  }
-  let k1 = 0;
-  const off = nblocks * 4;
-  const tail = len & 3;
-  if (tail === 3) k1 ^= bytes[off + 2] << 16;
-  if (tail >= 2) k1 ^= bytes[off + 1] << 8;
-  if (tail >= 1) {
-    k1 ^= bytes[off];
-    k1 = Math.imul(k1, c1);
-    k1 = (k1 << 15) | (k1 >>> 17);
-    k1 = Math.imul(k1, c2);
-    h1 ^= k1;
-  }
-  h1 ^= len;
-  h1 ^= h1 >>> 16;
-  h1 = Math.imul(h1, 0x85ebca6b);
-  h1 ^= h1 >>> 13;
-  h1 = Math.imul(h1, 0xc2b2ae35);
-  h1 ^= h1 >>> 16;
-  return h1 >>> 0;
-}
+const SCALE = 10000;
 
 /** Discord filter type hashes → human labels */
 const FILTER_TYPES = {

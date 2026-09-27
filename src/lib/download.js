@@ -8,9 +8,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
-
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+const { sleep, DEFAULT_UA } = require('./utils');
 
 const DOWNLOAD_CONCURRENCY = Number(process.env.DOWNLOAD_CONCURRENCY || 24);
 const DOWNLOAD_RETRIES = Number(process.env.DOWNLOAD_RETRIES || 4);
@@ -40,10 +38,6 @@ function getDownloadStats() {
 
 function resetDownloadStats() {
   stats = emptyStats();
-}
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
 }
 
 async function readBodyWithLimit(res, maxBytes) {
@@ -156,7 +150,7 @@ async function downloadList(urls, assetsDir, force) {
       try {
         if (attempt > 0) retried++;
         const res = await fetch(job.url, {
-          headers: { 'User-Agent': UA, Accept: '*/*' },
+          headers: { 'User-Agent': DEFAULT_UA, Accept: '*/*' },
           timeout: DOWNLOAD_TIMEOUT_MS,
         });
         if (res.status === 429) {
