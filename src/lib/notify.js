@@ -209,57 +209,51 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
 }
 
 async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
-  // Les sections sont indépendantes : on les envoie en parallèle.
-  // Le queue interne de webhook.js sérialise les envois vers le même webhook.
-  const results = await Promise.all(
-    sections
-      .filter((sec) => sec.lines.length)
-      .map(async (sec) => {
-        const chunks = chunkLines(sec.lines, FIELD_MAX);
-        const embeds = [];
+  let ok = true;
+  for (const sec of sections) {
+    if (!sec.lines.length) continue;
+    const chunks = chunkLines(sec.lines, FIELD_MAX);
+    const embeds = [];
 
-        const firstFields = chunks.slice(0, 5).map((c, i) => ({
-          name: i === 0 ? sec.label : `… (${i + 1})`,
+    const firstFields = chunks.slice(0, 5).map((c, i) => ({
+      name: i === 0 ? sec.label : `… (${i + 1})`,
+      value: String(c).slice(0, FIELD_MAX),
+      inline: false,
+    }));
+
+    embeds.push({
+      author: { name: BOT, icon_url: AVATAR },
+      title,
+      description: `Build ${bn} · **${sec.count}**`,
+      fields: firstFields,
+      color: sec.color,
+      footer: { text: `Build ${bn} · Datamining` },
+      timestamp: ts,
+    });
+
+    let offset = 5;
+    while (offset < chunks.length && embeds.length < 8) {
+      const slice = chunks.slice(offset, offset + 5);
+      embeds.push({
+        title: `${title} · suite`,
+        fields: slice.map((c, i) => ({
+          name: `… (${offset + i + 1})`,
           value: String(c).slice(0, FIELD_MAX),
           inline: false,
-        }));
+        })),
+        color: sec.color,
+        footer: { text: `Build ${bn} · Datamining` },
+        timestamp: ts,
+      });
+      offset += 5;
+    }
 
-        embeds.push({
-          author: { name: BOT, icon_url: AVATAR },
-          title,
-          description: `Build ${bn} · **${sec.count}**`,
-          fields: firstFields,
-          color: sec.color,
-          footer: { text: `Build ${bn} · Datamining` },
-          timestamp: ts,
-        });
-
-        let offset = 5;
-        while (offset < chunks.length && embeds.length < 8) {
-          const slice = chunks.slice(offset, offset + 5);
-          embeds.push({
-            title: `${title} · suite`,
-            fields: slice.map((c, i) => ({
-              name: `… (${offset + i + 1})`,
-              value: String(c).slice(0, FIELD_MAX),
-              inline: false,
-            })),
-            color: sec.color,
-            footer: { text: `Build ${bn} · Datamining` },
-            timestamp: ts,
-          });
-          offset += 5;
-        }
-
-        let sectionOk = true;
-        for (let i = 0; i < embeds.length; i += 5) {
-          const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
-          if (!r) sectionOk = false;
-        }
-        return sectionOk;
-      }),
-  );
-  return results.every(Boolean);
+    for (let i = 0; i < embeds.length; i += 5) {
+      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
+      if (!r) ok = false;
+    }
+  }
+  return ok;
 }
 
 async function sendExperiments(webhookUrl, bn, exp, ts) {
