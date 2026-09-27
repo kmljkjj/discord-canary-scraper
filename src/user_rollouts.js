@@ -26,6 +26,8 @@ const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
 const { sendEmbeds } = require('./lib/webhook');
+const { murmur3 } = require('./lib/murmur3');
+const { writeJsonAtomic } = require('./lib/atomic');
 const {
   mergeIntervals,
   estimateFromPoints,
@@ -95,44 +97,6 @@ function redactSecrets(msg) {
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
-}
-
-function murmur3(key, seed = 0) {
-  let h1 = seed >>> 0;
-  const c1 = 0xcc9e2d51;
-  const c2 = 0x1b873593;
-  const bytes = Buffer.from(String(key), 'utf8');
-  const len = bytes.length;
-  const nblocks = len >> 2;
-  for (let i = 0; i < nblocks; i++) {
-    let k1 =
-      bytes[i * 4] | (bytes[i * 4 + 1] << 8) | (bytes[i * 4 + 2] << 16) | (bytes[i * 4 + 3] << 24);
-    k1 = Math.imul(k1, c1);
-    k1 = (k1 << 15) | (k1 >>> 17);
-    k1 = Math.imul(k1, c2);
-    h1 ^= k1;
-    h1 = (h1 << 13) | (h1 >>> 19);
-    h1 = (Math.imul(h1, 5) + 0xe6546b64) >>> 0;
-  }
-  let k1 = 0;
-  const off = nblocks * 4;
-  const tail = len & 3;
-  if (tail === 3) k1 ^= bytes[off + 2] << 16;
-  if (tail >= 2) k1 ^= bytes[off + 1] << 8;
-  if (tail >= 1) {
-    k1 ^= bytes[off];
-    k1 = Math.imul(k1, c1);
-    k1 = (k1 << 15) | (k1 >>> 17);
-    k1 = Math.imul(k1, c2);
-    h1 ^= k1;
-  }
-  h1 ^= len;
-  h1 ^= h1 >>> 16;
-  h1 = Math.imul(h1, 0x85ebca6b);
-  h1 ^= h1 >>> 13;
-  h1 = Math.imul(h1, 0xc2b2ae35);
-  h1 ^= h1 >>> 16;
-  return h1 >>> 0;
 }
 
 function tLabel(bucket) {
@@ -616,7 +580,7 @@ async function main() {
       changeCount: (extra.changes && extra.changes.length) || 0,
     };
     const history = [...prevHist, histEntry].slice(-40);
-    await fs.writeJson(
+    await writeJsonAtomic(
       STATE,
       {
         scrapedAt: new Date().toISOString(),
@@ -637,7 +601,7 @@ async function main() {
         history,
         lastChanges: extra.changes || prev.lastChanges || [],
       },
-      { spaces: 2 },
+      2,
     );
   }
 

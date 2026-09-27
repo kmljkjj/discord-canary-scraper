@@ -8,6 +8,8 @@ const { execSync } = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
+const { inferType } = require('./lib/infer_type');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const WORK_DIR = path.join(__dirname, '..', '.mobile_datamine');
@@ -112,13 +114,6 @@ async function collectJsFiles(root) {
   return out;
 }
 
-function inferType(id) {
-  const s = String(id).toLowerCase();
-  if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
-    return 'guild';
-  return 'user';
-}
-
 function extractFromContent(content, expMap, strings) {
   const reNK =
     /\{\s*name\s*:\s*["'](20[2-3]\d-[0-1]\d[_-][a-z0-9][a-z0-9_\-]{2,90})["']\s*,\s*kind\s*:\s*["'](user|guild)["']/gi;
@@ -200,10 +195,10 @@ async function loadKnown() {
 
 async function saveKnown(set) {
   const ids = [...set].sort();
-  await fs.writeJson(
+  await writeJsonAtomic(
     KNOWN_FILE,
     { updatedAt: new Date().toISOString(), count: ids.length, ids },
-    { spaces: 2 },
+    2,
   );
 }
 
@@ -373,7 +368,7 @@ async function main() {
     experiments: findings.experiments,
     strings: findings.strings,
   };
-  await fs.writeJson(STATE_FILE, state, { spaces: 2 });
+  await writeJsonAtomic(STATE_FILE, state, 2);
   await saveKnown(known);
 
   console.log('=== Mobile files done ===');

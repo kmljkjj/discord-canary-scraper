@@ -25,3 +25,10 @@ canary-*-chunks.zip
 # générations de données temporaires (publish_data.js)
 data/.generations/
 *.tmp-*
+
+# mobile datamine working directory
+.mobile_datamine/
+
+# coverage reports
+coverage/
+.nyc_output/

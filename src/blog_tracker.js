@@ -9,6 +9,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
 const { sendWebhook } = require('./lib/webhook');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'blog_tracker.json');
@@ -771,7 +772,7 @@ async function main() {
     if (result.failed > 0) process.exitCode = 2;
   }
 
-  await fs.writeJson(
+  await writeJsonAtomic(
     STATE_FILE,
     {
       scrapedAt: new Date().toISOString(),
@@ -779,7 +780,7 @@ async function main() {
       zendesk: nextZendesk,
       counts: { blog: nextBlog.length, zendesk: nextZendesk.length },
     },
-    { spaces: 2 },
+    2,
   );
   console.log(
     'State written',

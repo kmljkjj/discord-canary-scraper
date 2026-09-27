@@ -7,6 +7,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
@@ -543,7 +544,7 @@ async function main() {
       snapshot.changes = [];
       snapshot.paused = false;
       snapshot.notifyOk = false;
-      await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
+      await writeJsonAtomic(STATE_FILE, snapshot, 2);
       console.warn('NOTIFY_FAIL:', e.message, '- fingerprints NOT advanced');
       process.exit(2);
     }
@@ -584,7 +585,7 @@ async function main() {
   snapshot.paused = false;
   snapshot.notifyOk = true;
 
-  await fs.writeJson(STATE_FILE, snapshot, { spaces: 2 });
+  await writeJsonAtomic(STATE_FILE, snapshot, 2);
   console.log('=== Mobile versions done ===');
 }
 

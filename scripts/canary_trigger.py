@@ -17,98 +17,38 @@ Vars optionnelles:
 """
 from __future__ import annotations
 
-import json
 import os
-import re
 import sys
 import time
-import urllib.error
-import urllib.request
 from pathlib import Path
 
+from _canary_common import (
+    get_canary_build,
+    read_state,
+    write_state,
+    dispatch_github_actions,
+    DEFAULT_REPO,
+    DEFAULT_EVENT,
+)
+
 TOKEN = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
-REPO = os.environ.get("GITHUB_REPO", "kmljkjj/discord-canary-scraper")
-EVENT = os.environ.get("DISPATCH_EVENT", "trigger-scraping")
+REPO = os.environ.get("GITHUB_REPO", DEFAULT_REPO)
+EVENT = os.environ.get("DISPATCH_EVENT", DEFAULT_EVENT)
 INTERVAL = int(os.environ.get("INTERVAL", "20"))
 STATE = Path(os.environ.get("STATE_FILE", str(Path(__file__).resolve().parent / "last_canary_build.txt")))
 
-CANARY_URL = "https://canary.discord.com/app"
-UA = "Mozilla/5.0 (compatible; Datamining-trigger/3.0)"
-
-
-def http_get(url: str, timeout: int = 20) -> str:
-    req = urllib.request.Request(
-        url, headers={"User-Agent": UA, "Accept": "text/html"}
-    )
-    with urllib.request.urlopen(req, timeout=timeout) as res:
-        return res.read().decode("utf-8", errors="replace")
-
-
-def get_build() -> str | None:
-    try:
-        html = http_get(CANARY_URL)
-    except Exception as e:
-        print(f"[trigger] fetch canary fail: {e}", flush=True)
-        return None
-    m = re.search(r'"BUILD_NUMBER"\s*:\s*"?(\d+)"?', html)
-    return m.group(1) if m else None
-
-
-def load_last() -> str | None:
-    try:
-        if STATE.exists():
-            return STATE.read_text(encoding="utf-8").strip() or None
-    except Exception:
-        pass
-    return None
-
-
-def save_last(bn: str) -> None:
-    try:
-        STATE.parent.mkdir(parents=True, exist_ok=True)
-        STATE.write_text(bn + "\n", encoding="utf-8")
-    except Exception as e:
-        print(f"[trigger] save state fail: {e}", flush=True)
-
-
-def dispatch() -> tuple[bool, str]:
-    if not TOKEN:
-        return False, "GITHUB_TOKEN manquant (scope repo + workflow)"
-    url = f"https://api.github.com/repos/{REPO}/dispatches"
-    body = json.dumps({"event_type": EVENT}).encode("utf-8")
-    req = urllib.request.Request(
-        url,
-        data=body,
-        method="POST",
-        headers={
-            "Accept": "application/vnd.github+json",
-            "Authorization": f"Bearer {TOKEN}",
-            "X-GitHub-Api-Version": "2022-11-28",
-            "Content-Type": "application/json",
-            "User-Agent": "datamining-canary-trigger",
-        },
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=30) as res:
-            return True, f"OK {res.status} dispatch → {REPO}"
-    except urllib.error.HTTPError as e:
-        err = e.read().decode("utf-8", errors="replace")
-        return False, f"HTTP {e.code}: {err[:300]}"
-    except Exception as e:
-        return False, str(e)
-
 
 def tick() -> str:
-    bn = get_build()
+    bn, _vh = get_canary_build()
     if not bn:
         return "build=? (fetch fail)"
-    last = load_last()
+    last = read_state(STATE)
     if last == bn:
         return f"build={bn} inchangé"
     # nouveau build
-    ok, msg = dispatch()
+    ok, msg = dispatch_github_actions(TOKEN, REPO, EVENT)
     if ok:
-        save_last(bn)
+        write_state(STATE, bn)
         return f"NOUVEAU build={bn} (prev={last}) → {msg}"
     return f"NOUVEAU build={bn} mais dispatch échoué: {msg}"
 

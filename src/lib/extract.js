@@ -19,6 +19,7 @@ const {
   resetDownloadStats,
   DOWNLOAD_CONCURRENCY,
 } = require('./download');
+const { inferType } = require('./infer_type');
 
 // Priority path still starts with web.*; full chunks after unless disabled
 const FULL_CHUNKS = process.env.SCRAPE_FULL_CHUNKS !== '0';
@@ -386,13 +387,6 @@ function extractStringsFromLocaleBlob(content, out) {
     const text = parts.join('');
     if (isGoodStringVal(text)) out[m[1]] = text;
   }
-}
-
-function inferType(id) {
-  const s = String(id || '').toLowerCase();
-  if (/guild|server|role|channel_list|community|moderat|automod|raid/.test(s))
-    return 'guild';
-  return 'user';
 }
 
 function isGoodStringKey(k) {

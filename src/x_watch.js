@@ -11,6 +11,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
 const { sendWebhook } = require('./lib/webhook');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
 const USER_ID = process.env.X_USER_ID || '2073982489836584960';
@@ -280,7 +281,7 @@ async function loadSeen() {
 
 async function saveSeen(set) {
   const ids = [...set].sort().slice(-MAX_SEEN);
-  await fs.writeJson(
+  await writeJsonAtomic(
     SEEN_FILE,
     { updatedAt: new Date().toISOString(), count: ids.length, ids },
     { spaces: 2 },

@@ -10,6 +10,7 @@
  *   ARCHIVE_COPY_ALL=1        copy every JS into builds/{bn}/files/
  */
 const fs = require('fs-extra');
+const { writeJsonAtomic } = require('./atomic');
 const path = require('path');
 
 const ENABLED = process.env.ARCHIVE_CHUNKS !== '0';
@@ -114,10 +115,10 @@ async function archiveBuildChunks({ build, assetsDir, buildsDir }) {
     files,
   };
 
-  await fs.writeJson(path.join(outDir, 'manifest.json'), manifest, { spaces: 2 });
+  await writeJsonAtomic(path.join(outDir, 'manifest.json'), manifest, 2);
 
   // Latest pointer
-  await fs.writeJson(
+  await writeJsonAtomic(
     path.join(buildsDir, 'latest.json'),
     {
       buildNumber: bn,
@@ -164,7 +165,7 @@ async function pruneOldBuilds(buildsDir, keep) {
 
 /** Write a marker file listing zip path for the workflow */
 async function writeZipHint(buildsDir, buildNumber, manifest) {
-  await fs.writeJson(
+  await writeJsonAtomic(
     path.join(buildsDir, 'zip-hint.json'),
     {
       buildNumber: String(buildNumber),

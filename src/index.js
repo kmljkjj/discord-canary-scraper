@@ -377,7 +377,7 @@ async function main() {
 
     if (expN === 0 && strN < 50 && baseExp > 40) {
       try {
-        await fs.writeJson(LAST_RUN_META, {
+        await writeJsonAtomic(LAST_RUN_META, {
           schemaVersion: 1,
           buildNumber: String(build.buildNumber),
           ts: Date.now(),
@@ -405,7 +405,7 @@ async function main() {
         ratioStr < 0.5;
       if (degraded) {
         try {
-          await fs.writeJson(LAST_RUN_META, {
+          await writeJsonAtomic(LAST_RUN_META, {
             schemaVersion: 1,
             buildNumber: String(build.buildNumber),
             ts: Date.now(),
@@ -434,7 +434,7 @@ async function main() {
     const cov = findings.coverage || null;
     if (cov && cov.degraded) {
       try {
-        await fs.writeJson(LAST_RUN_META, {
+        await writeJsonAtomic(LAST_RUN_META, {
           schemaVersion: 1,
           buildNumber: String(build.buildNumber),
           ts: Date.now(),
@@ -693,7 +693,7 @@ async function main() {
       'NOTIFY_FAIL: skipping ALL state advance (last_extract + saveState) — will retry next run',
     );
     try {
-      await fs.writeJson(LAST_RUN_META, {
+      await writeJsonAtomic(LAST_RUN_META, {
         schemaVersion: 1,
         buildNumber: String(build.buildNumber),
         ts: Date.now(),
@@ -891,7 +891,7 @@ async function main() {
   } catch (e) {
     console.error('DATA_PUBLISH failed — baseline not advanced', e.message);
     try {
-      await fs.writeJson(LAST_RUN_META, {
+      await writeJsonAtomic(LAST_RUN_META, {
         schemaVersion: 1,
         runId,
         buildNumber: bn,

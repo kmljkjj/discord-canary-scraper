@@ -12,6 +12,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'quests.json');
@@ -771,7 +772,7 @@ async function main() {
 
   async function writeQuestState(ids) {
     const unique = [...new Set((ids || []).map(String))];
-    await fs.writeJson(
+    await writeJsonAtomic(
       STATE_FILE,
       {
         scrapedAt: new Date().toISOString(),
@@ -779,7 +780,7 @@ async function main() {
         ids: unique,
         quests: questSnapshot,
       },
-      { spaces: 2 },
+      2,
     );
     console.log('State written: ids=', unique.length, 'active=', active.length);
   }

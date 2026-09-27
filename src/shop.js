@@ -12,6 +12,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const { sendEmbeds } = require('./lib/webhook');
+const { writeJsonAtomic } = require('./lib/atomic');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'shop_items.json');
@@ -452,7 +453,7 @@ async function main() {
   const allIds = items.map((i) => i.id);
 
   if (isFirst) {
-    await fs.writeJson(
+    await writeJsonAtomic(
       STATE,
       {
         scrapedAt: new Date().toISOString(),
@@ -466,14 +467,14 @@ async function main() {
         })),
         announced: {},
       },
-      { spaces: 2 },
+      2,
     );
     console.log('Seed', allIds.length, 'SKUs');
     return;
   }
 
   if (!newItems.length) {
-    await fs.writeJson(
+    await writeJsonAtomic(
       STATE,
       {
         scrapedAt: new Date().toISOString(),
@@ -487,7 +488,7 @@ async function main() {
         })),
         announced: prev.announced || {},
       },
-      { spaces: 2 },
+      2,
     );
     console.log('No new shop items');
     return;
@@ -509,7 +510,7 @@ async function main() {
     announced[it.id] = new Date().toISOString();
   }
 
-  await fs.writeJson(
+  await writeJsonAtomic(
     STATE,
     {
       scrapedAt: new Date().toISOString(),
@@ -524,7 +525,7 @@ async function main() {
       announced,
       lastNew: toNotify.map((i) => i.id),
     },
-    { spaces: 2 },
+    2,
   );
   console.log('✅ Shop done — announced', toNotify.length);
 }
