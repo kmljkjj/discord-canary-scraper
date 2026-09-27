@@ -1,13 +1,1810 @@
 {
-  "scrapedAt": "2026-09-27T21:34:03.465Z",
+  "scrapedAt": "2026-09-27T21:38:08.503Z",
   "version": 9,
   "schemaVersion": 9,
-  "runId": "2026-09-27T21-34-03-465Z_jsxp25",
+  "runId": "2026-09-27T21-38-08-503Z_bsu9xv",
   "samples": 150,
   "ok": 150,
   "fail": 0,
   "tokensConfigured": 1,
   "experiments": [
+    {
+      "hash": 75345024,
+      "id": "2022-08_community_onboarding",
+      "title": "Community Onboarding",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3723449866,
+      "id": "2022-09_creator_monetization_raven",
+      "title": "Creator Monetization Onboarding v2",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3510816342,
+      "id": "2022-03_role_subscription_analytics_portal",
+      "title": "Guild Role Subscription Analytics",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1990672009,
+      "id": "2022-04_guild_role_subscription_purchase_feedback_loop",
+      "title": "Guild Role Subscription Purchase Feedback Loop",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 4190408036,
+      "id": "2022-05_mobile_web_role_subscription_purchase_page",
+      "title": "Guild Role Subscription Mobile Web",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 24149521,
+      "id": "2022-10_creator_store_pages",
+      "title": "Creator Store Pages ",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3313601281,
+      "id": "2022-12_mobile_guild_role_subscription_team_setup",
+      "title": "Mobile Guild Role Subscription Team Setup",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100.02,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 90.01,
+          "pct": 90.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.9001,
+          "intervals": [
+            [
+              1000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              1000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 10.01,
+          "pct": 10.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.1001,
+          "intervals": [
+            [
+              0,
+              1000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              1000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:90.0|1:10.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 295820329,
+      "id": "2023-02_server_subscriptions_iap",
+      "title": "Server Subscriptions IAP",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3194028601,
+      "id": "2023-03_self_demonetization",
+      "title": "Self Demonetization",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 2457903107,
+      "id": "2022-10_communities_multi",
+      "title": "A multi-arm guild experiment that segments all eligible guilds to test different combinations of the Communities 2.0 experience",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100.05,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 40.02,
+          "pct": 40.02,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.4002,
+          "intervals": [
+            [
+              0,
+              2000
+            ],
+            [
+              8000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              2000
+            ],
+            [
+              8000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 20.01,
+          "pct": 20.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.2001,
+          "intervals": [
+            [
+              4000,
+              6000
+            ]
+          ],
+          "ranges": [
+            [
+              4000,
+              6000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 2,
+          "label": "Variant 2",
+          "percentage": 20.01,
+          "pct": 20.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.2001,
+          "intervals": [
+            [
+              6000,
+              8000
+            ]
+          ],
+          "ranges": [
+            [
+              6000,
+              8000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 4,
+          "label": "Variant 4",
+          "percentage": 20.01,
+          "pct": 20.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.2001,
+          "intervals": [
+            [
+              8000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              8000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:40.0|1:20.0|2:20.0|4:20.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 2014775304,
+      "id": "2023-02_burst_reaction_guild_experiment",
+      "title": "Burst Reactions",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.951,
+      "sumPct": 95.05,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 80.01,
+          "pct": 80.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.8001,
+          "intervals": [
+            [
+              2000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              2000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 5.02,
+          "pct": 5.02,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.0502,
+          "intervals": [
+            [
+              0,
+              100
+            ],
+            [
+              200,
+              600
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              100
+            ],
+            [
+              200,
+              600
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 2,
+          "label": "Variant 2",
+          "percentage": 5.01,
+          "pct": 5.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.0501,
+          "intervals": [
+            [
+              1000,
+              1500
+            ]
+          ],
+          "ranges": [
+            [
+              1000,
+              1500
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 4,
+          "label": "Variant 4",
+          "percentage": 5.01,
+          "pct": 5.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.0501,
+          "intervals": [
+            [
+              1500,
+              2000
+            ]
+          ],
+          "ranges": [
+            [
+              1500,
+              2000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:80.0|1:5.0|2:5.0|4:5.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 2433109164,
+      "id": "2021-12_soundboard",
+      "title": "Soundboard",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 210.02,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 3,
+          "label": "Variant 3",
+          "percentage": 5.01,
+          "pct": 5.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.0501,
+          "intervals": [
+            [
+              2900,
+              3400
+            ]
+          ],
+          "ranges": [
+            [
+              2900,
+              3400
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 4,
+          "label": "Variant 4",
+          "percentage": 5.01,
+          "pct": 5.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.0501,
+          "intervals": [
+            [
+              3400,
+              3900
+            ]
+          ],
+          "ranges": [
+            [
+              3400,
+              3900
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:100.0|1:100.0|3:5.0|4:5.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 4083096281,
+      "id": "2023-03_clyde_ai",
+      "title": "ClydeAI",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 200,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:100.0|1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3320756132,
+      "id": "2023-02_app_recommendations_server_checklist",
+      "title": "Application Recommendation Server Checklist Experiment",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1199974293,
+      "id": "2022-07_application_subscriptions",
+      "title": "Application Subscriptions",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1504498621,
+      "id": "2023-02_p13n_summarization",
+      "title": "Channel Summaries Guild Experiment",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 200,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 2,
+          "label": "Variant 2",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0|2:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 944104242,
+      "id": "2022-07_voice_in_threads",
+      "title": "Voice in Threads",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3636231100,
+      "id": "2022-10_guild_raid_messaging",
+      "title": "Raid Alerts",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3683063649,
+      "id": "2022-07_invites_disabled",
+      "title": "Report Raids",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1318029053,
+      "id": "2022-12_mention_raid_limit",
+      "title": "Automod Mention Raid Limit",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.5,
+      "sumPct": 50.02,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 50.02,
+          "pct": 50.02,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.5002,
+          "intervals": [
+            [
+              1000,
+              2000
+            ],
+            [
+              6000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              1000,
+              2000
+            ],
+            [
+              6000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:50.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 805661295,
+      "id": "2023-01_mention_raid_notice",
+      "title": "Automod Mention Raid Notice",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 511273769,
+      "id": "2023-02_automod_custom_message",
+      "title": "Automod Custom Message",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3362434932,
+      "id": "2023-02_automod_on_user_profile",
+      "title": "Automod on User Profile",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 160.01,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 60.01,
+          "pct": 60.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.6001,
+          "intervals": [
+            [
+              4000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              4000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:60.0|1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1446479414,
+      "id": "2023-01_forums_non_community",
+      "title": "Forum non-community",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.75,
+      "sumPct": 75.02,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 50.01,
+          "pct": 50.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.5001,
+          "intervals": [
+            [
+              5000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              5000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 25.01,
+          "pct": 25.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.2501,
+          "intervals": [
+            [
+              2500,
+              5000
+            ]
+          ],
+          "ranges": [
+            [
+              2500,
+              5000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:50.0|1:25.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1640064366,
+      "id": "2023-03_guild_safety_settings",
+      "title": "Safety check in guild settings",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.9,
+      "sumPct": 90.03,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 80.02,
+          "pct": 80.02,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.8002,
+          "intervals": [
+            [
+              1000,
+              5000
+            ],
+            [
+              6000,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              1000,
+              5000
+            ],
+            [
+              6000,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 10.01,
+          "pct": 10.01,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.1001,
+          "intervals": [
+            [
+              5000,
+              6000
+            ]
+          ],
+          "ranges": [
+            [
+              5000,
+              6000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:80.0|1:10.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 4030301365,
+      "id": "2021-10_study_group",
+      "title": "Student hub study group",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.667,
+      "sumPct": 66.69,
+      "treatments": [
+        {
+          "bucket": -1,
+          "label": "None",
+          "percentage": 33.35,
+          "pct": 33.35,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.3335,
+          "intervals": [
+            [
+              6666,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              6666,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 33.34,
+          "pct": 33.34,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.3334,
+          "intervals": [
+            [
+              3333,
+              6666
+            ]
+          ],
+          "ranges": [
+            [
+              3333,
+              6666
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "-1:33.0|1:33.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 43837900,
+      "id": "2022-08_application_command_forced_migration",
+      "title": "Run Commands scope migration then show upsell to enable disabled integrations",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 2462216785,
+      "id": "2022-11_default_disable_mass_mention",
+      "title": "Disable mass mentions for communities by default",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 1669115628,
+      "id": "2022-11_application_command_permission_v3_rollout",
+      "title": "Application Command Permission v3 Rollout",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 2,
+          "label": "Variant 2",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "2:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 3282315774,
+      "id": "2022-06_community_admin_server",
+      "title": "Show the button to join the admin server in community overview server settings page",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
+    {
+      "hash": 258580919,
+      "id": "2022-06_free_sticker_slots_design_updates",
+      "title": "Free Sticker Slots Design Updates",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 1,
+      "sumPct": 100,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 100,
+          "pct": 100,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 1,
+          "intervals": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              10000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_bucket_ranges"
+        }
+      ],
+      "fingerprint": "1:100.0",
+      "source": "worker_api",
+      "named": true
+    },
     {
       "hash": 3013881204,
       "id": "hash:3013881204",
@@ -16,795 +1813,747 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.098,
-      "sumPct": 9.76,
+      "coverage": 0.097,
+      "sumPct": 9.7,
       "treatments": [
         {
           "bucket": 11,
           "label": "Variant 11",
-          "percentage": 9.76,
-          "pct": 9.76,
+          "percentage": 9.7,
+          "pct": 9.7,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.098,
+          "coverage": 0.097,
           "intervals": [
             [
-              66,
-              66
+              1,
+              1
             ],
             [
-              109,
-              164
+              337,
+              337
             ],
             [
-              210,
-              213
+              423,
+              450
             ],
             [
-              252,
-              274
+              559,
+              559
             ],
             [
-              352,
-              373
+              599,
+              599
             ],
             [
-              418,
-              418
+              649,
+              732
             ],
             [
-              466,
-              466
+              813,
+              868
             ],
             [
-              518,
-              528
+              953,
+              953
             ],
             [
-              678,
-              678
+              1005,
+              1005
             ],
             [
-              745,
-              762
+              1053,
+              1053
             ],
             [
-              824,
-              824
+              1142,
+              1174
             ],
             [
-              890,
-              890
+              1319,
+              1319
             ],
             [
-              994,
-              994
+              1380,
+              1380
             ],
             [
-              1049,
-              1099
+              1420,
+              1420
             ],
             [
-              1175,
-              1175
+              1490,
+              1490
             ],
             [
-              1235,
-              1235
+              1614,
+              1649
             ],
             [
-              1437,
-              1478
+              1889,
+              1889
             ],
             [
-              1600,
-              1628
+              2229,
+              2242
             ],
             [
-              1769,
-              1788
+              2276,
+              2276
             ],
             [
-              1824,
-              1824
+              2332,
+              2332
             ],
             [
-              1865,
-              1865
+              2426,
+              2426
             ],
             [
-              1946,
-              1946
+              2533,
+              2533
             ],
             [
-              1980,
-              1980
+              2586,
+              2586
             ],
             [
-              2040,
-              2040
+              2647,
+              2647
             ],
             [
-              2169,
-              2169
+              2713,
+              2713
             ],
             [
-              2353,
-              2353
+              2751,
+              2794
             ],
             [
-              2525,
-              2525
+              2876,
+              2891
             ],
             [
-              2594,
-              2616
+              3016,
+              3016
             ],
             [
-              2986,
-              2986
-            ],
-            [
-              3046,
-              3046
-            ],
-            [
-              3087,
-              3087
-            ],
-            [
-              3242,
-              3242
+              3132,
+              3132
             ],
             [
               3292,
               3292
             ],
             [
-              3715,
-              3727
+              3361,
+              3361
             ],
             [
-              3777,
-              3777
+              3462,
+              3462
             ],
             [
-              3850,
-              3850
+              3515,
+              3515
             ],
             [
-              4036,
-              4036
+              3665,
+              3665
             ],
             [
-              4185,
-              4211
+              3837,
+              3837
             ],
             [
-              4255,
-              4262
+              3953,
+              3967
             ],
             [
-              4371,
-              4402
+              4468,
+              4480
             ],
             [
-              4563,
-              4563
+              4565,
+              4565
             ],
             [
-              4627,
-              4627
+              4677,
+              4677
             ],
             [
-              4694,
-              4694
-            ],
-            [
-              4917,
-              4917
+              4901,
+              4914
             ],
             [
               4952,
               4952
             ],
             [
-              5048,
-              5048
+              5033,
+              5055
             ],
             [
-              5087,
-              5087
+              5312,
+              5369
             ],
             [
-              5295,
-              5295
+              5403,
+              5403
             ],
             [
-              5341,
-              5341
-            ],
-            [
-              5455,
-              5455
+              5467,
+              5467
             ],
             [
               5502,
               5502
             ],
             [
-              5580,
-              5580
+              5624,
+              5650
             ],
             [
-              5687,
-              5687
+              5684,
+              5694
             ],
             [
-              5969,
-              5994
+              5774,
+              5811
             ],
             [
-              6135,
-              6135
+              6134,
+              6134
             ],
             [
-              6201,
-              6219
+              6222,
+              6222
             ],
             [
-              6296,
-              6313
+              6282,
+              6303
             ],
             [
-              6376,
-              6391
+              6365,
+              6411
             ],
             [
-              6456,
-              6500
+              6458,
+              6458
             ],
             [
-              6590,
+              6545,
               6590
             ],
             [
-              6683,
-              6683
+              6647,
+              6647
             ],
             [
-              6733,
-              6779
+              6702,
+              6710
             ],
             [
-              6829,
-              6829
+              6764,
+              6770
             ],
             [
-              6912,
-              6912
+              6839,
+              6865
             ],
             [
-              6990,
-              7065
+              6927,
+              6927
             ],
             [
-              7114,
-              7123
+              7000,
+              7000
             ],
             [
-              7348,
-              7348
+              7044,
+              7080
             ],
             [
-              7426,
-              7508
+              7203,
+              7203
             ],
             [
-              7584,
-              7584
+              7376,
+              7379
             ],
             [
-              7646,
-              7646
+              7481,
+              7509
             ],
             [
-              7919,
-              7919
+              7575,
+              7575
             ],
             [
-              7964,
-              7975
+              7636,
+              7636
             ],
             [
-              8100,
-              8128
+              7859,
+              7888
             ],
             [
-              8194,
-              8194
+              7933,
+              7933
             ],
             [
-              8233,
-              8258
+              7967,
+              7967
             ],
             [
-              8342,
-              8351
+              8002,
+              8042
             ],
             [
-              8438,
-              8438
+              8097,
+              8097
             ],
             [
-              8477,
-              8477
+              8146,
+              8146
             ],
             [
-              8629,
-              8638
+              8358,
+              8358
             ],
             [
-              8682,
-              8682
+              8525,
+              8525
             ],
             [
-              8717,
-              8717
+              8661,
+              8661
             ],
             [
-              8911,
-              8942
+              8784,
+              8784
             ],
             [
-              8980,
-              8980
+              8873,
+              8873
             ],
             [
-              9049,
-              9049
+              8928,
+              8928
             ],
             [
-              9102,
-              9135
+              9074,
+              9074
             ],
             [
-              9173,
-              9173
+              9140,
+              9152
             ],
             [
-              9232,
-              9232
+              9265,
+              9265
             ],
             [
-              9266,
-              9266
+              9369,
+              9369
             ],
             [
-              9338,
-              9338
+              9479,
+              9479
             ],
             [
-              9396,
-              9422
+              9558,
+              9568
             ],
             [
-              9497,
-              9497
+              9630,
+              9630
             ],
             [
-              9543,
-              9543
+              9670,
+              9706
             ],
             [
-              9586,
-              9586
+              9764,
+              9804
             ],
             [
-              9694,
-              9707
+              9851,
+              9851
             ],
             [
-              9834,
-              9834
-            ],
-            [
-              9988,
-              9988
+              9974,
+              9974
             ]
           ],
           "ranges": [
             [
-              66,
-              66
+              1,
+              1
             ],
             [
-              109,
-              164
+              337,
+              337
             ],
             [
-              210,
-              213
+              423,
+              450
             ],
             [
-              252,
-              274
+              559,
+              559
             ],
             [
-              352,
-              373
+              599,
+              599
             ],
             [
-              418,
-              418
+              649,
+              732
             ],
             [
-              466,
-              466
+              813,
+              868
             ],
             [
-              518,
-              528
+              953,
+              953
             ],
             [
-              678,
-              678
+              1005,
+              1005
             ],
             [
-              745,
-              762
+              1053,
+              1053
             ],
             [
-              824,
-              824
+              1142,
+              1174
             ],
             [
-              890,
-              890
+              1319,
+              1319
             ],
             [
-              994,
-              994
+              1380,
+              1380
             ],
             [
-              1049,
-              1099
+              1420,
+              1420
             ],
             [
-              1175,
-              1175
+              1490,
+              1490
             ],
             [
-              1235,
-              1235
+              1614,
+              1649
             ],
             [
-              1437,
-              1478
+              1889,
+              1889
             ],
             [
-              1600,
-              1628
+              2229,
+              2242
             ],
             [
-              1769,
-              1788
+              2276,
+              2276
             ],
             [
-              1824,
-              1824
+              2332,
+              2332
             ],
             [
-              1865,
-              1865
+              2426,
+              2426
             ],
             [
-              1946,
-              1946
+              2533,
+              2533
             ],
             [
-              1980,
-              1980
+              2586,
+              2586
             ],
             [
-              2040,
-              2040
+              2647,
+              2647
             ],
             [
-              2169,
-              2169
+              2713,
+              2713
             ],
             [
-              2353,
-              2353
+              2751,
+              2794
             ],
             [
-              2525,
-              2525
+              2876,
+              2891
             ],
             [
-              2594,
-              2616
+              3016,
+              3016
             ],
             [
-              2986,
-              2986
-            ],
-            [
-              3046,
-              3046
-            ],
-            [
-              3087,
-              3087
-            ],
-            [
-              3242,
-              3242
+              3132,
+              3132
             ],
             [
               3292,
               3292
             ],
             [
-              3715,
-              3727
+              3361,
+              3361
             ],
             [
-              3777,
-              3777
+              3462,
+              3462
             ],
             [
-              3850,
-              3850
+              3515,
+              3515
             ],
             [
-              4036,
-              4036
+              3665,
+              3665
             ],
             [
-              4185,
-              4211
+              3837,
+              3837
             ],
             [
-              4255,
-              4262
+              3953,
+              3967
             ],
             [
-              4371,
-              4402
+              4468,
+              4480
             ],
             [
-              4563,
-              4563
+              4565,
+              4565
             ],
             [
-              4627,
-              4627
+              4677,
+              4677
             ],
             [
-              4694,
-              4694
-            ],
-            [
-              4917,
-              4917
+              4901,
+              4914
             ],
             [
               4952,
               4952
             ],
             [
-              5048,
-              5048
+              5033,
+              5055
             ],
             [
-              5087,
-              5087
+              5312,
+              5369
             ],
             [
-              5295,
-              5295
+              5403,
+              5403
             ],
             [
-              5341,
-              5341
-            ],
-            [
-              5455,
-              5455
+              5467,
+              5467
             ],
             [
               5502,
               5502
             ],
             [
-              5580,
-              5580
+              5624,
+              5650
             ],
             [
-              5687,
-              5687
+              5684,
+              5694
             ],
             [
-              5969,
-              5994
+              5774,
+              5811
             ],
             [
-              6135,
-              6135
+              6134,
+              6134
             ],
             [
-              6201,
-              6219
+              6222,
+              6222
             ],
             [
-              6296,
-              6313
+              6282,
+              6303
             ],
             [
-              6376,
-              6391
+              6365,
+              6411
             ],
             [
-              6456,
-              6500
+              6458,
+              6458
             ],
             [
-              6590,
+              6545,
               6590
             ],
             [
-              6683,
-              6683
+              6647,
+              6647
             ],
             [
-              6733,
-              6779
+              6702,
+              6710
             ],
             [
-              6829,
-              6829
+              6764,
+              6770
             ],
             [
-              6912,
-              6912
+              6839,
+              6865
             ],
             [
-              6990,
-              7065
+              6927,
+              6927
             ],
             [
-              7114,
-              7123
+              7000,
+              7000
             ],
             [
-              7348,
-              7348
+              7044,
+              7080
             ],
             [
-              7426,
-              7508
+              7203,
+              7203
             ],
             [
-              7584,
-              7584
+              7376,
+              7379
             ],
             [
-              7646,
-              7646
+              7481,
+              7509
             ],
             [
-              7919,
-              7919
+              7575,
+              7575
             ],
             [
-              7964,
-              7975
+              7636,
+              7636
             ],
             [
-              8100,
-              8128
+              7859,
+              7888
             ],
             [
-              8194,
-              8194
+              7933,
+              7933
             ],
             [
-              8233,
-              8258
+              7967,
+              7967
             ],
             [
-              8342,
-              8351
+              8002,
+              8042
             ],
             [
-              8438,
-              8438
+              8097,
+              8097
             ],
             [
-              8477,
-              8477
+              8146,
+              8146
             ],
             [
-              8629,
-              8638
+              8358,
+              8358
             ],
             [
-              8682,
-              8682
+              8525,
+              8525
             ],
             [
-              8717,
-              8717
+              8661,
+              8661
             ],
             [
-              8911,
-              8942
+              8784,
+              8784
             ],
             [
-              8980,
-              8980
+              8873,
+              8873
             ],
             [
-              9049,
-              9049
+              8928,
+              8928
             ],
             [
-              9102,
-              9135
+              9074,
+              9074
             ],
             [
-              9173,
-              9173
+              9140,
+              9152
             ],
             [
-              9232,
-              9232
+              9265,
+              9265
             ],
             [
-              9266,
-              9266
+              9369,
+              9369
             ],
             [
-              9338,
-              9338
+              9479,
+              9479
             ],
             [
-              9396,
-              9422
+              9558,
+              9568
             ],
             [
-              9497,
-              9497
+              9630,
+              9630
             ],
             [
-              9543,
-              9543
+              9670,
+              9706
             ],
             [
-              9586,
-              9586
+              9764,
+              9804
             ],
             [
-              9694,
-              9707
+              9851,
+              9851
             ],
             [
-              9834,
-              9834
-            ],
-            [
-              9988,
-              9988
+              9974,
+              9974
             ]
           ],
           "observed": [
-            66,
-            9988
+            1,
+            9974
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -822,745 +2571,785 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.097,
-      "sumPct": 9.66,
+      "coverage": 0.088,
+      "sumPct": 8.82,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 9.66,
-          "pct": 9.66,
+          "percentage": 8.82,
+          "pct": 8.82,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.097,
+          "coverage": 0.088,
           "intervals": [
             [
-              85,
-              85
+              11,
+              11
             ],
             [
-              156,
-              178
+              150,
+              150
             ],
             [
-              260,
-              260
+              189,
+              232
             ],
             [
-              390,
-              390
+              312,
+              312
             ],
             [
-              566,
-              599
+              409,
+              409
             ],
             [
-              664,
-              689
+              489,
+              489
             ],
             [
-              779,
-              791
+              531,
+              531
             ],
             [
-              851,
-              851
+              605,
+              605
             ],
             [
-              935,
-              967
+              700,
+              732
             ],
             [
-              1035,
-              1035
+              791,
+              813
             ],
             [
-              1090,
-              1136
+              893,
+              893
             ],
             [
-              1222,
-              1227
+              936,
+              936
             ],
             [
-              1312,
-              1312
+              992,
+              992
             ],
             [
-              1417,
-              1417
+              1106,
+              1106
             ],
             [
-              1710,
-              1714
+              1166,
+              1166
             ],
             [
-              1772,
-              1777
+              1281,
+              1281
             ],
             [
-              1814,
-              1828
+              1378,
+              1378
             ],
             [
-              1873,
-              1880
+              1553,
+              1553
             ],
             [
-              1960,
-              1960
+              1614,
+              1629
             ],
             [
-              2030,
-              2032
+              1812,
+              1812
             ],
             [
-              2249,
-              2249
+              1912,
+              1943
             ],
             [
-              2303,
-              2303
+              2029,
+              2029
             ],
             [
-              2403,
-              2403
+              2386,
+              2401
             ],
             [
-              2494,
-              2553
+              2544,
+              2544
             ],
             [
-              2627,
-              2627
+              2630,
+              2630
             ],
             [
-              2911,
-              2911
+              2701,
+              2701
             ],
             [
-              2965,
-              2965
+              2744,
+              2798
             ],
             [
-              3000,
-              3022
+              2998,
+              3065
             ],
             [
-              3070,
-              3070
+              3115,
+              3133
             ],
             [
-              3160,
-              3184
+              3167,
+              3167
             ],
             [
-              3422,
-              3441
+              3220,
+              3293
             ],
             [
-              3499,
-              3499
+              3416,
+              3416
             ],
             [
-              3547,
-              3547
+              3559,
+              3559
             ],
             [
-              3620,
-              3629
+              3728,
+              3728
             ],
             [
-              3704,
-              3717
+              3776,
+              3795
             ],
             [
-              3772,
-              3790
+              3953,
+              3953
             ],
             [
-              3845,
-              3845
+              4106,
+              4106
             ],
             [
-              3884,
-              3884
+              4177,
+              4203
             ],
             [
-              3992,
-              3992
+              4257,
+              4265
             ],
             [
-              4036,
-              4057
+              4632,
+              4665
             ],
             [
-              4173,
-              4196
+              4738,
+              4738
             ],
             [
-              4287,
-              4346
+              4799,
+              4799
             ],
             [
-              4383,
-              4383
+              4951,
+              4951
             ],
             [
-              4468,
-              4491
+              5001,
+              5013
             ],
             [
-              4549,
-              4549
+              5125,
+              5125
             ],
             [
-              4759,
-              4759
+              5225,
+              5230
             ],
             [
-              4823,
-              4823
+              5270,
+              5314
             ],
             [
-              4897,
-              4897
+              5371,
+              5417
             ],
             [
-              4966,
-              4989
+              5466,
+              5466
             ],
             [
-              5036,
-              5036
+              5641,
+              5641
             ],
             [
-              5255,
-              5255
+              5715,
+              5719
             ],
             [
-              5296,
-              5296
+              5824,
+              5857
             ],
             [
-              5341,
-              5348
+              5905,
+              5929
             ],
             [
-              5576,
-              5576
+              5964,
+              5964
             ],
             [
-              5731,
-              5731
+              6047,
+              6076
             ],
             [
-              5765,
-              5765
+              6115,
+              6115
             ],
             [
-              5868,
-              5897
+              6155,
+              6159
             ],
             [
-              5941,
-              5941
+              6310,
+              6310
             ],
             [
-              6071,
-              6071
+              6374,
+              6374
             ],
             [
-              6143,
-              6143
+              6431,
+              6431
             ],
             [
-              6218,
-              6218
+              6516,
+              6516
             ],
             [
-              6295,
-              6295
+              6672,
+              6672
             ],
             [
-              6377,
-              6377
+              6749,
+              6749
             ],
             [
-              6634,
-              6634
+              6846,
+              6846
             ],
             [
-              6742,
-              6772
+              6913,
+              6913
             ],
             [
-              6889,
-              6889
+              6955,
+              6955
             ],
             [
-              6985,
-              7021
+              7231,
+              7231
             ],
             [
-              7079,
-              7079
+              7392,
+              7392
             ],
             [
-              7208,
-              7208
+              7447,
+              7447
             ],
             [
-              7285,
-              7291
+              7544,
+              7557
             ],
             [
-              7352,
-              7376
+              7626,
+              7626
             ],
             [
-              7547,
-              7572
+              7809,
+              7818
             ],
             [
-              7614,
-              7639
+              7870,
+              7870
             ],
             [
-              7677,
-              7677
+              7929,
+              7929
             ],
             [
-              7858,
-              7858
+              7965,
+              7965
             ],
             [
-              8099,
-              8167
+              8028,
+              8059
             ],
             [
-              8225,
-              8225
+              8141,
+              8141
             ],
             [
-              8315,
-              8315
+              8192,
+              8208
             ],
             [
-              8375,
-              8378
+              8316,
+              8316
             ],
             [
-              8439,
-              8474
+              8358,
+              8358
             ],
             [
-              8574,
-              8574
+              8517,
+              8517
             ],
             [
-              8795,
-              8798
+              8561,
+              8561
             ],
             [
-              8836,
-              8836
+              8632,
+              8632
             ],
             [
-              8924,
-              8937
+              8684,
+              8700
             ],
             [
-              9052,
-              9052
+              8820,
+              8820
             ],
             [
-              9294,
-              9303
+              8923,
+              8923
             ],
             [
-              9441,
-              9441
+              9045,
+              9045
             ],
             [
-              9830,
-              9874
+              9121,
+              9134
             ],
             [
-              9950,
-              9950
+              9199,
+              9221
+            ],
+            [
+              9383,
+              9383
+            ],
+            [
+              9477,
+              9477
+            ],
+            [
+              9613,
+              9613
+            ],
+            [
+              9761,
+              9761
+            ],
+            [
+              9902,
+              9913
             ]
           ],
           "ranges": [
             [
-              85,
-              85
+              11,
+              11
             ],
             [
-              156,
-              178
+              150,
+              150
             ],
             [
-              260,
-              260
+              189,
+              232
             ],
             [
-              390,
-              390
+              312,
+              312
             ],
             [
-              566,
-              599
+              409,
+              409
             ],
             [
-              664,
-              689
+              489,
+              489
             ],
             [
-              779,
-              791
+              531,
+              531
             ],
             [
-              851,
-              851
+              605,
+              605
             ],
             [
-              935,
-              967
+              700,
+              732
             ],
             [
-              1035,
-              1035
+              791,
+              813
             ],
             [
-              1090,
-              1136
+              893,
+              893
             ],
             [
-              1222,
-              1227
+              936,
+              936
             ],
             [
-              1312,
-              1312
+              992,
+              992
             ],
             [
-              1417,
-              1417
+              1106,
+              1106
             ],
             [
-              1710,
-              1714
+              1166,
+              1166
             ],
             [
-              1772,
-              1777
+              1281,
+              1281
             ],
             [
-              1814,
-              1828
+              1378,
+              1378
             ],
             [
-              1873,
-              1880
+              1553,
+              1553
             ],
             [
-              1960,
-              1960
+              1614,
+              1629
             ],
             [
-              2030,
-              2032
+              1812,
+              1812
             ],
             [
-              2249,
-              2249
+              1912,
+              1943
             ],
             [
-              2303,
-              2303
+              2029,
+              2029
             ],
             [
-              2403,
-              2403
+              2386,
+              2401
             ],
             [
-              2494,
-              2553
+              2544,
+              2544
             ],
             [
-              2627,
-              2627
+              2630,
+              2630
             ],
             [
-              2911,
-              2911
+              2701,
+              2701
             ],
             [
-              2965,
-              2965
+              2744,
+              2798
             ],
             [
-              3000,
-              3022
+              2998,
+              3065
             ],
             [
-              3070,
-              3070
+              3115,
+              3133
             ],
             [
-              3160,
-              3184
+              3167,
+              3167
             ],
             [
-              3422,
-              3441
+              3220,
+              3293
             ],
             [
-              3499,
-              3499
+              3416,
+              3416
             ],
             [
-              3547,
-              3547
+              3559,
+              3559
             ],
             [
-              3620,
-              3629
+              3728,
+              3728
             ],
             [
-              3704,
-              3717
+              3776,
+              3795
             ],
             [
-              3772,
-              3790
+              3953,
+              3953
             ],
             [
-              3845,
-              3845
+              4106,
+              4106
             ],
             [
-              3884,
-              3884
+              4177,
+              4203
             ],
             [
-              3992,
-              3992
+              4257,
+              4265
             ],
             [
-              4036,
-              4057
+              4632,
+              4665
             ],
             [
-              4173,
-              4196
+              4738,
+              4738
             ],
             [
-              4287,
-              4346
+              4799,
+              4799
             ],
             [
-              4383,
-              4383
+              4951,
+              4951
             ],
             [
-              4468,
-              4491
+              5001,
+              5013
             ],
             [
-              4549,
-              4549
+              5125,
+              5125
             ],
             [
-              4759,
-              4759
+              5225,
+              5230
             ],
             [
-              4823,
-              4823
+              5270,
+              5314
             ],
             [
-              4897,
-              4897
+              5371,
+              5417
             ],
             [
-              4966,
-              4989
+              5466,
+              5466
             ],
             [
-              5036,
-              5036
+              5641,
+              5641
             ],
             [
-              5255,
-              5255
+              5715,
+              5719
             ],
             [
-              5296,
-              5296
+              5824,
+              5857
             ],
             [
-              5341,
-              5348
+              5905,
+              5929
             ],
             [
-              5576,
-              5576
+              5964,
+              5964
             ],
             [
-              5731,
-              5731
+              6047,
+              6076
             ],
             [
-              5765,
-              5765
+              6115,
+              6115
             ],
             [
-              5868,
-              5897
+              6155,
+              6159
             ],
             [
-              5941,
-              5941
+              6310,
+              6310
             ],
             [
-              6071,
-              6071
+              6374,
+              6374
             ],
             [
-              6143,
-              6143
+              6431,
+              6431
             ],
             [
-              6218,
-              6218
+              6516,
+              6516
             ],
             [
-              6295,
-              6295
+              6672,
+              6672
             ],
             [
-              6377,
-              6377
+              6749,
+              6749
             ],
             [
-              6634,
-              6634
+              6846,
+              6846
             ],
             [
-              6742,
-              6772
+              6913,
+              6913
             ],
             [
-              6889,
-              6889
+              6955,
+              6955
             ],
             [
-              6985,
-              7021
+              7231,
+              7231
             ],
             [
-              7079,
-              7079
+              7392,
+              7392
             ],
             [
-              7208,
-              7208
+              7447,
+              7447
             ],
             [
-              7285,
-              7291
+              7544,
+              7557
             ],
             [
-              7352,
-              7376
+              7626,
+              7626
             ],
             [
-              7547,
-              7572
+              7809,
+              7818
             ],
             [
-              7614,
-              7639
+              7870,
+              7870
             ],
             [
-              7677,
-              7677
+              7929,
+              7929
             ],
             [
-              7858,
-              7858
+              7965,
+              7965
             ],
             [
-              8099,
-              8167
+              8028,
+              8059
             ],
             [
-              8225,
-              8225
+              8141,
+              8141
             ],
             [
-              8315,
-              8315
+              8192,
+              8208
             ],
             [
-              8375,
-              8378
+              8316,
+              8316
             ],
             [
-              8439,
-              8474
+              8358,
+              8358
             ],
             [
-              8574,
-              8574
+              8517,
+              8517
             ],
             [
-              8795,
-              8798
+              8561,
+              8561
             ],
             [
-              8836,
-              8836
+              8632,
+              8632
             ],
             [
-              8924,
-              8937
+              8684,
+              8700
             ],
             [
-              9052,
-              9052
+              8820,
+              8820
             ],
             [
-              9294,
-              9303
+              8923,
+              8923
             ],
             [
-              9441,
-              9441
+              9045,
+              9045
             ],
             [
-              9830,
-              9874
+              9121,
+              9134
             ],
             [
-              9950,
-              9950
+              9199,
+              9221
+            ],
+            [
+              9383,
+              9383
+            ],
+            [
+              9477,
+              9477
+            ],
+            [
+              9613,
+              9613
+            ],
+            [
+              9761,
+              9761
+            ],
+            [
+              9902,
+              9913
             ]
           ],
           "observed": [
-            85,
-            9950
+            11,
+            9913
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
         }
       ],
-      "fingerprint": "1:10.0",
+      "fingerprint": "1:9.0",
       "source": "fingerprint-sample",
       "named": true
     },
@@ -1572,787 +3361,817 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.091,
-      "sumPct": 9.06,
+      "coverage": 0.106,
+      "sumPct": 10.55,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 9.06,
-          "pct": 9.06,
+          "percentage": 10.55,
+          "pct": 10.55,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.091,
+          "coverage": 0.106,
           "intervals": [
             [
-              4,
-              4
+              113,
+              113
             ],
             [
-              59,
-              103
+              360,
+              360
             ],
             [
-              179,
-              209
+              504,
+              504
             ],
             [
-              296,
-              310
+              539,
+              558
             ],
             [
-              373,
-              374
+              622,
+              684
             ],
             [
-              451,
-              451
+              857,
+              881
             ],
             [
-              700,
-              700
+              1055,
+              1055
             ],
             [
-              784,
-              803
+              1131,
+              1131
             ],
             [
-              862,
-              862
+              1167,
+              1167
             ],
             [
-              1025,
-              1025
+              1395,
+              1395
             ],
             [
-              1102,
-              1137
+              1464,
+              1464
             ],
             [
-              1223,
-              1223
+              1653,
+              1653
             ],
             [
-              1342,
-              1342
+              1710,
+              1710
             ],
             [
-              1553,
-              1553
+              1889,
+              1909
             ],
             [
-              1595,
-              1595
+              1944,
+              2067
             ],
             [
-              1648,
-              1664
+              2150,
+              2156
             ],
             [
-              1724,
-              1724
+              2229,
+              2229
             ],
             [
-              1777,
-              1777
+              2279,
+              2329
             ],
             [
-              2222,
-              2222
+              2383,
+              2383
             ],
             [
-              2378,
-              2400
+              2546,
+              2605
             ],
             [
-              2494,
-              2494
+              2711,
+              2711
             ],
             [
-              2566,
-              2580
+              2756,
+              2756
             ],
             [
-              2663,
-              2688
+              2834,
+              2834
             ],
             [
-              2876,
-              2876
+              2879,
+              2879
             ],
             [
-              2912,
-              2912
+              3126,
+              3126
             ],
             [
-              2972,
-              3026
+              3171,
+              3171
             ],
             [
-              3147,
-              3167
+              3304,
+              3315
             ],
             [
-              3262,
-              3262
+              3351,
+              3351
             ],
             [
-              3349,
-              3349
+              3530,
+              3557
             ],
             [
-              3444,
-              3444
+              3647,
+              3647
             ],
             [
-              3481,
-              3481
+              3682,
+              3682
             ],
             [
-              3531,
-              3531
+              3847,
+              3847
             ],
             [
-              3661,
-              3674
+              3972,
+              3972
             ],
             [
-              3940,
-              3940
+              4128,
+              4156
             ],
             [
-              4042,
-              4055
+              4191,
+              4191
             ],
             [
-              4125,
-              4136
+              4351,
+              4351
             ],
             [
-              4202,
-              4202
+              4430,
+              4430
             ],
             [
-              4294,
-              4294
+              4466,
+              4466
             ],
             [
-              4347,
-              4347
+              4557,
+              4595
             ],
             [
-              4383,
-              4410
+              4655,
+              4663
             ],
             [
-              4445,
-              4456
+              4709,
+              4728
             ],
             [
-              4508,
-              4508
+              4814,
+              4852
             ],
             [
-              4612,
-              4612
+              4887,
+              4887
             ],
             [
-              4661,
-              4675
+              4931,
+              4964
             ],
             [
-              4823,
-              4823
+              5003,
+              5003
             ],
             [
-              4906,
-              4906
+              5155,
+              5155
             ],
             [
-              5009,
-              5009
+              5192,
+              5212
             ],
             [
-              5091,
-              5120
+              5259,
+              5280
             ],
             [
-              5258,
-              5258
+              5459,
+              5459
             ],
             [
-              5395,
-              5395
+              5539,
+              5539
             ],
             [
-              5504,
-              5554
+              5590,
+              5590
             ],
             [
-              5591,
-              5601
+              5809,
+              5833
             ],
             [
-              5721,
-              5721
+              5944,
+              5976
             ],
             [
-              5761,
-              5761
+              6014,
+              6014
             ],
             [
-              5884,
-              5938
+              6364,
+              6396
             ],
             [
-              6151,
-              6151
+              6462,
+              6468
             ],
             [
-              6211,
-              6211
+              6505,
+              6505
             ],
             [
-              6269,
-              6269
+              6565,
+              6565
             ],
             [
-              6331,
-              6331
+              6665,
+              6665
             ],
             [
-              6398,
-              6398
+              6721,
+              6769
             ],
             [
-              6539,
-              6557
+              6911,
+              6934
             ],
             [
-              6651,
-              6651
+              7019,
+              7019
             ],
             [
-              6784,
-              6784
+              7189,
+              7189
             ],
             [
-              6845,
-              6902
+              7246,
+              7246
             ],
             [
-              7033,
-              7033
+              7294,
+              7294
             ],
             [
-              7124,
-              7137
+              7402,
+              7402
             ],
             [
-              7302,
-              7315
+              7545,
+              7545
             ],
             [
-              7400,
-              7400
+              7641,
+              7675
             ],
             [
-              7588,
-              7610
+              7782,
+              7795
             ],
             [
-              7683,
-              7683
+              7922,
+              7968
             ],
             [
-              7742,
-              7742
+              8025,
+              8025
             ],
             [
-              7927,
-              7927
+              8301,
+              8311
             ],
             [
-              7984,
-              7994
+              8469,
+              8501
             ],
             [
-              8155,
-              8155
+              8635,
+              8635
             ],
             [
-              8196,
-              8196
+              8677,
+              8677
             ],
             [
-              8335,
-              8341
+              8754,
+              8754
             ],
             [
-              8379,
-              8379
+              8860,
+              8860
             ],
             [
-              8435,
-              8435
+              8902,
+              8959
             ],
             [
-              8622,
-              8634
+              9160,
+              9160
             ],
             [
-              8689,
-              8689
+              9368,
+              9371
             ],
             [
-              8766,
-              8766
+              9442,
+              9442
             ],
             [
-              8823,
-              8871
+              9561,
+              9561
             ],
             [
-              9008,
-              9043
+              9626,
+              9626
             ],
             [
-              9189,
-              9189
+              9665,
+              9665
             ],
             [
-              9232,
-              9232
+              9714,
+              9716
             ],
             [
-              9325,
-              9330
+              9859,
+              9859
             ],
             [
-              9364,
-              9386
-            ],
-            [
-              9425,
-              9425
-            ],
-            [
-              9459,
-              9459
-            ],
-            [
-              9498,
-              9520
-            ],
-            [
-              9576,
-              9576
-            ],
-            [
-              9668,
-              9668
-            ],
-            [
-              9735,
-              9738
-            ],
-            [
-              9837,
-              9837
+              9928,
+              9928
             ]
           ],
           "ranges": [
             [
-              4,
-              4
+              113,
+              113
             ],
             [
-              59,
-              103
+              360,
+              360
             ],
             [
-              179,
-              209
+              504,
+              504
             ],
             [
-              296,
-              310
+              539,
+              558
             ],
             [
-              373,
-              374
+              622,
+              684
             ],
             [
-              451,
-              451
+              857,
+              881
             ],
             [
-              700,
-              700
+              1055,
+              1055
             ],
             [
-              784,
-              803
+              1131,
+              1131
             ],
             [
-              862,
-              862
+              1167,
+              1167
             ],
             [
-              1025,
-              1025
+              1395,
+              1395
             ],
             [
-              1102,
-              1137
+              1464,
+              1464
             ],
             [
-              1223,
-              1223
+              1653,
+              1653
             ],
             [
-              1342,
-              1342
+              1710,
+              1710
             ],
             [
-              1553,
-              1553
+              1889,
+              1909
             ],
             [
-              1595,
-              1595
+              1944,
+              2067
             ],
             [
-              1648,
-              1664
+              2150,
+              2156
             ],
             [
-              1724,
-              1724
+              2229,
+              2229
             ],
             [
-              1777,
-              1777
+              2279,
+              2329
             ],
             [
-              2222,
-              2222
+              2383,
+              2383
             ],
             [
-              2378,
-              2400
+              2546,
+              2605
             ],
             [
-              2494,
-              2494
+              2711,
+              2711
             ],
             [
-              2566,
-              2580
+              2756,
+              2756
             ],
             [
-              2663,
-              2688
+              2834,
+              2834
             ],
             [
-              2876,
-              2876
+              2879,
+              2879
             ],
             [
-              2912,
-              2912
+              3126,
+              3126
             ],
             [
-              2972,
-              3026
+              3171,
+              3171
             ],
             [
-              3147,
-              3167
+              3304,
+              3315
             ],
             [
-              3262,
-              3262
+              3351,
+              3351
             ],
             [
-              3349,
-              3349
+              3530,
+              3557
             ],
             [
-              3444,
-              3444
+              3647,
+              3647
             ],
             [
-              3481,
-              3481
+              3682,
+              3682
             ],
             [
-              3531,
-              3531
+              3847,
+              3847
             ],
             [
-              3661,
-              3674
+              3972,
+              3972
             ],
             [
-              3940,
-              3940
+              4128,
+              4156
             ],
             [
-              4042,
-              4055
+              4191,
+              4191
             ],
             [
-              4125,
-              4136
+              4351,
+              4351
             ],
             [
-              4202,
-              4202
+              4430,
+              4430
             ],
             [
-              4294,
-              4294
+              4466,
+              4466
             ],
             [
-              4347,
-              4347
+              4557,
+              4595
             ],
             [
-              4383,
-              4410
+              4655,
+              4663
             ],
             [
-              4445,
-              4456
+              4709,
+              4728
             ],
             [
-              4508,
-              4508
+              4814,
+              4852
             ],
             [
-              4612,
-              4612
+              4887,
+              4887
             ],
             [
-              4661,
-              4675
+              4931,
+              4964
             ],
             [
-              4823,
-              4823
+              5003,
+              5003
             ],
             [
-              4906,
-              4906
+              5155,
+              5155
             ],
             [
-              5009,
-              5009
+              5192,
+              5212
             ],
             [
-              5091,
-              5120
+              5259,
+              5280
             ],
             [
-              5258,
-              5258
+              5459,
+              5459
             ],
             [
-              5395,
-              5395
+              5539,
+              5539
             ],
             [
-              5504,
-              5554
+              5590,
+              5590
             ],
             [
-              5591,
-              5601
+              5809,
+              5833
             ],
             [
-              5721,
-              5721
+              5944,
+              5976
             ],
             [
-              5761,
-              5761
+              6014,
+              6014
             ],
             [
-              5884,
-              5938
+              6364,
+              6396
             ],
             [
-              6151,
-              6151
+              6462,
+              6468
             ],
             [
-              6211,
-              6211
+              6505,
+              6505
             ],
             [
-              6269,
-              6269
+              6565,
+              6565
             ],
             [
-              6331,
-              6331
+              6665,
+              6665
             ],
             [
-              6398,
-              6398
+              6721,
+              6769
             ],
             [
-              6539,
-              6557
+              6911,
+              6934
             ],
             [
-              6651,
-              6651
+              7019,
+              7019
             ],
             [
-              6784,
-              6784
+              7189,
+              7189
             ],
             [
-              6845,
-              6902
+              7246,
+              7246
             ],
             [
-              7033,
-              7033
+              7294,
+              7294
             ],
             [
-              7124,
-              7137
+              7402,
+              7402
             ],
             [
-              7302,
-              7315
+              7545,
+              7545
             ],
             [
-              7400,
-              7400
+              7641,
+              7675
             ],
             [
-              7588,
-              7610
+              7782,
+              7795
             ],
             [
-              7683,
-              7683
+              7922,
+              7968
             ],
             [
-              7742,
-              7742
+              8025,
+              8025
             ],
             [
-              7927,
-              7927
+              8301,
+              8311
             ],
             [
-              7984,
-              7994
+              8469,
+              8501
             ],
             [
-              8155,
-              8155
+              8635,
+              8635
             ],
             [
-              8196,
-              8196
+              8677,
+              8677
             ],
             [
-              8335,
-              8341
+              8754,
+              8754
             ],
             [
-              8379,
-              8379
+              8860,
+              8860
             ],
             [
-              8435,
-              8435
+              8902,
+              8959
             ],
             [
-              8622,
-              8634
+              9160,
+              9160
             ],
             [
-              8689,
-              8689
+              9368,
+              9371
             ],
             [
-              8766,
-              8766
+              9442,
+              9442
             ],
             [
-              8823,
-              8871
+              9561,
+              9561
             ],
             [
-              9008,
-              9043
+              9626,
+              9626
             ],
             [
-              9189,
-              9189
+              9665,
+              9665
             ],
             [
-              9232,
-              9232
+              9714,
+              9716
             ],
             [
-              9325,
-              9330
+              9859,
+              9859
             ],
             [
-              9364,
-              9386
-            ],
-            [
-              9425,
-              9425
-            ],
-            [
-              9459,
-              9459
-            ],
-            [
-              9498,
-              9520
-            ],
-            [
-              9576,
-              9576
-            ],
-            [
-              9668,
-              9668
-            ],
-            [
-              9735,
-              9738
-            ],
-            [
-              9837,
-              9837
+              9928,
+              9928
             ]
           ],
           "observed": [
-            4,
-            9837
+            113,
+            9928
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
         }
       ],
-      "fingerprint": "1:9.0",
+      "fingerprint": "1:11.0",
       "source": "fingerprint-sample",
       "named": true
+    },
+    {
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
+      "type": "user",
+      "quality": "estimated",
+      "status": "estimated",
+      "confidence": 0.093,
+      "coverage": 0.017,
+      "sumPct": 1.66,
+      "treatments": [
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 1.66,
+          "pct": 1.66,
+          "pctKnown": true,
+          "status": "estimated",
+          "confidence": "medium",
+          "sampleCount": 14,
+          "samples": 14,
+          "coverage": 0.017,
+          "intervals": [
+            [
+              9553,
+              9585
+            ],
+            [
+              9627,
+              9724
+            ],
+            [
+              9768,
+              9768
+            ],
+            [
+              9851,
+              9882
+            ],
+            [
+              9935,
+              9935
+            ],
+            [
+              9988,
+              9988
+            ]
+          ],
+          "ranges": [
+            [
+              9553,
+              9585
+            ],
+            [
+              9627,
+              9724
+            ],
+            [
+              9768,
+              9768
+            ],
+            [
+              9851,
+              9882
+            ],
+            [
+              9935,
+              9935
+            ],
+            [
+              9988,
+              9988
+            ]
+          ],
+          "observed": [
+            9553,
+            9988
+          ],
+          "gapFill": 33,
+          "sourceKind": "estimated_from_samples"
+        }
+      ],
+      "fingerprint": "1:2.0",
+      "source": "fingerprint-sample",
+      "named": false
     },
     {
       "hash": 1144304849,
@@ -2361,106 +4180,76 @@
       "type": "user",
       "quality": "degraded",
       "status": "degraded",
-      "confidence": 0.047,
+      "confidence": 0.073,
       "coverage": 0.005,
-      "sumPct": 0.52,
+      "sumPct": 0.54,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 0.52,
-          "pct": 0.52,
+          "percentage": 0.54,
+          "pct": 0.54,
           "pctKnown": true,
           "status": "degraded",
           "confidence": "low",
-          "sampleCount": 7,
-          "samples": 7,
+          "sampleCount": 11,
+          "samples": 11,
           "coverage": 0.005,
           "intervals": [
             [
-              60,
-              100
+              3,
+              28
             ],
             [
-              224,
-              224
+              134,
+              134
             ],
             [
-              282,
-              291
+              189,
+              206
+            ],
+            [
+              271,
+              277
+            ],
+            [
+              354,
+              354
+            ],
+            [
+              401,
+              401
             ]
           ],
           "ranges": [
             [
-              60,
-              100
+              3,
+              28
             ],
             [
-              224,
-              224
+              134,
+              134
             ],
             [
-              282,
-              291
+              189,
+              206
+            ],
+            [
+              271,
+              277
+            ],
+            [
+              354,
+              354
+            ],
+            [
+              401,
+              401
             ]
           ],
           "observed": [
-            60,
-            291
-          ],
-          "gapFill": 33,
-          "sourceKind": "estimated_from_samples"
-        }
-      ],
-      "fingerprint": "1:0.0",
-      "source": "fingerprint-sample",
-      "named": false
-    },
-    {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
-      "type": "user",
-      "quality": "degraded",
-      "status": "degraded",
-      "confidence": 0.04,
-      "coverage": 0.005,
-      "sumPct": 0.5,
-      "treatments": [
-        {
-          "bucket": 1,
-          "label": "Variant 1",
-          "percentage": 0.5,
-          "pct": 0.5,
-          "pctKnown": true,
-          "status": "degraded",
-          "confidence": "low",
-          "sampleCount": 6,
-          "samples": 6,
-          "coverage": 0.005,
-          "intervals": [
-            [
-              9838,
-              9886
-            ],
-            [
-              9944,
-              9944
-            ]
-          ],
-          "ranges": [
-            [
-              9838,
-              9886
-            ],
-            [
-              9944,
-              9944
-            ]
-          ],
-          "observed": [
-            9838,
-            9944
+            3,
+            401
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -2501,17 +4290,41 @@
     }
   ],
   "announced": {
+    "24149521": "1:100.0",
+    "43837900": "1:100.0",
+    "75345024": "1:100.0",
+    "258580919": "1:100.0",
+    "295820329": "1:100.0",
+    "511273769": "1:100.0",
+    "805661295": "1:100.0",
+    "944104242": "1:100.0",
+    "1199974293": "1:100.0",
+    "1318029053": "1:50.0",
+    "1446479414": "-1:50.0|1:25.0",
+    "1504498621": "1:100.0|2:100.0",
+    "1640064366": "-1:80.0|1:10.0",
+    "1669115628": "2:100.0",
+    "1990672009": "1:100.0",
+    "2014775304": "-1:80.0|1:5.0|2:5.0|4:5.0",
     "2180379513": "1:10.0",
-    "4055210228": "1:12.0"
+    "2433109164": "-1:100.0|1:100.0|3:5.0|4:5.0",
+    "2457903107": "-1:40.0|1:20.0|2:20.0|4:20.0",
+    "2462216785": "1:100.0",
+    "3194028601": "1:100.0",
+    "3282315774": "1:100.0",
+    "3313601281": "-1:90.0|1:10.0",
+    "3320756132": "1:100.0",
+    "3362434932": "-1:60.0|1:100.0",
+    "3510816342": "1:100.0",
+    "3636231100": "1:100.0",
+    "3683063649": "1:100.0",
+    "3723449866": "1:100.0",
+    "4030301365": "-1:33.0|1:33.0",
+    "4055210228": "1:12.0",
+    "4083096281": "-1:100.0|1:100.0",
+    "4190408036": "1:100.0"
   },
   "history": [
-    {
-      "ts": "2026-09-27T17:25:51.907Z",
-      "ok": 150,
-      "fail": 0,
-      "experimentCount": 5,
-      "changeCount": 0
-    },
     {
       "ts": "2026-09-27T17:32:34.051Z",
       "ok": 150,
@@ -2783,6 +4596,13 @@
       "ok": 150,
       "fail": 0,
       "experimentCount": 5,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-09-27T21:38:08.503Z",
+      "ok": 150,
+      "fail": 0,
+      "experimentCount": 36,
       "changeCount": 0
     }
   ],
