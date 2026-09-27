@@ -13,6 +13,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { sleep, firstToken, redactSecrets, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'shop_items.json');
@@ -21,22 +22,6 @@ const WEBHOOK =
   process.env.SHOP_WEBHOOK_URL ||
   process.env.DISCORD_WEBHOOK_URL ||
   null;
-
-function loadToken() {
-  const candidates = [
-    process.env.DISCORD_USER_TOKEN,
-    process.env.DISCORD_USER_TOKEN_1,
-    process.env.DISCORD_TOKEN,
-    process.env.DISCORD_USER_TOKENS,
-  ];
-  for (const raw of candidates) {
-    if (!raw) continue;
-    const part = String(raw).split(/[,\n;]+/)[0].trim();
-    if (!part) continue;
-    return normalizeToken(part);
-  }
-  return null;
-}
 
 function normalizeToken(t) {
   let s = String(t || '')
@@ -70,15 +55,7 @@ function tokenShape(t) {
   ].join(' ');
 }
 
-const TOKEN = loadToken();
-
-const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
-const AVATAR =
-  process.env.ORBIT_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
-
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
+const TOKEN = normalizeToken(firstToken());
 
 const HOSTS = [
   'https://canary.discord.com/api/v9',
@@ -87,23 +64,13 @@ const HOSTS = [
 
 const ITEM_TYPES = ['0', '1', '2', '3'];
 
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
-
-function redact(msg) {
-  return String(msg || '')
-    .replace(/[\w-]{20,}\.[\w-]{5,}\.[\w-]{10,}/g, '[REDACTED]')
-    .replace(/mfa\.[\w-]{20,}/gi, '[REDACTED]');
-}
-
 function superProperties() {
   const payload = {
     os: 'Windows',
     browser: 'Chrome',
     device: '',
     system_locale: 'en-US',
-    browser_user_agent: UA,
+    browser_user_agent: DEFAULT_UA,
     browser_version: '131.0.0.0',
     os_version: '10',
     referrer: '',
@@ -120,7 +87,7 @@ function superProperties() {
 function authHeaders() {
   return {
     Authorization: TOKEN,
-    'User-Agent': UA,
+    'User-Agent': DEFAULT_UA,
     Accept: 'application/json',
     'Accept-Language': 'en-US,en;q=0.9',
     'X-Discord-Locale': 'en-US',
@@ -140,7 +107,7 @@ async function validateUserToken() {
       name: 'minimal',
       headers: {
         Authorization: TOKEN,
-        'User-Agent': UA,
+        'User-Agent': DEFAULT_UA,
         Accept: 'application/json',
       },
     },
@@ -179,7 +146,7 @@ async function validateUserToken() {
           res.status,
         );
       } catch (e) {
-        console.warn('Token probe error:', redact(e.message));
+        console.warn('Token probe error:', redactSecrets(e.message));
       }
     }
   }
@@ -328,7 +295,7 @@ async function fetchShopCatalog() {
     walkCollect(data, map);
     console.log('collectibles-shop items:', map.size);
   } catch (e) {
-    console.warn('collectibles-shop:', redact(e.message));
+    console.warn('collectibles-shop:', redactSecrets(e.message));
   }
 
   for (const itype of ITEM_TYPES) {
@@ -341,7 +308,7 @@ async function fetchShopCatalog() {
       walkCollect(data, map);
       await sleep(250);
     } catch (e) {
-      console.warn('shop/search type', itype, redact(e.message));
+      console.warn('shop/search type', itype, redactSecrets(e.message));
       // endpoint refusé (400) → les autres types échoueront pareil
       if (/HTTP 400/.test(String(e.message))) {
         console.warn('shop/search désactivé pour ce run (HTTP 400)');
@@ -354,7 +321,7 @@ async function fetchShopCatalog() {
     const data = await apiGet('/collectibles-categories');
     walkCollect(data, map);
   } catch (e) {
-    console.warn('collectibles-categories:', redact(e.message));
+    console.warn('collectibles-categories:', redactSecrets(e.message));
   }
 
   return [...map.values()];
@@ -429,7 +396,7 @@ async function main() {
   try {
     items = await fetchShopCatalog();
   } catch (e) {
-    console.error('Shop fetch failed:', redact(e.message));
+    console.error('Shop fetch failed:', redactSecrets(e.message));
     process.exit(1);
   }
   console.log('Catalog items:', items.length);
@@ -532,7 +499,7 @@ async function main() {
 
 if (require.main === module) {
   main().catch((e) => {
-    console.error(redact(e.message || e));
+    console.error(redactSecrets(e.message || e));
     process.exit(1);
   });
 }

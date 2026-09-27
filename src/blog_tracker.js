@@ -10,6 +10,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { sleep, DEFAULT_UA } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'blog_tracker.json');
@@ -26,9 +27,6 @@ const AVATAR =
   process.env.ORBIT_AVATAR_URL ||
   process.env.WEBHOOK_AVATAR_URL ||
   'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f4f0.png';
-
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 const BLOG_RSS = 'https://discord.com/blog/rss.xml';
 
@@ -69,14 +67,10 @@ function truncate(s, n) {
   return t.slice(0, n - 1) + '…';
 }
 
-async function sleep(ms) {
-  await new Promise((r) => setTimeout(r, ms));
-}
-
 async function fetchText(url, opts = {}) {
   const res = await fetch(url, {
     headers: {
-      'User-Agent': UA,
+      'User-Agent': DEFAULT_UA,
       Accept: opts.accept || 'text/html,application/json,*/*',
       ...(opts.headers || {}),
     },

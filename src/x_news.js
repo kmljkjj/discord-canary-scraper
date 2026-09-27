@@ -25,6 +25,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sendWebhook } = require('./lib/webhook');
+const { sleep, DEFAULT_UA } = require('./lib/utils');
 
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'seen_x_posts.json');
@@ -42,8 +43,6 @@ const WEB_BEARER =
   'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 
 const MAX_NOTIFY = 8;
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 // Query IDs from live main.59435dbf6f40166da.js (Sep 2026)
 const QID_USER = [
@@ -271,7 +270,7 @@ function sessionHeaders(session, method, apiPath) {
     'content-type': 'application/json',
     'x-client-transaction-id': tid,
     Cookie: session.cookieHeader,
-    'User-Agent': UA,
+    'User-Agent': DEFAULT_UA,
     Accept: '*/*',
     'Accept-Language': 'en-US,en;q=0.9',
     Referer: `https://x.com/${SCREEN_NAME}`,
@@ -531,7 +530,7 @@ async function fetchFromRss() {
       console.log('RSS try', url);
       const res = await fetch(url, {
         headers: {
-          'User-Agent': UA,
+          'User-Agent': DEFAULT_UA,
           Accept: 'application/rss+xml, application/xml, text/xml, */*',
         },
         timeout: 12000,
@@ -665,10 +664,6 @@ async function saveSeen(seen) {
 
 function uniq(arr) {
   return [...new Set(arr.map(String))];
-}
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
 }
 
 main().catch((e) => {

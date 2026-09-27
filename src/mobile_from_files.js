@@ -10,6 +10,7 @@ const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
 const { inferType } = require('./lib/infer_type');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: BOT_AVATAR } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const WORK_DIR = path.join(__dirname, '..', '.mobile_datamine');
@@ -18,11 +19,6 @@ const KNOWN_FILE = path.join(DATA_DIR, 'known_mobile_experiment_ids.json');
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
 const SOURCE_REPO = process.env.MOBILE_DATAMINE_REPO || '';
-
-const BOT_NAME = process.env.ORBIT_BOT_NAME || 'Datamining';
-const BOT_AVATAR =
-  process.env.ORBIT_BOT_AVATAR ||
-  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 const MAX_NOTIFY_EXP = Number(process.env.MAX_WEBHOOKS_PER_RUN || 8);
 

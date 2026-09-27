@@ -8,6 +8,7 @@ const path = require('path');
 const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
@@ -25,32 +26,10 @@ const WEBHOOK =
   process.env.ROLLOUT_WEBHOOK_URL ||
   process.env.DISCORD_WEBHOOK_URL ||
   null;
-const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
-const AVATAR =
-  process.env.ORBIT_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '1');
 const YEAR_MIN = Number(process.env.APEX_RECENT_YEAR || '2024');
 const SCALE = 10000;
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-
-function loadUserTokens() {
-  const out = [];
-  const seen = new Set();
-  const push = (t) => {
-    const s = String(t || '').trim();
-    if (!s || seen.has(s)) return;
-    seen.add(s);
-    out.push(s);
-  };
-  for (const part of String(process.env.DISCORD_USER_TOKENS || '').split(/[,;\n]+/)) push(part);
-  for (let i = 1; i <= 10; i++) push(process.env['DISCORD_USER_TOKEN_' + i]);
-  push(process.env.DISCORD_USER_TOKEN);
-  push(process.env.DISCORD_TOKEN);
-  return out;
-}
-const USER_TOKENS = loadUserTokens();
+const USER_TOKENS = loadTokens();
 
 function tLabel(bucket) {
   const b = Number(bucket);
@@ -194,7 +173,7 @@ async function buildHashMap() {
   for (const url of [DEFS_URL, WORKERS_URL]) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': UA, Accept: 'application/json' },
+        headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
         timeout: 20000,
       });
       if (!res.ok) continue;
@@ -225,7 +204,7 @@ function clientHeaders(token) {
       browser: 'Chrome',
       device: '',
       system_locale: 'en-US',
-      browser_user_agent: UA,
+      browser_user_agent: DEFAULT_UA,
       browser_version: '131.0.0.0',
       os_version: '10',
       release_channel: 'stable',
@@ -233,7 +212,7 @@ function clientHeaders(token) {
     }),
   ).toString('base64');
   const h = {
-    'User-Agent': UA,
+    'User-Agent': DEFAULT_UA,
     Accept: '*/*',
     'X-Super-Properties': superProps,
     'X-Discord-Locale': 'en-US',

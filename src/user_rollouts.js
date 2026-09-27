@@ -28,6 +28,7 @@ const crypto = require('crypto');
 const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const {
   mergeIntervals,
   estimateFromPoints,
@@ -44,23 +45,6 @@ const EXPS = path.join(DATA, 'experiments.json');
 const BASELINE = path.join(DATA, 'baseline_experiments.json');
 const APEX_EXP = path.join(DATA, 'apex_experiments.json');
 
-function loadTokens() {
-  const out = [];
-  const push = (t) => {
-    const s = String(t || '').trim();
-    if (s && !out.includes(s)) out.push(s);
-  };
-  const multi = process.env.DISCORD_USER_TOKENS || '';
-  if (multi) multi.split(/[,\n;]+/).forEach(push);
-  push(process.env.DISCORD_USER_TOKEN);
-  push(process.env.DISCORD_TOKEN);
-  for (let i = 1; i <= 8; i++) {
-    push(process.env['DISCORD_USER_TOKEN_' + i]);
-    push(process.env['DISCORD_USER_TOKENS' + i]);
-  }
-  return out;
-}
-
 const TOKENS = loadTokens();
 const WEBHOOK =
   process.env.APEX_WEBHOOK_URL ||
@@ -75,29 +59,12 @@ const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
 // z du seuil de bruit statistique (0 = désactivé). Évite les annonces 10 % → 12 % → 10 %.
 const NOISE_Z = Math.max(0, Number(process.env.USER_ROLLOUT_NOISE_Z ?? 2));
-const BOT = process.env.ORBIT_BOT_NAME || 'Datamining';
-const AVATAR =
-  process.env.ORBIT_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const SCALE = DEFAULT_SCALE;
 const DEFS_URL =
   process.env.APEX_DEFS_URL ||
   'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
 const WORKERS_URL =
   process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
-
-function redactSecrets(msg) {
-  return String(msg || '')
-    .replace(/[\w-]{20,}\.[\w-]{5,}\.[\w-]{10,}/g, '[REDACTED_JWT]')
-    .replace(/mfa\.[\w-]{20,}/gi, '[REDACTED_TOKEN]')
-    .replace(/Bot\s+[\w.-]{20,}/gi, 'Bot [REDACTED]');
-}
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
 
 function tLabel(bucket) {
   const b = Number(bucket);
@@ -137,7 +104,7 @@ async function loadHashMap() {
   for (const url of [DEFS_URL, WORKERS_URL]) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': UA, Accept: 'application/json' },
+        headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
         timeout: 20000,
       });
       if (!res.ok) continue;
@@ -166,7 +133,7 @@ async function loadHashMap() {
 async function fetchAssignments(extraHeaders = {}, attempt = 0) {
   const res = await fetch('https://canary.discord.com/api/v10/experiments', {
     headers: {
-      'User-Agent': UA,
+      'User-Agent': DEFAULT_UA,
       Accept: '*/*',
       'Cache-Control': 'no-cache',
       ...extraHeaders,

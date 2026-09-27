@@ -8,6 +8,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: BOT_AVATAR, DEFAULT_UA } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
@@ -20,13 +21,7 @@ const PAUSED =
   process.env.MOBILE_VERSIONS_PAUSED === 'true';
 // ──────────────────────────────────────────────────────
 
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 const IOS_APP_ID = '985746746';
-const BOT_NAME = process.env.ORBIT_BOT_NAME || 'Datamining';
-const BOT_AVATAR =
-  process.env.ORBIT_BOT_AVATAR ||
-  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 function parseVersion(v) {
   const parts = String(v)
@@ -60,7 +55,7 @@ function versionFingerprint(c) {
 async function fetchText(url, opts = {}) {
   const res = await fetch(url, {
     timeout: 22000,
-    headers: { 'User-Agent': UA, Accept: '*/*', ...(opts.headers || {}) },
+    headers: { 'User-Agent': DEFAULT_UA, Accept: '*/*', ...(opts.headers || {}) },
     ...opts,
   });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);

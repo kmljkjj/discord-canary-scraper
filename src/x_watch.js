@@ -12,6 +12,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { DEFAULT_UA } = require('./lib/utils');
 
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
 const USER_ID = process.env.X_USER_ID || '2073982489836584960';
@@ -27,8 +28,6 @@ const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'x_seen_ids.json');
 const MAX_SEEN = 300;
 const MAX_NOTIFY = 5;
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
 
 const RSS_SOURCES = [
   `https://rsshub.rssforever.com/twitter/user/${USERNAME}`,
@@ -180,7 +179,7 @@ async function fetchViaRss() {
     try {
       const res = await fetch(src, {
         headers: {
-          'User-Agent': UA,
+          'User-Agent': DEFAULT_UA,
           Accept: 'application/rss+xml, application/xml, text/xml, */*',
         },
         timeout: 12000,

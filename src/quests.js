@@ -13,6 +13,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { DEFAULT_UA, DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: AVATAR } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'quests.json');
@@ -27,16 +28,6 @@ const DISCORD_TOKEN =
   process.env.DISCORD_USER_TOKEN_1 ||
   null;
 const PUBLIC_QUESTS_URL = 'https://api.discordquest.com/api/quests';
-
-const UA =
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36';
-
-const BOT_NAME =
-  process.env.ORBIT_BOT_NAME || process.env.WEBHOOK_BOT_NAME || 'Datamining';
-const AVATAR =
-  process.env.ORBIT_AVATAR_URL ||
-  process.env.WEBHOOK_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/1f50d.png';
 
 const CDN = 'https://cdn.discordapp.com/';
 const IS_COMPONENTS_V2 = 1 << 15; // 32768
@@ -586,7 +577,7 @@ async function sendQuestWebhook(quest) {
 
 async function fetchPublicQuests() {
   const res = await fetch(PUBLIC_QUESTS_URL, {
-    headers: { 'User-Agent': UA, Accept: 'application/json' },
+    headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
     timeout: 30000,
   });
   if (!res.ok) throw new Error('public quests HTTP ' + res.status);
@@ -606,7 +597,7 @@ async function fetchOfficialQuests() {
   ];
   const headers = {
     Authorization: DISCORD_TOKEN,
-    'User-Agent': UA,
+    'User-Agent': DEFAULT_UA,
     Accept: 'application/json',
   };
   let lastStatus = 0;
