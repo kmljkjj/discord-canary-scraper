@@ -9,6 +9,7 @@
  * - masque le token du webhook dans les logs
  */
 const fetch = require('node-fetch');
+const { sleep } = require('./utils');
 
 const DEFAULTS = {
   maxAttempts: Number(process.env.WEBHOOK_MAX_ATTEMPTS || 5),
@@ -21,8 +22,6 @@ const DEFAULTS = {
 // Limites officielles Discord
 const MAX_EMBEDS_PER_MESSAGE = 10;
 const MAX_EMBED_CHARS_PER_MESSAGE = 6000;
-
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Pause partagée si Discord signale un bucket épuisé
 let bucketResetAt = 0;
