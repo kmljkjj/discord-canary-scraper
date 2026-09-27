@@ -452,7 +452,9 @@ async function maybeWarnCredits(seen) {
       seen.creditsWarnedAt = now;
       await saveSeen(seen);
     }
-  } catch {}
+  } catch (e) {
+    console.warn('sendCreditsWarning: failed -', e.message);
+  }
 }
 
 async function fetchFromApi(bearer) {
@@ -650,7 +652,9 @@ async function loadSeen() {
         creditsWarnedAt: d.creditsWarnedAt || null,
       };
     }
-  } catch {}
+  } catch (e) {
+    console.warn('loadSeen: failed to read', SEEN_FILE, '-', e.message);
+  }
   return { ids: [], creditsWarnedAt: null };
 }
 

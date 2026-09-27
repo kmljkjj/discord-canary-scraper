@@ -42,7 +42,9 @@ async function loadKnownIds(file, fromAlready) {
       const d = await fs.readJson(file);
       for (const id of d.ids || d.keys || []) set.add(String(id));
     }
-  } catch {}
+  } catch (e) {
+    console.warn('loadLastSet: failed to read', file, '-', e.message);
+  }
   return set;
 }
 
@@ -932,7 +934,9 @@ async function markBuild(buildNumber) {
   let data = { builds: [] };
   try {
     if (await fs.pathExists(ANNOUNCED)) data = await fs.readJson(ANNOUNCED);
-  } catch {}
+  } catch (e) {
+    console.warn('markBuild: failed to read', ANNOUNCED, '-', e.message);
+  }
   const set = new Set((data.builds || []).map(String));
   set.add(String(buildNumber));
   await writeJsonAtomic(ANNOUNCED, {

@@ -489,7 +489,9 @@ async function main() {
   if (await fs.pathExists(STATE_FILE)) {
     try {
       previous = await fs.readJson(STATE_FILE);
-    } catch {}
+    } catch (e) {
+      console.warn('loadPrevious: failed to read', STATE_FILE, '-', e.message);
+    }
   }
 
   console.log('=== Mobile Versions ===');

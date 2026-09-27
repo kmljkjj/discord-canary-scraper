@@ -74,11 +74,15 @@ async function syncSourceRepo() {
   let head = 'unknown';
   try {
     head = run('git rev-parse --short HEAD', WORK_DIR).trim();
-  } catch {}
+  } catch (e) {
+    console.warn('getRepoInfo: git rev-parse failed -', e.message);
+  }
   let msg = '';
   try {
     msg = run('git log -1 --pretty=%s', WORK_DIR).trim();
-  } catch {}
+  } catch (e) {
+    console.warn('getRepoInfo: git log failed -', e.message);
+  }
   return { dir: WORK_DIR, commit: head, message: msg };
 }
 
@@ -169,7 +173,9 @@ async function scanMobileFiles(root) {
       const content = await fs.readFile(fp, 'utf8');
       extractFromContent(content, expMap, strings);
       n++;
-    } catch {}
+    } catch (e) {
+      console.warn('extractFromFiles: failed to process', fp, '-', e.message);
+    }
   }
   console.log('Scanned files:', n);
   return {
@@ -185,7 +191,9 @@ async function loadKnown() {
       const d = await fs.readJson(KNOWN_FILE);
       for (const id of d.ids || []) set.add(String(id));
     }
-  } catch {}
+  } catch (e) {
+    console.warn('loadKnown: failed to read', KNOWN_FILE, '-', e.message);
+  }
   return set;
 }
 
@@ -301,7 +309,9 @@ async function main() {
   if (await fs.pathExists(STATE_FILE)) {
     try {
       previous = await fs.readJson(STATE_FILE);
-    } catch {}
+    } catch (e) {
+      console.warn('loadPrevious: failed to read', STATE_FILE, '-', e.message);
+    }
   }
   for (const e of previous?.experiments || []) {
     if (e?.id) known.add(String(e.id));

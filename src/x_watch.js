@@ -274,7 +274,9 @@ async function loadSeen() {
       const d = await fs.readJson(legacy);
       for (const id of d.ids || []) set.add(String(id));
     }
-  } catch {}
+  } catch (e) {
+    console.warn('loadSeen: failed to read legacy seen file -', e.message);
+  }
   return set;
 }
 
