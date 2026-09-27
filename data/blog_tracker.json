@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-27T09:16:46.684Z",
+  "scrapedAt": "2026-09-27T09:17:56.771Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,15 +455,54 @@
   ],
   "zendesk": [
     {
+      "id": "360004027692",
+      "title": "Requesting a Copy of your Data",
+      "link": "https://support.discord.com/hc/en-us/articles/360004027692-Requesting-a-Copy-of-your-Data",
+      "updatedAt": "2026-09-27T09:17:52Z",
+      "createdAt": "2018-05-19T00:50:36Z",
+      "sectionId": "24453668939799",
+      "bodyHash": "3f349d3f7e1491a140bb90b16e4de493ecfb8fcebdca70c2e601f1b2c331ca85",
+      "bodyPreview": "Learn how to request your personal Discord data with these easy steps. Whether you're using Discord on desktop, browser, or mobile, we'll show you the step-by-step process to request and receive your account information. This article covers everything you need to know about data requests, processing times, and important considerations to keep in mind. What this article covers: Requesting Your Dat…",
+      "thumb": "https://support.discord.com/hc/article_attachments/30074476223255",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360040724612",
+      "title": "Why is Discord asking for my birthday?",
+      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
+      "updatedAt": "2026-09-27T09:17:49Z",
+      "createdAt": "2020-03-19T00:18:15Z",
+      "sectionId": "360007875171",
+      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
+      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360060145013",
       "title": "Why isn't my DM going through?",
       "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-27T09:16:08Z",
+      "updatedAt": "2026-09-27T09:17:45Z",
       "createdAt": "2020-11-30T20:42:12Z",
       "sectionId": "115000458672",
       "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
       "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
       "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "21865322754327",
+      "title": "Data Used to Personalize Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/21865322754327-Data-Used-to-Personalize-Discord",
+      "updatedAt": "2026-09-27T09:16:53Z",
+      "createdAt": "2024-03-06T19:53:27Z",
+      "sectionId": "24453668939799",
+      "bodyHash": "dc8be1ba4dd8068909f88a8fc6fc4633d331434273a4246be4dc80900e5bd079",
+      "bodyPreview": "We use certain information to personalize our services. This includes features like customizing your experience on our discovery surfaces, highlighting activity on Discord that may interest you, and surfacing Discord features and promotions from us and our partners that may be of interest to you. For example, we may use information about who you interact with to rank a Friend who you interact wit…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34671597943319",
       "source": "support",
       "label": "Support"
     },
@@ -477,19 +516,6 @@
       "bodyHash": "0e5a14c0009d4a96777c662d054e9683e9b68dd98b2053b77686cf1352466abd",
       "bodyPreview": "If you have been determined to be in the teen age group (13-17), your account automatically receives certain protections. This article explains what those protections are, what they affect, and what can be changed. We work to place users into the right age group automatically via our age estimation model , so if you're a teen, these settings may already be in place without you having to do anythi…",
       "thumb": "https://support.discord.com/hc/article_attachments/43482885502231",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360040724612",
-      "title": "Why is Discord asking for my birthday?",
-      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-27T09:15:36Z",
-      "createdAt": "2020-03-19T00:18:15Z",
-      "sectionId": "360007875171",
-      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
-      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -1153,19 +1179,6 @@
       "bodyHash": "cea612822c933c0cb64e3ede45615f3cea150cb12991b78b466a80ded2031bd7",
       "bodyPreview": "What this article covers: How to Undo an Email Address Change I Got an Error When Trying to Undo My Email Change How Does the Account Recovery Link Actually Work? Note: Please note that account recovery links will become invalid after a 48 hour time period. Do not share this link to others. Changing the email on your Discord account is a big deal! That’s why we send you an extra email notificatio…",
       "thumb": "https://support.discord.com/hc/article_attachments/28088027759767",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "21865322754327",
-      "title": "Data Used to Personalize Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/21865322754327-Data-Used-to-Personalize-Discord",
-      "updatedAt": "2026-09-27T08:13:40Z",
-      "createdAt": "2024-03-06T19:53:27Z",
-      "sectionId": "24453668939799",
-      "bodyHash": "dc8be1ba4dd8068909f88a8fc6fc4633d331434273a4246be4dc80900e5bd079",
-      "bodyPreview": "We use certain information to personalize our services. This includes features like customizing your experience on our discovery surfaces, highlighting activity on Discord that may interest you, and surfacing Discord features and promotions from us and our partners that may be of interest to you. For example, we may use information about who you interact with to rank a Friend who you interact wit…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34671597943319",
       "source": "support",
       "label": "Support"
     },
@@ -3363,19 +3376,6 @@
       "bodyHash": "4aff980d0e15ca8a86871057a13736d2ca0bbcb0400dc0748c5fbb05d46ad7e2",
       "bodyPreview": "On May 10, 2026, we identified an issue causing the Discord desktop client to crash, close, or refresh on its own when users start a game. The cause is a regression in AMD's 26.5.1 graphics driver release. We are working with AMD, who is actively investigating. Frequently Asked Questions Q: Who is affected by this issue? A: Windows users running AMD graphics driver version 26.5.1 (also identified…",
       "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360004027692",
-      "title": "Requesting a Copy of your Data",
-      "link": "https://support.discord.com/hc/en-us/articles/360004027692-Requesting-a-Copy-of-your-Data",
-      "updatedAt": "2026-09-26T17:05:46Z",
-      "createdAt": "2018-05-19T00:50:36Z",
-      "sectionId": "24453668939799",
-      "bodyHash": "3f349d3f7e1491a140bb90b16e4de493ecfb8fcebdca70c2e601f1b2c331ca85",
-      "bodyPreview": "Learn how to request your personal Discord data with these easy steps. Whether you're using Discord on desktop, browser, or mobile, we'll show you the step-by-step process to request and receive your account information. This article covers everything you need to know about data requests, processing times, and important considerations to keep in mind. What this article covers: Requesting Your Dat…",
-      "thumb": "https://support.discord.com/hc/article_attachments/30074476223255",
       "source": "support",
       "label": "Support"
     },
