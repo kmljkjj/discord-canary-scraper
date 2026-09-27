@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Experiments — Discord Canary</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <title>Rollouts — Canary Lab</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -16,25 +14,25 @@
   <nav class="nav">
     <a class="nav-brand" href="index.html"><span class="nav-logo">◈</span> Canary Lab</a>
     <div class="nav-links">
-      <a class="active" href="index.html">Experiments</a>
+      <a href="index.html">Experiments</a>
       <a href="shop.html">Boutique</a>
       <a href="status.html">Statut</a>
       <a href="mobile.html">Mobile</a>
-      <a href="rollouts.html">Rollouts</a>
+      <a class="active" href="rollouts.html">Rollouts</a>
     </div>
   </nav>
 
   <div class="wrap">
     <header class="header">
       <div class="brand-block">
-        <h1>Experiments</h1>
-        <p class="subtitle">Discord Canary · données du scraper</p>
+        <h1>Rollouts</h1>
+        <p class="subtitle">Pourcentages de déploiement des expériences Discord</p>
       </div>
-      <div class="stats">
+      <div class="stats" id="stats">
         <div class="stat"><span class="stat-val" id="stat-total">—</span><span class="stat-label">Total</span></div>
-        <div class="stat"><span class="stat-val" id="stat-user">—</span><span class="stat-label">User</span></div>
-        <div class="stat"><span class="stat-val" id="stat-guild">—</span><span class="stat-label">Guild</span></div>
-        <div class="stat"><span class="stat-val" id="stat-apex">—</span><span class="stat-label">Apex</span></div>
+        <div class="stat"><span class="stat-val" id="stat-pct">—</span><span class="stat-label">Avec %</span></div>
+        <div class="stat"><span class="stat-val" id="stat-full">—</span><span class="stat-label">Full rollout</span></div>
+        <div class="stat"><span class="stat-val" id="stat-fp">—</span><span class="stat-label">FP échantillonnés</span></div>
       </div>
     </header>
 
@@ -45,14 +43,19 @@
       </div>
       <div class="filters">
         <button class="chip active" data-filter="all">Tous</button>
-        <button class="chip" data-filter="user">User</button>
+        <button class="chip" data-filter="with-pct">Avec %</button>
         <button class="chip" data-filter="guild">Guild</button>
-        <button class="chip" data-filter="apex">Apex</button>
+        <button class="chip" data-filter="user">User</button>
+        <button class="chip" data-filter="fp">Fingerprint</button>
       </div>
       <div class="meta" id="meta">Chargement…</div>
     </section>
 
-    <main class="grid" id="grid"></main>
+    <section class="sources" id="sources"></section>
+
+    <main class="grid" id="grid">
+      <div class="empty">Chargement…</div>
+    </main>
 
     <footer class="footer">
       <span>Data · <a href="https://github.com/kmljkjj/discord-canary-scraper" target="_blank" rel="noopener">discord-canary-scraper</a></span>
@@ -60,6 +63,6 @@
     </footer>
   </div>
 
-  <script src="app.js"></script>
+  <script src="rollouts.js"></script>
 </body>
 </html>

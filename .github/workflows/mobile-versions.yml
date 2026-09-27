@@ -51,6 +51,19 @@ jobs:
         run: |
           scripts/commit-state.sh "mobile files: experiments state" data/mobile_experiments.json data/known_mobile_experiment_ids.json
 
+      - name: Experiment rollouts
+        id: rollouts
+        if: always() && steps.versions.outcome != 'cancelled'
+        env:
+          EXP_FP_SAMPLES: '50'
+          EXP_FP_DELAY_MS: '5000'
+        run: node src/experiment_rollouts.js
+
+      - name: Commit rollouts state
+        if: always() && steps.rollouts.outcome == 'success'
+        run: |
+          scripts/commit-state.sh "experiment rollouts" data/experiment_rollouts.json
+
       - name: Fail if versions or files failed
         if: always() && (steps.versions.outcome == 'failure' || steps.files.outcome == 'failure')
         run: |
