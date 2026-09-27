@@ -297,8 +297,11 @@ function buildTreatments(def, bucketMap, totalOk) {
   };
 }
 
-async function fetchAssignments(extraHeaders = {}, attempt = 0) {
-  const res = await fetch('https://canary.discord.com/api/v10/experiments', {
+async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 0) {
+  const url = withGuild
+    ? 'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true'
+    : 'https://canary.discord.com/api/v10/experiments';
+  const res = await fetch(url, {
     headers: {
       'User-Agent': DEFAULT_UA,
       Accept: '*/*',
@@ -314,7 +317,7 @@ async function fetchAssignments(extraHeaders = {}, attempt = 0) {
     const wait = Math.min(30, Math.max(1, ra)) * 1000 + attempt * 500;
     console.warn('429 → wait', Math.round(wait / 1000) + 's');
     await sleep(wait);
-    return fetchAssignments(extraHeaders, attempt + 1);
+    return fetchAssignments(extraHeaders, withGuild, attempt + 1);
   }
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const data = await res.json();
@@ -395,7 +398,9 @@ async function fetchTokenSnapshot(defs) {
   const out = [];
   for (const token of TOKENS.slice(0, 5)) {
     try {
-      const data = await fetchAssignments({ Authorization: token });
+      // Use with_guild_experiments=true to get guild experiment definitions too
+      const data = await fetchAssignments({ Authorization: token }, true);
+      // Parse user assignments
       for (const a of data.assignments || []) {
         if (!Array.isArray(a) || a.length < 3) continue;
         const hash = Number(a[0]);
@@ -496,15 +501,95 @@ async function main() {
   // Load experiment definitions with bucket ranges
   const defs = await loadExperimentDefs();
 
-  // Sample fingerprints to detect active experiments
+  // Fetch token snapshot FIRST (authenticated endpoint returns more experiments)
+  const tokenSnap = await fetchTokenSnapshot(defs);
+  console.log('Token snapshot:', tokenSnap.length, 'experiments');
+
+  // Sample fingerprints (unauthenticated — for detection + fallback estimation)
   const { byHash, ok, fail } = await sampleFingerprints(SAMPLES, CONC);
 
   if (ok < MIN_OK) {
     console.warn('Too few ok samples', ok, '<', MIN_OK, '— skip estimates (avoid noise)');
   }
 
+  // Build a set of hashes detected via sampling or token snapshot
+  const detectedHashes = new Set();
+  for (const hash of byHash.keys()) detectedHashes.add(hash);
+  for (const t of tokenSnap) detectedHashes.add(t.hash);
+
   const experiments = [];
+  const processedHashes = new Set();
+
+  // 1. Process ALL worker API definitions that have an active rollout
+  //    (non-None bucket with non-zero range) — these give EXACT percentages
+  for (const [hash, def] of defs) {
+    if (def.source !== 'worker_api' || !def.populations || !def.populations.length) continue;
+    if (processedHashes.has(hash)) continue;
+
+    const exactPcts = calculateBucketPercentages(def);
+    if (!exactPcts.size) continue;
+
+    // Check if this experiment has an active rollout (any non-None bucket with non-zero range)
+    let hasActiveRollout = false;
+    for (const [bucket, info] of exactPcts) {
+      if (bucket >= 0 && info.percentage > 0) {
+        hasActiveRollout = true;
+        break;
+      }
+    }
+    if (!hasActiveRollout) continue;
+
+    // Build treatments from exact bucket ranges
+    const treatments = [];
+    let coveredAll = 0;
+    for (const [bucket, info] of exactPcts) {
+      coveredAll += info.coverage || 0;
+      // Merge with fingerprint sample counts if available
+      const sampleCount = byHash.get(hash)?.get(bucket)?.length || 0;
+      treatments.push({
+        bucket: Number(bucket),
+        label: tLabel(bucket),
+        percentage: info.percentage,
+        pct: info.percentage,
+        pctKnown: info.percentage != null,
+        status: 'exact',
+        confidence: 'high',
+        sampleCount,
+        samples: sampleCount,
+        coverage: info.coverage / SCALE,
+        intervals: info.ranges,
+        ranges: info.ranges,
+        observed: null,
+        gapFill: 0,
+        sourceKind: 'exact_from_bucket_ranges',
+      });
+    }
+    treatments.sort((a, b) => a.bucket - b.bucket);
+    if (!treatments.length) continue;
+
+    processedHashes.add(hash);
+    experiments.push({
+      hash,
+      id: def.id,
+      title: def.title,
+      type: 'user',
+      quality: 'exact',
+      status: 'exact',
+      confidence: 1,
+      coverage: Math.round((Math.min(coveredAll, SCALE) / SCALE) * 1000) / 1000,
+      sumPct: Math.round(treatments.reduce((s, t) => s + (t.pctKnown ? t.pct : 0), 0) * 100) / 100,
+      treatments,
+      fingerprint: fingerprintOf(treatments),
+      source: 'worker_api',
+      named: hasName(def.id),
+    });
+  }
+  console.log('Worker API experiments with active rollout:', experiments.length);
+
+  // 2. Process experiments detected via fingerprint sampling but NOT in worker API
+  //    (fallback to estimation from hash_result spread)
   for (const [hash, bucketMap] of byHash) {
+    if (processedHashes.has(hash)) continue;
     if (ok < MIN_OK) continue;
     const def = defs.get(hash) || {
       id: 'hash:' + hash,
@@ -519,6 +604,7 @@ async function main() {
     if (!treatments.length) continue;
     const nObs = treatments.reduce((s, t) => s + (t.sampleCount || t.samples || 0), 0);
     if (nObs < 3 && rollStatus !== 'exact') continue;
+    processedHashes.add(hash);
     const quality =
       rollStatus === 'exact'
         ? 'exact'
@@ -543,6 +629,7 @@ async function main() {
       named: hasName(def.id),
     });
   }
+
   console.log(
     'Experiments:',
     experiments.length,
@@ -550,9 +637,9 @@ async function main() {
     experiments.filter((e) => e.named).length,
     'exact',
     experiments.filter((e) => e.status === 'exact').length,
+    'estimated',
+    experiments.filter((e) => e.status !== 'exact').length,
   );
-
-  const tokenSnap = await fetchTokenSnapshot(defs);
 
   let prev = { experiments: [], token: [], announced: {} };
   if (await fs.pathExists(STATE)) {
