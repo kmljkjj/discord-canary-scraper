@@ -638,7 +638,7 @@ async function postWebhook(p) {
     WEBHOOK,
     { username: 'Datamining · X' },
     [embed],
-    { label: 'x-news ' + p.id, timeoutMs: 15000 },
+    { label: 'x-news ' + p.id, timeoutMs: 15000, withDismiss: true },
   );
   console.log('webhook', r.status, p.id);
   return r.ok;

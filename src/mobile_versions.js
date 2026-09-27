@@ -75,7 +75,7 @@ async function postWebhook(payload) {
   };
   const embeds = body.embeds || [];
   const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || BOT_AVATAR };
-  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { label: 'mobile', timeoutMs: 30000, minGapMs: 200 });
+  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { label: 'mobile', timeoutMs: 30000, minGapMs: 200, withDismiss: true });
   if (r.ok) {
     console.log('Webhook OK');
     return true;

@@ -377,7 +377,7 @@ async function postWebhook(embeds) {
     WEBHOOK,
     { username: BOT.slice(0, 80), avatar_url: AVATAR },
     embeds,
-    { label: 'user-rollouts' },
+    { label: 'user-rollouts', withDismiss: true },
   );
 }
 

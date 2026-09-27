@@ -207,8 +207,9 @@ async function sendEmbeds(url, base, embeds, options = {}) {
   if (!url || !embeds || !embeds.length)
     return { ok: false, status: 0, text: 'skip', attempts: 0, sent: 0 };
 
-  // Convertir les embeds en messages Components V2
-  const messages = embedsToComponents(embeds);
+  // Convertir les embeds en messages Components V2 avec bouton dismiss
+  const withDismiss = options.withDismiss !== false;
+  const messages = embedsToComponents(embeds, withDismiss);
   if (!messages.length)
     return { ok: false, status: 0, text: 'no components', attempts: 0, sent: 0 };
 

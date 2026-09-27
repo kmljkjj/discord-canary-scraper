@@ -104,13 +104,64 @@ function chunkText(text, maxLen = TEXT_DISPLAY_MAX) {
 }
 
 /**
+ * Build a link button (style 5) that works on non-app webhooks.
+ * @param {string} label - Button text
+ * @param {string} url - URL to open
+ * @returns {{type:number,style:number,label:string,url:string}}
+ */
+function linkButton(label, url) {
+  return { type: 2, style: 5, label: String(label).slice(0, 80), url: String(url).slice(0, 512) };
+}
+
+/**
+ * Build an ActionRow containing a dismiss button.
+ * Uses link button (style 5) since webhooks can't handle interactions.
+ * The button links to discord.com so the user can navigate to the message
+ * and delete it manually.
+ * @param {string} [label='Dismiss'] - Button label
+ * @returns {{type:number,components:Array}}
+ */
+function dismissButton(label = 'Dismiss') {
+  return {
+    type: 1, // ActionRow
+    components: [linkButton(label, 'https://discord.com')],
+  };
+}
+
+/**
+ * Add a dismiss button to the last container of each message.
+ * If the last component is a Container, adds the ActionRow inside it.
+ * Otherwise, adds the ActionRow as a top-level component.
+ *
+ * @param {Array<Array>} messages - Array of message component arrays
+ * @returns {Array<Array>} Messages with dismiss button added
+ */
+function addDismissToMessages(messages) {
+  for (const msg of messages) {
+    // Find the last container in the message
+    let lastContainer = null;
+    for (const comp of msg) {
+      if (comp.type === 17) lastContainer = comp;
+    }
+    if (lastContainer && lastContainer.components.length < CONTAINER_MAX_COMPONENTS) {
+      lastContainer.components.push(dismissButton());
+    } else {
+      // No container or container is full — add as top-level
+      msg.push(dismissButton());
+    }
+  }
+  return messages;
+}
+
+/**
  * Split a list of components into messages that respect the 40-component limit.
  * Each message gets its own Container with the accent color.
  * @param {Array} components - Flat list of components
  * @param {number} [accentColor] - Container accent color
+ * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
  * @returns {Array<Array>} Array of message component arrays
  */
-function chunkIntoMessages(components, accentColor) {
+function chunkIntoMessages(components, accentColor, withDismiss = false) {
   const messages = [];
   let current = [];
   let containerCount = 0;
@@ -128,6 +179,9 @@ function chunkIntoMessages(components, accentColor) {
   if (current.length) {
     messages.push([container(current, accentColor)]);
   }
+  if (withDismiss) {
+    addDismissToMessages(messages);
+  }
   return messages;
 }
 
@@ -142,9 +196,10 @@ function chunkIntoMessages(components, accentColor) {
  * @param {string} [params.botName] - Bot name for header
  * @param {string} [params.avatarUrl] - Avatar URL
  * @param {Array} params.sections - Array of {label, color, count, lines}
+ * @param {boolean} [params.withDismiss=false] - Add a dismiss button to each message
  * @returns {Array<Array>} Array of message payloads (each is a components array)
  */
-function buildSectionMessages({ title, bn, ts, sections }) {
+function buildSectionMessages({ title, bn, ts, sections, withDismiss = false }) {
   const allComponents = [];
 
   for (const sec of sections) {
@@ -179,7 +234,7 @@ function buildSectionMessages({ title, bn, ts, sections }) {
   // Split into messages (respecting 40-component limit)
   // Use the first section's color as the container accent
   const accentColor = sections.find((s) => s.color != null)?.color;
-  return chunkIntoMessages(allComponents, accentColor);
+  return chunkIntoMessages(allComponents, accentColor, withDismiss);
 }
 
 /**
@@ -187,9 +242,10 @@ function buildSectionMessages({ title, bn, ts, sections }) {
  * Handles title, description, fields, color, footer, author.
  *
  * @param {Object} embed - Legacy Discord embed
+ * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
  * @returns {Array<Array>} Array of message component arrays
  */
-function embedToComponents(embed) {
+function embedToComponents(embed, withDismiss = false) {
   const components = [];
 
   // Author + Title
@@ -231,7 +287,7 @@ function embedToComponents(embed) {
   }
 
   const accentColor = embed.color;
-  return chunkIntoMessages(components, accentColor);
+  return chunkIntoMessages(components, accentColor, withDismiss);
 }
 
 /**
@@ -239,9 +295,10 @@ function embedToComponents(embed) {
  * Embeds are concatenated and split respecting limits.
  *
  * @param {Array} embeds - Array of legacy Discord embeds
+ * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
  * @returns {Array<Array>} Array of message component arrays
  */
-function embedsToComponents(embeds) {
+function embedsToComponents(embeds, withDismiss = false) {
   const allComponents = [];
 
   for (let i = 0; i < embeds.length; i++) {
@@ -286,7 +343,7 @@ function embedsToComponents(embeds) {
 
   // Use first embed's color
   const accentColor = embeds.find((e) => e && e.color != null)?.color;
-  return chunkIntoMessages(allComponents, accentColor);
+  return chunkIntoMessages(allComponents, accentColor, withDismiss);
 }
 
 module.exports = {
@@ -297,6 +354,9 @@ module.exports = {
   textDisplay,
   separator,
   container,
+  linkButton,
+  dismissButton,
+  addDismissToMessages,
   chunkText,
   chunkIntoMessages,
   buildSectionMessages,

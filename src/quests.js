@@ -545,7 +545,7 @@ async function postWebhook(url, body) {
   if (!url) return { ok: false, status: 0, text: 'no webhook' };
   const embeds = body.embeds || [];
   const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
-  return sendEmbeds(url, base, embeds, { label: 'quests' });
+  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });
 }
 
 async function sendQuestWebhook(quest) {

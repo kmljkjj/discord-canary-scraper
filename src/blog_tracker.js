@@ -592,7 +592,7 @@ async function postWebhook(payload) {
     r = await sendWebhook(withComponentsUrl(WEBHOOK), { ...base, flags: 1 << 15, components: body.components }, { label: 'blog' });
   } else {
     // Embeds classiques — sendEmbeds convertit en Components V2
-    r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'blog' });
+    r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'blog', withDismiss: true });
   }
   if (!r.ok) {
     console.warn('blog webhook fail', r.status, (r.text || '').slice(0, 200));

@@ -439,7 +439,7 @@ async function post(url, body) {
   const embeds = body.embeds || [];
   const base = { username: body.username, avatar_url: body.avatar_url };
   // Utiliser sendEmbeds qui convertit automatiquement en Components V2
-  const r = await sendEmbeds(url, base, embeds, { label: title, minGapMs: 50 });
+  const r = await sendEmbeds(url, base, embeds, { label: title, minGapMs: 50, withDismiss: true });
   console.log('webhook', r.status, title);
   if (r.ok) {
     await markPosted(fp);

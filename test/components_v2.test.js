@@ -10,6 +10,9 @@ const {
   textDisplay,
   separator,
   container,
+  linkButton,
+  dismissButton,
+  addDismissToMessages,
   chunkText,
   chunkIntoMessages,
   buildSectionMessages,
@@ -233,4 +236,86 @@ test('chunkText preserves text exactly when reassembled', () => {
   const text = parts.join('\n');
   const chunks = chunkText(text, 200);
   assert.strictEqual(chunks.join(''), text);
+});
+
+test('linkButton builds a style 5 button', () => {
+  const btn = linkButton('Click me', 'https://example.com');
+  assert.strictEqual(btn.type, 2);
+  assert.strictEqual(btn.style, 5);
+  assert.strictEqual(btn.label, 'Click me');
+  assert.strictEqual(btn.url, 'https://example.com');
+});
+
+test('linkButton truncates label to 80 chars', () => {
+  const btn = linkButton('a'.repeat(100), 'https://example.com');
+  assert.strictEqual(btn.label.length, 80);
+});
+
+test('dismissButton builds an ActionRow with a link button', () => {
+  const row = dismissButton();
+  assert.strictEqual(row.type, 1); // ActionRow
+  assert.strictEqual(row.components.length, 1);
+  assert.strictEqual(row.components[0].type, 2); // Button
+  assert.strictEqual(row.components[0].style, 5); // Link
+  assert.ok(row.components[0].label);
+  assert.ok(row.components[0].url);
+});
+
+test('dismissButton accepts custom label', () => {
+  const row = dismissButton('Effacer');
+  assert.strictEqual(row.components[0].label, 'Effacer');
+});
+
+test('addDismissToMessages adds button to container', () => {
+  const messages = [[
+    container([textDisplay('hello')], 0xff0000),
+  ]];
+  addDismissToMessages(messages);
+  const c = messages[0][0];
+  // Container should now have 2 components: textDisplay + dismiss ActionRow
+  assert.strictEqual(c.components.length, 2);
+  assert.strictEqual(c.components[1].type, 1); // ActionRow
+  assert.strictEqual(c.components[1].components[0].style, 5); // Link button
+});
+
+test('addDismissToMessages handles full container', () => {
+  // Fill container to max
+  const children = [];
+  for (let i = 0; i < 10; i++) children.push(textDisplay(`item ${i}`));
+  const messages = [[container(children, 0xff0000)]];
+  addDismissToMessages(messages);
+  // Dismiss button should be added as top-level component
+  assert.ok(messages[0].length >= 2);
+  const last = messages[0][messages[0].length - 1];
+  assert.strictEqual(last.type, 1); // ActionRow
+});
+
+test('embedsToComponents with withDismiss=true adds dismiss button', () => {
+  const embeds = [{ title: 'Test', description: 'Hello' }];
+  const messages = embedsToComponents(embeds, true);
+  assert.ok(messages.length >= 1);
+  // Last component of last message should be an ActionRow (dismiss button)
+  const lastMsg = messages[messages.length - 1];
+  const container = lastMsg[0];
+  const lastComp = container.components[container.components.length - 1];
+  assert.strictEqual(lastComp.type, 1); // ActionRow
+  assert.strictEqual(lastComp.components[0].style, 5); // Link button
+});
+
+test('buildSectionMessages with withDismiss=true adds dismiss button', () => {
+  const sections = [
+    { label: 'Experiments', color: 0x5865f2, count: 2, lines: ['exp1', 'exp2'] },
+  ];
+  const messages = buildSectionMessages({
+    title: 'Experiments',
+    bn: '300000',
+    ts: '',
+    sections,
+    withDismiss: true,
+  });
+  assert.ok(messages.length >= 1);
+  const container = messages[0][0];
+  const lastComp = container.components[container.components.length - 1];
+  assert.strictEqual(lastComp.type, 1); // ActionRow
+  assert.strictEqual(lastComp.components[0].style, 5); // Link button
 });

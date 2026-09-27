@@ -258,7 +258,7 @@ async function postWebhook(p) {
   if (p.image) body.embeds[0].image = { url: p.image };
   const embeds = body.embeds || [];
   const base = { username: body.username || 'Datamining · X', avatar_url: body.avatar_url };
-  const r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'x-watch ' + p.id });
+  const r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'x-watch ' + p.id, withDismiss: true });
   console.log('webhook', r.status, p.id);
   return r.ok;
 }
