@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mobile — Canary Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <nav class="nav">
+    <a class="nav-brand" href="index.html"><span class="nav-logo">◈</span> Canary Lab</a>
+    <div class="nav-links">
+      <a href="index.html">Experiments</a>
+      <a href="shop.html">Boutique</a>
+      <a href="status.html">Statut</a>
+      <a class="active" href="mobile.html">Mobile</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header class="header">
+      <div class="brand-block">
+        <h1>Mobile</h1>
+        <p class="subtitle">Versions iOS &amp; Android · stable / bêta / alpha</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </header>
+
+    <section id="version-cards" class="mobile-grid">
+      <div class="empty">Chargement…</div>
+    </section>
+
+    <section class="mobile-section">
+      <h2 class="section-title">Historique OTA</h2>
+      <div id="ota-history" class="ota-grid">
+        <div class="empty">Chargement…</div>
+      </div>
+    </section>
+
+    <section class="mobile-section">
+      <h2 class="section-title">Experiments mobiles</h2>
+      <div id="mobile-exp-info" class="exp-info">
+        <div class="empty">Chargement…</div>
+      </div>
+    </section>
+
+    <section class="mobile-section" id="history-section" style="display:none">
+      <h2 class="section-title">Changements récents</h2>
+      <div id="change-history"></div>
+    </section>
+
+    <footer class="footer">
+      <span>Data · <a href="https://github.com/kmljkjj/discord-canary-scraper" target="_blank" rel="noopener">discord-canary-scraper</a></span>
+      <span id="updated"></span>
+    </footer>
+  </div>
+
+  <script src="mobile.js"></script>
+</body>
+</html>

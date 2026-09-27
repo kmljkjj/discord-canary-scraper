@@ -490,3 +490,246 @@ input[type="search"]:focus, #search:focus, .input:focus {
   .brand-block h1 { font-size: 1.35rem; }
   .meta { width: 100%; margin-left: 0; }
 }
+
+/* —— Mobile page —— */
+.mobile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.version-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.3rem 1.1rem;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: rise 0.45s ease both;
+  transition: transform 0.22s ease, border-color 0.22s, background 0.22s;
+}
+
+.version-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent, var(--green)), transparent 80%);
+  opacity: 0.9;
+}
+
+.version-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  background: var(--card-hover);
+}
+
+.version-card.unavailable {
+  opacity: 0.55;
+}
+
+.vc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.vc-platform {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.vc-channel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+}
+
+.vc-version {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.vc-build, .vc-commit, .vc-release, .vc-date, .vc-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+
+.vc-build code, .vc-commit code {
+  font-size: 0.78rem;
+  background: rgba(255,255,255,0.06);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+}
+
+.vc-notes {
+  margin: 0.6rem 0;
+}
+
+.vc-notes summary {
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.vc-notes p {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.vc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+}
+
+.vc-store {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #aeb4ff;
+  text-decoration: none;
+}
+
+.vc-store:hover { text-decoration: underline; }
+
+.vc-source {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mobile-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.ota-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.ota-group h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+}
+
+.ota-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ota-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.7rem 0.9rem;
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ota-version {
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.ota-platform {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.ota-build, .ota-commit {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.ota-build code, .ota-commit code {
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.06);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+}
+
+.ota-release {
+  font-size: 0.72rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.exp-info {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  backdrop-filter: blur(16px);
+}
+
+.change-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  margin-bottom: 0.4rem;
+}
+
+.change-key {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.change-version {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.change-version code {
+  font-size: 0.78rem;
+  background: rgba(255,255,255,0.06);
+  padding: 0.1rem 0.35rem;
+  border-radius: 5px;
+}
+
+.change-date {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .mobile-grid { grid-template-columns: 1fr; }
+  .ota-grid { grid-template-columns: 1fr; }
+}

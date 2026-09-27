@@ -1,0 +1,2094 @@
+{
+  "scrapedAt": "2026-09-09T07:24:38.540Z",
+  "sourceRepo": "https://github.com/Wumpus-Central/discord-mobile-datamining.git",
+  "sourceCommit": "fe7d375d",
+  "sourceMessage": "346.1 (346201) runtime",
+  "experimentCount": 305,
+  "stringCount": 251,
+  "newExperimentCount": 0,
+  "experiments": [
+    {
+      "id": "2022-03_block_russian_purchases",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2022-07_voice_in_threads",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2023-09_iar_user_reporting",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2024-06_rtc_pacer__simulcast",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2024-09_secure_frames_deeplink",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2024-12_guild_voice_channel_ringing",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-01-allow-nonstaff-to-preview-app-collections",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-05-search-results-feedback",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-06_native_intents",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-08_default_invite_expiration_guild",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-08_portkey_enabled",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-08-animated-keyboard-android",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-08-browser-hevc",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-08-voice-user-affinity",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09_hotwheels_nvidia_boost",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-image-attachment-mezzanine-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-libdiscore-telemetry",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-premium-trial-offer-action-sheet-ks",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-sensitive-content-self-harm",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-server-nsfw-level",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-09-video-qoe-metrics-tracking",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-clear-channel-notifications-on-app-foreground-ios",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-force-sdr-emojis-stickers",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-friend-request-alerts-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-go-live-auto-quality",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-low-latency-rate-control",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-mobile-home-drawer",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-10-video-frame-rate-validation",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-age-verification-expressive-everywhere",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-defer-load-late-lazy-cache",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-enhanced-jpeg-encoding-on-ios",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-global-frame-pool-lock",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-hide-manual-link",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-overlay-chat",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-11-video-end-card-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12_voice_channel_hoisting",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-09-ptt-education",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-connection-indicator",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-katsudon",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-mobile-lossless-image-upload-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-nitro-s-rewards",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-orb-redemption-thru-orders",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-proportional-vad-indicator",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-shadow-node-spike",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-windows-audio-effects",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-wmf-gpu-encode",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2025-12-zoomed-analytics",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-android-rmle",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-bug-reporter",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-chat-loading-indicator",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-family-center-v3",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-favorites-server",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-image-optimized-encoding-ladder",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-ios-apptransactionid-tracking",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-ios-push-notif-json-fix",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-less-personalized-ads",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-libdiscore-batch-store-refactor",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-mobile-action-sheet-killswitch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-mobile-go-live-entrypoint",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-wmf-gpu-encode-intel",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-01-yytext-replacement-ios",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02_game_claim_coachmark",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02_hangout_window",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02_past_vc_activity_messages",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-activity-privacy-matching",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-android-chat-mosaic-shared-pool",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-android-fresco-cache",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-callkit-metric-collection",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-content-classification-presence-filter",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-default-audio-route",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-expiring-powerup-coachmark",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-game-server-tab-always-on",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-gift-cards",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-go-live-hdr",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-go-live-video-preset-resolution",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-mana-playground-access",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-mobile-mute-indicator",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-mobile-visual-refresh",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-mobile-volume-output-slider-removal",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-premium-offer-reminder-xp",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-private-channel-hiding",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-private-profiles",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-process-boost-on-voice",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-pubsub-bulk-ban-users",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-referral-reminder-dc",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-silence-warning-aggression",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-02-wgc-dirty-regions-all",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03_file_upload_250_mb_powerup",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03_game_server_pricing",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03_guild_official_messages",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03_voice_badge",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-acom-modify-dark-launch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-age-verification-google-wallet",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-audio-effects-probe",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-block-purchases",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-bogo-promotion-gate-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-bogo-promotion-marketing-materials-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-boost-to-unlock-mobile-coachmark",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-browser-inverted-wants",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-churro",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-clips-experiment",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-collectibles-profile-frames",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-content-inventory-memberlist-and-ranker",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-conversation-highlighting-utility",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-crepe",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-debug-experiment",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-denormalized-perks-access-read",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-file-upload-powerup-holdout",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-friend-request-message",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-icymi-desktop",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-icymi-staff-debugging-utility",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-ios-audio-interrupt-handling",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-message-bookmarks",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-mobile-hermes-occupancy-target",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-mobile-quest-home-red-dot-notification",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-muted-video-quest-new-defaults",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-nitro-acom-subscription",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-notification-load-messages",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-overlay-default-keybind",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-private-profiles-strict",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-private-profiles-strict-gb",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-quest-home-bounties",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-soundmoji-rendering",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-soundmoji-sending",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-stage-voice-panel",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-surface-direct-renderer",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-video-capture-device-no-reuse",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-video-stutter-mitigation",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-03-wysiwyg-user-profile-editing",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04_application_identity_linked_roles",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04_server_theme",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04_voice_call_trigger_point",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-attachment-quality-metrics",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-browser-transceiver-padding-removal",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-collectibles-profile-frames-purchase",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-composed-quest-player",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-declarative-notif-settings",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-disable-hook-frame-pacer",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-ensure-received-messages-added-in-order",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-gift-promotion-reminder",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-gifting-badge",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-hide-covered-channels",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-http-request-sample",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-icymi-staff-only",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-inappropriate-conversations-default-on",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-inappropriate-conversations-prescan",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-kestrel",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-krisp-v9-ios",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-mobile-boost-progress-bar",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-mobile-go-live-upsell",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-new-games-coachmark",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-one-day-fractional-nitro",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-overlay-streamer-mode",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-post-reaction-push-banner",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-quests-premium-orb-multiplier-marketing",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-safety-flows",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-server-boost-copy-1440p",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-topical-navigation-staff-control",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-upcoming-server-event",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-user-profile-performance-analytics",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-video-hook-dx12",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-04-voice-gateway-protocol-version",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05_default_invite_expiration_guild_web",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05_voice_channel_list_invite_embed",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-age-restricted-application-commands",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-app-store-overlay-feature-gate",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-av1-bitrate-tuning",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-bounties-stage-1",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-bounty-stale-refresh-quest-home",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-dice-roll-slash-command",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-disable-camera-simulcast",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-distributed-clips",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-electron-multilang-spellcheck",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-frontier-tuning",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-ios-video-stabilization",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-mana-type-consolidation",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-mobile-referral-subscriber-profile-entrypoint-button",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-mobile-request-review-no-tti",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-noisier-notif-settings-defaults",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-quest-home-tile-redesign",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-server-theme-user",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-spatial-audio-for-voice",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-use-ad-analytics-interface",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-05-you-bar-activity-status",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06_guild_rooms",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06_guild_spaces",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-age-verification-incode",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-android-two-week-trials",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-av1-encode-linux",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-battlenet-social-sdk-migration",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-bounties-shop-carousel",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-clickstream-analytics",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-content-classification-embedded-activity-filter",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-contextual-opt-in-nudge-holdout",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-dont-badge-muted-vcs",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-family-center-connection-prereq",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-gift-acom-order",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-gifting-badge-desktop",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-gummy-bears",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-gummy-viewers",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-macaron",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-messages-list-impl",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-mobile-friendship-anniversary",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-mobile-media-viewer-share",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-mobile-server-tag",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-nitro-gdm-cap-increase",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-non-friend-messages-requests-in-uk",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-orbs-holdout",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-otp-acom-order",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-quest-fetch-reconnect-jitter",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-quest-home-layout-visual-tweaks",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-rive-app-state-playback",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-server-ladder",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-server-setup-boost-cta",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-server-theme-apex-shadow",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-topical-navigation-guild",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-upscale-small-captured-frames",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-06-wmf-cpu-encode-intel",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-ad-recheck-interval-experiment",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-app-channels",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-attachment-image-ladder",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-autoclipping-default-override",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-aws-gateway",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-bounties-modal-transitions-refactor",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-bounties-vertical-scroll",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-clips-game-events-on-player",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-custom-app-store-overlay",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-custom-typing-indicator",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-desktop-channel-tabs",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-expressive-modal-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-ios-attribution",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-krisp-cpu-disablement",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-manual-age-assurance-fallback",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-message-bookmarks-v2",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-message-request-push-notification",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-mobile-boosting-optimizations",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-mobile-emoji-suggestions",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-mobile-game-collection",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-mobile-reaction-to-profile",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-nitro-acom-discounts",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-nitro-acom-trials",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-nitro-floating-subscribe",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-nitro-visual-ux",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-nvenc-reconstructed-frames",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-parental-consent-warning-fetch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-premium-group-announcement-modal",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-premium-referral-incentives",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-quest-bar-secondary-cta",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-react-native-plain-text",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-reject-with-error-kill-switch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-renewable-end-date-sort",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-rm-member-verification-route",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-shop-this-look-mobile",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-smag-mobile-wishlist-suggestions",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-tr-offer-1-campaign",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-vibegrations-guild",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-07-you-bar-guild-tag",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-ad-topic-opt-out-client",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-android-rn-reparenting-flag",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-audio-fidelity",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-badge-management",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-bounties-ctr-experiment-1",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-bounties-mobile-quest-bar",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-compress-logs",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-dcf-new-user-cooldown",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-fake-play-age-signals",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-favorites-server",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-find-coded-links-regex",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-game-community-add-server-entry",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-game-tag-on-mobile-voice-call-tiles",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-guild-members-in-mobile-vc-invites",
+      "type": "guild",
+      "kind": "guild",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-guilds-bar-media-state-store",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-heic-upload-conversion",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-ios-objc-composed-image-cache",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-kestrel-ga",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-mark-channel-unread",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-mobile-emoji-picker-upsell-restyle",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-mobile-soundboard-sound-preview-menu",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-mobile-voice-channel-games",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-mute-aware-noise-cancellation",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-nitro-tenure-badge-withheld-state",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-premium-gifting-gogo-promotion",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-scheduled-messages",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-shop-standalone-pdp-mobile",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-show-expressive-modal-subtitle-alt",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-timestamp-autocomplete-mobile",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-tiny-bronco",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-top-soundboard-sounds",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-top-soundboard-sounds-mobile",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-user-bio-max-length",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-video-guard",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-virtual-backgrounds-ios",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-08-vq-remaining-time-truncation",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-declarative-notification-settings-redesign",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-friends-sidebar",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-mobile-sticker-picker-upsell-restyle",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-nitro-file-upload-rollout",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-non-nitro-file-upload-marketing",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-profile-link-fetch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-stream-zero-vad-leading",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    },
+    {
+      "id": "2026-09-video-background-profile-fetch",
+      "type": "user",
+      "kind": "user",
+      "source": "mobile_files"
+    }
+  ],
+  "strings": {
+    "Window": " +\n                                String(source) +\n                                ",
+    "cc-csc": "cc-csc",
+    "cc-exp": "cc-exp",
+    "no-bok": "nb",
+    "no-nyn": "nn",
+    "sgn-BR": "bzs",
+    "sgn-CO": "csn",
+    "sgn-DE": "gsg",
+    "sgn-DK": "dsl",
+    "sgn-ES": "ssp",
+    "sgn-FR": "fsl",
+    "sgn-GB": "bfi",
+    "sgn-GR": "gss",
+    "sgn-IE": "isg",
+    "sgn-IT": "ise",
+    "sgn-JP": "jsl",
+    "sgn-MX": "mfs",
+    "sgn-NI": "ncs",
+    "sgn-NL": "dse",
+    "sgn-NO": "nsl",
+    "sgn-PT": "psr",
+    "sgn-SE": "swl",
+    "sgn-US": "ase",
+    "sgn-ZA": "sfs",
+    "zh-cmn": "cmn",
+    "zh-gan": "gan",
+    "zh-min": "nan-x-zh-min",
+    "zh-wuu": "wuu",
+    "zh-yue": "yue",
+    "man-GN": "man-Nkoo-GN",
+    "und-AD": "ca-Latn-AD",
+    "und-AE": "ar-Arab-AE",
+    "und-AF": "fa-Arab-AF",
+    "und-AL": "sq-Latn-AL",
+    "und-AM": "hy-Armn-AM",
+    "und-AO": "pt-Latn-AO",
+    "und-AR": "es-Latn-AR",
+    "und-AS": "sm-Latn-AS",
+    "und-AT": "de-Latn-AT",
+    "und-AW": "nl-Latn-AW",
+    "und-AX": "sv-Latn-AX",
+    "und-AZ": "az-Latn-AZ",
+    "und-BA": "bs-Latn-BA",
+    "und-BD": "bn-Beng-BD",
+    "und-BE": "nl-Latn-BE",
+    "und-BF": "fr-Latn-BF",
+    "und-BG": "bg-Cyrl-BG",
+    "und-BH": "ar-Arab-BH",
+    "und-BI": "rn-Latn-BI",
+    "und-BJ": "fr-Latn-BJ",
+    "und-BL": "fr-Latn-BL",
+    "und-BN": "ms-Latn-BN",
+    "und-BO": "es-Latn-BO",
+    "und-BQ": "pap-Latn-BQ",
+    "und-BR": "pt-Latn-BR",
+    "und-BT": "dz-Tibt-BT",
+    "und-BY": "be-Cyrl-BY",
+    "und-CC": "ms-Arab-CC",
+    "und-CD": "sw-Latn-CD",
+    "und-CF": "fr-Latn-CF",
+    "und-CG": "fr-Latn-CG",
+    "und-CH": "de-Latn-CH",
+    "und-CI": "fr-Latn-CI",
+    "und-CL": "es-Latn-CL",
+    "und-CM": "fr-Latn-CM",
+    "und-CN": "zh-Hans-CN",
+    "und-CO": "es-Latn-CO",
+    "und-CR": "es-Latn-CR",
+    "und-CU": "es-Latn-CU",
+    "und-CV": "pt-Latn-CV",
+    "und-CW": "pap-Latn-CW",
+    "und-CY": "el-Grek-CY",
+    "und-CZ": "cs-Latn-CZ",
+    "und-DE": "de-Latn-DE",
+    "und-DJ": "aa-Latn-DJ",
+    "und-DK": "da-Latn-DK",
+    "und-DO": "es-Latn-DO",
+    "und-DZ": "ar-Arab-DZ",
+    "und-EA": "es-Latn-EA",
+    "und-EC": "es-Latn-EC",
+    "und-EE": "et-Latn-EE",
+    "und-EG": "ar-Arab-EG",
+    "und-EH": "ar-Arab-EH",
+    "und-ER": "ti-Ethi-ER",
+    "und-ES": "es-Latn-ES",
+    "und-ET": "am-Ethi-ET",
+    "und-FI": "fi-Latn-FI",
+    "und-FO": "fo-Latn-FO",
+    "und-FR": "fr-Latn-FR",
+    "und-GA": "fr-Latn-GA",
+    "und-GE": "ka-Geor-GE",
+    "und-GF": "fr-Latn-GF",
+    "und-GH": "ak-Latn-GH",
+    "und-GL": "kl-Latn-GL",
+    "und-GN": "fr-Latn-GN",
+    "und-GP": "fr-Latn-GP",
+    "und-GQ": "es-Latn-GQ",
+    "und-GR": "el-Grek-GR",
+    "und-GT": "es-Latn-GT",
+    "und-GW": "pt-Latn-GW",
+    "und-HK": "zh-Hant-HK",
+    "und-HN": "es-Latn-HN",
+    "und-HR": "hr-Latn-HR",
+    "und-HT": "ht-Latn-HT",
+    "und-HU": "hu-Latn-HU",
+    "und-IC": "es-Latn-IC",
+    "und-ID": "id-Latn-ID",
+    "und-IL": "he-Hebr-IL",
+    "und-IN": "hi-Deva-IN",
+    "und-IQ": "ar-Arab-IQ",
+    "und-IR": "fa-Arab-IR",
+    "und-IS": "is-Latn-IS",
+    "und-IT": "it-Latn-IT",
+    "und-JO": "ar-Arab-JO",
+    "und-JP": "ja-Jpan-JP",
+    "und-KE": "sw-Latn-KE",
+    "und-KG": "ky-Cyrl-KG",
+    "und-KH": "km-Khmr-KH",
+    "und-KM": "ar-Arab-KM",
+    "und-KP": "ko-Kore-KP",
+    "und-KR": "ko-Kore-KR",
+    "und-KW": "ar-Arab-KW",
+    "und-KZ": "ru-Cyrl-KZ",
+    "und-LA": "lo-Laoo-LA",
+    "und-LB": "ar-Arab-LB",
+    "und-LI": "de-Latn-LI",
+    "und-LK": "si-Sinh-LK",
+    "und-LS": "st-Latn-LS",
+    "und-LT": "lt-Latn-LT",
+    "und-LU": "fr-Latn-LU",
+    "und-LV": "lv-Latn-LV",
+    "und-LY": "ar-Arab-LY",
+    "und-MA": "ar-Arab-MA",
+    "und-MC": "fr-Latn-MC",
+    "und-MD": "ro-Latn-MD",
+    "und-ME": "sr-Latn-ME",
+    "und-MF": "fr-Latn-MF",
+    "und-MG": "mg-Latn-MG",
+    "und-MK": "mk-Cyrl-MK",
+    "und-ML": "bm-Latn-ML",
+    "und-MM": "my-Mymr-MM",
+    "und-MN": "mn-Cyrl-MN",
+    "und-MO": "zh-Hant-MO",
+    "und-MQ": "fr-Latn-MQ",
+    "und-MR": "ar-Arab-MR",
+    "und-MT": "mt-Latn-MT",
+    "und-MU": "mfe-Latn-MU",
+    "und-MV": "dv-Thaa-MV",
+    "und-MX": "es-Latn-MX",
+    "und-MY": "ms-Latn-MY",
+    "und-MZ": "pt-Latn-MZ",
+    "und-NA": "af-Latn-NA",
+    "und-NC": "fr-Latn-NC",
+    "und-NE": "ha-Latn-NE",
+    "und-NI": "es-Latn-NI",
+    "und-NL": "nl-Latn-NL",
+    "und-NO": "nb-Latn-NO",
+    "und-NP": "ne-Deva-NP",
+    "und-OM": "ar-Arab-OM",
+    "und-PA": "es-Latn-PA",
+    "und-PE": "es-Latn-PE",
+    "und-PF": "fr-Latn-PF",
+    "und-PG": "tpi-Latn-PG",
+    "und-PH": "fil-Latn-PH",
+    "und-PK": "ur-Arab-PK",
+    "und-PL": "pl-Latn-PL",
+    "und-PM": "fr-Latn-PM",
+    "und-PR": "es-Latn-PR",
+    "und-PS": "ar-Arab-PS",
+    "und-PT": "pt-Latn-PT",
+    "und-PW": "pau-Latn-PW",
+    "und-PY": "gn-Latn-PY",
+    "und-QA": "ar-Arab-QA",
+    "und-RE": "fr-Latn-RE",
+    "und-RO": "ro-Latn-RO",
+    "und-RS": "sr-Cyrl-RS",
+    "und-RU": "ru-Cyrl-RU",
+    "und-RW": "rw-Latn-RW",
+    "und-SA": "ar-Arab-SA",
+    "und-SC": "fr-Latn-SC",
+    "und-SD": "ar-Arab-SD",
+    "und-SE": "sv-Latn-SE",
+    "und-SI": "sl-Latn-SI",
+    "und-SJ": "nb-Latn-SJ",
+    "und-SK": "sk-Latn-SK",
+    "und-SL": "kri-Latn-SL",
+    "und-SM": "it-Latn-SM",
+    "und-SN": "fr-Latn-SN",
+    "und-SO": "so-Latn-SO",
+    "und-SR": "nl-Latn-SR",
+    "und-SS": "ar-Arab-SS",
+    "und-ST": "pt-Latn-ST",
+    "und-SV": "es-Latn-SV",
+    "und-SY": "ar-Arab-SY",
+    "und-TD": "fr-Latn-TD",
+    "und-TF": "fr-Latn-TF",
+    "und-TG": "fr-Latn-TG",
+    "und-TH": "th-Thai-TH",
+    "und-TJ": "tg-Cyrl-TJ",
+    "und-TK": "tkl-Latn-TK",
+    "und-TL": "pt-Latn-TL",
+    "und-TM": "tk-Latn-TM",
+    "und-TN": "ar-Arab-TN",
+    "und-TO": "to-Latn-TO",
+    "und-TR": "tr-Latn-TR",
+    "und-TV": "tvl-Latn-TV",
+    "und-TW": "zh-Hant-TW",
+    "und-TZ": "sw-Latn-TZ",
+    "und-UA": "uk-Cyrl-UA",
+    "und-UG": "sw-Latn-UG",
+    "und-UY": "es-Latn-UY",
+    "und-UZ": "uz-Latn-UZ",
+    "und-VA": "it-Latn-VA",
+    "und-VE": "es-Latn-VE",
+    "und-VN": "vi-Latn-VN",
+    "und-VU": "bi-Latn-VU",
+    "und-WF": "fr-Latn-WF",
+    "und-WS": "sm-Latn-WS",
+    "und-XK": "sq-Latn-XK",
+    "und-YE": "ar-Arab-YE",
+    "und-YT": "fr-Latn-YT",
+    "und-ZM": "bem-Latn-ZM",
+    "und-ZW": "sn-Latn-ZW",
+    "unr-NP": "unr-Deva-NP",
+    "yue-CN": "yue-Hans-CN",
+    "bgn-AE": "right-to-left",
+    "bgn-AF": "right-to-left",
+    "bgn-IR": "right-to-left",
+    "bgn-OM": "right-to-left",
+    "ccp-IN": "left-to-right",
+    "ckb-IR": "right-to-left",
+    "en-001": "left-to-right",
+    "en-150": "left-to-right",
+    "es-419": "left-to-right",
+    "gez-ER": "left-to-right",
+    "gsw-FR": "left-to-right",
+    "gsw-LI": "left-to-right",
+    "kpe-GN": "left-to-right",
+    "lrc-IQ": "right-to-left",
+    "mas-TZ": "left-to-right",
+    "nds-NL": "left-to-right",
+    "pap-AW": "left-to-right",
+    "sdh-IQ": "right-to-left",
+    "shn-TH": "left-to-right",
+    "sma-NO": "left-to-right",
+    "smj-NO": "left-to-right",
+    "syr-SY": "right-to-left",
+    "teo-KE": "left-to-right",
+    "yrl-CO": "left-to-right",
+    "yrl-VE": "left-to-right",
+    "180deg": "0deg"
+  }
+}

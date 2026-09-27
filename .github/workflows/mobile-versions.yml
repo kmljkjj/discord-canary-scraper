@@ -30,7 +30,6 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           ORBIT_BOT_NAME: Datamining
-          MOBILE_VERSIONS_PAUSED: '1'
         run: node src/mobile_versions.js
 
       - name: Commit versions state
