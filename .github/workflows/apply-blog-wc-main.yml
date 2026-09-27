@@ -37,6 +37,6 @@ jobs:
           git diff --cached --stat
           git commit -m "fix(blog): require ?with_components=true for Components V2 webhooks
 
-Sans with_components, Discord ignore silencieusement les components V2
-sur les webhooks non-application. Aligné sur quests.js." || echo "nothing"
+          Sans with_components, Discord ignore silencieusement les components V2
+          sur les webhooks non-application. Aligné sur quests.js." || echo "nothing"
           git push
