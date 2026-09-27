@@ -1,16 +1,17 @@
 {
-  "scrapedAt": "2026-09-27T22:17:42.074Z",
+  "scrapedAt": "2026-09-27T22:24:14.757Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
       "version": "346.0",
+      "build": null,
+      "releaseDate": "2026-09-21T16:07:45Z",
+      "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "releaseDate": "2026-09-21T16:07:45Z",
-      "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
-      "checkedAt": "2026-09-27T22:17:42.074Z"
+      "checkedAt": "2026-09-27T22:24:14.757Z"
     },
     {
       "platform": "ios",
@@ -18,7 +19,8 @@
       "version": null,
       "available": false,
       "note": "OTA not ahead of App Store",
-      "checkedAt": "2026-09-27T22:17:42.074Z"
+      "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
+      "checkedAt": "2026-09-27T22:24:14.757Z"
     },
     {
       "platform": "android",
@@ -30,15 +32,20 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-09-27T22:17:42.074Z"
+      "checkedAt": "2026-09-27T22:24:14.757Z"
     },
     {
       "platform": "android",
       "channel": "beta",
-      "version": null,
-      "available": false,
-      "note": "No OTA version ahead of stable",
-      "checkedAt": "2026-09-27T22:17:42.074Z"
+      "version": "347.8",
+      "build": null,
+      "commit": null,
+      "releaseName": null,
+      "source": "aptoide",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
+      "available": true,
+      "note": "Track-labeled on aptoide",
+      "checkedAt": "2026-09-27T22:24:14.757Z"
     },
     {
       "platform": "android",
@@ -46,7 +53,8 @@
       "version": null,
       "available": false,
       "note": "No OTA version ahead of stable",
-      "checkedAt": "2026-09-27T22:17:42.074Z"
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
+      "checkedAt": "2026-09-27T22:24:14.757Z"
     }
   ],
   "otaIndex": {
@@ -259,9 +267,23 @@
       }
     ]
   },
-  "history": [],
-  "previousScrapedAt": "2026-09-27T22:13:58.845Z",
+  "sources": {
+    "externalFallback": true,
+    "externalFallbackDate": "2026-09-27T22:14:47Z",
+    "discordMinVersion": "388"
+  },
+  "history": [
+    {
+      "at": "2026-09-27T22:24:14.757Z",
+      "key": "android/beta",
+      "from": null,
+      "to": "347.8",
+      "build": null
+    }
+  ],
+  "previousScrapedAt": "2026-09-27T22:17:42.074Z",
   "notifiedFingerprints": [
+    "android|beta|347.8",
     "android|stable|343.12",
     "android|stable|346.13",
     "ios|beta|343.0",
@@ -269,7 +291,15 @@
     "ios|stable|344.0",
     "ios|stable|346.0"
   ],
-  "changes": [],
+  "changes": [
+    {
+      "type": "new",
+      "key": "android/beta",
+      "from": null,
+      "to": "347.8",
+      "build": null
+    }
+  ],
   "paused": false,
   "notifyOk": true
 }
