@@ -35,7 +35,7 @@ jobs:
       - name: Commit versions state
         if: always() && steps.versions.outcome == 'success'
         run: |
-          scripts/commit-state.sh "mobile versions" data/mobile_versions.json
+          scripts/commit-state.sh "mobile versions" data/mobile_versions.json data/external_versions.json
 
       - name: Mobile experiments from client files
         id: files

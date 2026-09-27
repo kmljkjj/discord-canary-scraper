@@ -1,0 +1,29 @@
+{
+  "updatedAt": "2026-09-27T22:14:47Z",
+  "sources": {
+    "aptoide": {
+      "url": "https://discord.bd.aptoide.com/versions",
+      "lastAccessible": false,
+      "note": "Aptoide versions page — behind Cloudflare. Data extracted via content fetch."
+    },
+    "apkmirror": {
+      "url": "https://www.apkmirror.com/uploads/?appcategory=discord-chat-for-gamers",
+      "lastAccessible": false,
+      "note": "APKMirror latest uploads — behind Cloudflare."
+    }
+  },
+  "android": {
+    "beta": {
+      "version": "347.8",
+      "date": "22/9/2026",
+      "source": "aptoide",
+      "track": "beta"
+    },
+    "alpha": null,
+    "note": "Alpha track not listed on Aptoide. APKMirror last had alpha (291.4) in July 2025."
+  },
+  "ios": {
+    "beta": null,
+    "note": "TestFlight beta not publicly queryable. OTA manifest shows no version ahead of App Store stable (346.0)."
+  }
+}
