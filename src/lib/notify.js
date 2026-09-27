@@ -5,12 +5,10 @@
  * - Batch dedupe marked ONLY after successful webhook post
  */
 const { sendWebhook } = require('./webhook');
+const { DEFAULT_BOT_NAME, DEFAULT_AVATAR_URL } = require('./utils');
 
-const BOT = process.env.ORBIT_BOT_NAME || process.env.WEBHOOK_BOT_NAME || 'Datamining';
-const AVATAR =
-  process.env.ORBIT_AVATAR_URL ||
-  process.env.WEBHOOK_AVATAR_URL ||
-  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media/datamining-avatar.png';
+const BOT = process.env.WEBHOOK_BOT_NAME || DEFAULT_BOT_NAME;
+const AVATAR = process.env.WEBHOOK_AVATAR_URL || DEFAULT_AVATAR_URL;
 
 const {
   markPosted,
