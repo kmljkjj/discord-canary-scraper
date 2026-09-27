@@ -297,7 +297,78 @@ function buildTreatments(def, bucketMap, totalOk) {
   };
 }
 
+/**
+ * Global rate limiter — tracks Discord's rate limit headers and pauses
+ * all workers when rate limited, instead of per-request retries.
+ */
+const rateLimit = {
+  remaining: 1,
+  resetAfter: 0,
+  globalBlockUntil: 0,
+  consecutive429: 0,
+  dynamicDelayMs: DELAY_MS,
+
+  /**
+ * Check if we should wait before making a request.
+ * Returns the number of ms to wait, or 0.
+ */
+  waitMs() {
+    const now = Date.now();
+    if (now < this.globalBlockUntil) {
+      return this.globalBlockUntil - now;
+    }
+    return 0;
+  },
+
+  /**
+   * Update rate limit state from response headers.
+   */
+  update(headers) {
+    const remaining = headers.get('x-ratelimit-remaining');
+    const resetAfter = headers.get('x-ratelimit-reset-after');
+    if (remaining != null) this.remaining = Number(remaining);
+    if (resetAfter != null) this.resetAfter = Number(resetAfter);
+
+    // Dynamically adjust delay: if remaining is low, increase delay
+    if (this.remaining <= 1 && this.resetAfter > 0) {
+      this.dynamicDelayMs = Math.min(3000, DELAY_MS + 200);
+    } else if (this.remaining >= 3) {
+      this.dynamicDelayMs = Math.max(DELAY_MS, this.dynamicDelayMs - 50);
+    }
+  },
+
+  /**
+   * Handle a 429 response — block all workers.
+   */
+  block429(retryAfter) {
+    this.consecutive429++;
+    const wait = Math.min(30, Math.max(1, Number(retryAfter) || 2)) * 1000;
+    this.globalBlockUntil = Date.now() + wait;
+    // Increase dynamic delay after 429
+    this.dynamicDelayMs = Math.min(5000, this.dynamicDelayMs + 500);
+    console.warn('429 → global block', Math.round(wait / 1000) + 's · dynamic delay now', this.dynamicDelayMs + 'ms');
+    return wait;
+  },
+
+  /**
+   * Reset consecutive 429 counter on success.
+   */
+  success() {
+    if (this.consecutive429 > 0) {
+      // Gradually reduce dynamic delay on success
+      this.dynamicDelayMs = Math.max(DELAY_MS, this.dynamicDelayMs - 100);
+      this.consecutive429 = 0;
+    }
+  },
+};
+
 async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 0) {
+  // Wait if globally rate limited
+  const wait = rateLimit.waitMs();
+  if (wait > 0) {
+    await sleep(wait);
+  }
+
   const url = withGuild
     ? 'https://canary.discord.com/api/v10/experiments?with_guild_experiments=true'
     : 'https://canary.discord.com/api/v10/experiments';
@@ -310,16 +381,23 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
     },
     timeout: 25000,
   });
-  if (res.status === 429 && attempt < 4) {
+
+  // Update rate limit state from headers
+  rateLimit.update(res.headers);
+
+  if (res.status === 429) {
     const ra = Number(
       res.headers.get('retry-after') || res.headers.get('x-ratelimit-reset-after') || 2,
     );
-    const wait = Math.min(30, Math.max(1, ra)) * 1000 + attempt * 500;
-    console.warn('429 → wait', Math.round(wait / 1000) + 's');
-    await sleep(wait);
-    return fetchAssignments(extraHeaders, withGuild, attempt + 1);
+    rateLimit.block429(ra);
+    if (attempt < 4) {
+      await sleep(rateLimit.waitMs());
+      return fetchAssignments(extraHeaders, withGuild, attempt + 1);
+    }
+    throw new Error('429 after ' + (attempt + 1) + ' retries');
   }
   if (!res.ok) throw new Error('HTTP ' + res.status);
+  rateLimit.success();
   const data = await res.json();
   return {
     fingerprint: data.fingerprint,
@@ -335,23 +413,23 @@ async function sampleFingerprints(n, concurrency) {
   const byHash = new Map();
   let ok = 0;
   let fail = 0;
-  let consecutive429 = 0;
   let next = 0;
 
   async function worker() {
     while (true) {
       const my = next++;
       if (my >= n) break;
-      if (consecutive429 > 10) {
+      if (rateLimit.consecutive429 > 15) {
         fail++;
         continue;
       }
       try {
-        await sleep(DELAY_MS + Math.floor(Math.random() * 100));
+        // Use dynamic delay from rate limiter + jitter
+        const delay = rateLimit.dynamicDelayMs + Math.floor(Math.random() * 150);
+        await sleep(delay);
         const { assignments } = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
         });
-        consecutive429 = 0;
         for (const a of assignments) {
           if (!Array.isArray(a) || a.length < 6) continue;
           const hash = Number(a[0]);
@@ -366,16 +444,19 @@ async function sampleFingerprints(n, concurrency) {
         ok++;
       } catch (e) {
         fail++;
-        if (String(e.message).includes('429')) consecutive429++;
-        if (fail <= 6) console.warn('sample fail', e.message);
-        if (consecutive429 > 3) await sleep(3500);
+        if (String(e.message).includes('429')) {
+          // Already handled by rate limiter, just wait
+          await sleep(rateLimit.waitMs());
+        } else if (fail <= 6) {
+          console.warn('sample fail', e.message);
+        }
       }
-      if (my && my % 25 === 0) console.log('  sampled', my, '/', n, 'ok', ok);
+      if (my && my % 25 === 0) console.log('  sampled', my, '/', n, 'ok', ok, 'delay', rateLimit.dynamicDelayMs + 'ms');
     }
   }
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
-  console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size);
+  console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429);
   return { byHash, ok, fail };
 }
 
