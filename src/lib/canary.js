@@ -1,3 +1,9 @@
+/**
+ * Discord Canary build scraper.
+ * Fetches the canary.discord.com/app HTML, parses GLOBAL_ENV metadata
+ * (BUILD_NUMBER, VERSION_HASH, etc.), and extracts all JS/CSS asset URLs.
+ * Assets are prioritized so web.* bundles are fetched first.
+ */
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const { DEFAULT_UA } = require('./utils');
