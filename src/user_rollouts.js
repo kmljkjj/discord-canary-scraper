@@ -1,15 +1,14 @@
 /**
- * User experiment rollouts v8 — ESTIMATED only (honest sampling)
+ * User experiment rollouts v9 — EXACT percentages from bucket ranges.
  *
- * Fixes vs previous:
- *  - No more samples/totalSamples as "true %"
- *  - No forced 500-boundary invention as primary truth
- *  - Stronger hash→id map (known ids + experiments + baseline + remote defs)
- *  - Skip notify for unresolved hash:… (or mark clearly)
- *  - announced map anti-spam
- *  - Confidence gate (min samples / ok rate)
- *  - TRANSACTIONAL: announced only advanced AFTER successful webhook
- *    (experiments snapshot still saved for next-run deltas; notify fail → exit 2)
+ * Key changes vs v8:
+ *  - Fetches experiment definitions from experiments.dscrd.workers.dev
+ *    which returns rollout populations with bucket ranges (start/end)
+ *  - Calculates EXACT percentages from bucket ranges instead of
+ *    estimating from hash_result spread (which was unreliable)
+ *  - Fingerprint sampling still used to detect active experiments
+ *  - Falls back to estimation only if no bucket ranges are available
+ *  - More recent experiment definitions (fresh from the worker API)
  *
  * Env:
  *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..5
@@ -31,10 +30,12 @@ const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const {
   mergeIntervals,
-  estimateFromPoints,
+  intervalsCoverage,
+  coveragePercent,
   classifyChange,
   noiseMargin,
   stableChangeFingerprint,
+  estimateFromPoints,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
 
@@ -57,12 +58,11 @@ const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DEL
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);
 const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
-// z du seuil de bruit statistique (0 = désactivé). Évite les annonces 10 % → 12 % → 10 %.
 const NOISE_Z = Math.max(0, Number(process.env.USER_ROLLOUT_NOISE_Z ?? 2));
 const SCALE = DEFAULT_SCALE;
 const DEFS_URL =
   process.env.APEX_DEFS_URL ||
-  'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
+  'https://experiments.dscrd.workers.dev/experiments';
 const WORKERS_URL =
   process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
 
@@ -73,34 +73,15 @@ function tLabel(bucket) {
   return 'Variant ' + b;
 }
 
-async function loadHashMap() {
-  const map = new Map();
-  const add = (id, type, title) => {
-    if (!id || typeof id !== 'string') return;
-    const clean = id.trim();
-    if (!clean || clean.startsWith('hash:')) return;
-    const h = murmur3(clean);
-    if (!map.has(h)) {
-      map.set(h, { id: clean, type: type || 'user', title: title || clean });
-    }
-  };
+/**
+ * Load experiment definitions from the worker API and local files.
+ * Returns a Map of hash → {id, title, type, buckets, populations, rollout}.
+ * The worker API returns full rollout definitions with bucket ranges.
+ */
+async function loadExperimentDefs() {
+  const defs = new Map();
 
-  for (const f of [EXPS, BASELINE, KNOWN, APEX_EXP]) {
-    if (!(await fs.pathExists(f))) continue;
-    try {
-      const j = await fs.readJson(f);
-      const arr = Array.isArray(j)
-        ? j
-        : j.experiments || j.ids || (typeof j === 'object' ? Object.keys(j) : []);
-      for (const e of arr) {
-        if (typeof e === 'string') add(e, 'user');
-        else if (e && (e.id || e.name)) {
-          add(String(e.id || e.name), e.type || e.kind || 'user', e.title || e.label || e.id);
-        }
-      }
-    } catch (_) {}
-  }
-
+  // 1. Fetch from worker API (primary source — has bucket ranges)
   for (const url of [DEFS_URL, WORKERS_URL]) {
     try {
       const res = await fetch(url, {
@@ -112,22 +93,208 @@ async function loadHashMap() {
       const list = Array.isArray(data) ? data : data.experiments || [];
       let n = 0;
       for (const e of list) {
-        if (typeof e === 'string') {
-          add(e, 'user');
-          n++;
-        } else if (e && (e.id || e.name)) {
-          add(String(e.id || e.name), e.type || 'user', e.title || e.label);
-          n++;
-        }
+        if (!e || (!e.id && !e.name)) continue;
+        const id = String(e.id || e.name);
+        const hash = e.hash != null ? Number(e.hash) : murmur3(id);
+        const type = e.type || e.kind || 'user';
+        const title = e.title || e.label || e.description || id;
+        const buckets = e.buckets || [];
+        const populations = (e.rollout && e.rollout.populations) || [];
+        defs.set(hash, {
+          id,
+          hash,
+          title,
+          type,
+          buckets,
+          populations,
+          rollout: e.rollout || null,
+          source: 'worker_api',
+        });
+        n++;
       }
-      console.log('Remote defs', url.split('/').slice(-2).join('/'), n);
+      console.log('Worker defs loaded:', n, 'from', url.split('/').slice(-2).join('/'));
+      break; // Use first successful URL
     } catch (e) {
-      console.warn('Remote defs fail', e.message);
+      console.warn('Worker defs fail:', e.message);
     }
   }
 
-  console.log('Hash map:', map.size, 'ids');
-  return map;
+  // 2. Merge local experiment files (for additional IDs/names, but no ranges)
+  const addLocal = (id, type, title) => {
+    if (!id || typeof id !== 'string') return;
+    const clean = id.trim();
+    if (!clean || clean.startsWith('hash:')) return;
+    const h = murmur3(clean);
+    if (!defs.has(h)) {
+      defs.set(h, {
+        id: clean,
+        hash: h,
+        title: title || clean,
+        type: type || 'user',
+        buckets: [],
+        populations: [],
+        rollout: null,
+        source: 'local',
+      });
+    }
+  };
+
+  for (const f of [EXPS, BASELINE, KNOWN, APEX_EXP]) {
+    if (!(await fs.pathExists(f))) continue;
+    try {
+      const j = await fs.readJson(f);
+      const arr = Array.isArray(j)
+        ? j
+        : j.experiments || j.ids || (typeof j === 'object' ? Object.keys(j) : []);
+      for (const e of arr) {
+        if (typeof e === 'string') addLocal(e, 'user');
+        else if (e && (e.id || e.name)) {
+          addLocal(String(e.id || e.name), e.type || e.kind || 'user', e.title || e.label || e.id);
+        }
+      }
+    } catch (_) {}
+  }
+
+  console.log('Total experiment defs:', defs.size, '(worker:', [...defs.values()].filter((d) => d.source === 'worker_api').length, 'local:', [...defs.values()].filter((d) => d.source === 'local').length, ')');
+  return defs;
+}
+
+/**
+ * Calculate exact bucket percentages from rollout populations.
+ * Returns a Map of bucket → { percentage, ranges, coverage }.
+ *
+ * For each bucket, sums up the range sizes (end - start) from all
+ * populations with no filters (or empty filters = applies to everyone).
+ */
+function calculateBucketPercentages(def) {
+  const result = new Map();
+  if (!def || !def.populations || !def.populations.length) return result;
+
+  // Use populations with no filters (applies to everyone)
+  const globalPops = def.populations.filter(
+    (p) => !p.filters || p.filters.length === 0,
+  );
+  const pops = globalPops.length ? globalPops : def.populations;
+
+  for (const pop of pops) {
+    const positions = pop.position || [];
+    for (const pos of positions) {
+      const bucket = Number(pos.bucket);
+      if (!Number.isFinite(bucket)) continue;
+      const rollouts = pos.rollouts || [];
+      const ranges = rollouts
+        .map((r) => [Number(r.start), Number(r.end)])
+        .filter(([a, b]) => Number.isFinite(a) && Number.isFinite(b));
+      if (!ranges.length) continue;
+
+      const merged = mergeIntervals(ranges);
+      const covered = intervalsCoverage(merged, SCALE);
+      const pct = coveragePercent(merged, SCALE);
+
+      if (!result.has(bucket)) {
+        result.set(bucket, {
+          percentage: pct,
+          ranges: merged,
+          coverage: covered,
+          sampleCount: 0,
+        });
+      } else {
+        // Merge with existing ranges
+        const existing = result.get(bucket);
+        const allRanges = [...(existing.ranges || []), ...merged];
+        const mergedAll = mergeIntervals(allRanges);
+        existing.ranges = mergedAll;
+        existing.coverage = intervalsCoverage(mergedAll, SCALE);
+        existing.percentage = coveragePercent(mergedAll, SCALE);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Build treatments for an experiment using exact bucket ranges.
+ * Falls back to estimation from hash_result spread if no ranges available.
+ */
+function buildTreatments(def, bucketMap, totalOk) {
+  const exactPcts = calculateBucketPercentages(def);
+  const treatments = [];
+  let coveredAll = 0;
+
+  if (exactPcts.size > 0) {
+    // Use exact percentages from bucket ranges
+    for (const [bucket, info] of exactPcts) {
+      coveredAll += info.coverage || 0;
+      treatments.push({
+        bucket: Number(bucket),
+        label: tLabel(bucket),
+        percentage: info.percentage,
+        pct: info.percentage,
+        pctKnown: info.percentage != null,
+        status: 'exact',
+        confidence: 'high',
+        sampleCount: bucketMap.get(bucket)?.length || 0,
+        samples: bucketMap.get(bucket)?.length || 0,
+        coverage: info.coverage / SCALE,
+        intervals: info.ranges,
+        ranges: info.ranges,
+        observed: null,
+        gapFill: 0,
+        sourceKind: 'exact_from_bucket_ranges',
+      });
+    }
+  } else if (totalOk >= MIN_OK) {
+    // Fallback: estimate from hash_result spread (less reliable)
+    for (const [bucket, hrs] of bucketMap) {
+      if (!hrs || !hrs.length) continue;
+      const est = estimateFromPoints(hrs, totalOk, SCALE);
+      coveredAll += Math.round((est.coverage || 0) * SCALE);
+      treatments.push({
+        bucket: Number(bucket),
+        label: tLabel(bucket),
+        percentage: est.percentage,
+        pct: est.percentage,
+        pctKnown: est.percentage != null && est.status !== 'insufficient_data',
+        status: est.status,
+        confidence: est.confidence,
+        sampleCount: est.sampleCount,
+        samples: est.sampleCount,
+        coverage: est.coverage,
+        intervals: est.ranges,
+        ranges: est.ranges,
+        observed: est.observed,
+        gapFill: est.gapFill,
+        sourceKind: 'estimated_from_samples',
+      });
+    }
+  }
+
+  treatments.sort((a, b) => a.bucket - b.bucket);
+  const sumPct = treatments.reduce(
+    (s, t) => s + (t.pctKnown && t.pct != null ? t.pct : 0),
+    0,
+  );
+
+  let globalStatus = 'exact';
+  if (treatments.length === 0) globalStatus = 'insufficient_data';
+  else if (treatments.some((t) => t.status === 'degraded' || t.status === 'unknown')) {
+    globalStatus = 'degraded';
+  } else if (treatments.some((t) => t.status === 'estimated')) {
+    globalStatus = 'estimated';
+  }
+
+  const conf = totalOk > 0
+    ? Math.min(1, treatments.reduce((s, t) => s + t.sampleCount, 0) / (totalOk * Math.max(1, treatments.length)))
+    : 1;
+
+  return {
+    treatments,
+    conf,
+    status: globalStatus,
+    coverage: Math.round((Math.min(coveredAll, SCALE) / SCALE) * 1000) / 1000,
+    sumPct: Math.round(sumPct * 100) / 100,
+  };
 }
 
 async function fetchAssignments(extraHeaders = {}, attempt = 0) {
@@ -157,6 +324,10 @@ async function fetchAssignments(extraHeaders = {}, attempt = 0) {
   };
 }
 
+/**
+ * Sample fingerprints to detect which experiments are active.
+ * Returns a map of hash → bucket → hash_result[] (for detection + fallback estimation).
+ */
 async function sampleFingerprints(n, concurrency) {
   const byHash = new Map();
   let ok = 0;
@@ -205,60 +376,6 @@ async function sampleFingerprints(n, concurrency) {
   return { byHash, ok, fail };
 }
 
-function rangesToTreatments(bucketMap, totalOk) {
-  const treatments = [];
-  let coveredAll = 0;
-  for (const [bucket, hrs] of bucketMap) {
-    if (!hrs || !hrs.length) continue;
-    const est = estimateFromPoints(hrs, totalOk, SCALE);
-    coveredAll += Math.round((est.coverage || 0) * SCALE);
-    treatments.push({
-      bucket: Number(bucket),
-      label: tLabel(bucket),
-      percentage: est.percentage,
-      pct: est.percentage,
-      pctKnown: est.percentage != null && est.status !== 'insufficient_data',
-      status: est.status,
-      confidence: est.confidence,
-      sampleCount: est.sampleCount,
-      samples: est.sampleCount,
-      coverage: est.coverage,
-      intervals: est.ranges,
-      ranges: est.ranges,
-      observed: est.observed,
-      gapFill: est.gapFill,
-      sourceKind: est.sourceKind || 'estimated_from_samples',
-    });
-  }
-  treatments.sort((a, b) => a.bucket - b.bucket);
-  const sumPct = treatments.reduce(
-    (s, t) => s + (t.pctKnown && t.pct != null ? t.pct : 0),
-    0,
-  );
-  let globalStatus = 'estimated';
-  if (treatments.every((t) => t.status === 'insufficient_data')) globalStatus = 'insufficient_data';
-  else if (
-    treatments.some((t) => t.status === 'degraded' || t.status === 'unknown') ||
-    sumPct > 105
-  )
-    globalStatus = 'degraded';
-  const conf =
-    totalOk > 0
-      ? Math.min(
-          1,
-          treatments.reduce((s, t) => s + t.sampleCount, 0) /
-            (totalOk * Math.max(1, treatments.length)),
-        )
-      : 0;
-  return {
-    treatments,
-    conf,
-    status: globalStatus,
-    coverage: Math.round((Math.min(coveredAll, SCALE) / SCALE) * 1000) / 1000,
-    sumPct: Math.round(sumPct * 100) / 100,
-  };
-}
-
 function fingerprintOf(treatments) {
   return treatments
     .map((t) => {
@@ -273,17 +390,16 @@ function fingerprintOf(treatments) {
     .join('|');
 }
 
-async function fetchTokenSnapshot(hashMap) {
+async function fetchTokenSnapshot(defs) {
   if (!TOKENS.length) return [];
   const out = [];
   for (const token of TOKENS.slice(0, 5)) {
     try {
-      // fetchAssignments gère les 429 (Retry-After) — avant : 1 seul essai, perdu après l'échantillonnage
       const data = await fetchAssignments({ Authorization: token });
       for (const a of data.assignments || []) {
         if (!Array.isArray(a) || a.length < 3) continue;
         const hash = Number(a[0]);
-        const meta = hashMap.get(hash) || {
+        const meta = defs.get(hash) || {
           id: 'hash:' + hash,
           type: 'user',
           title: 'hash:' + hash,
@@ -311,58 +427,43 @@ function buildEmbeds(changes) {
   for (const c of changes.slice(0, 10)) {
     if (c.kind === 'new') {
       const lines = (c.treatments || []).slice(0, 10).map((t) => {
-        const band =
-          t.observed && t.observed.length === 2
-            ? ' · observed `' + t.observed[0] + '–' + t.observed[1] + '`'
-            : '';
-        const pct = t.pctKnown && t.pct != null ? '`≈' + t.pct + '%`' : '`?%`';
-        const st = t.status && t.status !== 'estimated' ? ' · `' + t.status + '`' : '';
-        const confL = t.confidence ? ' · conf `' + t.confidence + '`' : '';
-        return '• **' + t.label + '** · ' + pct + st + confL + ' · n=' + (t.sampleCount || t.samples || 0) + band;
+        const pct = t.pctKnown && t.pct != null ? '`' + t.pct + '%`' : '`?%`';
+        const st = t.status === 'exact' ? ' · **exact**' : t.status && t.status !== 'estimated' ? ' · `' + t.status + '`' : ' · `est.`';
+        const n = t.sampleCount || t.samples || 0;
+        const band = n > 0 ? ' · n=' + n : '';
+        return '• **' + t.label + '** · ' + pct + st + band;
       });
       embeds.push({
         title: '+ ' + c.id,
         description: [
           '**' + c.title + '**',
-          'Type · `user` · **ESTIMATED** (sampling)',
+          'Type · `user` · ' + (c.status === 'exact' ? '**EXACT** (bucket ranges)' : '**ESTIMATED** (sampling)'),
           '',
           lines.join('\n') || '_no treatments_',
-        ]
-          .join('\n')
-          .slice(0, 4000),
+        ].join('\n').slice(0, 4000),
         color: 0x57f287,
-        footer: { text: 'user sampling · not exact Discord %' },
+        footer: { text: c.status === 'exact' ? 'exact % from bucket ranges' : 'user sampling · not exact Discord %' },
       });
     } else if (c.kind === 'pct') {
       const lines = (c.deltas || []).slice(0, 12).map((d) => {
-        return '• **' + d.label + '** · `' + d.from + '%` → `' + d.to + '%` (est.)';
+        return '• **' + d.label + '** · `' + d.from + '%` → `' + d.to + '%`' + (d.exact ? ' (exact)' : ' (est.)');
       });
       embeds.push({
         title: '~ ' + c.id,
         description: [
           '**' + c.title + '**',
-          'Type · `user` · **ESTIMATED**',
+          'Type · `user`',
           '',
           lines.join('\n'),
-        ]
-          .join('\n')
-          .slice(0, 4000),
+        ].join('\n').slice(0, 4000),
         color: 0xe67e22,
-        footer: { text: 'user sampling · noise possible' },
+        footer: { text: c.exact ? 'exact % from bucket ranges' : 'user sampling · noise possible' },
       });
     } else if (c.kind === 'revision') {
       embeds.push({
         title: '~ ' + c.id + ' revision',
         description:
-          '**' +
-          c.title +
-          '**\nRevision `' +
-          c.fromRev +
-          '` → `' +
-          c.toRev +
-          '` · bucket `' +
-          c.bucket +
-          '`',
+          '**' + c.title + '**\nRevision `' + c.fromRev + '` → `' + c.toRev + '` · bucket `' + c.bucket + '`',
         color: 0x5865f2,
         footer: { text: 'assignment revision' },
       });
@@ -387,12 +488,15 @@ function hasName(id) {
 
 async function main() {
   await fs.ensureDir(DATA);
-  console.log('📊 User rollouts v8 (ESTIMATED, honest)');
+  console.log('📊 User rollouts v9 (EXACT from bucket ranges)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
 
-  const hashMap = await loadHashMap();
+  // Load experiment definitions with bucket ranges
+  const defs = await loadExperimentDefs();
+
+  // Sample fingerprints to detect active experiments
   const { byHash, ok, fail } = await sampleFingerprints(SAMPLES, CONC);
 
   if (ok < MIN_OK) {
@@ -402,26 +506,31 @@ async function main() {
   const experiments = [];
   for (const [hash, bucketMap] of byHash) {
     if (ok < MIN_OK) continue;
-    const meta = hashMap.get(hash) || {
+    const def = defs.get(hash) || {
       id: 'hash:' + hash,
-      type: 'user',
+      hash,
       title: 'hash:' + hash,
+      type: 'user',
+      populations: [],
+      source: 'unknown',
     };
     const { treatments, conf, status: rollStatus, coverage: rollCov, sumPct } =
-      rangesToTreatments(bucketMap, ok);
+      buildTreatments(def, bucketMap, ok);
     if (!treatments.length) continue;
     const nObs = treatments.reduce((s, t) => s + (t.sampleCount || t.samples || 0), 0);
-    if (nObs < 3) continue;
+    if (nObs < 3 && rollStatus !== 'exact') continue;
     const quality =
-      rollStatus === 'estimated'
-        ? 'estimated'
-        : rollStatus === 'degraded'
-          ? 'degraded'
-          : 'insufficient_data';
+      rollStatus === 'exact'
+        ? 'exact'
+        : rollStatus === 'estimated'
+          ? 'estimated'
+          : rollStatus === 'degraded'
+            ? 'degraded'
+            : 'insufficient_data';
     experiments.push({
       hash,
-      id: meta.id,
-      title: meta.title,
+      id: def.id,
+      title: def.title,
       type: 'user',
       quality,
       status: rollStatus,
@@ -430,18 +539,20 @@ async function main() {
       sumPct,
       treatments,
       fingerprint: fingerprintOf(treatments),
-      source: 'fingerprint-sample',
-      named: hasName(meta.id),
+      source: def.source === 'worker_api' ? 'worker_api+sample' : 'fingerprint-sample',
+      named: hasName(def.id),
     });
   }
   console.log(
-    'Estimated user experiments:',
+    'Experiments:',
     experiments.length,
     'named',
     experiments.filter((e) => e.named).length,
+    'exact',
+    experiments.filter((e) => e.status === 'exact').length,
   );
 
-  const tokenSnap = await fetchTokenSnapshot(hashMap);
+  const tokenSnap = await fetchTokenSnapshot(defs);
 
   let prev = { experiments: [], token: [], announced: {} };
   if (await fs.pathExists(STATE)) {
@@ -477,6 +588,7 @@ async function main() {
       if (p.status === 'degraded' || p.status === 'insufficient_data') {
         continue;
       }
+      const isExact = n.status === 'exact';
       for (const t of n.treatments || []) {
         if (!t.pctKnown || t.pct == null) continue;
         if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
@@ -484,9 +596,9 @@ async function main() {
         if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
         const from = Number(oldT.pct);
         const to = Number(t.pct);
-        // Estimation par échantillonnage : ignorer les écarts sous la marge de bruit
-        const n = Math.min(Number(t.sampleCount || t.samples || 0), Number(oldT.sampleCount || oldT.samples || 0)) || Number(t.sampleCount || 0);
-        const margin = t.status === 'estimated' ? noiseMargin(Math.max(from, to), n, NOISE_Z) : 0;
+        // For exact percentages: no noise margin needed (exact values)
+        // For estimated: use noise margin
+        const margin = isExact ? 0 : noiseMargin(Math.max(from, to), Math.min(Number(t.sampleCount || 0), Number(oldT.sampleCount || 0)) || Number(t.sampleCount || 0), NOISE_Z);
         const { changeType, change } = classifyChange(from, to, Math.max(MIN_DELTA, margin));
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
         deltas.push({
@@ -500,6 +612,7 @@ async function main() {
           ranges: t.intervals || t.ranges || null,
           confidence: t.confidence,
           status: t.status,
+          exact: isExact,
           population: 'user',
           treatment: t.label,
         });
@@ -516,6 +629,7 @@ async function main() {
           deltas,
           named: n.named,
           changeFingerprint: fp,
+          exact: isExact,
         });
       }
     }
@@ -551,13 +665,11 @@ async function main() {
       STATE,
       {
         scrapedAt: new Date().toISOString(),
-        version: 8,
-        schemaVersion: 8,
+        version: 9,
+        schemaVersion: 9,
         runId:
           extra.runId ||
-          new Date().toISOString().replace(/[:.]/g, '-') +
-            '_' +
-            Math.random().toString(36).slice(2, 8),
+          new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
         samples: SAMPLES,
         ok,
         fail,
@@ -584,7 +696,6 @@ async function main() {
   }
 
   // Persist current estimates for next-run deltas, but keep PREV announced.
-  // Never advance anti-spam locks before a successful webhook.
   await writeState(announced);
 
   console.log('Changes', changes.length);
@@ -614,7 +725,6 @@ async function main() {
       const exp = experiments.find((e) => e.id === c.id);
       if (exp) announced[String(exp.hash)] = exp.fingerprint;
     }
-    // revision: no fingerprint lock — re-check next run if needed
   }
   await writeState(announced);
   console.log('✅ Done (announced advanced after webhook OK)');
@@ -626,4 +736,4 @@ if (require.main === module)
     process.exit(1);
   });
 
-module.exports = { main, murmur3, loadHashMap, rangesToTreatments, classifyChange, mergeIntervals };
+module.exports = { main, murmur3, loadExperimentDefs, calculateBucketPercentages, buildTreatments, classifyChange, mergeIntervals };
