@@ -166,15 +166,27 @@ async function scanMobileFiles(root) {
   const expMap = new Map();
   const strings = {};
   let n = 0;
-  for (const fp of files) {
-    try {
-      const st = await fs.stat(fp);
-      if (st.size > 8_000_000) continue;
-      const content = await fs.readFile(fp, 'utf8');
-      extractFromContent(content, expMap, strings);
+  // Lecture I/O en parallèle (batch de 16), extraction séquentielle
+  const READ_BATCH = 16;
+  for (let i = 0; i < files.length; i += READ_BATCH) {
+    const batch = files.slice(i, i + READ_BATCH);
+    const contents = await Promise.all(
+      batch.map(async (fp) => {
+        try {
+          const st = await fs.stat(fp);
+          if (st.size > 8_000_000) return null;
+          const content = await fs.readFile(fp, 'utf8');
+          return { fp, content };
+        } catch (e) {
+          console.warn('extractFromFiles: failed to process', fp, '-', e.message);
+          return null;
+        }
+      }),
+    );
+    for (const item of contents) {
+      if (!item) continue;
+      extractFromContent(item.content, expMap, strings);
       n++;
-    } catch (e) {
-      console.warn('extractFromFiles: failed to process', fp, '-', e.message);
     }
   }
   console.log('Scanned files:', n);
