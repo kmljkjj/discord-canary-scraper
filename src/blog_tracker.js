@@ -8,7 +8,7 @@ const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
-const { sendWebhook } = require('./lib/webhook');
+const { sendEmbeds, sendWebhook, withComponentsUrl } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, DEFAULT_UA } = require('./lib/utils');
 
@@ -570,24 +570,9 @@ function buildEmbed(entry, action) {
 
 /**
  * Post webhook payload.
- * - Blog: { flags, components } (Components V2) - requires ?with_components=true
- * - Zendesk: { embeds: [...] }
- *
- * Sans with_components, Discord ignore silencieusement les components V2
- * sur les webhooks non-application (message vide / echec).
+ * - Blog: { flags, components } (Components V2) - with_components=true ajouté automatiquement
+ * - Zendesk: { embeds: [...] } - converti en Components V2 par sendEmbeds
  */
-function webhookUrlWithComponents(baseUrl) {
-  if (!baseUrl) return null;
-  try {
-    const u = new URL(baseUrl);
-    u.searchParams.set('with_components', 'true');
-    u.searchParams.set('wait', 'true');
-    return u.toString();
-  } catch (_) {
-    const sep = String(baseUrl).includes('?') ? '&' : '?';
-    return baseUrl + sep + 'with_components=true&wait=true';
-  }
-}
 
 async function postWebhook(payload) {
   if (!WEBHOOK) {
@@ -599,12 +584,16 @@ async function postWebhook(payload) {
     avatar_url: AVATAR,
     ...payload,
   };
-  // Components V2: obligatoire pour les webhooks non-app
-  const url =
-    payload && payload.flags === IS_COMPONENTS_V2
-      ? webhookUrlWithComponents(WEBHOOK)
-      : WEBHOOK;
-  const r = await sendWebhook(url, body, { label: 'blog' });
+  const embeds = body.embeds || [];
+  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
+  let r;
+  if (body.components && Array.isArray(body.components)) {
+    // Déjà en Components V2 — envoyer directement
+    r = await sendWebhook(withComponentsUrl(WEBHOOK), { ...base, flags: 1 << 15, components: body.components }, { label: 'blog' });
+  } else {
+    // Embeds classiques — sendEmbeds convertit en Components V2
+    r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'blog' });
+  }
   if (!r.ok) {
     console.warn('blog webhook fail', r.status, (r.text || '').slice(0, 200));
   }

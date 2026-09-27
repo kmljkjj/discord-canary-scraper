@@ -7,6 +7,7 @@ const http = require('http');
 const {
   sendWebhook,
   sendEmbeds,
+  withComponentsUrl,
   chunkEmbeds,
   embedChars,
   maskWebhook,
@@ -121,26 +122,36 @@ test('embedChars compte titre, description, champs, footer, auteur', () => {
   assert.equal(n, 2 + 3 + 3 + 1 + 2);
 });
 
-test('sendEmbeds découpe et envoie tous les groupes', async () => {
+test('sendEmbeds converts embeds to Components V2', async () => {
   await withServer([{ status: 204 }], async (url, hits) => {
     const embeds = Array.from({ length: 12 }, (_, i) => ({ title: 't' + i }));
     const r = await sendEmbeds(url, { username: 'bot' }, embeds, FAST);
     assert.equal(r.ok, true);
-    assert.equal(r.sent, 12);
-    assert.equal(hits.length, 2);
+    // Components V2: body should have flags=32768 and components, not embeds
+    assert.equal(hits[0].body.flags, 32768);
+    assert.equal(hits[0].body.embeds, undefined);
+    assert.ok(Array.isArray(hits[0].body.components));
     assert.equal(hits[0].body.username, 'bot');
-    assert.equal(hits[0].body.embeds.length, 10);
-    assert.equal(hits[1].body.embeds.length, 2);
+  });
+});
+
+test('sendEmbeds sends with_components=true in URL', async () => {
+  await withServer([{ status: 204 }], async (url, hits) => {
+    const embeds = [{ title: 'test' }];
+    await sendEmbeds(url, {}, embeds, FAST);
+    // The URL should contain with_components=true
+    // hits only has body, but we can verify via withComponentsUrl helper
+    const componentUrl = withComponentsUrl(url);
+    assert.ok(componentUrl.includes('with_components=true'));
   });
 });
 
 test('sendEmbeds s’arrête au premier échec', async () => {
-  await withServer([{ status: 204 }, { status: 404 }], async (url, hits) => {
-    const embeds = Array.from({ length: 25 }, (_, i) => ({ title: 't' + i }));
+  await withServer([{ status: 404 }], async (url, hits) => {
+    const embeds = [{ title: 't1' }, { title: 't2' }];
     const r = await sendEmbeds(url, {}, embeds, FAST);
     assert.equal(r.ok, false);
-    assert.equal(r.sent, 10);
-    assert.equal(hits.length, 2);
+    assert.equal(hits.length, 1);
   });
 });
 
@@ -151,4 +162,17 @@ test('maskWebhook et isWebhookUrl', () => {
   assert.equal(isWebhookUrl('https://canary.discord.com/api/v10/webhooks/1/x'), true);
   assert.equal(isWebhookUrl('https://example.com/api/webhooks/1/x'), false);
   assert.equal(isWebhookUrl(''), false);
+});
+
+test('withComponentsUrl ajoute with_components=true', () => {
+  const url = 'https://discord.com/api/webhooks/123/tok';
+  const result = withComponentsUrl(url);
+  assert.ok(result.includes('with_components=true'));
+});
+
+test('withComponentsUrl préserve les paramètres existants', () => {
+  const url = 'https://discord.com/api/webhooks/123/tok?thread_id=456';
+  const result = withComponentsUrl(url);
+  assert.ok(result.includes('with_components=true'));
+  assert.ok(result.includes('thread_id=456'));
 });

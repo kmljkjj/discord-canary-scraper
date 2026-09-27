@@ -44,7 +44,7 @@ function uninstallFetchMock() {
 
 function clearNotifyModules() {
   for (const key of Object.keys(require.cache)) {
-    if (key.includes('webhook_dedupe') || key.includes('notify.js') || key.endsWith('webhook.js')) {
+    if (key.includes('webhook_dedupe') || key.includes('notify.js') || key.endsWith('webhook.js') || key.includes('components_v2')) {
       delete require.cache[key];
     }
   }
@@ -84,15 +84,23 @@ test('partial batch: success then fail, retry skips sent and retries failed', as
 
   fetchImpl = async (url, opts) => {
     const body = JSON.parse(opts.body);
-    const title =
-      (body.embeds && body.embeds[0] && body.embeds[0].title) || '';
-    const field =
-      (body.embeds &&
-        body.embeds[0] &&
-        body.embeds[0].fields &&
-        body.embeds[0].fields[0] &&
-        body.embeds[0].fields[0].name) ||
-      '';
+    // Components V2: extract title from TextDisplay content inside Container
+    let title = '';
+    let field = '';
+    if (body.components && Array.isArray(body.components)) {
+      for (const comp of body.components) {
+        if (comp.type === 17 && comp.components) {
+          for (const child of comp.components) {
+            if (child.type === 10 && child.content && !title) {
+              title = child.content;
+            }
+          }
+        }
+      }
+    } else if (body.embeds && body.embeds[0]) {
+      title = body.embeds[0].title || '';
+      field = (body.embeds[0].fields && body.embeds[0].fields[0] && body.embeds[0].fields[0].name) || '';
+    }
     httpCalls.push({ phase, title, field });
     if (phase === 'first') {
       if (httpCalls.filter((c) => c.phase === 'first').length === 1) return okRes();

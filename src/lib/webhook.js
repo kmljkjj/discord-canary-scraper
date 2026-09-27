@@ -10,6 +10,7 @@
  */
 const fetch = require('node-fetch');
 const { sleep } = require('./utils');
+const { IS_COMPONENTS_V2_FLAG, embedsToComponents } = require('./components_v2');
 
 const DEFAULTS = {
   maxAttempts: Number(process.env.WEBHOOK_MAX_ATTEMPTS || 5),
@@ -182,18 +183,52 @@ async function _sendWebhook(url, body, options = {}) {
 }
 
 /**
- * Envoie une liste d'embeds découpée automatiquement.
+ * Ajoute with_components=true à l'URL du webhook (requis pour Components V2).
+ */
+function withComponentsUrl(url) {
+  try {
+    const u = new URL(url);
+    u.searchParams.set('with_components', 'true');
+    return u.toString();
+  } catch {
+    return url + (url.includes('?') ? '&' : '?') + 'with_components=true';
+  }
+}
+
+/**
+ * Envoie une liste d'embeds en les convertissant automatiquement en Components V2.
+ * Les embeds sont transformés en Container + TextDisplay, ce qui :
+ * - Supporte du texte bien plus long (4000 chars par TextDisplay vs 1024 par field)
+ * - Évite les erreurs de limite de 6000 chars par embed
+ * - Gère automatiquement le dépassement en multipliant les messages
  * Arrête au premier échec (retourne le résultat de l'échec).
  */
 async function sendEmbeds(url, base, embeds, options = {}) {
-  const groups = chunkEmbeds(embeds);
-  if (!url || !groups.length) return { ok: false, status: 0, text: 'skip', attempts: 0, sent: 0 };
+  if (!url || !embeds || !embeds.length)
+    return { ok: false, status: 0, text: 'skip', attempts: 0, sent: 0 };
+
+  // Convertir les embeds en messages Components V2
+  const messages = embedsToComponents(embeds);
+  if (!messages.length)
+    return { ok: false, status: 0, text: 'no components', attempts: 0, sent: 0 };
+
+  const componentUrl = withComponentsUrl(url);
   let last = { ok: true, status: 204, text: '', attempts: 0 };
   let sent = 0;
-  for (const g of groups) {
-    last = await sendWebhook(url, { ...base, embeds: g }, options);
+
+  for (const components of messages) {
+    const body = {
+      ...base,
+      flags: IS_COMPONENTS_V2_FLAG,
+      components,
+    };
+    // Supprimer embeds/content qui ne fonctionnent pas avec Components V2
+    delete body.embeds;
+    delete body.content;
+
+    last = await sendWebhook(componentUrl, body, options);
     if (!last.ok) return { ...last, sent };
-    sent += g.length;
+    sent += components.length;
   }
   return { ...last, sent };
 }
@@ -205,6 +240,8 @@ function _resetBucket() {
 module.exports = {
   sendWebhook,
   sendEmbeds,
+  sendComponentsV2: sendEmbeds, // alias pour clarté
+  withComponentsUrl,
   chunkEmbeds,
   embedChars,
   retryAfterMs,

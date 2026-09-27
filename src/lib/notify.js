@@ -4,7 +4,7 @@
  * - Strings/Routes: key + full text
  * - Batch dedupe marked ONLY after successful webhook post
  */
-const { sendWebhook } = require('./webhook');
+const { sendEmbeds } = require('./webhook');
 const { DEFAULT_BOT_NAME, DEFAULT_AVATAR_URL } = require('./utils');
 
 const BOT = process.env.WEBHOOK_BOT_NAME || DEFAULT_BOT_NAME;
@@ -436,7 +436,10 @@ async function post(url, body) {
     return true;
   }
   const title = body.embeds?.[0]?.title || '';
-  const r = await sendWebhook(url, body, { label: title, minGapMs: 50 });
+  const embeds = body.embeds || [];
+  const base = { username: body.username, avatar_url: body.avatar_url };
+  // Utiliser sendEmbeds qui convertit automatiquement en Components V2
+  const r = await sendEmbeds(url, base, embeds, { label: title, minGapMs: 50 });
   console.log('webhook', r.status, title);
   if (r.ok) {
     await markPosted(fp);

@@ -24,7 +24,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
 const { writeJsonAtomic } = require('./lib/atomic');
-const { sendWebhook } = require('./lib/webhook');
+const { sendEmbeds } = require('./lib/webhook');
 const { sleep, DEFAULT_UA } = require('./lib/utils');
 
 const DATA = path.join(__dirname, '..', 'data');
@@ -634,9 +634,10 @@ async function postWebhook(p) {
   };
   if (p.image) embed.image = { url: p.image };
 
-  const r = await sendWebhook(
+  const r = await sendEmbeds(
     WEBHOOK,
-    { username: 'Datamining · X', embeds: [embed], content: p.url },
+    { username: 'Datamining · X' },
+    [embed],
     { label: 'x-news ' + p.id, timeoutMs: 15000 },
   );
   console.log('webhook', r.status, p.id);

@@ -6,7 +6,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
-const { sendWebhook } = require('./lib/webhook');
+const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: BOT_AVATAR, DEFAULT_UA } = require('./lib/utils');
 
@@ -73,7 +73,9 @@ async function postWebhook(payload) {
     avatar_url: BOT_AVATAR,
     ...payload,
   };
-  const r = await sendWebhook(WEBHOOK_URL, body, { label: 'mobile', timeoutMs: 30000, minGapMs: 200 });
+  const embeds = body.embeds || [];
+  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || BOT_AVATAR };
+  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { label: 'mobile', timeoutMs: 30000, minGapMs: 200 });
   if (r.ok) {
     console.log('Webhook OK');
     return true;

@@ -10,7 +10,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const fetch = require('node-fetch');
-const { sendWebhook } = require('./lib/webhook');
+const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_UA } = require('./lib/utils');
 
@@ -256,7 +256,9 @@ async function postWebhook(p) {
     ],
   };
   if (p.image) body.embeds[0].image = { url: p.image };
-  const r = await sendWebhook(WEBHOOK, body, { label: 'x-watch ' + p.id });
+  const embeds = body.embeds || [];
+  const base = { username: body.username || 'Datamining · X', avatar_url: body.avatar_url };
+  const r = await sendEmbeds(WEBHOOK, base, embeds, { label: 'x-watch ' + p.id });
   console.log('webhook', r.status, p.id);
   return r.ok;
 }
