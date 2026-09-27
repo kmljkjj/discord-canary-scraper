@@ -149,35 +149,50 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     fullChunks: !!FULL_CHUNKS,
   };
 
+  // Phase 1: stat tous les fichiers en parallèle (I/O bound)
+  const toScan = [];
   for (const f of jsFiles) {
     if (/^web\./i.test(f)) {
       coverage.webFiles++;
       coverage.skippedWeb++;
       continue; // already extracted in core path
     }
-    const fp = path.join(assetsDir, f);
-    try {
-      const st = await fs.stat(fp);
-      if (st.size === 0) {
-        coverage.skippedEmpty++;
-        continue;
-      }
-      if (st.size > MAX_CHUNK_SCAN_BYTES) {
-        coverage.skippedOversize++;
-        coverage.bytesSkippedOversize += st.size;
-        continue;
-      }
-      const content = await fs.readFile(fp, 'utf8');
-      extractRoutes(content, routes);
-      extractExperiments(content, expSet);
-      if (st.size < 500_000) extractStrings(content, strings);
+    toScan.push({ f, fp: path.join(assetsDir, f) });
+  }
+
+  // Stat + read en parallèle (batch de 16 pour limiter la mémoire)
+  const READ_BATCH = 16;
+  for (let i = 0; i < toScan.length; i += READ_BATCH) {
+    const batch = toScan.slice(i, i + READ_BATCH);
+    const stats = await Promise.all(
+      batch.map(async ({ f, fp }) => {
+        try {
+          const st = await fs.stat(fp);
+          if (st.size === 0) { coverage.skippedEmpty++; return null; }
+          if (st.size > MAX_CHUNK_SCAN_BYTES) {
+            coverage.skippedOversize++;
+            coverage.bytesSkippedOversize += st.size;
+            return null;
+          }
+          const content = await fs.readFile(fp, 'utf8');
+          return { f, fp, content, size: st.size };
+        } catch (e) {
+          coverage.readErrors++;
+          if (coverage.readErrors <= 8) {
+            console.warn('chunk read error', f, e && e.message ? e.message : e);
+          }
+          return null;
+        }
+      }),
+    );
+    // Phase 2: extraction séquentielle (CPU bound, évite les race conditions sur routes/expSet/strings)
+    for (const item of stats) {
+      if (!item) continue;
+      extractRoutes(item.content, routes);
+      extractExperiments(item.content, expSet);
+      if (item.size < 500_000) extractStrings(item.content, strings);
       coverage.scanned++;
-      coverage.bytesScanned += st.size;
-    } catch (e) {
-      coverage.readErrors++;
-      if (coverage.readErrors <= 8) {
-        console.warn('chunk read error', f, e && e.message ? e.message : e);
-      }
+      coverage.bytesScanned += item.size;
     }
   }
 
