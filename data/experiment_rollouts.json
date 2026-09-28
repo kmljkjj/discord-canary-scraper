@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-28T19:05:24.142Z",
+  "fetchedAt": "2026-09-28T19:12:45.422Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5046,10 +5046,10 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 2,
@@ -5066,10 +5066,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 1,
@@ -8386,6 +8386,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-multi-sku-embed-rendering",
+      "hash": 3733834381,
+      "type": "user",
+      "title": "2026-09-multi-sku-embed-rendering",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-multisku-embed-builder",
       "hash": 1489790872,
       "type": "user",
@@ -8637,11 +8647,11 @@
     }
   ],
   "summary": {
-    "total": 579,
+    "total": 580,
     "guild": 91,
-    "user": 488,
+    "user": 489,
     "withPercentage": 224,
-    "withoutPercentage": 355,
+    "withoutPercentage": 356,
     "fullRollout": 39,
     "partial": 8,
     "notStarted": 177,
