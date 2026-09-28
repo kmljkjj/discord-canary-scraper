@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-28T10:34:24.973Z",
+  "scrapedAt": "2026-09-28T10:35:33.203Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,23 @@
   ],
   "zendesk": [
     {
+      "id": "24160905919511",
+      "title": "My Discord Account was Hacked or Compromised",
+      "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
+      "updatedAt": "2026-09-28T10:35:27Z",
+      "createdAt": "2024-06-13T16:51:09Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
+      "bodyPreview": "Important: Discord Staff will never contact users directly through the Discord app for support-related matters. If someone requests personal information, asks for payment, or urges you to change your login credentials, please do not comply and avoid further interaction. As per our Terms of Service , you are responsible for the security of your account. Please note that if you fail to secure your …",
+      "thumb": "https://support.discord.com/hc/article_attachments/32331211229463",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-09-28T10:32:34Z",
+      "updatedAt": "2026-09-28T10:35:25Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
@@ -468,15 +481,119 @@
       "label": "Support"
     },
     {
+      "id": "219576828",
+      "title": "Setting up Multi-Factor Authentication",
+      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
+      "updatedAt": "2026-09-28T10:35:14Z",
+      "createdAt": "2016-05-26T17:18:00Z",
+      "sectionId": "360009072571",
+      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
+      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "4423385681175",
+      "title": "How to Change your Discord Account's Email",
+      "link": "https://support.discord.com/hc/en-us/articles/4423385681175-How-to-Change-your-Discord-Account-s-Email",
+      "updatedAt": "2026-09-28T10:35:08Z",
+      "createdAt": "2022-02-10T23:26:28Z",
+      "sectionId": "360007770532",
+      "bodyHash": "bea2a20cfd201d663207081a971c4f361caa9e2dbb7d18d17a4cf8372dd5eafa",
+      "bodyPreview": "What this article covers: Desktop/Browser Mobile Note: The Discord Support Team cannot change the email address associated with your account. To update your email, you'll need access to the inbox of your current email address. Desktop/Browser 1. Tap on the cogwheel [ ] next to your Discord username to access your User Settings . Example of the cogwheel icon through Discord desktop/browser 2. Make…",
+      "thumb": "https://support.discord.com/hc/article_attachments/29223522008727",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360060145013",
       "title": "Why isn't my DM going through?",
       "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-09-28T10:32:04Z",
+      "updatedAt": "2026-09-28T10:34:39Z",
       "createdAt": "2020-11-30T20:42:12Z",
       "sectionId": "115000458672",
       "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
       "bodyPreview": "If your direct message was unable to be sent, you'll receive an error message from Clyde that states the following: Your message could not be delivered. This is usually because you don't share a server with the recipient or the recipient is only accepting direct messages from friends. Clyde’s message will look something like this: Possible Reasons for This Error There can be a few reasons why you…",
       "thumb": "https://support.discord.com/hc/article_attachments/38971509168663",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "26680694104215",
+      "title": "How to Fix Phone Errors on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
+      "updatedAt": "2026-09-28T10:34:30Z",
+      "createdAt": "2024-09-27T20:04:46Z",
+      "sectionId": "360009072571",
+      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
+      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "205093487",
+      "title": "How do I enable my mic in Chrome?",
+      "link": "https://support.discord.com/hc/en-us/articles/205093487-How-do-I-enable-my-mic-in-Chrome",
+      "updatedAt": "2026-09-28T10:34:13Z",
+      "createdAt": "2015-03-17T20:07:59Z",
+      "sectionId": "360007770612",
+      "bodyHash": "4296b468eddb3cbcbc1289987c995a4cd5f89aa423efdc98d3a82547195d268c",
+      "bodyPreview": "For more information, check out Google Chrome's official support page here: https://support.google.com/chrome/answer/2693767 If you previously disabled Discord's access to your mic in Chrome, you'll need to enable the permissions in your Google Chrome settings in order to use it once again. Follow these steps below to allow Discord access to your mic in the Chrome browser. What this article cover…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32891219438743",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "22489665250327",
+      "title": "Recently Played Games on Profiles",
+      "link": "https://support.discord.com/hc/en-us/articles/22489665250327-Recently-Played-Games-on-Profiles",
+      "updatedAt": "2026-09-28T10:34:12Z",
+      "createdAt": "2024-04-01T21:36:48Z",
+      "sectionId": "24452694774551",
+      "bodyHash": "4e0d356925878436f76a683b29e48f56fb67752a86c546aadac56575c4c43878",
+      "bodyPreview": "What this article covers: What is Recently Played Games? How to Manage your Recently Played Games Settings Frequently Asked Questions What is Recently Played Games? This feature is currently an experiment and limited to a small percentage of users. Recently Played Games will display a maximum of 3 tiles on a user’s profile showcasing the recent games that they played. The game, how long ago it wa…",
+      "thumb": "https://support.discord.com/hc/article_attachments/22571944639895",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360041820932",
+      "title": "Help! I'm old enough to use Discord in my country but I got locked out?",
+      "link": "https://support.discord.com/hc/en-us/articles/360041820932-Help-I-m-old-enough-to-use-Discord-in-my-country-but-I-got-locked-out",
+      "updatedAt": "2026-09-28T10:34:06Z",
+      "createdAt": "2020-04-13T20:57:25Z",
+      "sectionId": "360007875171",
+      "bodyHash": "cd4f6cb2654528b4b5bd6fcc1ee65baa1ef87e65444b2272891a720bfa51d453",
+      "bodyPreview": "We require all users to meet the minimum age requirement for their region. If you meet that requirement and have been locked out of Discord, you can appeal your banned account by following the instructions below. \"Your account is suspended\" screen, showing an Active Violations card for a minimum age requirements violation How to Confirm Your Age Group to Unlock Your Account 1. Log in to your lock…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442927639",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "30326565624343",
+      "title": "How to Confirm Your Age Group on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
+      "updatedAt": "2026-09-28T10:33:39Z",
+      "createdAt": "2025-02-28T23:11:37Z",
+      "sectionId": "360009072571",
+      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
+      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "18210965981847",
+      "title": "Discord Warning System",
+      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
+      "updatedAt": "2026-09-28T10:33:20Z",
+      "createdAt": "2023-10-12T01:36:18Z",
+      "sectionId": "360007875171",
+      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
+      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
       "source": "support",
       "label": "Support"
     },
@@ -507,32 +624,6 @@
       "label": "Support"
     },
     {
-      "id": "219576828",
-      "title": "Setting up Multi-Factor Authentication",
-      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
-      "updatedAt": "2026-09-28T10:31:19Z",
-      "createdAt": "2016-05-26T17:18:00Z",
-      "sectionId": "360009072571",
-      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
-      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "18210965981847",
-      "title": "Discord Warning System",
-      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
-      "updatedAt": "2026-09-28T10:31:05Z",
-      "createdAt": "2023-10-12T01:36:18Z",
-      "sectionId": "360007875171",
-      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
-      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360001556852",
       "title": "Invalid Invite Links",
       "link": "https://support.discord.com/hc/en-us/articles/360001556852-Invalid-Invite-Links",
@@ -555,19 +646,6 @@
       "bodyHash": "a3a65c9f9f00c6a4b5d18fa3790af2f45df2840771bafa82346f6f1ddbf97dc9",
       "bodyPreview": "You can request a refund for your Discord subscription if it meets our Refund Policy requirements. Simply find your payment ID and submit your request to the Discord Billing Support Team. What this article covers: How to Find your Payment ID Desktop/Browser Mobile How to Request a Refund NOTE: Before requesting a refund, check out our Refund Policy to ensure your purchase is eligible. How to Find…",
       "thumb": "https://support.discord.com/hc/article_attachments/28332528955671",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "26680694104215",
-      "title": "How to Fix Phone Errors on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
-      "updatedAt": "2026-09-28T10:28:48Z",
-      "createdAt": "2024-09-27T20:04:46Z",
-      "sectionId": "360009072571",
-      "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
-      "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
       "source": "support",
       "label": "Support"
     },
@@ -620,19 +698,6 @@
       "bodyHash": "0cc2ded7c75b8ed442d0e87db2c2f22dc3784252c9a4717e552e0fa298c48b70",
       "bodyPreview": "Listening to something on your Bluetooth headset and noticing a drop in quality when joining a Discord call? The headphones are probably switching to the Bluetooth “headset” profile. This is required for low latency and microphone functionality on most Bluetooth headphones, but it provides a lower quality audio experience. This is a known limitation of the Bluetooth standard that affects all apps…",
       "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "24160905919511",
-      "title": "My Discord Account was Hacked or Compromised",
-      "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
-      "updatedAt": "2026-09-28T10:25:47Z",
-      "createdAt": "2024-06-13T16:51:09Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
-      "bodyPreview": "Important: Discord Staff will never contact users directly through the Discord app for support-related matters. If someone requests personal information, asks for payment, or urges you to change your login credentials, please do not comply and avoid further interaction. As per our Terms of Service , you are responsible for the security of your account. Please note that if you fail to secure your …",
-      "thumb": "https://support.discord.com/hc/article_attachments/32331211229463",
       "source": "support",
       "label": "Support"
     },
@@ -698,19 +763,6 @@
       "bodyHash": "5ea734e8cddb2bc2d8e283a7d85ae7a51fd09ba6283c156292e9f19e6408916d",
       "bodyPreview": "Hey, we've all been there. Passwords are supposed to be difficult! Whether it’s time to set up a new password or you forget your old one, this guide will help you with navigating all things password-related. What this article covers: Password Requirements How to Change Your Password Desktop/Browser Mobile How to Reset Your Password Desktop/Browser Mobile Password Requirements When making your pas…",
       "thumb": "https://support.discord.com/hc/article_attachments/32331688455319",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "30326565624343",
-      "title": "How to Confirm Your Age Group on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
-      "updatedAt": "2026-09-28T10:23:16Z",
-      "createdAt": "2025-02-28T23:11:37Z",
-      "sectionId": "360009072571",
-      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
-      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
       "source": "support",
       "label": "Support"
     },
@@ -819,19 +871,6 @@
       "label": "Support"
     },
     {
-      "id": "205093487",
-      "title": "How do I enable my mic in Chrome?",
-      "link": "https://support.discord.com/hc/en-us/articles/205093487-How-do-I-enable-my-mic-in-Chrome",
-      "updatedAt": "2026-09-28T10:16:46Z",
-      "createdAt": "2015-03-17T20:07:59Z",
-      "sectionId": "360007770612",
-      "bodyHash": "4296b468eddb3cbcbc1289987c995a4cd5f89aa423efdc98d3a82547195d268c",
-      "bodyPreview": "For more information, check out Google Chrome's official support page here: https://support.google.com/chrome/answer/2693767 If you previously disabled Discord's access to your mic in Chrome, you'll need to enable the permissions in your Google Chrome settings in order to use it once again. Follow these steps below to allow Discord access to your mic in the Chrome browser. What this article cover…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32891219438743",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "115000084051",
       "title": "Age-Restricted Channels and Content",
       "link": "https://support.discord.com/hc/en-us/articles/115000084051-Age-Restricted-Channels-and-Content",
@@ -854,19 +893,6 @@
       "bodyHash": "f2a9a18539f1b85f1fdfcdf1bcc05f8a48839756d69b45532a40e9a4ded15354",
       "bodyPreview": "As someone who enjoys Nitro, do you ever wish you could share the fun and joy of your favorite perks with friends? As part of their membership, Nitro members can share up to three friend passes (2-week trials of Nitro ) with their friends! Sharing Nitro with friends can be a fun way to discover how they might style their profile and which custom emojis become their favorite to use in daily conver…",
       "thumb": "https://support.discord.com/hc/article_attachments/24143904581655",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360041820932",
-      "title": "Help! I'm old enough to use Discord in my country but I got locked out?",
-      "link": "https://support.discord.com/hc/en-us/articles/360041820932-Help-I-m-old-enough-to-use-Discord-in-my-country-but-I-got-locked-out",
-      "updatedAt": "2026-09-28T10:14:23Z",
-      "createdAt": "2020-04-13T20:57:25Z",
-      "sectionId": "360007875171",
-      "bodyHash": "cd4f6cb2654528b4b5bd6fcc1ee65baa1ef87e65444b2272891a720bfa51d453",
-      "bodyPreview": "We require all users to meet the minimum age requirement for their region. If you meet that requirement and have been locked out of Discord, you can appeal your banned account by following the instructions below. \"Your account is suspended\" screen, showing an Active Violations card for a minimum age requirements violation How to Confirm Your Age Group to Unlock Your Account 1. Log in to your lock…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442927639",
       "source": "support",
       "label": "Support"
     },
@@ -1556,19 +1582,6 @@
       "bodyHash": "b6102b582b07c78bb6fd86eeb200c964683b33c8b06f23dee40869e9f1d0200e",
       "bodyPreview": "What this article covers: What is Krisp? How Krisp Works on Discord How to enable Krisp Desktop Mobile Frequently Asked Questions What Is Krisp? Krisp is a 3rd party machine learning, noise filtration software that runs on your device. Krisp is able to remove background noise much better than traditional solutions, letting you have clear conversations even in busy environments! Krisp is also a st…",
       "thumb": "https://support.discord.com/hc/article_attachments/30908536048151",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "4423385681175",
-      "title": "How to Change your Discord Account's Email",
-      "link": "https://support.discord.com/hc/en-us/articles/4423385681175-How-to-Change-your-Discord-Account-s-Email",
-      "updatedAt": "2026-09-28T07:24:56Z",
-      "createdAt": "2022-02-10T23:26:28Z",
-      "sectionId": "360007770532",
-      "bodyHash": "bea2a20cfd201d663207081a971c4f361caa9e2dbb7d18d17a4cf8372dd5eafa",
-      "bodyPreview": "What this article covers: Desktop/Browser Mobile Note: The Discord Support Team cannot change the email address associated with your account. To update your email, you'll need access to the inbox of your current email address. Desktop/Browser 1. Tap on the cogwheel [ ] next to your Discord username to access your User Settings . Example of the cogwheel icon through Discord desktop/browser 2. Make…",
-      "thumb": "https://support.discord.com/hc/article_attachments/29223522008727",
       "source": "support",
       "label": "Support"
     },
@@ -3168,19 +3181,6 @@
       "bodyHash": "1405160b9278849c9050d1cf523632b335b3e3a75be838e34d27134a76d78670",
       "bodyPreview": "What this article covers: What is Activity Sharing on Discord? How to View Activity Within User Profiles On Global Activity Cards As a Status Message How do I control who sees my activity? Activity Sharing for the Teen Age Group Global Settings Per-Server Control Connection Settings Game Detection Recent Activity History Who Can Join My Game How Activity Sharing Works with Profile Privacy Setting…",
       "thumb": "https://support.discord.com/hc/article_attachments/43516378944151",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "22489665250327",
-      "title": "Recently Played Games on Profiles",
-      "link": "https://support.discord.com/hc/en-us/articles/22489665250327-Recently-Played-Games-on-Profiles",
-      "updatedAt": "2026-09-27T20:02:36Z",
-      "createdAt": "2024-04-01T21:36:48Z",
-      "sectionId": "24452694774551",
-      "bodyHash": "4e0d356925878436f76a683b29e48f56fb67752a86c546aadac56575c4c43878",
-      "bodyPreview": "What this article covers: What is Recently Played Games? How to Manage your Recently Played Games Settings Frequently Asked Questions What is Recently Played Games? This feature is currently an experiment and limited to a small percentage of users. Recently Played Games will display a maximum of 3 tiles on a user’s profile showcasing the recent games that they played. The game, how long ago it wa…",
-      "thumb": "https://support.discord.com/hc/article_attachments/22571944639895",
       "source": "support",
       "label": "Support"
     },
