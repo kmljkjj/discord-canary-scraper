@@ -5139,6 +5139,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-multi-sku-embed-rendering",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-multisku-embed-builder",
     "defaultConfig": {
       "enabled": false
