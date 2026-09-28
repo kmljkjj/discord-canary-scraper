@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-28T23-10-57-077Z_623713_iyhg0y",
-  "buildNumber": "623713",
-  "updatedAt": "2026-09-28T23:10:57.077Z",
-  "count": 365,
+  "runId": "2026-09-28T23-26-10-175Z_623737_jcwpft",
+  "buildNumber": "623737",
+  "updatedAt": "2026-09-28T23:26:10.175Z",
+  "count": 364,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -63,34 +63,6 @@
         "value": null
       },
       "fingerprint": "38bf2a7429337fc29a3c14ba5217bb5e473daf650019b2cd6df26e963e19167e"
-    },
-    {
-      "id": "2021-10_study_group",
-      "kind": "guild",
-      "type": "guild",
-      "system": "apex",
-      "label": "Student hub study group",
-      "title": "Student hub study group",
-      "description": null,
-      "defaultConfig": {
-        "enableStudyGroup": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "734ddd69323df8cd9d855b2fdd7d29993b71305411a663eb527cf83df5af793f"
     },
     {
       "id": "2021-12_inferno_spam_redaction",
