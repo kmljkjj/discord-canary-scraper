@@ -1,17 +1,17 @@
 {
-  "scrapedAt": "2026-09-29T14:22:07.057Z",
+  "scrapedAt": "2026-09-29T14:28:52.103Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
-      "version": "347.0",
+      "version": "346.0",
       "build": null,
-      "releaseDate": "2026-09-28T19:52:03Z",
+      "releaseDate": "2026-09-21T16:07:45Z",
       "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-09-29T14:22:07.057Z"
+      "checkedAt": "2026-09-29T14:28:52.103Z"
     },
     {
       "platform": "ios",
@@ -20,7 +20,7 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-09-29T14:22:07.057Z"
+      "checkedAt": "2026-09-29T14:28:52.103Z"
     },
     {
       "platform": "android",
@@ -32,7 +32,7 @@
       "source": "store",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-09-29T14:22:07.057Z"
+      "checkedAt": "2026-09-29T14:28:52.103Z"
     },
     {
       "platform": "android",
@@ -45,7 +45,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-09-29T14:22:07.057Z"
+      "checkedAt": "2026-09-29T14:28:52.103Z"
     },
     {
       "platform": "android",
@@ -54,7 +54,7 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-09-29T14:22:07.057Z"
+      "checkedAt": "2026-09-29T14:28:52.103Z"
     }
   ],
   "otaIndex": {
@@ -160,6 +160,12 @@
         "build": "103833",
         "commit": "680b71624880cc88fd410e3f702ab4ec9284b610",
         "releaseName": null
+      },
+      {
+        "version": "331.0",
+        "build": "103362",
+        "commit": "ccd30499bd3b408c0cd6ee5a3fa3fa7d21f27a58",
+        "releaseName": null
       }
     ],
     "android": [
@@ -252,6 +258,12 @@
         "build": "33201100394507",
         "commit": "586384563f73e01274aff572da648af96f91a662",
         "releaseName": "discord_android@332.11.394507-0+33201100394507"
+      },
+      {
+        "version": "331.14",
+        "build": "33101400395249",
+        "commit": "1222d4237447d30b06284884bb01771cf99af182",
+        "releaseName": "discord_android@331.14.395249-0+33101400395249"
       }
     ]
   },
@@ -283,7 +295,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-09-29T14:15:11.215Z",
+  "previousScrapedAt": "2026-09-29T14:22:07.057Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
