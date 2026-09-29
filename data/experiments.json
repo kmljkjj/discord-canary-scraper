@@ -1,11 +1,11 @@
 {
-  "runId": "2026-09-29T16-37-22-146Z_624188_ylj7wj",
-  "buildNumber": "624188",
-  "scrapedAt": "2026-09-29T16:37:22.146Z",
+  "runId": "2026-09-29T16-39-33-542Z_624191_aj69al",
+  "buildNumber": "624191",
+  "scrapedAt": "2026-09-29T16:39:33.542Z",
   "totals": {
-    "all": 367,
+    "all": 366,
     "legacy": 0,
-    "apex": 367
+    "apex": 366
   },
   "experiments": [
     {
@@ -2848,23 +2848,6 @@
     },
     {
       "id": "2026-04-mobile-boost-progress-bar",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-04-new-games-coachmark",
       "type": "user",
       "kind": "user",
       "label": null,
