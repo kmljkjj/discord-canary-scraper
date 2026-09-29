@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-29T16:39:01.493Z",
+  "fetchedAt": "2026-09-29T16:45:55.965Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,17 +5070,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 5
       }
     },
     {
@@ -6498,16 +6498,6 @@
       "hash": 1493296856,
       "type": "user",
       "title": "2026-04-mobile-boost-progress-bar",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-04-new-games-coachmark",
-      "hash": 2120077429,
-      "type": "user",
-      "title": "2026-04-new-games-coachmark",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8594,6 +8584,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-soundboard-echo",
+      "hash": 1564205367,
+      "type": "guild",
+      "title": "2026-09-soundboard-echo",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in Discord API or worker API."
+    },
+    {
       "id": "2026-09-soundboard-favorites",
       "hash": 2268468082,
       "type": "user",
@@ -8676,8 +8676,8 @@
   ],
   "summary": {
     "total": 583,
-    "guild": 91,
-    "user": 492,
+    "guild": 92,
+    "user": 491,
     "withPercentage": 224,
     "withoutPercentage": 359,
     "fullRollout": 39,
