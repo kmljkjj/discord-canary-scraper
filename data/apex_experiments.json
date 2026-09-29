@@ -5309,6 +5309,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-server-onboarding-setup-progress",
+    "defaultConfig": {
+      "showSetupProgressRow": false
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-silp-cta-copy-tests",
     "defaultConfig": {
       "variant": null

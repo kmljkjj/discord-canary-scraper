@@ -1,11 +1,11 @@
 {
-  "runId": "2026-09-29T00-19-06-829Z_623802_guv3i3",
-  "buildNumber": "623802",
-  "scrapedAt": "2026-09-29T00:19:06.829Z",
+  "runId": "2026-09-29T00-27-50-755Z_623807_wdtgw4",
+  "buildNumber": "623807",
+  "scrapedAt": "2026-09-29T00:27:50.755Z",
   "totals": {
-    "all": 364,
+    "all": 365,
     "legacy": 0,
-    "apex": 364
+    "apex": 365
   },
   "experiments": [
     {
@@ -6711,6 +6711,23 @@
       "system": "apex",
       "defaultConfig": {
         "trackingCopy": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-server-onboarding-setup-progress",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "showSetupProgressRow": false
       },
       "variations": {
         "1": {
