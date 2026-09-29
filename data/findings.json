@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-29T16-51-31-762Z_624208_tm4324",
-  "buildNumber": "624208",
-  "scrapedAt": "2026-09-29T16:51:31.762Z",
+  "runId": "2026-09-29T16-53-39-448Z_624200_yjcwd6",
+  "buildNumber": "624200",
+  "scrapedAt": "2026-09-29T16:53:39.448Z",
   "totals": {
-    "all": 366
+    "all": 367
   },
   "experiments": [
     {
@@ -2842,6 +2842,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-04-mobile-boost-progress-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
