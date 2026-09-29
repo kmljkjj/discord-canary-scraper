@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-29T14-07-56-818Z_624059_i5f8mn",
-  "buildNumber": "624059",
-  "scrapedAt": "2026-09-29T14:07:56.818Z",
+  "runId": "2026-09-29T14-19-49-721Z_624067_w61efv",
+  "buildNumber": "624067",
+  "scrapedAt": "2026-09-29T14:19:49.721Z",
   "totals": {
-    "all": 365
+    "all": 366
   },
   "experiments": [
     {
@@ -6733,6 +6733,29 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-silp-app-opened-direct-to-discoverable",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "placement": null
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
