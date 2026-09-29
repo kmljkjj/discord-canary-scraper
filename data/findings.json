@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-29T15-40-04-132Z_624125_ibq1v8",
-  "buildNumber": "624125",
-  "scrapedAt": "2026-09-29T15:40:04.132Z",
+  "runId": "2026-09-29T15-57-28-201Z_624140_5gjgkt",
+  "buildNumber": "624140",
+  "scrapedAt": "2026-09-29T15:57:28.202Z",
   "totals": {
-    "all": 366
+    "all": 367
   },
   "experiments": [
     {
@@ -6562,6 +6562,26 @@
       "system": "apex",
       "defaultConfig": {
         "useNewHScroll": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-new-orb-reward-visuals",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
       },
       "variations": {
         "0": {
