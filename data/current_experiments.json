@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T19-45-58-410Z_624595_u6hrds",
-  "buildNumber": "624595",
-  "updatedAt": "2026-09-29T19:45:58.410Z",
-  "count": 367,
+  "runId": "2026-09-29T19-58-30-203Z_624614_i7hiqq",
+  "buildNumber": "624614",
+  "updatedAt": "2026-09-29T19:58:30.203Z",
+  "count": 368,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9080,6 +9080,34 @@
         "value": null
       },
       "fingerprint": "bf2731bf4c07836ad612491cb6281ac1169de51172b352714cc8ade6ac8a806f"
+    },
+    {
+      "id": "2026-08-split-payments",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c850820e0330d714b779b6833157e1616a7cc362c45e2e194a121252a0462ef7"
     },
     {
       "id": "2026-08-timestamp-autocomplete-mobile",
