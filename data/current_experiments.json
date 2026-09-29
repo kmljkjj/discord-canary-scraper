@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T16-53-39-448Z_624200_yjcwd6",
-  "buildNumber": "624200",
-  "updatedAt": "2026-09-29T16:53:39.448Z",
-  "count": 367,
+  "runId": "2026-09-29T16-55-52-183Z_624213_uzgfo0",
+  "buildNumber": "624213",
+  "updatedAt": "2026-09-29T16:55:52.183Z",
+  "count": 366,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -4481,34 +4481,6 @@
         "value": null
       },
       "fingerprint": "456d669e68c71e182746470ee749006a2c597285c138fa5e8825bc84a11c94d7"
-    },
-    {
-      "id": "2026-04-mobile-boost-progress-bar",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "3454fbb985cadde2e8aa2d2b65174442b8a968096e1d805fc840e3f5d5e4866d"
     },
     {
       "id": "2026-04-one-day-fractional-nitro",
