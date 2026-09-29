@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-09-29T21:54:51.021Z",
+  "scrapedAt": "2026-09-29T22:01:46.206Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-09-29T21:54:51.021Z"
+      "checkedAt": "2026-09-29T22:01:46.206Z"
     },
     {
       "platform": "ios",
@@ -20,7 +20,7 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-09-29T21:54:51.021Z"
+      "checkedAt": "2026-09-29T22:01:46.206Z"
     },
     {
       "platform": "android",
@@ -32,7 +32,7 @@
       "source": "store",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-09-29T21:54:51.021Z"
+      "checkedAt": "2026-09-29T22:01:46.206Z"
     },
     {
       "platform": "android",
@@ -45,7 +45,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-09-29T21:54:51.021Z"
+      "checkedAt": "2026-09-29T22:01:46.206Z"
     },
     {
       "platform": "android",
@@ -54,11 +54,17 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-09-29T21:54:51.021Z"
+      "checkedAt": "2026-09-29T22:01:46.206Z"
     }
   ],
   "otaIndex": {
     "ios": [
+      {
+        "version": "347.0",
+        "build": "112970",
+        "commit": "bcf41355a7e515f87651eda3962b8a992fcbabeb",
+        "releaseName": null
+      },
       {
         "version": "346.0",
         "build": "112812",
@@ -283,7 +289,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-09-29T21:48:07.088Z",
+  "previousScrapedAt": "2026-09-29T21:54:51.021Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
