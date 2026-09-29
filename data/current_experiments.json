@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T22-21-19-016Z_624905_p6ycjg",
-  "buildNumber": "624905",
-  "updatedAt": "2026-09-29T22:21:19.016Z",
-  "count": 366,
+  "runId": "2026-09-29T22-23-23-249Z_624907_olg30k",
+  "buildNumber": "624907",
+  "updatedAt": "2026-09-29T22:23:23.249Z",
+  "count": 365,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -1086,34 +1086,6 @@
         "value": null
       },
       "fingerprint": "58dbb217e2150931547700662d9ce02685928fcc7b0e57b7cf742b2654e26432"
-    },
-    {
-      "id": "2025-11-hide-manual-link",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "isHidden": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "ba941fd968158216974869a5e067dd5446d486f733033a8ca8d28feb05f55dfb"
     },
     {
       "id": "2025-11-mana-context-menu",

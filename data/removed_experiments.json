@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T22-21-19-016Z_624905_p6ycjg",
-  "buildNumber": "624905",
-  "updatedAt": "2026-09-29T22:21:19.016Z",
-  "count": 16,
+  "runId": "2026-09-29T22-23-23-249Z_624907_olg30k",
+  "buildNumber": "624907",
+  "updatedAt": "2026-09-29T22:23:23.249Z",
+  "count": 17,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -115,6 +115,13 @@
       "label": null,
       "removedAt": "2026-09-29T22:07:56.377Z",
       "lastBuild": "624872"
+    },
+    {
+      "id": "2025-11-hide-manual-link",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-29T22:23:23.261Z",
+      "lastBuild": "624907"
     }
   ]
 }
