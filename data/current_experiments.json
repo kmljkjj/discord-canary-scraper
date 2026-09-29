@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T22-05-36-492Z_624867_8g1vsb",
-  "buildNumber": "624867",
-  "updatedAt": "2026-09-29T22:05:36.492Z",
-  "count": 367,
+  "runId": "2026-09-29T22-07-56-367Z_624872_erqcqz",
+  "buildNumber": "624872",
+  "updatedAt": "2026-09-29T22:07:56.367Z",
+  "count": 366,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -7915,37 +7915,6 @@
         "value": null
       },
       "fingerprint": "311ccadfc40355e47e830e28c1acec21f7752b70a31cf6290f42e4f3f9295502"
-    },
-    {
-      "id": "2026-07-shop-this-look",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "shopThisLookEnabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "dbea251bf885f5a283ab3a4a7f4dcb3680b7db856f06e72a51016330a3c33591"
     },
     {
       "id": "2026-07-smag-dm-sidebar-nitro-recommendation",
