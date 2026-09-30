@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-30T20:07:36.828Z",
+  "fetchedAt": "2026-09-30T20:14:15.898Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -110,10 +110,11 @@
           1
         ]
       ],
-      "id": "2022-12_mention_raid_limit",
+      "id": null,
       "type": "guild",
-      "title": "Automod Mention Raid Limit",
-      "source": "discord_api + local_match"
+      "title": "hash_1318029053",
+      "source": "discord_api",
+      "note": "No local experiment ID match for this hash"
     },
     {
       "hash": 1727857487,
@@ -303,16 +304,11 @@
           1
         ]
       ],
-      "id": "2022-12_mention_raid_limit",
+      "id": null,
       "type": "guild",
-      "title": "Automod Mention Raid Limit",
+      "title": "hash_1318029053",
       "source": "discord_api",
-      "workerTitle": "Automod Mention Raid Limit",
-      "workerRevision": 2,
-      "buckets": [
-        0,
-        1
-      ]
+      "note": "No local experiment ID match for this hash"
     },
     {
       "hash": 1727857487,
@@ -3536,6 +3532,36 @@
       "source": "worker_api"
     },
     {
+      "id": "2022-12_mention_raid_limit",
+      "hash": 1318029053,
+      "type": "guild",
+      "title": "Automod Mention Raid Limit",
+      "percentage": 50.02,
+      "status": "partial",
+      "coverage": 5002,
+      "populations": 2,
+      "filters": [
+        "feature:PARTNERED",
+        "feature:COMMUNITY"
+      ],
+      "revision": 2,
+      "buckets": [
+        0,
+        1
+      ],
+      "treatmentRanges": [
+        [
+          1000,
+          2000
+        ],
+        [
+          6000,
+          10000
+        ]
+      ],
+      "source": "worker_api"
+    },
+    {
       "id": "2023-01_mention_raid_notice",
       "hash": 805661295,
       "type": "guild",
@@ -5050,17 +5076,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 4
       }
     },
     {
@@ -5070,17 +5096,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -5634,16 +5660,6 @@
       "note": "No rollout data found in Discord API or worker API."
     },
     {
-      "id": "2026-02-activity-privacy-matching",
-      "hash": 1485289462,
-      "type": "user",
-      "title": "2026-02-activity-privacy-matching",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-02-announcement-composer",
       "hash": 2988495041,
       "type": "user",
@@ -5838,16 +5854,6 @@
       "hash": 764569958,
       "type": "user",
       "title": "2026-02-private-channel-hiding",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-02-private-profiles",
-      "hash": 2361341172,
-      "type": "user",
-      "title": "2026-02-private-profiles",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -6168,26 +6174,6 @@
       "hash": 2148060109,
       "type": "user",
       "title": "2026-03-overlay-default-keybind",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-private-profiles-strict",
-      "hash": 100663015,
-      "type": "user",
-      "title": "2026-03-private-profiles-strict",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-private-profiles-strict-gb",
-      "hash": 1723653722,
-      "type": "user",
-      "title": "2026-03-private-profiles-strict-gb",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8194,16 +8180,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-09-dismissible-content-server-arbitration",
-      "hash": 2072666453,
-      "type": "user",
-      "title": "2026-09-dismissible-content-server-arbitration",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-09-friends-sidebar",
       "hash": 4104334858,
       "type": "user",
@@ -8334,10 +8310,10 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-09-markdown-file-preview",
-      "hash": 1559501732,
+      "id": "2026-09-manual-review-inconclusive-copy",
+      "hash": 246802655,
       "type": "user",
-      "title": "2026-09-markdown-file-preview",
+      "title": "2026-09-manual-review-inconclusive-copy",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8644,6 +8620,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-youtube-3p-nagbar",
+      "hash": 3485209992,
+      "type": "user",
+      "title": "2026-09-youtube-3p-nagbar",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-badge-directory-updates",
       "hash": 1475570113,
       "type": "user",
@@ -8655,13 +8641,13 @@
     }
   ],
   "summary": {
-    "total": 581,
-    "guild": 91,
-    "user": 490,
-    "withPercentage": 224,
-    "withoutPercentage": 357,
+    "total": 578,
+    "guild": 92,
+    "user": 486,
+    "withPercentage": 225,
+    "withoutPercentage": 353,
     "fullRollout": 39,
-    "partial": 8,
+    "partial": 9,
     "notStarted": 177,
     "fpSampled": 5
   }
