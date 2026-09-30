@@ -287,7 +287,7 @@ async function saveSeen(set) {
   await writeJsonAtomic(
     SEEN_FILE,
     { updatedAt: new Date().toISOString(), count: ids.length, ids },
-    { spaces: 2 },
+    2,
   );
 }
 

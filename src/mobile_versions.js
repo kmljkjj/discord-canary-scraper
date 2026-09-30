@@ -79,18 +79,6 @@ function versionFingerprint(c) {
   return `${c.platform}|${c.channel}|${c.version}`;
 }
 
-/**
- * Parse a build number to extract the track.
- * Build format: MMM T NN PPPPPPP (e.g., 34601300444005)
- * Track digit: 0=stable, 1=beta, 2=alpha, 3=development
- */
-function trackFromBuild(build) {
-  const s = String(build || '');
-  if (s.length < 4) return null;
-  const trackDigit = parseInt(s[3], 10);
-  return ['stable', 'beta', 'alpha', 'development'][trackDigit] || null;
-}
-
 // ── HTTP helpers ──────────────────────────────────────
 
 async function fetchText(url, opts = {}) {
@@ -349,7 +337,7 @@ async function androidFromAptoide() {
 
       // Also try to extract dates
       const dateRe = /(\d{1,2})\/(\d{1,2})\/(\d{4})/g;
-      const dates = [...html.matchAll(dateRe)];
+      const _dates = [...html.matchAll(dateRe)];
 
       // Find the latest beta and alpha
       const betas = versions.filter((v) => v.track === 'beta')

@@ -22,7 +22,7 @@ const path = require('path');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { murmur3 } = require('./lib/murmur3');
 const { mergeIntervals, intervalsCoverage, coveragePercent, DEFAULT_SCALE } = require('./lib/rollout_math');
-const { DEFAULT_UA, loadTokens } = require('./lib/utils');
+const { DEFAULT_UA } = require('./lib/utils');
 
 const DATA = path.join(__dirname, '..', 'data');
 const OUTPUT = path.join(DATA, 'experiment_rollouts.json');
@@ -46,19 +46,6 @@ async function fetchJson(url, opts = {}) {
   });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);
   return res.json();
-}
-
-// ── Hash → ID mapping ────────────────────────────────
-
-function buildHashMap(experiments) {
-  const map = new Map();
-  for (const exp of experiments) {
-    const id = String(exp.id || exp.name || '');
-    if (!id) continue;
-    const hash = exp.hash != null ? Number(exp.hash) : murmur3(id);
-    map.set(hash, { id, type: exp.type || exp.kind || 'unknown', title: exp.title || exp.label || id });
-  }
-  return map;
 }
 
 // ── Parse guild experiment rollouts from Discord API ──
@@ -193,19 +180,7 @@ function parseWorkerExperiment(e) {
   }
 
   // Also check overrides_formatted (these are for staff/internal)
-  const overrides = e.rollout.overrides_formatted || [];
-  let overridePct = null;
-  for (const ov of overrides) {
-    const positions = ov.position || [];
-    for (const pos of positions) {
-      if (pos.bucket > 0) {
-        const ranges = pos.rollouts || [];
-        for (const r of ranges) {
-          // Overrides are for specific users/guilds, not overall rollout
-        }
-      }
-    }
-  }
+  // Overrides are for specific users/guilds, not overall rollout — skipped
 
   const merged = mergeIntervals(treatmentRanges);
   const coverage = intervalsCoverage(merged, SCALE);
@@ -486,11 +461,7 @@ async function main() {
         parsed.clientKind = localMatch.kind || localMatch.type;
       }
 
-      if (parsed.type === 'guild') {
-        workerExperiments.push(parsed);
-      } else {
-        workerExperiments.push(parsed);
-      }
+      workerExperiments.push(parsed);
     }
   } catch (e) {
     console.warn('Worker API fetch failed:', e.message);
