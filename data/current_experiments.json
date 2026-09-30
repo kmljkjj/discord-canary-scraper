@@ -1,7 +1,7 @@
 {
-  "runId": "2026-09-30T22-47-07-481Z_626259_elv2dv",
-  "buildNumber": "626259",
-  "updatedAt": "2026-09-30T22:47:07.482Z",
+  "runId": "2026-09-30T22-49-19-704Z_626262_97y5zp",
+  "buildNumber": "626262",
+  "updatedAt": "2026-09-30T22:49:19.704Z",
   "count": 359,
   "experiments": [
     {
@@ -10299,15 +10299,19 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "showSetupProgressRow": false
+        "showSetupProgressRow": false,
+        "boostBeforeAddApp": false
       },
       "variations": {
         "1": {
           "id": 1
+        },
+        "2": {
+          "id": 2
         }
       },
       "treatments": null,
-      "variationCount": 1,
+      "variationCount": 2,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -10316,7 +10320,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "1481a7275f4d8f122df04e3a04bb1604e6509b344ccff99b27c14ce9ae5d56b5"
+      "fingerprint": "9d0e7b9d0be65120ea132ee658c1d65c9544b6ab751ce2bdd9b1de88afe489e7"
     },
     {
       "id": "2026-09-silp-app-opened-direct-to-discoverable",
