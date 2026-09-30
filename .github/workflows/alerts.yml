@@ -58,16 +58,20 @@ jobs:
           payload=$(jq -n \
             --arg name "$NAME" --arg url "$URL" --arg branch "$BRANCH" \
             --arg sha "${SHA:0:7}" --arg event "$EVENT" --arg repo "$GITHUB_REPOSITORY" \
+            --arg prev "${{ steps.prev.outputs.previous }}" \
             '{username: "Datamining · Alertes",
               embeds: [{
                 title: ("❌ " + $name + " a échoué"),
                 url: $url,
+                description: "Ouvre le run pour les logs (Scrape/notify, Strings 400, dedupe, etc.). Alerte uniquement au **premier** échec d une série.",
                 color: 15548997,
                 fields: [
                   {name: "Dépôt", value: $repo, inline: true},
                   {name: "Branche", value: $branch, inline: true},
                   {name: "Déclencheur", value: $event, inline: true},
-                  {name: "Commit", value: ("`" + $sha + "`"), inline: true}
+                  {name: "Commit", value: ("`" + $sha + "`"), inline: true},
+                  {name: "Run précédent", value: $prev, inline: true},
+                  {name: "Logs", value: ("[Ouvrir le run](" + $url + ")"), inline: true}
                 ],
                 timestamp: (now | todate)
               }]}')
