@@ -206,6 +206,20 @@ async function main() {
   // avec le chargement du state pour gagner ~1-2s.
   const buildPromise = fetchBuild();
 
+  // Load known-removed experiment IDs to prevent re-notifying the same removed experiments
+  // across builds (dedupe by build number in notify_dedupe.json is not sufficient when the
+  // state commit fails or a new build comes out with the same experiments still missing).
+  let knownRemoved = new Set();
+  try {
+    const removedData = await experimentState.loadRemovedExperiments(DATA);
+    for (const e of removedData) {
+      const id = String(typeof e === 'string' ? e : e && e.id || '');
+      if (id) knownRemoved.add(id);
+    }
+  } catch (e) {
+    console.warn('loadKnownRemoved: failed -', e.message);
+  }
+
   const [prev, knownExp, knownStr, knownRt, lastStr, lastRt, lastExp] =
     await Promise.all([
       loadState(DATA),
@@ -219,6 +233,7 @@ async function main() {
 
   console.log('Known / last', {
     knownExp: knownExp.size,
+    knownRemoved: knownRemoved.size,
     lastExp: Object.keys(lastExp).length,
     lastStr: Object.keys(lastStr).length,
     lastRt: Object.keys(lastRt).length,
@@ -509,6 +524,33 @@ async function main() {
     { skipKnownFilter: isCatchUp },
   );
 
+  // Filter out experiments already known as removed to prevent re-notification
+  // across builds. This is the cross-build dedupe that notify_dedupe.json (per-build)
+  // cannot provide.
+  if (knownRemoved.size && expDiff.removed.length) {
+    const before = expDiff.removed.length;
+    expDiff.removed = expDiff.removed.filter((e) => {
+      const id = String(typeof e === 'string' ? e : e && e.id || '');
+      return id && !knownRemoved.has(id);
+    });
+    if (rawDiff && rawDiff.removed) {
+      rawDiff.removed = rawDiff.removed.filter((e) => {
+        const id = String(e && e.id || '');
+        return id && !knownRemoved.has(id);
+      });
+    }
+    if (rawDiff && rawDiff.removedAll) {
+      rawDiff.removedAll = rawDiff.removedAll.filter((e) => {
+        const id = String(e && e.id || '');
+        return id && !knownRemoved.has(id);
+      });
+    }
+    const skipped = before - expDiff.removed.length;
+    if (skipped > 0) {
+      console.log(`REMOVED_DEDUPE: filtered ${skipped} already-known removed experiment(s)`);
+    }
+  }
+
   const strDiff = { added: {}, modified: {}, removed: {} };
   const lastStrCount = Object.keys(lastStr).length;
   if (extractedStrCount >= MIN_STRINGS_FOR_DIFF && lastStrCount >= 50) {
@@ -747,7 +789,7 @@ async function main() {
     previousCurrent,
     current: normalized,
     existingRemoved: previousRemoved,
-    allowRemovals: !!cov.reliable,
+    allowRemovals: !!cov.reliable || (expDiff.removed.length > 0),
     buildNumber: bn,
     confirmedRemovedIds: (
       (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
