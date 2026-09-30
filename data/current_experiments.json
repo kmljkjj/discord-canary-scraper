@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-30T23-00-14-261Z_626281_zlln2m",
-  "buildNumber": "626281",
-  "updatedAt": "2026-09-30T23:00:14.261Z",
-  "count": 358,
+  "runId": "2026-09-30T23-12-28-796Z_626294_eb2oud",
+  "buildNumber": "626294",
+  "updatedAt": "2026-09-30T23:12:28.796Z",
+  "count": 359,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10087,6 +10087,37 @@
         "value": null
       },
       "fingerprint": "07a086b1c4a87044c534c24457fabf88b91a71a5c56a69bf07e13eb6c955fc4e"
+    },
+    {
+      "id": "2026-09-orbs-hero-carousel",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f9e839e21ce13f6dea7d772ecd6ec52e2e991042b49b7c63ac4c03a6f9a7c687"
     },
     {
       "id": "2026-09-profile-link-fetch",
