@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-30T20-40-09-430Z_626017_sde75b",
-  "buildNumber": "626017",
-  "updatedAt": "2026-09-30T20:40:09.430Z",
-  "count": 672,
+  "runId": "2026-09-30T20-47-35-854Z_626026_bjazdi",
+  "buildNumber": "626026",
+  "updatedAt": "2026-09-30T20:47:35.854Z",
+  "count": 673,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -542,6 +542,7 @@
     "USER_ACTIVITY_JOIN": "/users/:param/sessions/:param/activities/:param/1",
     "GUILD_FEATURE_ACK": "/guilds/:param/ack/:param/:param",
     "USER_NON_CHANNEL_ACK": "/users/@me/:param/:param/ack",
+    "VIBEGRATIONS_PROJECT_ACK": "/conjuring/projects/:param/ack/:param",
     "GUILD_MEMBER": "/guilds/:param/members/:param",
     "GUILD_MEMBER_NICK": "/guilds/:param/members/:param/nick",
     "GUILD_MEMBER_AVATAR": "/guilds/:param/users/:param/avatars/:param.:param",
