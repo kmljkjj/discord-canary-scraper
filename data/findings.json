@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-29T22-27-44-097Z_624913_yx3yk5",
-  "buildNumber": "624913",
-  "scrapedAt": "2026-09-29T22:27:44.097Z",
+  "runId": "2026-09-30T20-13-00-267Z_625974_br2bzt",
+  "buildNumber": "625974",
+  "scrapedAt": "2026-09-30T20:13:00.267Z",
   "totals": {
-    "all": 365
+    "all": 360
   },
   "experiments": [
     {
@@ -94,23 +94,6 @@
       "type": "guild",
       "kind": "guild",
       "label": "Disable mass mentions for communities by default",
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2022-12_mention_raid_limit",
-      "type": "guild",
-      "kind": "guild",
-      "label": "Automod Mention Raid Limit",
       "system": "apex",
       "defaultConfig": {
         "enabled": false
@@ -1222,30 +1205,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-02-activity-privacy-matching",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "copyChanges": false,
-        "upsell": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "variationCount": 3,
-      "source": "discord"
-    },
-    {
       "id": "2026-02-announcement-composer",
       "type": "user",
       "kind": "user",
@@ -1610,26 +1569,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-private-profiles",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {
@@ -2237,58 +2176,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-private-profiles-strict",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-private-profiles-strict-gb",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
       "source": "discord"
     },
     {
@@ -6113,26 +6000,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-09-dismissible-content-server-arbitration",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-09-friends-sidebar",
       "type": "user",
       "kind": "user",
@@ -6390,7 +6257,7 @@
       "source": "discord"
     },
     {
-      "id": "2026-09-markdown-file-preview",
+      "id": "2026-09-manual-review-inconclusive-copy",
       "type": "user",
       "kind": "user",
       "label": null,
@@ -6399,14 +6266,11 @@
         "enabled": false
       },
       "variations": {
-        "0": {
-          "id": 0
-        },
         "1": {
           "id": 1
         }
       },
-      "variationCount": 2,
+      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -6980,6 +6844,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-youtube-3p-nagbar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

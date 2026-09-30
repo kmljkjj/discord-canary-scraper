@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T22-27-44-097Z_624913_yx3yk5",
-  "buildNumber": "624913",
-  "updatedAt": "2026-09-29T22:27:44.097Z",
-  "count": 365,
+  "runId": "2026-09-30T20-13-00-267Z_625974_br2bzt",
+  "buildNumber": "625974",
+  "updatedAt": "2026-09-30T20:13:00.267Z",
+  "count": 360,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -169,34 +169,6 @@
         "value": null
       },
       "fingerprint": "a0d02767aa118888281de888ba20e967882ad6314c5b4ce1a07b54bca9e5f0d2"
-    },
-    {
-      "id": "2022-12_mention_raid_limit",
-      "kind": "guild",
-      "type": "guild",
-      "system": "apex",
-      "label": "Automod Mention Raid Limit",
-      "title": "Automod Mention Raid Limit",
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "6600e0b69245e6c8333c4a34c8f151b11f14a36bc4f88c7e1a2803558be87cb2"
     },
     {
       "id": "2023-02_guest_voice_invites",
@@ -1913,41 +1885,6 @@
       "fingerprint": "580de023f058dec9c0b63847e72cc42ca9ce04bab9807164a89b33af2745d176"
     },
     {
-      "id": "2026-02-activity-privacy-matching",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "copyChanges": false,
-        "upsell": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "treatments": null,
-      "variationCount": 3,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "1ca9ce61e32e181f4430d49c250909961c1598c633c5b929f629f8fd3aef6e7c"
-    },
-    {
       "id": "2026-02-announcement-composer",
       "kind": "user",
       "type": "user",
@@ -2533,37 +2470,6 @@
         "value": null
       },
       "fingerprint": "fd1fd19523189e01af93d32f34773f4ab8b5abdfd1c0d135ee3fd6dcf3414415"
-    },
-    {
-      "id": "2026-02-private-profiles",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "2a9bbf95d466086d3fe13a6ccc9c03fd8e3c9eb5bbe639527ec1900f533a6cf0"
     },
     {
       "id": "2026-02-process-boost-on-voice",
@@ -3523,80 +3429,6 @@
         "value": null
       },
       "fingerprint": "247ac89d18ea2cb3d841425616a25383898d9946975f8ff7187d535d23a7f8ae"
-    },
-    {
-      "id": "2026-03-private-profiles-strict",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "treatments": null,
-      "variationCount": 4,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "2cc688c6c4e9dcffc15401d4662d205a4cfc56b20bbf43a7c2564191af66a24d"
-    },
-    {
-      "id": "2026-03-private-profiles-strict-gb",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "treatments": null,
-      "variationCount": 4,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "8fabd0347815ad0658f00fd0e94042fb703426a4e66a07be378d7b2af1b73137"
     },
     {
       "id": "2026-03-soundmoji-rendering",
@@ -9623,37 +9455,6 @@
       "fingerprint": "8b460a13a55c573114a5d692faba0185951f30e063f86458aef5db41716e347c"
     },
     {
-      "id": "2026-09-dismissible-content-server-arbitration",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "b3f8998242205eca7dfac64164dcd8e4743eab74a832e47843ce211e63f5bc3b"
-    },
-    {
       "id": "2026-09-friends-sidebar",
       "kind": "user",
       "type": "user",
@@ -10054,7 +9855,7 @@
       "fingerprint": "e61e4aacc46f26240161094e4ca47a7772bf24fe68ddcdc9a2bffec21fc23dcc"
     },
     {
-      "id": "2026-09-markdown-file-preview",
+      "id": "2026-09-manual-review-inconclusive-copy",
       "kind": "user",
       "type": "user",
       "system": "apex",
@@ -10065,15 +9866,12 @@
         "enabled": false
       },
       "variations": {
-        "0": {
-          "id": 0
-        },
         "1": {
           "id": 1
         }
       },
       "treatments": null,
-      "variationCount": 2,
+      "variationCount": 1,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -10082,7 +9880,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "3ce279c66c84088591fe56b561bdf6bf37a25b2020ba7ef16de367a5dffbc821"
+      "fingerprint": "69535f9948d37cecffb385c67e983c94a9afc6ba60b3aef7aee8ae8775126ed5"
     },
     {
       "id": "2026-09-mobile-quest-home-sort-priority",
@@ -10986,6 +10784,34 @@
         "value": null
       },
       "fingerprint": "654fcb33f9ae9638ff3582e9da3987870e809362dd487cd3510432248a897cd4"
+    },
+    {
+      "id": "2026-09-youtube-3p-nagbar",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f965d27f1e1eecede2679cb5d83ceab442fc62b3f480ff307186ee6e11a2b060"
     },
     {
       "id": "2026-10-badge-directory-updates",

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-29T22-27-44-097Z_624913_yx3yk5",
-  "buildNumber": "624913",
-  "updatedAt": "2026-09-29T22:27:44.097Z",
-  "count": 17,
+  "runId": "2026-09-30T20-13-00-267Z_625974_br2bzt",
+  "buildNumber": "625974",
+  "updatedAt": "2026-09-30T20:13:00.267Z",
+  "count": 24,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -122,6 +122,55 @@
       "label": null,
       "removedAt": "2026-09-29T22:23:23.261Z",
       "lastBuild": "624907"
+    },
+    {
+      "id": "2022-12_mention_raid_limit",
+      "kind": "guild",
+      "label": "Automod Mention Raid Limit",
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-02-activity-privacy-matching",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-02-private-profiles",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-03-private-profiles-strict",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-03-private-profiles-strict-gb",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-09-dismissible-content-server-arbitration",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
+    },
+    {
+      "id": "2026-09-markdown-file-preview",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-09-30T20:13:00.277Z",
+      "lastBuild": "625974"
     }
   ]
 }
