@@ -4893,6 +4893,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-linked-game-org-invites-dev",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-linux-gpu-decode",
     "defaultConfig": {
       "mode": "all"

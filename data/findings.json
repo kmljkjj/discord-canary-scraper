@@ -1,9 +1,9 @@
 {
-  "runId": "2026-09-30T23-13-44-234Z_626296_lj50gz",
-  "buildNumber": "626296",
-  "scrapedAt": "2026-09-30T23:13:44.234Z",
+  "runId": "2026-09-30T23-15-20-834Z_626310_dc0mcv",
+  "buildNumber": "626310",
+  "scrapedAt": "2026-09-30T23:15:20.834Z",
   "totals": {
-    "all": 359
+    "all": 360
   },
   "experiments": [
     {
@@ -6192,6 +6192,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-linked-game-org-invites-dev",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

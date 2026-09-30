@@ -1,8 +1,8 @@
 {
-  "runId": "2026-09-30T23-13-44-234Z_626296_lj50gz",
-  "buildNumber": "626296",
-  "updatedAt": "2026-09-30T23:13:44.234Z",
-  "count": 359,
+  "runId": "2026-09-30T23-15-20-834Z_626310_dc0mcv",
+  "buildNumber": "626310",
+  "updatedAt": "2026-09-30T23:15:20.834Z",
+  "count": 360,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9758,6 +9758,34 @@
         "value": null
       },
       "fingerprint": "47e9c46827ce6f4fc505b529b1ec49184036f265ef0ff3b2ce63eb1b41afc02f"
+    },
+    {
+      "id": "2026-09-linked-game-org-invites-dev",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "604e6b216cc8293653e78567d8c8fdaed7ea07b3bd0a505b4948c25fa407fafc"
     },
     {
       "id": "2026-09-linux-gpu-decode",
