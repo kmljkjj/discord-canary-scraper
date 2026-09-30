@@ -3294,37 +3294,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-06-wysiwyg-show-dns-to-non-nitro",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "id": 1
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-06-wysiwyg-user-profile-premium-try-it-out",
-    "defaultConfig": {
-      "enabled": false,
-      "showPresetName": false,
-      "clientThemeAdaptedColorsEnabled": false
-    },
-    "variations": {
-      "1": {
-        "id": 1
-      },
-      "2": {
-        "id": 2
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-07-ad-recheck-interval-experiment",
     "defaultConfig": {
       "enableFastAdRecheck": false
