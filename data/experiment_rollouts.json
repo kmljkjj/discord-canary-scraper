@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-30T23:10:08.429Z",
+  "fetchedAt": "2026-09-30T23:17:09.481Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 1
       }
     },
     {
@@ -5096,17 +5096,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 2
       }
     },
     {
@@ -8280,6 +8280,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-linked-game-org-invites-dev",
+      "hash": 4056747830,
+      "type": "user",
+      "title": "2026-09-linked-game-org-invites-dev",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-linux-gpu-decode",
       "hash": 388390375,
       "type": "user",
@@ -8384,6 +8394,16 @@
       "hash": 2217911162,
       "type": "user",
       "title": "2026-09-non-nitro-file-upload-marketing",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-09-orbs-hero-carousel",
+      "hash": 3708024214,
+      "type": "user",
+      "title": "2026-09-orbs-hero-carousel",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8621,11 +8641,11 @@
     }
   ],
   "summary": {
-    "total": 576,
+    "total": 578,
     "guild": 92,
-    "user": 484,
+    "user": 486,
     "withPercentage": 225,
-    "withoutPercentage": 351,
+    "withoutPercentage": 353,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
