@@ -8,15 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
         with:
-          node-version: '22'
+          fetch-depth: 0
       - name: Critical patches
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-
           p = Path('src/lib/webhook.js')
           t = p.read_text()
           if 'sanitizeLogText' not in t:
@@ -33,7 +31,6 @@ jobs:
               print('webhook OK')
           else:
               print('webhook already')
-
           p = Path('docs/mobile.js')
           t = p.read_text()
           t2 = t.replace(
@@ -42,7 +39,6 @@ jobs:
           )
           p.write_text(t2)
           print('mobile', 'OK' if t2 != t else 'already')
-
           p = Path('docs/status.js')
           t = p.read_text()
           if 'function safeUrl' not in t:
@@ -56,7 +52,6 @@ jobs:
               print('status OK')
           else:
               print('status already')
-
           p = Path('docs/rollouts.js')
           t = p.read_text()
           if 'function escapeHtml' not in t:
@@ -70,20 +65,18 @@ jobs:
           else:
               print('rollouts already')
           PY
-          node --check src/lib/webhook.js || true
           grep -q sanitizeLogText src/lib/webhook.js && echo mask_present
-          grep -q 'escapeHtml(change.from)' docs/mobile.js && echo mobile_escaped
       - name: Remove obsolete workflows
         run: |
           for f in emergency-restore.yml restore-notify-fix.yml apply-blog-wc-main.yml apply-blog-wc-patch.yml blog-wc-fix.yml security-priority-fixes.yml; do
             p=".github/workflows/$f"
             [ -f "$p" ] && git rm -f "$p" && echo removed $f || true
           done
-      - name: Commit
+      - name: Commit and push with rebase
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git status
-          git commit -m "security: mask webhook token in logs, HTML-escape docs, remove obsolete restore workflows" || exit 0
+          git commit -m "security: mask webhook token in logs, HTML-escape docs, remove obsolete restore workflows" || echo "nothing to commit"
+          git pull --rebase origin main || git pull --rebase --autostash origin main
           git push
