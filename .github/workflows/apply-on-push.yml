@@ -12,74 +12,79 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Patch quests + shop
+      - name: Patch quests postWebhook for V2
         run: |
-          python3 <<'PY'
+          python3 -c "
           from pathlib import Path
           p = Path('src/quests.js')
           t = p.read_text()
-          t = t.replace("const { sendEmbeds } = require('./lib/webhook');", "const { sendEmbeds, sendWebhook } = require('./lib/webhook');", 1)
-          old = "async function postWebhook(url, body) {\n  if (!url) return { ok: false, status: 0, text: 'no webhook' };\n  const embeds = body.embeds || [];\n  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };\n  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });\n}"
-          new = "async function postWebhook(url, body) {\n  if (!url) return { ok: false, status: 0, text: 'no webhook' };\n  if (body && Array.isArray(body.components) && body.components.length) {\n    return sendWebhook(url, body, { label: 'quests-v2' });\n  }\n  const embeds = body.embeds || [];\n  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };\n  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });\n}"
-          if old in t:
-              p.write_text(t.replace(old, new, 1))
-              print('quests OK')
-          else:
-              print('quests skip')
+          t = t.replace(\"const { sendEmbeds } = require('./lib/webhook');\", \"const { sendEmbeds, sendWebhook } = require('./lib/webhook');\", 1)
+          a = 'const embeds = body.embeds || [];'
+          b = '''if (body && Array.isArray(body.components) && body.components.length) {
+    return sendWebhook(url, body, { label: \'quests-v2\' });
+  }
+  const embeds = body.embeds || [];'''
+          if a not in t:
+              raise SystemExit('marker missing')
+          # only first occurrence inside postWebhook
+          idx = t.find('async function postWebhook')
+          idx2 = t.find(a, idx)
+          t = t[:idx2] + b + t[idx2+len(a):]
+          p.write_text(t)
+          print('quests patched')
+          "
+          grep -n quests-v2 src/quests.js | head
+      - name: Patch shop pending batches
+        run: |
+          python3 -c "
+          from pathlib import Path
           p = Path('src/shop.js')
           t = p.read_text()
           if 'pendingNew' in t:
-              print('shop already')
-          else:
-              marker = '  const toNotify = newItems.slice(0, 15);'
-              if marker not in t:
-                  raise SystemExit('shop marker missing')
-              start = t.index(marker)
-              end = t.index("console.log('\u2705 Shop done")
-              brace = t.index('\n}', end)
-              block = '''  let remaining = newItems.slice();
-  const announced = { ...(prev.announced || {}) };
-  const notified = [];
-  while (remaining.length) {
-    const batch = remaining.slice(0, 15);
-    remaining = remaining.slice(15);
-    const sent = await postWebhook(batch.map(buildEmbed));
-    console.log('Webhook batch', batch.length, sent.status, sent.ok ? 'OK' : sent.text);
-    if (!sent.ok) {
-      console.warn('NOTIFY_FAIL shop — remaining will retry');
-      process.exitCode = 2;
-      remaining = batch.concat(remaining);
-      break;
-    }
-    const ts = new Date().toISOString();
-    for (const it of batch) {
-      announced[it.id] = ts;
-      notified.push(it.id);
-    }
+              print('shop already'); raise SystemExit(0)
+          old = '''  const toNotify = newItems.slice(0, 15);
+  const embeds = toNotify.map(buildEmbed);
+  const sent = await postWebhook(embeds);
+  console.log(\x27Webhook\x27, sent.status, sent.ok ? \x27OK\x27 : sent.text);
+
+  if (!sent.ok) {
+    console.warn(\x27NOTIFY_FAIL shop — ids NOT marked; will retry next run\x27);
+    process.exitCode = 2;
+    return;
   }
-  const knownIds = new Set([...(prev.ids || []), ...Object.keys(announced)]);
-  const nextIds = allIds.filter((id) => knownIds.has(id));
-  await writeJsonAtomic(STATE, {
-    scrapedAt: new Date().toISOString(),
-    count: items.length,
-    ids: nextIds,
-    items: items.map((i) => ({ id: i.id, name: i.name, type: i.type, image: i.image })),
-    announced,
-    lastNew: notified,
-    pendingNew: remaining.map((i) => i.id),
-  }, 2);
-  console.log('\u2705 Shop done — announced', notified.length, 'pending', remaining.length);
+
+  const announced = { ...(prev.announced || {}) };
+  for (const it of toNotify) {
+    announced[it.id] = new Date().toISOString();
+  }
+
+  await writeJsonAtomic(
+    STATE,
+    {
+      scrapedAt: new Date().toISOString(),
+      count: items.length,
+      ids: allIds,
+      items: items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        type: i.type,
+        image: i.image,
+      })),
+      announced,
+      lastNew: toNotify.map((i) => i.id),
+    },
+    2,
+  );
+  console.log(\x27\u2705 Shop done — announced\x27, toNotify.length);
 }'''
-              p.write_text(t[:start] + block + t[brace+2:])
-              print('shop OK')
-          PY
-          grep -q quests-v2 src/quests.js && echo quests_ok
-          grep -q pendingNew src/shop.js && echo shop_ok
+          print('looking for shop block', old[:40] in t)
+          "
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/quests.js src/shop.js
-          git commit -m "fix: quests V2 sendWebhook + shop pending batches" || exit 0
+          git add src/quests.js src/shop.js || true
+          git status
+          git commit -m "fix: quests V2 sendWebhook path" || exit 0
           git pull --rebase origin main || true
           git push
