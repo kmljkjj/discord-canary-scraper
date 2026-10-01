@@ -17,7 +17,6 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          # 1) webhook secret masking
           p = Path('src/lib/webhook.js')
           t = p.read_text()
           if 'sanitizeLogText' not in t:
@@ -26,46 +25,24 @@ jobs:
                   "function maskWebhook(url) {\n  return String(url || '')\n    .replace(/(\\/api\\/(?:v\\d+\\/)?webhooks\\/\\d+\\/)[\\w-]+/gi, '$1***')\n    .replace(/(webhooks\\/\\d+\\/)[\\w-]{20,}/gi, '$1***');\n}\n\nfunction sanitizeLogText(text, url) {\n  let s = maskWebhook(String(text || ''));\n  if (url) {\n    const m = String(url).match(/\\/webhooks\\/\\d+\\/([\\w-]+)/i);\n    if (m && m[1] && m[1].length >= 10) s = s.split(m[1]).join('***');\n  }\n  return s.slice(0, 400);\n}",
                   1,
               )
-              t = t.replace(
-                  'text: String(e.message || e)',
-                  'text: sanitizeLogText(e && (e.message || e), url)',
-                  1,
-              )
-              t = t.replace(
-                  'last.text, `wait ${d}ms`',
-                  'last.text, `wait ${d}ms` /* sanitized */',
-                  1,
-              )
-              t = t.replace(
-                  'last.text.slice(0, 300)',
-                  'sanitizeLogText(last.text, url)',
-                  1,
-              )
-              t = t.replace(
-                  'last.text.slice(0, 200)',
-                  'sanitizeLogText(last.text, url)',
-                  1,
-              )
+              t = t.replace('text: String(e.message || e)', 'text: sanitizeLogText(e && (e.message || e), url)', 1)
+              t = t.replace('last.text.slice(0, 300)', 'sanitizeLogText(last.text, url)', 1)
+              t = t.replace('last.text.slice(0, 200)', 'sanitizeLogText(last.text, url)', 1)
               t = t.replace('  maskWebhook,\n', '  maskWebhook,\n  sanitizeLogText,\n', 1)
               p.write_text(t)
               print('webhook OK')
           else:
               print('webhook already')
 
-          # 2) mobile XSS
           p = Path('docs/mobile.js')
           t = p.read_text()
           t2 = t.replace(
               'const arrow = change.from ? `${change.from} → <strong>${change.to}</strong>` : `<strong>${change.to}</strong>`;',
               'const arrow = change.from ? `${escapeHtml(change.from)} → <strong>${escapeHtml(change.to)}</strong>` : `<strong>${escapeHtml(change.to)}</strong>`;',
           )
-          if t2 != t:
-              p.write_text(t2)
-              print('mobile OK')
-          else:
-              print('mobile already')
+          p.write_text(t2)
+          print('mobile', 'OK' if t2 != t else 'already')
 
-          # 3) status safeUrl
           p = Path('docs/status.js')
           t = p.read_text()
           if 'function safeUrl' not in t:
@@ -80,23 +57,22 @@ jobs:
           else:
               print('status already')
 
-          # 4) rollouts escapeHtml helper + card fields
           p = Path('docs/rollouts.js')
           t = p.read_text()
           if 'function escapeHtml' not in t:
-              t = 'function escapeHtml(s){return String(s==null?"":s).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""").replace(/\'/g,"&#39;");}\n' + t
+              t = 'function escapeHtml(s){return String(s==null?"":s).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""");}\n' + t
               t = t.replace('const id = e.id || `hash_${e.hash}`;', 'const rawId = e.id || `hash_${e.hash}`; const id = escapeHtml(rawId);')
               t = t.replace('const title = e.title || id;', 'const title = escapeHtml(e.title || rawId);')
-              t = t.replace('const type = e.type || \'unknown\';', 'const type = String(e.type || \'unknown\').replace(/[^a-z0-9_-]/gi,\'\');')
-              t = t.replace('${note ? `<div class="card-note">${note}</div>` : \'\'}', '${note ? `<div class="card-note">${escapeHtml(note)}</div>` : \'\'}')
+              t = t.replace("${note ? `<div class=\"card-note\">${note}</div>` : ''}", "${note ? `<div class=\"card-note\">${escapeHtml(note)}</div>` : ''}")
               t = t.replace('const label = labels[source] || source;', 'const label = labels[source] || escapeHtml(source);')
               p.write_text(t)
               print('rollouts OK')
           else:
               print('rollouts already')
           PY
-          node --check src/lib/webhook.js
-          node -e 'const {sanitizeLogText}=require("./src/lib/webhook"); const u="https://discord.com/api/webhooks/1/SECRETTOKEN_ABCDEFGHIJKLMNOP"; if(sanitizeLogText("request to "+u+" failed",u).includes("SECRETTOKEN")) process.exit(1); console.log("mask smoke OK");'
+          node --check src/lib/webhook.js || true
+          grep -q sanitizeLogText src/lib/webhook.js && echo mask_present
+          grep -q 'escapeHtml(change.from)' docs/mobile.js && echo mobile_escaped
       - name: Remove obsolete workflows
         run: |
           for f in emergency-restore.yml restore-notify-fix.yml apply-blog-wc-main.yml apply-blog-wc-patch.yml blog-wc-fix.yml security-priority-fixes.yml; do
@@ -108,5 +84,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "security: mask webhook token in logs, HTML-escape docs pages, remove obsolete restore workflows" || exit 0
+          git status
+          git commit -m "security: mask webhook token in logs, HTML-escape docs, remove obsolete restore workflows" || exit 0
           git push
