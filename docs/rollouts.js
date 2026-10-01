@@ -1,3 +1,4 @@
+function escapeHtml(s){return String(s==null?"":s).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""");}
 /* Rollouts page — fetch experiment_rollouts.json and render cards */
 (async () => {
   const grid = document.getElementById('grid');
@@ -86,7 +87,7 @@
       fingerprint_sampling: 'Fingerprint',
       client_bundle: 'Client',
     };
-    const label = labels[source] || source;
+    const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
   }
 
@@ -130,8 +131,8 @@
     }
 
     grid.innerHTML = filtered.slice(0, 500).map((e) => {
-      const id = e.id || `hash_${e.hash}`;
-      const title = e.title || id;
+      const rawId = e.id || `hash_${e.hash}`; const id = escapeHtml(rawId);
+      const title = escapeHtml(e.title || rawId);
       const type = e.type || 'unknown';
       const pct = e.percentage;
       const source = e.source || '';
@@ -149,7 +150,7 @@
           ${sourceTag(source)}
         </div>
         ${fpDetails(e)}
-        ${note ? `<div class="card-note">${note}</div>` : ''}
+        ${note ? `<div class="card-note">${escapeHtml(note)}</div>` : ''}
       </div>`;
     }).join('');
   }

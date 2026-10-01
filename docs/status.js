@@ -1,6 +1,7 @@
 const SUMMARY_URL = 'https://discordstatus.com/api/v2/summary.json';
 const INCIDENTS_URL = 'https://discordstatus.com/api/v2/incidents.json';
 
+function safeUrl(u) { try { const x=new URL(String(u||''),'https://status.discord.com'); if(x.protocol!=='https:'&&x.protocol!=='http:') return '#'; return x.href; } catch { return '#'; } }
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
@@ -78,7 +79,7 @@ async function main() {
         return (
           '<div class="incident">' +
           '<div style="font-weight:700;margin-bottom:0.25rem"><a href="' +
-          escapeHtml(inc.shortlink || '#') +
+          escapeHtml(safeUrl(inc.shortlink || '#')) +
           '" target="_blank" rel="noopener">' +
           escapeHtml(inc.name) +
           '</a></div>' +

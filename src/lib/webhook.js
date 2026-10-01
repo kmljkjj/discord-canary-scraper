@@ -43,10 +43,18 @@ function enqueue(url, fn) {
 }
 
 function maskWebhook(url) {
-  return String(url || '').replace(
-    /(\/api\/(?:v\d+\/)?webhooks\/\d+\/)[\w-]+/i,
-    '$1***',
-  );
+  return String(url || '')
+    .replace(/(\/api\/(?:v\d+\/)?webhooks\/\d+\/)[\w-]+/gi, '$1***')
+    .replace(/(webhooks\/\d+\/)[\w-]{20,}/gi, '$1***');
+}
+
+function sanitizeLogText(text, url) {
+  let s = maskWebhook(String(text || ''));
+  if (url) {
+    const m = String(url).match(/\/webhooks\/\d+\/([\w-]+)/i);
+    if (m && m[1] && m[1].length >= 10) s = s.split(m[1]).join('***');
+  }
+  return s.slice(0, 400);
 }
 
 function isWebhookUrl(url) {
@@ -140,7 +148,7 @@ async function _sendWebhook(url, body, options = {}) {
         timeout: opts.timeoutMs,
       });
     } catch (e) {
-      last = { ok: false, status: 0, text: String(e.message || e), attempts: attempt + 1 };
+      last = { ok: false, status: 0, text: sanitizeLogText(e && (e.message || e), url), attempts: attempt + 1 };
       const d = backoff(attempt, opts);
       console.warn(`webhook network error (${attempt + 1}/${opts.maxAttempts}) ${label}`, last.text, `wait ${d}ms`);
       if (attempt + 1 < opts.maxAttempts) await sleep(d);
@@ -174,11 +182,11 @@ async function _sendWebhook(url, body, options = {}) {
     }
 
     // 4xx : payload invalide / webhook supprimé → pas de retry
-    console.warn(`webhook fail ${res.status} ${label} ${maskWebhook(url)}`, last.text.slice(0, 300));
+    console.warn(`webhook fail ${res.status} ${label} ${maskWebhook(url)}`, sanitizeLogText(last.text, url));
     return last;
   }
 
-  console.warn(`webhook gave up after ${last.attempts} attempts ${label}`, last.status, last.text.slice(0, 200));
+  console.warn(`webhook gave up after ${last.attempts} attempts ${label}`, last.status, sanitizeLogText(last.text, url));
   return last;
 }
 
@@ -247,6 +255,7 @@ module.exports = {
   embedChars,
   retryAfterMs,
   maskWebhook,
+  sanitizeLogText,
   isWebhookUrl,
   MAX_EMBEDS_PER_MESSAGE,
   MAX_EMBED_CHARS_PER_MESSAGE,

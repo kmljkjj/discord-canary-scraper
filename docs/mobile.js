@@ -92,7 +92,7 @@ function otaCard(entry, platform) {
 }
 
 function changeEntry(change) {
-  const arrow = change.from ? `${change.from} → <strong>${change.to}</strong>` : `<strong>${change.to}</strong>`;
+  const arrow = change.from ? `${escapeHtml(change.from)} → <strong>${escapeHtml(change.to)}</strong>` : `<strong>${escapeHtml(change.to)}</strong>`;
   const build = change.build ? ` · build <code>${escapeHtml(change.build)}</code>` : '';
   return (
     `<div class="change-row">` +
