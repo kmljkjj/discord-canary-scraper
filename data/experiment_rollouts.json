@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-01T01:45:30.462Z",
+  "fetchedAt": "2026-10-01T01:52:15.604Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,8 +11,8 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
-      "matched": 2
+      "uniqueHashes": 4,
+      "matched": 1
     }
   },
   "guildExperiments": [
@@ -5050,26 +5050,6 @@
       }
     },
     {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "type": "user",
-      "title": "Tida Webform",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 50,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 50
-      },
-      "source": "fingerprint_sampling",
-      "note": null,
-      "fpSamples": 50,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 50
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
@@ -5096,17 +5076,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -5364,6 +5344,16 @@
       "hash": 511860492,
       "type": "user",
       "title": "Calendar",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2025-11_tida_webform",
+      "hash": 4055210228,
+      "type": "user",
+      "title": "Tida Webform",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8644,11 +8634,11 @@
     "total": 578,
     "guild": 92,
     "user": 486,
-    "withPercentage": 225,
-    "withoutPercentage": 353,
+    "withPercentage": 224,
+    "withoutPercentage": 354,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
