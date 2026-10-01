@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-01T07:43:05.740Z",
+  "scrapedAt": "2026-10-01T07:44:11.185Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,23 @@
   ],
   "zendesk": [
     {
+      "id": "43761617103767",
+      "title": "Get a Riot Cash Code When You Subscribe to Nitro",
+      "link": "https://support.discord.com/hc/en-us/articles/43761617103767-Get-a-Riot-Cash-Code-When-You-Subscribe-to-Nitro",
+      "updatedAt": "2026-10-01T07:42:56Z",
+      "createdAt": "2026-09-25T16:23:04Z",
+      "sectionId": "22113084771863",
+      "bodyHash": "bf6932eaa0192b0ef702894e5bb66913a78fba3fb9922bb70115c7fe00ec84fa",
+      "bodyPreview": "Discord has partnered with Riot Games to offer eligible new Nitro subscribers a Riot Cash Code, redeemable for in-game currency in select Riot Games titles. What this article covers: What is a Riot Cash Code? Eligibility Requirements How to Get Your Riot Cash Code How to Access Your Code Frequently Asked Questions Offer : This offer is available to certain new Nitro subscribers who subscribe Sept…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43832707836439",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "24160905919511",
       "title": "My Discord Account was Hacked or Compromised",
       "link": "https://support.discord.com/hc/en-us/articles/24160905919511-My-Discord-Account-was-Hacked-or-Compromised",
-      "updatedAt": "2026-10-01T07:39:42Z",
+      "updatedAt": "2026-10-01T07:42:30Z",
       "createdAt": "2024-06-13T16:51:09Z",
       "sectionId": "24453122216087",
       "bodyHash": "207e61097e49b4613f5f664db8c149e8223addf0b3235feb322942da7cb3a335",
@@ -468,15 +481,93 @@
       "label": "Support"
     },
     {
+      "id": "360061878534",
+      "title": "Find Your Friends FAQ",
+      "link": "https://support.discord.com/hc/en-us/articles/360061878534-Find-Your-Friends-FAQ",
+      "updatedAt": "2026-10-01T07:42:15Z",
+      "createdAt": "2021-03-04T22:41:16Z",
+      "sectionId": "24452288971927",
+      "bodyHash": "48989517b40cfb7cebd60459b8265ea1494d11be08e5fd30a830108bad80c9ce",
+      "bodyPreview": "What is Find Your Friends? Connecting with your friends on Discord just got a whole lot easier! Introducing Find Your Friends - allowing you to discover friends on Discord using your phone contacts! What does this article cover? How does Find Your Friends work How do I set up Find Your Friends How do I change my name? How do I disable Find Your Friends Privacy How does Find Your Friends work: Let…",
+      "thumb": "https://support.discord.com/hc/article_attachments/1500004652502",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "26304482627095",
+      "title": "Using an Authenticator App on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/26304482627095-Using-an-Authenticator-App-on-Discord",
+      "updatedAt": "2026-10-01T07:42:10Z",
+      "createdAt": "2024-09-11T18:22:42Z",
+      "sectionId": "360009072571",
+      "bodyHash": "ed338d88eb8cf1f32627a1bd514e5369cd1e206894267f6c4dc0fe74a5ca4b2f",
+      "bodyPreview": "What this article covers: What is an Authenticator App? How to Register an Authenticator App Mobile Desktop/Browser Logging in With an Authenticator App What is an Authenticator App? Using an Authenticator App (also called a Time-based One-Time Password or TOTP) is another great way to secure your account by providing a one-time code alongside your password - this ensures that someone can’t log i…",
+      "thumb": "https://support.discord.com/hc/article_attachments/26407339578263",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "26680694104215",
       "title": "How to Fix Phone Errors on Discord",
       "link": "https://support.discord.com/hc/en-us/articles/26680694104215-How-to-Fix-Phone-Errors-on-Discord",
-      "updatedAt": "2026-10-01T07:39:09Z",
+      "updatedAt": "2026-10-01T07:42:09Z",
       "createdAt": "2024-09-27T20:04:46Z",
       "sectionId": "360009072571",
       "bodyHash": "bb02489bae9cdd801a94574bfe50025c63afdf3a04414f8e1bad8ca13391713f",
       "bodyPreview": "What this article covers: Phone is Already Registered Invalid Phone Number Other Phone Errors There are some error messages that you might notice when trying to register with, add, or change the phone number on your account. Let’s go over those cases and what to do if you’re experiencing those specific errors. Before you begin the process of adding a phone number, please make sure you have access…",
       "thumb": "https://support.discord.com/hc/article_attachments/26823326690967",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115002192352",
+      "title": "Automated User Accounts (Self-Bots)",
+      "link": "https://support.discord.com/hc/en-us/articles/115002192352-Automated-User-Accounts-Self-Bots",
+      "updatedAt": "2026-10-01T07:41:43Z",
+      "createdAt": "2017-10-17T19:35:16Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "c5974c6ea43648d8bf4ed30a3f0589745c95cea38fc66f82e5eaee7c4cb8bb8c",
+      "bodyPreview": "The question regarding \"self bots\" has come up here and there, and we'd like to make our stance clear: Discord's API provides a separate type of user account dedicated to automation, called a bot account. Bot accounts can be created through the applications page, and are authenticated using a token (rather than a username and password). Unlike the normal OAuth2 flow, bot accounts have full access…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "42962943077271",
+      "title": "Custom Typing Indicator FAQ",
+      "link": "https://support.discord.com/hc/en-us/articles/42962943077271-Custom-Typing-Indicator-FAQ",
+      "updatedAt": "2026-10-01T07:41:26Z",
+      "createdAt": "2026-08-24T19:37:48Z",
+      "sectionId": "115000458672",
+      "bodyHash": "4e162b11678df3fabe31c6bcd24df9e5a425edda9eecbe515441b6cce92a7c85",
+      "bodyPreview": "Customize the “ is typing… ” message that appears when you're the only one typing, with your own emoji and status word. What this article covers: Custom Typing Indicator: What Is It? How to Customize Your Typing Indicator Settings Profile Nitro vs. Non-Nitro Access Frequently Asked Questions Important: This is currently an experiment in beta and isn't widely available yet. Only a limited number o…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43188238655511",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360040724612",
+      "title": "Why is Discord asking for my birthday?",
+      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
+      "updatedAt": "2026-10-01T07:40:33Z",
+      "createdAt": "2020-03-19T00:18:15Z",
+      "sectionId": "360007875171",
+      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
+      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "18210965981847",
+      "title": "Discord Warning System",
+      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
+      "updatedAt": "2026-10-01T07:40:28Z",
+      "createdAt": "2023-10-12T01:36:18Z",
+      "sectionId": "360007875171",
+      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
+      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
+      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
       "source": "support",
       "label": "Support"
     },
@@ -490,32 +581,6 @@
       "bodyHash": "ce95184282e0a0130743fa332b47ad674cb6c8b76406953f788b831efabc331c",
       "bodyPreview": "Discord's age-restricted server designation helps ensure that communities centered around adult content remain accessible only to users aged 18+, as indicated in our Community Guidelines . Servers can either be self-designated as 18+ by their owners or classified as age-restricted by Discord when they focus primarily on mature themes or content. What this article covers: What is classified as an …",
       "thumb": "https://support.discord.com/hc/article_attachments/35493461038359",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360040724612",
-      "title": "Why is Discord asking for my birthday?",
-      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-10-01T07:39:01Z",
-      "createdAt": "2020-03-19T00:18:15Z",
-      "sectionId": "360007875171",
-      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
-      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
-      "thumb": null,
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "18210965981847",
-      "title": "Discord Warning System",
-      "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
-      "updatedAt": "2026-10-01T07:38:46Z",
-      "createdAt": "2023-10-12T01:36:18Z",
-      "sectionId": "360007875171",
-      "bodyHash": "2d981aff4c39673542f65e1a943ca003dc08bd111e36732bb0de110e717fd2b1",
-      "bodyPreview": "The Discord Warning System informs users when they have broken our rules, what actions we have taken, and how it may impact their overall account standing. This system includes multiple touchpoints for users to have more transparency into Discord interventions in order to better understand what happens when our rules are broken and how to avoid receiving a warning or violation in the future. This…",
-      "thumb": "https://support.discord.com/hc/article_attachments/34638129254679",
       "source": "support",
       "label": "Support"
     },
@@ -685,19 +750,6 @@
       "bodyHash": "fa497430aca83b2de4862dabfdb011344b35d749d0279693365ddcf26029ba1a",
       "bodyPreview": "Customize a set of questions that your server members can answer to be given channels and roles relevant to their answers. Check out these example questions below. Questions that Assign Channels For your first question, create something that helps members pick channels in addition to the Default Channels you set up. Note: Your most popular channels should be included in Default Channels. You don’…",
       "thumb": "https://support.discord.com/hc/article_attachments/10579718184855",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115002192352",
-      "title": "Automated User Accounts (Self-Bots)",
-      "link": "https://support.discord.com/hc/en-us/articles/115002192352-Automated-User-Accounts-Self-Bots",
-      "updatedAt": "2026-10-01T07:24:34Z",
-      "createdAt": "2017-10-17T19:35:16Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "c5974c6ea43648d8bf4ed30a3f0589745c95cea38fc66f82e5eaee7c4cb8bb8c",
-      "bodyPreview": "The question regarding \"self bots\" has come up here and there, and we'd like to make our stance clear: Discord's API provides a separate type of user account dedicated to automation, called a bot account. Bot accounts can be created through the applications page, and are authenticated using a token (rather than a username and password). Unlike the normal OAuth2 flow, bot accounts have full access…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -1547,19 +1599,6 @@
       "label": "Support"
     },
     {
-      "id": "360061878534",
-      "title": "Find Your Friends FAQ",
-      "link": "https://support.discord.com/hc/en-us/articles/360061878534-Find-Your-Friends-FAQ",
-      "updatedAt": "2026-10-01T05:16:46Z",
-      "createdAt": "2021-03-04T22:41:16Z",
-      "sectionId": "24452288971927",
-      "bodyHash": "48989517b40cfb7cebd60459b8265ea1494d11be08e5fd30a830108bad80c9ce",
-      "bodyPreview": "What is Find Your Friends? Connecting with your friends on Discord just got a whole lot easier! Introducing Find Your Friends - allowing you to discover friends on Discord using your phone contacts! What does this article cover? How does Find Your Friends work How do I set up Find Your Friends How do I change my name? How do I disable Find Your Friends Privacy How does Find Your Friends work: Let…",
-      "thumb": "https://support.discord.com/hc/article_attachments/1500004652502",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "360040843952",
       "title": "Krisp FAQ",
       "link": "https://support.discord.com/hc/en-us/articles/360040843952-Krisp-FAQ",
@@ -1794,19 +1833,6 @@
       "label": "Support"
     },
     {
-      "id": "42962943077271",
-      "title": "Custom Typing Indicator FAQ",
-      "link": "https://support.discord.com/hc/en-us/articles/42962943077271-Custom-Typing-Indicator-FAQ",
-      "updatedAt": "2026-10-01T04:08:49Z",
-      "createdAt": "2026-08-24T19:37:48Z",
-      "sectionId": "115000458672",
-      "bodyHash": "4e162b11678df3fabe31c6bcd24df9e5a425edda9eecbe515441b6cce92a7c85",
-      "bodyPreview": "Customize the “ is typing… ” message that appears when you're the only one typing, with your own emoji and status word. What this article covers: Custom Typing Indicator: What Is It? How to Customize Your Typing Indicator Settings Profile Nitro vs. Non-Nitro Access Frequently Asked Questions Important: This is currently an experiment in beta and isn't widely available yet. Only a limited number o…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43188238655511",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "14078261239831",
       "title": "Clarifying Server Types",
       "link": "https://support.discord.com/hc/en-us/articles/14078261239831-Clarifying-Server-Types",
@@ -1829,19 +1855,6 @@
       "bodyHash": "07a77c60623127b20749b185966f9db12979c03801e05563885262f044ba4dde",
       "bodyPreview": "🚧 Article under construction! 🚧 What this article covers: Introduction to Testing Clients Where can I download these clients? Browser Windows MacOS Linux iOS Android Introduction to Testing Clients We have a couple of early access programs for all desktop clients, where you can get a sneak peek at the new features, and you can still do all of the stuff you normally do on Discord. The catch is t…",
       "thumb": "https://support.discord.com/hc/article_attachments/4405173412375",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "26304482627095",
-      "title": "Using an Authenticator App on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/26304482627095-Using-an-Authenticator-App-on-Discord",
-      "updatedAt": "2026-10-01T04:01:43Z",
-      "createdAt": "2024-09-11T18:22:42Z",
-      "sectionId": "360009072571",
-      "bodyHash": "ed338d88eb8cf1f32627a1bd514e5369cd1e206894267f6c4dc0fe74a5ca4b2f",
-      "bodyPreview": "What this article covers: What is an Authenticator App? How to Register an Authenticator App Mobile Desktop/Browser Logging in With an Authenticator App What is an Authenticator App? Using an Authenticator App (also called a Time-based One-Time Password or TOTP) is another great way to secure your account by providing a one-time code alongside your password - this ensures that someone can’t log i…",
-      "thumb": "https://support.discord.com/hc/article_attachments/26407339578263",
       "source": "support",
       "label": "Support"
     },
@@ -2622,19 +2635,6 @@
       "bodyHash": "394ceaed1a1040ae06447b6f6e8a1ebaa99e3d7ba2aea0230862a481df9a3d35",
       "bodyPreview": "On October 20, 2023, we investigated a stream discoloration issue that occurred during screensharing in Discord for Windows users with the latest NVIDIA GPU driver, version 545.84. The outgoing stream can exhibit a loss in color values, creating a wash out image as you see below. This is a possible video encoder regression in NVIDIA’s 545.84 driver. If you are impacted by this issue, we recommend…",
       "thumb": "https://support.discord.com/hc/article_attachments/18621978181015",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "43761617103767",
-      "title": "Get a Riot Cash Code When You Subscribe to Nitro",
-      "link": "https://support.discord.com/hc/en-us/articles/43761617103767-Get-a-Riot-Cash-Code-When-You-Subscribe-to-Nitro",
-      "updatedAt": "2026-09-30T22:02:43Z",
-      "createdAt": "2026-09-25T16:23:04Z",
-      "sectionId": "22113084771863",
-      "bodyHash": "bf6932eaa0192b0ef702894e5bb66913a78fba3fb9922bb70115c7fe00ec84fa",
-      "bodyPreview": "Discord has partnered with Riot Games to offer eligible new Nitro subscribers a Riot Cash Code, redeemable for in-game currency in select Riot Games titles. What this article covers: What is a Riot Cash Code? Eligibility Requirements How to Get Your Riot Cash Code How to Access Your Code Frequently Asked Questions Offer : This offer is available to certain new Nitro subscribers who subscribe Sept…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43832707836439",
       "source": "support",
       "label": "Support"
     },
