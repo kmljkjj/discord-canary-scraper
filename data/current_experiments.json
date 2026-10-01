@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-01T21-12-39-429Z_627204_kdt5h0",
-  "buildNumber": "627204",
-  "updatedAt": "2026-10-01T21:12:39.429Z",
-  "count": 362,
+  "runId": "2026-10-01T21-19-06-748Z_627222_0a2lpo",
+  "buildNumber": "627222",
+  "updatedAt": "2026-10-01T21:19:06.749Z",
+  "count": 363,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10380,6 +10380,37 @@
         "value": null
       },
       "fingerprint": "8e139cab627ec1b0ce298d190e611a4eee615de7108102a468bdb83121538335"
+    },
+    {
+      "id": "2026-09-rust-3p",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b937a40dc9fb4e22980742c93a292bd2248845cf0aee4dfb21ae80a8cebb9aa2"
     },
     {
       "id": "2026-09-safety-flows-legacy-required-actions",

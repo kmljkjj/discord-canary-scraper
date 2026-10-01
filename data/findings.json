@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-01T21-12-39-429Z_627204_kdt5h0",
-  "buildNumber": "627204",
-  "scrapedAt": "2026-10-01T21:12:39.429Z",
+  "runId": "2026-10-01T21-19-06-748Z_627222_0a2lpo",
+  "buildNumber": "627222",
+  "scrapedAt": "2026-10-01T21:19:06.749Z",
   "totals": {
-    "all": 362
+    "all": 363
   },
   "experiments": [
     {
@@ -6583,6 +6583,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-rust-3p",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
