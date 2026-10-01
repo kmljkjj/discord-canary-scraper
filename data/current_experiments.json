@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-01T10-46-35-892Z_626616_571g0d",
-  "buildNumber": "626616",
-  "updatedAt": "2026-10-01T10:46:35.892Z",
-  "count": 360,
+  "runId": "2026-10-01T10-57-34-992Z_626620_9tq9zg",
+  "buildNumber": "626620",
+  "updatedAt": "2026-10-01T10:57:34.992Z",
+  "count": 359,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6090,34 +6090,6 @@
         "value": null
       },
       "fingerprint": "8a1b1a0b5cbf045f1b87491b7fa57f0cdca1d588922c1127e295976ebc1803c4"
-    },
-    {
-      "id": "2026-06-non-friend-messages-requests-in-uk",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "58f3ec1fcc0e12f692688d14eae6e729122ca95b07c567c6489fb6112885cf5b"
     },
     {
       "id": "2026-06-orbs-holdout",

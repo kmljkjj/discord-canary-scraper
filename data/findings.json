@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-01T10-46-35-892Z_626616_571g0d",
-  "buildNumber": "626616",
-  "scrapedAt": "2026-10-01T10:46:35.892Z",
+  "runId": "2026-10-01T10-57-34-992Z_626620_9tq9zg",
+  "buildNumber": "626620",
+  "scrapedAt": "2026-10-01T10:57:34.992Z",
   "totals": {
-    "all": 360
+    "all": 359
   },
   "experiments": [
     {
@@ -3857,23 +3857,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-non-friend-messages-requests-in-uk",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
