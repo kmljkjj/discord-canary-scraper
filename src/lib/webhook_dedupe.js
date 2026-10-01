@@ -16,6 +16,32 @@ const DEDUPE_FILE =
   path.join(__dirname, '..', '..', 'data', 'notify_dedupe.json');
 const WINDOW_MS = 24 * 3600 * 1000;
 const CLAIM_STALE_MS = 5 * 60 * 1000;
+const LOCK_FILE = DEDUPE_FILE + '.lock';
+const LOCK_WAIT_MS = 8000;
+
+async function withDedupeLock(fn) {
+  const start = Date.now();
+  while (Date.now() - start < LOCK_WAIT_MS) {
+    let fd = null;
+    try {
+      fd = await fs.open(LOCK_FILE, 'wx');
+      try { return await fn(); }
+      finally {
+        try { await fd.close(); } catch {}
+        try { await fs.unlink(LOCK_FILE); } catch {}
+      }
+    } catch (e) {
+      if (e && e.code === 'EEXIST') {
+        await new Promise((r) => setTimeout(r, 15 + Math.floor(Math.random() * 40)));
+        continue;
+      }
+      console.warn('dedupe lock unavailable', e.message);
+      return fn();
+    }
+  }
+  console.warn('dedupe lock timeout — proceeding unlocked');
+  return fn();
+}
 
 async function load() {
   try {
@@ -47,7 +73,6 @@ async function save(d) {
         .forEach((k) => delete d.fps[k]);
     }
     await fs.ensureDir(path.dirname(DEDUPE_FILE));
-    // Unique tmp avoids concurrent claimPosted/markPosted rename races (ENOENT).
     const tmp =
       DEDUPE_FILE +
       '.tmp.' +
@@ -60,7 +85,6 @@ async function save(d) {
     try {
       await fs.move(tmp, DEDUPE_FILE, { overwrite: true });
     } catch (moveErr) {
-      // Another writer may have won the race — retry once with a fresh tmp.
       try {
         await fs.remove(tmp).catch(() => {});
         const tmp2 =
@@ -98,7 +122,6 @@ function entryStatus(v) {
   return 'sent';
 }
 
-/** True only if successfully sent within window — NOT pending/failed. */
 async function wasPosted(fp) {
   try {
     const d = await load();
@@ -112,24 +135,21 @@ async function wasPosted(fp) {
   }
 }
 
-/**
- * Claim fingerprint for sending.
- * Returns false if already sent (within window) or pending (not stale).
- * failed and stale pending are re-claimable.
- */
 async function claimPosted(fp) {
   try {
-    const d = await load();
-    const v = d.fps[fp];
-    if (v) {
-      const age = Date.now() - entryTs(v);
-      const st = entryStatus(v);
-      if (st === 'sent' && age < WINDOW_MS) return false;
-      if (st === 'pending' && age < CLAIM_STALE_MS) return false;
-    }
-    d.fps[fp] = { ts: Date.now(), status: 'pending' };
-    await save(d);
-    return true;
+    return await withDedupeLock(async () => {
+      const d = await load();
+      const v = d.fps[fp];
+      if (v) {
+        const age = Date.now() - entryTs(v);
+        const st = entryStatus(v);
+        if (st === 'sent' && age < WINDOW_MS) return false;
+        if (st === 'pending' && age < CLAIM_STALE_MS) return false;
+      }
+      d.fps[fp] = { ts: Date.now(), status: 'pending' };
+      await save(d);
+      return true;
+    });
   } catch (e) {
     console.warn('claimPosted fail (allow send)', e.message);
     return true;
@@ -138,9 +158,11 @@ async function claimPosted(fp) {
 
 async function markPosted(fp) {
   try {
-    const d = await load();
-    d.fps[fp] = { ts: Date.now(), status: 'sent' };
-    await save(d);
+    await withDedupeLock(async () => {
+      const d = await load();
+      d.fps[fp] = { ts: Date.now(), status: 'sent' };
+      await save(d);
+    });
   } catch (e) {
     console.warn('markPosted fail', e.message);
   }
@@ -148,13 +170,15 @@ async function markPosted(fp) {
 
 async function markFailed(fp, error) {
   try {
-    const d = await load();
-    d.fps[fp] = {
-      ts: Date.now(),
-      status: 'failed',
-      error: String(error || '').slice(0, 500),
-    };
-    await save(d);
+    await withDedupeLock(async () => {
+      const d = await load();
+      d.fps[fp] = {
+        ts: Date.now(),
+        status: 'failed',
+        error: String(error || '').slice(0, 500),
+      };
+      await save(d);
+    });
   } catch (e) {
     console.warn('markFailed fail', e.message);
   }
