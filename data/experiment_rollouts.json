@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-01T10:53:01.667Z",
+  "fetchedAt": "2026-10-01T10:59:52.421Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5096,17 +5096,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -7070,16 +7070,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-06-non-friend-messages-requests-in-uk",
-      "hash": 278144205,
-      "type": "user",
-      "title": "2026-06-non-friend-messages-requests-in-uk",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-06-orbs-holdout",
       "hash": 3567301860,
       "type": "user",
@@ -8641,11 +8631,11 @@
     }
   ],
   "summary": {
-    "total": 578,
+    "total": 577,
     "guild": 92,
-    "user": 486,
+    "user": 485,
     "withPercentage": 225,
-    "withoutPercentage": 353,
+    "withoutPercentage": 352,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
