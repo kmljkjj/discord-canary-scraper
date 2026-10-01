@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-01T18-15-01-088Z_626907_151kf9",
-  "buildNumber": "626907",
-  "updatedAt": "2026-10-01T18:15:01.088Z",
-  "count": 361,
+  "runId": "2026-10-01T18-17-09-644Z_626914_r6lq3y",
+  "buildNumber": "626914",
+  "updatedAt": "2026-10-01T18:17:09.644Z",
+  "count": 362,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9459,6 +9459,35 @@
         "value": null
       },
       "fingerprint": "119595ae1bad7e93056cff4eb7ca5e0a4e9e0ce2ab1ac2ddafb7418a5770f511"
+    },
+    {
+      "id": "2026-09-game-profiles-v3-communities-tab",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "64db701064602b377fd8e2894374055ca1c2db7a266c4eb1b23f10a3d7d79d72"
     },
     {
       "id": "2026-09-game-search-row",
