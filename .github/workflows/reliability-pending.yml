@@ -1,0 +1,185 @@
+name: Reliability Pending Fixes
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Apply reliability patches
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # --- 1) dedupe file lock ---
+          p = Path('src/lib/webhook_dedupe.js')
+          t = p.read_text()
+          if 'withDedupeLock' not in t:
+              needle = "const CLAIM_STALE_MS = 5 * 60 * 1000;\n"
+              insert = needle + '''const LOCK_FILE = DEDUPE_FILE + '.lock';\nconst LOCK_WAIT_MS = 8000;\n\nasync function withDedupeLock(fn) {\n  const start = Date.now();\n  while (Date.now() - start < LOCK_WAIT_MS) {\n    let fd = null;\n    try {\n      fd = await fs.open(LOCK_FILE, 'wx');\n      try { return await fn(); }\n      finally {\n        try { await fd.close(); } catch {}\n        try { await fs.unlink(LOCK_FILE); } catch {}\n      }\n    } catch (e) {\n      if (e && e.code === 'EEXIST') {\n        await new Promise((r) => setTimeout(r, 15 + Math.floor(Math.random() * 40)));\n        continue;\n      }\n      console.warn('dedupe lock unavailable', e.message);\n      return fn();\n    }\n  }\n  console.warn('dedupe lock timeout — proceeding unlocked');\n  return fn();\n}\n\n'''
+              if needle not in t:
+                  raise SystemExit('CLAIM_STALE missing')
+              t = t.replace(needle, insert, 1)
+              old_claim = '''async function claimPosted(fp) {\n  try {\n    const d = await load();\n    const v = d.fps[fp];\n    if (v) {\n      const age = Date.now() - entryTs(v);\n      const st = entryStatus(v);\n      if (st === 'sent' && age < WINDOW_MS) return false;\n      if (st === 'pending' && age < CLAIM_STALE_MS) return false;\n    }\n    d.fps[fp] = { ts: Date.now(), status: 'pending' };\n    await save(d);\n    return true;\n  } catch (e) {\n    console.warn('claimPosted fail (allow send)', e.message);\n    return true;\n  }\n}'''
+              new_claim = '''async function claimPosted(fp) {\n  try {\n    return await withDedupeLock(async () => {\n      const d = await load();\n      const v = d.fps[fp];\n      if (v) {\n        const age = Date.now() - entryTs(v);\n        const st = entryStatus(v);\n        if (st === 'sent' && age < WINDOW_MS) return false;\n        if (st === 'pending' && age < CLAIM_STALE_MS) return false;\n      }\n      d.fps[fp] = { ts: Date.now(), status: 'pending' };\n      await save(d);\n      return true;\n    });\n  } catch (e) {\n    console.warn('claimPosted fail (allow send)', e.message);\n    return true;\n  }\n}'''
+              if old_claim not in t: raise SystemExit('claimPosted missing')
+              t = t.replace(old_claim, new_claim, 1)
+              t = t.replace(
+                  '''async function markPosted(fp) {\n  try {\n    const d = await load();\n    d.fps[fp] = { ts: Date.now(), status: 'sent' };\n    await save(d);\n  } catch (e) {\n    console.warn('markPosted fail', e.message);\n  }\n}''',
+                  '''async function markPosted(fp) {\n  try {\n    await withDedupeLock(async () => {\n      const d = await load();\n      d.fps[fp] = { ts: Date.now(), status: 'sent' };\n      await save(d);\n    });\n  } catch (e) {\n    console.warn('markPosted fail', e.message);\n  }\n}''',
+                  1,
+              )
+              t = t.replace(
+                  '''async function markFailed(fp, error) {\n  try {\n    const d = await load();\n    d.fps[fp] = {\n      ts: Date.now(),\n      status: 'failed',\n      error: String(error || '').slice(0, 500),\n    };\n    await save(d);\n  } catch (e) {\n    console.warn('markFailed fail', e.message);\n  }\n}''',
+                  '''async function markFailed(fp, error) {\n  try {\n    await withDedupeLock(async () => {\n      const d = await load();\n      d.fps[fp] = {\n        ts: Date.now(),\n        status: 'failed',\n        error: String(error || '').slice(0, 500),\n      };\n      await save(d);\n    });\n  } catch (e) {\n    console.warn('markFailed fail', e.message);\n  }\n}''',
+                  1,
+              )
+              p.write_text(t)
+              print('dedupe lock OK')
+          else:
+              print('dedupe already')
+
+          # --- 2) quests V2 via sendWebhook ---
+          p = Path('src/quests.js')
+          t = p.read_text()
+          if "require('./lib/webhook')" in t and 'sendWebhook' not in t.split("require('./lib/webhook')")[0][-80:]+t.split("require('./lib/webhook')")[1][:120]:
+              t = t.replace(
+                  "const { sendEmbeds } = require('./lib/webhook');",
+                  "const { sendEmbeds, sendWebhook } = require('./lib/webhook');",
+                  1,
+              )
+          old_post = '''async function postWebhook(url, body) {
+  if (!url) return { ok: false, status: 0, text: 'no webhook' };
+  const embeds = body.embeds || [];
+  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
+  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });
+}'''
+          new_post = '''async function postWebhook(url, body) {
+  if (!url) return { ok: false, status: 0, text: 'no webhook' };
+  // Components V2 payload: send as-is (do not strip to embeds-only).
+  if (body && Array.isArray(body.components) && body.components.length) {
+    return sendWebhook(url, body, { label: 'quests-v2' });
+  }
+  const embeds = body.embeds || [];
+  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
+  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });
+}'''
+          if old_post in t:
+              t = t.replace(old_post, new_post, 1)
+              p.write_text(t)
+              print('quests V2 OK')
+          elif 'quests-v2' in t:
+              print('quests already')
+          else:
+              print('WARN quests postWebhook pattern not found')
+
+          # --- 3) shop: batch until exhausted; only mark notified ids ---
+          p = Path('src/shop.js')
+          t = p.read_text()
+          old_shop = '''  const toNotify = newItems.slice(0, 15);
+  const embeds = toNotify.map(buildEmbed);
+  const sent = await postWebhook(embeds);
+  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
+
+  if (!sent.ok) {
+    console.warn('NOTIFY_FAIL shop — ids NOT marked; will retry next run');
+    process.exitCode = 2;
+    return;
+  }
+
+  const announced = { ...(prev.announced || {}) };
+  for (const it of toNotify) {
+    announced[it.id] = new Date().toISOString();
+  }
+
+  await writeJsonAtomic(
+    STATE,
+    {
+      scrapedAt: new Date().toISOString(),
+      count: items.length,
+      ids: allIds,
+      items: items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        type: i.type,
+        image: i.image,
+      })),
+      announced,
+      lastNew: toNotify.map((i) => i.id),
+    },
+    2,
+  );
+  console.log('✅ Shop done — announced', toNotify.length);
+}'''
+          new_shop = '''  // Announce in batches of 15; only mark successfully sent IDs as known.
+  // Unannounced new IDs stay out of `ids` so the next run still sees them as new.
+  let remaining = newItems.slice();
+  const announced = { ...(prev.announced || {}) };
+  const notified = [];
+  while (remaining.length) {
+    const batch = remaining.slice(0, 15);
+    remaining = remaining.slice(15);
+    const sent = await postWebhook(batch.map(buildEmbed));
+    console.log('Webhook batch', batch.length, sent.status, sent.ok ? 'OK' : sent.text);
+    if (!sent.ok) {
+      console.warn('NOTIFY_FAIL shop — remaining', remaining.length + batch.length, 'will retry');
+      process.exitCode = 2;
+      remaining = batch.concat(remaining);
+      break;
+    }
+    const ts = new Date().toISOString();
+    for (const it of batch) {
+      announced[it.id] = ts;
+      notified.push(it.id);
+    }
+  }
+  const knownIds = new Set([...(prev.ids || []), ...Object.keys(announced)]);
+  const nextIds = allIds.filter((id) => knownIds.has(id));
+
+  await writeJsonAtomic(
+    STATE,
+    {
+      scrapedAt: new Date().toISOString(),
+      count: items.length,
+      ids: nextIds,
+      items: items.map((i) => ({
+        id: i.id,
+        name: i.name,
+        type: i.type,
+        image: i.image,
+      })),
+      announced,
+      lastNew: notified,
+      pendingNew: remaining.map((i) => i.id),
+    },
+    2,
+  );
+  console.log('✅ Shop done — announced', notified.length, 'pending', remaining.length);
+}'''
+          if old_shop in t:
+              t = t.replace(old_shop, new_shop, 1)
+              p.write_text(t)
+              print('shop pending OK')
+          elif 'pendingNew' in t:
+              print('shop already')
+          else:
+              print('WARN shop block not found')
+          print('done')
+          PY
+          grep -q withDedupeLock src/lib/webhook_dedupe.js && echo dedupe_ok
+          grep -q quests-v2 src/quests.js && echo quests_ok
+          grep -q pendingNew src/shop.js && echo shop_ok
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/webhook_dedupe.js src/quests.js src/shop.js
+          git status
+          git commit -m "fix: dedupe lock, quests Components V2 send path, shop pending batches" || exit 0
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push
