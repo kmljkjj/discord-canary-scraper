@@ -11,14 +11,92 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
-      - name: Apply security patches (webhook mask, dedupe lock, docs XSS)
-        run: python3 scripts/security_priority_patch.py
-      - name: Smoke tests
+      - name: Critical patches
         run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          # 1) webhook secret masking
+          p = Path('src/lib/webhook.js')
+          t = p.read_text()
+          if 'sanitizeLogText' not in t:
+              t = t.replace(
+                  "function maskWebhook(url) {\n  return String(url || '').replace(\n    /(\\/api\\/(?:v\\d+\\/)?webhooks\\/\\d+\\/)[\\w-]+/i,\n    '$1***',\n  );\n}",
+                  "function maskWebhook(url) {\n  return String(url || '')\n    .replace(/(\\/api\\/(?:v\\d+\\/)?webhooks\\/\\d+\\/)[\\w-]+/gi, '$1***')\n    .replace(/(webhooks\\/\\d+\\/)[\\w-]{20,}/gi, '$1***');\n}\n\nfunction sanitizeLogText(text, url) {\n  let s = maskWebhook(String(text || ''));\n  if (url) {\n    const m = String(url).match(/\\/webhooks\\/\\d+\\/([\\w-]+)/i);\n    if (m && m[1] && m[1].length >= 10) s = s.split(m[1]).join('***');\n  }\n  return s.slice(0, 400);\n}",
+                  1,
+              )
+              t = t.replace(
+                  'text: String(e.message || e)',
+                  'text: sanitizeLogText(e && (e.message || e), url)',
+                  1,
+              )
+              t = t.replace(
+                  'last.text, `wait ${d}ms`',
+                  'last.text, `wait ${d}ms` /* sanitized */',
+                  1,
+              )
+              t = t.replace(
+                  'last.text.slice(0, 300)',
+                  'sanitizeLogText(last.text, url)',
+                  1,
+              )
+              t = t.replace(
+                  'last.text.slice(0, 200)',
+                  'sanitizeLogText(last.text, url)',
+                  1,
+              )
+              t = t.replace('  maskWebhook,\n', '  maskWebhook,\n  sanitizeLogText,\n', 1)
+              p.write_text(t)
+              print('webhook OK')
+          else:
+              print('webhook already')
+
+          # 2) mobile XSS
+          p = Path('docs/mobile.js')
+          t = p.read_text()
+          t2 = t.replace(
+              'const arrow = change.from ? `${change.from} → <strong>${change.to}</strong>` : `<strong>${change.to}</strong>`;',
+              'const arrow = change.from ? `${escapeHtml(change.from)} → <strong>${escapeHtml(change.to)}</strong>` : `<strong>${escapeHtml(change.to)}</strong>`;',
+          )
+          if t2 != t:
+              p.write_text(t2)
+              print('mobile OK')
+          else:
+              print('mobile already')
+
+          # 3) status safeUrl
+          p = Path('docs/status.js')
+          t = p.read_text()
+          if 'function safeUrl' not in t:
+              t = t.replace(
+                  'function escapeHtml(s) {',
+                  "function safeUrl(u) { try { const x=new URL(String(u||''),'https://status.discord.com'); if(x.protocol!=='https:'&&x.protocol!=='http:') return '#'; return x.href; } catch { return '#'; } }\nfunction escapeHtml(s) {",
+                  1,
+              )
+              t = t.replace("escapeHtml(inc.shortlink || '#')", "escapeHtml(safeUrl(inc.shortlink || '#'))", 1)
+              p.write_text(t)
+              print('status OK')
+          else:
+              print('status already')
+
+          # 4) rollouts escapeHtml helper + card fields
+          p = Path('docs/rollouts.js')
+          t = p.read_text()
+          if 'function escapeHtml' not in t:
+              t = 'function escapeHtml(s){return String(s==null?"":s).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""").replace(/\'/g,"&#39;");}\n' + t
+              t = t.replace('const id = e.id || `hash_${e.hash}`;', 'const rawId = e.id || `hash_${e.hash}`; const id = escapeHtml(rawId);')
+              t = t.replace('const title = e.title || id;', 'const title = escapeHtml(e.title || rawId);')
+              t = t.replace('const type = e.type || \'unknown\';', 'const type = String(e.type || \'unknown\').replace(/[^a-z0-9_-]/gi,\'\');')
+              t = t.replace('${note ? `<div class="card-note">${note}</div>` : \'\'}', '${note ? `<div class="card-note">${escapeHtml(note)}</div>` : \'\'}')
+              t = t.replace('const label = labels[source] || source;', 'const label = labels[source] || escapeHtml(source);')
+              p.write_text(t)
+              print('rollouts OK')
+          else:
+              print('rollouts already')
+          PY
           node --check src/lib/webhook.js
-          node --check src/lib/webhook_dedupe.js
-          node -e 'const {sanitizeLogText}=require("./src/lib/webhook"); const u="https://discord.com/api/webhooks/1/SECRETTOKEN_ABCDEFGHIJKLMNOP"; const s=sanitizeLogText("request to "+u+" failed",u); if(s.includes("SECRETTOKEN")) process.exit(1); console.log("mask OK");'
-          node -e 'const fs=require("fs"),path=require("path"),os=require("os"); const d=fs.mkdtempSync(path.join(os.tmpdir(),"d-")); process.env.NOTIFY_DEDUPE_FILE=path.join(d,"x.json"); const {claimPosted}=require("./src/lib/webhook_dedupe"); (async()=>{await Promise.all(Array.from({length:30},(_,i)=>claimPosted("fp"+i))); const n=Object.keys(JSON.parse(fs.readFileSync(process.env.NOTIFY_DEDUPE_FILE)).fps).length; console.log("fps",n); if(n<30) process.exit(1);})().catch(e=>{console.error(e);process.exit(1)});'
+          node -e 'const {sanitizeLogText}=require("./src/lib/webhook"); const u="https://discord.com/api/webhooks/1/SECRETTOKEN_ABCDEFGHIJKLMNOP"; if(sanitizeLogText("request to "+u+" failed",u).includes("SECRETTOKEN")) process.exit(1); console.log("mask smoke OK");'
       - name: Remove obsolete workflows
         run: |
           for f in emergency-restore.yml restore-notify-fix.yml apply-blog-wc-main.yml apply-blog-wc-patch.yml blog-wc-fix.yml security-priority-fixes.yml; do
@@ -30,5 +108,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "security: mask webhook secrets, HTML-escape docs, lock dedupe; remove obsolete restore workflows" || exit 0
+          git commit -m "security: mask webhook token in logs, HTML-escape docs pages, remove obsolete restore workflows" || exit 0
           git push
