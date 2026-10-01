@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-01T01:38:07.914Z",
+  "scrapedAt": "2026-10-01T01:39:08.436Z",
   "blog": [
     {
       "id": "https://discord.com/blog/discord-update-september-25-2026",
@@ -455,10 +455,36 @@
   ],
   "zendesk": [
     {
+      "id": "6461420677527",
+      "title": "Limited Access FAQ",
+      "link": "https://support.discord.com/hc/en-us/articles/6461420677527-Limited-Access-FAQ",
+      "updatedAt": "2026-10-01T01:38:41Z",
+      "createdAt": "2022-06-01T02:51:53Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "162ed24bdfc276b63b8b931cdf18d99f0f7808fc38ca8feafdf69aa60af7cc0f",
+      "bodyPreview": "If Discord detects suspicious account behavior on your account, we may place your account in Limited Access. If your account is in Limited Access, you will not be able to join new servers or initiate new direct messages. Placing accounts with suspicious behavior in limited access helps us maintain a high quality experience for everyone on the platform. How do I know I’ve been placed in Limited Ac…",
+      "thumb": "https://support.discord.com/hc/article_attachments/12045817217815",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "360035969312",
+      "title": "Community Server Guidelines",
+      "link": "https://support.discord.com/hc/en-us/articles/360035969312-Community-Server-Guidelines",
+      "updatedAt": "2026-10-01T01:38:35Z",
+      "createdAt": "2019-11-15T22:36:54Z",
+      "sectionId": "360007770572",
+      "bodyHash": "7a6aff8fd9d305be6580c9ba187f36f6d301f649a1d122be4cc04e6054fd66a3",
+      "bodyPreview": "As an owner of a Community server, you and your moderation team are responsible for helping users find a place to hang out and be part of a new community. Here's what you'll need to be a Community. Your server must: Have a title and description that accurately describes the server. Help potential members understand why they want to join. Be accurate here — no one likes being misled. Have clearly …",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360060145013",
       "title": "Why isn't my DM going through?",
       "link": "https://support.discord.com/hc/en-us/articles/360060145013-Why-isn-t-my-DM-going-through",
-      "updatedAt": "2026-10-01T01:36:41Z",
+      "updatedAt": "2026-10-01T01:37:52Z",
       "createdAt": "2020-11-30T20:42:12Z",
       "sectionId": "115000458672",
       "bodyHash": "9d08db0fbafaae3ed6d05e7c33cc4b557db01541d01b27c2f8f039588f65fe19",
@@ -471,12 +497,64 @@
       "id": "360040724612",
       "title": "Why is Discord asking for my birthday?",
       "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-10-01T01:36:36Z",
+      "updatedAt": "2026-10-01T01:37:51Z",
       "createdAt": "2020-03-19T00:18:15Z",
       "sectionId": "360007875171",
       "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
       "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
       "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115001221072",
+      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
+      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
+      "updatedAt": "2026-10-01T01:37:51Z",
+      "createdAt": "2017-08-22T01:07:34Z",
+      "sectionId": "360009072571",
+      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
+      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "219576828",
+      "title": "Setting up Multi-Factor Authentication",
+      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
+      "updatedAt": "2026-10-01T01:37:45Z",
+      "createdAt": "2016-05-26T17:18:00Z",
+      "sectionId": "360009072571",
+      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
+      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
+      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "1500005292701",
+      "title": "How to Access an Age-Restricted Server FAQ",
+      "link": "https://support.discord.com/hc/en-us/articles/1500005292701-How-to-Access-an-Age-Restricted-Server-FAQ",
+      "updatedAt": "2026-10-01T01:37:24Z",
+      "createdAt": "2021-03-29T22:55:05Z",
+      "sectionId": "360007875171",
+      "bodyHash": "a8be7aedadc0591aa60984f76a1692589f40d278541455e6fc466f46bd48b1ec",
+      "bodyPreview": "Age-restricted servers are Discord communities marked as 18+ to ensure adult content is only accessible to users who meet age requirements. These servers can be designated by server owners or admins. What this article covers: Why Is A Server Labeled As Age-Restricted? I Can’t View or Join Age-Restricted servers. What Should I Do? Want to learn more? Check out our support article here to learn mor…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43516248537879",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "205093487",
+      "title": "How do I enable my mic in Chrome?",
+      "link": "https://support.discord.com/hc/en-us/articles/205093487-How-do-I-enable-my-mic-in-Chrome",
+      "updatedAt": "2026-10-01T01:37:12Z",
+      "createdAt": "2015-03-17T20:07:59Z",
+      "sectionId": "360007770612",
+      "bodyHash": "4296b468eddb3cbcbc1289987c995a4cd5f89aa423efdc98d3a82547195d268c",
+      "bodyPreview": "For more information, check out Google Chrome's official support page here: https://support.google.com/chrome/answer/2693767 If you previously disabled Discord's access to your mic in Chrome, you'll need to enable the permissions in your Google Chrome settings in order to use it once again. Follow these steps below to allow Discord access to your mic in the Chrome browser. What this article cover…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32891219438743",
       "source": "support",
       "label": "Support"
     },
@@ -507,19 +585,6 @@
       "label": "Support"
     },
     {
-      "id": "205093487",
-      "title": "How do I enable my mic in Chrome?",
-      "link": "https://support.discord.com/hc/en-us/articles/205093487-How-do-I-enable-my-mic-in-Chrome",
-      "updatedAt": "2026-10-01T01:33:31Z",
-      "createdAt": "2015-03-17T20:07:59Z",
-      "sectionId": "360007770612",
-      "bodyHash": "4296b468eddb3cbcbc1289987c995a4cd5f89aa423efdc98d3a82547195d268c",
-      "bodyPreview": "For more information, check out Google Chrome's official support page here: https://support.google.com/chrome/answer/2693767 If you previously disabled Discord's access to your mic in Chrome, you'll need to enable the permissions in your Google Chrome settings in order to use it once again. Follow these steps below to allow Discord access to your mic in the Chrome browser. What this article cover…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32891219438743",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "18210965981847",
       "title": "Discord Warning System",
       "link": "https://support.discord.com/hc/en-us/articles/18210965981847-Discord-Warning-System",
@@ -542,19 +607,6 @@
       "bodyHash": "a69ef961082850eae28c85f96496847a4d51a3884bfaf2ad1a9be56d7828c796",
       "bodyPreview": "In order to use Discord and check out Discord servers, you may be required to verify your email and phone number as part of our safety system to keep users and communities safe. What this article covers: Why do I need to verify my account? How does Discord use my phone number? How to verify my account Having trouble verifying? Why do I need to verify my account? We want users to feel secure using…",
       "thumb": "https://support.discord.com/hc/article_attachments/12476192844183",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115001221072",
-      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
-      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
-      "updatedAt": "2026-10-01T01:32:40Z",
-      "createdAt": "2017-08-22T01:07:34Z",
-      "sectionId": "360009072571",
-      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
-      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
       "source": "support",
       "label": "Support"
     },
@@ -607,32 +659,6 @@
       "bodyHash": "fedd9208c7ed1ce20dc5d7e0b06d50e13938baba02d161259ee0bb04862f6270",
       "bodyPreview": "Let me innnnnnn! You finally got an invite to a server, but you’re getting hit with an error message and can’t join. What does it mean? Why can’t you join? Let’s go over the possible error messages that you might see, what they mean, and what you can do if you’re seeing them. Invalid Error Messages Unknown/Expired Invite: Your invite link may have expired. In this case, please ask for a new invit…",
       "thumb": "https://support.discord.com/hc/article_attachments/16951605041047",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "1500005292701",
-      "title": "How to Access an Age-Restricted Server FAQ",
-      "link": "https://support.discord.com/hc/en-us/articles/1500005292701-How-to-Access-an-Age-Restricted-Server-FAQ",
-      "updatedAt": "2026-10-01T01:30:10Z",
-      "createdAt": "2021-03-29T22:55:05Z",
-      "sectionId": "360007875171",
-      "bodyHash": "a8be7aedadc0591aa60984f76a1692589f40d278541455e6fc466f46bd48b1ec",
-      "bodyPreview": "Age-restricted servers are Discord communities marked as 18+ to ensure adult content is only accessible to users who meet age requirements. These servers can be designated by server owners or admins. What this article covers: Why Is A Server Labeled As Age-Restricted? I Can’t View or Join Age-Restricted servers. What Should I Do? Want to learn more? Check out our support article here to learn mor…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43516248537879",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "219576828",
-      "title": "Setting up Multi-Factor Authentication",
-      "link": "https://support.discord.com/hc/en-us/articles/219576828-Setting-up-Multi-Factor-Authentication",
-      "updatedAt": "2026-10-01T01:29:16Z",
-      "createdAt": "2016-05-26T17:18:00Z",
-      "sectionId": "360009072571",
-      "bodyHash": "58949b53bd1fe07059096c4e9c36b80845c38f65af02f98a7766ccbb9960d4d9",
-      "bodyPreview": "Multi-Factor Authentication (MFA for short) is a great way to add an extra layer of security to your Discord account to help you stay in control of logging in. What this article covers: Types of Multi-Factor Authentication Passkeys and Security Keys Authenticator App SMS/Texts Backup Codes I forgot to download my codes I forgot to add my phone as backup Important: Don’t forget to save your backup…",
-      "thumb": "https://support.discord.com/hc/article_attachments/33571014122391",
       "source": "support",
       "label": "Support"
     },
@@ -867,19 +893,6 @@
       "bodyHash": "8bb909b31d42a0ec7aa03465fca3bda1bbe9ad3c9d09444139a8d4ee77d7184d",
       "bodyPreview": "Clips are only stored on your local machine. You control which Clips you share on Discord. What this article covers: What are Clips? How to Enable Clips Overview of Clips Settings Minimum System Requirements How to Create Clips How to Edit Clips How to Share Clips How to Delete Clips What are Clips? Do you ever find yourself streaming a game to your friends only to have an AMAZING moment that you…",
       "thumb": "https://support.discord.com/hc/article_attachments/16920821633559",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "6461420677527",
-      "title": "Limited Access FAQ",
-      "link": "https://support.discord.com/hc/en-us/articles/6461420677527-Limited-Access-FAQ",
-      "updatedAt": "2026-10-01T01:10:38Z",
-      "createdAt": "2022-06-01T02:51:53Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "162ed24bdfc276b63b8b931cdf18d99f0f7808fc38ca8feafdf69aa60af7cc0f",
-      "bodyPreview": "If Discord detects suspicious account behavior on your account, we may place your account in Limited Access. If your account is in Limited Access, you will not be able to join new servers or initiate new direct messages. Placing accounts with suspicious behavior in limited access helps us maintain a high quality experience for everyone on the platform. How do I know I’ve been placed in Limited Ac…",
-      "thumb": "https://support.discord.com/hc/article_attachments/12045817217815",
       "source": "support",
       "label": "Support"
     },
@@ -3831,19 +3844,6 @@
       "bodyHash": "65b0a9acf0142c688bd90956ed195d30c2bc6078cfc4574e78842fbf9e3d2756",
       "bodyPreview": "Joining a new server is an exciting experience, but sometimes it can be overwhelming to familiarize yourself with all the different channels and rules. To help new members with their onboarding experience, admins can now add a Server Guide . What this article covers: What is Server Guide? How to set up Server Guide Frequently Asked Questions What is a Server Guide? Server Guide is a dedicated spa…",
       "thumb": "https://support.discord.com/hc/article_attachments/17866576547223",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360035969312",
-      "title": "Community Server Guidelines",
-      "link": "https://support.discord.com/hc/en-us/articles/360035969312-Community-Server-Guidelines",
-      "updatedAt": "2026-09-30T02:19:18Z",
-      "createdAt": "2019-11-15T22:36:54Z",
-      "sectionId": "360007770572",
-      "bodyHash": "7a6aff8fd9d305be6580c9ba187f36f6d301f649a1d122be4cc04e6054fd66a3",
-      "bodyPreview": "As an owner of a Community server, you and your moderation team are responsible for helping users find a place to hang out and be part of a new community. Here's what you'll need to be a Community. Your server must: Have a title and description that accurately describes the server. Help potential members understand why they want to join. Be accurate here — no one likes being misled. Have clearly …",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
