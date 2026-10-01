@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Priority security patches: webhook secret masking, dedupe lock, docs XSS."""
+from pathlib import Path
+
+def patch_webhook():
+    p = Path("src/lib/webhook.js")
+    t = p.read_text()
+    if "sanitizeLogText" in t:
+        print("webhook: already patched")
+        return
+    old = """function maskWebhook(url) {
+  return String(url || '').replace(
+    /(\/api\/(?:v\d+\/)?webhooks\/\d+\/)[\w-]+/i,
+    '$1***',
+  );
+}"""
+    new = """function maskWebhook(url) {
+  return String(url || '')
+    .replace(/(\/api\/(?:v\d+\/)?webhooks\/\d+\/)[\w-]+/gi, '$1***')
+    .replace(/(webhooks\/\d+\/)[\w-]{20,}/gi, '$1***');
+}
+
+function sanitizeLogText(text, url) {
+  let s = maskWebhook(String(text || ''));
+  if (url) {
+    const m = String(url).match(/\/webhooks\/\d+\/([\w-]+)/i);
+    if (m && m[1] && m[1].length >= 10) s = s.split(m[1]).join('***');
+  }
+  return s.slice(0, 400);
+}"""
+    if old not in t:
+        raise SystemExit("webhook: maskWebhook not found")
+    t = t.replace(old, new, 1)
+    t = t.replace(
+        """    } catch (e) {
+      last = { ok: false, status: 0, text: String(e.message || e), attempts: attempt + 1 };
+      const d = backoff(attempt, opts);
+      console.warn(`webhook network error (${attempt + 1}/${opts.maxAttempts}) ${label}`, last.text, `wait ${d}ms`);
+""",
+        """    } catch (e) {
+      const safe = sanitizeLogText(e && (e.message || e), url);
+      last = { ok: false, status: 0, text: safe, attempts: attempt + 1 };
+      const d = backoff(attempt, opts);
+      console.warn(`webhook network error (${attempt + 1}/${opts.maxAttempts}) ${label}`, safe, `wait ${d}ms`);
+""",
+        1,
+    )
+    t = t.replace(
+        "console.warn(`webhook fail ${res.status} ${label} ${maskWebhook(url)}`, last.text.slice(0, 300));",
+        "console.warn(`webhook fail ${res.status} ${label} ${maskWebhook(url)}`, sanitizeLogText(last.text, url));",
+        1,
+    )
+    t = t.replace(
+        "console.warn(`webhook gave up after ${last.attempts} attempts ${label}`, last.status, last.text.slice(0, 200));",
+        "console.warn(`webhook gave up after ${last.attempts} attempts ${label}`, last.status, sanitizeLogText(last.text, url));",
+        1,
+    )
+    t = t.replace("  maskWebhook,\n", "  maskWebhook,\n  sanitizeLogText,\n", 1)
+    p.write_text(t)
+    print("webhook: patched")
