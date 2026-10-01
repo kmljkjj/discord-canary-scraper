@@ -1,0 +1,34 @@
+name: Security Inline Patches
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Apply security patches (webhook mask, dedupe lock, docs XSS)
+        run: python3 scripts/security_priority_patch.py
+      - name: Smoke tests
+        run: |
+          node --check src/lib/webhook.js
+          node --check src/lib/webhook_dedupe.js
+          node -e 'const {sanitizeLogText}=require("./src/lib/webhook"); const u="https://discord.com/api/webhooks/1/SECRETTOKEN_ABCDEFGHIJKLMNOP"; const s=sanitizeLogText("request to "+u+" failed",u); if(s.includes("SECRETTOKEN")) process.exit(1); console.log("mask OK");'
+          node -e 'const fs=require("fs"),path=require("path"),os=require("os"); const d=fs.mkdtempSync(path.join(os.tmpdir(),"d-")); process.env.NOTIFY_DEDUPE_FILE=path.join(d,"x.json"); const {claimPosted}=require("./src/lib/webhook_dedupe"); (async()=>{await Promise.all(Array.from({length:30},(_,i)=>claimPosted("fp"+i))); const n=Object.keys(JSON.parse(fs.readFileSync(process.env.NOTIFY_DEDUPE_FILE)).fps).length; console.log("fps",n); if(n<30) process.exit(1);})().catch(e=>{console.error(e);process.exit(1)});'
+      - name: Remove obsolete workflows
+        run: |
+          for f in emergency-restore.yml restore-notify-fix.yml apply-blog-wc-main.yml apply-blog-wc-patch.yml blog-wc-fix.yml security-priority-fixes.yml; do
+            p=".github/workflows/$f"
+            [ -f "$p" ] && git rm -f "$p" && echo removed $f || true
+          done
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "security: mask webhook secrets, HTML-escape docs, lock dedupe; remove obsolete restore workflows" || exit 0
+          git push
