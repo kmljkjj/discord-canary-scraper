@@ -11,7 +11,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
-const { sendEmbeds } = require('./lib/webhook');
+const { sendEmbeds, sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_UA, DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: AVATAR } = require('./lib/utils');
 
@@ -543,6 +543,9 @@ function webhookUrlWithComponents() {
 
 async function postWebhook(url, body) {
   if (!url) return { ok: false, status: 0, text: 'no webhook' };
+  if (body && Array.isArray(body.components) && body.components.length) {
+    return sendWebhook(url, body, { label: 'quests-v2' });
+  }
   const embeds = body.embeds || [];
   const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
   return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });

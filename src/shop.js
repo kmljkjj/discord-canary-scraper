@@ -461,28 +461,34 @@ async function main() {
     return;
   }
 
-  const toNotify = newItems.slice(0, 15);
-  const embeds = toNotify.map(buildEmbed);
-  const sent = await postWebhook(embeds);
-  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
-
-  if (!sent.ok) {
-    console.warn('NOTIFY_FAIL shop — ids NOT marked; will retry next run');
-    process.exitCode = 2;
-    return;
-  }
-
+  let remaining = newItems.slice();
   const announced = { ...(prev.announced || {}) };
-  for (const it of toNotify) {
-    announced[it.id] = new Date().toISOString();
+  const notified = [];
+  while (remaining.length) {
+    const batch = remaining.slice(0, 15);
+    remaining = remaining.slice(15);
+    const sent = await postWebhook(batch.map(buildEmbed));
+    console.log('Webhook batch', batch.length, sent.status, sent.ok ? 'OK' : sent.text);
+    if (!sent.ok) {
+      console.warn('NOTIFY_FAIL shop — remaining will retry');
+      process.exitCode = 2;
+      remaining = batch.concat(remaining);
+      break;
+    }
+    const ts = new Date().toISOString();
+    for (const it of batch) {
+      announced[it.id] = ts;
+      notified.push(it.id);
+    }
   }
-
+  const knownIds = new Set([...(prev.ids || []), ...Object.keys(announced)]);
+  const nextIds = allIds.filter((id) => knownIds.has(id));
   await writeJsonAtomic(
     STATE,
     {
       scrapedAt: new Date().toISOString(),
       count: items.length,
-      ids: allIds,
+      ids: nextIds,
       items: items.map((i) => ({
         id: i.id,
         name: i.name,
@@ -490,11 +496,12 @@ async function main() {
         image: i.image,
       })),
       announced,
-      lastNew: toNotify.map((i) => i.id),
+      lastNew: notified,
+      pendingNew: remaining.map((i) => i.id),
     },
     2,
   );
-  console.log('✅ Shop done — announced', toNotify.length);
+  console.log('✅ Shop done — announced', notified.length, 'pending', remaining.length);
 }
 
 if (require.main === module) {
