@@ -1,4 +1,10 @@
-function escapeHtml(s){return String(s==null?"":s).replace(/&/g,"&").replace(/</g,"<").replace(/>/g,">").replace(/"/g,""");}
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"');
+}
 /* Rollouts page — fetch experiment_rollouts.json and render cards */
 (async () => {
   const grid = document.getElementById('grid');
