@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-02T17:34:07.462Z",
+  "scrapedAt": "2026-10-02T17:40:58.214Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-10-02T17:34:07.462Z"
+      "checkedAt": "2026-10-02T17:40:58.214Z"
     },
     {
       "platform": "ios",
@@ -20,7 +20,7 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-02T17:34:07.462Z"
+      "checkedAt": "2026-10-02T17:40:58.214Z"
     },
     {
       "platform": "android",
@@ -32,7 +32,7 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-02T17:34:07.462Z"
+      "checkedAt": "2026-10-02T17:40:58.214Z"
     },
     {
       "platform": "android",
@@ -45,7 +45,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-10-02T17:34:07.462Z"
+      "checkedAt": "2026-10-02T17:40:58.214Z"
     },
     {
       "platform": "android",
@@ -54,15 +54,15 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-02T17:34:07.462Z"
+      "checkedAt": "2026-10-02T17:40:58.214Z"
     }
   ],
   "otaIndex": {
     "ios": [
       {
         "version": "347.0",
-        "build": "112970",
-        "commit": "bcf41355a7e515f87651eda3962b8a992fcbabeb",
+        "build": "113706",
+        "commit": "07e0f9d79726a5b27b23641a2829707ea6978e78",
         "releaseName": null
       },
       {
@@ -295,7 +295,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-02T17:27:27.831Z",
+  "previousScrapedAt": "2026-10-02T17:34:07.462Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
