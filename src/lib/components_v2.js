@@ -46,6 +46,36 @@ function separator(divider = true, spacing = 1) {
 }
 
 /**
+ * Build a MediaGallery (type 12) from image URLs.
+ * @param {string[]} urls
+ * @returns {{type:number,items:Array}|null}
+ */
+function mediaGalleryFromUrls(urls) {
+  const items = [];
+  const seen = new Set();
+  for (const u of urls || []) {
+    if (!u || typeof u !== 'string') continue;
+    const url = String(u).trim();
+    if (!/^https?:\/\//i.test(url)) continue;
+    if (seen.has(url)) continue;
+    seen.add(url);
+    items.push({ media: { url: url.slice(0, 2048) } });
+    if (items.length >= 4) break;
+  }
+  if (!items.length) return null;
+  return { type: 12, items };
+}
+
+/** Collect image/thumbnail URLs from a legacy embed. */
+function embedImageUrls(embed) {
+  if (!embed || typeof embed !== 'object') return [];
+  const urls = [];
+  if (embed.image && embed.image.url) urls.push(embed.image.url);
+  if (embed.thumbnail && embed.thumbnail.url) urls.push(embed.thumbnail.url);
+  return urls;
+}
+
+/**
  * Build a Container component.
  * @param {Array} components - Child components
  * @param {number} [accentColor] - RGB color
@@ -259,6 +289,12 @@ function embedToComponents(embed, withDismiss = false) {
     }
   }
 
+  // Image / thumbnail as MediaGallery (Components V2 drops embed.image otherwise)
+  {
+    const gallery = mediaGalleryFromUrls(embedImageUrls(embed));
+    if (gallery) components.push(gallery);
+  }
+
   // Description
   if (embed.description) {
     for (const chunk of chunkText(embed.description)) {
@@ -317,6 +353,12 @@ function embedsToComponents(embeds, withDismiss = false) {
       }
     }
 
+    // Preserve embed.image / thumbnail as MediaGallery
+    {
+      const gallery = mediaGalleryFromUrls(embedImageUrls(embed));
+      if (gallery) allComponents.push(gallery);
+    }
+
     if (embed.description) {
       for (const chunk of chunkText(embed.description)) {
         allComponents.push(textDisplay(chunk));
@@ -354,6 +396,8 @@ module.exports = {
   textDisplay,
   separator,
   container,
+  mediaGalleryFromUrls,
+  embedImageUrls,
   linkButton,
   dismissButton,
   addDismissToMessages,
