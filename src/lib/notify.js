@@ -137,13 +137,13 @@ function cleanText(s, max = LINE_VAL_MAX) {
 }
 
 function stringLine(prefix, key, value, maxVal) {
-  // Show the phrase only — Discord i18n keys (e.g. zVcDfj) are opaque hashes.
+  // Phrase only — no hash key, no +/- prefix (section label already says Ajoute/Supprime).
   const v = cleanText(value, maxVal);
   if (!v) {
     const k = String(key || '').replace(/`/g, "'");
-    return `${prefix} ${k}`;
+    return k;
   }
-  return `${prefix} ${v}`;
+  return v;
 }
 
 function routeLine(prefix, key, value) {
@@ -370,7 +370,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (a.length > maxLines) lines.push(`… +${a.length - maxLines} more`);
     sections.push({
-      label: label(E.added, `Added · ${a.length}`),
+      label: label(E.added, isRoutes ? `Added · ${a.length}` : `Ajouté · ${a.length}`),
       color: COLOR.added,
       count: a.length,
       lines,
@@ -385,7 +385,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (m.length > maxLines) lines.push(`… +${m.length - maxLines} more`);
     sections.push({
-      label: label(E.modified, `Modified · ${m.length}`),
+      label: label(E.modified, isRoutes ? `Modified · ${m.length}` : `Modifié · ${m.length}`),
       color: COLOR.modified,
       count: m.length,
       lines,
@@ -400,7 +400,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     );
     if (r.length > maxLines) lines.push(`… +${r.length - maxLines} more`);
     sections.push({
-      label: label(E.removed, `Removed · ${r.length}`),
+      label: label(E.removed, isRoutes ? `Removed · ${r.length}` : `Supprimé · ${r.length}`),
       color: COLOR.removed,
       count: r.length,
       lines,
