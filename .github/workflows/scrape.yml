@@ -23,12 +23,45 @@ jobs:
         with:
           fetch-depth: 1
 
+      # Garde anti-tempête : un repository_dispatch pour un build déjà scrapé est un no-op
+      # (job vert, aucune alerte, aucun commit). Le cron et workflow_dispatch passent toujours.
+      # Le build visé vient de client_payload.build (trigger v2.5) ou, pour les anciens
+      # déclencheurs sans payload, du BUILD_NUMBER live de canary.discord.com.
+      - name: Garde — build déjà scrapé ?
+        id: guard
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_BUILD: ${{ github.event.client_payload.build }}
+        run: |
+          if [ "$EVENT_NAME" != "repository_dispatch" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          current=$(node -e "try{console.log(require('./data/build.json').buildNumber||'')}catch(e){console.log('')}")
+          target="$DISPATCH_BUILD"
+          if [ -z "$target" ]; then
+            target=$(curl -fsSL --max-time 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131.0.0.0" \
+              https://canary.discord.com/app 2>/dev/null \
+              | grep -oE '"BUILD_NUMBER"[[:space:]]*:[[:space:]]*"?[0-9]+' | grep -oE '[0-9]+$' | head -1 || true)
+            echo "pas de client_payload.build — BUILD_NUMBER live : '${target:-?}'"
+          fi
+          if [ -n "$target" ] && [ -n "$current" ] && [ "$target" = "$current" ]; then
+            echo "build $target déjà scrapé (data/build.json) — run ignoré"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "dispatch build='${target:-n/a}' current='${current:-n/a}' → scrape"
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: ./.github/actions/setup
+        if: steps.guard.outputs.skip != 'true'
 
       - name: Syntax check
+        if: steps.guard.outputs.skip != 'true'
         run: npm run check
 
       - name: Scrape + notify + archive chunks
+        if: steps.guard.outputs.skip != 'true'
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
@@ -48,11 +81,11 @@ jobs:
         run: node src/index.js
 
       - name: Run summary
-        if: always()
+        if: always() && steps.guard.outputs.skip != 'true'
         run: node scripts/summary.js
 
       - name: Commit baseline + archive
-        if: success()
+        if: success() && steps.guard.outputs.skip != 'true'
         run: |
           BUILD_NUM=$(node -e "try{console.log(require('./data/build.json').buildNumber||'unknown')}catch(e){console.log('unknown')}")
           scripts/commit-state.sh "canary build: ${BUILD_NUM}" \

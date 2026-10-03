@@ -4,8 +4,10 @@ on:
   schedule:
     - cron: '*/10 * * * *'
   workflow_dispatch:
+  # Un nouveau build Canary n'a aucun lien avec le blog : seul trigger-blog est écouté
+  # (trigger-scraping déclenchait Blog Tracker à chaque build → commits d'état inutiles).
   repository_dispatch:
-    types: [trigger-blog, trigger-scraping]
+    types: [trigger-blog]
 
 permissions:
   contents: write
