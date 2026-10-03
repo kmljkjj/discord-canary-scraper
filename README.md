@@ -58,7 +58,7 @@ Le cron GitHub a souvent du retard. `scripts/trigger_host.py` vérifie le `BUILD
 
 ```bash
 export GITHUB_TOKEN=...            # PAT classic : repo + workflow (jamais dans le code)
-export GITHUB_REPO=kmljkjj/discord-canary-scraper-test
+export GITHUB_REPO=kmljkjj/discord-canary-scraper
 export INTERVAL=50
 python3 scripts/trigger_host.py
 ```
@@ -99,3 +99,4 @@ python3 scripts/trigger_host.py
 - **User rollouts** : le snapshot du token réessaie après un 429. Avant, il était perdu à chaque fois après l'échantillonnage.
 - **Shop** : `/shop/search` renvoie 400 (`ENUM_TYPE_COERCE`, types refusés par Discord). Le script s'arrête au premier 400 et logge la raison. Le catalogue (1688 items) reste complet.
 - **Scrape** : la limite de scan passe de 6 à 16 Mo, car un chunk de 6,15 Mo n'était jamais analysé. Les IDs Discord numériques ne sont plus pris pour des chunks (404 en moins).
+- **CI** : le job « Lint workflows » échouait (SC2015 dans `apply-quests-shop.yml`). Les workflows de patch ponctuels `apply-quests-shop.yml` et `apply-media-gallery.yml` (et leurs scripts `apply_*.py`, déjà appliqués) sont supprimés, ainsi que les résidus encore commités (`.github/payloads/*.b64.*`, `__pycache__/`, `security_priority_patch.py.a`, `.apply-reliability`). Imports Python inutilisés retirés ; la CI lance maintenant `pyflakes`. Le test `repo_hygiene` empêche ces régressions.
