@@ -32,3 +32,13 @@ data/.generations/
 # coverage reports
 coverage/
 .nyc_output/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# résidus de patchs ponctuels (base64, scripts .a, marqueurs .apply-*)
+.github/payloads/
+*.b64.*
+*.py.a
+.apply-*

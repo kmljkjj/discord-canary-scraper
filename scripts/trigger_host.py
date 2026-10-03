@@ -16,7 +16,6 @@ Env:
 from __future__ import annotations
 
 import os
-import sys
 import time
 
 from _canary_common import (

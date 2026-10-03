@@ -20,7 +20,6 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-import discord
 from discord.ext import commands, tasks
 
 # ═══════════════════════════════════════════════════════
