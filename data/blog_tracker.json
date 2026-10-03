@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-03T01:14:08.806Z",
+  "scrapedAt": "2026-10-03T01:15:19.771Z",
   "blog": [
     {
       "id": "https://discord.com/blog/halloween-2026",
@@ -466,6 +466,84 @@
   ],
   "zendesk": [
     {
+      "id": "360040724612",
+      "title": "Why is Discord asking for my birthday?",
+      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
+      "updatedAt": "2026-10-03T01:12:38Z",
+      "createdAt": "2020-03-19T00:18:15Z",
+      "sectionId": "360007875171",
+      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
+      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "27893392334359",
+      "title": "How Games Integrate Discord-Powered Features",
+      "link": "https://support.discord.com/hc/en-us/articles/27893392334359-How-Games-Integrate-Discord-Powered-Features",
+      "updatedAt": "2026-10-03T01:12:22Z",
+      "createdAt": "2024-11-18T21:48:12Z",
+      "sectionId": "360007770552",
+      "bodyHash": "8bb3b62eda27195f89aca56d9ff9432d11260bbb9add1fdd0bbcff88b97457b6",
+      "bodyPreview": "Discord offers tools that game developers can use to power various social and communication features within their games. For you as a player, this means some aspects of your in-game experience will be powered by Discord—which can include in-game voice chat and friends lists, as well as the ability to directly link your Discord account to unlock additional features (such as a combined friends list…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "218410947",
+      "title": "How to Reset or Change Your Forgotten Password on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/218410947-How-to-Reset-or-Change-Your-Forgotten-Password-on-Discord",
+      "updatedAt": "2026-10-03T01:12:03Z",
+      "createdAt": "2016-03-29T22:39:24Z",
+      "sectionId": "360007770532",
+      "bodyHash": "5ea734e8cddb2bc2d8e283a7d85ae7a51fd09ba6283c156292e9f19e6408916d",
+      "bodyPreview": "Hey, we've all been there. Passwords are supposed to be difficult! Whether it’s time to set up a new password or you forget your old one, this guide will help you with navigating all things password-related. What this article covers: Password Requirements How to Change Your Password Desktop/Browser Mobile How to Reset Your Password Desktop/Browser Mobile Password Requirements When making your pas…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32331688455319",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115002192352",
+      "title": "Automated User Accounts (Self-Bots)",
+      "link": "https://support.discord.com/hc/en-us/articles/115002192352-Automated-User-Accounts-Self-Bots",
+      "updatedAt": "2026-10-03T01:11:54Z",
+      "createdAt": "2017-10-17T19:35:16Z",
+      "sectionId": "24453122216087",
+      "bodyHash": "c5974c6ea43648d8bf4ed30a3f0589745c95cea38fc66f82e5eaee7c4cb8bb8c",
+      "bodyPreview": "The question regarding \"self bots\" has come up here and there, and we'd like to make our stance clear: Discord's API provides a separate type of user account dedicated to automation, called a bot account. Bot accounts can be created through the applications page, and are authenticated using a token (rather than a username and password). Unlike the normal OAuth2 flow, bot accounts have full access…",
+      "thumb": null,
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "30326565624343",
+      "title": "How to Confirm Your Age Group on Discord",
+      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
+      "updatedAt": "2026-10-03T01:11:43Z",
+      "createdAt": "2025-02-28T23:11:37Z",
+      "sectionId": "360009072571",
+      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
+      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
+      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
+      "source": "support",
+      "label": "Support"
+    },
+    {
+      "id": "115001221072",
+      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
+      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
+      "updatedAt": "2026-10-03T01:11:37Z",
+      "createdAt": "2017-08-22T01:07:34Z",
+      "sectionId": "360009072571",
+      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
+      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
+      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
+      "source": "support",
+      "label": "Support"
+    },
+    {
       "id": "360041820932",
       "title": "Help! I'm old enough to use Discord in my country but I got locked out?",
       "link": "https://support.discord.com/hc/en-us/articles/360041820932-Help-I-m-old-enough-to-use-Discord-in-my-country-but-I-got-locked-out",
@@ -475,19 +553,6 @@
       "bodyHash": "cd4f6cb2654528b4b5bd6fcc1ee65baa1ef87e65444b2272891a720bfa51d453",
       "bodyPreview": "We require all users to meet the minimum age requirement for their region. If you meet that requirement and have been locked out of Discord, you can appeal your banned account by following the instructions below. \"Your account is suspended\" screen, showing an Active Violations card for a minimum age requirements violation How to Confirm Your Age Group to Unlock Your Account 1. Log in to your lock…",
       "thumb": "https://support.discord.com/hc/article_attachments/43517442927639",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "360040724612",
-      "title": "Why is Discord asking for my birthday?",
-      "link": "https://support.discord.com/hc/en-us/articles/360040724612-Why-is-Discord-asking-for-my-birthday",
-      "updatedAt": "2026-10-03T01:10:37Z",
-      "createdAt": "2020-03-19T00:18:15Z",
-      "sectionId": "360007875171",
-      "bodyHash": "3e8e9064520367e2fbdd86f4f536b675810c0b8b5c6463d2953f6152c752fb76",
-      "bodyPreview": "You must be over a minimum age to use Discord or access certain features or content. The minimum age requirements are different in different countries: you must be at least 13 to use Discord, but in some countries you may need to be as old as 16. We require you to confirm their age group to satisfy that minimum age requirement for your region. If you satisfy the minimum age requirement and are ol…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -505,19 +570,6 @@
       "label": "Support"
     },
     {
-      "id": "218410947",
-      "title": "How to Reset or Change Your Forgotten Password on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/218410947-How-to-Reset-or-Change-Your-Forgotten-Password-on-Discord",
-      "updatedAt": "2026-10-03T01:08:46Z",
-      "createdAt": "2016-03-29T22:39:24Z",
-      "sectionId": "360007770532",
-      "bodyHash": "5ea734e8cddb2bc2d8e283a7d85ae7a51fd09ba6283c156292e9f19e6408916d",
-      "bodyPreview": "Hey, we've all been there. Passwords are supposed to be difficult! Whether it’s time to set up a new password or you forget your old one, this guide will help you with navigating all things password-related. What this article covers: Password Requirements How to Change Your Password Desktop/Browser Mobile How to Reset Your Password Desktop/Browser Mobile Password Requirements When making your pas…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32331688455319",
-      "source": "support",
-      "label": "Support"
-    },
-    {
       "id": "37127619588375",
       "title": "Nitro 2-Week Trial Offer",
       "link": "https://support.discord.com/hc/en-us/articles/37127619588375-Nitro-2-Week-Trial-Offer",
@@ -527,19 +579,6 @@
       "bodyHash": "34d7b92610735183ffdfdcbd23c5dde3d837ab8af8b7fe80f3e65eefa7448b93",
       "bodyPreview": "Try two weeks of Nitro for $0 with our promotion valid through January 29, 2026 ! Read below to learn more. What this article covers: Promotion Summary Eligibility Conditions What is Discord Nitro? How do Nitro Trials work? How do I claim my Nitro Trial? On Desktop/Browser On Mobile Frequently Asked Questions Note: Please make sure your Discord app is updated to the latest version! If you don’t s…",
       "thumb": "https://support.discord.com/hc/article_attachments/37844328063895",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "30326565624343",
-      "title": "How to Confirm Your Age Group on Discord",
-      "link": "https://support.discord.com/hc/en-us/articles/30326565624343-How-to-Confirm-Your-Age-Group-on-Discord",
-      "updatedAt": "2026-10-03T01:08:19Z",
-      "createdAt": "2025-02-28T23:11:37Z",
-      "sectionId": "360009072571",
-      "bodyHash": "efd4ee8d13adc774f180c42e2e5989f660b78fe573ecfcea66e2bd1ec8ec8647",
-      "bodyPreview": "Resolved as of Sep 23, 8:32PM PST - Some of you may have saw mismatched experiences across devices - for example, appearing as “unconfirmed” on an older app version, or being unable to access age-restricted servers on certain mobile devices. We had identified a bug causing this issue. - This issue has now been resolved ! Please close and refresh your app to get the fix for the age group status. -…",
-      "thumb": "https://support.discord.com/hc/article_attachments/43517442456343",
       "source": "support",
       "label": "Support"
     },
@@ -709,19 +748,6 @@
       "bodyHash": "d7eda6bf3be89739de98c2e194f9ed6b0d6a124e8136543bde537a00bbd770ba",
       "bodyPreview": "Greetings summoners! Welcome to Discord. What does this article cover? New to Discord? Channel Following Adding it to your server How to remove followed posts Official Riot game Discord Servers Discord Support New to Discord? Here are some guides to help you get started: Discord Installation guide Beginner's Guide to Discord Discord on Mobile Devices How do I create a server? How do I join a Serv…",
       "thumb": "https://support.discord.com/hc/article_attachments/360099255273",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115001221072",
-      "title": "How to Recover Your Discord Account When Locked Out of Multi-Factor Authentication (MFA)",
-      "link": "https://support.discord.com/hc/en-us/articles/115001221072-How-to-Recover-Your-Discord-Account-When-Locked-Out-of-Multi-Factor-Authentication-MFA",
-      "updatedAt": "2026-10-03T01:01:06Z",
-      "createdAt": "2017-08-22T01:07:34Z",
-      "sectionId": "360009072571",
-      "bodyHash": "4fa84c5d4a1c50192f7be541a85e66e733c8d210a1692139cba0c828ce9cdc01",
-      "bodyPreview": "Being locked out of your Discord account due to Multi-Factor Authentication can be frustrating, but with the right approach and Discord's recovery options, you can regain access to your account. Important: If you do not have access to your backup codes, Discord is unable to remove MFA or issue you new backup codes. What this article covers: Disabling MFA if You’re not Logged Into Your Discord Acc…",
-      "thumb": "https://support.discord.com/hc/article_attachments/32330681923735",
       "source": "support",
       "label": "Support"
     },
@@ -1359,19 +1385,6 @@
       "bodyHash": "3f349d3f7e1491a140bb90b16e4de493ecfb8fcebdca70c2e601f1b2c331ca85",
       "bodyPreview": "Learn how to request your personal Discord data with these easy steps. Whether you're using Discord on desktop, browser, or mobile, we'll show you the step-by-step process to request and receive your account information. This article covers everything you need to know about data requests, processing times, and important considerations to keep in mind. What this article covers: Requesting Your Dat…",
       "thumb": "https://support.discord.com/hc/article_attachments/30074476223255",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "27893392334359",
-      "title": "How Games Integrate Discord-Powered Features",
-      "link": "https://support.discord.com/hc/en-us/articles/27893392334359-How-Games-Integrate-Discord-Powered-Features",
-      "updatedAt": "2026-10-02T23:57:46Z",
-      "createdAt": "2024-11-18T21:48:12Z",
-      "sectionId": "360007770552",
-      "bodyHash": "8bb3b62eda27195f89aca56d9ff9432d11260bbb9add1fdd0bbcff88b97457b6",
-      "bodyPreview": "Discord offers tools that game developers can use to power various social and communication features within their games. For you as a player, this means some aspects of your in-game experience will be powered by Discord—which can include in-game voice chat and friends lists, as well as the ability to directly link your Discord account to unlock additional features (such as a combined friends list…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
@@ -3270,19 +3283,6 @@
       "bodyHash": "6b11bb0063f45f487819784a5b68df24b27293e1ac0113471301ab7223e9eb48",
       "bodyPreview": "Discord gift cards are an easy way to treat yourself or a friend. Redeem one to add balance to your account and spend it on Nitro, Shop items, Server Boosts, and more. What this article covers: What are Discord gift cards? Where can I buy a Discord gift card? What can I buy with a Discord gift card? How to Redeem Your Gift Card Desktop App Discord.com/redeem Mobile Availability Frequently Asked Q…",
       "thumb": "https://support.discord.com/hc/article_attachments/41524725299479",
-      "source": "support",
-      "label": "Support"
-    },
-    {
-      "id": "115002192352",
-      "title": "Automated User Accounts (Self-Bots)",
-      "link": "https://support.discord.com/hc/en-us/articles/115002192352-Automated-User-Accounts-Self-Bots",
-      "updatedAt": "2026-10-02T12:51:18Z",
-      "createdAt": "2017-10-17T19:35:16Z",
-      "sectionId": "24453122216087",
-      "bodyHash": "c5974c6ea43648d8bf4ed30a3f0589745c95cea38fc66f82e5eaee7c4cb8bb8c",
-      "bodyPreview": "The question regarding \"self bots\" has come up here and there, and we'd like to make our stance clear: Discord's API provides a separate type of user account dedicated to automation, called a bot account. Bot accounts can be created through the applications page, and are authenticated using a token (rather than a username and password). Unlike the normal OAuth2 flow, bot accounts have full access…",
-      "thumb": null,
       "source": "support",
       "label": "Support"
     },
