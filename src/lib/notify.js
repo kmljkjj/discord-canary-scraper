@@ -1,7 +1,7 @@
 /**
  * Datamining — notify (classic embeds only — reliable on all webhooks)
  * - No backticks around keys
- * - Strings/Routes: key + full text
+ * - Strings: phrase only (no hash key) · Routes: key + path
  * - Batch dedupe marked ONLY after successful webhook post
  */
 const { sendEmbeds } = require('./webhook');
@@ -137,10 +137,13 @@ function cleanText(s, max = LINE_VAL_MAX) {
 }
 
 function stringLine(prefix, key, value, maxVal) {
-  const k = String(key || '').replace(/`/g, "'");
+  // Show the phrase only — Discord i18n keys (e.g. zVcDfj) are opaque hashes.
   const v = cleanText(value, maxVal);
-  if (!v) return `${prefix} ${k}`;
-  return `${prefix} ${k}: ${v}`;
+  if (!v) {
+    const k = String(key || '').replace(/`/g, "'");
+    return `${prefix} ${k}`;
+  }
+  return `${prefix} ${v}`;
 }
 
 function routeLine(prefix, key, value) {
