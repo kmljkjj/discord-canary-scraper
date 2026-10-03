@@ -18,4 +18,6 @@ runs:
           echo "::error::package-lock.json manquant — installation non reproductible refusée"
           exit 1
         fi
-        npm ci --no-audit --no-fund --omit=dev
+        # --ignore-scripts : aucune dépendance n'a de script d'installation ; on évite
+        # d'exécuter du code tiers pendant que le token du checkout est présent.
+        npm ci --no-audit --no-fund --omit=dev --ignore-scripts

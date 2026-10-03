@@ -18,6 +18,10 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+# Token GitHub conseillé : PAT *fine-grained* limité à ce seul dépôt, avec
+# uniquement la permission « Contents: Read and write » (suffit pour
+# POST /repos/{repo}/dispatches). Pas de PAT classic repo+workflow.
+
 # ── Constants ──────────────────────────────────────────────
 CANARY_URLS = (
     "https://canary.discord.com/app",
@@ -80,6 +84,40 @@ def get_canary_build(ua: str = DEFAULT_UA, timeout: int = 20) -> tuple:
     return None, None
 
 
+# ── State format ───────────────────────────────────────────
+# Format commun aux 3 déclencheurs (scripts + cog) : "BUILD" ou "BUILD:HASH".
+def state_token(build: str, version_hash: str | None = None) -> str:
+    """Return the shared state token: "build:hash12" (hash optional)."""
+    build = str(build).strip()
+    if version_hash:
+        return f"{build}:{str(version_hash).strip()[:12]}"
+    return build
+
+
+def build_of(token: str | None) -> str | None:
+    """Extract the build number from a state token ("123" or "123:abc")."""
+    if not token:
+        return None
+    return str(token).strip().split(":", 1)[0] or None
+
+
+def is_same_state(last: str | None, current: str) -> bool:
+    """True if `current` is already recorded in `last`.
+
+    Compatible with legacy files that only contain the build number: when one
+    side has no hash, only build numbers are compared.
+    """
+    if not last:
+        return False
+    last = str(last).strip()
+    current = str(current).strip()
+    if last == current:
+        return True
+    if ":" not in last or ":" not in current:
+        return build_of(last) == build_of(current)
+    return False
+
+
 # ── State file I/O ─────────────────────────────────────────
 def read_state(state_file) -> str | None:
     """Read last known build number from state file."""
@@ -92,16 +130,29 @@ def read_state(state_file) -> str | None:
     return None
 
 
-def write_state(state_file, build: str) -> None:
-    """Write build number to state file (atomic-ish: write then flush)."""
+def write_state(state_file, token: str) -> bool:
+    """Atomically write the state token (tmp file + replace). Returns success."""
     p = Path(state_file) if not isinstance(state_file, Path) else state_file
     try:
         p.parent.mkdir(parents=True, exist_ok=True)
         tmp = p.with_suffix(p.suffix + ".tmp")
-        tmp.write_text(build, encoding="utf-8")
+        tmp.write_text(token, encoding="utf-8")
         tmp.replace(p)
-    except Exception:
-        pass
+        return True
+    except Exception as e:
+        print(f"[canary] state write fail {p}: {e}", flush=True)
+        return False
+
+
+def dispatch_body(event: str = DEFAULT_EVENT, build: str | None = None) -> dict:
+    """repository_dispatch body. `client_payload.build` lets the scrape.yml
+    anti-storm guard compare against the build that triggered the dispatch
+    instead of re-fetching canary.discord.com (which may differ)."""
+    body: dict = {"event_type": event}
+    b = build_of(build)
+    if b:
+        body["client_payload"] = {"build": b}
+    return body
 
 
 # ── GitHub Actions dispatch ────────────────────────────────
@@ -111,6 +162,7 @@ def dispatch_github_actions(
     event: str = DEFAULT_EVENT,
     ua: str = DEFAULT_UA,
     timeout: int = 30,
+    build: str | None = None,
 ) -> tuple:
     """Dispatch a GitHub Actions repository_dispatch event.
     Returns (success: bool, message: str).
@@ -120,7 +172,7 @@ def dispatch_github_actions(
     url = f"https://api.github.com/repos/{repo}/dispatches"
     status, err = http_post_json(
         url,
-        {"event_type": event},
+        dispatch_body(event, build),
         {
             "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {token}",

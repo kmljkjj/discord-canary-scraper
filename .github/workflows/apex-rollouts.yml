@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   rollouts:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
@@ -27,7 +27,7 @@ jobs:
       - uses: ./.github/actions/setup
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --no-audit --no-fund --ignore-scripts
 
       - name: Syntax check
         run: node --check src/apex_rollouts.js

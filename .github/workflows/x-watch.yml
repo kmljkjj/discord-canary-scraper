@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   watch:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v5
@@ -37,7 +37,5 @@ jobs:
 
       - name: Save seen ids
         if: always()
-        env:
-          COMMIT_SOFT_FAIL: '1'
         run: |
           scripts/commit-state.sh "x-watch: seen" data/x_seen_ids.json data/seen_x_posts.json

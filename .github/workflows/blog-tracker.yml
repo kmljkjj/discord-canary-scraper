@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   track:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v5
@@ -38,8 +38,6 @@ jobs:
 
       - name: Save state
         if: always() && steps.track.outcome != 'cancelled'
-        env:
-          COMMIT_SOFT_FAIL: '1'
         run: |
           scripts/commit-state.sh "blog-tracker: state" data/blog_tracker.json
 

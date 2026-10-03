@@ -7,7 +7,7 @@ Wumpus tourne hors Actions. Ce script poll canary.discord.com
 et ne dispatch QUE si le BUILD_NUMBER change.
 
 Usage:
-  export GITHUB_TOKEN="ghp_xxx"   # classic : repo + workflow
+  export GITHUB_TOKEN="ghp_xxx"   # PAT fine-grained : ce dépôt, Contents: Read and write
   python3 scripts/canary_trigger.py
 
 Vars optionnelles:
@@ -26,6 +26,8 @@ from _canary_common import (
     get_canary_build,
     read_state,
     write_state,
+    state_token,
+    is_same_state,
     dispatch_github_actions,
     DEFAULT_REPO,
     DEFAULT_EVENT,
@@ -39,23 +41,24 @@ STATE = Path(os.environ.get("STATE_FILE", str(Path(__file__).resolve().parent / 
 
 
 def tick() -> str:
-    bn, _vh = get_canary_build()
+    bn, vh = get_canary_build()
     if not bn:
         return "build=? (fetch fail)"
+    token = state_token(bn, vh)
     last = read_state(STATE)
-    if last == bn:
-        return f"build={bn} inchangé"
+    if is_same_state(last, token):
+        return f"build={token} inchangé"
     # nouveau build
-    ok, msg = dispatch_github_actions(TOKEN, REPO, EVENT)
+    ok, msg = dispatch_github_actions(TOKEN, REPO, EVENT, build=bn)
     if ok:
-        write_state(STATE, bn)
-        return f"NOUVEAU build={bn} (prev={last}) → {msg}"
-    return f"NOUVEAU build={bn} mais dispatch échoué: {msg}"
+        write_state(STATE, token)
+        return f"NOUVEAU build={token} (prev={last}) → {msg}"
+    return f"NOUVEAU build={token} mais dispatch échoué: {msg}"
 
 
 def main() -> None:
     if not TOKEN:
-        print("Erreur: export GITHUB_TOKEN=ghp_... (classic: repo + workflow)")
+        print("Erreur: export GITHUB_TOKEN=ghp_... (PAT fine-grained, Contents: Read and write)")
         sys.exit(1)
     print(
         f"[trigger] repo={REPO} interval={INTERVAL}s event={EVENT}",

@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   shop:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
@@ -39,8 +39,6 @@ jobs:
 
       - name: Save shop state
         if: always() && steps.shop.outcome != 'cancelled'
-        env:
-          COMMIT_SOFT_FAIL: '1'
         run: |
           scripts/commit-state.sh "shop: state" data/shop_items.json
 

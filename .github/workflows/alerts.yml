@@ -26,7 +26,7 @@ permissions:
 jobs:
   alert:
     if: github.event.workflow_run.conclusion == 'failure'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
       - name: Previous run of same workflow

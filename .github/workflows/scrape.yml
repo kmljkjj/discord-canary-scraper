@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   scrape:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
@@ -39,6 +39,7 @@ jobs:
           fi
           current=$(node -e "try{console.log(require('./data/build.json').buildNumber||'')}catch(e){console.log('')}")
           target="$DISPATCH_BUILD"
+          case "$target" in *[!0-9]*) echo "client_payload.build invalide — ignoré"; target="" ;; esac
           if [ -z "$target" ]; then
             target=$(curl -fsSL --max-time 20 -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131.0.0.0" \
               https://canary.discord.com/app 2>/dev/null \

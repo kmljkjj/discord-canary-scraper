@@ -6,7 +6,7 @@ Ne lance GitHub Actions QUE si le BUILD_NUMBER Canary a changé.
 Sinon : un simple check HTTP, zéro spam Actions.
 
 Setup:
-  1. export GITHUB_TOKEN=... (PAT classic : repo + workflow)
+  1. export GITHUB_TOKEN=... (PAT fine-grained : ce dépôt seulement, Contents: Read and write)
   2. python3 scripts/trigger_host.py
 
 Env:
@@ -22,6 +22,8 @@ from _canary_common import (
     get_canary_build,
     read_state,
     write_state,
+    state_token,
+    is_same_state,
     dispatch_github_actions,
     DEFAULT_REPO,
     DEFAULT_EVENT,
@@ -39,18 +41,19 @@ def log(msg: str) -> None:
 
 
 def tick() -> None:
-    build, _vh = get_canary_build()
+    build, vh = get_canary_build()
     if not build:
         log("pas de BUILD_NUMBER")
         return
+    token = state_token(build, vh)
     last = read_state(STATE_FILE)
-    if last == build:
-        log(f"build {build} inchangé — pas de dispatch")
+    if is_same_state(last, token):
+        log(f"build {token} inchangé — pas de dispatch")
         return
-    log(f"NOUVEAU build {last} → {build} — dispatch Actions")
-    ok, msg = dispatch_github_actions(TOKEN, REPO, EVENT)
+    log(f"NOUVEAU build {last} → {token} — dispatch Actions")
+    ok, msg = dispatch_github_actions(TOKEN, REPO, EVENT, build=build)
     if ok:
-        write_state(STATE_FILE, build)
+        write_state(STATE_FILE, token)
     else:
         log(f"dispatch échoué — on réessaiera: {msg}")
 
