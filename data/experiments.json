@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-03T02-18-21-417Z_628789_z7j9mo",
-  "buildNumber": "628789",
-  "scrapedAt": "2026-10-03T02:18:21.417Z",
+  "runId": "2026-10-03T06-39-59-341Z_628830_ru09zf",
+  "buildNumber": "628830",
+  "scrapedAt": "2026-10-03T06:39:59.341Z",
   "totals": {
-    "all": 366,
+    "all": 365,
     "legacy": 0,
-    "apex": 366
+    "apex": 365
   },
   "experiments": [
     {
@@ -1597,23 +1597,6 @@
         }
       },
       "variationCount": 4,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-sticker-padding",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "padding": 2
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
