@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-04T13:39:32.620Z",
+  "fetchedAt": "2026-10-04T13:46:22.754Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 3,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -5070,6 +5070,46 @@
       }
     },
     {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 5,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 5
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 5,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 5
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
+      }
+    },
+    {
       "id": "2021-10_runtime_accessibility_system",
       "hash": 3654722494,
       "type": "user",
@@ -8651,14 +8691,14 @@
     }
   ],
   "summary": {
-    "total": 581,
+    "total": 583,
     "guild": 92,
-    "user": 489,
-    "withPercentage": 223,
+    "user": 491,
+    "withPercentage": 225,
     "withoutPercentage": 358,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 175,
-    "fpSampled": 3
+    "notStarted": 177,
+    "fpSampled": 5
   }
 }
