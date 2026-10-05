@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-05T22-11-03-736Z_629935_ju2qbs",
-  "buildNumber": "629935",
-  "updatedAt": "2026-10-05T22:11:03.736Z",
-  "count": 368,
+  "runId": "2026-10-05T22-18-42-507Z_629943_zfm27k",
+  "buildNumber": "629943",
+  "updatedAt": "2026-10-05T22:18:42.507Z",
+  "count": 367,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6641,37 +6641,6 @@
         "value": null
       },
       "fingerprint": "8592c9c86b29493ca08625376ebf5ee5e02d43c71adbe7f9911f886718d52d5f"
-    },
-    {
-      "id": "2026-07-aws-gateway",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enableAltGateway": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "cb648dae191dae619edc4d6a1ca869d0d70f00f043ccbe85055ef62661ae75c5"
     },
     {
       "id": "2026-07-call-of-duty-3pp-expired",
