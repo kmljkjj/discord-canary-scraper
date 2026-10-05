@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-05T23-26-52-298Z_630092_79khhe",
-  "buildNumber": "630092",
-  "updatedAt": "2026-10-05T23:26:52.298Z",
-  "count": 367,
+  "runId": "2026-10-05T23-37-46-655Z_630119_6re3tq",
+  "buildNumber": "630119",
+  "updatedAt": "2026-10-05T23:37:46.656Z",
+  "count": 368,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10860,6 +10860,38 @@
         "value": null
       },
       "fingerprint": "716b3b8224c3ebf37f86640c41da1120b600a8bf3f0394cad80c192f557cf554"
+    },
+    {
+      "id": "2026-09-voice-connect-feedback",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "rtcConnectionJoinSounds": false,
+        "showSelfConnectingUI": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fcca02cb62f8124c18f713f2f752b94ebaac19c139f61b98e65b1ba9d03cb8b6"
     },
     {
       "id": "2026-09-web-sticker-picker-upsell-restyle",

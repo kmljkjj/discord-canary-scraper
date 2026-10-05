@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-05T23-26-52-298Z_630092_79khhe",
-  "buildNumber": "630092",
-  "scrapedAt": "2026-10-05T23:26:52.298Z",
+  "runId": "2026-10-05T23-37-46-655Z_630119_6re3tq",
+  "buildNumber": "630119",
+  "scrapedAt": "2026-10-05T23:37:46.656Z",
   "totals": {
-    "all": 367,
+    "all": 368,
     "legacy": 0,
-    "apex": 367
+    "apex": 368
   },
   "experiments": [
     {
@@ -6897,6 +6897,27 @@
         },
         "1": {
           "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-voice-connect-feedback",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "rtcConnectionJoinSounds": false,
+        "showSelfConnectingUI": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
         }
       },
       "variationCount": 2,

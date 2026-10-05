@@ -5455,6 +5455,23 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-voice-connect-feedback",
+    "defaultConfig": {
+      "rtcConnectionJoinSounds": false,
+      "showSelfConnectingUI": false
+    },
+    "variations": {
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-web-sticker-picker-upsell-restyle",
     "defaultConfig": null,
     "variations": {
