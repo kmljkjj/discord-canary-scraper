@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-05T05:08:26.997Z",
+  "fetchedAt": "2026-10-05T05:15:13.002Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5050,23 +5050,23 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 7,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 7
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 7,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
+        "0": 7
       }
     },
     {
@@ -5090,23 +5090,23 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 3
       }
     },
     {
