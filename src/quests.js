@@ -8,11 +8,11 @@
  *
  * Fallback: embed classique si V2 refuse le payload
  */
-const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
 const { sendEmbeds, sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
+const { fetchJsonWithRetry } = require('./lib/http');
 const { sleep, DEFAULT_UA, DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: AVATAR } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
@@ -212,15 +212,15 @@ function countryCodeToFlag(code) {
 async function fetchQuestRegions() {
   const map = new Map();
   try {
-    const res = await fetch(REGIONS_URL, {
+    const data = await fetchJsonWithRetry(REGIONS_URL, {
       headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
       timeout: 15000,
+      label: 'regions',
     });
-    if (!res.ok) {
-      console.warn('Regions API HTTP', res.status, '— toutes les quêtes seront Global');
+    if (!data) {
+      console.warn('Regions API indisponible — toutes les quêtes seront Global');
       return map;
     }
-    const data = await res.json();
     const list =
       (data && Array.isArray(data.quests) && data.quests) ||
       (Array.isArray(data) && data) ||
@@ -652,12 +652,13 @@ async function sendQuestWebhook(quest) {
 }
 
 async function fetchPublicQuests(regionMap) {
-  const res = await fetch(PUBLIC_QUESTS_URL, {
+  const data = await fetchJsonWithRetry(PUBLIC_QUESTS_URL, {
     headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
     timeout: 30000,
+    maxAttempts: 2,
+    label: 'quests-public',
   });
-  if (!res.ok) throw new Error('public quests HTTP ' + res.status);
-  const data = await res.json();
+  if (!data) throw new Error('public quests: réponse vide ou invalide');
   const list = Array.isArray(data) ? data : data.quests || data.data || [];
   return list.map((q) => normalizeQuest(q, regionMap)).filter(Boolean);
 }
@@ -679,23 +680,16 @@ async function fetchOfficialQuests(regionMap) {
   let lastStatus = 0;
   for (const url of endpoints) {
     try {
-      const res = await fetch(url, { headers, timeout: 25000 });
-      lastStatus = res.status;
-      if (res.status === 401 || res.status === 403) {
-        console.warn('official quests auth failed HTTP', res.status, '(check DISCORD_TOKEN secret)');
-        return [];
-      }
-      if (res.status === 429) {
-        const ra = Number(res.headers.get('retry-after') || 2);
-        console.warn('official quests 429 — wait', ra, 's');
-        await sleep(Math.min(15, ra) * 1000);
+      const data = await fetchJsonWithRetry(url, {
+        headers,
+        timeout: 25000,
+        maxAttempts: 2,
+        label: 'quests-official',
+      });
+      if (!data) {
+        lastStatus = -1;
         continue;
       }
-      if (!res.ok) {
-        console.warn('official quests HTTP', res.status, url.includes('canary') ? 'canary' : 'stable');
-        continue;
-      }
-      const data = await res.json();
       const list = Array.isArray(data) ? data : data.quests || data.data || [];
       const out = list.map((q) => normalizeQuest(q, regionMap)).filter(Boolean);
       console.log('Official quests:', out.length, url.includes('canary') ? '(canary)' : '(stable)');

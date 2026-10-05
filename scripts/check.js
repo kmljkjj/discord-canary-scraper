@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Vérifie la syntaxe de TOUS les fichiers JS du projet (src/, test/, docs/, scripts/).
- * Remplace l'ancienne liste manuelle dans package.json qui oubliait des fichiers.
+ * Vérifie la syntaxe de TOUS les fichiers JS et Python du projet.
+ * JS : node --check
+ * Python : py_compile (si python3 disponible)
  */
 const { spawnSync } = require('child_process');
 const fs = require('fs');
@@ -16,18 +17,28 @@ function walk(dir, out) {
     if (ent.name === 'node_modules' || ent.name.startsWith('.')) continue;
     const p = path.join(dir, ent.name);
     if (ent.isDirectory()) walk(p, out);
-    else if (ent.name.endsWith('.js')) out.push(p);
+    else if (ent.name.endsWith('.js')) out.push({ path: p, lang: 'js' });
+    else if (ent.name.endsWith('.py')) out.push({ path: p, lang: 'py' });
   }
   return out;
 }
 
 const files = DIRS.flatMap((d) => walk(path.join(ROOT, d), [])).sort();
 let failed = 0;
+const hasPython = spawnSync('python3', ['--version'], { encoding: 'utf8' }).status === 0;
+
 for (const f of files) {
-  const r = spawnSync(process.execPath, ['--check', f], { encoding: 'utf8' });
+  let r;
+  if (f.lang === 'js') {
+    r = spawnSync(process.execPath, ['--check', f.path], { encoding: 'utf8' });
+  } else if (f.lang === 'py' && hasPython) {
+    r = spawnSync('python3', ['-m', 'py_compile', f.path], { encoding: 'utf8' });
+  } else {
+    continue;
+  }
   if (r.status !== 0) {
     failed++;
-    console.error(`✗ ${path.relative(ROOT, f)}\n${r.stderr}`);
+    console.error(`✗ ${path.relative(ROOT, f.path)}\n${r.stderr || r.stdout}`);
   }
 }
 console.log(`syntax check: ${files.length - failed}/${files.length} OK`);

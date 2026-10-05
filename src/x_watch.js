@@ -13,6 +13,7 @@ const fetch = require('node-fetch');
 const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_UA } = require('./lib/utils');
+const { safeJson } = require('./lib/http');
 
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
 const USER_ID = process.env.X_USER_ID || '2073982489836584960';
@@ -121,8 +122,8 @@ async function fetchViaOfficialApi(bearer) {
       },
     );
     if (uRes.ok) {
-      const uj = await uRes.json();
-      if (uj.data && uj.data.id) uid = String(uj.data.id);
+      const uj = await safeJson(uRes);
+      if (uj && uj.data && uj.data.id) uid = String(uj.data.id);
     }
   } catch (e) {
     console.warn('username lookup fail, using env USER_ID');
@@ -146,7 +147,8 @@ async function fetchViaOfficialApi(bearer) {
     const t = await res.text();
     throw new Error(res.status + ' ' + t.slice(0, 180));
   }
-  const data = await res.json();
+  const data = await safeJson(res);
+  if (!data) throw new Error('réponse JSON invalide');
   const mediaMap = {};
   for (const m of (data.includes && data.includes.media) || []) {
     mediaMap[m.media_key] = m.url || m.preview_image_url || null;

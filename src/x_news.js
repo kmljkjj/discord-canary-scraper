@@ -26,6 +26,7 @@ const fetch = require('node-fetch');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sendEmbeds } = require('./lib/webhook');
 const { sleep, DEFAULT_UA } = require('./lib/utils');
+const { safeJson } = require('./lib/http');
 
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'seen_x_posts.json');
@@ -307,7 +308,7 @@ async function fetchFromSession(session) {
         console.warn('UserByScreenName', qid, res.status);
         continue;
       }
-      const data = await res.json();
+      const data = await safeJson(res);
       const rest =
         data &&
         data.data &&
@@ -471,8 +472,8 @@ async function fetchFromApi(bearer) {
       },
     );
     if (uRes.ok) {
-      const uj = await uRes.json();
-      if (uj.data && uj.data.id) uid = String(uj.data.id);
+      const uj = await safeJson(uRes);
+      if (uj && uj.data && uj.data.id) uid = String(uj.data.id);
     } else {
       const t = await uRes.text();
       if (uRes.status === 402 || /credits depleted/i.test(t))
@@ -499,7 +500,8 @@ async function fetchFromApi(bearer) {
     const t = await res.text();
     throw new Error('API ' + res.status + ' ' + t.slice(0, 250));
   }
-  const data = await res.json();
+  const data = await safeJson(res);
+  if (!data) throw new Error('réponse JSON invalide');
   const mediaMap = {};
   for (const m of (data.includes && data.includes.media) || []) {
     mediaMap[m.media_key] = m.url || m.preview_image_url || null;

@@ -22,7 +22,8 @@ const path = require('path');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { murmur3 } = require('./lib/murmur3');
 const { mergeIntervals, intervalsCoverage, coveragePercent, DEFAULT_SCALE } = require('./lib/rollout_math');
-const { DEFAULT_UA } = require('./lib/utils');
+const { DEFAULT_UA, sleep } = require('./lib/utils');
+const { safeJson } = require('./lib/http');
 
 const DATA = path.join(__dirname, '..', 'data');
 const OUTPUT = path.join(DATA, 'experiment_rollouts.json');
@@ -45,7 +46,9 @@ async function fetchJson(url, opts = {}) {
     ...opts,
   });
   if (!res.ok) throw new Error(`${url} → ${res.status}`);
-  return res.json();
+  const data = await safeJson(res);
+  if (data === null) throw new Error(`${url} → JSON invalide`);
+  return data;
 }
 
 // ── Parse guild experiment rollouts from Discord API ──
@@ -226,12 +229,12 @@ async function getFingerprint(retries = 3) {
       const retryAfter = Number(r.headers.get('Retry-After') || 5);
       const delay = Math.min(30, retryAfter + attempt * 2) * 1000;
       if (attempt < retries) {
-        await new Promise((res) => setTimeout(res, delay));
+        await sleep(delay);
         continue;
       }
     }
     if (!r.ok) throw new Error(`fingerprint → ${r.status}`);
-    const data = await r.json();
+    const data = await safeJson(r);
     return data.fingerprint;
   }
 }
@@ -246,7 +249,8 @@ async function getExperimentsWithFp(fp) {
     timeout: 15000,
   });
   if (!r.ok) throw new Error(`experiments(fp) → ${r.status}`);
-  return r.json();
+  const data = await safeJson(r);
+  return data;
 }
 
 /**
@@ -270,8 +274,6 @@ async function sampleFingerprintRollouts(hashToId) {
   let success = 0;
   let fail = 0;
   let lastProgress = 0;
-
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   async function sampleOne() {
     try {

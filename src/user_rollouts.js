@@ -28,6 +28,7 @@ const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
+const { safeJson } = require('./lib/http');
 const {
   mergeIntervals,
   intervalsCoverage,
@@ -89,7 +90,7 @@ async function loadExperimentDefs() {
         timeout: 20000,
       });
       if (!res.ok) continue;
-      const data = await res.json();
+      const data = await safeJson(res);
       const list = Array.isArray(data) ? data : data.experiments || [];
       let n = 0;
       for (const e of list) {
@@ -398,7 +399,8 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
   }
   if (!res.ok) throw new Error('HTTP ' + res.status);
   rateLimit.success();
-  const data = await res.json();
+  const data = await safeJson(res);
+  if (!data) throw new Error('réponse JSON invalide');
   return {
     fingerprint: data.fingerprint,
     assignments: Array.isArray(data.assignments) ? data.assignments : [],

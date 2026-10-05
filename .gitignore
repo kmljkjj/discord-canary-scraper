@@ -32,3 +32,7 @@ data/.generations/
 # coverage reports
 coverage/
 .nyc_output/
+
+# Python bytecode
+__pycache__/
+*.pyc

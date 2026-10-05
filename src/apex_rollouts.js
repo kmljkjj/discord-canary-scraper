@@ -9,6 +9,7 @@ const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
+const { safeJson } = require('./lib/http');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
@@ -177,7 +178,7 @@ async function buildHashMap() {
         timeout: 20000,
       });
       if (!res.ok) continue;
-      const data = await res.json();
+      const data = await safeJson(res);
       let n = 0;
       for (const e of Array.isArray(data) ? data : data.experiments || []) {
         if (typeof e === 'string') {
@@ -237,7 +238,7 @@ async function fetchDiscordGuild(hashMap) {
           console.warn('Discord', res.status, url.includes('canary') ? 'canary' : 'stable');
           continue;
         }
-        const data = await res.json();
+        const data = await safeJson(res);
         const ge = data.guild_experiments || [];
         console.log('Discord guild_experiments:', ge.length);
         for (const t of ge) {

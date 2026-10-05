@@ -9,6 +9,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const crypto = require('crypto');
+const { sleep } = require('./utils');
 // NOTIFY_DEDUPE_FILE permet aux tests d'utiliser un fichier temporaire
 // (sinon ils écrasaient le vrai data/notify_dedupe.json → doubles notifications).
 const DEDUPE_FILE =
@@ -32,7 +33,7 @@ async function withDedupeLock(fn) {
       }
     } catch (e) {
       if (e && e.code === 'EEXIST') {
-        await new Promise((r) => setTimeout(r, 15 + Math.floor(Math.random() * 40)));
+        await sleep(15 + Math.floor(Math.random() * 40));
         continue;
       }
       console.warn('dedupe lock unavailable', e.message);
