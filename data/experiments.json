@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-05T16-20-16-904Z_629404_qgkq9h",
-  "buildNumber": "629404",
-  "scrapedAt": "2026-10-05T16:20:16.904Z",
+  "runId": "2026-10-05T16-20-55-036Z_629409_lrl531",
+  "buildNumber": "629409",
+  "scrapedAt": "2026-10-05T16:20:55.036Z",
   "totals": {
-    "all": 365,
+    "all": 366,
     "legacy": 0,
-    "apex": 365
+    "apex": 366
   },
   "experiments": [
     {
@@ -6877,6 +6877,24 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-three-month-nitro-gifting",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
