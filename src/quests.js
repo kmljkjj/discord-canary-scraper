@@ -13,10 +13,12 @@ const fs = require('fs-extra');
 const path = require('path');
 const { sendEmbeds, sendWebhook } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
-const { DEFAULT_UA, DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: AVATAR } = require('./lib/utils');
+const { sleep, DEFAULT_UA, DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: AVATAR } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'quests.json');
+
+const REGIONS_URL = 'https://api.discordquest.com/api/regions';
 
 const WEBHOOK =
   process.env.QUEST_WEBHOOK_URL ||
@@ -188,7 +190,75 @@ function platformsFr(root) {
   return bits.length ? bits.join(', ') : 'Multiplateforme';
 }
 
-function normalizeQuest(raw) {
+/**
+ * Convertit un code pays ISO 3166-1 alpha-2 (ex: "FR", "US") en emoji drapeau.
+ * @param {string} code - code pays à 2 lettres
+ * @returns {string} emoji drapeau, ou le code brut si invalide
+ */
+function countryCodeToFlag(code) {
+  if (!code || typeof code !== 'string') return '';
+  const c = code.trim().toUpperCase();
+  if (c.length !== 2 || !/^[A-Z]{2}$/.test(c)) return '';
+  const A = 0x1f1e6;
+  return String.fromCodePoint(A + (c.charCodeAt(0) - 65), A + (c.charCodeAt(1) - 65));
+}
+
+/**
+ * Récupère la carte des régions depuis l'API discordquest.com.
+ * Retourne un Map<questId, {isGlobal, include: string[], exclude: string[], flags: string}>.
+ * N'échoue jamais — en cas d'erreur, retourne une Map vide (tout Global).
+ * @returns {Promise<Map<string, object>>}
+ */
+async function fetchQuestRegions() {
+  const map = new Map();
+  try {
+    const res = await fetch(REGIONS_URL, {
+      headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
+      timeout: 15000,
+    });
+    if (!res.ok) {
+      console.warn('Regions API HTTP', res.status, '— toutes les quêtes seront Global');
+      return map;
+    }
+    const data = await res.json();
+    const list =
+      (data && Array.isArray(data.quests) && data.quests) ||
+      (Array.isArray(data) && data) ||
+      [];
+    for (const q of list) {
+      try {
+        const id = q && q.id ? String(q.id) : null;
+        if (!id) continue;
+        const isGlobal = q.is_global === true;
+        const regions = q.regions || {};
+        const include = Array.isArray(regions.include)
+          ? regions.include.map((r) => String(r).toUpperCase().trim()).filter(Boolean)
+          : [];
+        const exclude = Array.isArray(regions.exclude)
+          ? regions.exclude.map((r) => String(r).toUpperCase().trim()).filter(Boolean)
+          : [];
+
+        let flags = '';
+        if (isGlobal || (include.length === 0 && exclude.length === 0)) {
+          flags = '🌍';
+        } else if (include.length > 0) {
+          flags = include.map(countryCodeToFlag).filter(Boolean).join(' ');
+        } else if (exclude.length > 0) {
+          // Quête bloquée dans certains pays : on affiche les drapeaux exclus avec 🚫
+          flags = exclude.map((c) => '🚫' + countryCodeToFlag(c)).filter(Boolean).join(' ');
+        }
+        if (!flags) flags = '🌍';
+        map.set(id, { isGlobal, include, exclude, flags });
+      } catch {}
+    }
+    console.log('Regions API:', map.size, 'mappées');
+  } catch (e) {
+    console.warn('Regions API indisponible:', String(e.message || e).slice(0, 120));
+  }
+  return map;
+}
+
+function normalizeQuest(raw, regionMap) {
   if (!raw || typeof raw !== 'object') return null;
   const root =
     raw.config && typeof raw.config === 'object'
@@ -288,6 +358,7 @@ function normalizeQuest(raw) {
       redemptionLink: r.redemption_link || r.redemptionLink || null,
     })),
     tasksText: formatTasks(root),
+    regionFlags: regionMap && regionMap.get(id) ? regionMap.get(id).flags : '🌍',
     preview: !!(raw.preview || root.preview),
   };
 }
@@ -328,6 +399,7 @@ function buildQuestComponentsV2(quest) {
     duree,
     '',
     '**Plateformes** · ' + (quest.platforms || 'Multiplateforme'),
+    '**Pays** · ' + (quest.regionFlags || '🌍'),
   ];
   if (quest.gameTitle) info.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
   if (quest.publisher) info.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
@@ -491,6 +563,7 @@ function buildQuestEmbed(quest) {
   desc.push(duree);
   desc.push('');
   desc.push('**Plateformes** · ' + (quest.platforms || 'Multiplateforme'));
+  desc.push('**Pays** · ' + (quest.regionFlags || '🌍'));
   if (quest.gameTitle) desc.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
   if (quest.publisher) desc.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
 
@@ -563,7 +636,7 @@ async function sendQuestWebhook(quest) {
 
   if (res.ok) {
     console.log('🔔 Quête V2:', quest.name, '(' + quest.id + ')');
-    await new Promise((r) => setTimeout(r, 450));
+    await sleep(450);
     return true;
   }
 
@@ -574,11 +647,11 @@ async function sendQuestWebhook(quest) {
   } else {
     console.warn('Embed échoué', res.status, res.text);
   }
-  await new Promise((r) => setTimeout(r, 450));
+  await sleep(450);
   return res.ok;
 }
 
-async function fetchPublicQuests() {
+async function fetchPublicQuests(regionMap) {
   const res = await fetch(PUBLIC_QUESTS_URL, {
     headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
     timeout: 30000,
@@ -586,10 +659,10 @@ async function fetchPublicQuests() {
   if (!res.ok) throw new Error('public quests HTTP ' + res.status);
   const data = await res.json();
   const list = Array.isArray(data) ? data : data.quests || data.data || [];
-  return list.map(normalizeQuest).filter(Boolean);
+  return list.map((q) => normalizeQuest(q, regionMap)).filter(Boolean);
 }
 
-async function fetchOfficialQuests() {
+async function fetchOfficialQuests(regionMap) {
   if (!DISCORD_TOKEN) {
     console.log('No DISCORD_TOKEN / DISCORD_USER_TOKEN — official quests skipped');
     return [];
@@ -615,7 +688,7 @@ async function fetchOfficialQuests() {
       if (res.status === 429) {
         const ra = Number(res.headers.get('retry-after') || 2);
         console.warn('official quests 429 — wait', ra, 's');
-        await new Promise((r) => setTimeout(r, Math.min(15, ra) * 1000));
+        await sleep(Math.min(15, ra) * 1000);
         continue;
       }
       if (!res.ok) {
@@ -624,7 +697,7 @@ async function fetchOfficialQuests() {
       }
       const data = await res.json();
       const list = Array.isArray(data) ? data : data.quests || data.data || [];
-      const out = list.map(normalizeQuest).filter(Boolean);
+      const out = list.map((q) => normalizeQuest(q, regionMap)).filter(Boolean);
       console.log('Official quests:', out.length, url.includes('canary') ? '(canary)' : '(stable)');
       return out;
     } catch (e) {
@@ -652,9 +725,12 @@ async function main() {
   let official = [];
   let publicList = [];
 
+  console.log('🗺️ Récupération des régions…');
+  const regionMap = await fetchQuestRegions();
+
   if (DISCORD_TOKEN) {
     try {
-      official = await fetchOfficialQuests();
+      official = await fetchOfficialQuests(regionMap);
     } catch (e) {
       console.warn('Quêtes officielles:', String(e.message || e).slice(0, 120));
     }
@@ -663,7 +739,7 @@ async function main() {
   }
 
   try {
-    publicList = await fetchPublicQuests();
+    publicList = await fetchPublicQuests(regionMap);
     console.log('API publique:', publicList.length, 'quêtes');
   } catch (e) {
     console.error('API publique échouée:', e.message);
@@ -694,6 +770,7 @@ async function main() {
           q.rewards ||
           [],
         tasksText: prev.tasksText || q.tasksText,
+        regionFlags: prev.regionFlags || q.regionFlags,
         source: prev.source === 'official' ? 'official+public' : prev.source,
       });
     }
@@ -762,6 +839,7 @@ async function main() {
     videoUrl: q.videoUrl || null,
     heroImage: q.heroImage || null,
     rewardCount: (q.rewards || []).length,
+    regionFlags: q.regionFlags || '🌍',
   }));
 
   async function writeQuestState(ids) {
@@ -829,5 +907,7 @@ module.exports = {
   normalizeQuest,
   buildQuestEmbed,
   buildQuestComponentsV2,
+  countryCodeToFlag,
+  fetchQuestRegions,
   main,
 };
