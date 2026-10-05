@@ -3267,31 +3267,6 @@
     "label": null
   },
   {
-    "kind": "user",
-    "name": "2026-07-ad-recheck-interval-experiment",
-    "defaultConfig": {
-      "enableFastAdRecheck": false
-    },
-    "variations": {
-      "1": {
-        "id": 1
-      },
-      "2": {
-        "id": 2
-      },
-      "3": {
-        "id": 3
-      },
-      "4": {
-        "id": 4
-      },
-      "5": {
-        "id": 5
-      }
-    },
-    "label": null
-  },
-  {
     "kind": "guild",
     "name": "2026-07-app-channels",
     "defaultConfig": {
@@ -5559,6 +5534,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-contextual-referrals-gdm-member-list",
+    "defaultConfig": {
+      "showEmbed": false
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-guild-tooltip-lazy-content",
     "defaultConfig": {
       "enabled": false
@@ -5567,6 +5558,19 @@
       "0": {
         "id": 0
       },
+      "1": {
+        "id": 1
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-purchase-history",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
       "1": {
         "id": 1
       }

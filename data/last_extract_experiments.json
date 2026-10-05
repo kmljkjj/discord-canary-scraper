@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-05T20-50-16-862Z_629764_d7wn8j",
-  "buildNumber": "629764",
-  "updatedAt": "2026-10-05T20:50:16.862Z",
-  "count": 367,
+  "runId": "2026-10-05T21-16-21-659Z_629805_5c8l46",
+  "buildNumber": "629805",
+  "updatedAt": "2026-10-05T21:16:21.659Z",
+  "count": 368,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -3260,31 +3260,6 @@
       },
       "fp": "f168eaf07e491e0688f2b8f8"
     },
-    "2026-07-ad-recheck-interval-experiment": {
-      "id": "2026-07-ad-recheck-interval-experiment",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 5,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        },
-        "4": {
-          "id": 4
-        },
-        "5": {
-          "id": 5
-        }
-      },
-      "fp": "48205e4bfc47365a8e3d82ac"
-    },
     "2026-07-app-channels": {
       "id": "2026-07-app-channels",
       "type": "guild",
@@ -5571,6 +5546,22 @@
       },
       "fp": "a80296903cc2e06ce785d5ee"
     },
+    "2026-10-contextual-referrals-gdm-member-list": {
+      "id": "2026-10-contextual-referrals-gdm-member-list",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "4eb58677fe4d82185914eef5"
+    },
     "2026-10-guild-tooltip-lazy-content": {
       "id": "2026-10-guild-tooltip-lazy-content",
       "type": "user",
@@ -5586,6 +5577,19 @@
         }
       },
       "fp": "4eb58677fe4d82185914eef5"
+    },
+    "2026-10-purchase-history": {
+      "id": "2026-10-purchase-history",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "fp": "f168eaf07e491e0688f2b8f8"
     }
   }
 }

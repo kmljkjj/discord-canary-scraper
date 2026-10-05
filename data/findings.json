@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-05T20-50-16-862Z_629764_d7wn8j",
-  "buildNumber": "629764",
-  "scrapedAt": "2026-10-05T20:50:16.862Z",
+  "runId": "2026-10-05T21-16-21-659Z_629805_5c8l46",
+  "buildNumber": "629805",
+  "scrapedAt": "2026-10-05T21:16:21.659Z",
   "totals": {
-    "all": 367
+    "all": 368
   },
   "experiments": [
     {
@@ -4142,35 +4142,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-07-ad-recheck-interval-experiment",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableFastAdRecheck": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        },
-        "4": {
-          "id": 4
-        },
-        "5": {
-          "id": 5
-        }
-      },
-      "variationCount": 5,
-      "source": "discord"
-    },
-    {
       "id": "2026-07-app-channels",
       "type": "guild",
       "kind": "guild",
@@ -7029,6 +7000,26 @@
       "source": "discord"
     },
     {
+      "id": "2026-10-contextual-referrals-gdm-member-list",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-10-guild-tooltip-lazy-content",
       "type": "user",
       "kind": "user",
@@ -7046,6 +7037,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-purchase-history",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     }
   ]
