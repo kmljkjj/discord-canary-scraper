@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-05T16:15:49.825Z",
+  "fetchedAt": "2026-10-05T16:22:34.808Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,26 +5076,6 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 1
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 1
-      }
-    },
-    {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
       "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
@@ -5107,6 +5087,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 5
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -8620,6 +8620,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-three-month-nitro-gifting",
+      "hash": 1644794275,
+      "type": "user",
+      "title": "2026-09-three-month-nitro-gifting",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-update-email-settings-copy-subtext",
       "hash": 680101207,
       "type": "user",
@@ -8691,11 +8701,11 @@
     }
   ],
   "summary": {
-    "total": 583,
+    "total": 584,
     "guild": 92,
-    "user": 491,
+    "user": 492,
     "withPercentage": 225,
-    "withoutPercentage": 358,
+    "withoutPercentage": 359,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
