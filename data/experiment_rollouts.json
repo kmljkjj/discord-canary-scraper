@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-05T23:36:05.486Z",
+  "fetchedAt": "2026-10-05T23:42:57.930Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5076,26 +5076,6 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 3
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 3
-      }
-    },
-    {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
       "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
@@ -8640,6 +8620,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-voice-connect-feedback",
+      "hash": 4142779735,
+      "type": "user",
+      "title": "2026-09-voice-connect-feedback",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-web-sticker-picker-upsell-restyle",
       "hash": 541436062,
       "type": "user",
@@ -8714,11 +8704,11 @@
     "total": 585,
     "guild": 92,
     "user": 493,
-    "withPercentage": 225,
-    "withoutPercentage": 360,
+    "withPercentage": 224,
+    "withoutPercentage": 361,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
