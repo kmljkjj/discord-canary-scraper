@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-05T16-10-22-826Z_629399_ua9vln",
-  "buildNumber": "629399",
-  "updatedAt": "2026-10-05T16:10:22.826Z",
-  "count": 365,
+  "runId": "2026-10-05T16-15-48-344Z_629405_hy42g6",
+  "buildNumber": "629405",
+  "updatedAt": "2026-10-05T16:15:48.344Z",
+  "count": 366,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10815,6 +10815,35 @@
         "value": null
       },
       "fingerprint": "e15589316479308450838578c34e3c667cb93fbd872150565ca07ee3940afdbe"
+    },
+    {
+      "id": "2026-09-three-month-nitro-gifting",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a754f59db8c6b4a623b9b2259ac98f805b371be2d4943669840adfcccdf7f1d1"
     },
     {
       "id": "2026-09-update-email-settings-copy-subtext",
