@@ -1,9 +1,8 @@
 {
-  "fetchedAt": "2026-10-06T21:14:43.432Z",
+  "fetchedAt": "2026-10-06T21:21:41.898Z",
   "sources": {
     "discordApi": {
-      "url": "https://discord.com/api/v9/experiments",
-      "count": 6
+      "error": "https://discord.com/api/v9/experiments?with_guild_experiments=true → 503"
     },
     "workerApi": {
       "url": "https://experiments.dscrd.workers.dev/experiments",
@@ -11,384 +10,13 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
-  "guildExperiments": [
-    {
-      "hash": 944104242,
-      "name": null,
-      "revision": 0,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 1,
-      "filters": [
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": "2022-07_voice_in_threads",
-      "type": "guild",
-      "title": "Voice in Threads",
-      "source": "discord_api + local_match"
-    },
-    {
-      "hash": 2462216785,
-      "name": null,
-      "revision": 0,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 2,
-      "filters": [
-        "feature:feature_1183251248; id_range:[[3399957344,5000],[1238858341,null]]",
-        "all"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ],
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": "2022-11_default_disable_mass_mention",
-      "type": "guild",
-      "title": "Disable mass mentions for communities by default",
-      "source": "discord_api + local_match"
-    },
-    {
-      "hash": 1318029053,
-      "name": null,
-      "revision": 3,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 2,
-      "filters": [
-        "feature:feature_1183251248",
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ],
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_1318029053",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    },
-    {
-      "hash": 1727857487,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": "2023-02_guest_voice_invites",
-      "type": "guild",
-      "title": "Guest Voice Invites",
-      "source": "discord_api + local_match"
-    },
-    {
-      "hash": 2453702596,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "member_count:[[3399957344,null],[1238858341,\"1470518767757819904\"]]"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_2453702596",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    },
-    {
-      "hash": 3633668656,
-      "name": null,
-      "revision": 2,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 1,
-      "filters": [
-        "all"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_3633668656",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    }
-  ],
+  "guildExperiments": [],
   "userExperiments": [],
   "matchedExperiments": [
-    {
-      "hash": 944104242,
-      "name": null,
-      "revision": 0,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 1,
-      "filters": [
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": "2022-07_voice_in_threads",
-      "type": "guild",
-      "title": "Voice in Threads",
-      "source": "discord_api",
-      "workerTitle": "Voice in Threads",
-      "workerRevision": 0,
-      "buckets": [
-        0,
-        1
-      ]
-    },
-    {
-      "hash": 2462216785,
-      "name": null,
-      "revision": 0,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 2,
-      "filters": [
-        "feature:feature_1183251248; id_range:[[3399957344,5000],[1238858341,null]]",
-        "all"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ],
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": "2022-11_default_disable_mass_mention",
-      "type": "guild",
-      "title": "Disable mass mentions for communities by default",
-      "source": "discord_api",
-      "workerTitle": "Disable mass mentions for communities by default",
-      "workerRevision": 0,
-      "buckets": [
-        0,
-        1
-      ]
-    },
-    {
-      "hash": 1318029053,
-      "name": null,
-      "revision": 3,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 2,
-      "filters": [
-        "feature:feature_1183251248",
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ],
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_1318029053",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    },
-    {
-      "hash": 1727857487,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "feature:feature_1183251248"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": "2023-02_guest_voice_invites",
-      "type": "guild",
-      "title": "Guest Voice Invites",
-      "source": "discord_api"
-    },
-    {
-      "hash": 2453702596,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "member_count:[[3399957344,null],[1238858341,\"1470518767757819904\"]]"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_2453702596",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    },
-    {
-      "hash": 3633668656,
-      "name": null,
-      "revision": 2,
-      "percentage": 100,
-      "status": "full_rollout",
-      "coverage": 10000,
-      "populations": 1,
-      "filters": [
-        "all"
-      ],
-      "treatmentRanges": [
-        [
-          0,
-          10000
-        ]
-      ],
-      "allRanges": [
-        [
-          0,
-          10000,
-          1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_3633668656",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
-    },
     {
       "id": "2023-01_global_display_names",
       "hash": 785391472,
@@ -2729,6 +2357,33 @@
       "source": "worker_api"
     },
     {
+      "id": "2022-07_voice_in_threads",
+      "hash": 944104242,
+      "type": "guild",
+      "title": "Voice in Threads",
+      "percentage": 100,
+      "status": "full_rollout",
+      "coverage": 10000,
+      "populations": 1,
+      "filters": [
+        "feature:VOICE_IN_THREADS"
+      ],
+      "revision": 0,
+      "buckets": [
+        0,
+        1
+      ],
+      "treatmentRanges": [
+        [
+          0,
+          10000
+        ]
+      ],
+      "inClient": true,
+      "clientKind": "guild",
+      "source": "worker_api"
+    },
+    {
       "id": "2022-11_command_query_pagination",
       "hash": 2206139940,
       "type": "user",
@@ -3985,6 +3640,34 @@
       "source": "worker_api"
     },
     {
+      "id": "2022-11_default_disable_mass_mention",
+      "hash": 2462216785,
+      "type": "guild",
+      "title": "Disable mass mentions for communities by default",
+      "percentage": 100,
+      "status": "full_rollout",
+      "coverage": 10000,
+      "populations": 2,
+      "filters": [
+        "feature:COMMUNITY; member_count",
+        "all"
+      ],
+      "revision": 0,
+      "buckets": [
+        0,
+        1
+      ],
+      "treatmentRanges": [
+        [
+          0,
+          10000
+        ]
+      ],
+      "inClient": true,
+      "clientKind": "guild",
+      "source": "worker_api"
+    },
+    {
       "id": "2021-11_hub_events",
       "hash": 1107510295,
       "type": "guild",
@@ -5016,17 +4699,17 @@
       "title": "hash_3013881204",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 48,
-      "enrolled": 48,
+      "samples": 6,
+      "enrolled": 6,
       "treatmentDistribution": {
-        "1": 48
+        "1": 6
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 48,
-      "fpEnrolled": 48,
+      "fpSamples": 6,
+      "fpEnrolled": 6,
       "fpTreatmentDist": {
-        "1": 48
+        "1": 6
       }
     },
     {
@@ -5036,17 +4719,17 @@
       "title": "Safety Experience IAR User Reporting",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 48,
-      "enrolled": 48,
+      "samples": 6,
+      "enrolled": 6,
       "treatmentDistribution": {
-        "4": 48
+        "4": 6
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 48,
-      "fpEnrolled": 48,
+      "fpSamples": 6,
+      "fpEnrolled": 6,
       "fpTreatmentDist": {
-        "4": 48
+        "4": 6
       }
     },
     {
@@ -5056,37 +4739,17 @@
       "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 48,
+      "samples": 6,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 48
+        "0": 6
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 48,
+      "fpSamples": 6,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 48
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
+        "0": 6
       }
     },
     {
@@ -5128,6 +4791,16 @@
       "status": "no_rollout_data",
       "source": "client_bundle",
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2023-02_guest_voice_invites",
+      "hash": 1727857487,
+      "type": "guild",
+      "title": "Guest Voice Invites",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in Discord API or worker API."
     },
     {
       "id": "2023-09_iar_dsa_webform",
@@ -8711,14 +8384,14 @@
     }
   ],
   "summary": {
-    "total": 585,
-    "guild": 93,
-    "user": 492,
-    "withPercentage": 225,
-    "withoutPercentage": 360,
-    "fullRollout": 39,
+    "total": 581,
+    "guild": 90,
+    "user": 491,
+    "withPercentage": 220,
+    "withoutPercentage": 361,
+    "fullRollout": 37,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 174,
+    "fpSampled": 4
   }
 }
