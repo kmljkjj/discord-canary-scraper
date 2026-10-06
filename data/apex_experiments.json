@@ -4050,6 +4050,29 @@
   },
   {
     "kind": "user",
+    "name": "2026-08-gift-recipient-display-name-search",
+    "defaultConfig": {
+      "displayNameSearchEnabled": false,
+      "affinityOrderingEnabled": false
+    },
+    "variations": {
+      "0": {
+        "id": 0
+      },
+      "1": {
+        "id": 1
+      },
+      "2": {
+        "id": 2
+      },
+      "3": {
+        "id": 3
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-08-gsh-subs-activity-bar",
     "defaultConfig": {
       "enabled": false
