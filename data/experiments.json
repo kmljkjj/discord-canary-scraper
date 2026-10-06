@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-06T19-32-46-820Z_630944_xx5sh7",
-  "buildNumber": "630944",
-  "scrapedAt": "2026-10-06T19:32:46.820Z",
+  "runId": "2026-10-06T19-34-59-001Z_630947_oias38",
+  "buildNumber": "630947",
+  "scrapedAt": "2026-10-06T19:34:59.001Z",
   "totals": {
-    "all": 365,
+    "all": 366,
     "legacy": 0,
-    "apex": 364
+    "apex": 365
   },
   "experiments": [
     {
@@ -6047,6 +6047,30 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-hexagon-campaign-client",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false,
+        "questHomeRedirect": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
