@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-06T18-19-04-270Z_630818_azgpa5",
-  "buildNumber": "630818",
-  "scrapedAt": "2026-10-06T18:19:04.270Z",
+  "runId": "2026-10-06T18-23-44-301Z_630824_nqre64",
+  "buildNumber": "630824",
+  "scrapedAt": "2026-10-06T18:23:44.301Z",
   "totals": {
-    "all": 364,
+    "all": 363,
     "legacy": 0,
-    "apex": 364
+    "apex": 363
   },
   "experiments": [
     {
@@ -5127,33 +5127,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-gift-recipient-display-name-search",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "displayNameSearchEnabled": false,
-        "affinityOrderingEnabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "variationCount": 4,
       "source": "discord"
     },
     {
