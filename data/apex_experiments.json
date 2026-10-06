@@ -2837,11 +2837,13 @@
     "kind": "user",
     "name": "2026-05-spatial-audio-for-voice",
     "defaultConfig": {
-      "enabled": false
+      "enabled": false,
+      "defaultOn": false
     },
     "variations": {
       "1": {
-        "enabled": true
+        "enabled": true,
+        "defaultOn": true
       }
     },
     "label": null
