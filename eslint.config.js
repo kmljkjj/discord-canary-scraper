@@ -2,7 +2,7 @@
 const globals = require('globals');
 
 module.exports = [
-  { ignores: ['node_modules/**', 'builds/**', 'assets/**', 'data/**'] },
+  { ignores: ['node_modules/**', 'builds/**', 'assets/**', 'data/**', 'chunks/**', 'css/**'] },
   {
     files: ['**/*.js'],
     languageOptions: {

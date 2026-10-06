@@ -9,6 +9,7 @@ const { analyzeAssets } = require('./lib/extract');
 const { loadState, makeRunId } = require('./lib/state');
 const { notifyUrgent, notifyNormal } = require('./lib/notify');
 const { archiveBuildChunks, writeZipHint } = require('./lib/archive_chunks');
+const { publishFlatChunks } = require('./lib/flat_chunks');
 const { writeJsonAtomic } = require('./lib/atomic');
 const experimentState = require('./lib/experiment_state');
 const { publishDataGeneration } = require('./lib/publish_data');
@@ -491,6 +492,17 @@ async function main() {
     if (manifest) await writeZipHint(BUILDS, build.buildNumber, manifest);
   } catch (e) {
     console.warn('archive chunks failed', e.message);
+  }
+
+  // Publier les chunks plats (format discrapper-canary) pour diff GitHub
+  try {
+    await publishFlatChunks({
+      assetsDir: ASSETS,
+      repoRoot: path.join(__dirname, '..'),
+      build,
+    });
+  } catch (e) {
+    console.warn('flat chunks failed', e.message);
   }
 
   const extractedStrings = { ...(findings.strings || {}) };

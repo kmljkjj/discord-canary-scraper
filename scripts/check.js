@@ -10,6 +10,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const DIRS = ['src', 'test', 'docs', 'scripts'];
+// Ne pas vérifier chunks/ et css/ (fichiers minifiés générés, non du code source)
 
 function walk(dir, out) {
   if (!fs.existsSync(dir)) return out;
