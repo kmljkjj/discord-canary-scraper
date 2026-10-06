@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-05T23-56-11-145Z_630158_ilt851",
-  "buildNumber": "630158",
-  "scrapedAt": "2026-10-05T23:56:11.145Z",
+  "runId": "2026-10-06T00-11-31-134Z_630183_vyz91b",
+  "buildNumber": "630183",
+  "scrapedAt": "2026-10-06T00:11:31.134Z",
   "totals": {
-    "all": 368
+    "all": 367
   },
   "experiments": [
     {
@@ -4278,23 +4278,6 @@
       "system": "apex",
       "defaultConfig": {
         "enableGameEventsOnPlayer": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-clips-ntp-clock",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "useNtpClock": false
       },
       "variations": {
         "1": {
