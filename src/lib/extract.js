@@ -667,10 +667,19 @@ function countVariationsNear(content, from) {
   const body = window.slice(start, i - 1);
   const out = {};
   if (isArray) {
-    const ids = [...body.matchAll(/\bid\s*:\s*(\d+)/g)].map((x) => x[1]);
-    if (ids.length) {
-      for (const k of ids) out[k] = { id: Number(k) };
+    // Tableau treatments: [{...}, {...}] — chaque objet est une variation
+    // On parse chaque bloc { ... } individuellement pour extraire toutes les paires clé:valeur
+    const blocks = parseTopLevelBlocks(body, '{', '}');
+    if (blocks.length) {
+      blocks.forEach((block, idx) => {
+        // Extraire l'id du bloc, sinon utiliser l'index
+        const idMatch = block.match(/\bid\s*:\s*(\d+)/);
+        const k = idMatch ? idMatch[1] : String(idx);
+        const pairs = extractObjectLiteralPairs(block);
+        out[k] = Object.keys(pairs).length ? pairs : { id: Number(k) };
+      });
     } else {
+      // Fallback : compter les objets
       let n = 0;
       let d = 0;
       for (const ch of body) {
@@ -683,39 +692,93 @@ function countVariationsNear(content, from) {
       for (let k = 0; k < n && k < 40; k++) out[String(k)] = { id: k };
     }
   } else {
-    const keys = [...body.matchAll(/(?:^|[,{])\s*(\d+)\s*:/g)].map((x) => x[1]);
+    // Objet variations: { "0": {...}, "1": {...} } — extraire toutes les paires de chaque variation
+    const keys = [...body.matchAll(/(?:^|[,{}])\s*(\d+)\s*:/g)].map((x) => x[1]);
     if (!keys.length) return null;
     for (const k of keys) {
-      const entry = { id: Number(k) };
-      const re = new RegExp('(?:^|[,{])\s*' + k + '\s*:\s*\{([^}]{0,400})\}');
-      const block = body.match(re);
+      // Extraire le bloc { ... } de cette variation avec un scanner d'accolades
+      const block = extractVariationBlock(body, k);
       if (block) {
-        const inner = block[1];
-        const pct =
-          inner.match(/percentage\s*:\s*([0-9.]+)/i) ||
-          inner.match(/percent\s*:\s*([0-9.]+)/i) ||
-          inner.match(/rate\s*:\s*([0-9.]+)/i);
-        if (pct) {
-          const n = Number(pct[1]);
-          if (Number.isFinite(n)) entry.percentage = n;
-        }
-        const start = inner.match(/(?:start|min|from)\s*:\s*([0-9.]+)/i);
-        const end = inner.match(/(?:end|max|to)\s*:\s*([0-9.]+)/i);
-        if (start && end) {
-          entry.start = Number(start[1]);
-          entry.end = Number(end[1]);
-        }
-        const enabled = inner.match(/enabled\s*:\s*([0-9.]+)/i);
-        const total = inner.match(/total\s*:\s*([0-9.]+)/i);
-        if (enabled && total) {
-          entry.enabled = Number(enabled[1]);
-          entry.total = Number(total[1]);
-        }
+        const pairs = extractObjectLiteralPairs(block);
+        out[k] = Object.keys(pairs).length ? pairs : { id: Number(k) };
+      } else {
+        out[k] = { id: Number(k) };
       }
-      out[k] = entry;
     }
   }
   return Object.keys(out).length ? out : null;
+}
+
+/**
+ * Extrait toutes les paires clé:valeur simples d'un bloc d'objet JavaScript.
+ * Gère true/false/!0/!1/null/nombres/strings.
+ * Similaire à extractDefaultConfigNear mais réutilisable.
+ */
+function extractObjectLiteralPairs(body) {
+  const out = {};
+  const re = /([A-Za-z_][\w]*)\s*:\s*(true|false|!0|!1|null|\d+(?:\.\d+)?|["'][^"']*["'])/g;
+  let x;
+  while ((x = re.exec(body)) !== null) {
+    let v = x[2];
+    if (v === 'true' || v === '!0') v = true;
+    else if (v === 'false' || v === '!1') v = false;
+    else if (v === 'null') v = null;
+    else if (/^\d+(?:\.\d+)?$/.test(v)) v = Number(v);
+    else v = v.replace(/^["']|["']$/g, '');
+    out[x[1]] = v;
+  }
+  return out;
+}
+
+/**
+ * Extrait le contenu { ... } d'une variation avec une clé numérique donnée.
+ * Utilise un scanner d'accolades pour gérer les objets imbriqués.
+ * @param {string} body - le corps de l'objet variations
+ * @param {string} key - la clé numérique (ex: "0", "1")
+ * @returns {string|null} le contenu entre accolades, ou null
+ */
+function extractVariationBlock(body, key) {
+  // Trouver la position de la clé
+  const re = new RegExp('(?:^|[,{}])\\s*' + key + '\\s*:\\s*\\{');
+  const m = body.match(re);
+  if (!m) return null;
+  const start = m.index + m[0].length;
+  let depth = 1;
+  let i = start;
+  for (; i < body.length && depth > 0; i++) {
+    if (body[i] === '{') depth++;
+    else if (body[i] === '}') depth--;
+  }
+  if (depth !== 0) return null;
+  return body.slice(start, i - 1);
+}
+
+/**
+ * Parse les blocs de premier niveau dans un corps (array ou objet).
+ * @param {string} body
+ * @param {string} open - caractère d'ouverture ('{' ou '[')
+ * @param {string} close - caractère de fermeture ('}' ou ']')
+ * @returns {string[]} contenu de chaque bloc (sans les délimiteurs)
+ */
+function parseTopLevelBlocks(body, open, close) {
+  const blocks = [];
+  let i = 0;
+  while (i < body.length) {
+    // Trouver le prochain caractère d'ouverture
+    while (i < body.length && body[i] !== open) i++;
+    if (i >= body.length) break;
+    const start = i + 1;
+    let depth = 1;
+    i++;
+    for (; i < body.length && depth > 0; i++) {
+      if (body[i] === open) depth++;
+      else if (body[i] === close) depth--;
+    }
+    if (depth === 0) {
+      blocks.push(body.slice(start, i - 1));
+    }
+  }
+  return blocks;
 }
 
 module.exports = {
@@ -732,4 +795,7 @@ module.exports = {
   extractLocaleStrings,
   extractExperiments,
   extractCoreParallel,
+  extractObjectLiteralPairs,
+  extractVariationBlock,
+  parseTopLevelBlocks,
 };

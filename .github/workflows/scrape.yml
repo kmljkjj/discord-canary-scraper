@@ -65,7 +65,7 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SCRAPE_WEB_ONLY: '1'
-          SCRAPE_CSS: '0'
+          SCRAPE_CSS: '1'
           DOWNLOAD_CONCURRENCY: '24'
           DOWNLOAD_RETRIES: '4'
           ARCHIVE_KEEP_BUILDS: '8'
@@ -108,5 +108,9 @@ jobs:
             data/routes.json \
             data/meta.json \
             data/generation.json \
+            data/chunk_manifest.json \
             data/cache \
-            builds
+            builds \
+            chunks \
+            css \
+            info.json
