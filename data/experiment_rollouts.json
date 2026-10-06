@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T00:23:27.704Z",
+  "fetchedAt": "2026-10-06T00:30:07.967Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 1
       }
     },
     {
@@ -7760,16 +7760,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-08-heic-upload-conversion",
-      "hash": 2078450398,
-      "type": "user",
-      "title": "2026-08-heic-upload-conversion",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-08-hide-gift-shop-upsell",
       "hash": 4064203157,
       "type": "user",
@@ -8250,16 +8240,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-09-jxr-upload-conversion",
-      "hash": 3850701141,
-      "type": "user",
-      "title": "2026-09-jxr-upload-conversion",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-09-linked-game-org-invites-dev",
       "hash": 4056747830,
       "type": "user",
@@ -8711,11 +8691,11 @@
     }
   ],
   "summary": {
-    "total": 585,
+    "total": 583,
     "guild": 92,
-    "user": 493,
+    "user": 491,
     "withPercentage": 225,
-    "withoutPercentage": 360,
+    "withoutPercentage": 358,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
