@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-06T15-40-55-344Z_630580_3bpvp2",
-  "buildNumber": "630580",
-  "scrapedAt": "2026-10-06T15:40:55.344Z",
+  "runId": "2026-10-06T15-42-01-886Z_630584_l9u7t8",
+  "buildNumber": "630584",
+  "scrapedAt": "2026-10-06T15:42:01.886Z",
   "totals": {
-    "all": 365,
+    "all": 364,
     "legacy": 0,
-    "apex": 365
+    "apex": 364
   },
   "experiments": [
     {
@@ -3738,23 +3738,6 @@
     },
     {
       "id": "2026-06-gummy-bears",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-gummy-viewers",
       "type": "user",
       "kind": "user",
       "label": null,
