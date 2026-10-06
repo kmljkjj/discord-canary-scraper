@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T20:20:01.160Z",
+  "fetchedAt": "2026-10-06T20:26:45.995Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5050,6 +5050,26 @@
       }
     },
     {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 5,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 5
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 5,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 5
+      }
+    },
+    {
       "hash": 4055210228,
       "id": "2025-11_tida_webform",
       "type": "user",
@@ -5067,46 +5087,6 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 50
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 5,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 5
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 5
-      }
-    },
-    {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 3,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 3
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 3
       }
     },
     {
@@ -8701,14 +8681,14 @@
     }
   ],
   "summary": {
-    "total": 584,
+    "total": 583,
     "guild": 93,
-    "user": 491,
-    "withPercentage": 225,
+    "user": 490,
+    "withPercentage": 224,
     "withoutPercentage": 359,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
