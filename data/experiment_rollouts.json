@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T19:25:35.662Z",
+  "fetchedAt": "2026-10-06T19:32:14.025Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,30 +5070,30 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 5,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 5
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 5
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 2,
@@ -8160,6 +8160,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-guild-sidebar-stream-preview",
+      "hash": 3028503345,
+      "type": "guild",
+      "title": "2026-09-guild-sidebar-stream-preview",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in Discord API or worker API."
+    },
+    {
       "id": "2026-09-guild-spaces",
       "hash": 4201393060,
       "type": "guild",
@@ -8184,6 +8194,16 @@
       "hash": 2925045667,
       "type": "user",
       "title": "2026-09-halloween-wishlisting-animation",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-09-hexagon-campaign-client",
+      "hash": 2646394310,
+      "type": "user",
+      "title": "2026-09-hexagon-campaign-client",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8681,11 +8701,11 @@
     }
   ],
   "summary": {
-    "total": 582,
-    "guild": 92,
-    "user": 490,
+    "total": 584,
+    "guild": 93,
+    "user": 491,
     "withPercentage": 225,
-    "withoutPercentage": 357,
+    "withoutPercentage": 359,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
