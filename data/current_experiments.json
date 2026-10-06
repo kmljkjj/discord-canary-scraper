@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T19-30-43-575Z_630946_cqf1mo",
-  "buildNumber": "630946",
-  "updatedAt": "2026-10-06T19:30:43.575Z",
-  "count": 365,
+  "runId": "2026-10-06T19-32-46-820Z_630944_xx5sh7",
+  "buildNumber": "630944",
+  "updatedAt": "2026-10-06T19:32:46.820Z",
+  "count": 364,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9499,41 +9499,6 @@
         "value": null
       },
       "fingerprint": "476067cbc482cde06d7ef7f54112d9a58547b2481ef6146c30d0dd80f775f00a"
-    },
-    {
-      "id": "2026-09-hexagon-campaign-client",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false,
-        "questHomeRedirect": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "treatments": null,
-      "variationCount": 3,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e79f28104a0a581b06528af1f592172fbca407d789d124b3dd567605c25de3fa"
     },
     {
       "id": "2026-09-invite-accept-age-group-errors",
