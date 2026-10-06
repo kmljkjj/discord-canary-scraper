@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T19-24-02-155Z_630937_v1cjr4",
-  "buildNumber": "630937",
-  "updatedAt": "2026-10-06T19:24:02.156Z",
-  "count": 363,
+  "runId": "2026-10-06T19-28-27-772Z_630938_4x9ixf",
+  "buildNumber": "630938",
+  "updatedAt": "2026-10-06T19:28:27.772Z",
+  "count": 364,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9375,6 +9375,37 @@
         "value": null
       },
       "fingerprint": "7d93c9b66cddc095062a72e1b6b0fc874c4260c321f6639ebb95d5dad38b0c06"
+    },
+    {
+      "id": "2026-09-guild-sidebar-stream-preview",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3b90d4e5f2288de796d750e202a8c5ba2d263a7d6a293333ba18d2fd33460a25"
     },
     {
       "id": "2026-09-guild-spaces",
