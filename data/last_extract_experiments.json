@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T19-28-27-772Z_630938_4x9ixf",
-  "buildNumber": "630938",
-  "updatedAt": "2026-10-06T19:28:27.772Z",
-  "count": 364,
+  "runId": "2026-10-06T19-30-43-575Z_630946_cqf1mo",
+  "buildNumber": "630946",
+  "updatedAt": "2026-10-06T19:30:43.575Z",
+  "count": 365,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4764,6 +4764,25 @@
         }
       },
       "fp": "4eb58677fe4d82185914eef5"
+    },
+    "2026-09-hexagon-campaign-client": {
+      "id": "2026-09-hexagon-campaign-client",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "fp": "a80296903cc2e06ce785d5ee"
     },
     "2026-09-invite-accept-age-group-errors": {
       "id": "2026-09-invite-accept-age-group-errors",
