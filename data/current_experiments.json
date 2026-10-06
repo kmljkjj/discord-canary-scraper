@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T18-27-48-937Z_630822_hyxwa4",
-  "buildNumber": "630822",
-  "updatedAt": "2026-10-06T18:27:48.937Z",
-  "count": 364,
+  "runId": "2026-10-06T18-37-03-811Z_630837_18svxh",
+  "buildNumber": "630837",
+  "updatedAt": "2026-10-06T18:37:03.811Z",
+  "count": 363,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8075,44 +8075,6 @@
         "value": null
       },
       "fingerprint": "d2300c3963bdf20d682e3ccc4c6e185689ff95c97ad1314562f68640e7ef3ed4"
-    },
-    {
-      "id": "2026-08-gift-recipient-display-name-search",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "displayNameSearchEnabled": false,
-        "affinityOrderingEnabled": false
-      },
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        },
-        "3": {
-          "id": 3
-        }
-      },
-      "treatments": null,
-      "variationCount": 4,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "3f55daae238d8c8b76da3263f2e1e61dafed10eb6f0ed726ecaa66229e38055b"
     },
     {
       "id": "2026-08-gsh-subs-activity-bar",
