@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T16:22:14.329Z",
+  "fetchedAt": "2026-10-06T16:29:00.719Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -5070,6 +5070,26 @@
       }
     },
     {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 3,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 3
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 3,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 3
+      }
+    },
+    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
@@ -8661,14 +8681,14 @@
     }
   ],
   "summary": {
-    "total": 581,
+    "total": 582,
     "guild": 92,
-    "user": 489,
-    "withPercentage": 224,
+    "user": 490,
+    "withPercentage": 225,
     "withoutPercentage": 357,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 176,
-    "fpSampled": 4
+    "notStarted": 177,
+    "fpSampled": 5
   }
 }
