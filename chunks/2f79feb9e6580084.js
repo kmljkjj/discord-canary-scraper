@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["161282"],{999129(r,e,t){t.d(e,{A:()=>c});var n=t(582128);let u=[];function c(r,e){let t=(0,n.useRef)(),c=(0,n.useRef)(u);return c.current===u?(t.current=r(),c.current=e):!function(r,e){if(r.length!==e.length)return!1;for(let t=0;t<e.length&&t<r.length;t++)if(!Object.is(r[t],e[t]))return!1;return!0}(e,c.current)&&(t.current=r(),c.current=e),t.current}}}]);
+//# sourceMappingURL=2f79feb9e6580084.js.map

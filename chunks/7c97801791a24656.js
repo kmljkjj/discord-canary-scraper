@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["763612"],{475735(e,a,s){s.d(a,{O:()=>i});let i=(0,s(945810).mj)({name:"2026-05-screenshare-picker-wgc",kind:"user",defaultConfig:{enabled:!1},variations:{1:{enabled:!0}}})}}]);
+//# sourceMappingURL=7c97801791a24656.js.map

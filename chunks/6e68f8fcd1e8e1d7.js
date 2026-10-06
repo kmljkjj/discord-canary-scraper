@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["842492"],{935159(t,E,p){p.d(E,{Lx:()=>N,Nt:()=>h,iF:()=>_,pE:()=>c});var i=p(73153);function _(t){let{eventId:E,stageId:p}=t;(null!=E||null!=p)&&i.h.dispatch({type:"LIVE_CHANNEL_NOTICE_HIDE",eventId:E,stageId:p})}function N(t){i.h.dispatch({type:"UPCOMING_GUILD_EVENT_NOTICE_HIDE",eventId:t})}function c(t){i.h.dispatch({type:"UPCOMING_GUILD_EVENT_NOTICE_SEEN",guildEventId:t})}function h(t){i.h.dispatch({type:"EVENT_BANNER_DISMISS",eventId:t})}}}]);
+//# sourceMappingURL=6e68f8fcd1e8e1d7.js.map

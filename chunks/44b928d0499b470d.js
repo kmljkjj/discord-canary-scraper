@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["533591"],{303818(s){s.exports=JSON.parse('{"F3llsQ":["Udost\u0119pnij, gdy zaktualizuj\u0119 sw\xf3j profil"],"6goWcz":["Zezw\xf3l znajomym na otrzymywanie powiadomie\u0144 push, gdy aktualizujesz sw\xf3j profil."]}')}}]);
+//# sourceMappingURL=44b928d0499b470d.js.map

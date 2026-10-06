@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["979259"],{453430(p,s,c){p.exports={L:"loading__6bdc6"}}}]);

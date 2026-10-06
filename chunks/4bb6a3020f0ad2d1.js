@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["511527"],{218394(s,t,e){e.d(t,{j:()=>d});var u=e(582128),c=e(17928),i=e(267102),p=e(531685);function d(){let{windowId:s}=u.useContext(i.Ay);return(0,c.bG)([p.A],()=>p.A.isFocused(s),[s])}}}]);
+//# sourceMappingURL=4bb6a3020f0ad2d1.js.map

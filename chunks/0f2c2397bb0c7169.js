@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["77408"],{21539(e,c,i){i.r(c),i.d(c,{default:()=>a});let a=JSON.parse('{"JgM2xu":["Check out all the new features you\'ve unlocked."],"ublzTG":["Account Connected and 200 Orbs claimed!"],"jR3bbS":["Unlock in-game social features like a unified friend list, direct party invites, and more!"],"2cOIOr":["Link Account"],"dPuaZE":["Get 200 Discord Orbs when you link your ",[1,"applicationName"]," Account"]}')}}]);
+//# sourceMappingURL=0f2c2397bb0c7169.js.map

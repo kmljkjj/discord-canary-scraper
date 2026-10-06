@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["450530"],{359289(e,c,i){e.exports={_q:"riveContainer__7ce16",JW:"backgroundRive__7ce16"}}}]);

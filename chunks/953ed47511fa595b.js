@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["892937"],{747760(a,e,r){a.exports={kL:"container__7a78a",Yi:"placeholderDetailsCard__7a78a "+r(442248).H,RC:"placeholderText__7a78a",h$:"placeholderBar__7a78a",Nu:"placeholderCoverGrid__7a78a "+r(442248).H,LH:"placeholderCover__7a78a"}}}]);

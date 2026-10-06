@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-06T20-46-24-351Z_631072_lx2dvt",
-  "buildNumber": "631072",
-  "updatedAt": "2026-10-06T20:46:24.351Z",
+  "runId": "2026-10-06T20-49-47-826Z_631073_gz1a8s",
+  "buildNumber": "631073",
+  "updatedAt": "2026-10-06T20:49:47.826Z",
   "count": 365,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -12,10 +12,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Show scores in QS results",
+          "showScores": true
         }
       },
-      "fp": "08fcd7c8501631929708254e"
+      "fp": "a6a7739f22ee3588b0a64a9c"
     },
     "2021-10_runtime_accessibility_system": {
       "id": "2021-10_runtime_accessibility_system",
@@ -25,13 +27,19 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enabled but silent",
+          "enabled": true,
+          "reporting": false
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Enabled and reporting",
+          "enabled": true,
+          "reporting": true
         }
       },
-      "fp": "5b96f1c51eca77881eec962b"
+      "fp": "16302d5e36ddacf782d477dd"
     },
     "2021-12_inferno_spam_redaction": {
       "id": "2021-12_inferno_spam_redaction",
@@ -41,10 +49,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Allow guild channel messages from spammers to be collapsed",
+          "enabled": true
         }
       },
-      "fp": "55e701ef0ce5f091ddd81357"
+      "fp": "fb1e64d8aa85b5436a8ecd6d"
     },
     "2022-01_threads": {
       "id": "2022-01_threads",
@@ -63,10 +73,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "On",
+          "enabled": true
         }
       },
-      "fp": "0b889b882ed95b7e4d5cdbbe"
+      "fp": "fed8ac6cdfc8f99355d43247"
     },
     "2022-11_default_disable_mass_mention": {
       "id": "2022-11_default_disable_mass_mention",
@@ -76,10 +88,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enabled",
+          "enabled": true
         }
       },
-      "fp": "af856f021bcdc8e4405e768b"
+      "fp": "78df235895b05cd80a19132f"
     },
     "2023-02_guest_voice_invites": {
       "id": "2023-02_guest_voice_invites",
@@ -89,10 +103,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Allow creation of guest voice invites",
+          "enabled": true
         }
       },
-      "fp": "c968c1a48c9736a82fa1951d"
+      "fp": "ca0f0d3f36639b81171949c7"
     },
     "2023-09_iar_dsa_webform": {
       "id": "2023-09_iar_dsa_webform",
@@ -102,13 +118,17 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "EU user",
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "DSA E2E testing user",
+          "enabled": true
         }
       },
-      "fp": "7a0490b4ff1cd32d6fbe31ca"
+      "fp": "19be356971471435758cf60f"
     },
     "2023-09_iar_user_reporting": {
       "id": "2023-09_iar_user_reporting",
@@ -118,10 +138,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enabled",
+          "enabled": true
         }
       },
-      "fp": "43b80547443a98790ef43b83"
+      "fp": "6e5e59c3f03f54c0a25dea26"
     },
     "2024-06_rtc_pacer__simulcast": {
       "id": "2024-06_rtc_pacer__simulcast",
@@ -131,25 +153,49 @@
       "variationCount": 6,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Golive Simulcast without prober 720p@500k",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+          "simulcastEnabled": true
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Golive Simulcast 720p@500k",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+          "simulcastEnabled": true
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "label": "Golive with pacing",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer",
+          "simulcastEnabled": false
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "label": "Golive with pacing and probing",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+          "simulcastEnabled": false
         },
         "5": {
-          "id": 5
+          "id": 5,
+          "label": "Golive Simulcast 720p@750k",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-750k",
+          "simulcastEnabled": true
         },
         "6": {
-          "id": 6
+          "id": 6,
+          "label": "Golive Simulcast 720p@1000k",
+          "enabled": true,
+          "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-1000k",
+          "simulcastEnabled": true
         }
       },
-      "fp": "bdb2452251c098dd085cec92"
+      "fp": "10c8aa98ca3cbac0f59bd055"
     },
     "2025-01-allow-nonstaff-to-preview-app-collections": {
       "id": "2025-01-allow-nonstaff-to-preview-app-collections",
@@ -159,10 +205,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-04-desktop-refresh-fast-follows": {
       "id": "2025-04-desktop-refresh-fast-follows",
@@ -172,22 +218,32 @@
       "variationCount": 5,
       "variations": {
         "1": {
-          "id": 1
+          "largerGuildIcons": true,
+          "darkerGuildListBackground": false,
+          "distinctBorders": false
         },
         "2": {
-          "id": 2
+          "largerGuildIcons": false,
+          "darkerGuildListBackground": true,
+          "distinctBorders": false
         },
         "3": {
-          "id": 3
+          "largerGuildIcons": true,
+          "darkerGuildListBackground": true,
+          "distinctBorders": false
         },
         "4": {
-          "id": 4
+          "largerGuildIcons": false,
+          "darkerGuildListBackground": false,
+          "distinctBorders": true
         },
         "5": {
-          "id": 5
+          "largerGuildIcons": true,
+          "darkerGuildListBackground": false,
+          "distinctBorders": true
         }
       },
-      "fp": "48205e4bfc47365a8e3d82ac"
+      "fp": "e4f6f47ef8e635dd414e8f50"
     },
     "2025-04-native-markdown": {
       "id": "2025-04-native-markdown",
@@ -197,13 +253,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-05-search-results-feedback": {
       "id": "2025-05-search-results-feedback",
@@ -213,10 +269,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-06_native_intents": {
       "id": "2025-06_native_intents",
@@ -226,19 +282,35 @@
       "variationCount": 4,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "All enabled",
+          "searchEnabled": true,
+          "clearEnabled": true,
+          "activityEnabled": true
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Clear Only",
+          "searchEnabled": false,
+          "clearEnabled": true,
+          "activityEnabled": false
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "label": "Activities Only",
+          "searchEnabled": false,
+          "clearEnabled": false,
+          "activityEnabled": true
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "label": "Activities and Clear",
+          "searchEnabled": false,
+          "clearEnabled": true,
+          "activityEnabled": true
         }
       },
-      "fp": "28f332e1750d3045ed0c08e8"
+      "fp": "a0eb55cf566300ed00603ec5"
     },
     "2025-08_default_invite_expiration_guild": {
       "id": "2025-08_default_invite_expiration_guild",
@@ -248,16 +320,22 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "14 days",
+          "defaultMaxAge": 1209600
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "30 days",
+          "defaultMaxAge": 2592
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "label": "60 days",
+          "defaultMaxAge": 5184
         }
       },
-      "fp": "154342a9176888cc3b76ecb3"
+      "fp": "2b6f6f9a6ac5124dd26b9e1a"
     },
     "2025-08_portkey_enabled": {
       "id": "2025-08_portkey_enabled",
@@ -267,10 +345,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable GameServer",
+          "enabled": true
         }
       },
-      "fp": "2db6ec47825e9a0e3b70cf77"
+      "fp": "40ad29d6389561ba73b3f79e"
     },
     "2025-08-browser-hevc": {
       "id": "2025-08-browser-hevc",
@@ -280,10 +360,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-08-voice-user-affinity": {
       "id": "2025-08-voice-user-affinity",
@@ -293,16 +373,18 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "sortType": "vc_probability"
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "sortType": "communication_probability"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "50e6942aade4420e539c9240"
     },
     "2025-09_hotwheels_nvidia_boost": {
       "id": "2025-09_hotwheels_nvidia_boost",
@@ -312,13 +394,15 @@
       "variationCount": 2,
       "variations": {
         "16": {
-          "id": 16
+          "id": 16,
+          "label": "ML model V3 - Nvidia small boost"
         },
         "17": {
-          "id": 17
+          "id": 17,
+          "label": "ML model V3 - Nvidia big boost"
         }
       },
-      "fp": "2406f6c66c3f13c704de2d0b"
+      "fp": "3700e1404d831cc7dabe361c"
     },
     "2025-09-image-attachment-mezzanine-v2": {
       "id": "2025-09-image-attachment-mezzanine-v2",
@@ -328,16 +412,18 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "maxFileSizeBytes": 524288
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "maxFileSizeBytes": 262144
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "8190905eaee06558a8a91b9a"
     },
     "2025-09-overlay-state-tracking": {
       "id": "2025-09-overlay-state-tracking",
@@ -347,10 +433,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-sensitive-content-self-harm": {
       "id": "2025-09-sensitive-content-self-harm",
@@ -360,10 +446,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-server-nsfw-level": {
       "id": "2025-09-server-nsfw-level",
@@ -373,10 +459,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-video-qoe-metrics-tracking": {
       "id": "2025-09-video-qoe-metrics-tracking",
@@ -386,13 +472,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "externalAnalyticsEnabled": false
         },
         "1": {
-          "id": 1
+          "externalAnalyticsEnabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "a9e3ffbd5b4e6a46f58431c0"
     },
     "2025-10_community_account_link_onboarding": {
       "id": "2025-10_community_account_link_onboarding",
@@ -402,10 +488,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Community Account Linking UI",
+          "enabled": true
         }
       },
-      "fp": "cc4407de3daa3a777c5ae647"
+      "fp": "6e1ae08450ac89def944103d"
     },
     "2025-10-collectibles-custom-cursors": {
       "id": "2025-10-collectibles-custom-cursors",
@@ -415,13 +503,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enableCustomCursors": false
         },
         "1": {
-          "id": 1
+          "enableCustomCursors": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "863b17448dc98aba7d22550a"
     },
     "2025-10-desktop-communication-notifications-emoji": {
       "id": "2025-10-desktop-communication-notifications-emoji",
@@ -431,10 +519,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-10-force-sdr-emojis-stickers": {
       "id": "2025-10-force-sdr-emojis-stickers",
@@ -444,13 +532,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-10-go-live-auto-quality": {
       "id": "2025-10-go-live-auto-quality",
@@ -460,13 +548,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "allowAutoQuality": true,
+          "migrateAutoQuality": true
         },
         "2": {
-          "id": 2
+          "allowAutoQuality": true,
+          "defaultAutoQuality": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "2ce836119459a5067e523584"
     },
     "2025-10-low-latency-rate-control": {
       "id": "2025-10-low-latency-rate-control",
@@ -476,10 +566,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-10-mana-date-inputs": {
       "id": "2025-10-mana-date-inputs",
@@ -489,10 +579,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "e4344c1a7b00a663b09fed10"
+      "fp": "c3cc85d6647269585f1c47fc"
     },
     "2025-11_tida_webform": {
       "id": "2025-11_tida_webform",
@@ -502,10 +592,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enabled",
+          "tidaWebformEnabled": true
         }
       },
-      "fp": "296a5c36bee5a9495d6706fa"
+      "fp": "48b1e0277f12c6a5e122f953"
     },
     "2025-11-age-verification-expressive-everywhere": {
       "id": "2025-11-age-verification-expressive-everywhere",
@@ -515,10 +607,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-global-frame-pool-lock": {
       "id": "2025-11-global-frame-pool-lock",
@@ -528,10 +620,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-mana-context-menu": {
       "id": "2025-11-mana-context-menu",
@@ -541,10 +633,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-overlay-chat": {
       "id": "2025-11-overlay-chat",
@@ -554,16 +646,22 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "hasChat": true,
+          "hasFriendList": false,
+          "showNowPlayingForDifferentGames": false
         },
         "2": {
-          "id": 2
+          "hasChat": true,
+          "hasFriendList": true,
+          "showNowPlayingForDifferentGames": false
         },
         "3": {
-          "id": 3
+          "hasChat": true,
+          "hasFriendList": true,
+          "showNowPlayingForDifferentGames": true
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "ab223023f990ae9cf5733cde"
     },
     "2025-11-rtc-panel-entry-point-new-copy": {
       "id": "2025-11-rtc-panel-entry-point-new-copy",
@@ -573,13 +671,17 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "altTitle": false,
+          "altBody": false,
+          "altCta": false
         },
         "1": {
-          "id": 1
+          "altTitle": true,
+          "altBody": false,
+          "altCta": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "fe9f45cffdd5828e44d65af8"
     },
     "2025-11-shockbyte-degraded": {
       "id": "2025-11-shockbyte-degraded",
@@ -589,10 +691,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-video-end-card-v2": {
       "id": "2025-11-video-end-card-v2",
@@ -602,10 +704,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12_voice_channel_hoisting": {
       "id": "2025-12_voice_channel_hoisting",
@@ -615,13 +717,19 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Both waveform and highlight",
+          "enableWaveformIcon": true,
+          "enableHighlight": true
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Waveform icon only",
+          "enableWaveformIcon": true,
+          "enableHighlight": false
         }
       },
-      "fp": "3bfe81b67eeacf9709ac9eb2"
+      "fp": "269429199caefe41db01b7e2"
     },
     "2025-12-game-invite-account-linking-entry-point": {
       "id": "2025-12-game-invite-account-linking-entry-point",
@@ -631,13 +739,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-12-hdr-accessibility-setting": {
       "id": "2025-12-hdr-accessibility-setting",
@@ -647,10 +755,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-katsudon": {
       "id": "2025-12-katsudon",
@@ -660,13 +768,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-12-mana-multistep-community-enabled": {
       "id": "2025-12-mana-multistep-community-enabled",
@@ -676,10 +784,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-nitro-s-rewards": {
       "id": "2025-12-nitro-s-rewards",
@@ -689,22 +797,22 @@
       "variationCount": 5,
       "variations": {
         "0": {
-          "id": 0
+          "treatment": "control"
         },
         "1": {
-          "id": 1
+          "treatment": "treatment_a"
         },
         "2": {
-          "id": 2
+          "treatment": "treatment_b"
         },
         "3": {
-          "id": 3
+          "treatment": "treatment_c"
         },
         "4": {
-          "id": 4
+          "treatment": "treatment_d"
         }
       },
-      "fp": "d8f6dc7d902a390baa71ede3"
+      "fp": "a830213441e5e8be44216a36"
     },
     "2025-12-orb-redemption-thru-orders": {
       "id": "2025-12-orb-redemption-thru-orders",
@@ -714,10 +822,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-proportional-vad-indicator": {
       "id": "2025-12-proportional-vad-indicator",
@@ -727,19 +835,24 @@
       "variationCount": 4,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "disableUI": true
         },
         "3": {
-          "id": 3
+          "enabled": true,
+          "disableUI": true,
+          "swallowVolumeOnlySpeakingEvents": true
         },
         "4": {
-          "id": 4
+          "enabled": true,
+          "disableUI": true,
+          "dontEmitVolumeOnlySpeakingEvents": true
         }
       },
-      "fp": "5c77e86646335e1936a55a3a"
+      "fp": "9c14a6c7cb1f717513b4f015"
     },
     "2025-12-quest-cta-refactor-rollout": {
       "id": "2025-12-quest-cta-refactor-rollout",
@@ -749,28 +862,28 @@
       "variationCount": 7,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true
         },
         "3": {
-          "id": 3
+          "enabled": true
         },
         "4": {
-          "id": 4
+          "enabled": true
         },
         "5": {
-          "id": 5
+          "enabled": true
         },
         "6": {
-          "id": 6
+          "enabled": true
         },
         "7": {
-          "id": 7
+          "enabled": true
         }
       },
-      "fp": "185a05d5efed934100f4b84e"
+      "fp": "1aaebb0de7d7bf0129046a9a"
     },
     "2025-12-windows-audio-effects": {
       "id": "2025-12-windows-audio-effects",
@@ -780,10 +893,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "preferSystemEffects": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "d94a9bd14d82a6bdc60ea609"
     },
     "2025-12-wmf-gpu-encode": {
       "id": "2025-12-wmf-gpu-encode",
@@ -793,10 +906,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-bug-reporter": {
       "id": "2026-01-bug-reporter",
@@ -806,10 +919,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "hasBugReporterAccess": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "ccda291fa1cca764ad0b7a19"
     },
     "2026-01-cms-layouts": {
       "id": "2026-01-cms-layouts",
@@ -819,13 +932,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-01-favorites-server": {
       "id": "2026-01-favorites-server",
@@ -835,13 +948,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-01-friends-in-server": {
       "id": "2026-01-friends-in-server",
@@ -851,10 +964,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "guildFriendsEnabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "fbb57e81f0e27fbd8de768c8"
     },
     "2026-01-ios-push-notif-json-fix": {
       "id": "2026-01-ios-push-notif-json-fix",
@@ -864,10 +977,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-less-personalized-ads": {
       "id": "2026-01-less-personalized-ads",
@@ -877,13 +990,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-01-voice-dares-v0": {
       "id": "2026-01-voice-dares-v0",
@@ -893,10 +1006,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-wmf-gpu-encode-intel": {
       "id": "2026-01-wmf-gpu-encode-intel",
@@ -906,10 +1019,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02_game_claim_coachmark": {
       "id": "2026-02_game_claim_coachmark",
@@ -919,10 +1032,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Game Claim Coachmark",
+          "enabled": true
         }
       },
-      "fp": "725cd43d9c0a05b00092b5ca"
+      "fp": "73ae8a9fabf7068bf9365b07"
     },
     "2026-02_hangout_window": {
       "id": "2026-02_hangout_window",
@@ -932,10 +1047,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Hangout Window",
+          "enableHangoutWindow": true
         }
       },
-      "fp": "72c9094389528a229c373f4c"
+      "fp": "ac1e1527b51fe93b8776e195"
     },
     "2026-02_past_vc_activity_messages": {
       "id": "2026-02_past_vc_activity_messages",
@@ -945,10 +1062,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Show past VC activity messages in system channel",
+          "enabled": true
         }
       },
-      "fp": "6f1828710a1ad50c6f9ad90d"
+      "fp": "2809061bf560d1086c4330ca"
     },
     "2026-02-announcement-composer": {
       "id": "2026-02-announcement-composer",
@@ -958,10 +1077,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "announcementComposer": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "3b7fb37fc1a31888c36f773e"
     },
     "2026-02-boosting-refresh-modals": {
       "id": "2026-02-boosting-refresh-modals",
@@ -971,16 +1090,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "variant": "control"
         },
         "1": {
-          "id": 1
+          "variant": "refresh"
         },
         "2": {
-          "id": 2
+          "variant": "refresh_expressive_cta"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "87ffbb4afd1a49638803a1da"
     },
     "2026-02-capture-target-window": {
       "id": "2026-02-capture-target-window",
@@ -990,10 +1109,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-content-classification-presence-filter": {
       "id": "2026-02-content-classification-presence-filter",
@@ -1003,13 +1122,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-02-desktop-new-user-onboarding": {
       "id": "2026-02-desktop-new-user-onboarding",
@@ -1019,10 +1138,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-expiring-powerup-coachmark": {
       "id": "2026-02-expiring-powerup-coachmark",
@@ -1032,13 +1151,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-02-friends-list": {
       "id": "2026-02-friends-list",
@@ -1048,10 +1167,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "hasFriendList": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "e92f77c21b2283af05709c12"
     },
     "2026-02-game-server-tab-always-on": {
       "id": "2026-02-game-server-tab-always-on",
@@ -1061,10 +1180,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-gift-cards": {
       "id": "2026-02-gift-cards",
@@ -1074,10 +1193,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-gifting-modal-redesign": {
       "id": "2026-02-gifting-modal-redesign",
@@ -1087,10 +1206,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-go-live-hdr": {
       "id": "2026-02-go-live-hdr",
@@ -1100,13 +1219,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "hdrCaptureMode": "always"
         },
         "2": {
-          "id": 2
+          "hdrCaptureMode": "permittedDevicesOnly"
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "4767cfa608f7d8fc21e6edc7"
     },
     "2026-02-gsh-game-detection-upsell": {
       "id": "2026-02-gsh-game-detection-upsell",
@@ -1116,10 +1235,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-join-game-community-cta": {
       "id": "2026-02-join-game-community-cta",
@@ -1129,10 +1248,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-lazy-load-all-images": {
       "id": "2026-02-lazy-load-all-images",
@@ -1142,10 +1261,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-longer-group-dm-invites": {
       "id": "2026-02-longer-group-dm-invites",
@@ -1155,13 +1274,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "inviteMaxAgeSeconds": 86400
         },
         "1": {
-          "id": 1
+          "inviteMaxAgeSeconds": 2419200
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "13a50a972001ad6d62fdf3b2"
     },
     "2026-02-mana-playground-access": {
       "id": "2026-02-mana-playground-access",
@@ -1171,10 +1290,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-mobile-volume-output-slider-removal": {
       "id": "2026-02-mobile-volume-output-slider-removal",
@@ -1184,10 +1303,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "audioOutputPresent": false,
+          "nonContextualStreamOutputPresent": false,
+          "showTileVolumeIndicator": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "2336df2c33f9f4300174635e"
     },
     "2026-02-non-dm-gifting-modal-redesign": {
       "id": "2026-02-non-dm-gifting-modal-redesign",
@@ -1197,10 +1318,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-premium-offer-reminder-xp": {
       "id": "2026-02-premium-offer-reminder-xp",
@@ -1210,10 +1331,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-private-channel-hiding": {
       "id": "2026-02-private-channel-hiding",
@@ -1223,16 +1344,19 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "enableObfuscation": true,
+          "enableIntegrityCheck": false
         },
         "2": {
-          "id": 2
+          "enableObfuscation": true,
+          "enableIntegrityCheck": true
         },
         "3": {
-          "id": 3
+          "enableObfuscation": false,
+          "enableIntegrityCheck": false
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "c4238b6aab72aa3eebbcb663"
     },
     "2026-02-process-boost-on-voice": {
       "id": "2026-02-process-boost-on-voice",
@@ -1242,19 +1366,19 @@
       "variationCount": 4,
       "variations": {
         "1": {
-          "id": 1
+          "threadPriorityConfiguration": 0
         },
         "2": {
-          "id": 2
+          "threadPriorityConfiguration": 1
         },
         "3": {
-          "id": 3
+          "threadPriorityConfiguration": 2
         },
         "4": {
-          "id": 4
+          "threadPriorityConfiguration": 3
         }
       },
-      "fp": "5c77e86646335e1936a55a3a"
+      "fp": "4ce83674ee87c8c4a86bde64"
     },
     "2026-02-voice-channel-link-click": {
       "id": "2026-02-voice-channel-link-click",
@@ -1264,10 +1388,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "navigateOnly": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "3bf09032c265864a21c67f8a"
     },
     "2026-02-wgc-dirty-regions-all": {
       "id": "2026-02-wgc-dirty-regions-all",
@@ -1277,10 +1401,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03_guild_official_messages": {
       "id": "2026-03_guild_official_messages",
@@ -1290,10 +1414,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable official messages",
+          "enabled": true
         }
       },
-      "fp": "b323e32366eae040f188e5cb"
+      "fp": "51fc2fca7d13d69fc2ad8af6"
     },
     "2026-03_voice_badge": {
       "id": "2026-03_voice_badge",
@@ -1303,13 +1429,17 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "id": 0,
+          "label": "Control",
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Show voice badges",
+          "enabled": true
         }
       },
-      "fp": "dd1e7a01f55be2767907233b"
+      "fp": "9caa31aa1aed37de3e49a22f"
     },
     "2026-03-age-verification-google-wallet": {
       "id": "2026-03-age-verification-google-wallet",
@@ -1319,10 +1449,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-app-guild-validation": {
       "id": "2026-03-app-guild-validation",
@@ -1332,13 +1462,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": true
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "74fc9d0ff39d614ade8bdadc"
+      "fp": "9f382a372863c897e0a106aa"
     },
     "2026-03-application-widget-v2-add-tweak": {
       "id": "2026-03-application-widget-v2-add-tweak",
@@ -1348,13 +1478,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-arborium-highlight": {
       "id": "2026-03-arborium-highlight",
@@ -1364,10 +1494,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-audio-effects-probe": {
       "id": "2026-03-audio-effects-probe",
@@ -1377,10 +1507,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "probeAudioEffects": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "06f83193ff8cec2d236871c5"
     },
     "2026-03-block-purchases": {
       "id": "2026-03-block-purchases",
@@ -1390,10 +1520,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-churro": {
       "id": "2026-03-churro",
@@ -1403,10 +1533,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "allowPlayStationStaging": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "685af2ed1334237df652a6ec"
     },
     "2026-03-clips-experiment": {
       "id": "2026-03-clips-experiment",
@@ -1416,13 +1546,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enableClips": true,
+          "ignorePlatformRestriction": false
         },
         "2": {
-          "id": 2
+          "enableClips": true,
+          "ignorePlatformRestriction": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "ca6246110bc13289553d6828"
     },
     "2026-03-content-inventory-memberlist-and-ranker": {
       "id": "2026-03-content-inventory-memberlist-and-ranker",
@@ -1432,10 +1564,11 @@
       "variationCount": 1,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "impressionCappingEnabled": false
         }
       },
-      "fp": "5d772b8ae64c04c884c038b4"
+      "fp": "05144a1177449290632a3ace"
     },
     "2026-03-conversation-highlighting-utility": {
       "id": "2026-03-conversation-highlighting-utility",
@@ -1445,13 +1578,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": false
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "7fd898ccae761659a86bd9e2"
     },
     "2026-03-croissant": {
       "id": "2026-03-croissant",
@@ -1461,13 +1594,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-debug-experiment": {
       "id": "2026-03-debug-experiment",
@@ -1512,10 +1645,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-icymi-desktop": {
       "id": "2026-03-icymi-desktop",
@@ -1525,10 +1658,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "icymiDesktopEnabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "4589192991cc7aded8370dab"
     },
     "2026-03-icymi-staff-debugging-utility": {
       "id": "2026-03-icymi-staff-debugging-utility",
@@ -1538,10 +1671,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-image-load-metrics": {
       "id": "2026-03-image-load-metrics",
@@ -1551,16 +1684,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": false
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "f15666cb611ca156941a46e0"
     },
     "2026-03-ios-audio-interrupt-handling": {
       "id": "2026-03-ios-audio-interrupt-handling",
@@ -1570,10 +1703,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-krisp-stats-collection": {
       "id": "2026-03-krisp-stats-collection",
@@ -1583,10 +1716,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableStats": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "03a8dcc6b9f48c8c7a1e1515"
     },
     "2026-03-l-3pp": {
       "id": "2026-03-l-3pp",
@@ -1596,13 +1729,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-media-play-metrics": {
       "id": "2026-03-media-play-metrics",
@@ -1612,13 +1745,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-message-bookmarks": {
       "id": "2026-03-message-bookmarks",
@@ -1628,13 +1761,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-03-mobile-quest-home-red-dot-notification": {
       "id": "2026-03-mobile-quest-home-red-dot-notification",
@@ -1644,13 +1777,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-muted-video-quest-new-defaults": {
       "id": "2026-03-muted-video-quest-new-defaults",
@@ -1660,16 +1793,19 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "variant": 0
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "variant": 1
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "variant": 2
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "914d1a29a31c5e9c7b1f9b32"
     },
     "2026-03-new-server-boost-system-messages": {
       "id": "2026-03-new-server-boost-system-messages",
@@ -1679,13 +1815,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "showCta": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "showCta": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "60beea5e57c8e5136d76b7a9"
     },
     "2026-03-overlay-default-keybind": {
       "id": "2026-03-overlay-default-keybind",
@@ -1695,16 +1833,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "keybindOverride": "ctrl+tab"
         },
         "2": {
-          "id": 2
+          "keybindOverride": "alt+x"
         },
         "3": {
-          "id": 3
+          "keybindOverride": "ctrl+l"
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "7d525d923871d38eab547c14"
     },
     "2026-03-soundmoji-rendering": {
       "id": "2026-03-soundmoji-rendering",
@@ -1714,10 +1852,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-soundmoji-sending": {
       "id": "2026-03-soundmoji-sending",
@@ -1727,13 +1865,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "showSoundmojiInEmojiPicker": false
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "showSoundmojiInEmojiPicker": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "6351f4f1c27e0182ae16c581"
     },
     "2026-03-steelseries-3p-recurring": {
       "id": "2026-03-steelseries-3p-recurring",
@@ -1743,13 +1883,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-surface-direct-renderer": {
       "id": "2026-03-surface-direct-renderer",
@@ -1759,10 +1899,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableSurfaceDirectRenderer": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "09b896409de62541dfc50292"
     },
     "2026-03-video-capture-device-no-reuse": {
       "id": "2026-03-video-capture-device-no-reuse",
@@ -1772,10 +1912,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "overrideDeviceReuse": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "f7f35948720294b2a1b28fd9"
     },
     "2026-03-wysiwyg-user-profile-editing": {
       "id": "2026-03-wysiwyg-user-profile-editing",
@@ -1785,10 +1925,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04_application_identity_linked_roles": {
       "id": "2026-04_application_identity_linked_roles",
@@ -1798,10 +1938,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Application Identity Linked Roles",
+          "enabled": true
         }
       },
-      "fp": "d113bc84d573b26f62b2d255"
+      "fp": "00e5a9dfa3cef136c4844ec0"
     },
     "2026-04_guild_verification_role": {
       "id": "2026-04_guild_verification_role",
@@ -1811,10 +1953,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable verification role setting",
+          "enabled": true
         }
       },
-      "fp": "97fd56104c92dc4adfff803c"
+      "fp": "240f5e91a8506674d4963ac0"
     },
     "2026-04_server_theme": {
       "id": "2026-04_server_theme",
@@ -1824,16 +1968,31 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "id": 0,
+          "label": "Control",
+          "enabled": false,
+          "inExperiment": true,
+          "gatesApex": false,
+          "rollbackEnabled": false
         },
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Server Theme",
+          "enabled": true,
+          "inExperiment": true,
+          "gatesApex": false,
+          "rollbackEnabled": false
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Rollback UI for Server Theme",
+          "enabled": true,
+          "inExperiment": true,
+          "gatesApex": false,
+          "rollbackEnabled": true
         }
       },
-      "fp": "1bf23e4b488eb861856301e9"
+      "fp": "ec6fdb0a1d1f277fd22d0621"
     },
     "2026-04_voice_call_trigger_point": {
       "id": "2026-04_voice_call_trigger_point",
@@ -1843,10 +2002,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Treatment",
+          "enabled": true
         }
       },
-      "fp": "3a03f8228a2b3af2c64db28f"
+      "fp": "637a0c8120e6a78dd9e6ccaf"
     },
     "2026-04_voice_user_duration": {
       "id": "2026-04_voice_user_duration",
@@ -1856,10 +2017,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Allow guild members to see each others duration in the channel list",
+          "enabled": true
         }
       },
-      "fp": "045c4a9a0a0ce29900b579a2"
+      "fp": "e6794fb024321a06ee4879c5"
     },
     "2026-04-boosting-pre-checkout-modal-refresh-v2": {
       "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
@@ -1869,13 +2032,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-browser-transceiver-padding-removal": {
       "id": "2026-04-browser-transceiver-padding-removal",
@@ -1885,10 +2048,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-clips-v3-runtime": {
       "id": "2026-04-clips-v3-runtime",
@@ -1898,13 +2061,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enableClipsV3ML": false
         },
         "2": {
-          "id": 2
+          "enableClipsV3ML": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "f87a583780db7834b7f6e9b2"
     },
     "2026-04-composed-quest-player": {
       "id": "2026-04-composed-quest-player",
@@ -1914,10 +2077,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-notification-center": {
       "id": "2026-04-desktop-notification-center",
@@ -1927,16 +2090,22 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "notificationCenterVariant": "popout",
+          "entrypoint": "title-bar-left",
+          "filterStyle": "dropdown"
         },
         "2": {
-          "id": 2
+          "notificationCenterVariant": "popout",
+          "entrypoint": "server-rail-top",
+          "filterStyle": "dropdown"
         },
         "3": {
-          "id": 3
+          "notificationCenterVariant": "sidebar",
+          "entrypoint": "server-rail-top",
+          "filterStyle": "dropdown"
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "e27973d27039c195c4ae8bb8"
     },
     "2026-04-desktop-tti-dnstcp-warmup": {
       "id": "2026-04-desktop-tti-dnstcp-warmup",
@@ -1946,10 +2115,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-tti-early-update-check": {
       "id": "2026-04-desktop-tti-early-update-check",
@@ -1959,10 +2128,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-tti-update-backoff": {
       "id": "2026-04-desktop-tti-update-backoff",
@@ -1972,16 +2141,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "maxBackoffMs": 2
         },
         "2": {
-          "id": 2
+          "maxBackoffMs": 1
         },
         "3": {
-          "id": 3
+          "maxBackoffMs": 3
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "74858ab8362331de8a25064a"
     },
     "2026-04-desktop-tti-v8-cache": {
       "id": "2026-04-desktop-tti-v8-cache",
@@ -1991,10 +2160,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-ensure-received-messages-added-in-order": {
       "id": "2026-04-ensure-received-messages-added-in-order",
@@ -2004,10 +2173,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-gift-promotion-reminder": {
       "id": "2026-04-gift-promotion-reminder",
@@ -2017,10 +2186,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-gifting-badge": {
       "id": "2026-04-gifting-badge",
@@ -2030,10 +2199,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-hide-view-full-profile-button": {
       "id": "2026-04-hide-view-full-profile-button",
@@ -2043,10 +2212,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "showButton": false
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "915d8562ce1ef775ab5402b1"
     },
     "2026-04-http-request-sample": {
       "id": "2026-04-http-request-sample",
@@ -2056,11 +2225,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1,
-          "percentage": 1
+          "sampleRate": 1
         }
       },
-      "fp": "cfd4c1909c41a936eb9ca1f2"
+      "fp": "2ad20a5e1e83ee071f5bf8bd"
     },
     "2026-04-icymi-staff-only": {
       "id": "2026-04-icymi-staff-only",
@@ -2070,10 +2238,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-inappropriate-conversations-default-on": {
       "id": "2026-04-inappropriate-conversations-default-on",
@@ -2083,13 +2251,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-inappropriate-conversations-prescan": {
       "id": "2026-04-inappropriate-conversations-prescan",
@@ -2099,13 +2267,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-one-day-fractional-nitro": {
       "id": "2026-04-one-day-fractional-nitro",
@@ -2128,10 +2296,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-quests-premium-orb-multiplier-marketing": {
       "id": "2026-04-quests-premium-orb-multiplier-marketing",
@@ -2141,13 +2309,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-safety-flows": {
       "id": "2026-04-safety-flows",
@@ -2157,13 +2325,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-server-boost-copy-1440p": {
       "id": "2026-04-server-boost-copy-1440p",
@@ -2173,10 +2341,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "streamQualityMarketingResolution": "1440p"
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "a5b6df06806e5744ca8a1f52"
     },
     "2026-04-topical-navigation-staff-control": {
       "id": "2026-04-topical-navigation-staff-control",
@@ -2186,10 +2354,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-upcoming-server-event": {
       "id": "2026-04-upcoming-server-event",
@@ -2199,16 +2367,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "showSettingsToggle": true
         },
         "2": {
-          "id": 2
+          "showSettingsToggle": true
         },
         "3": {
-          "id": 3
+          "showSettingsToggle": true
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "ab171a361b360b6fac913c8d"
     },
     "2026-04-user-profile-performance-analytics": {
       "id": "2026-04-user-profile-performance-analytics",
@@ -2218,13 +2386,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "performanceAnalyticsEnabled": false
         },
         "1": {
-          "id": 1
+          "performanceAnalyticsEnabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "984ff5a2a0149f3d90a187ee"
     },
     "2026-04-video-hook-dx12": {
       "id": "2026-04-video-hook-dx12",
@@ -2234,10 +2402,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-voice-gateway-protocol-version": {
       "id": "2026-04-voice-gateway-protocol-version",
@@ -2247,10 +2415,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-wetf-parser": {
       "id": "2026-04-wetf-parser",
@@ -2260,10 +2428,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05_default_invite_expiration_guild_web": {
       "id": "2026-05_default_invite_expiration_guild_web",
@@ -2273,16 +2441,22 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "14 days",
+          "defaultMaxAge": 1209600
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "30 days",
+          "defaultMaxAge": 2592
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "label": "60 days",
+          "defaultMaxAge": 5184
         }
       },
-      "fp": "323283e1c33e2ca710b5c2e3"
+      "fp": "a1783bf712ffa110047e430f"
     },
     "2026-05_voice_channel_list_invite_embed": {
       "id": "2026-05_voice_channel_list_invite_embed",
@@ -2292,10 +2466,12 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable channel-list-style voice invite embed",
+          "enabled": true
         }
       },
-      "fp": "4018388188804551df6b7db5"
+      "fp": "03513890f61c182145931d0d"
     },
     "2026-05-age-restricted-application-commands": {
       "id": "2026-05-age-restricted-application-commands",
@@ -2305,10 +2481,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-app-store-overlay-feature-gate": {
       "id": "2026-05-app-store-overlay-feature-gate",
@@ -2318,10 +2494,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-auto-clips-review": {
       "id": "2026-05-auto-clips-review",
@@ -2331,10 +2507,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableAutoClipsReview": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "3953a2b1f219136790168a25"
     },
     "2026-05-av1-bitrate-tuning": {
       "id": "2026-05-av1-bitrate-tuning",
@@ -2344,15 +2520,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1,
-          "percentage": 3
+          "bitrate": 3
         },
         "2": {
-          "id": 2,
-          "percentage": 25
+          "bitrate": 25
         }
       },
-      "fp": "ab821ac5435571e419251e95"
+      "fp": "d08c4331553fc89337015106"
     },
     "2026-05-badge-discovery-milestone-2": {
       "id": "2026-05-badge-discovery-milestone-2",
@@ -2362,13 +2536,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate": {
       "id": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
@@ -2378,13 +2552,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-bounty-stale-refresh-quest-home": {
       "id": "2026-05-bounty-stale-refresh-quest-home",
@@ -2394,13 +2568,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-clips-media-comments": {
       "id": "2026-05-clips-media-comments",
@@ -2410,10 +2584,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableMediaComments": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "33ccc5b2b4d20fbb9ca74bd4"
     },
     "2026-05-device-form-factor-indicators": {
       "id": "2026-05-device-form-factor-indicators",
@@ -2423,10 +2597,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "showDeviceFormFactorIndicators": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "17973a4ce2710004cb0b44e7"
     },
     "2026-05-dice-roll-slash-command": {
       "id": "2026-05-dice-roll-slash-command",
@@ -2436,10 +2610,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-disable-camera-simulcast": {
       "id": "2026-05-disable-camera-simulcast",
@@ -2449,10 +2623,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableSimulcast": false
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "57be2780167e2c63080915f2"
     },
     "2026-05-distributed-clips": {
       "id": "2026-05-distributed-clips",
@@ -2462,10 +2636,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableDistributedClips": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "79494b6356a6616d10337bbe"
     },
     "2026-05-dvp-for-attachments": {
       "id": "2026-05-dvp-for-attachments",
@@ -2475,13 +2649,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "useDiscordVideoPlayer": false
         },
         "1": {
-          "id": 1
+          "useDiscordVideoPlayer": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "b00cad5158f64ca437dc72ea"
     },
     "2026-05-electron-multilang-spellcheck": {
       "id": "2026-05-electron-multilang-spellcheck",
@@ -2491,10 +2665,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableElectronMultilangSpellcheck": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "a3cd2049b467f777b57e955a"
     },
     "2026-05-frontier-tuning": {
       "id": "2026-05-frontier-tuning",
@@ -2504,23 +2678,21 @@
       "variationCount": 4,
       "variations": {
         "1": {
-          "id": 1,
-          "percentage": 35
+          "maxBitrate": 35,
+          "maskReportedQuality": true
         },
         "2": {
-          "id": 2,
-          "percentage": 5
+          "maxBitrate": 5,
+          "maskReportedQuality": true
         },
         "3": {
-          "id": 3,
-          "percentage": 35
+          "maxBitrate": 35
         },
         "4": {
-          "id": 4,
-          "percentage": 5
+          "maxBitrate": 5
         }
       },
-      "fp": "6c01a1d585eb4afe80d10232"
+      "fp": "d6d9e1491ea274f7076113f4"
     },
     "2026-05-global-soundboard-wheel-popout": {
       "id": "2026-05-global-soundboard-wheel-popout",
@@ -2530,10 +2702,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-ios-video-stabilization": {
       "id": "2026-05-ios-video-stabilization",
@@ -2543,13 +2715,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "mode": "standard"
         },
         "2": {
-          "id": 2
+          "mode": "low_latency"
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "949efeeb328d5f2bcb4ffe9c"
     },
     "2026-05-mana-type-consolidation": {
       "id": "2026-05-mana-type-consolidation",
@@ -2559,10 +2731,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-quest-home-tile-redesign": {
       "id": "2026-05-quest-home-tile-redesign",
@@ -2572,22 +2744,37 @@
       "variationCount": 5,
       "variations": {
         "0": {
-          "id": 0
+          "useNewLayoutWithSearch": false,
+          "useNewTile": false,
+          "useNewFeaturedTiles": false,
+          "ctaOnHover": false
         },
         "1": {
-          "id": 1
+          "useNewLayoutWithSearch": true,
+          "useNewTile": false,
+          "useNewFeaturedTiles": false,
+          "ctaOnHover": false
         },
         "2": {
-          "id": 2
+          "useNewLayoutWithSearch": true,
+          "useNewTile": true,
+          "useNewFeaturedTiles": true,
+          "ctaOnHover": true
         },
         "3": {
-          "id": 3
+          "useNewLayoutWithSearch": true,
+          "useNewTile": true,
+          "useNewFeaturedTiles": false,
+          "ctaOnHover": true
         },
         "4": {
-          "id": 4
+          "useNewLayoutWithSearch": true,
+          "useNewTile": true,
+          "useNewFeaturedTiles": true,
+          "ctaOnHover": false
         }
       },
-      "fp": "d8f6dc7d902a390baa71ede3"
+      "fp": "c328b426ceb5abd38e7cfa8f"
     },
     "2026-05-screenshare-picker-wgc": {
       "id": "2026-05-screenshare-picker-wgc",
@@ -2597,10 +2784,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-server-theme-user": {
       "id": "2026-05-server-theme-user",
@@ -2610,10 +2797,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-slayer-storefront-hide-leaderboard": {
       "id": "2026-05-slayer-storefront-hide-leaderboard",
@@ -2623,13 +2810,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-social-layer-storefront-game-shops-dropdown": {
       "id": "2026-05-social-layer-storefront-game-shops-dropdown",
@@ -2639,13 +2826,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-spatial-audio-for-voice": {
       "id": "2026-05-spatial-audio-for-voice",
@@ -2655,10 +2842,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-use-ad-analytics-interface": {
       "id": "2026-05-use-ad-analytics-interface",
@@ -2668,25 +2855,30 @@
       "variationCount": 6,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "maxStep": 0
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "maxStep": 1
         },
         "3": {
-          "id": 3
+          "enabled": true,
+          "maxStep": 2
         },
         "4": {
-          "id": 4
+          "enabled": true,
+          "maxStep": 3
         },
         "5": {
-          "id": 5
+          "enabled": true,
+          "maxStep": 4
         }
       },
-      "fp": "c7581458d2a42d5ed27f229c"
+      "fp": "e01baf49918e0ab55422ba7d"
     },
     "2026-06_guild_rooms": {
       "id": "2026-06_guild_rooms",
@@ -2696,22 +2888,47 @@
       "variationCount": 5,
       "variations": {
         "1": {
-          "id": 1
+          "id": 1,
+          "label": "Enable Guild Rooms in this guild",
+          "enabled": true,
+          "interactionsEnabled": true,
+          "multipleRoomsEnabled": false,
+          "posturesEnabled": true
         },
         "2": {
-          "id": 2
+          "id": 2,
+          "label": "Enable Guild Rooms without Interactions",
+          "enabled": true,
+          "interactionsEnabled": false,
+          "multipleRoomsEnabled": false,
+          "posturesEnabled": true
         },
         "3": {
-          "id": 3
+          "id": 3,
+          "label": "Enable Guild Rooms with Room Variants",
+          "enabled": true,
+          "interactionsEnabled": true,
+          "multipleRoomsEnabled": true,
+          "posturesEnabled": true
         },
         "4": {
-          "id": 4
+          "id": 4,
+          "label": "Enable Guild Rooms without Postures",
+          "enabled": true,
+          "interactionsEnabled": true,
+          "multipleRoomsEnabled": false,
+          "posturesEnabled": false
         },
         "5": {
-          "id": 5
+          "id": 5,
+          "label": "Enable Guild Rooms with Room 2 Default and Selector",
+          "enabled": true,
+          "interactionsEnabled": true,
+          "multipleRoomsEnabled": true,
+          "posturesEnabled": true
         }
       },
-      "fp": "8792632a285bdc5c55a6dbe0"
+      "fp": "6b752f9b2916dcf36c6fa43a"
     },
     "2026-06-age-verification-incode": {
       "id": "2026-06-age-verification-incode",
@@ -2721,10 +2938,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-av1-encode-linux": {
       "id": "2026-06-av1-encode-linux",
@@ -2734,10 +2951,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-battlenet-social-sdk-migration": {
       "id": "2026-06-battlenet-social-sdk-migration",
@@ -2747,13 +2964,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-bulk-nitro-gifting": {
       "id": "2026-06-bulk-nitro-gifting",
@@ -2782,10 +2999,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-clickstream-analytics": {
       "id": "2026-06-clickstream-analytics",
@@ -2795,10 +3012,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-clips-league-events": {
       "id": "2026-06-clips-league-events",
@@ -2808,10 +3025,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableLeagueEvents": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "5c0b57702553dd006ed5d836"
     },
     "2026-06-clips-secondary-entrypoints": {
       "id": "2026-06-clips-secondary-entrypoints",
@@ -2821,10 +3038,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableOverlayEntrypoint": true,
+          "enableGamePanelEntrypoint": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "26d47bdfb2fa1706751c5de4"
     },
     "2026-06-content-classification-embedded-activity-filter": {
       "id": "2026-06-content-classification-embedded-activity-filter",
@@ -2834,13 +3052,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-desktop-tti-http-cdt": {
       "id": "2026-06-desktop-tti-http-cdt",
@@ -2850,10 +3068,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-desktop-tti-splash-asset": {
       "id": "2026-06-desktop-tti-splash-asset",
@@ -2863,10 +3081,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-dont-badge-muted-vcs": {
       "id": "2026-06-dont-badge-muted-vcs",
@@ -2876,13 +3094,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-game-invites-channel": {
       "id": "2026-06-game-invites-channel",
@@ -2892,10 +3110,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-06-game-server-hosting-in-shop": {
       "id": "2026-06-game-server-hosting-in-shop",
@@ -2905,16 +3123,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "7916513f2d8f10276925cb73"
     },
     "2026-06-gifting-badge-desktop": {
       "id": "2026-06-gifting-badge-desktop",
@@ -2924,10 +3142,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-guild-profile-server-tag": {
       "id": "2026-06-guild-profile-server-tag",
@@ -2937,10 +3155,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "showServerTag": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "7f5bfb782481abf562fd56cc"
     },
     "2026-06-gummy-bears": {
       "id": "2026-06-gummy-bears",
@@ -2950,10 +3168,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-hero-shelf-ad-tile": {
       "id": "2026-06-hero-shelf-ad-tile",
@@ -2963,10 +3181,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-improved-shop-loading": {
       "id": "2026-06-improved-shop-loading",
@@ -2976,13 +3194,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-mobile-server-tag": {
       "id": "2026-06-mobile-server-tag",
@@ -2992,10 +3210,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-nitro-gdm-cap-increase": {
       "id": "2026-06-nitro-gdm-cap-increase",
@@ -3005,13 +3223,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-orbs-holdout": {
       "id": "2026-06-orbs-holdout",
@@ -3021,13 +3239,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-otp-orders-phase-1": {
       "id": "2026-06-otp-orders-phase-1",
@@ -3037,10 +3255,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-post-call-survey-assets": {
       "id": "2026-06-post-call-survey-assets",
@@ -3050,13 +3268,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "surveyEmojiKind": "face"
         },
         "1": {
-          "id": 1
+          "surveyEmojiKind": "face-refresh"
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "be25d865c374dba30f319683"
     },
     "2026-06-quest-fetch-reconnect-jitter": {
       "id": "2026-06-quest-fetch-reconnect-jitter",
@@ -3066,10 +3284,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "questFetchJitterMs": 60,
+          "questHomeHeroJitterMs": 60
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "5fa9381e2fc46e7c3f0f6d7d"
     },
     "2026-06-quest-home-layout-visual-tweaks": {
       "id": "2026-06-quest-home-layout-visual-tweaks",
@@ -3079,22 +3298,27 @@
       "variationCount": 5,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "variant": 0
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "variant": 1
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "variant": 2
         },
         "3": {
-          "id": 3
+          "enabled": true,
+          "variant": 3
         },
         "4": {
-          "id": 4
+          "enabled": true,
+          "variant": 4
         }
       },
-      "fp": "d8f6dc7d902a390baa71ede3"
+      "fp": "3ccc771168ed3630929ad128"
     },
     "2026-06-server-ladder": {
       "id": "2026-06-server-ladder",
@@ -3104,11 +3328,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1,
-          "percentage": 35
+          "bitrate": 35,
+          "enabled": true
         }
       },
-      "fp": "dd7cb95a2d1307f187b5c464"
+      "fp": "b11ad2cddec442de4dc20e81"
     },
     "2026-06-server-theme-apex-shadow": {
       "id": "2026-06-server-theme-apex-shadow",
@@ -3118,22 +3342,37 @@
       "variationCount": 5,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "inExperiment": true,
+          "gatesApex": false,
+          "rollbackEnabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "inExperiment": true,
+          "gatesApex": false,
+          "rollbackEnabled": false
         },
         "2": {
-          "id": 2
+          "enabled": false,
+          "inExperiment": true,
+          "gatesApex": true,
+          "rollbackEnabled": false
         },
         "3": {
-          "id": 3
+          "enabled": true,
+          "inExperiment": true,
+          "gatesApex": true,
+          "rollbackEnabled": false
         },
         "4": {
-          "id": 4
+          "enabled": true,
+          "inExperiment": true,
+          "gatesApex": true,
+          "rollbackEnabled": true
         }
       },
-      "fp": "3d44a5780c3a5bf69b9508ad"
+      "fp": "0dce2baa1b5f642eba5137e8"
     },
     "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones": {
       "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
@@ -3143,10 +3382,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "echoReferenceMode": "auto"
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "37edfa3fb32fa2c3644cb6a2"
     },
     "2026-06-topical-navigation-guild": {
       "id": "2026-06-topical-navigation-guild",
@@ -3156,10 +3395,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-06-upscale-small-captured-frames": {
       "id": "2026-06-upscale-small-captured-frames",
@@ -3169,10 +3408,11 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "minCaptureWidth": 130,
+          "minCaptureHeight": 130
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "f154d3009430b797e6247969"
     },
     "2026-06-use-new-badge-image-source": {
       "id": "2026-06-use-new-badge-image-source",
@@ -3182,13 +3422,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-user-profile-sidebar-redesign": {
       "id": "2026-06-user-profile-sidebar-redesign",
@@ -3198,10 +3438,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-web-translate-dom-guard": {
       "id": "2026-06-web-translate-dom-guard",
@@ -3211,10 +3451,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": false
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "87105ed873380cd0b0f22936"
     },
     "2026-06-web-vitals-monitoring": {
       "id": "2026-06-web-vitals-monitoring",
@@ -3224,15 +3464,14 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1,
-          "percentage": 0.05
+          "enabled": true
         },
         "2": {
-          "id": 2,
-          "percentage": 1
+          "enabled": true,
+          "sampleRate": 1
         }
       },
-      "fp": "8c05ac108a20c0c44c308310"
+      "fp": "c2ae07e01bff3291ee1383d3"
     },
     "2026-06-wmf-cpu-encode-intel": {
       "id": "2026-06-wmf-cpu-encode-intel",
@@ -3242,10 +3481,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-app-channels": {
       "id": "2026-07-app-channels",
@@ -3255,10 +3494,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-07-attachment-image-ladder": {
       "id": "2026-07-attachment-image-ladder",
@@ -3271,10 +3510,10 @@
           "id": 0
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-07-autoclipping-default-override": {
       "id": "2026-07-autoclipping-default-override",
@@ -3284,10 +3523,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-autoclipping-marketing": {
       "id": "2026-07-autoclipping-marketing",
@@ -3297,10 +3536,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableMarketing": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "bd393b391cb8b7f8a94083b6"
     },
     "2026-07-call-of-duty-3pp-expired": {
       "id": "2026-07-call-of-duty-3pp-expired",
@@ -3310,13 +3549,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-call-of-duty-3pp-marketing": {
       "id": "2026-07-call-of-duty-3pp-marketing",
@@ -3326,13 +3565,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-call-of-duty-3pp-non-sub-marketing": {
       "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
@@ -3342,13 +3581,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-clips-game-events-on-player": {
       "id": "2026-07-clips-game-events-on-player",
@@ -3358,10 +3597,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableGameEventsOnPlayer": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "66da57c597741b567730a97a"
     },
     "2026-07-clips-on-profile-setter": {
       "id": "2026-07-clips-on-profile-setter",
@@ -3371,13 +3610,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-clips-on-profile-viewer": {
       "id": "2026-07-clips-on-profile-viewer",
@@ -3387,13 +3626,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-cobalt": {
       "id": "2026-07-cobalt",
@@ -3403,13 +3642,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-cod-3pp": {
       "id": "2026-07-cod-3pp",
@@ -3419,13 +3658,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-custom-app-store-overlay": {
       "id": "2026-07-custom-app-store-overlay",
@@ -3435,10 +3674,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-desktop-channel-tabs": {
       "id": "2026-07-desktop-channel-tabs",
@@ -3448,10 +3687,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-desktop-tti-update-backoff-algo": {
       "id": "2026-07-desktop-tti-update-backoff-algo",
@@ -3461,10 +3700,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "algo": 1
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "6069bf145e03dd69e684a407"
     },
     "2026-07-expressive-modal-v2": {
       "id": "2026-07-expressive-modal-v2",
@@ -3474,13 +3713,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         },
         "2": {
-          "id": 2
+          "enabled": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-07-gsimagic": {
       "id": "2026-07-gsimagic",
@@ -3490,10 +3729,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableCs2Gsi": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "0106ae3121c0b78ee3941437"
     },
     "2026-07-ios-attribution": {
       "id": "2026-07-ios-attribution",
@@ -3503,10 +3742,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-manual-age-assurance-fallback": {
       "id": "2026-07-manual-age-assurance-fallback",
@@ -3516,10 +3755,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-message-bookmarks-v2": {
       "id": "2026-07-message-bookmarks-v2",
@@ -3545,10 +3784,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-onyx": {
       "id": "2026-07-onyx",
@@ -3558,13 +3797,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-orbchievements": {
       "id": "2026-07-orbchievements",
@@ -3574,10 +3813,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-parental-consent-warning-fetch": {
       "id": "2026-07-parental-consent-warning-fetch",
@@ -3587,10 +3826,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-personal-widget": {
       "id": "2026-07-personal-widget",
@@ -3600,16 +3839,19 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "showCreateEntrypoint": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "showCreateEntrypoint": false
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "showCreateEntrypoint": true
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "16cf26a662162823d69f19eb"
     },
     "2026-07-plan-select-ui-redesign": {
       "id": "2026-07-plan-select-ui-redesign",
@@ -3635,13 +3877,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-premium-group-expansion-announcement": {
       "id": "2026-07-premium-group-expansion-announcement",
@@ -3667,22 +3909,27 @@
       "variationCount": 5,
       "variations": {
         "0": {
-          "id": 0
+          "referralRewardType": null,
+          "useAltReferralCardArt": false
         },
         "1": {
-          "id": 1
+          "referralRewardType": "orbs",
+          "useAltReferralCardArt": false
         },
         "2": {
-          "id": 2
+          "referralRewardType": "discount",
+          "useAltReferralCardArt": false
         },
         "3": {
-          "id": 3
+          "referralRewardType": "orbs",
+          "useAltReferralCardArt": true
         },
         "4": {
-          "id": 4
+          "referralRewardType": "discount",
+          "useAltReferralCardArt": true
         }
       },
-      "fp": "d8f6dc7d902a390baa71ede3"
+      "fp": "6c1ed7e08aa93b09e4a6d00a"
     },
     "2026-07-quest-home-default-banner-removal": {
       "id": "2026-07-quest-home-default-banner-removal",
@@ -3701,10 +3948,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "useStaticGradient": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "604e7d539a7e75fea98dd4ef"
     },
     "2026-07-reject-with-error-kill-switch": {
       "id": "2026-07-reject-with-error-kill-switch",
@@ -3714,10 +3961,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "migrationKilled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "df61b85cea23a3b554f4db07"
     },
     "2026-07-renewable-end-date-sort": {
       "id": "2026-07-renewable-end-date-sort",
@@ -3727,13 +3974,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-smag-dm-sidebar-nitro-recommendation": {
       "id": "2026-07-smag-dm-sidebar-nitro-recommendation",
@@ -3743,13 +3990,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "isEnabled": false
         },
         "1": {
-          "id": 1
+          "isEnabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "5cba73a0c2c4d6b8225edbd6"
     },
     "2026-07-typing-users-css-dots": {
       "id": "2026-07-typing-users-css-dots",
@@ -3759,10 +4006,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-unobtrusive-device-suggestions": {
       "id": "2026-07-unobtrusive-device-suggestions",
@@ -3772,10 +4019,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "showDeviceDetectedPanel": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "ca2606dfa38bf3b2e3e2acf4"
     },
     "2026-07-vibegrations-guild": {
       "id": "2026-07-vibegrations-guild",
@@ -3785,13 +4032,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "74fc9d0ff39d614ade8bdadc"
+      "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-07-wishlist-direct-to-gifting": {
       "id": "2026-07-wishlist-direct-to-gifting",
@@ -3801,13 +4048,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "clickRoutesToGift": true,
+          "showGiftButton": true
         },
         "2": {
-          "id": 2
+          "clickRoutesToGift": true,
+          "showGiftButton": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "c747a0d32164ac3da8c4b426"
     },
     "2026-08-ad-topic-opt-out-client": {
       "id": "2026-08-ad-topic-opt-out-client",
@@ -3817,22 +4066,22 @@
       "variationCount": 5,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": false
         },
         "2": {
-          "id": 2
+          "enabled": true
         },
         "3": {
-          "id": 3
+          "enabled": true
         },
         "4": {
-          "id": 4
+          "enabled": true
         },
         "5": {
-          "id": 5
+          "enabled": true
         }
       },
-      "fp": "48205e4bfc47365a8e3d82ac"
+      "fp": "d88929023257256cf87514a4"
     },
     "2026-08-android-rn-reparenting-flag": {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -3851,31 +4100,47 @@
       "variationCount": 8,
       "variations": {
         "1": {
-          "id": 1
+          "capSampleRate": true,
+          "capChannelCount": false,
+          "condition": "krisp"
         },
         "2": {
-          "id": 2
+          "capSampleRate": true,
+          "capChannelCount": false,
+          "condition": "noiseSuppression"
         },
         "3": {
-          "id": 3
+          "capSampleRate": true,
+          "capChannelCount": false,
+          "condition": "echoCancellation"
         },
         "4": {
-          "id": 4
+          "capSampleRate": true,
+          "capChannelCount": false,
+          "condition": "any"
         },
         "5": {
-          "id": 5
+          "capSampleRate": true,
+          "capChannelCount": true,
+          "condition": "krisp"
         },
         "6": {
-          "id": 6
+          "capSampleRate": true,
+          "capChannelCount": true,
+          "condition": "noiseSuppression"
         },
         "7": {
-          "id": 7
+          "capSampleRate": true,
+          "capChannelCount": true,
+          "condition": "echoCancellation"
         },
         "8": {
-          "id": 8
+          "capSampleRate": true,
+          "capChannelCount": true,
+          "condition": "any"
         }
       },
-      "fp": "4db9a64021db9503376c493c"
+      "fp": "0b63d601a5f9bdc0b65156b9"
     },
     "2026-08-automontage": {
       "id": "2026-08-automontage",
@@ -3885,10 +4150,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableAutomontage": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "6195ec1c011b9e9f2bd13f50"
     },
     "2026-08-badge-management": {
       "id": "2026-08-badge-management",
@@ -3898,13 +4163,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "tenureBadgeHideable": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "tenureBadgeHideable": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "b770065750f9b4f5d10a22be"
     },
     "2026-08-bounties-mobile-quest-bar": {
       "id": "2026-08-bounties-mobile-quest-bar",
@@ -3914,28 +4181,45 @@
       "variationCount": 7,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "illustration": "illustration1",
+          "ctrVariant": 0,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "illustration": "illustration2",
+          "ctrVariant": 0,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "3": {
-          "id": 3
+          "enabled": true,
+          "illustration": "illustration3",
+          "ctrVariant": 0,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "4": {
-          "id": 4
+          "enabled": true,
+          "ctrVariant": 2,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "5": {
-          "id": 5
+          "enabled": true,
+          "ctrVariant": 3,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "6": {
-          "id": 6
+          "enabled": true,
+          "ctrVariant": 1,
+          "hapticFeedbackOnRewardEarnedEnabled": false
         },
         "7": {
-          "id": 7
+          "enabled": true,
+          "ctrVariant": 0,
+          "hapticFeedbackOnRewardEarnedEnabled": true
         }
       },
-      "fp": "185a05d5efed934100f4b84e"
+      "fp": "ffa085d6f15d87730b91d6a2"
     },
     "2026-08-call-of-duty-3pp-nagbar": {
       "id": "2026-08-call-of-duty-3pp-nagbar",
@@ -3945,13 +4229,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-compress-logs": {
       "id": "2026-08-compress-logs",
@@ -3961,10 +4245,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-dcf-new-user-cooldown": {
       "id": "2026-08-dcf-new-user-cooldown",
@@ -3974,16 +4258,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "newUserCooldownMs": 2
         },
         "2": {
-          "id": 2
+          "newUserCooldownMs": 3
         },
         "3": {
-          "id": 3
+          "newUserCooldownMs": 7
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "abac17880c6b0b07f008184b"
     },
     "2026-08-dont-close-chat": {
       "id": "2026-08-dont-close-chat",
@@ -3993,10 +4277,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "closeChatOnLeave": false
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "06316c00418652b0859b27b2"
     },
     "2026-08-favorites-server": {
       "id": "2026-08-favorites-server",
@@ -4006,10 +4290,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-forward-age-restricted-destinations": {
       "id": "2026-08-forward-age-restricted-destinations",
@@ -4019,10 +4303,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "disableAgeRestrictedDestinations": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "29e6c710e5d7fa2249f9aee7"
     },
     "2026-08-game-mode": {
       "id": "2026-08-game-mode",
@@ -4032,10 +4316,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-game-profiles-vc": {
       "id": "2026-08-game-profiles-vc",
@@ -4048,10 +4332,10 @@
           "id": 0
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-08-gsh-subs-activity-bar": {
       "id": "2026-08-gsh-subs-activity-bar",
@@ -4061,13 +4345,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-guilds-bar-media-state-store": {
       "id": "2026-08-guilds-bar-media-state-store",
@@ -4077,16 +4361,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "source": "hook"
         },
         "1": {
-          "id": 1
+          "source": "store"
         },
         "2": {
-          "id": 2
+          "source": "shadow"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "dbf8a0d849c49e7155e75403"
     },
     "2026-08-hide-gift-shop-upsell": {
       "id": "2026-08-hide-gift-shop-upsell",
@@ -4096,13 +4380,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "isHidden": false
         },
         "1": {
-          "id": 1
+          "isHidden": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "8511a82dda710ce003f4bfb5"
     },
     "2026-08-ios-objc-composed-image-cache": {
       "id": "2026-08-ios-objc-composed-image-cache",
@@ -4121,10 +4405,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-mute-aware-noise-cancellation": {
       "id": "2026-08-mute-aware-noise-cancellation",
@@ -4134,13 +4418,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-nitro-tenure-badge-total-progress": {
       "id": "2026-08-nitro-tenure-badge-total-progress",
@@ -4150,13 +4434,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "measureFromStreakStart": false
         },
         "1": {
-          "id": 1
+          "measureFromStreakStart": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "c2281007f6c70697dbd73038"
     },
     "2026-08-nitro-tenure-badge-withheld-state": {
       "id": "2026-08-nitro-tenure-badge-withheld-state",
@@ -4166,13 +4450,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "showWithheldBadge": false
         },
         "1": {
-          "id": 1
+          "showWithheldBadge": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "f098cb3ee3c1abc1c9c50a13"
     },
     "2026-08-no-fill-logging": {
       "id": "2026-08-no-fill-logging",
@@ -4182,13 +4466,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enableNoFill": false
         },
         "2": {
-          "id": 2
+          "enableNoFill": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "40dc6f3c379cec02510a26c6"
     },
     "2026-08-profile-embed-rendering": {
       "id": "2026-08-profile-embed-rendering",
@@ -4198,10 +4482,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-profile-embed-share-button": {
       "id": "2026-08-profile-embed-share-button",
@@ -4211,10 +4495,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-profile-read-state-v1": {
       "id": "2026-08-profile-read-state-v1",
@@ -4233,10 +4517,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableRocketLeagueEvents": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "86ecd14decee892a07c46b55"
     },
     "2026-08-scheduled-messages": {
       "id": "2026-08-scheduled-messages",
@@ -4262,10 +4546,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-split-payments": {
       "id": "2026-08-split-payments",
@@ -4275,10 +4559,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-timestamp-autocomplete-mobile": {
       "id": "2026-08-timestamp-autocomplete-mobile",
@@ -4288,13 +4572,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-tiny-bronco": {
       "id": "2026-08-tiny-bronco",
@@ -4304,13 +4588,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-top-soundboard-sounds": {
       "id": "2026-08-top-soundboard-sounds",
@@ -4320,13 +4604,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "topSoundsFirst": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "topSoundsFirst": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "6a9933627116a0d604cdb68b"
     },
     "2026-08-top-soundboard-sounds-mobile": {
       "id": "2026-08-top-soundboard-sounds-mobile",
@@ -4336,13 +4622,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "topSoundsFirst": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "topSoundsFirst": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "6a9933627116a0d604cdb68b"
     },
     "2026-08-user-bio-max-length": {
       "id": "2026-08-user-bio-max-length",
@@ -4368,10 +4656,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-video-guard": {
       "id": "2026-08-video-guard",
@@ -4381,13 +4669,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "videoEnabled": false
         },
         "2": {
-          "id": 2
+          "videoEnabled": false
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "e0fa802fdb155591e79ebcce"
     },
     "2026-08-virtual-backgrounds-ios": {
       "id": "2026-08-virtual-backgrounds-ios",
@@ -4397,10 +4685,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-voice-server-update-immediate": {
       "id": "2026-08-voice-server-update-immediate",
@@ -4410,10 +4698,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-vq-remaining-time-truncation": {
       "id": "2026-08-vq-remaining-time-truncation",
@@ -4423,13 +4711,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "truncateMoreThanSeconds": 30
         },
         "2": {
-          "id": 2
+          "truncateMoreThanSeconds": 60
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "d789c171ce6100fabdb78b1b"
     },
     "2026-08-web-filter-tag-group-migration": {
       "id": "2026-08-web-filter-tag-group-migration",
@@ -4439,10 +4727,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-agc2-mobile": {
       "id": "2026-09-agc2-mobile",
@@ -4474,13 +4762,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-automod-application-rules": {
       "id": "2026-09-automod-application-rules",
@@ -4490,10 +4778,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-09-build-a-bear": {
       "id": "2026-09-build-a-bear",
@@ -4503,13 +4791,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-clips-editor-image-track": {
       "id": "2026-09-clips-editor-image-track",
@@ -4519,10 +4807,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-connected-thread-sidebar": {
       "id": "2026-09-connected-thread-sidebar",
@@ -4532,13 +4820,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-conversation-topic-header": {
       "id": "2026-09-conversation-topic-header",
@@ -4548,10 +4836,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-design-systems-notification-components": {
       "id": "2026-09-design-systems-notification-components",
@@ -4561,10 +4849,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-desktop-tti-shader-cache": {
       "id": "2026-09-desktop-tti-shader-cache",
@@ -4574,10 +4862,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-edit-profile-collectibles-ordering": {
       "id": "2026-09-edit-profile-collectibles-ordering",
@@ -4587,13 +4875,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-friends-sidebar": {
       "id": "2026-09-friends-sidebar",
@@ -4603,16 +4891,19 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "sidebarEnabled": false,
+          "appBarToggleEnabled": false
         },
         "1": {
-          "id": 1
+          "sidebarEnabled": true,
+          "appBarToggleEnabled": false
         },
         "2": {
-          "id": 2
+          "sidebarEnabled": true,
+          "appBarToggleEnabled": true
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "fb260903477484dbc62c9af4"
     },
     "2026-09-game-profiles-v3-commerce-tab": {
       "id": "2026-09-game-profiles-v3-commerce-tab",
@@ -4625,10 +4916,10 @@
           "id": 0
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-09-game-profiles-v3-communities-tab": {
       "id": "2026-09-game-profiles-v3-communities-tab",
@@ -4641,10 +4932,10 @@
           "id": 0
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-09-game-search-row": {
       "id": "2026-09-game-search-row",
@@ -4654,10 +4945,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "extraChromeEnabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "29c34eaac2d9ba6a228532f6"
     },
     "2026-09-gifting-badge-coachmark-audience": {
       "id": "2026-09-gifting-badge-coachmark-audience",
@@ -4667,10 +4958,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-gifting-badge-complex-art": {
       "id": "2026-09-gifting-badge-complex-art",
@@ -4680,13 +4971,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-gsimagic2": {
       "id": "2026-09-gsimagic2",
@@ -4696,10 +4987,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enableDotaGsi": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "6a50f31960df5bca5d42110d"
     },
     "2026-09-guild-sidebar-stream-preview": {
       "id": "2026-09-guild-sidebar-stream-preview",
@@ -4709,13 +5000,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "74fc9d0ff39d614ade8bdadc"
+      "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-09-guild-spaces": {
       "id": "2026-09-guild-spaces",
@@ -4725,13 +5016,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "74fc9d0ff39d614ade8bdadc"
+      "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-09-halloween-holiday": {
       "id": "2026-09-halloween-holiday",
@@ -4741,13 +5032,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-halloween-wishlisting-animation": {
       "id": "2026-09-halloween-wishlisting-animation",
@@ -4757,13 +5048,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-hexagon-campaign-client": {
       "id": "2026-09-hexagon-campaign-client",
@@ -4773,16 +5064,19 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "questHomeRedirect": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "questHomeRedirect": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "questHomeRedirect": false
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "88121ba1a6cb201de4e82bd1"
     },
     "2026-09-invite-accept-age-group-errors": {
       "id": "2026-09-invite-accept-age-group-errors",
@@ -4792,13 +5086,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-invite-expiring-soon": {
       "id": "2026-09-invite-expiring-soon",
@@ -4808,13 +5102,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-invite-silp-education": {
       "id": "2026-09-invite-silp-education",
@@ -4824,13 +5118,13 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "variant": "popover"
         },
         "2": {
-          "id": 2
+          "variant": "sidebar"
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "f74b00b4d1644ed30820654a"
     },
     "2026-09-linked-game-org-invites-dev": {
       "id": "2026-09-linked-game-org-invites-dev",
@@ -4840,10 +5134,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-linux-gpu-decode": {
       "id": "2026-09-linux-gpu-decode",
@@ -4853,16 +5147,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "mode": "all"
         },
         "1": {
-          "id": 1
+          "mode": "disable_nvidia"
         },
         "2": {
-          "id": 2
+          "mode": "disable_all"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "118ecebebbc8856e87fea412"
     },
     "2026-09-manual-review-inconclusive-copy": {
       "id": "2026-09-manual-review-inconclusive-copy",
@@ -4872,10 +5166,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-mobile-quest-home-sort-priority": {
       "id": "2026-09-mobile-quest-home-sort-priority",
@@ -4885,13 +5179,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-mobile-quest-reward-button-to-secondary-button": {
       "id": "2026-09-mobile-quest-reward-button-to-secondary-button",
@@ -4901,10 +5195,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-multi-sku-embed-rendering": {
       "id": "2026-09-multi-sku-embed-rendering",
@@ -4914,10 +5208,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-multisku-embed-builder": {
       "id": "2026-09-multisku-embed-builder",
@@ -4927,10 +5221,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-nameplate-video-preload-none": {
       "id": "2026-09-nameplate-video-preload-none",
@@ -4940,10 +5234,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "preload": "none"
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "5a1fa4f5efd6f606a867d357"
     },
     "2026-09-new-horizontal-scroll-shared": {
       "id": "2026-09-new-horizontal-scroll-shared",
@@ -4953,13 +5247,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "useNewHScroll": false
         },
         "1": {
-          "id": 1
+          "useNewHScroll": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "5d6aff8c2c5f51adfd105c8e"
     },
     "2026-09-new-hscroll": {
       "id": "2026-09-new-hscroll",
@@ -4969,13 +5263,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "useNewHScroll": false
         },
         "1": {
-          "id": 1
+          "useNewHScroll": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "5d6aff8c2c5f51adfd105c8e"
     },
     "2026-09-new-orb-reward-visuals": {
       "id": "2026-09-new-orb-reward-visuals",
@@ -4985,13 +5279,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-nitro-file-upload-rollout": {
       "id": "2026-09-nitro-file-upload-rollout",
@@ -5001,10 +5295,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-non-nitro-file-upload-marketing": {
       "id": "2026-09-non-nitro-file-upload-marketing",
@@ -5014,13 +5308,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-orbs-hero-carousel": {
       "id": "2026-09-orbs-hero-carousel",
@@ -5030,13 +5324,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-profile-link-fetch": {
       "id": "2026-09-profile-link-fetch",
@@ -5046,10 +5340,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-profile-widget-empty-state-suggestions": {
       "id": "2026-09-profile-widget-empty-state-suggestions",
@@ -5059,13 +5353,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "maxWidgetOptions": 4
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "maxWidgetOptions": 6
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "42607203bd6a8a61a8abe786"
     },
     "2026-09-quest-home-bounties-feature-gate": {
       "id": "2026-09-quest-home-bounties-feature-gate",
@@ -5075,10 +5371,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-quest-mobile-bar-secondary-cta": {
       "id": "2026-09-quest-mobile-bar-secondary-cta",
@@ -5088,10 +5384,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-referral-profile-contextual-menu-upsell": {
       "id": "2026-09-referral-profile-contextual-menu-upsell",
@@ -5133,10 +5429,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "trackingCopy": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "08cecc862d6ee19e050de6b8"
     },
     "2026-09-rust-3p": {
       "id": "2026-09-rust-3p",
@@ -5146,13 +5442,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-safety-flows-legacy-required-actions": {
       "id": "2026-09-safety-flows-legacy-required-actions",
@@ -5199,13 +5495,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": false
         },
         "2": {
-          "id": 2
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "cc981a8cefd5a586c4f0f053"
     },
     "2026-09-server-tooltip-notification-context": {
       "id": "2026-09-server-tooltip-notification-context",
@@ -5215,16 +5513,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "mode": "disabled"
         },
         "1": {
-          "id": 1
+          "mode": "latest"
         },
         "2": {
-          "id": 2
+          "mode": "mentions_first"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "03b84e49df85641eab99f6bb"
     },
     "2026-09-silp-app-opened-direct-to-discoverable": {
       "id": "2026-09-silp-app-opened-direct-to-discoverable",
@@ -5234,16 +5532,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "placement": null
         },
         "1": {
-          "id": 1
+          "placement": "in_content"
         },
         "2": {
-          "id": 2
+          "placement": "below_content"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "1e29774f01a21b41e1071999"
     },
     "2026-09-silp-cta-copy-tests": {
       "id": "2026-09-silp-cta-copy-tests",
@@ -5253,16 +5551,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "variant": "clarity"
         },
         "2": {
-          "id": 2
+          "variant": "clarity_softer"
         },
         "3": {
-          "id": 3
+          "variant": "low_commitment"
         }
       },
-      "fp": "36041cccbf4c0138483fb586"
+      "fp": "fc5bf841f481b9b5af34e76b"
     },
     "2026-09-silp-desktop-app-upsell": {
       "id": "2026-09-silp-desktop-app-upsell",
@@ -5272,16 +5570,16 @@
       "variationCount": 3,
       "variations": {
         "1": {
-          "id": 1
+          "label": "download_discord_app"
         },
         "2": {
-          "id": 2
+          "label": "download_app"
         },
         "3": {
-          "id": 3
+          "label": "get_discord"
         }
       },
-      "fp": "b08ec5e5832d933e7840b887"
+      "fp": "6f4892d9a99c0524777313b2"
     },
     "2026-09-silp-direct-to-discoverable": {
       "id": "2026-09-silp-direct-to-discoverable",
@@ -5291,16 +5589,16 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "placement": null
         },
         "1": {
-          "id": 1
+          "placement": "in_content"
         },
         "2": {
-          "id": 2
+          "placement": "below_content"
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "1e29774f01a21b41e1071999"
     },
     "2026-09-single-cpu-copy": {
       "id": "2026-09-single-cpu-copy",
@@ -5310,10 +5608,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-soundboard-echo": {
       "id": "2026-09-soundboard-echo",
@@ -5323,10 +5621,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "21e8485f60217160d4c2e2f4"
+      "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-09-soundboard-favorites": {
       "id": "2026-09-soundboard-favorites",
@@ -5336,13 +5634,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "sortOrder": "favorite-date",
+          "allowReordering": false
         },
         "2": {
-          "id": 2
+          "sortOrder": "favorite-date",
+          "allowReordering": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "a5f66b3569c62be7253f2974"
     },
     "2026-09-soundboard-quick-action": {
       "id": "2026-09-soundboard-quick-action",
@@ -5352,13 +5652,17 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true,
+          "showQuickAccess": true,
+          "showOnRTCHover": true
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "showQuickAccess": false,
+          "showOnRTCHover": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "00bf906f070f5a89a6cd2ecc"
     },
     "2026-09-stream-zero-vad-leading": {
       "id": "2026-09-stream-zero-vad-leading",
@@ -5368,10 +5672,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-three-month-nitro-gifting": {
       "id": "2026-09-three-month-nitro-gifting",
@@ -5397,10 +5701,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-video-background-profile-fetch": {
       "id": "2026-09-video-background-profile-fetch",
@@ -5410,13 +5714,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-voice-connect-feedback": {
       "id": "2026-09-voice-connect-feedback",
@@ -5426,13 +5730,15 @@
       "variationCount": 2,
       "variations": {
         "1": {
-          "id": 1
+          "rtcConnectionJoinSounds": true,
+          "showSelfConnectingUI": false
         },
         "2": {
-          "id": 2
+          "rtcConnectionJoinSounds": true,
+          "showSelfConnectingUI": true
         }
       },
-      "fp": "f44d6f0eb6e4563019d5aa79"
+      "fp": "335a4e6f4ecaeaa631605a6e"
     },
     "2026-09-web-sticker-picker-upsell-restyle": {
       "id": "2026-09-web-sticker-picker-upsell-restyle",
@@ -5458,13 +5764,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-youtube-3p-nagbar": {
       "id": "2026-09-youtube-3p-nagbar",
@@ -5474,10 +5780,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-badge-directory-updates": {
       "id": "2026-10-badge-directory-updates",
@@ -5487,16 +5793,19 @@
       "variationCount": 3,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false,
+          "swipeBetweenBadges": false
         },
         "1": {
-          "id": 1
+          "enabled": true,
+          "swipeBetweenBadges": false
         },
         "2": {
-          "id": 2
+          "enabled": true,
+          "swipeBetweenBadges": true
         }
       },
-      "fp": "a80296903cc2e06ce785d5ee"
+      "fp": "3827681dea47d84bba18bfdd"
     },
     "2026-10-contextual-referrals-gdm-member-list": {
       "id": "2026-10-contextual-referrals-gdm-member-list",
@@ -5506,13 +5815,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "showEmbed": false
         },
         "1": {
-          "id": 1
+          "showEmbed": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "3e826cdc3421d41db9406acb"
     },
     "2026-10-guild-tooltip-lazy-content": {
       "id": "2026-10-guild-tooltip-lazy-content",
@@ -5522,13 +5831,13 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "enabled": false
         },
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "4eb58677fe4d82185914eef5"
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-purchase-history": {
       "id": "2026-10-purchase-history",
@@ -5538,10 +5847,10 @@
       "variationCount": 1,
       "variations": {
         "1": {
-          "id": 1
+          "enabled": true
         }
       },
-      "fp": "f168eaf07e491e0688f2b8f8"
+      "fp": "cd22bd20f219f1b2129849b7"
     }
   }
 }

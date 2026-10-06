@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["452729"],{116960(a,d,t){t.d(d,{default:()=>n});var e=t(477900);t(582128);var i=t(192308);function n(a){(0,i.openModalLazy)(async()=>{let{default:d}=await t.e("88862").then(t.bind(t,846637));return t=>(0,e.jsx)(d,{...t,guildId:a})})}}}]);
+//# sourceMappingURL=bfccdd924cd5d58e.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["733314"],{954457(c,s,a){a.d(s,{A:()=>b});let b="https://cdn.discordapp.com/assets/content/60fb932c6ca2a353188680784e8689fa8384d04e7b7abbb8660c25dbb70afb9c.svg"}}]);
+//# sourceMappingURL=8b2525dd84e1bac0.js.map

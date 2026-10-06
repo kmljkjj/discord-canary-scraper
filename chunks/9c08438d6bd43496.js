@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["34486"],{923477(i,h,t){t.d(h,{O:()=>r});let r=(0,t(196765).v)()(i=>({highlightFirstCardNonce:0,requestHighlightFirstCard:()=>i(i=>({highlightFirstCardNonce:i.highlightFirstCardNonce+1}))}))}}]);
+//# sourceMappingURL=9c08438d6bd43496.js.map

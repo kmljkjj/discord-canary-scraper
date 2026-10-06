@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["519623"],{518650(i){i.exports=JSON.parse('{"yfwZuy":["Ver mi insignia"],"UnPGii":["La insignia se ha a\xf1adido a tu perfil."],"nvaTQq":["\xa1Has conseguido la insignia de perfil de Orbs!"]}')}}]);
+//# sourceMappingURL=f05d05854ac016bb.js.map

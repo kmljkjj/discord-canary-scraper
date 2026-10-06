@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["253234"],{184054(t,e,r){r.d(e,{t:()=>a});var s=r(225220);async function a(t){let e=t.query?(0,s.t)(t.url,t.query):t.url,r=await fetch(e,{method:t.method,headers:t.headers,body:t.body,signal:t.signal});if(!r.ok)throw Error(`${t.method} ${e} failed: ${r.status} ${r.statusText}`);return r}}}]);
+//# sourceMappingURL=1cd2b4a4b0ac21bc.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["25159"],{939981(e,t,n){n.d(t,{A:()=>i});var a=n(773669);function i(e){let t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{month:"numeric",day:"numeric"};return new Date(e).toLocaleDateString(a.default.locale,{...t,timeZone:"UTC"})}}}]);
+//# sourceMappingURL=bae9b7fe34d6d699.js.map

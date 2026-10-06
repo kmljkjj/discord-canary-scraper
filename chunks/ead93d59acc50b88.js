@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["951811"],{414798(p,t,s){s.d(t,{A:()=>i});var h=s(73153);let i={startTyping(p){h.h.dispatch({type:"TYPING_START_LOCAL",channelId:p})},stopTyping(p){h.h.dispatch({type:"TYPING_STOP_LOCAL",channelId:p})}}}}]);
+//# sourceMappingURL=ead93d59acc50b88.js.map

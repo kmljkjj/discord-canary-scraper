@@ -1,0 +1,2 @@
+(()=>{var e={},r={};function t(s){var a=r[s];if(void 0!==a)return a.exports;var n=r[s]={exports:{}};return e[s](n,n.exports,t),n.exports}t.rv=()=>"1.7.11",t.ruid="bundler=rspack@1.7.11",self.addEventListener("message",async e=>{let{data:{url:r}}=e,t=!1;try{await fetch(r)}catch(e){t=!0}self.postMessage({url:r,error:t})})})();
+//# sourceMappingURL=fd640ecc3f512e29.js.map

@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["881063"],{232666(s,p,t){s.exports={L:"confettiCanvas__78e61"}}}]);

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["926170"],{891553(e){e.exports=JSON.parse('{"WMK6Pg":["L\xe5s opp tilbud"],"7TxNKE":["dager"],"7pATiR":["Timer"],"dXR9qI":["Minutter"],"v5a81e":["Hent premie"],"TaUsG9":["Om ",[6,"days",{"one":[[7]," dag"],"other":[[7]," dager"]},0,"cardinal"]],"vlafDc":["L\xe5s opp premie"]}')}}]);
+//# sourceMappingURL=e68cf2237f7bce70.js.map

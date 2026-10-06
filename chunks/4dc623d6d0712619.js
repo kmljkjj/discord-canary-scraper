@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["863232"],{702211(e,t,r){r.d(t,{b:()=>p});var u=r(17928),i=r(287809),s=r(474090),d=r(202541);function p(){let e=arguments.length>0&&void 0!==arguments[0]&&arguments[0];return!(0,u.bG)([i.default],()=>s.Ay.isPremium(i.default.getCurrentUser(),d.PremiumTypes.TIER_2))&&!e}}}]);
+//# sourceMappingURL=4dc623d6d0712619.js.map

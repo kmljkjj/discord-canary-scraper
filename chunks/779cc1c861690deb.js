@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["896496"],{842291(a,r,e){a.exports={GI:"bannerFrame__63723",k5:"roundedBanner__63723",oz:"avatarOverlay__63723"}}}]);

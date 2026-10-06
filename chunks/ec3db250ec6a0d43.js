@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["106980"],{51407(t,e,a){t.exports={pQ:"connectedAccountVanityMetadata_fffe42",RB:"connectedAccountVanityMetadataTag_fffe42",uR:"connectedAccountVanityMetadataItem_fffe42",pv:"connectedAccountVanityMetadataItemIcon_fffe42",wI:"paypalVerifiedTag_fffe42"}}}]);

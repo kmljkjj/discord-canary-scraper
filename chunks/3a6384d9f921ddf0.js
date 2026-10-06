@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["95340"],{486503(e,d,a){a.d(d,{A:()=>i});let i=(0,a(600975).C)({kind:"user",id:"2025-11_tida_webform",label:"Tida Webform",defaultConfig:{tidaWebformEnabled:!1},treatments:[{id:1,label:"Enabled",config:{tidaWebformEnabled:!0}}]})}}]);
+//# sourceMappingURL=3a6384d9f921ddf0.js.map

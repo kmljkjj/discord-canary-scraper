@@ -7,7 +7,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Show scores in QS results",
+        "showScores": true
       }
     },
     "label": "Display QS scores in results. Not a real experiment"
@@ -21,10 +23,16 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enabled but silent",
+        "enabled": true,
+        "reporting": false
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Enabled and reporting",
+        "enabled": true,
+        "reporting": true
       }
     },
     "label": "Runtime Accessibility System"
@@ -37,7 +45,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Allow guild channel messages from spammers to be collapsed",
+        "enabled": true
       }
     },
     "label": "Inferno Spam Redaction"
@@ -57,7 +67,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "On",
+        "enabled": true
       }
     },
     "label": "Voice in Threads"
@@ -70,7 +82,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enabled",
+        "enabled": true
       }
     },
     "label": "Disable mass mentions for communities by default"
@@ -83,7 +97,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Allow creation of guest voice invites",
+        "enabled": true
       }
     },
     "label": "Guest Voice Invites"
@@ -96,10 +112,14 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "EU user",
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "DSA E2E testing user",
+        "enabled": true
       }
     },
     "label": "Safety Experience Unauthenticated Report Form"
@@ -112,7 +132,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enabled",
+        "enabled": true
       }
     },
     "label": "Safety Experience IAR User Reporting"
@@ -127,22 +149,46 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Golive Simulcast without prober 720p@500k",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+        "simulcastEnabled": true
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Golive Simulcast 720p@500k",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+        "simulcastEnabled": true
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "label": "Golive with pacing",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer",
+        "simulcastEnabled": false
       },
       "4": {
-        "id": 4
+        "id": 4,
+        "label": "Golive with pacing and probing",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer,worker-pacer-probe",
+        "simulcastEnabled": false
       },
       "5": {
-        "id": 5
+        "id": 5,
+        "label": "Golive Simulcast 720p@750k",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-750k",
+        "simulcastEnabled": true
       },
       "6": {
-        "id": 6
+        "id": 6,
+        "label": "Golive Simulcast 720p@1000k",
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/worker-pacer-probe,worker-lq-floor-1000k",
+        "simulcastEnabled": true
       }
     },
     "label": "RTC Pacer & Golive Simulcast"
@@ -155,7 +201,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -170,19 +216,29 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "largerGuildIcons": true,
+        "darkerGuildListBackground": false,
+        "distinctBorders": false
       },
       "2": {
-        "id": 2
+        "largerGuildIcons": false,
+        "darkerGuildListBackground": true,
+        "distinctBorders": false
       },
       "3": {
-        "id": 3
+        "largerGuildIcons": true,
+        "darkerGuildListBackground": true,
+        "distinctBorders": false
       },
       "4": {
-        "id": 4
+        "largerGuildIcons": false,
+        "darkerGuildListBackground": false,
+        "distinctBorders": true
       },
       "5": {
-        "id": 5
+        "largerGuildIcons": true,
+        "darkerGuildListBackground": false,
+        "distinctBorders": true
       }
     },
     "label": null
@@ -195,10 +251,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -211,7 +267,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -226,16 +282,32 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "All enabled",
+        "searchEnabled": true,
+        "clearEnabled": true,
+        "activityEnabled": true
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Clear Only",
+        "searchEnabled": false,
+        "clearEnabled": true,
+        "activityEnabled": false
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "label": "Activities Only",
+        "searchEnabled": false,
+        "clearEnabled": false,
+        "activityEnabled": true
       },
       "4": {
-        "id": 4
+        "id": 4,
+        "label": "Activities and Clear",
+        "searchEnabled": false,
+        "clearEnabled": true,
+        "activityEnabled": true
       }
     },
     "label": "Native Intents"
@@ -248,13 +320,19 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "14 days",
+        "defaultMaxAge": 1209600
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "30 days",
+        "defaultMaxAge": 2592
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "label": "60 days",
+        "defaultMaxAge": 5184
       }
     },
     "label": "Default Invite Expiration Guild"
@@ -267,7 +345,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable GameServer",
+        "enabled": true
       }
     },
     "label": "GameServer Enabled"
@@ -280,7 +360,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -293,13 +373,15 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "sortType": "vc_probability"
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "sortType": "communication_probability"
       }
     },
     "label": null
@@ -310,10 +392,12 @@
     "defaultConfig": null,
     "variations": {
       "16": {
-        "id": 16
+        "id": 16,
+        "label": "ML model V3 - Nvidia small boost"
       },
       "17": {
-        "id": 17
+        "id": 17,
+        "label": "ML model V3 - Nvidia big boost"
       }
     },
     "label": "Next iteration of the activity feed ranking model."
@@ -326,13 +410,15 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "maxFileSizeBytes": 524288
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "maxFileSizeBytes": 262144
       }
     },
     "label": null
@@ -345,7 +431,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -358,7 +444,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -371,7 +457,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -384,10 +470,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "externalAnalyticsEnabled": false
       },
       "1": {
-        "id": 1
+        "externalAnalyticsEnabled": true
       }
     },
     "label": null
@@ -400,7 +486,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Community Account Linking UI",
+        "enabled": true
       }
     },
     "label": "Community Account Linking"
@@ -413,10 +501,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enableCustomCursors": false
       },
       "1": {
-        "id": 1
+        "enableCustomCursors": true
       }
     },
     "label": null
@@ -429,7 +517,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -442,10 +530,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -456,10 +544,12 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "allowAutoQuality": true,
+        "migrateAutoQuality": true
       },
       "2": {
-        "id": 2
+        "allowAutoQuality": true,
+        "defaultAutoQuality": true
       }
     },
     "label": null
@@ -472,7 +562,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -485,7 +575,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": "Calendar"
@@ -498,7 +588,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enabled",
+        "tidaWebformEnabled": true
       }
     },
     "label": "Tida Webform"
@@ -511,7 +603,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -524,7 +616,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -537,7 +629,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -552,13 +644,19 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "hasChat": true,
+        "hasFriendList": false,
+        "showNowPlayingForDifferentGames": false
       },
       "2": {
-        "id": 2
+        "hasChat": true,
+        "hasFriendList": true,
+        "showNowPlayingForDifferentGames": false
       },
       "3": {
-        "id": 3
+        "hasChat": true,
+        "hasFriendList": true,
+        "showNowPlayingForDifferentGames": true
       }
     },
     "label": null
@@ -573,10 +671,14 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "altTitle": false,
+        "altBody": false,
+        "altCta": false
       },
       "1": {
-        "id": 1
+        "altTitle": true,
+        "altBody": false,
+        "altCta": true
       }
     },
     "label": null
@@ -589,7 +691,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -602,7 +704,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -616,10 +718,16 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Both waveform and highlight",
+        "enableWaveformIcon": true,
+        "enableHighlight": true
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Waveform icon only",
+        "enableWaveformIcon": true,
+        "enableHighlight": false
       }
     },
     "label": "Voice Channel Hoisting"
@@ -632,10 +740,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -648,7 +756,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -661,10 +769,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -677,7 +785,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -690,19 +798,19 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "treatment": "control"
       },
       "1": {
-        "id": 1
+        "treatment": "treatment_a"
       },
       "2": {
-        "id": 2
+        "treatment": "treatment_b"
       },
       "3": {
-        "id": 3
+        "treatment": "treatment_c"
       },
       "4": {
-        "id": 4
+        "treatment": "treatment_d"
       }
     },
     "label": null
@@ -715,7 +823,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -728,16 +836,21 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "disableUI": true
       },
       "3": {
-        "id": 3
+        "enabled": true,
+        "disableUI": true,
+        "swallowVolumeOnlySpeakingEvents": true
       },
       "4": {
-        "id": 4
+        "enabled": true,
+        "disableUI": true,
+        "dontEmitVolumeOnlySpeakingEvents": true
       }
     },
     "label": null
@@ -750,25 +863,25 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true
       },
       "3": {
-        "id": 3
+        "enabled": true
       },
       "4": {
-        "id": 4
+        "enabled": true
       },
       "5": {
-        "id": 5
+        "enabled": true
       },
       "6": {
-        "id": 6
+        "enabled": true
       },
       "7": {
-        "id": 7
+        "enabled": true
       }
     },
     "label": null
@@ -779,7 +892,7 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "preferSystemEffects": true
       }
     },
     "label": null
@@ -792,7 +905,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -805,7 +918,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "hasBugReporterAccess": true
       }
     },
     "label": null
@@ -818,10 +931,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -834,10 +947,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -850,7 +963,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "guildFriendsEnabled": true
       }
     },
     "label": null
@@ -863,7 +976,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -876,10 +989,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -892,7 +1005,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -905,7 +1018,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -918,7 +1031,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Game Claim Coachmark",
+        "enabled": true
       }
     },
     "label": "Game Claim Coachmark"
@@ -931,7 +1046,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Hangout Window",
+        "enableHangoutWindow": true
       }
     },
     "label": "Hangout Window"
@@ -944,7 +1061,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Show past VC activity messages in system channel",
+        "enabled": true
       }
     },
     "label": "Past VC Activity Messages"
@@ -957,7 +1076,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "announcementComposer": true
       }
     },
     "label": null
@@ -970,13 +1089,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "variant": "control"
       },
       "1": {
-        "id": 1
+        "variant": "refresh"
       },
       "2": {
-        "id": 2
+        "variant": "refresh_expressive_cta"
       }
     },
     "label": null
@@ -989,7 +1108,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1002,10 +1121,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1018,7 +1137,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1031,10 +1150,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1047,7 +1166,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "hasFriendList": true
       }
     },
     "label": null
@@ -1060,7 +1179,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1073,7 +1192,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1086,7 +1205,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1099,10 +1218,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "hdrCaptureMode": "always"
       },
       "2": {
-        "id": 2
+        "hdrCaptureMode": "permittedDevicesOnly"
       }
     },
     "label": null
@@ -1115,7 +1234,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1128,7 +1247,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1141,7 +1260,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1154,10 +1273,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "inviteMaxAgeSeconds": 86400
       },
       "1": {
-        "id": 1
+        "inviteMaxAgeSeconds": 2419200
       }
     },
     "label": null
@@ -1170,7 +1289,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1185,7 +1304,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "audioOutputPresent": false,
+        "nonContextualStreamOutputPresent": false,
+        "showTileVolumeIndicator": true
       }
     },
     "label": null
@@ -1198,7 +1319,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1211,7 +1332,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1225,13 +1346,16 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableObfuscation": true,
+        "enableIntegrityCheck": false
       },
       "2": {
-        "id": 2
+        "enableObfuscation": true,
+        "enableIntegrityCheck": true
       },
       "3": {
-        "id": 3
+        "enableObfuscation": false,
+        "enableIntegrityCheck": false
       }
     },
     "label": null
@@ -1244,16 +1368,16 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "threadPriorityConfiguration": 0
       },
       "2": {
-        "id": 2
+        "threadPriorityConfiguration": 1
       },
       "3": {
-        "id": 3
+        "threadPriorityConfiguration": 2
       },
       "4": {
-        "id": 4
+        "threadPriorityConfiguration": 3
       }
     },
     "label": null
@@ -1266,7 +1390,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "navigateOnly": true
       }
     },
     "label": null
@@ -1279,7 +1403,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1292,7 +1416,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable official messages",
+        "enabled": true
       }
     },
     "label": "Guild Official Messages"
@@ -1305,10 +1431,14 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "id": 0,
+        "label": "Control",
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Show voice badges",
+        "enabled": true
       }
     },
     "label": "Display Voice Channel Badge"
@@ -1321,7 +1451,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1334,10 +1464,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": true
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1350,10 +1480,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1366,7 +1496,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1377,7 +1507,7 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "probeAudioEffects": true
       }
     },
     "label": null
@@ -1390,7 +1520,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1403,7 +1533,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "allowPlayStationStaging": true
       }
     },
     "label": null
@@ -1417,10 +1547,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableClips": true,
+        "ignorePlatformRestriction": false
       },
       "2": {
-        "id": 2
+        "enableClips": true,
+        "ignorePlatformRestriction": true
       }
     },
     "label": null
@@ -1434,7 +1566,8 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "impressionCappingEnabled": false
       }
     },
     "label": null
@@ -1447,10 +1580,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": false
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -1463,10 +1596,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1510,7 +1643,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1523,7 +1656,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "icymiDesktopEnabled": true
       }
     },
     "label": null
@@ -1536,7 +1669,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1549,13 +1682,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": false
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -1568,7 +1701,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1579,7 +1712,7 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "enableStats": true
       }
     },
     "label": null
@@ -1592,10 +1725,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1608,10 +1741,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1624,10 +1757,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -1640,10 +1773,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1657,13 +1790,16 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "variant": 0
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "variant": 1
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "variant": 2
       }
     },
     "label": null
@@ -1677,10 +1813,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "showCta": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "showCta": false
       }
     },
     "label": null
@@ -1691,13 +1829,13 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "keybindOverride": "ctrl+tab"
       },
       "2": {
-        "id": 2
+        "keybindOverride": "alt+x"
       },
       "3": {
-        "id": 3
+        "keybindOverride": "ctrl+l"
       }
     },
     "label": null
@@ -1710,7 +1848,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1724,10 +1862,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "showSoundmojiInEmojiPicker": false
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "showSoundmojiInEmojiPicker": true
       }
     },
     "label": null
@@ -1740,10 +1880,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1756,7 +1896,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableSurfaceDirectRenderer": true
       }
     },
     "label": null
@@ -1769,7 +1909,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "overrideDeviceReuse": true
       }
     },
     "label": null
@@ -1782,7 +1922,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1795,7 +1935,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Application Identity Linked Roles",
+        "enabled": true
       }
     },
     "label": "Application Identity Linked Roles"
@@ -1808,7 +1950,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable verification role setting",
+        "enabled": true
       }
     },
     "label": "Guild Verification Role"
@@ -1824,13 +1968,28 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "id": 0,
+        "label": "Control",
+        "enabled": false,
+        "inExperiment": true,
+        "gatesApex": false,
+        "rollbackEnabled": false
       },
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Server Theme",
+        "enabled": true,
+        "inExperiment": true,
+        "gatesApex": false,
+        "rollbackEnabled": false
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Rollback UI for Server Theme",
+        "enabled": true,
+        "inExperiment": true,
+        "gatesApex": false,
+        "rollbackEnabled": true
       }
     },
     "label": "Server Theme"
@@ -1843,7 +2002,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Treatment",
+        "enabled": true
       }
     },
     "label": "Voice Call Trigger Point Experiment"
@@ -1856,7 +2017,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Allow guild members to see each others duration in the channel list",
+        "enabled": true
       }
     },
     "label": "Voice User Duration"
@@ -1869,10 +2032,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1885,7 +2048,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1898,10 +2061,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableClipsV3ML": false
       },
       "2": {
-        "id": 2
+        "enableClipsV3ML": true
       }
     },
     "label": null
@@ -1914,7 +2077,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1929,13 +2092,19 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "notificationCenterVariant": "popout",
+        "entrypoint": "title-bar-left",
+        "filterStyle": "dropdown"
       },
       "2": {
-        "id": 2
+        "notificationCenterVariant": "popout",
+        "entrypoint": "server-rail-top",
+        "filterStyle": "dropdown"
       },
       "3": {
-        "id": 3
+        "notificationCenterVariant": "sidebar",
+        "entrypoint": "server-rail-top",
+        "filterStyle": "dropdown"
       }
     },
     "label": null
@@ -1948,7 +2117,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1961,7 +2130,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -1974,13 +2143,13 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "maxBackoffMs": 2
       },
       "2": {
-        "id": 2
+        "maxBackoffMs": 1
       },
       "3": {
-        "id": 3
+        "maxBackoffMs": 3
       }
     },
     "label": null
@@ -1993,7 +2162,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2006,7 +2175,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2019,7 +2188,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2032,7 +2201,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2045,7 +2214,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showButton": false
       }
     },
     "label": null
@@ -2058,8 +2227,7 @@
     },
     "variations": {
       "1": {
-        "id": 1,
-        "percentage": 1
+        "sampleRate": 1
       }
     },
     "label": null
@@ -2072,7 +2240,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2085,10 +2253,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2101,10 +2269,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2128,7 +2296,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2141,10 +2309,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2157,10 +2325,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2171,7 +2339,7 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "streamQualityMarketingResolution": "1440p"
       }
     },
     "label": null
@@ -2184,7 +2352,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2197,13 +2365,13 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showSettingsToggle": true
       },
       "2": {
-        "id": 2
+        "showSettingsToggle": true
       },
       "3": {
-        "id": 3
+        "showSettingsToggle": true
       }
     },
     "label": null
@@ -2216,10 +2384,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "performanceAnalyticsEnabled": false
       },
       "1": {
-        "id": 1
+        "performanceAnalyticsEnabled": true
       }
     },
     "label": null
@@ -2232,7 +2400,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2245,7 +2413,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2258,7 +2426,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2271,13 +2439,19 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "14 days",
+        "defaultMaxAge": 1209600
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "30 days",
+        "defaultMaxAge": 2592
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "label": "60 days",
+        "defaultMaxAge": 5184
       }
     },
     "label": "Default Invite Expiration Guild Web"
@@ -2290,7 +2464,9 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable channel-list-style voice invite embed",
+        "enabled": true
       }
     },
     "label": "Voice Channel List Invite Embed"
@@ -2303,7 +2479,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2316,7 +2492,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2329,7 +2505,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableAutoClipsReview": true
       }
     },
     "label": null
@@ -2342,12 +2518,10 @@
     },
     "variations": {
       "1": {
-        "id": 1,
-        "percentage": 3
+        "bitrate": 3
       },
       "2": {
-        "id": 2,
-        "percentage": 25
+        "bitrate": 25
       }
     },
     "label": null
@@ -2360,10 +2534,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2376,10 +2550,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2392,10 +2566,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2408,7 +2582,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableMediaComments": true
       }
     },
     "label": null
@@ -2421,7 +2595,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showDeviceFormFactorIndicators": true
       }
     },
     "label": null
@@ -2434,7 +2608,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2447,7 +2621,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableSimulcast": false
       }
     },
     "label": null
@@ -2460,7 +2634,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableDistributedClips": true
       }
     },
     "label": null
@@ -2473,10 +2647,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "useDiscordVideoPlayer": false
       },
       "1": {
-        "id": 1
+        "useDiscordVideoPlayer": true
       }
     },
     "label": null
@@ -2489,7 +2663,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableElectronMultilangSpellcheck": true
       }
     },
     "label": null
@@ -2500,20 +2674,18 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1,
-        "percentage": 35
+        "maxBitrate": 35,
+        "maskReportedQuality": true
       },
       "2": {
-        "id": 2,
-        "percentage": 5
+        "maxBitrate": 5,
+        "maskReportedQuality": true
       },
       "3": {
-        "id": 3,
-        "percentage": 35
+        "maxBitrate": 35
       },
       "4": {
-        "id": 4,
-        "percentage": 5
+        "maxBitrate": 5
       }
     },
     "label": null
@@ -2526,7 +2698,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2539,10 +2711,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "mode": "standard"
       },
       "2": {
-        "id": 2
+        "mode": "low_latency"
       }
     },
     "label": null
@@ -2555,7 +2727,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2571,19 +2743,34 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "useNewLayoutWithSearch": false,
+        "useNewTile": false,
+        "useNewFeaturedTiles": false,
+        "ctaOnHover": false
       },
       "1": {
-        "id": 1
+        "useNewLayoutWithSearch": true,
+        "useNewTile": false,
+        "useNewFeaturedTiles": false,
+        "ctaOnHover": false
       },
       "2": {
-        "id": 2
+        "useNewLayoutWithSearch": true,
+        "useNewTile": true,
+        "useNewFeaturedTiles": true,
+        "ctaOnHover": true
       },
       "3": {
-        "id": 3
+        "useNewLayoutWithSearch": true,
+        "useNewTile": true,
+        "useNewFeaturedTiles": false,
+        "ctaOnHover": true
       },
       "4": {
-        "id": 4
+        "useNewLayoutWithSearch": true,
+        "useNewTile": true,
+        "useNewFeaturedTiles": true,
+        "ctaOnHover": false
       }
     },
     "label": null
@@ -2596,7 +2783,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2609,7 +2796,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2622,10 +2809,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2638,10 +2825,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2654,7 +2841,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2667,22 +2854,27 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "maxStep": 0
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "maxStep": 1
       },
       "3": {
-        "id": 3
+        "enabled": true,
+        "maxStep": 2
       },
       "4": {
-        "id": 4
+        "enabled": true,
+        "maxStep": 3
       },
       "5": {
-        "id": 5
+        "enabled": true,
+        "maxStep": 4
       }
     },
     "label": null
@@ -2698,19 +2890,44 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "id": 1,
+        "label": "Enable Guild Rooms in this guild",
+        "enabled": true,
+        "interactionsEnabled": true,
+        "multipleRoomsEnabled": false,
+        "posturesEnabled": true
       },
       "2": {
-        "id": 2
+        "id": 2,
+        "label": "Enable Guild Rooms without Interactions",
+        "enabled": true,
+        "interactionsEnabled": false,
+        "multipleRoomsEnabled": false,
+        "posturesEnabled": true
       },
       "3": {
-        "id": 3
+        "id": 3,
+        "label": "Enable Guild Rooms with Room Variants",
+        "enabled": true,
+        "interactionsEnabled": true,
+        "multipleRoomsEnabled": true,
+        "posturesEnabled": true
       },
       "4": {
-        "id": 4
+        "id": 4,
+        "label": "Enable Guild Rooms without Postures",
+        "enabled": true,
+        "interactionsEnabled": true,
+        "multipleRoomsEnabled": false,
+        "posturesEnabled": false
       },
       "5": {
-        "id": 5
+        "id": 5,
+        "label": "Enable Guild Rooms with Room 2 Default and Selector",
+        "enabled": true,
+        "interactionsEnabled": true,
+        "multipleRoomsEnabled": true,
+        "posturesEnabled": true
       }
     },
     "label": "Guild Rooms"
@@ -2723,7 +2940,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2736,7 +2953,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2749,10 +2966,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2782,7 +2999,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2795,7 +3012,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2808,7 +3025,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableLeagueEvents": true
       }
     },
     "label": null
@@ -2822,7 +3039,8 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableOverlayEntrypoint": true,
+        "enableGamePanelEntrypoint": true
       }
     },
     "label": null
@@ -2835,10 +3053,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2851,7 +3069,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2864,7 +3082,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2877,10 +3095,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2893,7 +3111,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2906,13 +3124,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -2925,7 +3143,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2938,7 +3156,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showServerTag": true
       }
     },
     "label": null
@@ -2951,7 +3169,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2964,7 +3182,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2977,10 +3195,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -2993,7 +3211,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3006,10 +3224,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3022,10 +3240,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3038,7 +3256,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3051,10 +3269,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "surveyEmojiKind": "face"
       },
       "1": {
-        "id": 1
+        "surveyEmojiKind": "face-refresh"
       }
     },
     "label": null
@@ -3065,7 +3283,8 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "questFetchJitterMs": 60,
+        "questHomeHeroJitterMs": 60
       }
     },
     "label": null
@@ -3079,19 +3298,24 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "variant": 0
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "variant": 1
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "variant": 2
       },
       "3": {
-        "id": 3
+        "enabled": true,
+        "variant": 3
       },
       "4": {
-        "id": 4
+        "enabled": true,
+        "variant": 4
       }
     },
     "label": null
@@ -3105,8 +3329,8 @@
     },
     "variations": {
       "1": {
-        "id": 1,
-        "percentage": 35
+        "bitrate": 35,
+        "enabled": true
       }
     },
     "label": null
@@ -3122,19 +3346,34 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "inExperiment": true,
+        "gatesApex": false,
+        "rollbackEnabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "inExperiment": true,
+        "gatesApex": false,
+        "rollbackEnabled": false
       },
       "2": {
-        "id": 2
+        "enabled": false,
+        "inExperiment": true,
+        "gatesApex": true,
+        "rollbackEnabled": false
       },
       "3": {
-        "id": 3
+        "enabled": true,
+        "inExperiment": true,
+        "gatesApex": true,
+        "rollbackEnabled": false
       },
       "4": {
-        "id": 4
+        "enabled": true,
+        "inExperiment": true,
+        "gatesApex": true,
+        "rollbackEnabled": true
       }
     },
     "label": null
@@ -3147,7 +3386,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "echoReferenceMode": "auto"
       }
     },
     "label": null
@@ -3160,7 +3399,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3174,7 +3413,8 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "minCaptureWidth": 130,
+        "minCaptureHeight": 130
       }
     },
     "label": null
@@ -3187,10 +3427,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3203,7 +3443,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3216,7 +3456,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": false
       }
     },
     "label": null
@@ -3230,12 +3470,11 @@
     },
     "variations": {
       "1": {
-        "id": 1,
-        "percentage": 0.05
+        "enabled": true
       },
       "2": {
-        "id": 2,
-        "percentage": 1
+        "enabled": true,
+        "sampleRate": 1
       }
     },
     "label": null
@@ -3248,7 +3487,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3261,7 +3500,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3275,7 +3514,7 @@
         "id": 0
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3288,7 +3527,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3301,7 +3540,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableMarketing": true
       }
     },
     "label": null
@@ -3314,10 +3553,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3330,10 +3569,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3346,10 +3585,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3362,7 +3601,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableGameEventsOnPlayer": true
       }
     },
     "label": null
@@ -3375,10 +3614,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3391,10 +3630,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3407,10 +3646,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3423,10 +3662,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3439,7 +3678,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3452,7 +3691,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3465,7 +3704,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "algo": 1
       }
     },
     "label": null
@@ -3478,10 +3717,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       },
       "2": {
-        "id": 2
+        "enabled": true
       }
     },
     "label": null
@@ -3494,7 +3733,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableCs2Gsi": true
       }
     },
     "label": null
@@ -3507,7 +3746,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3520,7 +3759,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3547,7 +3786,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3560,10 +3799,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3576,7 +3815,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3589,7 +3828,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3603,13 +3842,16 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "showCreateEntrypoint": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "showCreateEntrypoint": false
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "showCreateEntrypoint": true
       }
     },
     "label": null
@@ -3636,10 +3878,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3667,19 +3909,24 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "referralRewardType": null,
+        "useAltReferralCardArt": false
       },
       "1": {
-        "id": 1
+        "referralRewardType": "orbs",
+        "useAltReferralCardArt": false
       },
       "2": {
-        "id": 2
+        "referralRewardType": "discount",
+        "useAltReferralCardArt": false
       },
       "3": {
-        "id": 3
+        "referralRewardType": "orbs",
+        "useAltReferralCardArt": true
       },
       "4": {
-        "id": 4
+        "referralRewardType": "discount",
+        "useAltReferralCardArt": true
       }
     },
     "label": null
@@ -3699,7 +3946,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "useStaticGradient": true
       }
     },
     "label": null
@@ -3712,7 +3959,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "migrationKilled": true
       }
     },
     "label": null
@@ -3725,10 +3972,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3741,10 +3988,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "isEnabled": false
       },
       "1": {
-        "id": 1
+        "isEnabled": true
       }
     },
     "label": null
@@ -3757,7 +4004,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3770,7 +4017,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showDeviceDetectedPanel": true
       }
     },
     "label": null
@@ -3783,10 +4030,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3797,10 +4044,12 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "clickRoutesToGift": true,
+        "showGiftButton": true
       },
       "2": {
-        "id": 2
+        "clickRoutesToGift": true,
+        "showGiftButton": false
       }
     },
     "label": null
@@ -3813,19 +4062,19 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": false
       },
       "2": {
-        "id": 2
+        "enabled": true
       },
       "3": {
-        "id": 3
+        "enabled": true
       },
       "4": {
-        "id": 4
+        "enabled": true
       },
       "5": {
-        "id": 5
+        "enabled": true
       }
     },
     "label": null
@@ -3847,28 +4096,44 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "capSampleRate": true,
+        "capChannelCount": false,
+        "condition": "krisp"
       },
       "2": {
-        "id": 2
+        "capSampleRate": true,
+        "capChannelCount": false,
+        "condition": "noiseSuppression"
       },
       "3": {
-        "id": 3
+        "capSampleRate": true,
+        "capChannelCount": false,
+        "condition": "echoCancellation"
       },
       "4": {
-        "id": 4
+        "capSampleRate": true,
+        "capChannelCount": false,
+        "condition": "any"
       },
       "5": {
-        "id": 5
+        "capSampleRate": true,
+        "capChannelCount": true,
+        "condition": "krisp"
       },
       "6": {
-        "id": 6
+        "capSampleRate": true,
+        "capChannelCount": true,
+        "condition": "noiseSuppression"
       },
       "7": {
-        "id": 7
+        "capSampleRate": true,
+        "capChannelCount": true,
+        "condition": "echoCancellation"
       },
       "8": {
-        "id": 8
+        "capSampleRate": true,
+        "capChannelCount": true,
+        "condition": "any"
       }
     },
     "label": null
@@ -3881,7 +4146,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableAutomontage": true
       }
     },
     "label": null
@@ -3895,10 +4160,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "tenureBadgeHideable": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "tenureBadgeHideable": false
       }
     },
     "label": null
@@ -3913,25 +4180,42 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "illustration": "illustration1",
+        "ctrVariant": 0,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "illustration": "illustration2",
+        "ctrVariant": 0,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "3": {
-        "id": 3
+        "enabled": true,
+        "illustration": "illustration3",
+        "ctrVariant": 0,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "4": {
-        "id": 4
+        "enabled": true,
+        "ctrVariant": 2,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "5": {
-        "id": 5
+        "enabled": true,
+        "ctrVariant": 3,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "6": {
-        "id": 6
+        "enabled": true,
+        "ctrVariant": 1,
+        "hapticFeedbackOnRewardEarnedEnabled": false
       },
       "7": {
-        "id": 7
+        "enabled": true,
+        "ctrVariant": 0,
+        "hapticFeedbackOnRewardEarnedEnabled": true
       }
     },
     "label": null
@@ -3944,10 +4228,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3960,7 +4244,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -3971,13 +4255,13 @@
     "defaultConfig": null,
     "variations": {
       "1": {
-        "id": 1
+        "newUserCooldownMs": 2
       },
       "2": {
-        "id": 2
+        "newUserCooldownMs": 3
       },
       "3": {
-        "id": 3
+        "newUserCooldownMs": 7
       }
     },
     "label": null
@@ -3990,7 +4274,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "closeChatOnLeave": false
       }
     },
     "label": null
@@ -4003,7 +4287,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4016,7 +4300,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "disableAgeRestrictedDestinations": true
       }
     },
     "label": null
@@ -4029,7 +4313,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4043,7 +4327,7 @@
         "id": 0
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4056,10 +4340,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4072,13 +4356,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "source": "hook"
       },
       "1": {
-        "id": 1
+        "source": "store"
       },
       "2": {
-        "id": 2
+        "source": "shadow"
       }
     },
     "label": null
@@ -4091,10 +4375,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "isHidden": false
       },
       "1": {
-        "id": 1
+        "isHidden": true
       }
     },
     "label": null
@@ -4114,7 +4398,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4127,10 +4411,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4143,10 +4427,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "measureFromStreakStart": false
       },
       "1": {
-        "id": 1
+        "measureFromStreakStart": true
       }
     },
     "label": null
@@ -4159,10 +4443,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "showWithheldBadge": false
       },
       "1": {
-        "id": 1
+        "showWithheldBadge": true
       }
     },
     "label": null
@@ -4175,10 +4459,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableNoFill": false
       },
       "2": {
-        "id": 2
+        "enableNoFill": true
       }
     },
     "label": null
@@ -4191,7 +4475,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4204,7 +4488,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4224,7 +4508,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableRocketLeagueEvents": true
       }
     },
     "label": null
@@ -4251,7 +4535,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4264,7 +4548,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4277,10 +4561,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4293,10 +4577,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4310,10 +4594,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "topSoundsFirst": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "topSoundsFirst": false
       }
     },
     "label": null
@@ -4327,10 +4613,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "topSoundsFirst": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "topSoundsFirst": false
       }
     },
     "label": null
@@ -4357,7 +4645,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4370,10 +4658,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "videoEnabled": false
       },
       "2": {
-        "id": 2
+        "videoEnabled": false
       }
     },
     "label": null
@@ -4386,7 +4674,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4399,7 +4687,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4412,10 +4700,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "truncateMoreThanSeconds": 30
       },
       "2": {
-        "id": 2
+        "truncateMoreThanSeconds": 60
       }
     },
     "label": null
@@ -4428,7 +4716,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4464,10 +4752,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4480,7 +4768,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4493,10 +4781,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4509,7 +4797,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4522,10 +4810,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4538,7 +4826,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4551,7 +4839,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4564,7 +4852,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4577,10 +4865,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4594,13 +4882,16 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "sidebarEnabled": false,
+        "appBarToggleEnabled": false
       },
       "1": {
-        "id": 1
+        "sidebarEnabled": true,
+        "appBarToggleEnabled": false
       },
       "2": {
-        "id": 2
+        "sidebarEnabled": true,
+        "appBarToggleEnabled": true
       }
     },
     "label": null
@@ -4614,7 +4905,7 @@
         "id": 0
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4628,7 +4919,7 @@
         "id": 0
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4641,7 +4932,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "extraChromeEnabled": true
       }
     },
     "label": null
@@ -4654,7 +4945,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4667,10 +4958,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4683,7 +4974,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enableDotaGsi": true
       }
     },
     "label": null
@@ -4696,10 +4987,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4712,10 +5003,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4728,10 +5019,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4744,10 +5035,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4761,13 +5052,16 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "questHomeRedirect": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "questHomeRedirect": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "questHomeRedirect": false
       }
     },
     "label": null
@@ -4780,10 +5074,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4796,10 +5090,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4812,10 +5106,10 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "variant": "popover"
       },
       "2": {
-        "id": 2
+        "variant": "sidebar"
       }
     },
     "label": null
@@ -4828,7 +5122,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4841,13 +5135,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "mode": "all"
       },
       "1": {
-        "id": 1
+        "mode": "disable_nvidia"
       },
       "2": {
-        "id": 2
+        "mode": "disable_all"
       }
     },
     "label": null
@@ -4860,7 +5154,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4873,10 +5167,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4889,7 +5183,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4902,7 +5196,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4915,7 +5209,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4928,7 +5222,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "preload": "none"
       }
     },
     "label": null
@@ -4941,10 +5235,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "useNewHScroll": false
       },
       "1": {
-        "id": 1
+        "useNewHScroll": true
       }
     },
     "label": null
@@ -4957,10 +5251,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "useNewHScroll": false
       },
       "1": {
-        "id": 1
+        "useNewHScroll": true
       }
     },
     "label": null
@@ -4973,10 +5267,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -4989,7 +5283,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5002,10 +5296,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5018,10 +5312,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5034,7 +5328,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5048,10 +5342,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "maxWidgetOptions": 4
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "maxWidgetOptions": 6
       }
     },
     "label": null
@@ -5064,7 +5360,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5077,7 +5373,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5118,7 +5414,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "trackingCopy": true
       }
     },
     "label": null
@@ -5131,10 +5427,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5183,10 +5479,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "showSetupProgressRow": true,
+        "boostBeforeAddApp": false
       },
       "2": {
-        "id": 2
+        "showSetupProgressRow": true,
+        "boostBeforeAddApp": true
       }
     },
     "label": null
@@ -5199,13 +5497,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "mode": "disabled"
       },
       "1": {
-        "id": 1
+        "mode": "latest"
       },
       "2": {
-        "id": 2
+        "mode": "mentions_first"
       }
     },
     "label": null
@@ -5218,13 +5516,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "placement": null
       },
       "1": {
-        "id": 1
+        "placement": "in_content"
       },
       "2": {
-        "id": 2
+        "placement": "below_content"
       }
     },
     "label": null
@@ -5237,13 +5535,13 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "variant": "clarity"
       },
       "2": {
-        "id": 2
+        "variant": "clarity_softer"
       },
       "3": {
-        "id": 3
+        "variant": "low_commitment"
       }
     },
     "label": null
@@ -5256,13 +5554,13 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "label": "download_discord_app"
       },
       "2": {
-        "id": 2
+        "label": "download_app"
       },
       "3": {
-        "id": 3
+        "label": "get_discord"
       }
     },
     "label": "download_discord_app"
@@ -5275,13 +5573,13 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "placement": null
       },
       "1": {
-        "id": 1
+        "placement": "in_content"
       },
       "2": {
-        "id": 2
+        "placement": "below_content"
       }
     },
     "label": null
@@ -5294,7 +5592,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5307,7 +5605,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5321,10 +5619,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "sortOrder": "favorite-date",
+        "allowReordering": false
       },
       "2": {
-        "id": 2
+        "sortOrder": "favorite-date",
+        "allowReordering": true
       }
     },
     "label": null
@@ -5339,10 +5639,14 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true,
+        "showQuickAccess": true,
+        "showOnRTCHover": true
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "showQuickAccess": false,
+        "showOnRTCHover": true
       }
     },
     "label": null
@@ -5355,7 +5659,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5382,7 +5686,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5395,10 +5699,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5412,10 +5716,12 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "rtcConnectionJoinSounds": true,
+        "showSelfConnectingUI": false
       },
       "2": {
-        "id": 2
+        "rtcConnectionJoinSounds": true,
+        "showSelfConnectingUI": true
       }
     },
     "label": null
@@ -5442,10 +5748,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5458,7 +5764,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5472,13 +5778,16 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false,
+        "swipeBetweenBadges": false
       },
       "1": {
-        "id": 1
+        "enabled": true,
+        "swipeBetweenBadges": false
       },
       "2": {
-        "id": 2
+        "enabled": true,
+        "swipeBetweenBadges": true
       }
     },
     "label": null
@@ -5491,10 +5800,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "showEmbed": false
       },
       "1": {
-        "id": 1
+        "showEmbed": true
       }
     },
     "label": null
@@ -5507,10 +5816,10 @@
     },
     "variations": {
       "0": {
-        "id": 0
+        "enabled": false
       },
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null
@@ -5523,7 +5832,7 @@
     },
     "variations": {
       "1": {
-        "id": 1
+        "enabled": true
       }
     },
     "label": null

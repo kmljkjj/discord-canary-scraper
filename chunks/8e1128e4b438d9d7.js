@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["224155"],{954646(p,s,t){p.exports={$:"attachmentIcon__1db97"}}}]);
