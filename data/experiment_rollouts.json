@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T21:07:49.556Z",
+  "fetchedAt": "2026-10-06T21:14:43.432Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5016,17 +5016,17 @@
       "title": "hash_3013881204",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 50,
-      "enrolled": 50,
+      "samples": 48,
+      "enrolled": 48,
       "treatmentDistribution": {
-        "1": 50
+        "1": 48
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 50,
-      "fpEnrolled": 50,
+      "fpSamples": 48,
+      "fpEnrolled": 48,
       "fpTreatmentDist": {
-        "1": 50
+        "1": 48
       }
     },
     {
@@ -5036,17 +5036,17 @@
       "title": "Safety Experience IAR User Reporting",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 50,
-      "enrolled": 50,
+      "samples": 48,
+      "enrolled": 48,
       "treatmentDistribution": {
-        "4": 50
+        "4": 48
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 50,
-      "fpEnrolled": 50,
+      "fpSamples": 48,
+      "fpEnrolled": 48,
       "fpTreatmentDist": {
-        "4": 50
+        "4": 48
       }
     },
     {
@@ -5056,37 +5056,17 @@
       "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 50,
+      "samples": 48,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 50
+        "0": 48
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 50,
+      "fpSamples": 48,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 50
-      }
-    },
-    {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 5,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 5
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 5
+        "0": 48
       }
     },
     {
@@ -5096,17 +5076,37 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 4
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -7990,6 +7990,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-a11y-chassis-target-size",
+      "hash": 3012809029,
+      "type": "user",
+      "title": "2026-09-a11y-chassis-target-size",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-agc2-mobile",
       "hash": 2725641019,
       "type": "user",
@@ -8701,11 +8711,11 @@
     }
   ],
   "summary": {
-    "total": 584,
+    "total": 585,
     "guild": 93,
-    "user": 491,
+    "user": 492,
     "withPercentage": 225,
-    "withoutPercentage": 359,
+    "withoutPercentage": 360,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
