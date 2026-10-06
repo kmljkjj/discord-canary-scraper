@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-06T22:32:06.257Z",
+  "scrapedAt": "2026-10-06T22:39:21.929Z",
   "channels": [
     {
       "platform": "ios",
@@ -11,7 +11,7 @@
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-10-06T22:32:06.257Z"
+      "checkedAt": "2026-10-06T22:39:21.929Z"
     },
     {
       "platform": "ios",
@@ -20,19 +20,19 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-06T22:32:06.257Z"
+      "checkedAt": "2026-10-06T22:39:21.929Z"
     },
     {
       "platform": "android",
       "channel": "stable",
-      "version": "347.12",
-      "build": "34701200449686",
-      "commit": "7064a0dd81579fec1192be85c906759902a70e09",
-      "releaseName": "discord_android@347.12.449686-0+34701200449686",
-      "source": "discord_ota_manifest",
+      "version": "348.10",
+      "build": null,
+      "commit": null,
+      "releaseName": null,
+      "source": "store",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-06T22:32:06.257Z"
+      "checkedAt": "2026-10-06T22:39:21.929Z"
     },
     {
       "platform": "android",
@@ -45,7 +45,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-10-06T22:32:06.257Z"
+      "checkedAt": "2026-10-06T22:39:21.929Z"
     },
     {
       "platform": "android",
@@ -54,7 +54,7 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-06T22:32:06.257Z"
+      "checkedAt": "2026-10-06T22:39:21.929Z"
     }
   ],
   "otaIndex": {
@@ -262,6 +262,13 @@
   },
   "history": [
     {
+      "at": "2026-10-06T22:39:21.929Z",
+      "key": "android/stable",
+      "from": "347.12",
+      "to": "348.10",
+      "build": null
+    },
+    {
       "at": "2026-10-05T21:26:39.381Z",
       "key": "ios/stable",
       "from": "347.0",
@@ -290,12 +297,13 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-06T22:25:14.369Z",
+  "previousScrapedAt": "2026-10-06T22:32:06.257Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
     "android|stable|346.13",
     "android|stable|347.12",
+    "android|stable|348.10",
     "ios|beta|343.0",
     "ios|ota_latest|343.0",
     "ios|stable|344.0",
@@ -303,7 +311,15 @@
     "ios|stable|347.0",
     "ios|stable|348.0"
   ],
-  "changes": [],
+  "changes": [
+    {
+      "type": "updated",
+      "key": "android/stable",
+      "from": "347.12",
+      "to": "348.10",
+      "build": null
+    }
+  ],
   "paused": false,
   "notifyOk": true
 }
