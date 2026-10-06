@@ -325,14 +325,15 @@ function normalizeQuest(raw, regionMap) {
     startsAt: root.starts_at || root.startsAt || null,
     expiresAt: root.expires_at || root.expiresAt || null,
     heroImage: hero,
+    // Prefer hashed assets: plain game_logotype.png is often 404 on the CDN.
     gameTile:
-      assetUrl(id, assets.game_tile) ||
       assetUrl(id, assets.game_tile_dark) ||
-      assetUrl(id, assets.game_tile_light),
+      assetUrl(id, assets.game_tile_light) ||
+      assetUrl(id, assets.game_tile),
     logotype:
-      assetUrl(id, assets.logotype) ||
       assetUrl(id, assets.logotype_dark) ||
-      assetUrl(id, assets.logotype_light),
+      assetUrl(id, assets.logotype_light) ||
+      assetUrl(id, assets.logotype),
     videoUrl,
     videoKind,
     videoLabel,
@@ -420,9 +421,10 @@ function buildQuestComponentsV2(quest) {
   ];
   if (quest.preview) header.push('⚠️ _Aperçu (preview)_');
 
+  // game_tile = icone jeu (fiable) ; logotype = wordmark (souvent game_logotype.png en 404)
   const logo =
-    (quest.logotype && isImageUrl(quest.logotype) && quest.logotype) ||
     (quest.gameTile && isImageUrl(quest.gameTile) && quest.gameTile) ||
+    (quest.logotype && isImageUrl(quest.logotype) && quest.logotype) ||
     null;
   const gameLabel =
     quest.gameTitle || quest.applicationName || quest.name || 'Jeu';
@@ -643,6 +645,8 @@ function buildQuestEmbed(quest) {
     fields,
     image: quest.heroImage ? { url: quest.heroImage } : undefined,
     thumbnail: (() => {
+      if (quest.gameTile && isImageUrl(quest.gameTile)) return { url: quest.gameTile };
+      if (quest.logotype && isImageUrl(quest.logotype)) return { url: quest.logotype };
       const first =
         (quest.rewards || []).find((r) => r.asset && isImageUrl(r.asset)) || null;
       return first ? { url: first.asset } : undefined;
@@ -804,6 +808,7 @@ async function main() {
         name: prev.name || q.name,
         heroImage: prev.heroImage || q.heroImage,
         gameTile: prev.gameTile || q.gameTile,
+        logotype: prev.logotype || q.logotype,
         videoUrl: prev.videoUrl || q.videoUrl,
         rewards:
           (prev.rewards && prev.rewards.length ? prev.rewards : null) ||
