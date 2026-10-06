@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T22-08-44-950Z_631253_nheeed",
-  "buildNumber": "631253",
-  "updatedAt": "2026-10-06T22:08:44.950Z",
-  "count": 366,
+  "runId": "2026-10-06T22-11-00-954Z_631256_no4gfz",
+  "buildNumber": "631256",
+  "updatedAt": "2026-10-06T22:11:00.954Z",
+  "count": 367,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11295,6 +11295,34 @@
         "value": null
       },
       "fingerprint": "bdd5ac8f8e01f7145ce07d4055b7f3785d6a399975b63063a8f6e7888781245a"
+    },
+    {
+      "id": "2026-10-gift-cards-in-app-marketing",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "ee30f3bef1cc237eb161e263620d410348cd99e660f4fa1303bde21de39bdbe4"
     },
     {
       "id": "2026-10-guild-tooltip-lazy-content",

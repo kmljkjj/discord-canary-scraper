@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-06T22-08-44-950Z_631253_nheeed",
-  "buildNumber": "631253",
-  "scrapedAt": "2026-10-06T22:08:44.950Z",
+  "runId": "2026-10-06T22-11-00-954Z_631256_no4gfz",
+  "buildNumber": "631256",
+  "scrapedAt": "2026-10-06T22:11:00.954Z",
   "totals": {
-    "all": 367
+    "all": 368
   },
   "experiments": [
     {
@@ -7316,6 +7316,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-gift-cards-in-app-marketing",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {
