@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T22:04:45.711Z",
+  "fetchedAt": "2026-10-06T22:11:37.422Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 3
       }
     },
     {
@@ -8660,6 +8660,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-gift-cards-in-app-marketing",
+      "hash": 683780585,
+      "type": "user",
+      "title": "2026-10-gift-cards-in-app-marketing",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-guild-tooltip-lazy-content",
       "hash": 1056221119,
       "type": "user",
@@ -8691,11 +8701,11 @@
     }
   ],
   "summary": {
-    "total": 584,
+    "total": 585,
     "guild": 93,
-    "user": 491,
+    "user": 492,
     "withPercentage": 224,
-    "withoutPercentage": 360,
+    "withoutPercentage": 361,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
