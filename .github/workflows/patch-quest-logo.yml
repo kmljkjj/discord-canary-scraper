@@ -1,0 +1,22 @@
+name: Patch Quest Logo
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/patch_quest_logo.py
+      - run: node --check src/quests.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/quests.js scripts/patch_quest_logo.py
+          git commit -m "fix(quests): show working game icon beside name (not 404 logotype)" || exit 0
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push
