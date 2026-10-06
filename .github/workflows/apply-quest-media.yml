@@ -1,0 +1,22 @@
+name: Apply Quest Media
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: python3 scripts/apply_quest_media.py
+      - run: node --check src/quests.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add media/orbs-700.jpg media/orbs-200.jpg src/quests.js scripts/apply_quest_media.py
+          git commit -m "feat(quests): logo beside game name + orbs images by quantity" || exit 0
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push
