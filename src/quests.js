@@ -379,6 +379,32 @@ function isImageUrl(url) {
   return false;
 }
 
+
+const MEDIA_BASE =
+  process.env.QUEST_MEDIA_BASE ||
+  'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@main/media';
+
+function orbImageUrl(qty) {
+  const n = Number(qty) || 0;
+  if (n >= 500) return MEDIA_BASE + '/orbs-700.jpg';
+  return MEDIA_BASE + '/orbs-200.jpg';
+}
+
+function sectionWithThumb(text, imageUrl, desc) {
+  const block = {
+    type: 9,
+    components: [{ type: 10, content: String(text || '').slice(0, 4000) }],
+  };
+  if (imageUrl && isImageUrl(imageUrl)) {
+    block.accessory = {
+      type: 11,
+      media: { url: String(imageUrl).slice(0, 2048) },
+      description: String(desc || '').slice(0, 100) || undefined,
+    };
+  }
+  return block;
+}
+
 /** Components V2 payload — MediaGallery for hero + video */
 function buildQuestComponentsV2(quest) {
   const start = formatDateFr(quest.startsAt);
@@ -394,27 +420,16 @@ function buildQuestComponentsV2(quest) {
   ];
   if (quest.preview) header.push('⚠️ _Aperçu (preview)_');
 
-  const info = [
-    '**Durée**',
-    duree,
-    '',
-    '**Plateformes** · ' + (quest.platforms || 'Multiplateforme'),
-    '**Pays** · ' + (quest.regionFlags || '🌍'),
-  ];
-  if (quest.gameTitle) info.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
-  if (quest.publisher) info.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
-  if (quest.applicationName || quest.applicationId) {
-    info.push(
-      '**Application** · ' +
-        (quest.applicationName || 'App') +
-        (quest.applicationId ? ' · `' + quest.applicationId + '`' : ''),
-    );
-  }
-  if (quest.features) info.push('**Flags** · ' + quest.features);
+  const logo =
+    (quest.logotype && isImageUrl(quest.logotype) && quest.logotype) ||
+    (quest.gameTile && isImageUrl(quest.gameTile) && quest.gameTile) ||
+    null;
+  const gameLabel =
+    quest.gameTitle || quest.applicationName || quest.name || 'Jeu';
+  const appLabel = quest.applicationName || null;
 
   const blocks = [];
 
-  // 1) Photo en haut — une seule image (hero)
   if (quest.heroImage && isImageUrl(quest.heroImage)) {
     blocks.push({
       type: 12,
@@ -427,10 +442,42 @@ function buildQuestComponentsV2(quest) {
     });
   }
 
-  // 2) Texte
   blocks.push({ type: 10, content: header.join('\n').slice(0, 4000) });
   blocks.push({ type: 14, divider: true, spacing: 1 });
+
+  const info = [
+    '**Durée**',
+    duree,
+    '',
+    '**Plateformes** · ' + (quest.platforms || 'Multiplateforme'),
+    '**Pays** · ' + (quest.regionFlags || '🌍'),
+  ];
+  if (quest.publisher) info.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
+  if (quest.features) info.push('**Flags** · ' + quest.features);
   blocks.push({ type: 10, content: info.join('\n').slice(0, 4000) });
+
+  if (logo) {
+    let line = '**Jeu** · ' + String(gameLabel).slice(0, 180);
+    if (appLabel && appLabel !== gameLabel) {
+      line += '\n**Application** · ' + String(appLabel).slice(0, 120);
+    } else if (quest.applicationId) {
+      line += '\n`' + quest.applicationId + '`';
+    }
+    blocks.push({ type: 14, divider: true, spacing: 1 });
+    blocks.push(sectionWithThumb(line, logo, String(gameLabel).slice(0, 100)));
+  } else if (quest.gameTitle || quest.applicationName) {
+    const bits = [];
+    if (quest.gameTitle) bits.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
+    if (quest.applicationName || quest.applicationId) {
+      bits.push(
+        '**Application** · ' +
+          (quest.applicationName || 'App') +
+          (quest.applicationId ? ' · `' + quest.applicationId + '`' : ''),
+      );
+    }
+    blocks.push({ type: 14, divider: true, spacing: 1 });
+    blocks.push({ type: 10, content: bits.join('\n').slice(0, 4000) });
+  }
 
   if (quest.tasksText) {
     blocks.push({ type: 14, divider: true, spacing: 1 });
@@ -442,37 +489,45 @@ function buildQuestComponentsV2(quest) {
 
   const rewards = quest.rewards || [];
   if (rewards.length) {
-    const rLines = [];
+    blocks.push({ type: 14, divider: true, spacing: 1 });
+    blocks.push({ type: 10, content: '**Récompenses**' });
+
     for (const r of rewards.slice(0, 8)) {
+      const isOrbs =
+        r.orbQuantity != null ||
+        r.type === 4 ||
+        /orbe/i.test(String(r.typeLabel || ''));
+
+      if (isOrbs && r.orbQuantity != null) {
+        const line =
+          '• **' +
+          (r.typeLabel || 'Orbes') +
+          '** · **' +
+          r.orbQuantity +
+          ' orbes**' +
+          (r.skuId ? '\n　SKU `' + r.skuId + '`' : '');
+        blocks.push(
+          sectionWithThumb(
+            line,
+            orbImageUrl(r.orbQuantity),
+            String(r.orbQuantity) + ' orbes',
+          ),
+        );
+        continue;
+      }
+
       let line = '• **' + r.typeLabel + '**';
       if (r.name) line += ' — ' + r.name;
       if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
       if (r.skuId) line += '\n　SKU `' + r.skuId + '`';
-      rLines.push(line);
-    }
-    blocks.push({ type: 14, divider: true, spacing: 1 });
-    blocks.push({
-      type: 10,
-      content: ('**Récompenses**\n' + rLines.join('\n')).slice(0, 4000),
-    });
 
-    // Images des récompenses (décorations, collectibles, etc.)
-    const rewardMedia = [];
-    for (const r of rewards.slice(0, 8)) {
       if (r.asset && isImageUrl(r.asset)) {
-        rewardMedia.push({
-          media: { url: r.asset },
-          description: String(r.name || r.typeLabel || 'Récompense').slice(0, 100),
-        });
+        blocks.push(
+          sectionWithThumb(line, r.asset, r.name || r.typeLabel || 'Récompense'),
+        );
+      } else {
+        blocks.push({ type: 10, content: line.slice(0, 4000) });
       }
-    }
-    if (rewardMedia.length) {
-      blocks.push({ type: 14, divider: true, spacing: 1 });
-      blocks.push({
-        type: 10,
-        content: '**Aperçu récompense' + (rewardMedia.length > 1 ? 's' : '') + '**',
-      });
-      blocks.push({ type: 12, items: rewardMedia.slice(0, 4) });
     }
   }
 
@@ -482,14 +537,10 @@ function buildQuestComponentsV2(quest) {
     content: '**ID** · `' + quest.id + '`' ,
   });
 
-  // 3) Vidéo en bas — une seule (tâche ou présentation)
   if (quest.videoUrl && isVideoUrl(quest.videoUrl)) {
     const vLabel = quest.videoLabel || 'Vidéo';
     blocks.push({ type: 14, divider: true, spacing: 1 });
-    blocks.push({
-      type: 10,
-      content: '**' + vLabel + '**',
-    });
+    blocks.push({ type: 10, content: '**' + vLabel + '**' });
     blocks.push({
       type: 12,
       items: [
@@ -501,7 +552,6 @@ function buildQuestComponentsV2(quest) {
     });
   }
 
-  // Link buttons (style 5) — work on non-app webhooks
   const buttons = [];
   if (quest.videoUrl) {
     buttons.push({
@@ -531,24 +581,20 @@ function buildQuestComponentsV2(quest) {
     }
   }
   if (buttons.length) {
-    blocks.push({
-      type: 1, // Action Row
-      components: buttons.slice(0, 5),
-    });
+    blocks.push({ type: 1, components: buttons.slice(0, 5) });
   }
-
-  const container = {
-    type: 17, // Container
-    accent_color: 0,
-    components: blocks,
-  };
 
   return {
     flags: IS_COMPONENTS_V2,
-    components: [container],
+    components: [
+      {
+        type: 17,
+        accent_color: 0,
+        components: blocks,
+      },
+    ],
   };
 }
-
 /** Fallback classic embed */
 function buildQuestEmbed(quest) {
   const start = formatDateFr(quest.startsAt);

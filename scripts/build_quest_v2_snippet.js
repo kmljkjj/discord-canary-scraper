@@ -53,7 +53,7 @@ function buildQuestComponentsV2(quest) {
     if (appLabel && appLabel !== gameLabel) {
       line += '\n**Application** · ' + String(appLabel).slice(0, 120);
     } else if (quest.applicationId) {
-      line += '\n`' + quest.applicationId + '`;
+      line += '\n`' + quest.applicationId + '`';
     }
     blocks.push({ type: 14, divider: true, spacing: 1 });
     blocks.push(sectionWithThumb(line, logo, String(gameLabel).slice(0, 100)));
@@ -111,7 +111,7 @@ function buildQuestComponentsV2(quest) {
       let line = '• **' + r.typeLabel + '**';
       if (r.name) line += ' — ' + r.name;
       if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
-      if (r.skuId) line += '\n　SKU `' + r.skuId + '`;
+      if (r.skuId) line += '\n　SKU `' + r.skuId + '`';
 
       if (r.asset && isImageUrl(r.asset)) {
         blocks.push(
