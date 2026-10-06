@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T00:09:56.909Z",
+  "fetchedAt": "2026-10-06T00:16:44.902Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5070,43 +5070,23 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 4
       }
     },
     {
@@ -7290,16 +7270,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-07-clips-ntp-clock",
-      "hash": 1294053962,
-      "type": "user",
-      "title": "2026-07-clips-ntp-clock",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-07-clips-on-profile-setter",
       "hash": 1626374014,
       "type": "user",
@@ -8721,14 +8691,14 @@
     }
   ],
   "summary": {
-    "total": 586,
+    "total": 584,
     "guild": 92,
-    "user": 494,
-    "withPercentage": 225,
-    "withoutPercentage": 361,
+    "user": 492,
+    "withPercentage": 224,
+    "withoutPercentage": 360,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
