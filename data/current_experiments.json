@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-06T21-03-44-438Z_631082_90j828",
-  "buildNumber": "631082",
-  "updatedAt": "2026-10-06T21:03:44.438Z",
-  "count": 365,
+  "runId": "2026-10-06T21-08-07-381Z_631085_s69xve",
+  "buildNumber": "631085",
+  "updatedAt": "2026-10-06T21:08:07.381Z",
+  "count": 366,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9150,6 +9150,44 @@
         "value": null
       },
       "fingerprint": "b0bf7eb76c4086d265762ae61995966f36e2ff9de48da7bb89ab9efac35d0c8d"
+    },
+    {
+      "id": "2026-09-a11y-chassis-target-size",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false,
+        "rtcLargerTarget": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false,
+          "rtcLargerTarget": false
+        },
+        "1": {
+          "enabled": true,
+          "rtcLargerTarget": false
+        },
+        "2": {
+          "enabled": true,
+          "rtcLargerTarget": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 3,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "db5a2575494ce498c0d5891063855796b9dc6fe529727893bf6d6e5d6f0041bb"
     },
     {
       "id": "2026-09-agc2-mobile",

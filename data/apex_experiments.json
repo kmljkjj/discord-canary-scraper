@@ -4723,6 +4723,29 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-a11y-chassis-target-size",
+    "defaultConfig": {
+      "enabled": false,
+      "rtcLargerTarget": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false,
+        "rtcLargerTarget": false
+      },
+      "1": {
+        "enabled": true,
+        "rtcLargerTarget": false
+      },
+      "2": {
+        "enabled": true,
+        "rtcLargerTarget": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-agc2-mobile",
     "defaultConfig": {
       "agc2Enabled": false,

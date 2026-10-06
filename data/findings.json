@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-06T21-03-44-438Z_631082_90j828",
-  "buildNumber": "631082",
-  "scrapedAt": "2026-10-06T21:03:44.438Z",
+  "runId": "2026-10-06T21-08-07-381Z_631085_s69xve",
+  "buildNumber": "631085",
+  "scrapedAt": "2026-10-06T21:08:07.381Z",
   "totals": {
-    "all": 366
+    "all": 367
   },
   "experiments": [
     {
@@ -5930,6 +5930,33 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-a11y-chassis-target-size",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false,
+        "rtcLargerTarget": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false,
+          "rtcLargerTarget": false
+        },
+        "1": {
+          "enabled": true,
+          "rtcLargerTarget": false
+        },
+        "2": {
+          "enabled": true,
+          "rtcLargerTarget": true
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
