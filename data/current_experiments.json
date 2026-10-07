@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-07T21-14-24-254Z_632327_k6iefi",
-  "buildNumber": "632327",
-  "updatedAt": "2026-10-07T21:14:24.254Z",
-  "count": 368,
+  "runId": "2026-10-07T21-19-23-937Z_632333_02fut6",
+  "buildNumber": "632333",
+  "updatedAt": "2026-10-07T21:19:23.937Z",
+  "count": 369,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11090,6 +11090,34 @@
         "value": null
       },
       "fingerprint": "1227d7bd17b198847a0fc017a47f76413d30e7dbe1e6916c0d690aa7797a1a60"
+    },
+    {
+      "id": "2026-09-windows-native-premap",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "54a65487733339001d760c5267cb083e1b74bcb2e225fc2475e47f69391f1093"
     },
     {
       "id": "2026-09-youtube-3p",
