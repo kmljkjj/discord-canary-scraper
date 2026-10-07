@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-10-07T21:06:26.760Z",
-  "version": 9,
-  "schemaVersion": 9,
-  "runId": "2026-10-07T21-06-26-760Z_8iaki5",
+  "scrapedAt": "2026-10-07T21:25:46.879Z",
+  "version": 10,
+  "schemaVersion": 10,
+  "runId": "2026-10-07T21-25-46-879Z_rumhsd",
   "samples": 150,
   "ok": 150,
   "fail": 0,
@@ -49,7 +49,126 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "GUILD_ONBOARDING_ADMIN_ONLY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:GUILD_ONBOARDING_ADMIN_ONLY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            },
+            {
+              "type": "member_count",
+              "range": {
+                "start": 5000,
+                "end": 10000
+              }
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY · members:5000-10000",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            },
+            {
+              "type": "member_count",
+              "range": {
+                "start": 0,
+                "end": 5000
+              }
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY · members:0-5000",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "global + feature:GUILD_ONBOARDING_ADMIN_ONLY | feature:PARTNERED",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3723449866,
@@ -92,7 +211,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3510816342,
@@ -135,7 +258,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 1990672009,
@@ -178,7 +305,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 4190408036,
@@ -221,7 +352,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 24149521,
@@ -264,7 +399,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3313601281,
@@ -334,7 +473,11 @@
       ],
       "fingerprint": "-1:90.0|1:10.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 295820329,
@@ -377,7 +520,61 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "id",
+              "ids": [
+                "223070469148901376",
+                "189889574556663809",
+                "276867850906370049",
+                "200837505145110528",
+                "211228845771063296",
+                "224565836277481473",
+                "286002948348051456",
+                "371935977196879872",
+                "416512197590777857",
+                "703067018416619522",
+                "274311299025076225",
+                "827273038923563018",
+                "1050987630558445568",
+                "284453485603323905",
+                "1039309000807813261",
+                "646623094269673492",
+                "593348588239716373",
+                "1014626786786676758",
+                "873674677413879839",
+                "756644176610721842",
+                "941940190140842035",
+                "949081704625209404",
+                "996518857600680006",
+                "991854745864114266",
+                "896406230824804443"
+              ]
+            }
+          ],
+          "filterLabel": "ids:25",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · ids:25",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 3194028601,
@@ -420,7 +617,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 2457903107,
@@ -552,7 +753,126 @@
       ],
       "fingerprint": "-1:40.0|1:20.0|2:20.0|4:20.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY_EXP_LARGE_UNGATED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY_EXP_LARGE_UNGATED",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  0,
+                  2000
+                ]
+              ]
+            },
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  4000,
+                  6000
+                ]
+              ]
+            },
+            {
+              "bucket": 2,
+              "label": "Variant 2",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  6000,
+                  8000
+                ]
+              ]
+            },
+            {
+              "bucket": 4,
+              "label": "Variant 4",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  8000,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY_EXP_LARGE_GATED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY_EXP_LARGE_GATED",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 40.02,
+              "pct": 40.02,
+              "ranges": [
+                [
+                  0,
+                  2000
+                ],
+                [
+                  8000,
+                  10000
+                ]
+              ]
+            },
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  4000,
+                  6000
+                ]
+              ]
+            },
+            {
+              "bucket": 2,
+              "label": "Variant 2",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  6000,
+                  8000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:COMMUNITY_EXP_LARGE_UNGATED",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 2014775304,
@@ -684,7 +1004,37 @@
       ],
       "fingerprint": "-1:80.0|1:5.0|2:5.0|4:5.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "INTERNAL_EMPLOYEE_ONLY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:INTERNAL_EMPLOYEE_ONLY",
+          "treatments": [
+            {
+              "bucket": 2,
+              "label": "Variant 2",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "global + feature:INTERNAL_EMPLOYEE_ONLY",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 2433109164,
@@ -808,7 +1158,116 @@
       ],
       "fingerprint": "-1:100.0|1:100.0|3:5.0|4:5.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "SOUNDBOARD"
+              ]
+            }
+          ],
+          "filterLabel": "feature:SOUNDBOARD",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "member_count",
+              "range": {
+                "start": 1,
+                "end": 50
+              }
+            }
+          ],
+          "filterLabel": "members:1-50",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 90.02,
+              "pct": 90.02,
+              "ranges": [
+                [
+                  0,
+                  2900
+                ],
+                [
+                  3900,
+                  10000
+                ]
+              ]
+            },
+            {
+              "bucket": 3,
+              "label": "Variant 3",
+              "percentage": 5.01,
+              "pct": 5.01,
+              "ranges": [
+                [
+                  2900,
+                  3400
+                ]
+              ]
+            },
+            {
+              "bucket": 4,
+              "label": "Variant 4",
+              "percentage": 5.01,
+              "pct": 5.01,
+              "ranges": [
+                [
+                  3400,
+                  3900
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:SOUNDBOARD",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 4083096281,
@@ -878,7 +1337,101 @@
       ],
       "fingerprint": "-1:100.0|1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "CLYDE_EXPERIMENT_ENABLED",
+                "INTERNAL_EMPLOYEE_ONLY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:CLYDE_EXPERIMENT_ENABLED,INTERNAL_EMPLOYEE_ONLY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "member_count",
+              "range": {
+                "start": 0,
+                "end": 100
+              }
+            }
+          ],
+          "filterLabel": "members:0-100",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 98.01,
+              "pct": 98.01,
+              "ranges": [
+                [
+                  200,
+                  10000
+                ]
+              ]
+            },
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 1.01,
+              "pct": 1.01,
+              "ranges": [
+                [
+                  0,
+                  100
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:CLYDE_EXPERIMENT_ENABLED,INTERNAL_EMPLOYEE_ONLY",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 3320756132,
@@ -921,7 +1474,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 1199974293,
@@ -964,7 +1521,37 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "DEVELOPER_SUPPORT_SERVER"
+              ]
+            }
+          ],
+          "filterLabel": "feature:DEVELOPER_SUPPORT_SERVER",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "global + feature:DEVELOPER_SUPPORT_SERVER",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 1504498621,
@@ -1034,7 +1621,62 @@
       ],
       "fingerprint": "1:100.0|2:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "SUMMARIES_ENABLED_GA"
+              ]
+            }
+          ],
+          "filterLabel": "feature:SUMMARIES_ENABLED_GA",
+          "treatments": [
+            {
+              "bucket": 2,
+              "label": "Variant 2",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "SUMMARIES_ENABLED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:SUMMARIES_ENABLED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:SUMMARIES_ENABLED_GA",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 944104242,
@@ -1077,7 +1719,37 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "VOICE_IN_THREADS"
+              ]
+            }
+          ],
+          "filterLabel": "feature:VOICE_IN_THREADS",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:VOICE_IN_THREADS",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 3636231100,
@@ -1120,7 +1792,37 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:COMMUNITY",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 3683063649,
@@ -1163,7 +1865,62 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:PARTNERED",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 1318029053,
@@ -1214,7 +1971,70 @@
       ],
       "fingerprint": "1:50.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 50.02,
+              "pct": 50.02,
+              "ranges": [
+                [
+                  1000,
+                  2000
+                ],
+                [
+                  6000,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 50.02,
+              "pct": 50.02,
+              "ranges": [
+                [
+                  1000,
+                  2000
+                ],
+                [
+                  6000,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:PARTNERED",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 805661295,
@@ -1257,7 +2077,62 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:PARTNERED",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 511273769,
@@ -1300,7 +2175,37 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "global + feature:PARTNERED",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3362434932,
@@ -1370,7 +2275,74 @@
       ],
       "fingerprint": "-1:60.0|1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "PARTNERED"
+              ]
+            }
+          ],
+          "filterLabel": "feature:PARTNERED",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 60.01,
+              "pct": 60.01,
+              "ranges": [
+                [
+                  4000,
+                  10000
+                ]
+              ]
+            },
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 20.01,
+              "pct": 20.01,
+              "ranges": [
+                [
+                  2000,
+                  4000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:PARTNERED",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 1446479414,
@@ -1440,7 +2412,11 @@
       ],
       "fingerprint": "-1:50.0|1:25.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 1640064366,
@@ -1518,7 +2494,53 @@
       ],
       "fingerprint": "-1:80.0|1:10.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 80.02,
+              "pct": 80.02,
+              "ranges": [
+                [
+                  1000,
+                  5000
+                ],
+                [
+                  6000,
+                  10000
+                ]
+              ]
+            },
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 10.01,
+              "pct": 10.01,
+              "ranges": [
+                [
+                  5000,
+                  6000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:COMMUNITY",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 4030301365,
@@ -1588,7 +2610,11 @@
       ],
       "fingerprint": "-1:33.0|1:33.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 43837900,
@@ -1631,7 +2657,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 2462216785,
@@ -1674,7 +2704,44 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            },
+            {
+              "type": "member_count",
+              "range": {
+                "start": 5000,
+                "end": 10000
+              }
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY · members:5000-10000",
+          "treatments": [
+            {
+              "bucket": -1,
+              "label": "None",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "global + feature:COMMUNITY · members:5000-10000",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 1669115628,
@@ -1717,7 +2784,11 @@
       ],
       "fingerprint": "2:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3282315774,
@@ -1760,7 +2831,44 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [
+        {
+          "filters": [
+            {
+              "type": "feature",
+              "features": [
+                "COMMUNITY"
+              ]
+            },
+            {
+              "type": "member_count",
+              "range": {
+                "start": 500,
+                "end": 10000
+              }
+            }
+          ],
+          "filterLabel": "feature:COMMUNITY · members:500-10000",
+          "treatments": [
+            {
+              "bucket": 1,
+              "label": "Variant 1",
+              "percentage": 100,
+              "pct": 100,
+              "ranges": [
+                [
+                  0,
+                  10000
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "hasFilters": true,
+      "filterSummary": "filtered-only · feature:COMMUNITY · members:500-10000",
+      "usedFallbackFiltered": true
     },
     {
       "hash": 258580919,
@@ -1803,7 +2911,11 @@
       ],
       "fingerprint": "1:100.0",
       "source": "worker_api",
-      "named": true
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false
     },
     {
       "hash": 3013881204,
@@ -1813,755 +2925,779 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.1,
-      "sumPct": 10,
+      "coverage": 0.099,
+      "sumPct": 9.92,
       "treatments": [
         {
           "bucket": 11,
           "label": "Variant 11",
-          "percentage": 10,
-          "pct": 10,
+          "percentage": 9.92,
+          "pct": 9.92,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.1,
+          "coverage": 0.099,
           "intervals": [
             [
-              45,
-              70
+              60,
+              110
             ],
             [
-              134,
-              134
+              159,
+              205
             ],
             [
-              276,
-              276
+              259,
+              259
             ],
             [
-              441,
-              517
+              337,
+              337
             ],
             [
-              596,
-              601
+              379,
+              379
             ],
             [
-              688,
-              688
+              426,
+              426
             ],
             [
-              826,
-              826
+              702,
+              702
             ],
             [
-              878,
-              908
+              838,
+              853
             ],
             [
-              1125,
-              1125
+              997,
+              1032
             ],
             [
-              1187,
-              1187
+              1249,
+              1281
             ],
             [
-              1241,
-              1241
+              1492,
+              1492
             ],
             [
-              1364,
-              1364
+              1548,
+              1548
             ],
             [
-              1405,
-              1405
+              1696,
+              1696
             ],
             [
-              1467,
-              1471
+              1744,
+              1744
             ],
             [
-              1577,
-              1577
+              1855,
+              1885
             ],
             [
-              1629,
-              1629
+              1933,
+              1964
             ],
             [
-              1673,
-              1730
+              2022,
+              2027
             ],
             [
-              1873,
-              1873
+              2148,
+              2148
             ],
             [
-              2039,
-              2039
+              2249,
+              2250
             ],
             [
-              2093,
-              2093
+              2385,
+              2411
             ],
             [
-              2157,
-              2159
+              2452,
+              2477
             ],
             [
-              2464,
-              2464
+              2625,
+              2655
             ],
             [
-              2521,
-              2574
+              2698,
+              2706
             ],
             [
-              2628,
-              2628
+              2811,
+              2811
             ],
             [
-              2722,
-              2722
+              2954,
+              2954
             ],
             [
-              2796,
-              2818
+              3025,
+              3025
             ],
             [
-              3038,
-              3038
+              3282,
+              3307
             ],
             [
-              3157,
-              3157
+              3395,
+              3395
             ],
             [
-              3277,
-              3354
+              3438,
+              3451
             ],
             [
-              3481,
-              3490
+              3508,
+              3517
             ],
             [
-              3628,
-              3628
+              3574,
+              3574
             ],
             [
-              3913,
-              3913
+              3612,
+              3612
             ],
             [
-              4024,
-              4066
+              3651,
+              3665
             ],
             [
-              4285,
-              4296
+              3706,
+              3706
             ],
             [
-              4387,
-              4458
+              3771,
+              3771
             ],
             [
-              4507,
-              4507
+              3885,
+              3885
             ],
             [
-              4553,
-              4578
+              3922,
+              3922
             ],
             [
-              4842,
-              4842
+              4060,
+              4060
             ],
             [
-              4922,
-              4931
+              4124,
+              4124
             ],
             [
-              5026,
-              5026
+              4169,
+              4197
             ],
             [
-              5068,
-              5095
+              4252,
+              4252
             ],
             [
-              5149,
-              5149
+              4436,
+              4471
             ],
             [
-              5435,
-              5477
+              4698,
+              4698
             ],
             [
-              5545,
-              5549
+              4773,
+              4773
             ],
             [
-              5629,
-              5629
+              4830,
+              4830
             ],
             [
-              5694,
-              5694
+              4878,
+              4884
             ],
             [
-              5813,
-              5813
+              5066,
+              5066
             ],
             [
-              5967,
-              5967
+              5145,
+              5145
             ],
             [
-              6067,
-              6067
+              5235,
+              5268
             ],
             [
-              6123,
-              6129
+              5308,
+              5327
             ],
             [
-              6171,
-              6171
+              5400,
+              5451
             ],
             [
-              6289,
-              6289
+              5492,
+              5492
             ],
             [
-              6346,
-              6346
+              5532,
+              5566
             ],
             [
-              6540,
-              6540
+              5627,
+              5627
             ],
             [
-              6599,
-              6616
+              5742,
+              5742
             ],
             [
-              6814,
-              6814
+              5795,
+              5795
             ],
             [
-              6881,
-              6881
+              5847,
+              5847
             ],
             [
-              6958,
-              6961
+              6027,
+              6027
             ],
             [
-              6999,
-              7018
+              6115,
+              6115
             ],
             [
-              7059,
-              7059
+              6186,
+              6236
             ],
             [
-              7226,
-              7226
+              6323,
+              6323
             ],
             [
-              7357,
-              7388
+              6466,
+              6466
             ],
             [
-              7476,
-              7476
+              6563,
+              6563
             ],
             [
-              7511,
-              7511
+              6619,
+              6619
             ],
             [
-              7577,
-              7577
+              6684,
+              6689
             ],
             [
-              7658,
-              7747
+              6826,
+              6826
             ],
             [
-              7829,
-              7856
+              6919,
+              6919
             ],
             [
-              7997,
-              8010
+              6991,
+              6991
             ],
             [
-              8065,
-              8065
+              7142,
+              7155
             ],
             [
-              8123,
-              8123
+              7208,
+              7208
             ],
             [
-              8162,
-              8162
+              7316,
+              7316
             ],
             [
-              8276,
-              8276
+              7434,
+              7496
             ],
             [
-              8349,
-              8349
+              7582,
+              7582
             ],
             [
-              8386,
-              8386
+              7755,
+              7755
             ],
             [
-              8485,
-              8485
+              7832,
+              7889
             ],
             [
-              8552,
-              8552
+              7948,
+              7948
             ],
             [
-              8590,
-              8597
+              8192,
+              8192
             ],
             [
-              8734,
-              8734
+              8244,
+              8260
             ],
             [
-              8838,
-              8838
+              8587,
+              8587
             ],
             [
-              8949,
-              8949
+              8642,
+              8643
             ],
             [
-              8992,
-              8992
+              8794,
+              8794
             ],
             [
-              9060,
-              9065
+              8829,
+              8844
             ],
             [
-              9111,
-              9111
+              8910,
+              8910
+            ],
+            [
+              9018,
+              9018
             ],
             [
               9167,
-              9167
+              9181
             ],
             [
-              9264,
-              9264
+              9215,
+              9215
             ],
             [
-              9448,
-              9448
+              9290,
+              9290
             ],
             [
-              9556,
-              9572
+              9397,
+              9452
             ],
             [
-              9623,
-              9660
+              9583,
+              9592
             ],
             [
-              9714,
-              9742
+              9654,
+              9654
             ],
             [
-              9782,
-              9782
+              9689,
+              9689
             ],
             [
-              9879,
-              9899
+              9773,
+              9773
+            ],
+            [
+              9933,
+              9933
+            ],
+            [
+              9992,
+              9992
             ]
           ],
           "ranges": [
             [
-              45,
-              70
+              60,
+              110
             ],
             [
-              134,
-              134
+              159,
+              205
             ],
             [
-              276,
-              276
+              259,
+              259
             ],
             [
-              441,
-              517
+              337,
+              337
             ],
             [
-              596,
-              601
+              379,
+              379
             ],
             [
-              688,
-              688
+              426,
+              426
             ],
             [
-              826,
-              826
+              702,
+              702
             ],
             [
-              878,
-              908
+              838,
+              853
             ],
             [
-              1125,
-              1125
+              997,
+              1032
             ],
             [
-              1187,
-              1187
+              1249,
+              1281
             ],
             [
-              1241,
-              1241
+              1492,
+              1492
             ],
             [
-              1364,
-              1364
+              1548,
+              1548
             ],
             [
-              1405,
-              1405
+              1696,
+              1696
             ],
             [
-              1467,
-              1471
+              1744,
+              1744
             ],
             [
-              1577,
-              1577
+              1855,
+              1885
             ],
             [
-              1629,
-              1629
+              1933,
+              1964
             ],
             [
-              1673,
-              1730
+              2022,
+              2027
             ],
             [
-              1873,
-              1873
+              2148,
+              2148
             ],
             [
-              2039,
-              2039
+              2249,
+              2250
             ],
             [
-              2093,
-              2093
+              2385,
+              2411
             ],
             [
-              2157,
-              2159
+              2452,
+              2477
             ],
             [
-              2464,
-              2464
+              2625,
+              2655
             ],
             [
-              2521,
-              2574
+              2698,
+              2706
             ],
             [
-              2628,
-              2628
+              2811,
+              2811
             ],
             [
-              2722,
-              2722
+              2954,
+              2954
             ],
             [
-              2796,
-              2818
+              3025,
+              3025
             ],
             [
-              3038,
-              3038
+              3282,
+              3307
             ],
             [
-              3157,
-              3157
+              3395,
+              3395
             ],
             [
-              3277,
-              3354
+              3438,
+              3451
             ],
             [
-              3481,
-              3490
+              3508,
+              3517
             ],
             [
-              3628,
-              3628
+              3574,
+              3574
             ],
             [
-              3913,
-              3913
+              3612,
+              3612
             ],
             [
-              4024,
-              4066
+              3651,
+              3665
             ],
             [
-              4285,
-              4296
+              3706,
+              3706
             ],
             [
-              4387,
-              4458
+              3771,
+              3771
             ],
             [
-              4507,
-              4507
+              3885,
+              3885
             ],
             [
-              4553,
-              4578
+              3922,
+              3922
             ],
             [
-              4842,
-              4842
+              4060,
+              4060
             ],
             [
-              4922,
-              4931
+              4124,
+              4124
             ],
             [
-              5026,
-              5026
+              4169,
+              4197
             ],
             [
-              5068,
-              5095
+              4252,
+              4252
             ],
             [
-              5149,
-              5149
+              4436,
+              4471
             ],
             [
-              5435,
-              5477
+              4698,
+              4698
             ],
             [
-              5545,
-              5549
+              4773,
+              4773
             ],
             [
-              5629,
-              5629
+              4830,
+              4830
             ],
             [
-              5694,
-              5694
+              4878,
+              4884
             ],
             [
-              5813,
-              5813
+              5066,
+              5066
             ],
             [
-              5967,
-              5967
+              5145,
+              5145
             ],
             [
-              6067,
-              6067
+              5235,
+              5268
             ],
             [
-              6123,
-              6129
+              5308,
+              5327
             ],
             [
-              6171,
-              6171
+              5400,
+              5451
             ],
             [
-              6289,
-              6289
+              5492,
+              5492
             ],
             [
-              6346,
-              6346
+              5532,
+              5566
             ],
             [
-              6540,
-              6540
+              5627,
+              5627
             ],
             [
-              6599,
-              6616
+              5742,
+              5742
             ],
             [
-              6814,
-              6814
+              5795,
+              5795
             ],
             [
-              6881,
-              6881
+              5847,
+              5847
             ],
             [
-              6958,
-              6961
+              6027,
+              6027
             ],
             [
-              6999,
-              7018
+              6115,
+              6115
             ],
             [
-              7059,
-              7059
+              6186,
+              6236
             ],
             [
-              7226,
-              7226
+              6323,
+              6323
             ],
             [
-              7357,
-              7388
+              6466,
+              6466
             ],
             [
-              7476,
-              7476
+              6563,
+              6563
             ],
             [
-              7511,
-              7511
+              6619,
+              6619
             ],
             [
-              7577,
-              7577
+              6684,
+              6689
             ],
             [
-              7658,
-              7747
+              6826,
+              6826
             ],
             [
-              7829,
-              7856
+              6919,
+              6919
             ],
             [
-              7997,
-              8010
+              6991,
+              6991
             ],
             [
-              8065,
-              8065
+              7142,
+              7155
             ],
             [
-              8123,
-              8123
+              7208,
+              7208
             ],
             [
-              8162,
-              8162
+              7316,
+              7316
             ],
             [
-              8276,
-              8276
+              7434,
+              7496
             ],
             [
-              8349,
-              8349
+              7582,
+              7582
             ],
             [
-              8386,
-              8386
+              7755,
+              7755
             ],
             [
-              8485,
-              8485
+              7832,
+              7889
             ],
             [
-              8552,
-              8552
+              7948,
+              7948
             ],
             [
-              8590,
-              8597
+              8192,
+              8192
             ],
             [
-              8734,
-              8734
+              8244,
+              8260
             ],
             [
-              8838,
-              8838
+              8587,
+              8587
             ],
             [
-              8949,
-              8949
+              8642,
+              8643
             ],
             [
-              8992,
-              8992
+              8794,
+              8794
             ],
             [
-              9060,
-              9065
+              8829,
+              8844
             ],
             [
-              9111,
-              9111
+              8910,
+              8910
+            ],
+            [
+              9018,
+              9018
             ],
             [
               9167,
-              9167
+              9181
             ],
             [
-              9264,
-              9264
+              9215,
+              9215
             ],
             [
-              9448,
-              9448
+              9290,
+              9290
             ],
             [
-              9556,
-              9572
+              9397,
+              9452
             ],
             [
-              9623,
-              9660
+              9583,
+              9592
             ],
             [
-              9714,
-              9742
+              9654,
+              9654
             ],
             [
-              9782,
-              9782
+              9689,
+              9689
             ],
             [
-              9879,
-              9899
+              9773,
+              9773
+            ],
+            [
+              9933,
+              9933
+            ],
+            [
+              9992,
+              9992
             ]
           ],
           "observed": [
-            45,
-            9899
+            60,
+            9992
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -2579,747 +3715,763 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.095,
-      "sumPct": 9.5,
+      "coverage": 0.098,
+      "sumPct": 9.82,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 9.5,
-          "pct": 9.5,
+          "percentage": 9.82,
+          "pct": 9.82,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.095,
+          "coverage": 0.098,
           "intervals": [
             [
-              94,
-              126
+              44,
+              44
             ],
             [
-              162,
-              162
+              95,
+              114
             ],
             [
-              207,
-              207
+              169,
+              227
             ],
             [
-              416,
-              439
+              324,
+              329
             ],
             [
-              493,
-              493
+              677,
+              677
             ],
             [
-              659,
-              659
+              711,
+              711
             ],
             [
-              733,
-              765
+              752,
+              790
             ],
             [
-              812,
-              812
+              924,
+              956
             ],
             [
-              866,
-              866
+              1053,
+              1053
             ],
             [
-              1030,
-              1030
-            ],
-            [
-              1174,
-              1174
+              1126,
+              1126
             ],
             [
               1223,
-              1223
+              1241
             ],
             [
-              1278,
-              1278
+              1324,
+              1324
             ],
             [
-              1463,
-              1463
+              1507,
+              1529
             ],
             [
-              1623,
-              1657
+              1638,
+              1656
             ],
             [
-              1749,
-              1749
+              1746,
+              1746
             ],
             [
-              1896,
-              1902
+              1868,
+              1868
             ],
             [
-              1954,
-              1957
+              1969,
+              1969
             ],
             [
-              2039,
-              2039
+              2049,
+              2080
             ],
             [
-              2142,
-              2205
+              2228,
+              2228
             ],
             [
-              2269,
-              2321
+              2448,
+              2466
             ],
             [
-              2486,
-              2486
+              2590,
+              2591
             ],
             [
-              2637,
-              2665
+              2651,
+              2651
             ],
             [
-              2828,
-              2842
+              2693,
+              2693
             ],
             [
-              2890,
-              2890
+              2733,
+              2748
             ],
             [
-              2973,
-              2973
+              2798,
+              2798
             ],
             [
-              3024,
-              3038
+              2999,
+              2999
             ],
             [
-              3216,
-              3234
+              3059,
+              3059
             ],
             [
-              3394,
-              3394
+              3093,
+              3111
             ],
             [
-              3440,
-              3440
+              3207,
+              3207
             ],
             [
-              3481,
-              3501
+              3244,
+              3267
             ],
             [
-              3545,
-              3545
+              3316,
+              3352
             ],
             [
-              3608,
-              3608
+              3519,
+              3519
             ],
             [
-              3855,
-              3855
+              3623,
+              3623
             ],
             [
-              4112,
-              4126
+              3724,
+              3724
             ],
             [
-              4231,
-              4231
+              3817,
+              3817
             ],
             [
-              4394,
-              4403
+              3905,
+              3908
             ],
             [
-              4495,
-              4495
+              3996,
+              4020
             ],
             [
-              4659,
-              4659
+              4055,
+              4055
             ],
             [
-              4778,
-              4778
+              4265,
+              4265
             ],
             [
-              4838,
-              4862
+              4475,
+              4475
             ],
             [
-              4974,
-              4974
+              4584,
+              4584
             ],
             [
-              5034,
-              5034
+              4708,
+              4708
             ],
             [
-              5084,
-              5120
+              4819,
+              4840
             ],
             [
-              5350,
-              5350
+              4880,
+              4880
             ],
             [
-              5433,
-              5433
+              5055,
+              5088
             ],
             [
-              5600,
-              5600
+              5174,
+              5195
             ],
             [
-              5638,
-              5638
+              5333,
+              5333
             ],
             [
-              5711,
-              5711
+              5414,
+              5414
             ],
             [
-              5833,
-              5840
+              5532,
+              5532
             ],
             [
-              5929,
-              5955
+              5615,
+              5615
             ],
             [
-              5995,
-              6020
+              5698,
+              5698
             ],
             [
-              6082,
-              6143
+              5757,
+              5757
             ],
             [
-              6285,
-              6303
+              5845,
+              5845
             ],
             [
-              6430,
-              6430
+              5918,
+              5984
             ],
             [
-              6470,
-              6470
+              6044,
+              6044
             ],
             [
-              6505,
-              6505
+              6109,
+              6197
             ],
             [
-              6549,
-              6549
+              6247,
+              6259
             ],
             [
-              6721,
-              6721
+              6462,
+              6462
             ],
             [
-              6808,
-              6808
+              6538,
+              6538
             ],
             [
-              6859,
-              6859
+              6604,
+              6604
             ],
             [
-              6914,
-              6914
+              6671,
+              6690
             ],
             [
-              6954,
-              6954
+              6724,
+              6724
             ],
             [
-              7009,
-              7039
+              6773,
+              6773
             ],
             [
-              7077,
-              7077
+              6879,
+              6879
             ],
             [
-              7214,
-              7290
+              6932,
+              6946
             ],
             [
-              7424,
-              7424
+              6993,
+              6993
             ],
             [
-              7469,
-              7469
+              7040,
+              7040
             ],
             [
-              7562,
-              7580
+              7095,
+              7095
             ],
             [
-              7644,
-              7644
+              7175,
+              7204
             ],
             [
-              7765,
-              7765
+              7287,
+              7347
             ],
             [
-              7800,
-              7800
+              7423,
+              7441
             ],
             [
-              7850,
-              7850
+              7528,
+              7545
             ],
             [
-              7887,
-              7887
+              7626,
+              7626
             ],
             [
-              7974,
-              7988
+              7683,
+              7713
             ],
             [
-              8109,
-              8109
+              7823,
+              7823
             ],
             [
-              8230,
-              8230
+              7937,
+              7967
             ],
             [
-              8507,
-              8507
+              8079,
+              8086
             ],
             [
-              8744,
-              8765
+              8405,
+              8424
             ],
             [
-              8800,
-              8839
+              8461,
+              8461
             ],
             [
-              8921,
-              8921
+              8500,
+              8500
             ],
             [
-              9130,
-              9147
+              8534,
+              8534
             ],
             [
-              9207,
-              9228
+              8601,
+              8610
             ],
             [
-              9332,
-              9335
+              8718,
+              8728
             ],
             [
-              9499,
-              9499
+              8938,
+              8946
             ],
             [
-              9603,
-              9612
+              8993,
+              8993
             ],
             [
-              9666,
-              9666
+              9062,
+              9062
             ],
             [
-              9719,
-              9719
+              9110,
+              9110
             ],
             [
-              9769,
-              9769
+              9292,
+              9292
             ],
             [
-              9893,
-              9946
+              9421,
+              9421
+            ],
+            [
+              9503,
+              9503
+            ],
+            [
+              9542,
+              9542
+            ],
+            [
+              9877,
+              9877
             ]
           ],
           "ranges": [
             [
-              94,
-              126
+              44,
+              44
             ],
             [
-              162,
-              162
+              95,
+              114
             ],
             [
-              207,
-              207
+              169,
+              227
             ],
             [
-              416,
-              439
+              324,
+              329
             ],
             [
-              493,
-              493
+              677,
+              677
             ],
             [
-              659,
-              659
+              711,
+              711
             ],
             [
-              733,
-              765
+              752,
+              790
             ],
             [
-              812,
-              812
+              924,
+              956
             ],
             [
-              866,
-              866
+              1053,
+              1053
             ],
             [
-              1030,
-              1030
-            ],
-            [
-              1174,
-              1174
+              1126,
+              1126
             ],
             [
               1223,
-              1223
+              1241
             ],
             [
-              1278,
-              1278
+              1324,
+              1324
             ],
             [
-              1463,
-              1463
+              1507,
+              1529
             ],
             [
-              1623,
-              1657
+              1638,
+              1656
             ],
             [
-              1749,
-              1749
+              1746,
+              1746
             ],
             [
-              1896,
-              1902
+              1868,
+              1868
             ],
             [
-              1954,
-              1957
+              1969,
+              1969
             ],
             [
-              2039,
-              2039
+              2049,
+              2080
             ],
             [
-              2142,
-              2205
+              2228,
+              2228
             ],
             [
-              2269,
-              2321
+              2448,
+              2466
             ],
             [
-              2486,
-              2486
+              2590,
+              2591
             ],
             [
-              2637,
-              2665
+              2651,
+              2651
             ],
             [
-              2828,
-              2842
+              2693,
+              2693
             ],
             [
-              2890,
-              2890
+              2733,
+              2748
             ],
             [
-              2973,
-              2973
+              2798,
+              2798
             ],
             [
-              3024,
-              3038
+              2999,
+              2999
             ],
             [
-              3216,
-              3234
+              3059,
+              3059
             ],
             [
-              3394,
-              3394
+              3093,
+              3111
             ],
             [
-              3440,
-              3440
+              3207,
+              3207
             ],
             [
-              3481,
-              3501
+              3244,
+              3267
             ],
             [
-              3545,
-              3545
+              3316,
+              3352
             ],
             [
-              3608,
-              3608
+              3519,
+              3519
             ],
             [
-              3855,
-              3855
+              3623,
+              3623
             ],
             [
-              4112,
-              4126
+              3724,
+              3724
             ],
             [
-              4231,
-              4231
+              3817,
+              3817
             ],
             [
-              4394,
-              4403
+              3905,
+              3908
             ],
             [
-              4495,
-              4495
+              3996,
+              4020
             ],
             [
-              4659,
-              4659
+              4055,
+              4055
             ],
             [
-              4778,
-              4778
+              4265,
+              4265
             ],
             [
-              4838,
-              4862
+              4475,
+              4475
             ],
             [
-              4974,
-              4974
+              4584,
+              4584
             ],
             [
-              5034,
-              5034
+              4708,
+              4708
             ],
             [
-              5084,
-              5120
+              4819,
+              4840
             ],
             [
-              5350,
-              5350
+              4880,
+              4880
             ],
             [
-              5433,
-              5433
+              5055,
+              5088
             ],
             [
-              5600,
-              5600
+              5174,
+              5195
             ],
             [
-              5638,
-              5638
+              5333,
+              5333
             ],
             [
-              5711,
-              5711
+              5414,
+              5414
             ],
             [
-              5833,
-              5840
+              5532,
+              5532
             ],
             [
-              5929,
-              5955
+              5615,
+              5615
             ],
             [
-              5995,
-              6020
+              5698,
+              5698
             ],
             [
-              6082,
-              6143
+              5757,
+              5757
             ],
             [
-              6285,
-              6303
+              5845,
+              5845
             ],
             [
-              6430,
-              6430
+              5918,
+              5984
             ],
             [
-              6470,
-              6470
+              6044,
+              6044
             ],
             [
-              6505,
-              6505
+              6109,
+              6197
             ],
             [
-              6549,
-              6549
+              6247,
+              6259
             ],
             [
-              6721,
-              6721
+              6462,
+              6462
             ],
             [
-              6808,
-              6808
+              6538,
+              6538
             ],
             [
-              6859,
-              6859
+              6604,
+              6604
             ],
             [
-              6914,
-              6914
+              6671,
+              6690
             ],
             [
-              6954,
-              6954
+              6724,
+              6724
             ],
             [
-              7009,
-              7039
+              6773,
+              6773
             ],
             [
-              7077,
-              7077
+              6879,
+              6879
             ],
             [
-              7214,
-              7290
+              6932,
+              6946
             ],
             [
-              7424,
-              7424
+              6993,
+              6993
             ],
             [
-              7469,
-              7469
+              7040,
+              7040
             ],
             [
-              7562,
-              7580
+              7095,
+              7095
             ],
             [
-              7644,
-              7644
+              7175,
+              7204
             ],
             [
-              7765,
-              7765
+              7287,
+              7347
             ],
             [
-              7800,
-              7800
+              7423,
+              7441
             ],
             [
-              7850,
-              7850
+              7528,
+              7545
             ],
             [
-              7887,
-              7887
+              7626,
+              7626
             ],
             [
-              7974,
-              7988
+              7683,
+              7713
             ],
             [
-              8109,
-              8109
+              7823,
+              7823
             ],
             [
-              8230,
-              8230
+              7937,
+              7967
             ],
             [
-              8507,
-              8507
+              8079,
+              8086
             ],
             [
-              8744,
-              8765
+              8405,
+              8424
             ],
             [
-              8800,
-              8839
+              8461,
+              8461
             ],
             [
-              8921,
-              8921
+              8500,
+              8500
             ],
             [
-              9130,
-              9147
+              8534,
+              8534
             ],
             [
-              9207,
-              9228
+              8601,
+              8610
             ],
             [
-              9332,
-              9335
+              8718,
+              8728
             ],
             [
-              9499,
-              9499
+              8938,
+              8946
             ],
             [
-              9603,
-              9612
+              8993,
+              8993
             ],
             [
-              9666,
-              9666
+              9062,
+              9062
             ],
             [
-              9719,
-              9719
+              9110,
+              9110
             ],
             [
-              9769,
-              9769
+              9292,
+              9292
             ],
             [
-              9893,
-              9946
+              9421,
+              9421
+            ],
+            [
+              9503,
+              9503
+            ],
+            [
+              9542,
+              9542
+            ],
+            [
+              9877,
+              9877
             ]
           ],
           "observed": [
-            94,
-            9946
+            44,
+            9877
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -3337,865 +4489,777 @@
       "quality": "estimated",
       "status": "estimated",
       "confidence": 1,
-      "coverage": 0.093,
-      "sumPct": 9.31,
+      "coverage": 0.121,
+      "sumPct": 12.12,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 9.31,
-          "pct": 9.31,
+          "percentage": 12.12,
+          "pct": 12.12,
           "pctKnown": true,
           "status": "estimated",
           "confidence": "medium",
           "sampleCount": 150,
           "samples": 150,
-          "coverage": 0.093,
+          "coverage": 0.121,
           "intervals": [
             [
-              74,
-              92
+              7,
+              7
             ],
             [
-              211,
-              211
+              170,
+              170
             ],
             [
-              287,
-              300
+              272,
+              272
             ],
             [
-              396,
-              396
+              355,
+              355
             ],
             [
-              626,
-              626
+              438,
+              438
             ],
             [
-              712,
-              735
+              509,
+              509
             ],
             [
-              779,
-              779
+              551,
+              582
             ],
             [
-              834,
-              834
+              641,
+              641
             ],
             [
-              883,
-              934
+              798,
+              850
             ],
             [
-              1001,
-              1043
+              894,
+              940
             ],
             [
-              1177,
-              1206
+              1011,
+              1073
             ],
             [
-              1258,
-              1258
+              1203,
+              1235
             ],
             [
-              1304,
-              1304
+              1315,
+              1339
             ],
             [
-              1384,
-              1384
+              1376,
+              1376
             ],
             [
-              1473,
-              1473
+              1446,
+              1446
             ],
             [
-              1523,
-              1536
+              1481,
+              1539
             ],
             [
-              1597,
-              1597
+              1834,
+              1864
             ],
             [
-              1711,
-              1711
+              1946,
+              1972
             ],
             [
-              1755,
-              1755
+              2031,
+              2054
             ],
             [
-              1941,
-              1947
+              2103,
+              2103
             ],
             [
-              2059,
-              2059
+              2210,
+              2238
             ],
             [
-              2170,
-              2170
+              2283,
+              2308
             ],
             [
-              2229,
-              2229
+              2467,
+              2467
             ],
             [
-              2293,
-              2293
+              2524,
+              2524
             ],
             [
-              2367,
-              2367
+              2719,
+              2719
             ],
             [
-              2404,
-              2415
+              2794,
+              2794
             ],
             [
-              2471,
-              2471
+              3137,
+              3139
             ],
             [
-              2643,
-              2649
+              3290,
+              3290
             ],
             [
-              2732,
-              2732
+              3332,
+              3332
             ],
             [
-              2841,
-              2841
+              3399,
+              3399
             ],
             [
-              2946,
-              2946
+              3565,
+              3588
             ],
             [
-              3000,
-              3000
+              3641,
+              3641
             ],
             [
-              3078,
-              3078
+              3790,
+              3790
             ],
             [
-              3176,
-              3176
+              3827,
+              3827
             ],
             [
-              3280,
-              3280
+              3943,
+              3950
             ],
             [
-              3440,
-              3440
+              4011,
+              4044
             ],
             [
-              3485,
-              3485
+              4080,
+              4125
             ],
             [
-              3596,
-              3596
+              4201,
+              4201
             ],
             [
-              3656,
-              3679
+              4332,
+              4332
             ],
             [
-              3746,
-              3746
+              4418,
+              4418
             ],
             [
-              3822,
-              3822
+              4481,
+              4481
             ],
             [
-              3945,
-              3945
+              4516,
+              4543
             ],
             [
-              3982,
-              3998
+              4604,
+              4604
             ],
             [
-              4118,
-              4151
+              4876,
+              4891
             ],
             [
-              4317,
-              4317
+              5065,
+              5083
             ],
             [
-              4380,
-              4464
+              5163,
+              5185
             ],
             [
-              4552,
-              4552
+              5295,
+              5295
             ],
             [
-              4621,
-              4621
+              5360,
+              5387
             ],
             [
-              4828,
-              4828
+              5448,
+              5477
             ],
             [
-              4866,
-              4866
+              5546,
+              5569
             ],
             [
-              4947,
-              4947
+              5607,
+              5612
             ],
             [
-              5102,
-              5102
+              5646,
+              5646
             ],
             [
-              5368,
-              5372
+              5689,
+              5729
             ],
             [
-              5565,
-              5565
+              5800,
+              5836
             ],
             [
-              5719,
-              5719
+              5958,
+              5967
             ],
             [
-              5775,
-              5775
+              6100,
+              6118
             ],
             [
-              5883,
-              5883
+              6323,
+              6337
             ],
             [
-              5919,
-              5919
+              6387,
+              6387
             ],
             [
-              5954,
-              5954
+              6439,
+              6516
             ],
             [
-              6028,
-              6028
+              6623,
+              6623
             ],
             [
-              6123,
-              6133
+              6879,
+              6887
             ],
             [
-              6245,
-              6245
+              7148,
+              7179
             ],
             [
-              6304,
-              6308
+              7277,
+              7288
             ],
             [
-              6358,
-              6413
+              7387,
+              7387
             ],
             [
-              6549,
-              6549
+              7463,
+              7463
             ],
             [
-              6612,
-              6612
+              7858,
+              7858
             ],
             [
-              6677,
-              6719
+              8153,
+              8153
             ],
             [
-              6761,
-              6761
+              8296,
+              8296
             ],
             [
-              6795,
-              6795
+              8333,
+              8364
             ],
             [
-              6864,
-              6864
+              8483,
+              8533
             ],
             [
-              6909,
-              6909
+              8661,
+              8661
             ],
             [
-              6956,
-              6956
+              8751,
+              8751
             ],
             [
-              7071,
-              7075
+              8815,
+              8815
             ],
             [
-              7183,
-              7184
+              8915,
+              8915
             ],
             [
-              7330,
-              7354
+              8994,
+              9008
             ],
             [
-              7396,
-              7396
+              9119,
+              9119
             ],
             [
-              7483,
-              7483
+              9167,
+              9215
             ],
             [
-              7612,
-              7653
+              9276,
+              9276
             ],
             [
-              7785,
-              7785
+              9386,
+              9386
             ],
             [
-              8013,
-              8013
+              9506,
+              9506
             ],
             [
-              8050,
-              8050
+              9582,
+              9582
             ],
             [
-              8096,
-              8096
+              9713,
+              9741
             ],
             [
-              8214,
-              8214
+              9792,
+              9792
             ],
             [
-              8324,
-              8349
-            ],
-            [
-              8455,
-              8480
-            ],
-            [
-              8556,
-              8617
-            ],
-            [
-              8689,
-              8729
-            ],
-            [
-              8794,
-              8794
-            ],
-            [
-              8857,
-              8857
-            ],
-            [
-              8912,
-              8912
-            ],
-            [
-              8978,
-              8978
-            ],
-            [
-              9128,
-              9128
-            ],
-            [
-              9182,
-              9189
-            ],
-            [
-              9260,
-              9338
-            ],
-            [
-              9603,
-              9650
+              9960,
+              9960
             ]
           ],
           "ranges": [
             [
-              74,
-              92
+              7,
+              7
             ],
             [
-              211,
-              211
+              170,
+              170
             ],
             [
-              287,
-              300
+              272,
+              272
             ],
             [
-              396,
-              396
+              355,
+              355
             ],
             [
-              626,
-              626
+              438,
+              438
             ],
             [
-              712,
-              735
+              509,
+              509
             ],
             [
-              779,
-              779
+              551,
+              582
             ],
             [
-              834,
-              834
+              641,
+              641
             ],
             [
-              883,
-              934
+              798,
+              850
             ],
             [
-              1001,
-              1043
+              894,
+              940
             ],
             [
-              1177,
-              1206
+              1011,
+              1073
             ],
             [
-              1258,
-              1258
+              1203,
+              1235
             ],
             [
-              1304,
-              1304
+              1315,
+              1339
             ],
             [
-              1384,
-              1384
+              1376,
+              1376
             ],
             [
-              1473,
-              1473
+              1446,
+              1446
             ],
             [
-              1523,
-              1536
+              1481,
+              1539
             ],
             [
-              1597,
-              1597
+              1834,
+              1864
             ],
             [
-              1711,
-              1711
+              1946,
+              1972
             ],
             [
-              1755,
-              1755
+              2031,
+              2054
             ],
             [
-              1941,
-              1947
+              2103,
+              2103
             ],
             [
-              2059,
-              2059
+              2210,
+              2238
             ],
             [
-              2170,
-              2170
+              2283,
+              2308
             ],
             [
-              2229,
-              2229
+              2467,
+              2467
             ],
             [
-              2293,
-              2293
+              2524,
+              2524
             ],
             [
-              2367,
-              2367
+              2719,
+              2719
             ],
             [
-              2404,
-              2415
+              2794,
+              2794
             ],
             [
-              2471,
-              2471
+              3137,
+              3139
             ],
             [
-              2643,
-              2649
+              3290,
+              3290
             ],
             [
-              2732,
-              2732
+              3332,
+              3332
             ],
             [
-              2841,
-              2841
+              3399,
+              3399
             ],
             [
-              2946,
-              2946
+              3565,
+              3588
             ],
             [
-              3000,
-              3000
+              3641,
+              3641
             ],
             [
-              3078,
-              3078
+              3790,
+              3790
             ],
             [
-              3176,
-              3176
+              3827,
+              3827
             ],
             [
-              3280,
-              3280
+              3943,
+              3950
             ],
             [
-              3440,
-              3440
+              4011,
+              4044
             ],
             [
-              3485,
-              3485
+              4080,
+              4125
             ],
             [
-              3596,
-              3596
+              4201,
+              4201
             ],
             [
-              3656,
-              3679
+              4332,
+              4332
             ],
             [
-              3746,
-              3746
+              4418,
+              4418
             ],
             [
-              3822,
-              3822
+              4481,
+              4481
             ],
             [
-              3945,
-              3945
+              4516,
+              4543
             ],
             [
-              3982,
-              3998
+              4604,
+              4604
             ],
             [
-              4118,
-              4151
+              4876,
+              4891
             ],
             [
-              4317,
-              4317
+              5065,
+              5083
             ],
             [
-              4380,
-              4464
+              5163,
+              5185
             ],
             [
-              4552,
-              4552
+              5295,
+              5295
             ],
             [
-              4621,
-              4621
+              5360,
+              5387
             ],
             [
-              4828,
-              4828
+              5448,
+              5477
             ],
             [
-              4866,
-              4866
+              5546,
+              5569
             ],
             [
-              4947,
-              4947
+              5607,
+              5612
             ],
             [
-              5102,
-              5102
+              5646,
+              5646
             ],
             [
-              5368,
-              5372
+              5689,
+              5729
             ],
             [
-              5565,
-              5565
+              5800,
+              5836
             ],
             [
-              5719,
-              5719
+              5958,
+              5967
             ],
             [
-              5775,
-              5775
+              6100,
+              6118
             ],
             [
-              5883,
-              5883
+              6323,
+              6337
             ],
             [
-              5919,
-              5919
+              6387,
+              6387
             ],
             [
-              5954,
-              5954
+              6439,
+              6516
             ],
             [
-              6028,
-              6028
+              6623,
+              6623
             ],
             [
-              6123,
-              6133
+              6879,
+              6887
             ],
             [
-              6245,
-              6245
+              7148,
+              7179
             ],
             [
-              6304,
-              6308
+              7277,
+              7288
             ],
             [
-              6358,
-              6413
+              7387,
+              7387
             ],
             [
-              6549,
-              6549
+              7463,
+              7463
             ],
             [
-              6612,
-              6612
+              7858,
+              7858
             ],
             [
-              6677,
-              6719
+              8153,
+              8153
             ],
             [
-              6761,
-              6761
+              8296,
+              8296
             ],
             [
-              6795,
-              6795
+              8333,
+              8364
             ],
             [
-              6864,
-              6864
+              8483,
+              8533
             ],
             [
-              6909,
-              6909
+              8661,
+              8661
             ],
             [
-              6956,
-              6956
+              8751,
+              8751
             ],
             [
-              7071,
-              7075
+              8815,
+              8815
             ],
             [
-              7183,
-              7184
+              8915,
+              8915
             ],
             [
-              7330,
-              7354
+              8994,
+              9008
             ],
             [
-              7396,
-              7396
+              9119,
+              9119
             ],
             [
-              7483,
-              7483
+              9167,
+              9215
             ],
             [
-              7612,
-              7653
+              9276,
+              9276
             ],
             [
-              7785,
-              7785
+              9386,
+              9386
             ],
             [
-              8013,
-              8013
+              9506,
+              9506
             ],
             [
-              8050,
-              8050
+              9582,
+              9582
             ],
             [
-              8096,
-              8096
+              9713,
+              9741
             ],
             [
-              8214,
-              8214
+              9792,
+              9792
             ],
             [
-              8324,
-              8349
-            ],
-            [
-              8455,
-              8480
-            ],
-            [
-              8556,
-              8617
-            ],
-            [
-              8689,
-              8729
-            ],
-            [
-              8794,
-              8794
-            ],
-            [
-              8857,
-              8857
-            ],
-            [
-              8912,
-              8912
-            ],
-            [
-              8978,
-              8978
-            ],
-            [
-              9128,
-              9128
-            ],
-            [
-              9182,
-              9189
-            ],
-            [
-              9260,
-              9338
-            ],
-            [
-              9603,
-              9650
+              9960,
+              9960
             ]
           ],
           "observed": [
-            74,
-            9650
+            7,
+            9960
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
         }
       ],
-      "fingerprint": "1:9.0",
+      "fingerprint": "1:12.0",
       "source": "fingerprint-sample",
       "named": true
     },
     {
-      "hash": 1144304849,
-      "id": "hash:1144304849",
-      "title": "hash:1144304849",
+      "hash": 704914099,
+      "id": "hash:704914099",
+      "title": "hash:704914099",
       "type": "user",
       "quality": "degraded",
       "status": "degraded",
-      "confidence": 0.067,
-      "coverage": 0.008,
-      "sumPct": 0.83,
+      "confidence": 0.04,
+      "coverage": 0.002,
+      "sumPct": 0.22,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 0.83,
-          "pct": 0.83,
+          "percentage": 0.22,
+          "pct": 0.22,
           "pctKnown": true,
           "status": "degraded",
           "confidence": "low",
-          "sampleCount": 10,
-          "samples": 10,
-          "coverage": 0.008,
+          "sampleCount": 6,
+          "samples": 6,
+          "coverage": 0.002,
           "intervals": [
             [
-              56,
-              56
+              9558,
+              9558
             ],
             [
-              93,
-              130
+              9628,
+              9628
             ],
             [
-              240,
-              240
+              9822,
+              9822
             ],
             [
-              332,
-              373
+              9889,
+              9889
             ],
             [
-              449,
-              449
+              9959,
+              9976
             ]
           ],
           "ranges": [
             [
-              56,
-              56
+              9558,
+              9558
             ],
             [
-              93,
-              130
+              9628,
+              9628
             ],
             [
-              240,
-              240
+              9822,
+              9822
             ],
             [
-              332,
-              373
+              9889,
+              9889
             ],
             [
-              449,
-              449
+              9959,
+              9976
             ]
           ],
           "observed": [
-            56,
-            449
+            9558,
+            9976
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -4206,66 +5270,74 @@
       "named": false
     },
     {
-      "hash": 704914099,
-      "id": "hash:704914099",
-      "title": "hash:704914099",
+      "hash": 1144304849,
+      "id": "hash:1144304849",
+      "title": "hash:1144304849",
       "type": "user",
       "quality": "degraded",
       "status": "degraded",
-      "confidence": 0.027,
-      "coverage": 0,
-      "sumPct": 0.04,
+      "confidence": 0.047,
+      "coverage": 0.005,
+      "sumPct": 0.54,
       "treatments": [
         {
           "bucket": 1,
           "label": "Variant 1",
-          "percentage": 0.04,
-          "pct": 0.04,
+          "percentage": 0.54,
+          "pct": 0.54,
           "pctKnown": true,
           "status": "degraded",
           "confidence": "low",
-          "sampleCount": 4,
-          "samples": 4,
-          "coverage": 0,
+          "sampleCount": 7,
+          "samples": 7,
+          "coverage": 0.005,
           "intervals": [
             [
-              9627,
-              9627
+              62,
+              91
             ],
             [
-              9756,
-              9756
+              237,
+              237
             ],
             [
-              9856,
-              9856
+              286,
+              306
             ],
             [
-              9915,
-              9915
+              340,
+              340
+            ],
+            [
+              491,
+              491
             ]
           ],
           "ranges": [
             [
-              9627,
-              9627
+              62,
+              91
             ],
             [
-              9756,
-              9756
+              237,
+              237
             ],
             [
-              9856,
-              9856
+              286,
+              306
             ],
             [
-              9915,
-              9915
+              340,
+              340
+            ],
+            [
+              491,
+              491
             ]
           ],
           "observed": [
-            9627,
-            9915
+            62,
+            491
           ],
           "gapFill": 33,
           "sourceKind": "estimated_from_samples"
@@ -4309,13 +5381,6 @@
     "4055210228": "1:11.0"
   },
   "history": [
-    {
-      "ts": "2026-10-07T16:40:25.869Z",
-      "ok": 150,
-      "fail": 0,
-      "experimentCount": 36,
-      "changeCount": 0
-    },
     {
       "ts": "2026-10-07T16:46:55.405Z",
       "ok": 150,
@@ -4584,6 +5649,13 @@
     },
     {
       "ts": "2026-10-07T21:06:26.760Z",
+      "ok": 150,
+      "fail": 0,
+      "experimentCount": 36,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-07T21:25:46.879Z",
       "ok": 150,
       "fail": 0,
       "experimentCount": 36,
