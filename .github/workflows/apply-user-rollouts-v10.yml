@@ -10,9 +10,9 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Write user_rollouts.js
+      - name: Patch to v10
         run: |
-          python3 scripts/apply_user_rollouts_v10.py
+          python3 scripts/patch_user_rollouts_v10.py
           node --check src/user_rollouts.js
       - name: Commit
         run: |
