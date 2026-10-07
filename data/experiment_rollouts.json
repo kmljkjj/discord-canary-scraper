@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-07T23:33:47.091Z",
+  "fetchedAt": "2026-10-07T23:40:44.158Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,8 +11,8 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
-      "matched": 1
+      "uniqueHashes": 5,
+      "matched": 2
     }
   },
   "guildExperiments": [
@@ -5016,17 +5016,17 @@
       "title": "hash_3013881204",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 50,
-      "enrolled": 50,
+      "samples": 47,
+      "enrolled": 47,
       "treatmentDistribution": {
-        "1": 50
+        "1": 47
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 50,
-      "fpEnrolled": 50,
+      "fpSamples": 47,
+      "fpEnrolled": 47,
       "fpTreatmentDist": {
-        "1": 50
+        "1": 47
       }
     },
     {
@@ -5036,37 +5036,37 @@
       "title": "Safety Experience IAR User Reporting",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 50,
-      "enrolled": 50,
+      "samples": 47,
+      "enrolled": 47,
       "treatmentDistribution": {
-        "4": 50
+        "4": 47
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 50,
-      "fpEnrolled": 50,
+      "fpSamples": 47,
+      "fpEnrolled": 47,
       "fpTreatmentDist": {
-        "4": 50
+        "4": 47
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 47,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 47
       },
       "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "note": null,
+      "fpSamples": 47,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 47
       }
     },
     {
@@ -5087,6 +5087,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 1
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
       }
     },
     {
@@ -5344,16 +5364,6 @@
       "hash": 511860492,
       "type": "user",
       "title": "Calendar",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8744,11 +8754,11 @@
     "total": 589,
     "guild": 93,
     "user": 496,
-    "withPercentage": 224,
-    "withoutPercentage": 365,
+    "withPercentage": 225,
+    "withoutPercentage": 364,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 176,
-    "fpSampled": 4
+    "notStarted": 177,
+    "fpSampled": 5
   }
 }
