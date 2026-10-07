@@ -5810,6 +5810,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-desktop-game-perf",
+    "defaultConfig": {
+      "nativeSystemCpuTimes": false
+    },
+    "variations": {
+      "0": {
+        "nativeSystemCpuTimes": false
+      },
+      "1": {
+        "nativeSystemCpuTimes": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-desktop-tti-perf",
     "defaultConfig": {
       "legacyOverlayWorker": false
