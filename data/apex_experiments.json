@@ -1726,22 +1726,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-03-message-bookmarks",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "enabled": true
-      },
-      "2": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-03-mobile-quest-home-red-dot-notification",
     "defaultConfig": {
       "enabled": false
@@ -3737,20 +3721,6 @@
     "variations": {
       "1": {
         "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-07-message-bookmarks-v2",
-    "defaultConfig": null,
-    "variations": {
-      "1": {
-        "id": 1
-      },
-      "2": {
-        "id": 2
       }
     },
     "label": null
