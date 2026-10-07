@@ -4479,6 +4479,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-08-rive-web-perf",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-08-rocketleague-events",
     "defaultConfig": {
       "enableRocketLeagueEvents": false

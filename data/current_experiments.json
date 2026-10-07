@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-07T15-37-27-184Z_631732_zsjsa9",
-  "buildNumber": "631732",
-  "updatedAt": "2026-10-07T15:37:27.184Z",
-  "count": 367,
+  "runId": "2026-10-07T15-48-22-300Z_631737_vht7xq",
+  "buildNumber": "631737",
+  "updatedAt": "2026-10-07T15:48:22.300Z",
+  "count": 368,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8666,6 +8666,34 @@
         "value": null
       },
       "fingerprint": "06f2a9c185c68f4e85df6197547b5eaf8257df3654d0ec3a5b58d99b4192d71c"
+    },
+    {
+      "id": "2026-08-rive-web-perf",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6130c8ec191fd600d3b84c0627ae004e9a1939a68dcd6f40b78764fa18bf5745"
     },
     {
       "id": "2026-08-rocketleague-events",
