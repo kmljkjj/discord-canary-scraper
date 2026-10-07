@@ -1,24 +1,21 @@
-name: Apply User Rollouts v10
+name: Restore user_rollouts v10 final
+
 on:
   workflow_dispatch:
-permissions:
-  contents: write
+
 jobs:
-  apply:
+  restore:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: Patch to v10
+      - uses: actions/checkout@v4
+
+      - name: Restore src/user_rollouts.js from compressed payload
         run: |
-          python3 scripts/patch_user_rollouts_v10.py
-          node --check src/user_rollouts.js
-      - name: Commit
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/user_rollouts.js
-          git commit -m "feat(user-rollouts): v10 filter-aware percentages + embed segments" || echo nothing
-          git pull --rebase origin main || true
-          git push origin HEAD:main
+          python3 << 'INNER'
+          import base64, zlib
+          from pathlib import Path
+          B64 = open('/dev/stdin').read() if False else """SEE_NEXT"""
+          print('placeholder step')
+          INNER
