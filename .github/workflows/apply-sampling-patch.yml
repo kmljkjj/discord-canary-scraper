@@ -1,4 +1,4 @@
-name: Apply sampling-estimate patch
+name: Emergency restore math and user_rollouts
 on:
   workflow_dispatch:
 jobs:
@@ -8,5 +8,18 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: stub
-        run: echo use full payload next
+      - name: Restore known-good sources
+        run: |
+          set -e
+          curl -sL "https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/362755fe1b1a/src/lib/rollout_math.js" -o src/lib/rollout_math.js
+          curl -sL "https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/362755fe1b1a/src/user_rollouts.js" -o src/user_rollouts.js
+          wc -c src/lib/rollout_math.js src/user_rollouts.js
+          node --check src/lib/rollout_math.js
+          node --check src/user_rollouts.js
+          head -3 src/lib/rollout_math.js
+      - name: Commit restore
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/lib/rollout_math.js src/user_rollouts.js
+          git diff --cached --quiet && echo nochanges || (git commit -m "emergency restore rollout_math + user_rollouts" && git push)
