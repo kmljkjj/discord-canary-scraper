@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-07T17:49:19.294Z",
+  "fetchedAt": "2026-10-07T17:56:12.735Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,43 +5070,43 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 1,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 1
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 1
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 4
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
       }
     },
     {
@@ -6104,16 +6104,6 @@
       "hash": 3929126958,
       "type": "user",
       "title": "2026-03-media-play-metrics",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-message-bookmarks",
-      "hash": 3051456417,
-      "type": "user",
-      "title": "2026-03-message-bookmarks",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -7374,16 +7364,6 @@
       "hash": 1550266745,
       "type": "user",
       "title": "2026-07-manual-age-assurance-fallback",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-07-message-bookmarks-v2",
-      "hash": 367271379,
-      "type": "user",
-      "title": "2026-07-message-bookmarks-v2",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8761,11 +8741,11 @@
     }
   ],
   "summary": {
-    "total": 590,
+    "total": 588,
     "guild": 93,
-    "user": 497,
+    "user": 495,
     "withPercentage": 225,
-    "withoutPercentage": 365,
+    "withoutPercentage": 363,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
