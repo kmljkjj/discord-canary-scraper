@@ -1,0 +1,28 @@
+name: Patch Dismissible Content
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Apply patch
+        run: |
+          cp scripts/_dismissible_content_src.js scripts/_dismissible_content_src.js
+          python3 scripts/patch_dismissible.py
+          node --check src/lib/dismissible_content.js
+          node --check src/lib/extract.js
+          node --check src/index.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/dismissible_content.js src/lib/extract.js src/index.js \
+            .github/workflows/scrape.yml scripts/patch_dismissible.py scripts/_dismissible_content_src.js
+          git commit -m "feat: track Dismissible Content adds/removes and notify" || exit 0
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push
