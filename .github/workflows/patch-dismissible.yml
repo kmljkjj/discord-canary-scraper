@@ -12,7 +12,6 @@ jobs:
           fetch-depth: 0
       - name: Apply patch
         run: |
-          cp scripts/_dismissible_content_src.js scripts/_dismissible_content_src.js
           python3 scripts/patch_dismissible.py
           node --check src/lib/dismissible_content.js
           node --check src/lib/extract.js
