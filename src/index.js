@@ -8,6 +8,7 @@ const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, makeRunId } = require('./lib/state');
 const { notifyUrgent, notifyNormal } = require('./lib/notify');
+const { processDismissibleContent } = require('./lib/dismissible_content');
 const { archiveBuildChunks, writeZipHint } = require('./lib/archive_chunks');
 const { publishFlatChunks } = require('./lib/flat_chunks');
 const { writeJsonAtomic } = require('./lib/atomic');
@@ -731,6 +732,24 @@ async function main() {
     }
   }
   console.log('Notify done', Date.now() - t0 + 'ms');
+
+  // --- Dismissible Content enum (added / removed) ---
+  try {
+    const dismissible = findings.dismissibleContent || {};
+    const dcCount = Object.keys(dismissible).length;
+    const isDcSeed = !(await fs.pathExists(path.join(DATA, 'dismissible_content.json')));
+    await processDismissibleContent({
+      dataDir: DATA,
+      current: dismissible,
+      buildNumber: build.buildNumber || build.number || null,
+      webhookUrl: process.env.DISCORD_WEBHOOK_URL || process.env.WEBHOOK_URL || null,
+      isSeed: isDcSeed || isCatchUp,
+    });
+    console.log('Dismissible Content done', dcCount);
+  } catch (e) {
+    console.warn('Dismissible Content failed:', String(e.message || e).slice(0, 160));
+  }
+
 
   // Full transactional gate: nothing durable advances if normal notify failed
   // when there was something to announce (strings/routes). Experiments last_extract

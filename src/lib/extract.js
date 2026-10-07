@@ -20,6 +20,7 @@ const {
   DOWNLOAD_CONCURRENCY,
 } = require('./download');
 const { inferType } = require('./infer_type');
+const { extractDismissibleContent } = require('./dismissible_content');
 
 // Priority path still starts with web.*; full chunks after unless disabled
 const FULL_CHUNKS = process.env.SCRAPE_FULL_CHUNKS !== '0';
@@ -70,10 +71,12 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
   const strings = {};
   const routes = {};
   const expSet = new Map();
+  const dismissibleContent = {};
 
   if (webContent) {
     try {
       await extractCoreParallel(webContent, { routes, expSet, strings });
+      extractDismissibleContent(webContent, dismissibleContent);
     } catch (e) {
       console.error('web extract error', e.message);
       throw e;
@@ -191,6 +194,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
       extractRoutes(item.content, routes);
       extractExperiments(item.content, expSet);
       if (item.size < 500_000) extractStrings(item.content, strings);
+      extractDismissibleContent(item.content, dismissibleContent);
       coverage.scanned++;
       coverage.bytesScanned += item.size;
     }
@@ -238,6 +242,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     strings: Object.keys(strings).length,
     routes: Object.keys(routes).length,
     experiments: expSet.size,
+    dismissible: Object.keys(dismissibleContent).length,
     css: Object.keys(cssInventory).length,
     jsOnDisk: jsFiles.length,
     coverage,
@@ -253,6 +258,7 @@ async function analyzeAssets(build, { forceRefresh, assetsDir, cacheDir, onCore 
     experiments: [...expSet.values()].sort((a, b) => a.id.localeCompare(b.id)),
     strings,
     routes,
+    dismissibleContent,
     css: cssInventory,
     downloadStats: getDownloadStats(),
     coverage,
@@ -798,4 +804,5 @@ module.exports = {
   extractObjectLiteralPairs,
   extractVariationBlock,
   parseTopLevelBlocks,
+  extractDismissibleContent,
 };
