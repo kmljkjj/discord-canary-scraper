@@ -10,12 +10,19 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Restore src/user_rollouts.js from compressed payload
+      - name: Assemble user_rollouts.js
         run: |
-          python3 << 'INNER'
-          import base64, zlib
-          from pathlib import Path
-          B64 = open('/dev/stdin').read() if False else """SEE_NEXT"""
-          print('placeholder step')
-          INNER
+          cat scripts/chunks/ur_v10e_0.js scripts/chunks/ur_v10e_1.js scripts/chunks/ur_v10e_2.js scripts/chunks/ur_v10e_3.js > src/user_rollouts.js
+          wc -c src/user_rollouts.js
+          node --check src/user_rollouts.js
+          grep -q "User rollouts v10 (EXACT + filter-aware segments)" src/user_rollouts.js
+          grep -q "scopeLine" src/user_rollouts.js
+          grep -q "function formatFilter" src/user_rollouts.js
+          echo ALL_OK
+      - name: Commit & push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/user_rollouts.js
+          git commit -m "user_rollouts: restore v10 final (banner + filter-aware embeds)"
+          git push
