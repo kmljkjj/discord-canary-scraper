@@ -10,16 +10,46 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Enrich buildEmbeds
+      - name: Enrich buildEmbeds from good local logic
         run: |
           python3 << 'PY'
-          import base64
           from pathlib import Path
           src = Path("src/user_rollouts.js").read_text(encoding="utf-8")
           if "scopeLine" in src and "Filtres" in src:
               print("already enriched")
-          else:
-              # load enriched from sibling commit artifact - inline minimal replace
-              print("need patch")
-              raise SystemExit("use full payload")
+              raise SystemExit(0)
+          # Minimal surgical: inject scope into treatment lines + scopeLine after type line
+          old = """        const band = n > 0 ? ' · n=' + n : '';\n        return '• **' + t.label + '** · ' + pct + st + band;"""
+          new = """        const band = n > 0 ? ' · n=' + n : '';\n        const scope = t.scope === 'filtered' ? ' · `filtered`' : '';\n        return '• **' + t.label + '** · ' + pct + st + scope + band;"""
+          if old in src:
+              src = src.replace(old, new, 1)
+              print("scope on treatment lines")
+          # Inject scopeLine into new embeds description array
+          marker = "'Type · `user` · ' + (c.status === 'exact' ? '**EXACT** (bucket ranges)' : '**ESTIMATED** (sampling)'),"
+          inject = marker + "\n          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),"
+          if marker in src and "Filtres ·" not in src:
+              src = src.replace(marker, inject, 1)
+              print("scopeLine for new")
+          marker2 = "'Type · `user`',"
+          # only first pct occurrence after kind === 'pct'
+          idx = src.find("c.kind === 'pct'")
+          if idx > 0:
+              sub = src[idx:idx+800]
+              m2 = "'Type · `user`',"
+              if m2 in sub and "Filtres ·" not in sub:
+                  pos = src.index(m2, idx)
+                  inject2 = m2 + "\n          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),"
+                  src = src[:pos] + inject2 + src[pos+len(m2):]
+                  print("scopeLine for pct")
+          Path("src/user_rollouts.js").write_text(src, encoding="utf-8")
+          print("done", len(src))
+          assert "Filtres ·" in src or "already" in "x"
           PY
+          node --check src/user_rollouts.js
+          echo OK
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/user_rollouts.js
+          git diff --cached --quiet && echo nochanges || (git commit -m "user_rollouts: filter-aware embeds (scope/Filtres lines)" && git push)
