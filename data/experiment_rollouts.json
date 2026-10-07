@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-07T23:40:44.158Z",
+  "fetchedAt": "2026-10-07T23:47:44.944Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5016,17 +5016,17 @@
       "title": "hash_3013881204",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 47,
-      "enrolled": 47,
+      "samples": 50,
+      "enrolled": 50,
       "treatmentDistribution": {
-        "1": 47
+        "1": 50
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 47,
-      "fpEnrolled": 47,
+      "fpSamples": 50,
+      "fpEnrolled": 50,
       "fpTreatmentDist": {
-        "1": 47
+        "1": 50
       }
     },
     {
@@ -5036,37 +5036,17 @@
       "title": "Safety Experience IAR User Reporting",
       "percentage": 100,
       "status": "full_rollout",
-      "samples": 47,
-      "enrolled": 47,
+      "samples": 50,
+      "enrolled": 50,
       "treatmentDistribution": {
-        "4": 47
+        "4": 50
       },
       "source": "fingerprint_sampling",
       "note": null,
-      "fpSamples": 47,
-      "fpEnrolled": 47,
+      "fpSamples": 50,
+      "fpEnrolled": 50,
       "fpTreatmentDist": {
-        "4": 47
-      }
-    },
-    {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "type": "user",
-      "title": "Tida Webform",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 47,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 47
-      },
-      "source": "fingerprint_sampling",
-      "note": null,
-      "fpSamples": 47,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 47
+        "4": 50
       }
     },
     {
@@ -5076,17 +5056,37 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 4
+      }
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "type": "user",
+      "title": "Tida Webform",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 50,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 50
+      },
+      "source": "fingerprint_sampling",
+      "note": null,
+      "fpSamples": 50,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 50
       }
     },
     {
