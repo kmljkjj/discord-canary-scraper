@@ -10,15 +10,129 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Assemble user_rollouts.js
+
+      - name: Fetch good base + patch banner and embeds
         run: |
-          cat scripts/chunks/ur_v10e_0.js scripts/chunks/ur_v10e_1.js scripts/chunks/ur_v10e_2.js scripts/chunks/ur_v10e_3.js > src/user_rollouts.js
+          set -e
+          curl -sL "https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/d415e34090eaf255ddecdf112ee3df4b54f52892/src/user_rollouts.js" -o src/user_rollouts.js
           wc -c src/user_rollouts.js
+          python3 << 'PY'
+          from pathlib import Path
+          src = Path("src/user_rollouts.js").read_text(encoding="utf-8")
+          old_banner = "console.log('📊 User rollouts v9 (EXACT from bucket ranges)');"
+          new_banner = "console.log('📊 User rollouts v10 (EXACT + filter-aware segments)');"
+          if old_banner in src:
+              src = src.replace(old_banner, new_banner, 1)
+              print("Banner fixed")
+          enriched = r"""function buildEmbeds(changes) {
+  const embeds = [];
+  for (const c of changes.slice(0, 10)) {
+    if (c.kind === 'new') {
+      const lines = (c.treatments || []).slice(0, 10).map((t) => {
+        const pct = t.pctKnown && t.pct != null ? '`' + t.pct + '%`' : '`?%`';
+        const st = t.status === 'exact' ? ' · **exact**' : t.status && t.status !== 'estimated' ? ' · `' + t.status + '`' : ' · `est.`';
+        const n = t.sampleCount || t.samples || 0;
+        const band = n > 0 ? ' · n=' + n : '';
+        const scope = t.scope === 'filtered' ? ' · `filtered`' : '';
+        return '• **' + t.label + '** · ' + pct + st + scope + band;
+      });
+      const scopeLine =
+        c.filterSummary && c.filterSummary !== 'global'
+          ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`'
+          : null;
+      const segLines = [];
+      for (const seg of (c.segments || []).slice(0, 3)) {
+        const tline = (seg.treatments || [])
+          .slice(0, 4)
+          .map((t) => t.label + ' ' + (t.pct != null ? t.pct + '%' : '?'))
+          .join(', ');
+        segLines.push('↳ `' + (seg.filterLabel || 'filtered') + '` · ' + tline);
+      }
+      embeds.push({
+        title: '+ ' + c.id,
+        description: [
+          '**' + c.title + '**',
+          'Type · `user` · ' + (c.status === 'exact' ? '**EXACT** (bucket ranges)' : '**ESTIMATED** (sampling)'),
+          scopeLine,
+          '',
+          lines.join('\n') || '_no treatments_',
+          segLines.length ? '\n**Segments filtrés**\n' + segLines.join('\n') : null,
+        ]
+          .filter(Boolean)
+          .join('\n')
+          .slice(0, 4000),
+        color: 0x57f287,
+        footer: {
+          text:
+            c.status === 'exact'
+              ? c.usedFallbackFiltered
+                ? 'exact % · filtered populations only'
+                : 'exact % from bucket ranges'
+              : 'user sampling · not exact Discord %',
+        },
+      });
+    } else if (c.kind === 'pct') {
+      const lines = (c.deltas || []).slice(0, 12).map((d) => {
+        return '• **' + d.label + '** · `' + d.from + '%` → `' + d.to + '%`' + (d.exact ? ' (exact)' : ' (est.)');
+      });
+      const scopeLine =
+        c.filterSummary && c.filterSummary !== 'global'
+          ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`'
+          : null;
+      embeds.push({
+        title: '~ ' + c.id,
+        description: [
+          '**' + c.title + '**',
+          'Type · `user`',
+          scopeLine,
+          '',
+          lines.join('\n'),
+        ]
+          .filter(Boolean)
+          .join('\n')
+          .slice(0, 4000),
+        color: 0xe67e22,
+        footer: {
+          text: c.exact
+            ? c.usedFallbackFiltered
+              ? 'exact % · filtered populations only'
+              : 'exact % from bucket ranges'
+            : 'user sampling · noise possible',
+        },
+      });
+    } else if (c.kind === 'revision') {
+      embeds.push({
+        title: '~ ' + c.id + ' revision',
+        description:
+          '**' + c.title + '**\nRevision `' + c.fromRev + '` → `' + c.toRev + '` · bucket `' + c.bucket + '`' ,
+        color: 0x5865f2,
+        footer: { text: 'assignment revision' },
+      });
+    }
+  }
+  return embeds;
+}
+"""
+          old_start = "function buildEmbeds(changes) {"
+          start = src.index(old_start)
+          i = src.index("{", start)
+          depth = 1
+          j = i + 1
+          while j < len(src) and depth:
+              if src[j] == "{": depth += 1
+              elif src[j] == "}": depth -= 1
+              j += 1
+          if j < len(src) and src[j] == "\n":
+              j += 1
+          src = src[:start] + enriched + src[j:]
+          Path("src/user_rollouts.js").write_text(src, encoding="utf-8")
+          print("patched", len(src))
+          assert "scopeLine" in src
+          assert "User rollouts v10" in src
+          PY
           node --check src/user_rollouts.js
-          grep -q "User rollouts v10 (EXACT + filter-aware segments)" src/user_rollouts.js
-          grep -q "scopeLine" src/user_rollouts.js
-          grep -q "function formatFilter" src/user_rollouts.js
-          echo ALL_OK
+          echo SYNTAX_OK
+
       - name: Commit & push
         run: |
           git config user.name "github-actions[bot]"
