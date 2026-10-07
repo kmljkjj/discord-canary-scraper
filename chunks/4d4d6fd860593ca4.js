@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["390062"],{877373(a){a.exports=JSON.parse('{"WMK6Pg":["Sblocca offerta"],"7TxNKE":["Giorni"],"7pATiR":["Ore"],"dXR9qI":["Minuti"],"v5a81e":["Riscatta ricompensa"],"TaUsG9":["Tra ",[6,"days",{"one":[[7]," giorno"],"other":[[7]," giorni"]},0,"cardinal"]],"vlafDc":["Sblocca ricompensa"]}')}}]);
+//# sourceMappingURL=4d4d6fd860593ca4.js.map

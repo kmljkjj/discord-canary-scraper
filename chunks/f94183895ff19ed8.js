@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["673399"],{766314(e){e.exports=JSON.parse('{"X2xOBn":["N\xe3o foi poss\xedvel carregar seus apps. Tente novamente."],"KEB4Rm":["Nenhuma"],"4S6iHa":["Ainda n\xe3o h\xe1 nenhum app dispon\xedvel neste servidor"],"TQptZV":["N\xe3o foi poss\xedvel encontrar este app."],"13FYwI":["Este app n\xe3o pode ser executado em um canal de voz."]}')}}]);
-//# sourceMappingURL=f94183895ff19ed8.js.map

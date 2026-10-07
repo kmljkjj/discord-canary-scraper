@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["861199"],{823506(s){s.exports=JSON.parse('{"DwBO0x":["Reduser Discords CPU- og GPU-bruk mens et spill kj\xf8rer."],"rea2Ar":["Sl\xe5 p\xe5 spillmodus"],"VGcdxP":["Sl\xe5tt av mens spillmodus er i bruk."],"QG0axY":["Spillmodus"]}')}}]);
+//# sourceMappingURL=f321a7d6b4ebe5f2.js.map

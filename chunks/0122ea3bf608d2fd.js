@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["605523"],{459870(i){i.exports=JSON.parse('{"PhnOeM":["Controllo aggiornamenti..."],"mpd5Bv":["Ciao! Discord verr\xe0 eseguito in background per tenerti in contatto con i tuoi amici. Puoi cliccare con il tasto destro qui per uscire."],"zjuWNH":["Vai su ",[1,"appName"]],"VuK9sC":["Esci da ",[1,"appName"]],"JO5lXN":["Apri Impostazioni voce e video"]}')}}]);
+//# sourceMappingURL=0122ea3bf608d2fd.js.map

@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["126756"],{644495(e){e.exports=JSON.parse('{"klSpfs":["Rediger indstillinger"],"NzUuLD":["+",[1,"count"]," ",[6,"count",{"one":["besked"],"other":["beskeder"]},0,"cardinal"]],"O+racd":["Der er ingen meddelelser."],"5H2Jd6":["Vis alle"],"Ko8NGn":["Vis bogm\xe6rker"],"dcpdhC":["V\xe6lg en besked for at g\xe5 til den."],"VAK+h9":["Velkommen til dit meddelelsescenter!"]}')}}]);
-//# sourceMappingURL=d9aa5a348073fc57.js.map

@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["86752"],{58403(p){p.exports=JSON.parse('{"AP3kT4":["Anime"],"2zxYCx":["Eliminar"]}')}}]);
-//# sourceMappingURL=e3723e7f1bc94fe5.js.map

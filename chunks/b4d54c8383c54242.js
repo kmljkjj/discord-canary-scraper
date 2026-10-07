@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["450371"],{277966(e){e.exports=JSON.parse('{"yfwZuy":["Mein Abzeichen anzeigen"],"UnPGii":["Das Abzeichen wurde deinem Profil hinzugef\xfcgt."],"nvaTQq":["Du hast das Orbs-Profilabzeichen eingesammelt!"]}')}}]);
-//# sourceMappingURL=b4d54c8383c54242.js.map
