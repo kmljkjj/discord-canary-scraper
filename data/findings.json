@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-07T17-45-22-919Z_631871_nauxph",
-  "buildNumber": "631871",
-  "scrapedAt": "2026-10-07T17:45:22.919Z",
+  "runId": "2026-10-07T17-47-33-874Z_631882_ot1d1z",
+  "buildNumber": "631882",
+  "scrapedAt": "2026-10-07T17:47:33.874Z",
   "totals": {
-    "all": 371
+    "all": 372
   },
   "experiments": [
     {
@@ -7340,6 +7340,29 @@
         },
         "1": {
           "nativeSystemCpuTimes": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-desktop-general-perf",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "skipSilentDelayEstimatorFfts": false,
+        "basicProcessEnumeration": false
+      },
+      "variations": {
+        "0": {
+          "skipSilentDelayEstimatorFfts": false,
+          "basicProcessEnumeration": false
+        },
+        "1": {
+          "skipSilentDelayEstimatorFfts": true,
+          "basicProcessEnumeration": true
         }
       },
       "variationCount": 2,

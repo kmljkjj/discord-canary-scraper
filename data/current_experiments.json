@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-07T17-45-22-919Z_631871_nauxph",
-  "buildNumber": "631871",
-  "updatedAt": "2026-10-07T17:45:22.919Z",
-  "count": 369,
+  "runId": "2026-10-07T17-47-33-874Z_631882_ot1d1z",
+  "buildNumber": "631882",
+  "updatedAt": "2026-10-07T17:47:33.874Z",
+  "count": 370,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11309,6 +11309,40 @@
         "value": null
       },
       "fingerprint": "31f572c1b66019e409bb6a1c91ef9cbf732b1ebc9bf1105e8790603ec110efaf"
+    },
+    {
+      "id": "2026-10-desktop-general-perf",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "skipSilentDelayEstimatorFfts": false,
+        "basicProcessEnumeration": false
+      },
+      "variations": {
+        "0": {
+          "skipSilentDelayEstimatorFfts": false,
+          "basicProcessEnumeration": false
+        },
+        "1": {
+          "skipSilentDelayEstimatorFfts": true,
+          "basicProcessEnumeration": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b1c8d36ee752af80557389690c5ef3a825e18fb8947b7aad0744bb6cdf6425da"
     },
     {
       "id": "2026-10-desktop-tti-perf",

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-07T17-45-22-919Z_631871_nauxph",
-  "buildNumber": "631871",
-  "updatedAt": "2026-10-07T17:45:22.919Z",
-  "count": 369,
+  "runId": "2026-10-07T17-47-33-874Z_631882_ot1d1z",
+  "buildNumber": "631882",
+  "updatedAt": "2026-10-07T17:47:33.874Z",
+  "count": 370,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5843,6 +5843,24 @@
         }
       },
       "fp": "e69db94fc99d703bb8731909"
+    },
+    "2026-10-desktop-general-perf": {
+      "id": "2026-10-desktop-general-perf",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "skipSilentDelayEstimatorFfts": false,
+          "basicProcessEnumeration": false
+        },
+        "1": {
+          "skipSilentDelayEstimatorFfts": true,
+          "basicProcessEnumeration": true
+        }
+      },
+      "fp": "50e7805f57bb0f6796cc9921"
     },
     "2026-10-desktop-tti-perf": {
       "id": "2026-10-desktop-tti-perf",
