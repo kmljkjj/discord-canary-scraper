@@ -127,14 +127,34 @@ sp = ROOT / '.github' / 'workflows' / 'scrape.yml'
 if sp.exists():
     st = sp.read_text()
     if 'dismissible_content.json' not in st:
-        old = '            data/routes.json \\\'
-        new = '            data/routes.json \\\n            data/dismissible_content.json \\\'
-        if old in st:
-            st = st.replace(old, new, 1)
-            sp.write_text(st)
+        needle = 'data/routes.json'
+        if needle in st:
+            st = st.replace(
+                'data/routes.json',
+                'data/routes.json \\\n            data/dismissible_content.json',
+                1,
+            )
+            # fix: above may double-escape. Do cleaner:
+            st = sp.read_text()
+            st = st.replace(
+                '            data/routes.json \\',
+                '            data/routes.json \\\n            data/dismissible_content.json \\',
+                1,
+            )
+            # Actually use a line-based approach
+            st = sp.read_text()
+            lines = st.splitlines(True)
+            out = []
+            for line in lines:
+                out.append(line)
+                if 'data/routes.json' in line and 'dismissible' not in ''.join(out[-3:]):
+                    # insert after this line
+                    indent = '            '
+                    out.append(indent + 'data/dismissible_content.json \\\n')
+            sp.write_text(''.join(out))
             print('scrape.yml patched')
         else:
-            print('WARN scrape.yml')
+            print('WARN scrape.yml no routes.json')
     else:
         print('scrape.yml already')
 
