@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-07T00-27-33-320Z_631476_e6tgi2",
-  "buildNumber": "631476",
-  "updatedAt": "2026-10-07T00:27:33.320Z",
-  "count": 367,
+  "runId": "2026-10-07T00-31-51-895Z_631485_utu0jr",
+  "buildNumber": "631485",
+  "updatedAt": "2026-10-07T00:31:51.895Z",
+  "count": 366,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -1469,46 +1469,6 @@
         "value": null
       },
       "fingerprint": "e2e615f7671bd79febac193c1bf0f525cff65c46039b4a8cc4b0212d983a6643"
-    },
-    {
-      "id": "2025-12-nitro-s-rewards",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "treatment": "control"
-      },
-      "variations": {
-        "0": {
-          "treatment": "control"
-        },
-        "1": {
-          "treatment": "treatment_a"
-        },
-        "2": {
-          "treatment": "treatment_b"
-        },
-        "3": {
-          "treatment": "treatment_c"
-        },
-        "4": {
-          "treatment": "treatment_d"
-        }
-      },
-      "treatments": null,
-      "variationCount": 5,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "34204964bb47ba82bfe10717241be4e9937e5b6de64d54efed6f8fd2ca6463fa"
     },
     {
       "id": "2025-12-orb-redemption-thru-orders",

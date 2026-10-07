@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-07T00-27-33-320Z_631476_e6tgi2",
-  "buildNumber": "631476",
-  "scrapedAt": "2026-10-07T00:27:33.320Z",
+  "runId": "2026-10-07T00-31-51-895Z_631485_utu0jr",
+  "buildNumber": "631485",
+  "scrapedAt": "2026-10-07T00:31:51.895Z",
   "totals": {
-    "all": 368
+    "all": 367
   },
   "experiments": [
     {
@@ -975,35 +975,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2025-12-nitro-s-rewards",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "treatment": "control"
-      },
-      "variations": {
-        "0": {
-          "treatment": "control"
-        },
-        "1": {
-          "treatment": "treatment_a"
-        },
-        "2": {
-          "treatment": "treatment_b"
-        },
-        "3": {
-          "treatment": "treatment_c"
-        },
-        "4": {
-          "treatment": "treatment_d"
-        }
-      },
-      "variationCount": 5,
       "source": "discord"
     },
     {

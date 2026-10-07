@@ -792,31 +792,6 @@
   },
   {
     "kind": "user",
-    "name": "2025-12-nitro-s-rewards",
-    "defaultConfig": {
-      "treatment": "control"
-    },
-    "variations": {
-      "0": {
-        "treatment": "control"
-      },
-      "1": {
-        "treatment": "treatment_a"
-      },
-      "2": {
-        "treatment": "treatment_b"
-      },
-      "3": {
-        "treatment": "treatment_c"
-      },
-      "4": {
-        "treatment": "treatment_d"
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2025-12-orb-redemption-thru-orders",
     "defaultConfig": {
       "enabled": false
