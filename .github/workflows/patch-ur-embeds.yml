@@ -1,0 +1,25 @@
+name: Patch UR embeds v10
+
+on:
+  workflow_dispatch:
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enrich buildEmbeds
+        run: |
+          python3 << 'PY'
+          import base64
+          from pathlib import Path
+          src = Path("src/user_rollouts.js").read_text(encoding="utf-8")
+          if "scopeLine" in src and "Filtres" in src:
+              print("already enriched")
+          else:
+              # load enriched from sibling commit artifact - inline minimal replace
+              print("need patch")
+              raise SystemExit("use full payload")
+          PY
