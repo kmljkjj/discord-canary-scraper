@@ -1,1 +1,12 @@
-PLACEHOLDER
+name: Apply sampling-estimate patch
+on:
+  workflow_dispatch:
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: stub
+        run: echo use full payload next
