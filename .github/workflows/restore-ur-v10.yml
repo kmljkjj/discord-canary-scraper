@@ -1,0 +1,33 @@
+name: Restore UR v10
+
+on:
+  workflow_dispatch:
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch good base + patch
+        run: |
+          set -e
+          curl -sL "https://raw.githubusercontent.com/kmljkjj/discord-canary-scraper/d415e34090eaf255ddecdf112ee3df4b54f52892/src/user_rollouts.js" -o src/user_rollouts.js
+          python3 -c "
+          from pathlib import Path
+          src = Path('src/user_rollouts.js').read_text(encoding='utf-8')
+          src = src.replace(\"console.log('📊 User rollouts v9 (EXACT from bucket ranges)');\", \"console.log('📊 User rollouts v10 (EXACT + filter-aware segments)');\", 1)
+          Path('src/user_rollouts.js').write_text(src)
+          print('banner ok', len(src))
+          "
+          node --check src/user_rollouts.js
+          grep -q 'User rollouts v10' src/user_rollouts.js
+          echo BANNER_OK
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/user_rollouts.js
+          git commit -m "user_rollouts: restore v10 base + banner" || echo nochange
+          git push
