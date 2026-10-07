@@ -571,13 +571,15 @@ function buildEmbeds(changes) {
         const st = t.status === 'exact' ? ' · **exact**' : t.status && t.status !== 'estimated' ? ' · `' + t.status + '`' : ' · `est.`';
         const n = t.sampleCount || t.samples || 0;
         const band = n > 0 ? ' · n=' + n : '';
-        return '• **' + t.label + '** · ' + pct + st + band;
+        const scope = t.scope === 'filtered' ? ' · `filtered`' : '';
+        return '• **' + t.label + '** · ' + pct + st + scope + band;
       });
       embeds.push({
         title: '+ ' + c.id,
         description: [
           '**' + c.title + '**',
           'Type · `user` · ' + (c.status === 'exact' ? '**EXACT** (bucket ranges)' : '**ESTIMATED** (sampling)'),
+          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),
           '',
           lines.join('\n') || '_no treatments_',
         ].join('\n').slice(0, 4000),
@@ -593,6 +595,7 @@ function buildEmbeds(changes) {
         description: [
           '**' + c.title + '**',
           'Type · `user`',
+          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),
           '',
           lines.join('\n'),
         ].join('\n').slice(0, 4000),
