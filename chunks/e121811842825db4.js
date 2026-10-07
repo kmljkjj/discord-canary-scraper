@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["553683"],{201438(e,t,r){r.d(t,{A:()=>n});var a=r(569926),i=r(375708);function n(e,t,r){let{data:n,isLoading:s}=(0,a.I)(e);return{coverImageUrl:n?.getCoverURL(r),gameName:n?.name??t??i.intl.string(i.t.GIWFlF),isLoading:s}}}}]);
+//# sourceMappingURL=e121811842825db4.js.map
