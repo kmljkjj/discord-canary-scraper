@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T18-54-36-258Z_633472_ilzn6e",
-  "buildNumber": "633472",
-  "updatedAt": "2026-10-08T18:54:36.258Z",
-  "count": 367,
+  "runId": "2026-10-08T18-56-47-440Z_633475_bw2ty6",
+  "buildNumber": "633475",
+  "updatedAt": "2026-10-08T18:56:47.440Z",
+  "count": 368,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11122,6 +11122,34 @@
         "value": null
       },
       "fingerprint": "1a0c1e9bbc5f02049748ce9e19d782d1a5f0b5b85df0b1da2544a6b664ca2747"
+    },
+    {
+      "id": "2026-10-bounties-desktop-quest-bar",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "b9722cb7336bee7040ee15936ed2a13a6faf77b52aeca76e1fc6f29e5e48f299"
     },
     {
       "id": "2026-10-contextual-referrals-gdm-member-list",

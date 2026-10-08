@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-08T18-54-36-258Z_633472_ilzn6e",
-  "buildNumber": "633472",
-  "scrapedAt": "2026-10-08T18:54:36.258Z",
+  "runId": "2026-10-08T18-56-47-440Z_633475_bw2ty6",
+  "buildNumber": "633475",
+  "scrapedAt": "2026-10-08T18:56:47.440Z",
   "totals": {
-    "all": 369,
+    "all": 370,
     "legacy": 0,
-    "apex": 367
+    "apex": 368
   },
   "experiments": [
     {
@@ -7224,6 +7224,23 @@
         }
       },
       "variationCount": 3,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-bounties-desktop-quest-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

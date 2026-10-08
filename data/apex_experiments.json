@@ -5735,6 +5735,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-bounties-desktop-quest-bar",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-contextual-referrals-gdm-member-list",
     "defaultConfig": {
       "showEmbed": false
