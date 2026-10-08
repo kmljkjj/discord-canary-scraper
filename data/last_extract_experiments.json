@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T14-21-42-140Z_633111_or4m9i",
-  "buildNumber": "633111",
-  "updatedAt": "2026-10-08T14:21:42.140Z",
-  "count": 368,
+  "runId": "2026-10-08T14-30-17-349Z_633118_eyqaxo",
+  "buildNumber": "633118",
+  "updatedAt": "2026-10-08T14:30:17.350Z",
+  "count": 369,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5871,6 +5871,28 @@
         }
       },
       "fp": "6f6f176d6ff21eeffcf7f59e"
+    },
+    "2026-10-macaron": {
+      "id": "2026-10-macaron",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "0": {
+          "enabled": false,
+          "phase": 0
+        },
+        "1": {
+          "enabled": true,
+          "phase": 1
+        },
+        "2": {
+          "enabled": true,
+          "phase": 2
+        }
+      },
+      "fp": "20dcd7d26a41d3fee25a1ee7"
     },
     "2026-10-purchase-history": {
       "id": "2026-10-purchase-history",
