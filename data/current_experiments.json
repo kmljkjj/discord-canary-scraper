@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T17-20-24-392Z_633280_ewspzk",
-  "buildNumber": "633280",
-  "updatedAt": "2026-10-08T17:20:24.393Z",
-  "count": 369,
+  "runId": "2026-10-08T17-22-36-048Z_633282_bfjh55",
+  "buildNumber": "633282",
+  "updatedAt": "2026-10-08T17:22:36.048Z",
+  "count": 370,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10937,6 +10937,40 @@
         "value": null
       },
       "fingerprint": "a754f59db8c6b4a623b9b2259ac98f805b371be2d4943669840adfcccdf7f1d1"
+    },
+    {
+      "id": "2026-09-try-display-name-style",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "placement": "off"
+      },
+      "variations": {
+        "0": {
+          "placement": "off"
+        },
+        "1": {
+          "placement": "top_level_menu_item"
+        },
+        "2": {
+          "placement": "submenu"
+        }
+      },
+      "treatments": null,
+      "variationCount": 3,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "902db01da59a39a63cc891a8c3d5c9f046fe22478236c125afa9c85e7fcda714"
     },
     {
       "id": "2026-09-update-email-settings-copy-subtext",

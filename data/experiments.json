@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-08T17-20-24-392Z_633280_ewspzk",
-  "buildNumber": "633280",
-  "scrapedAt": "2026-10-08T17:20:24.393Z",
+  "runId": "2026-10-08T17-22-36-048Z_633282_bfjh55",
+  "buildNumber": "633282",
+  "scrapedAt": "2026-10-08T17:22:36.048Z",
   "totals": {
-    "all": 371,
+    "all": 372,
     "legacy": 0,
-    "apex": 369
+    "apex": 370
   },
   "experiments": [
     {
@@ -7105,6 +7105,29 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-try-display-name-style",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "placement": "off"
+      },
+      "variations": {
+        "0": {
+          "placement": "off"
+        },
+        "1": {
+          "placement": "top_level_menu_item"
+        },
+        "2": {
+          "placement": "submenu"
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {

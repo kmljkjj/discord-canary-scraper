@@ -5640,6 +5640,25 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-try-display-name-style",
+    "defaultConfig": {
+      "placement": "off"
+    },
+    "variations": {
+      "0": {
+        "placement": "off"
+      },
+      "1": {
+        "placement": "top_level_menu_item"
+      },
+      "2": {
+        "placement": "submenu"
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-update-email-settings-copy-subtext",
     "defaultConfig": {
       "enabled": false
