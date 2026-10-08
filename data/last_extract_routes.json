@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T01-42-03-109Z_632834_mze7gb",
-  "buildNumber": "632834",
-  "updatedAt": "2026-10-08T01:42:03.109Z",
-  "count": 674,
+  "runId": "2026-10-08T01-44-09-207Z_632835_f339st",
+  "buildNumber": "632835",
+  "updatedAt": "2026-10-08T01:44:09.207Z",
+  "count": 675,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -656,6 +656,7 @@
     "POLL_ANSWER_VOTERS": "/channels/:param/polls/:param/answers/:param",
     "QUESTS_DISMISS_CONTENT": "/quests/:param/dismissible-content/:param/dismiss",
     "VOICE_PUBLIC_KEYS": "/voice/public-keys",
+    "GAME_ORGANIZATION_INVITES": "/game-organizations/:param/:param/invites",
     "GUILD_ROOM": "/guilds/:param/rooms/:param",
     "GUILD_ROOM_CONNECT": "/guilds/:param/rooms/:param/connect",
     "GUILD_ROOM_UPDATE": "/guilds/:param/rooms/:param/update",
