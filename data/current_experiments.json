@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T05-49-03-929Z_632986_q9fw0o",
-  "buildNumber": "632986",
-  "updatedAt": "2026-10-08T05:49:03.929Z",
-  "count": 369,
+  "runId": "2026-10-08T06-19-13-482Z_633003_88sbq6",
+  "buildNumber": "633003",
+  "updatedAt": "2026-10-08T06:19:13.482Z",
+  "count": 368,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -5887,37 +5887,6 @@
         "value": null
       },
       "fingerprint": "7696c8eb9d93e9e9d04fa2e85f0484efc5d224313562e811d79e8aab26eb2e90"
-    },
-    {
-      "id": "2026-06-dont-badge-muted-vcs",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "9e1a21ae9156f102a10018fb86fb4b2dbe9443bb0b316fb82b6697482de578f1"
     },
     {
       "id": "2026-06-game-invites-channel",
