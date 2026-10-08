@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["402165"],{157076(s){s.exports=JSON.parse('{"DwBO0x":["Reducer Discords CPU- og GPU-forbrug, mens et spil k\xf8rer."],"rea2Ar":["Aktiv\xe9r spiltilstand"],"VGcdxP":["Dette er midlertidigt slukket, mens spiltilstand er aktiv."],"QG0axY":["Spiltilstand"]}')}}]);
+//# sourceMappingURL=06426d74a475a745.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["973466"],{79329(a){a.exports=JSON.parse('{"yfwZuy":["Voir mon badge"],"UnPGii":["Le badge a \xe9t\xe9 ajout\xe9 \xe0 ton profil."],"nvaTQq":["Tu as obtenu le badge de profil Orbs\xa0!"]}')}}]);
+//# sourceMappingURL=d5f3708310e14bc9.js.map
