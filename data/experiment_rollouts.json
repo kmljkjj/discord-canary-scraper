@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-08T18:27:37.539Z",
+  "fetchedAt": "2026-10-08T18:34:25.641Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 3
       }
     },
     {
@@ -5096,17 +5096,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
+        "0": 1
       }
     },
     {
@@ -6250,16 +6250,6 @@
       "note": "No rollout data found in Discord API or worker API."
     },
     {
-      "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
-      "hash": 3846429297,
-      "type": "user",
-      "title": "2026-04-boosting-pre-checkout-modal-refresh-v2",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-04-browser-transceiver-padding-removal",
       "hash": 3547665816,
       "type": "user",
@@ -6594,16 +6584,6 @@
       "hash": 2378713705,
       "type": "user",
       "title": "2026-05-badge-discovery-milestone-2",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
-      "hash": 3218183498,
-      "type": "user",
-      "title": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8751,11 +8731,11 @@
     }
   ],
   "summary": {
-    "total": 589,
+    "total": 587,
     "guild": 93,
-    "user": 496,
+    "user": 494,
     "withPercentage": 225,
-    "withoutPercentage": 364,
+    "withoutPercentage": 362,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
