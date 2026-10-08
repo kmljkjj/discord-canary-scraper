@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T21-41-27-030Z_633785_bgw172",
-  "buildNumber": "633785",
-  "updatedAt": "2026-10-08T21:41:27.030Z",
-  "count": 368,
+  "runId": "2026-10-08T21-47-59-226Z_633790_32io5p",
+  "buildNumber": "633790",
+  "updatedAt": "2026-10-08T21:47:59.226Z",
+  "count": 367,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -4764,37 +4764,6 @@
         "value": null
       },
       "fingerprint": "761452777591b6327bc0da500b9a6924fd4032eecb58ebc36b6c2b785f3c2c8f"
-    },
-    {
-      "id": "2026-05-badge-discovery-milestone-2",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "b1beaa17804d7b9e5b97951d94ed4de5a7e13de82939ada7f945d31d1f93c7fd"
     },
     {
       "id": "2026-05-bounty-stale-refresh-quest-home",
