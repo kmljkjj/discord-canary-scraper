@@ -1,1 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["452814"],{861899(e,p,_){e.exports={b:"switcher__36487",u:"option__36487"}},552821(e,p,_){e.exports={h:"trigger__106b4"}},470613(e,p,_){e.exports={Gt:"frame_d9c451",md:"md_d9c451",lg:"lg_d9c451",Sl:"image_d9c451",qf:"placeholder_d9c451"}},286739(e,p,_){e.exports={c:"people__36261"}}}]);
