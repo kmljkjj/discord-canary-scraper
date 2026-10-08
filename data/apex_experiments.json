@@ -53,6 +53,13 @@
     "label": "Inferno Spam Redaction"
   },
   {
+    "kind": "user",
+    "name": "2022-01_threads",
+    "defaultConfig": null,
+    "variations": null,
+    "label": "Allow logged out users"
+  },
+  {
     "kind": "guild",
     "name": "2022-07_voice_in_threads",
     "defaultConfig": {
@@ -2276,6 +2283,25 @@
   },
   {
     "kind": "user",
+    "name": "2026-04-upcoming-server-event",
+    "defaultConfig": {
+      "showSettingsToggle": false
+    },
+    "variations": {
+      "1": {
+        "showSettingsToggle": true
+      },
+      "2": {
+        "showSettingsToggle": true
+      },
+      "3": {
+        "showSettingsToggle": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-04-user-profile-performance-analytics",
     "defaultConfig": {
       "performanceAnalyticsEnabled": false
@@ -3888,6 +3914,31 @@
       "2": {
         "clickRoutesToGift": true,
         "showGiftButton": false
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-08-ad-topic-opt-out-client",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": false
+      },
+      "2": {
+        "enabled": true
+      },
+      "3": {
+        "enabled": true
+      },
+      "4": {
+        "enabled": true
+      },
+      "5": {
+        "enabled": true
       }
     },
     "label": null
@@ -5539,6 +5590,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-update-email-settings-copy-subtext",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-video-background-profile-fetch",
     "defaultConfig": {
       "enabled": false
@@ -5779,6 +5843,19 @@
       "2": {
         "enabled": true,
         "phase": 2
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-purchase-history",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
       }
     },
     "label": null

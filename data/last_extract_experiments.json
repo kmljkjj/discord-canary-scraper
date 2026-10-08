@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T22-10-40-575Z_633830_6rgys8",
-  "buildNumber": "633830",
-  "updatedAt": "2026-10-08T22:10:40.575Z",
-  "count": 362,
+  "runId": "2026-10-08T22-13-05-215Z_633838_6uk8x2",
+  "buildNumber": "633838",
+  "updatedAt": "2026-10-08T22:13:05.215Z",
+  "count": 367,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -55,6 +55,15 @@
         }
       },
       "fp": "fb1e64d8aa85b5436a8ecd6d"
+    },
+    "2022-01_threads": {
+      "id": "2022-01_threads",
+      "type": "user",
+      "kind": "user",
+      "label": "Allow logged out users",
+      "variationCount": 0,
+      "variations": null,
+      "fp": "c5fa9cea901dfe9802b867dd"
     },
     "2022-07_voice_in_threads": {
       "id": "2022-07_voice_in_threads",
@@ -2274,6 +2283,25 @@
       },
       "fp": "cd22bd20f219f1b2129849b7"
     },
+    "2026-04-upcoming-server-event": {
+      "id": "2026-04-upcoming-server-event",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "1": {
+          "showSettingsToggle": true
+        },
+        "2": {
+          "showSettingsToggle": true
+        },
+        "3": {
+          "showSettingsToggle": true
+        }
+      },
+      "fp": "ab171a361b360b6fac913c8d"
+    },
     "2026-04-user-profile-performance-analytics": {
       "id": "2026-04-user-profile-performance-analytics",
       "type": "user",
@@ -3890,6 +3918,31 @@
         }
       },
       "fp": "c747a0d32164ac3da8c4b426"
+    },
+    "2026-08-ad-topic-opt-out-client": {
+      "id": "2026-08-ad-topic-opt-out-client",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 5,
+      "variations": {
+        "1": {
+          "enabled": false
+        },
+        "2": {
+          "enabled": true
+        },
+        "3": {
+          "enabled": true
+        },
+        "4": {
+          "enabled": true
+        },
+        "5": {
+          "enabled": true
+        }
+      },
+      "fp": "d88929023257256cf87514a4"
     },
     "2026-08-android-rn-reparenting-flag": {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -5549,6 +5602,19 @@
       },
       "fp": "a80296903cc2e06ce785d5ee"
     },
+    "2026-09-update-email-settings-copy-subtext": {
+      "id": "2026-09-update-email-settings-copy-subtext",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "cd22bd20f219f1b2129849b7"
+    },
     "2026-09-video-background-profile-fetch": {
       "id": "2026-09-video-background-profile-fetch",
       "type": "user",
@@ -5792,6 +5858,19 @@
         }
       },
       "fp": "20dcd7d26a41d3fee25a1ee7"
+    },
+    "2026-10-purchase-history": {
+      "id": "2026-10-purchase-history",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "cd22bd20f219f1b2129849b7"
     }
   }
 }
