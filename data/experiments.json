@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-08T18-28-34-719Z_633425_f7wzih",
-  "buildNumber": "633425",
-  "scrapedAt": "2026-10-08T18:28:34.719Z",
+  "runId": "2026-10-08T18-33-09-782Z_633430_eqh1kj",
+  "buildNumber": "633430",
+  "scrapedAt": "2026-10-08T18:33:09.782Z",
   "totals": {
-    "all": 371,
+    "all": 369,
     "legacy": 0,
-    "apex": 369
+    "apex": 367
   },
   "experiments": [
     {
@@ -2458,26 +2458,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-04-browser-transceiver-padding-removal",
       "type": "user",
       "kind": "user",
@@ -3097,26 +3077,6 @@
     },
     {
       "id": "2026-05-badge-discovery-milestone-2",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
       "type": "user",
       "kind": "user",
       "label": null,

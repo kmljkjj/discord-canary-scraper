@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T18-28-34-719Z_633425_f7wzih",
-  "buildNumber": "633425",
-  "updatedAt": "2026-10-08T18:28:34.719Z",
-  "count": 369,
+  "runId": "2026-10-08T18-33-09-782Z_633430_eqh1kj",
+  "buildNumber": "633430",
+  "updatedAt": "2026-10-08T18:33:09.782Z",
+  "count": 367,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -3785,37 +3785,6 @@
       "fingerprint": "945fa8bc2ca25746beb651216279617d26fd100aec8d95961d4ce3cf741cc7f0"
     },
     {
-      "id": "2026-04-boosting-pre-checkout-modal-refresh-v2",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e2cd417cb6cedd578d3a7746fb6b9353bad76bcce915def9e394d777b85a969e"
-    },
-    {
       "id": "2026-04-browser-transceiver-padding-removal",
       "kind": "user",
       "type": "user",
@@ -4826,37 +4795,6 @@
         "value": null
       },
       "fingerprint": "b1beaa17804d7b9e5b97951d94ed4de5a7e13de82939ada7f945d31d1f93c7fd"
-    },
-    {
-      "id": "2026-05-boosting-pre-checkout-modal-refresh-monthly-rate",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "8d72a3ec576b3cce51f0868f46a45db113c44234c31f78d0fca47e9a6ec99ee9"
     },
     {
       "id": "2026-05-bounty-stale-refresh-quest-home",
