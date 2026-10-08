@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-08T21-52-25-640Z_633794_hvrhg1",
-  "buildNumber": "633794",
-  "scrapedAt": "2026-10-08T21:52:25.641Z",
+  "runId": "2026-10-08T21-54-29-437Z_633797_zeszwj",
+  "buildNumber": "633797",
+  "scrapedAt": "2026-10-08T21:54:29.437Z",
   "totals": {
     "all": 369
   },
@@ -7028,18 +7028,16 @@
       "kind": "user",
       "label": null,
       "system": "apex",
-      "defaultConfig": {
-        "placement": "off"
-      },
+      "defaultConfig": null,
       "variations": {
         "0": {
-          "placement": "off"
+          "id": 0
         },
         "1": {
-          "placement": "top_level_menu_item"
+          "id": 1
         },
         "2": {
-          "placement": "submenu"
+          "id": 2
         }
       },
       "variationCount": 3,

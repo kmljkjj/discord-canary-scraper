@@ -5574,18 +5574,16 @@
   {
     "kind": "user",
     "name": "2026-09-try-display-name-style",
-    "defaultConfig": {
-      "placement": "off"
-    },
+    "defaultConfig": null,
     "variations": {
       "0": {
-        "placement": "off"
+        "id": 0
       },
       "1": {
-        "placement": "top_level_menu_item"
+        "id": 1
       },
       "2": {
-        "placement": "submenu"
+        "id": 2
       }
     },
     "label": null
