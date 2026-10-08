@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-08T21-54-29-437Z_633797_zeszwj",
-  "buildNumber": "633797",
-  "scrapedAt": "2026-10-08T21:54:29.437Z",
+  "runId": "2026-10-08T21-56-42-146Z_633799_w7dtd8",
+  "buildNumber": "633799",
+  "scrapedAt": "2026-10-08T21:56:42.146Z",
   "totals": {
-    "all": 369,
+    "all": 364,
     "legacy": 0,
-    "apex": 367
+    "apex": 362
   },
   "experiments": [
     {
@@ -71,17 +71,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2022-01_threads",
-      "type": "user",
-      "kind": "user",
-      "label": "Allow logged out users",
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": null,
-      "variationCount": 0,
       "source": "discord"
     },
     {
@@ -2863,29 +2852,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-upcoming-server-event",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "showSettingsToggle": false
-      },
-      "variations": {
-        "1": {
-          "showSettingsToggle": true
-        },
-        "2": {
-          "showSettingsToggle": true
-        },
-        "3": {
-          "showSettingsToggle": true
-        }
-      },
-      "variationCount": 3,
-      "source": "discord"
-    },
-    {
       "id": "2026-04-user-profile-performance-analytics",
       "type": "user",
       "kind": "user",
@@ -4909,35 +4875,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-ad-topic-opt-out-client",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": false
-        },
-        "2": {
-          "enabled": true
-        },
-        "3": {
-          "enabled": true
-        },
-        "4": {
-          "enabled": true
-        },
-        "5": {
-          "enabled": true
-        }
-      },
-      "variationCount": 5,
       "source": "discord"
     },
     {
@@ -7046,23 +6983,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-09-update-email-settings-copy-subtext",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-09-video-background-profile-fetch",
       "type": "user",
       "kind": "user",
@@ -7366,23 +7286,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-10-purchase-history",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     }
   ],

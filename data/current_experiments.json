@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T21-54-29-437Z_633797_zeszwj",
-  "buildNumber": "633797",
-  "updatedAt": "2026-10-08T21:54:29.437Z",
-  "count": 367,
+  "runId": "2026-10-08T21-56-42-146Z_633799_w7dtd8",
+  "buildNumber": "633799",
+  "updatedAt": "2026-10-08T21:56:42.146Z",
+  "count": 362,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -101,28 +101,6 @@
         "value": null
       },
       "fingerprint": "8bcfcd4a6948e70579de61e19783e3b3e166886283a29b092307a9f24342805b"
-    },
-    {
-      "id": "2022-01_threads",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": "Allow logged out users",
-      "title": "Allow logged out users",
-      "description": null,
-      "defaultConfig": null,
-      "variations": null,
-      "treatments": null,
-      "variationCount": 0,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "59292f24ccd32783291d4f7de2fa0ba027184fdd0f9ed56e5146ed68034a899a"
     },
     {
       "id": "2022-07_voice_in_threads",
@@ -4432,40 +4410,6 @@
       "fingerprint": "6edc5c92f0fd280079850a0f005431ff8e4a88f23d65eb4b0e57be641144690a"
     },
     {
-      "id": "2026-04-upcoming-server-event",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "showSettingsToggle": false
-      },
-      "variations": {
-        "1": {
-          "showSettingsToggle": true
-        },
-        "2": {
-          "showSettingsToggle": true
-        },
-        "3": {
-          "showSettingsToggle": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 3,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "1dd0faf742b6ead7b51b93eea39cf8e3546ec2ae3284d3abe9990d4d474aa07a"
-    },
-    {
       "id": "2026-04-user-profile-performance-analytics",
       "kind": "user",
       "type": "user",
@@ -7612,46 +7556,6 @@
         "value": null
       },
       "fingerprint": "aee9df848e603f5099ad0258a8d4c4fee9be9c198dbd3f46ad32189daa184d19"
-    },
-    {
-      "id": "2026-08-ad-topic-opt-out-client",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": false
-        },
-        "2": {
-          "enabled": true
-        },
-        "3": {
-          "enabled": true
-        },
-        "4": {
-          "enabled": true
-        },
-        "5": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 5,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "1da67547b3b25f51f7e72e8c35a7ec02a7ed766d2ca8933825c673a8677965b4"
     },
     {
       "id": "2026-08-android-rn-reparenting-flag",
@@ -10844,34 +10748,6 @@
       "fingerprint": "902db01da59a39a63cc891a8c3d5c9f046fe22478236c125afa9c85e7fcda714"
     },
     {
-      "id": "2026-09-update-email-settings-copy-subtext",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "c7d3567c1702ce2a2eb878b84da44855817a5d095101ba7aa7157fb426972250"
-    },
-    {
       "id": "2026-09-video-background-profile-fetch",
       "kind": "user",
       "type": "user",
@@ -11341,34 +11217,6 @@
         "value": null
       },
       "fingerprint": "fde0724f4086cfc774c1216df5ef312819a2ccf64efdbcd8833ec45fd95be06c"
-    },
-    {
-      "id": "2026-10-purchase-history",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e3f5b2891467c81af1b2ee3316213a9d39f306ac6c612d3e47d2af8cddd73256"
     }
   ]
 }
