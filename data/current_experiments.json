@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-08T18-18-54-586Z_633393_eugm7z",
-  "buildNumber": "633393",
-  "updatedAt": "2026-10-08T18:18:54.586Z",
-  "count": 370,
+  "runId": "2026-10-08T18-21-00-341Z_633398_e6lzid",
+  "buildNumber": "633398",
+  "updatedAt": "2026-10-08T18:21:00.341Z",
+  "count": 369,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -1990,40 +1990,6 @@
         "value": null
       },
       "fingerprint": "6c61fad1029eb012e82e91c4b45eea34ebced6333252f035bc731de2ea74d23c"
-    },
-    {
-      "id": "2026-02-boosting-refresh-modals",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "variant": "control"
-      },
-      "variations": {
-        "0": {
-          "variant": "control"
-        },
-        "1": {
-          "variant": "refresh"
-        },
-        "2": {
-          "variant": "refresh_expressive_cta"
-        }
-      },
-      "treatments": null,
-      "variationCount": 3,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "4ec7f33f90388dd32077550cbee20324353d040ea622184e68495868d992eb30"
     },
     {
       "id": "2026-02-capture-target-window",

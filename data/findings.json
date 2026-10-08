@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-08T18-18-54-586Z_633393_eugm7z",
-  "buildNumber": "633393",
-  "scrapedAt": "2026-10-08T18:18:54.586Z",
+  "runId": "2026-10-08T18-21-00-341Z_633398_e6lzid",
+  "buildNumber": "633398",
+  "scrapedAt": "2026-10-08T18:21:00.341Z",
   "totals": {
-    "all": 372
+    "all": 371
   },
   "experiments": [
     {
@@ -1309,29 +1309,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-boosting-refresh-modals",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "variant": "control"
-      },
-      "variations": {
-        "0": {
-          "variant": "control"
-        },
-        "1": {
-          "variant": "refresh"
-        },
-        "2": {
-          "variant": "refresh_expressive_cta"
-        }
-      },
-      "variationCount": 3,
       "source": "discord"
     },
     {
