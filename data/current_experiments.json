@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T10-16-07-546Z_634337_pvg7ly",
-  "buildNumber": "634337",
-  "updatedAt": "2026-10-09T10:16:07.546Z",
-  "count": 369,
+  "runId": "2026-10-09T13-26-36-855Z_634365_8u1kof",
+  "buildNumber": "634365",
+  "updatedAt": "2026-10-09T13:26:36.855Z",
+  "count": 370,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11397,6 +11397,40 @@
         "value": null
       },
       "fingerprint": "e3f5b2891467c81af1b2ee3316213a9d39f306ac6c612d3e47d2af8cddd73256"
+    },
+    {
+      "id": "2026-10-server-tag-upsell-on-profile",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false,
+        "ignoreSubscriptionPlatform": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true,
+          "ignoreSubscriptionPlatform": false
+        },
+        "2": {
+          "enabled": true,
+          "ignoreSubscriptionPlatform": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "cbd890b50110a65cd5d717602ba98efdcdc7450e748cd84d1f7f764b9d0ca2af"
     },
     {
       "id": "2026-10-stage-unified-call",
