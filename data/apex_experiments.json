@@ -4623,6 +4623,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-activity-go-live",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-agc2-mobile",
     "defaultConfig": {
       "agc2Enabled": false,
