@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T20-16-57-384Z_634690_d51byu",
-  "buildNumber": "634690",
-  "updatedAt": "2026-10-09T20:16:57.384Z",
-  "count": 372,
+  "runId": "2026-10-09T20-22-21-641Z_634795_i5rgj7",
+  "buildNumber": "634795",
+  "updatedAt": "2026-10-09T20:22:21.641Z",
+  "count": 373,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11321,6 +11321,34 @@
         "value": null
       },
       "fingerprint": "eed054c142f7c0c556fbdb1b120c6885e05067e19410a67821701058160ab394"
+    },
+    {
+      "id": "2026-10-e2e-latency-measurement",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3888a47d0f83a2c635d5f1b8bd53472c339ba9fc1adaf3b912179b8da69e2094"
     },
     {
       "id": "2026-10-gift-cards-in-app-marketing",

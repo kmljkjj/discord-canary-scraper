@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T20-16-57-384Z_634690_d51byu",
-  "buildNumber": "634690",
-  "updatedAt": "2026-10-09T20:16:57.384Z",
-  "count": 372,
+  "runId": "2026-10-09T20-22-21-641Z_634795_i5rgj7",
+  "buildNumber": "634795",
+  "updatedAt": "2026-10-09T20:22:21.641Z",
+  "count": 373,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5854,6 +5854,19 @@
         }
       },
       "fp": "7911895979d90deafe41fb78"
+    },
+    "2026-10-e2e-latency-measurement": {
+      "id": "2026-10-e2e-latency-measurement",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-gift-cards-in-app-marketing": {
       "id": "2026-10-gift-cards-in-app-marketing",
