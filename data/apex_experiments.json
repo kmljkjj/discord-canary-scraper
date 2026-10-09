@@ -5793,6 +5793,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-contextual-referrals-server-channel-member-list",
+    "defaultConfig": {
+      "showEmbed": false
+    },
+    "variations": {
+      "0": {
+        "showEmbed": false
+      },
+      "1": {
+        "showEmbed": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-desktop-game-perf",
     "defaultConfig": {
       "nativeSystemCpuTimes": false

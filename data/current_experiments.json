@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T20-47-17-590Z_634838_pdx8w8",
-  "buildNumber": "634838",
-  "updatedAt": "2026-10-09T20:47:17.590Z",
-  "count": 373,
+  "runId": "2026-10-09T20-49-31-692Z_634841_55j8bz",
+  "buildNumber": "634841",
+  "updatedAt": "2026-10-09T20:49:31.692Z",
+  "count": 374,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11225,6 +11225,37 @@
         "value": null
       },
       "fingerprint": "bdd5ac8f8e01f7145ce07d4055b7f3785d6a399975b63063a8f6e7888781245a"
+    },
+    {
+      "id": "2026-10-contextual-referrals-server-channel-member-list",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "variations": {
+        "0": {
+          "showEmbed": false
+        },
+        "1": {
+          "showEmbed": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "697888d2d2d7cfc00d75674cde2951ddca23be145c4930ac6c9c705b8f68fad6"
     },
     {
       "id": "2026-10-desktop-game-perf",
