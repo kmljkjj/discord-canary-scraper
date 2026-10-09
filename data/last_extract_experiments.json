@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-09T17-22-34-833Z_634512_a4vq10",
-  "buildNumber": "634512",
-  "updatedAt": "2026-10-09T17:22:34.833Z",
+  "runId": "2026-10-09T17-24-44-115Z_634515_3prt61",
+  "buildNumber": "634515",
+  "updatedAt": "2026-10-09T17:24:44.115Z",
   "count": 371,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -5179,16 +5179,25 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 2,
+      "variationCount": 5,
       "variations": {
         "0": {
-          "enabled": false
+          "variant": 0
         },
         "1": {
-          "enabled": true
+          "variant": 1
+        },
+        "2": {
+          "variant": 3
+        },
+        "3": {
+          "variant": 4
+        },
+        "4": {
+          "variant": 2
         }
       },
-      "fp": "6f6f176d6ff21eeffcf7f59e"
+      "fp": "3e34a3faaa0a4d7603b78680"
     },
     "2026-09-nitro-file-upload-rollout": {
       "id": "2026-09-nitro-file-upload-rollout",

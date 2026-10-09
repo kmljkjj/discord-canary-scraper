@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-09T17-22-34-833Z_634512_a4vq10",
-  "buildNumber": "634512",
-  "updatedAt": "2026-10-09T17:22:34.833Z",
+  "runId": "2026-10-09T17-24-44-115Z_634515_3prt61",
+  "buildNumber": "634515",
+  "updatedAt": "2026-10-09T17:24:44.115Z",
   "count": 371,
   "experiments": [
     {
@@ -10054,18 +10054,27 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "enabled": false
+        "variant": 0
       },
       "variations": {
         "0": {
-          "enabled": false
+          "variant": 0
         },
         "1": {
-          "enabled": true
+          "variant": 1
+        },
+        "2": {
+          "variant": 3
+        },
+        "3": {
+          "variant": 4
+        },
+        "4": {
+          "variant": 2
         }
       },
       "treatments": null,
-      "variationCount": 2,
+      "variationCount": 5,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -10074,7 +10083,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "5260438bd38987a88340f16d027d59cf054e2703b5d47ce84aba177acecd3250"
+      "fingerprint": "5b94a145adc0c5c424d03ac8eb406a5760eb38b294f8ec80391d0bab46ef1dcf"
     },
     {
       "id": "2026-09-nitro-file-upload-rollout",
