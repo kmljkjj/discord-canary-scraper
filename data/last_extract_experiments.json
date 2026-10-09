@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T22-58-27-981Z_635060_n7p3e6",
-  "buildNumber": "635060",
-  "updatedAt": "2026-10-09T22:58:27.982Z",
-  "count": 375,
+  "runId": "2026-10-09T23-02-41-161Z_635063_69jfq2",
+  "buildNumber": "635063",
+  "updatedAt": "2026-10-09T23:02:41.161Z",
+  "count": 376,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5820,6 +5820,28 @@
         }
       },
       "fp": "3e826cdc3421d41db9406acb"
+    },
+    "2026-10-desktop-conjure-title-bar": {
+      "id": "2026-10-desktop-conjure-title-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "0": {
+          "leftEntrypoint": false,
+          "workingAnimation": false
+        },
+        "1": {
+          "leftEntrypoint": true,
+          "workingAnimation": false
+        },
+        "2": {
+          "leftEntrypoint": true,
+          "workingAnimation": true
+        }
+      },
+      "fp": "25ecb450e25b8694ee70d386"
     },
     "2026-10-desktop-game-perf": {
       "id": "2026-10-desktop-game-perf",

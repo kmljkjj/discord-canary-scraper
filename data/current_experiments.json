@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T22-58-27-981Z_635060_n7p3e6",
-  "buildNumber": "635060",
-  "updatedAt": "2026-10-09T22:58:27.982Z",
-  "count": 375,
+  "runId": "2026-10-09T23-02-41-161Z_635063_69jfq2",
+  "buildNumber": "635063",
+  "updatedAt": "2026-10-09T23:02:41.161Z",
+  "count": 376,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11256,6 +11256,44 @@
         "value": null
       },
       "fingerprint": "697888d2d2d7cfc00d75674cde2951ddca23be145c4930ac6c9c705b8f68fad6"
+    },
+    {
+      "id": "2026-10-desktop-conjure-title-bar",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "leftEntrypoint": false,
+        "workingAnimation": false
+      },
+      "variations": {
+        "0": {
+          "leftEntrypoint": false,
+          "workingAnimation": false
+        },
+        "1": {
+          "leftEntrypoint": true,
+          "workingAnimation": false
+        },
+        "2": {
+          "leftEntrypoint": true,
+          "workingAnimation": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 3,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "c7ce65b5c2237bb13cca652e655bc68e911b980433f6e1718cf28baae6d8e628"
     },
     {
       "id": "2026-10-desktop-game-perf",

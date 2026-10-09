@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-09T22-58-27-981Z_635060_n7p3e6",
-  "buildNumber": "635060",
-  "scrapedAt": "2026-10-09T22:58:27.982Z",
+  "runId": "2026-10-09T23-02-41-161Z_635063_69jfq2",
+  "buildNumber": "635063",
+  "scrapedAt": "2026-10-09T23:02:41.161Z",
   "totals": {
-    "all": 377
+    "all": 378
   },
   "experiments": [
     {
@@ -7312,6 +7312,33 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-desktop-conjure-title-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "leftEntrypoint": false,
+        "workingAnimation": false
+      },
+      "variations": {
+        "0": {
+          "leftEntrypoint": false,
+          "workingAnimation": false
+        },
+        "1": {
+          "leftEntrypoint": true,
+          "workingAnimation": false
+        },
+        "2": {
+          "leftEntrypoint": true,
+          "workingAnimation": true
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
