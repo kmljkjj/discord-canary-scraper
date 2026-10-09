@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T21-40-21-076Z_634920_dzbpl2",
-  "buildNumber": "634920",
-  "updatedAt": "2026-10-09T21:40:21.076Z",
-  "count": 374,
+  "runId": "2026-10-09T21-42-31-550Z_634924_cpja3f",
+  "buildNumber": "634924",
+  "updatedAt": "2026-10-09T21:42:31.550Z",
+  "count": 375,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11539,6 +11539,34 @@
         "value": null
       },
       "fingerprint": "cbd890b50110a65cd5d717602ba98efdcdc7450e748cd84d1f7f764b9d0ca2af"
+    },
+    {
+      "id": "2026-10-shop-marketing-fatigue",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enforceFatigue": false
+      },
+      "variations": {
+        "1": {
+          "enforceFatigue": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "57f1b60a18ae3e49408d5d47e92df175c7224fa0a5a390c12d8410c3dffc5263"
     },
     {
       "id": "2026-10-stage-unified-call",

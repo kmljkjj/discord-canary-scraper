@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T21-40-21-076Z_634920_dzbpl2",
-  "buildNumber": "634920",
-  "updatedAt": "2026-10-09T21:40:21.076Z",
-  "count": 374,
+  "runId": "2026-10-09T21-42-31-550Z_634924_cpja3f",
+  "buildNumber": "634924",
+  "updatedAt": "2026-10-09T21:42:31.550Z",
+  "count": 375,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5965,6 +5965,19 @@
         }
       },
       "fp": "8a0fc339de68c283207239b6"
+    },
+    "2026-10-shop-marketing-fatigue": {
+      "id": "2026-10-shop-marketing-fatigue",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enforceFatigue": true
+        }
+      },
+      "fp": "c71e2282f098f31709c493b0"
     },
     "2026-10-stage-unified-call": {
       "id": "2026-10-stage-unified-call",

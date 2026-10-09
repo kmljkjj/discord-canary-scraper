@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-09T21-40-21-076Z_634920_dzbpl2",
-  "buildNumber": "634920",
-  "scrapedAt": "2026-10-09T21:40:21.076Z",
+  "runId": "2026-10-09T21-42-31-550Z_634924_cpja3f",
+  "buildNumber": "634924",
+  "scrapedAt": "2026-10-09T21:42:31.550Z",
   "totals": {
-    "all": 376,
+    "all": 377,
     "legacy": 0,
-    "apex": 374
+    "apex": 375
   },
   "experiments": [
     {
@@ -7498,6 +7498,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-shop-marketing-fatigue",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enforceFatigue": false
+      },
+      "variations": {
+        "1": {
+          "enforceFatigue": true
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

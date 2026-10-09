@@ -5956,6 +5956,19 @@
     "label": null
   },
   {
+    "kind": "user",
+    "name": "2026-10-shop-marketing-fatigue",
+    "defaultConfig": {
+      "enforceFatigue": false
+    },
+    "variations": {
+      "1": {
+        "enforceFatigue": true
+      }
+    },
+    "label": null
+  },
+  {
     "kind": "guild",
     "name": "2026-10-stage-unified-call",
     "defaultConfig": {
