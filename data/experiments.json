@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-09T20-13-41-510Z_634789_j2obxj",
-  "buildNumber": "634789",
-  "scrapedAt": "2026-10-09T20:13:41.510Z",
+  "runId": "2026-10-09T20-16-57-384Z_634690_d51byu",
+  "buildNumber": "634690",
+  "scrapedAt": "2026-10-09T20:16:57.384Z",
   "totals": {
     "all": 375,
     "legacy": 0,
-    "apex": 373
+    "apex": 372
   },
   "experiments": [
     {
@@ -7362,9 +7362,8 @@
     {
       "id": "2026-10-e2e-latency-measurement",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "enabled": false
       },
@@ -7372,9 +7371,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 1,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-10-gift-cards-in-app-marketing",
