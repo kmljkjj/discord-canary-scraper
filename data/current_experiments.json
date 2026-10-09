@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-09T15-19-35-346Z_634393_puehmf",
-  "buildNumber": "634393",
-  "updatedAt": "2026-10-09T15:19:35.346Z",
-  "count": 370,
+  "runId": "2026-10-09T16-16-49-927Z_634439_o91hnz",
+  "buildNumber": "634439",
+  "updatedAt": "2026-10-09T16:16:49.927Z",
+  "count": 371,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11145,6 +11145,46 @@
         "value": null
       },
       "fingerprint": "b9722cb7336bee7040ee15936ed2a13a6faf77b52aeca76e1fc6f29e5e48f299"
+    },
+    {
+      "id": "2026-10-collectibles-marketing-client-cache",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "ttlMs": null
+      },
+      "variations": {
+        "0": {
+          "ttlMs": null
+        },
+        "1": {
+          "ttlMs": 36
+        },
+        "2": {
+          "ttlMs": 108
+        },
+        "3": {
+          "ttlMs": 216
+        },
+        "4": {
+          "ttlMs": 864
+        }
+      },
+      "treatments": null,
+      "variationCount": 5,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "16a5732e60ae8db8b6b053477af69482e57d62d4324d6982ebcfb381ad4e79f9"
     },
     {
       "id": "2026-10-contextual-referrals-gdm-member-list",
