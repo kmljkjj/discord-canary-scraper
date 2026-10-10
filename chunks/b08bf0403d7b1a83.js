@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["588018"],{860233(a){a.exports=JSON.parse('{"cfEYME":["cfEYME"],"lyE3Rw":["Avaa tarjous k\xe4ytt\xf6\xf6n"],"Q86yGA":["Avaa palkinto"]}')}}]);
-//# sourceMappingURL=b08bf0403d7b1a83.js.map
