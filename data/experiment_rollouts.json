@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-10T00:03:03.746Z",
+  "fetchedAt": "2026-10-10T00:09:48.500Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,10 +5070,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 2,
@@ -5090,10 +5090,10 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 2,
@@ -8400,6 +8400,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-request-to-stream-new-entry-point",
+      "hash": 2515942123,
+      "type": "user",
+      "title": "2026-09-request-to-stream-new-entry-point",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-rust-3p",
       "hash": 2440513648,
       "type": "user",
@@ -8821,11 +8831,11 @@
     }
   ],
   "summary": {
-    "total": 596,
+    "total": 597,
     "guild": 94,
-    "user": 502,
+    "user": 503,
     "withPercentage": 225,
-    "withoutPercentage": 371,
+    "withoutPercentage": 372,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
