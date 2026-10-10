@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-10T00-30-26-323Z_635209_01u5fu",
-  "buildNumber": "635209",
-  "updatedAt": "2026-10-10T00:30:26.323Z",
-  "count": 377,
+  "runId": "2026-10-10T00-34-44-032Z_635214_mciu10",
+  "buildNumber": "635214",
+  "updatedAt": "2026-10-10T00:34:44.032Z",
+  "count": 376,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -5850,34 +5850,6 @@
         "value": null
       },
       "fingerprint": "e8db162571223da157b51ead0d00c255b5e2fd6a6ec5a6fa316637e4224f3229"
-    },
-    {
-      "id": "2026-06-guild-profile-server-tag",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "showServerTag": false
-      },
-      "variations": {
-        "1": {
-          "showServerTag": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "471f00a3a07b8882a7d115232d646f52838276adf4eb0d05ad518a75e6797d8a"
     },
     {
       "id": "2026-06-gummy-bears",

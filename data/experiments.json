@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-10T00-30-26-323Z_635209_01u5fu",
-  "buildNumber": "635209",
-  "scrapedAt": "2026-10-10T00:30:26.323Z",
+  "runId": "2026-10-10T00-34-44-032Z_635214_mciu10",
+  "buildNumber": "635214",
+  "scrapedAt": "2026-10-10T00:34:44.032Z",
   "totals": {
-    "all": 379,
+    "all": 378,
     "legacy": 0,
-    "apex": 377
+    "apex": 376
   },
   "experiments": [
     {
@@ -3782,23 +3782,6 @@
       "variations": {
         "1": {
           "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-guild-profile-server-tag",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "showServerTag": false
-      },
-      "variations": {
-        "1": {
-          "showServerTag": true
         }
       },
       "variationCount": 1,
