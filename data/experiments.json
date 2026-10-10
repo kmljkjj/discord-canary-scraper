@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-10T00-04-25-476Z_635174_p0ef4n",
-  "buildNumber": "635174",
-  "scrapedAt": "2026-10-10T00:04:25.476Z",
+  "runId": "2026-10-10T00-06-40-852Z_635183_ulsssn",
+  "buildNumber": "635183",
+  "scrapedAt": "2026-10-10T00:06:40.852Z",
   "totals": {
-    "all": 378,
+    "all": 379,
     "legacy": 0,
-    "apex": 376
+    "apex": 377
   },
   "experiments": [
     {
@@ -6730,6 +6730,23 @@
       "variations": {
         "1": {
           "trackingCopy": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-request-to-stream-new-entry-point",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "showReminderPanel": false
+      },
+      "variations": {
+        "1": {
+          "showReminderPanel": true
         }
       },
       "variationCount": 1,

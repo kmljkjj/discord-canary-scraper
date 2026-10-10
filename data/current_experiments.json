@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-10T00-04-25-476Z_635174_p0ef4n",
-  "buildNumber": "635174",
-  "updatedAt": "2026-10-10T00:04:25.476Z",
-  "count": 376,
+  "runId": "2026-10-10T00-06-40-852Z_635183_ulsssn",
+  "buildNumber": "635183",
+  "updatedAt": "2026-10-10T00:06:40.852Z",
+  "count": 377,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10378,6 +10378,34 @@
         "value": null
       },
       "fingerprint": "8e139cab627ec1b0ce298d190e611a4eee615de7108102a468bdb83121538335"
+    },
+    {
+      "id": "2026-09-request-to-stream-new-entry-point",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "showReminderPanel": false
+      },
+      "variations": {
+        "1": {
+          "showReminderPanel": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6504a196c10684366993180db6557ac347ecfc83ac784229a08fc537acf7d5b4"
     },
     {
       "id": "2026-09-rust-3p",
