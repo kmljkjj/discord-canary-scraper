@@ -3428,38 +3428,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-07-call-of-duty-3pp-marketing",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "0": {
-        "enabled": false
-      },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-07-call-of-duty-3pp-non-sub-marketing",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "0": {
-        "enabled": false
-      },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-07-clips-game-events-on-player",
     "defaultConfig": {
       "enableGameEventsOnPlayer": false
@@ -3506,22 +3474,6 @@
   {
     "kind": "user",
     "name": "2026-07-cobalt",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "0": {
-        "enabled": false
-      },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-07-cod-3pp",
     "defaultConfig": {
       "enabled": false
     },
@@ -4067,22 +4019,6 @@
         "enabled": true,
         "ctrVariant": 0,
         "hapticFeedbackOnRewardEarnedEnabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-08-call-of-duty-3pp-nagbar",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "0": {
-        "enabled": false
-      },
-      "1": {
-        "enabled": true
       }
     },
     "label": null
