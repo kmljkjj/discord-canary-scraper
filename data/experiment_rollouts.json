@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-12T16:49:04.765Z",
+  "fetchedAt": "2026-10-12T16:56:14.479Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -5090,6 +5090,26 @@
       }
     },
     {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
+      }
+    },
+    {
       "id": "2021-10_runtime_accessibility_system",
       "hash": 3654722494,
       "type": "user",
@@ -7150,26 +7170,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-07-call-of-duty-3pp-marketing",
-      "hash": 3857525598,
-      "type": "user",
-      "title": "2026-07-call-of-duty-3pp-marketing",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-07-call-of-duty-3pp-non-sub-marketing",
-      "hash": 693023176,
-      "type": "user",
-      "title": "2026-07-call-of-duty-3pp-non-sub-marketing",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-07-clips-game-events-on-player",
       "hash": 3098460155,
       "type": "user",
@@ -7204,16 +7204,6 @@
       "hash": 3549807439,
       "type": "user",
       "title": "2026-07-cobalt",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-07-cod-3pp",
-      "hash": 3914947494,
-      "type": "user",
-      "title": "2026-07-cod-3pp",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -7524,16 +7514,6 @@
       "hash": 2746896667,
       "type": "user",
       "title": "2026-08-bounties-mobile-quest-bar",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-08-call-of-duty-3pp-nagbar",
-      "hash": 3268485961,
-      "type": "user",
-      "title": "2026-08-call-of-duty-3pp-nagbar",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8801,14 +8781,14 @@
     }
   ],
   "summary": {
-    "total": 595,
+    "total": 592,
     "guild": 94,
-    "user": 501,
-    "withPercentage": 224,
-    "withoutPercentage": 371,
+    "user": 498,
+    "withPercentage": 225,
+    "withoutPercentage": 367,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 176,
-    "fpSampled": 4
+    "notStarted": 177,
+    "fpSampled": 5
   }
 }
