@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-13T19-10-50-478Z_636469_qrf41e",
-  "buildNumber": "636469",
-  "scrapedAt": "2026-10-13T19:10:50.478Z",
+  "runId": "2026-10-13T19-15-28-083Z_636483_cs2ul9",
+  "buildNumber": "636483",
+  "scrapedAt": "2026-10-13T19:15:28.083Z",
   "totals": {
-    "all": 373,
+    "all": 374,
     "legacy": 0,
-    "apex": 371
+    "apex": 372
   },
   "experiments": [
     {
@@ -5900,6 +5900,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-desktop-tti-update-check-deadline",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "deadline_ms": 0
+      },
+      "variations": {
+        "1": {
+          "deadline_ms": 15
+        },
+        "2": {
+          "deadline_ms": 3
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {

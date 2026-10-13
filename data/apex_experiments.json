@@ -4695,6 +4695,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-desktop-tti-update-check-deadline",
+    "defaultConfig": {
+      "deadline_ms": 0
+    },
+    "variations": {
+      "1": {
+        "deadline_ms": 15
+      },
+      "2": {
+        "deadline_ms": 3
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-edit-profile-collectibles-ordering",
     "defaultConfig": {
       "enabled": false

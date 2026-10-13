@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-13T19-10-50-478Z_636469_qrf41e",
-  "buildNumber": "636469",
-  "updatedAt": "2026-10-13T19:10:50.478Z",
-  "count": 371,
+  "runId": "2026-10-13T19-15-28-083Z_636483_cs2ul9",
+  "buildNumber": "636483",
+  "updatedAt": "2026-10-13T19:15:28.083Z",
+  "count": 372,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4698,6 +4698,22 @@
         }
       },
       "fp": "cd22bd20f219f1b2129849b7"
+    },
+    "2026-09-desktop-tti-update-check-deadline": {
+      "id": "2026-09-desktop-tti-update-check-deadline",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "deadline_ms": 15
+        },
+        "2": {
+          "deadline_ms": 3
+        }
+      },
+      "fp": "56bee9dd463c92d6baf3573d"
     },
     "2026-09-edit-profile-collectibles-ordering": {
       "id": "2026-09-edit-profile-collectibles-ordering",
