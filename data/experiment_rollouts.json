@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-13T16:56:27.402Z",
+  "fetchedAt": "2026-10-13T17:03:22.123Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 3
       }
     },
     {
@@ -5096,17 +5096,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 2
       }
     },
     {
@@ -7140,16 +7140,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-07-autoclipping-default-override",
-      "hash": 2367578050,
-      "type": "user",
-      "title": "2026-07-autoclipping-default-override",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-07-autoclipping-marketing",
       "hash": 857282464,
       "type": "user",
@@ -8771,11 +8761,11 @@
     }
   ],
   "summary": {
-    "total": 591,
+    "total": 590,
     "guild": 94,
-    "user": 497,
+    "user": 496,
     "withPercentage": 225,
-    "withoutPercentage": 366,
+    "withoutPercentage": 365,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
