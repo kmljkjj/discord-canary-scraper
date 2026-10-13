@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-13T22:07:20.843Z",
+  "fetchedAt": "2026-10-13T22:14:16.666Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5070,26 +5070,6 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
@@ -7590,16 +7570,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-08-guilds-bar-media-state-store",
-      "hash": 1589937,
-      "type": "user",
-      "title": "2026-08-guilds-bar-media-state-store",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-08-hide-gift-shop-upsell",
       "hash": 4064203157,
       "type": "user",
@@ -8781,14 +8751,14 @@
     }
   ],
   "summary": {
-    "total": 592,
+    "total": 590,
     "guild": 94,
-    "user": 498,
-    "withPercentage": 225,
-    "withoutPercentage": 367,
+    "user": 496,
+    "withPercentage": 224,
+    "withoutPercentage": 366,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
