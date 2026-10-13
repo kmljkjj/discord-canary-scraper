@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-13T18-07-45-355Z_636386_8yujm7",
-  "buildNumber": "636386",
-  "updatedAt": "2026-10-13T18:07:45.355Z",
-  "count": 370,
+  "runId": "2026-10-13T18-12-01-066Z_636392_hhgy03",
+  "buildNumber": "636392",
+  "updatedAt": "2026-10-13T18:12:01.067Z",
+  "count": 371,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5854,6 +5854,22 @@
         }
       },
       "fp": "20dcd7d26a41d3fee25a1ee7"
+    },
+    "2026-10-macaron-non-sub-marketing": {
+      "id": "2026-10-macaron-non-sub-marketing",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-purchase-history": {
       "id": "2026-10-purchase-history",

@@ -5845,6 +5845,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-macaron-non-sub-marketing",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-purchase-history",
     "defaultConfig": {
       "enabled": false
