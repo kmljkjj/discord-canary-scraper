@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-13T22-06-17-757Z_636804_rlpoq2",
-  "buildNumber": "636804",
-  "updatedAt": "2026-10-13T22:06:17.757Z",
-  "count": 372,
+  "runId": "2026-10-13T22-08-28-311Z_636806_i4knwq",
+  "buildNumber": "636806",
+  "updatedAt": "2026-10-13T22:08:28.311Z",
+  "count": 371,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -7948,40 +7948,6 @@
         "value": null
       },
       "fingerprint": "c94cca6defb377a3ece2036f7bc2c332abd6482f44230d1fa824ea546a6a96fb"
-    },
-    {
-      "id": "2026-08-guilds-bar-media-state-store",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "source": "hook"
-      },
-      "variations": {
-        "0": {
-          "source": "hook"
-        },
-        "1": {
-          "source": "store"
-        },
-        "2": {
-          "source": "shadow"
-        }
-      },
-      "treatments": null,
-      "variationCount": 3,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "db093966a281cfda46042d382f5c20c8e7a390f233ee88f621e0279df5526aea"
     },
     {
       "id": "2026-08-hide-gift-shop-upsell",

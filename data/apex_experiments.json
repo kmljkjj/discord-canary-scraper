@@ -4121,25 +4121,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-08-guilds-bar-media-state-store",
-    "defaultConfig": {
-      "source": "hook"
-    },
-    "variations": {
-      "0": {
-        "source": "hook"
-      },
-      "1": {
-        "source": "store"
-      },
-      "2": {
-        "source": "shadow"
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-08-hide-gift-shop-upsell",
     "defaultConfig": {
       "isHidden": false
