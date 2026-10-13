@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-13T19:07:30.631Z",
+  "fetchedAt": "2026-10-13T19:17:25.448Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,10 +5070,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -5090,10 +5090,10 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -7980,6 +7980,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-desktop-tti-update-check-deadline",
+      "hash": 2903328370,
+      "type": "user",
+      "title": "2026-09-desktop-tti-update-check-deadline",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-edit-profile-collectibles-ordering",
       "hash": 2123326678,
       "type": "user",
@@ -8771,11 +8781,11 @@
     }
   ],
   "summary": {
-    "total": 591,
+    "total": 592,
     "guild": 94,
-    "user": 497,
+    "user": 498,
     "withPercentage": 225,
-    "withoutPercentage": 366,
+    "withoutPercentage": 367,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
