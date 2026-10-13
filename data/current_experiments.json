@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-13T16-57-37-847Z_636272_hodyxw",
-  "buildNumber": "636272",
-  "updatedAt": "2026-10-13T16:57:37.847Z",
-  "count": 371,
+  "runId": "2026-10-13T16-59-54-404Z_636273_q0gfk8",
+  "buildNumber": "636273",
+  "updatedAt": "2026-10-13T16:59:54.404Z",
+  "count": 370,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6538,34 +6538,6 @@
         "value": null
       },
       "fingerprint": "a12f7b58ced0a284301e5f10bc6ff540a6b65f4cff6fa0271e04a24b317a0277"
-    },
-    {
-      "id": "2026-07-autoclipping-default-override",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "5e274d09027dd3cdcd0b360bb27355fb41e0a5507a4a063c60a0a3b2cca4b322"
     },
     {
       "id": "2026-07-autoclipping-marketing",
