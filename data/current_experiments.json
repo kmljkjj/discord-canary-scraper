@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T17-14-40-249Z_637517_z4uahl",
-  "buildNumber": "637517",
-  "updatedAt": "2026-10-14T17:14:40.249Z",
-  "count": 374,
+  "runId": "2026-10-14T17-16-55-091Z_637520_fugdxt",
+  "buildNumber": "637520",
+  "updatedAt": "2026-10-14T17:16:55.091Z",
+  "count": 375,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11440,6 +11440,43 @@
         "value": null
       },
       "fingerprint": "e3f5b2891467c81af1b2ee3316213a9d39f306ac6c612d3e47d2af8cddd73256"
+    },
+    {
+      "id": "2026-10-recurring-referral-reminder",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false,
+        "bottomSheetEnabled": false,
+        "notificationEnabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true,
+          "bottomSheetEnabled": true,
+          "notificationEnabled": false
+        },
+        "2": {
+          "enabled": true,
+          "bottomSheetEnabled": false,
+          "notificationEnabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6baacdd35ff9724ee2e880cded00cac1e9fca0d90771a31e1d4e2678cd3a5cef"
     },
     {
       "id": "2026-10-server-tag-upsell-on-profile",

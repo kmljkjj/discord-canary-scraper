@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-14T17-14-40-249Z_637517_z4uahl",
-  "buildNumber": "637517",
-  "scrapedAt": "2026-10-14T17:14:40.249Z",
+  "runId": "2026-10-14T17-16-55-091Z_637520_fugdxt",
+  "buildNumber": "637520",
+  "scrapedAt": "2026-10-14T17:16:55.091Z",
   "totals": {
-    "all": 376,
+    "all": 377,
     "legacy": 0,
-    "apex": 374
+    "apex": 375
   },
   "experiments": [
     {
@@ -7432,6 +7432,32 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-recurring-referral-reminder",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false,
+        "bottomSheetEnabled": false,
+        "notificationEnabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true,
+          "bottomSheetEnabled": true,
+          "notificationEnabled": false
+        },
+        "2": {
+          "enabled": true,
+          "bottomSheetEnabled": false,
+          "notificationEnabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
