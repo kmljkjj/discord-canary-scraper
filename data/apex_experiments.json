@@ -4404,19 +4404,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-08-user-profile-server-tag-style",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-08-video-guard",
     "defaultConfig": {
       "videoEnabled": true
@@ -5720,6 +5707,22 @@
       },
       "1": {
         "showEmbed": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-desktop-conjure-native-preview-view",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
       }
     },
     "label": null
