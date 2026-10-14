@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-14T03-13-56-890Z_637165_6rf71o",
-  "buildNumber": "637165",
-  "scrapedAt": "2026-10-14T03:13:56.890Z",
+  "runId": "2026-10-14T04-15-06-534Z_637184_ysl7k9",
+  "buildNumber": "637184",
+  "scrapedAt": "2026-10-14T04:15:06.534Z",
   "totals": {
-    "all": 373
+    "all": 374
   },
   "experiments": [
     {
@@ -7466,6 +7466,37 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-web-streaming-optimizations",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "degradationPreference": "default",
+        "motionContentHint": false
+      },
+      "variations": {
+        "1": {
+          "degradationPreference": "maintain-framerate",
+          "motionContentHint": false
+        },
+        "2": {
+          "degradationPreference": "default",
+          "motionContentHint": true
+        },
+        "3": {
+          "degradationPreference": "maintain-framerate",
+          "motionContentHint": true
+        },
+        "4": {
+          "degradationPreference": "balanced",
+          "motionContentHint": false
+        }
+      },
+      "variationCount": 4,
       "source": "discord"
     }
   ]

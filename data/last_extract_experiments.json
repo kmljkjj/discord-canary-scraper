@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T03-13-56-890Z_637165_6rf71o",
-  "buildNumber": "637165",
-  "updatedAt": "2026-10-14T03:13:56.890Z",
-  "count": 371,
+  "runId": "2026-10-14T04-15-06-534Z_637184_ysl7k9",
+  "buildNumber": "637184",
+  "updatedAt": "2026-10-14T04:15:06.534Z",
+  "count": 372,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5937,6 +5937,32 @@
         }
       },
       "fp": "cd22bd20f219f1b2129849b7"
+    },
+    "2026-10-web-streaming-optimizations": {
+      "id": "2026-10-web-streaming-optimizations",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 4,
+      "variations": {
+        "1": {
+          "degradationPreference": "maintain-framerate",
+          "motionContentHint": false
+        },
+        "2": {
+          "degradationPreference": "default",
+          "motionContentHint": true
+        },
+        "3": {
+          "degradationPreference": "maintain-framerate",
+          "motionContentHint": true
+        },
+        "4": {
+          "degradationPreference": "balanced",
+          "motionContentHint": false
+        }
+      },
+      "fp": "a7ed95b2cda7ecbfbb199d6a"
     }
   }
 }
