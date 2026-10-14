@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T15-54-48-323Z_637429_n2d33s",
-  "buildNumber": "637429",
-  "updatedAt": "2026-10-14T15:54:48.323Z",
-  "count": 373,
+  "runId": "2026-10-14T15-58-10-357Z_637432_zr3hba",
+  "buildNumber": "637432",
+  "updatedAt": "2026-10-14T15:58:10.358Z",
+  "count": 374,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11283,6 +11283,35 @@
         "value": null
       },
       "fingerprint": "ee30f3bef1cc237eb161e263620d410348cd99e660f4fa1303bde21de39bdbe4"
+    },
+    {
+      "id": "2026-10-gifted-subscriptions",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "19bc9295bd759b3bae795e87a58f77f393fc0a7b7dbf826e2bf1b0b611d9c293"
     },
     {
       "id": "2026-10-guild-tooltip-lazy-content",

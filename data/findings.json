@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-14T15-54-48-323Z_637429_n2d33s",
-  "buildNumber": "637429",
-  "scrapedAt": "2026-10-14T15:54:48.323Z",
+  "runId": "2026-10-14T15-58-10-357Z_637432_zr3hba",
+  "buildNumber": "637432",
+  "scrapedAt": "2026-10-14T15:58:10.358Z",
   "totals": {
-    "all": 375
+    "all": 376
   },
   "experiments": [
     {
@@ -7328,6 +7328,24 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-gifted-subscriptions",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
