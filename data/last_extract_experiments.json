@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T23-02-23-184Z_638299_9ewbbq",
-  "buildNumber": "638299",
-  "updatedAt": "2026-10-14T23:02:23.184Z",
-  "count": 377,
+  "runId": "2026-10-14T23-22-06-424Z_638336_uqyras",
+  "buildNumber": "638336",
+  "updatedAt": "2026-10-14T23:22:06.424Z",
+  "count": 378,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5954,6 +5954,22 @@
         }
       },
       "fp": "3e7b3bb9eaed1d72339446c2"
+    },
+    "2026-10-remove-quests-from-discovery": {
+      "id": "2026-10-remove-quests-from-discovery",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-server-tag-upsell-on-profile": {
       "id": "2026-10-server-tag-upsell-on-profile",

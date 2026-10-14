@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T23-02-23-184Z_638299_9ewbbq",
-  "buildNumber": "638299",
-  "updatedAt": "2026-10-14T23:02:23.184Z",
-  "count": 377,
+  "runId": "2026-10-14T23-22-06-424Z_638336_uqyras",
+  "buildNumber": "638336",
+  "updatedAt": "2026-10-14T23:22:06.424Z",
+  "count": 378,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11527,6 +11527,37 @@
         "value": null
       },
       "fingerprint": "6baacdd35ff9724ee2e880cded00cac1e9fca0d90771a31e1d4e2678cd3a5cef"
+    },
+    {
+      "id": "2026-10-remove-quests-from-discovery",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "15d829a40b8a0b0dc5b144002e287e3563208787a9003cc5f1c81bdc11bc2eff"
     },
     {
       "id": "2026-10-server-tag-upsell-on-profile",
