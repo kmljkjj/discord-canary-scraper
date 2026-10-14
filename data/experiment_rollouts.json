@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-14T20:16:35.399Z",
+  "fetchedAt": "2026-10-14T20:23:29.321Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,6 +5070,26 @@
       }
     },
     {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 5,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 5
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 5,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 5
+      }
+    },
+    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
@@ -5087,26 +5107,6 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 3
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
       }
     },
     {
@@ -8720,6 +8720,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-profile-default-tab-with-content",
+      "hash": 1908672925,
+      "type": "user",
+      "title": "2026-10-profile-default-tab-with-content",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-purchase-history",
       "hash": 209919464,
       "type": "user",
@@ -8811,11 +8821,11 @@
     }
   ],
   "summary": {
-    "total": 595,
+    "total": 596,
     "guild": 94,
-    "user": 501,
+    "user": 502,
     "withPercentage": 225,
-    "withoutPercentage": 370,
+    "withoutPercentage": 371,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
