@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T21-31-52-814Z_638072_9yzct5",
-  "buildNumber": "638072",
-  "updatedAt": "2026-10-14T21:31:52.814Z",
-  "count": 376,
+  "runId": "2026-10-14T21-37-56-878Z_638088_56wvon",
+  "buildNumber": "638088",
+  "updatedAt": "2026-10-14T21:37:56.878Z",
+  "count": 377,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5670,6 +5670,19 @@
     },
     "2026-10-bulk-nitro-gifting-discounts": {
       "id": "2026-10-bulk-nitro-gifting-discounts",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "cd22bd20f219f1b2129849b7"
+    },
+    "2026-10-clickable-hero-banner": {
+      "id": "2026-10-clickable-hero-banner",
       "type": "user",
       "kind": "user",
       "label": null,

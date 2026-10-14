@@ -5671,6 +5671,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-clickable-hero-banner",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-collectibles-marketing-client-cache",
     "defaultConfig": {
       "ttlMs": null

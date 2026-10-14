@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-14T21-31-52-814Z_638072_9yzct5",
-  "buildNumber": "638072",
-  "updatedAt": "2026-10-14T21:31:52.814Z",
-  "count": 376,
+  "runId": "2026-10-14T21-37-56-878Z_638088_56wvon",
+  "buildNumber": "638088",
+  "updatedAt": "2026-10-14T21:37:56.878Z",
+  "count": 377,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10998,6 +10998,34 @@
         "value": null
       },
       "fingerprint": "025618bc7522bdd6f871d67c210d0675a3afe4e1e0d01a6f1950232c1f094333"
+    },
+    {
+      "id": "2026-10-clickable-hero-banner",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "f7b1c7083795e7c58dd1b28a69ad77bb20e3b0c0450aeb1487ec6bfac03f1d1d"
     },
     {
       "id": "2026-10-collectibles-marketing-client-cache",
