@@ -5776,16 +5776,16 @@
     "name": "2026-10-desktop-general-perf",
     "defaultConfig": {
       "skipSilentDelayEstimatorFfts": false,
-      "basicProcessEnumeration": false
+      "processPollingPerf": false
     },
     "variations": {
       "0": {
         "skipSilentDelayEstimatorFfts": false,
-        "basicProcessEnumeration": false
+        "processPollingPerf": false
       },
       "1": {
         "skipSilentDelayEstimatorFfts": true,
-        "basicProcessEnumeration": true
+        "processPollingPerf": true
       }
     },
     "label": null
