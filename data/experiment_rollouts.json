@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-14T01:55:16.670Z",
+  "fetchedAt": "2026-10-14T07:40:50.344Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 3,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5070,6 +5070,26 @@
       }
     },
     {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
+      }
+    },
+    {
       "id": "2021-10_runtime_accessibility_system",
       "hash": 3654722494,
       "type": "user",
@@ -8710,6 +8730,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-web-streaming-optimizations",
+      "hash": 2004834486,
+      "type": "user",
+      "title": "2026-10-web-streaming-optimizations",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-08-gift-recipient-display-name-search",
       "hash": 3633628057,
       "type": "user",
@@ -8731,14 +8761,14 @@
     }
   ],
   "summary": {
-    "total": 589,
+    "total": 591,
     "guild": 94,
-    "user": 495,
-    "withPercentage": 223,
-    "withoutPercentage": 366,
+    "user": 497,
+    "withPercentage": 224,
+    "withoutPercentage": 367,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 175,
-    "fpSampled": 3
+    "notStarted": 176,
+    "fpSampled": 4
   }
 }
