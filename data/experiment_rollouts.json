@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-14T00:03:41.979Z",
+  "fetchedAt": "2026-10-14T01:55:16.670Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 3,
       "matched": 2
     }
   },
@@ -5070,46 +5070,6 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "id": "2021-10_runtime_accessibility_system",
       "hash": 3654722494,
       "type": "user",
@@ -6810,16 +6770,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-06-bulk-nitro-gifting",
-      "hash": 3195018058,
-      "type": "user",
-      "title": "2026-06-bulk-nitro-gifting",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-06-chat-bar-customization",
       "hash": 2990474339,
       "type": "user",
@@ -7790,16 +7740,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-08-user-profile-server-tag-style",
-      "hash": 607553812,
-      "type": "user",
-      "title": "2026-08-user-profile-server-tag-style",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-08-video-guard",
       "hash": 3022613762,
       "type": "user",
@@ -8590,6 +8530,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-bulk-nitro-gifting-discounts",
+      "hash": 2214031646,
+      "type": "user",
+      "title": "2026-10-bulk-nitro-gifting-discounts",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-collectibles-marketing-client-cache",
       "hash": 903517929,
       "type": "user",
@@ -8614,6 +8564,16 @@
       "hash": 753842192,
       "type": "user",
       "title": "2026-10-contextual-referrals-server-channel-member-list",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-10-desktop-conjure-native-preview-view",
+      "hash": 2634436183,
+      "type": "user",
+      "title": "2026-10-desktop-conjure-native-preview-view",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8771,14 +8731,14 @@
     }
   ],
   "summary": {
-    "total": 591,
+    "total": 589,
     "guild": 94,
-    "user": 497,
-    "withPercentage": 225,
+    "user": 495,
+    "withPercentage": 223,
     "withoutPercentage": 366,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 175,
+    "fpSampled": 3
   }
 }
