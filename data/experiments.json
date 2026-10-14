@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-14T00-19-30-018Z_637038_8vyebi",
-  "buildNumber": "637038",
-  "scrapedAt": "2026-10-14T00:19:30.018Z",
+  "runId": "2026-10-14T01-20-05-820Z_637093_3fofnt",
+  "buildNumber": "637093",
+  "scrapedAt": "2026-10-14T01:20:05.820Z",
   "totals": {
     "all": 373,
     "legacy": 0,
@@ -3586,24 +3586,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-06-bulk-nitro-gifting",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-06-chat-bar-customization",
       "type": "user",
       "kind": "user",
@@ -7112,6 +7094,23 @@
     },
     {
       "id": "2026-10-bounties-desktop-quest-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-bulk-nitro-gifting-discounts",
       "type": "user",
       "kind": "user",
       "label": null,

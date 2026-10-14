@@ -2870,20 +2870,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-06-bulk-nitro-gifting",
-    "defaultConfig": null,
-    "variations": {
-      "0": {
-        "id": 0
-      },
-      "2": {
-        "id": 2
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-06-chat-bar-customization",
     "defaultConfig": {
       "enabled": false
@@ -5644,6 +5630,19 @@
   {
     "kind": "user",
     "name": "2026-10-bounties-desktop-quest-bar",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-bulk-nitro-gifting-discounts",
     "defaultConfig": {
       "enabled": false
     },

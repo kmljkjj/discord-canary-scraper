@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-14T00-19-30-018Z_637038_8vyebi",
-  "buildNumber": "637038",
-  "updatedAt": "2026-10-14T00:19:30.018Z",
+  "runId": "2026-10-14T01-20-05-820Z_637093_3fofnt",
+  "buildNumber": "637093",
+  "updatedAt": "2026-10-14T01:20:05.820Z",
   "count": 371,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -2865,22 +2865,6 @@
       },
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
-    "2026-06-bulk-nitro-gifting": {
-      "id": "2026-06-bulk-nitro-gifting",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 2,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "fp": "daf473af1b2bf875991e247d"
-    },
     "2026-06-chat-bar-customization": {
       "id": "2026-06-chat-bar-customization",
       "type": "user",
@@ -5657,6 +5641,19 @@
     },
     "2026-10-bounties-desktop-quest-bar": {
       "id": "2026-10-bounties-desktop-quest-bar",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "fp": "cd22bd20f219f1b2129849b7"
+    },
+    "2026-10-bulk-nitro-gifting-discounts": {
+      "id": "2026-10-bulk-nitro-gifting-discounts",
       "type": "user",
       "kind": "user",
       "label": null,

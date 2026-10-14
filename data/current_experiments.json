@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-14T00-19-30-018Z_637038_8vyebi",
-  "buildNumber": "637038",
-  "updatedAt": "2026-10-14T00:19:30.018Z",
+  "runId": "2026-10-14T01-20-05-820Z_637093_3fofnt",
+  "buildNumber": "637093",
+  "updatedAt": "2026-10-14T01:20:05.820Z",
   "count": 371,
   "experiments": [
     {
@@ -5529,35 +5529,6 @@
       "fingerprint": "b9cd17596a18ee7cc6279695e8a3f0c19df97e1cd1bb9cad9cd2515adbe12760"
     },
     {
-      "id": "2026-06-bulk-nitro-gifting",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e4e709cd297b30baa1f3d7ecec1a28d587bfb1c4ff918cb0587bb23e92770296"
-    },
-    {
       "id": "2026-06-chat-bar-customization",
       "kind": "user",
       "type": "user",
@@ -10968,6 +10939,34 @@
         "value": null
       },
       "fingerprint": "b9722cb7336bee7040ee15936ed2a13a6faf77b52aeca76e1fc6f29e5e48f299"
+    },
+    {
+      "id": "2026-10-bulk-nitro-gifting-discounts",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "025618bc7522bdd6f871d67c210d0675a3afe4e1e0d01a6f1950232c1f094333"
     },
     {
       "id": "2026-10-collectibles-marketing-client-cache",
