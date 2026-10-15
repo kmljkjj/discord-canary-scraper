@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-15T19-09-22-671Z_639222_z0pybg",
-  "buildNumber": "639222",
-  "updatedAt": "2026-10-15T19:09:22.671Z",
+  "runId": "2026-10-15T19-18-03-254Z_639256_kyikq8",
+  "buildNumber": "639256",
+  "updatedAt": "2026-10-15T19:18:03.255Z",
   "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -17,6 +17,10 @@
           "showScores": true
         }
       },
+      "defaultConfig": {
+        "showScores": false
+      },
+      "system": "apex",
       "fp": "a6a7739f22ee3588b0a64a9c"
     },
     "2021-10_runtime_accessibility_system": {
@@ -39,6 +43,11 @@
           "reporting": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "reporting": false
+      },
+      "system": "apex",
       "fp": "16302d5e36ddacf782d477dd"
     },
     "2021-12_inferno_spam_redaction": {
@@ -54,6 +63,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "fb1e64d8aa85b5436a8ecd6d"
     },
     "2022-01_threads": {
@@ -63,6 +76,8 @@
       "label": "Allow logged out users",
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "c5fa9cea901dfe9802b867dd"
     },
     "2022-07_voice_in_threads": {
@@ -78,6 +93,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "fed8ac6cdfc8f99355d43247"
     },
     "2022-11_default_disable_mass_mention": {
@@ -93,6 +112,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "78df235895b05cd80a19132f"
     },
     "2023-02_guest_voice_invites": {
@@ -108,6 +131,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "ca0f0d3f36639b81171949c7"
     },
     "2023-09_iar_dsa_webform": {
@@ -128,6 +155,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "19be356971471435758cf60f"
     },
     "2023-09_iar_user_reporting": {
@@ -143,6 +174,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6e5e59c3f03f54c0a25dea26"
     },
     "2024-06_rtc_pacer__simulcast": {
@@ -195,6 +230,12 @@
           "simulcastEnabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": true,
+        "fullname": "bandwidth_estimation/trendline-window-duration-3750,robust-estimator/",
+        "simulcastEnabled": false
+      },
+      "system": "apex",
       "fp": "10c8aa98ca3cbac0f59bd055"
     },
     "2025-01-allow-nonstaff-to-preview-app-collections": {
@@ -208,6 +249,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-04-desktop-refresh-fast-follows": {
@@ -243,6 +288,12 @@
           "distinctBorders": true
         }
       },
+      "defaultConfig": {
+        "largerGuildIcons": false,
+        "darkerGuildListBackground": false,
+        "distinctBorders": false
+      },
+      "system": "apex",
       "fp": "e4f6f47ef8e635dd414e8f50"
     },
     "2025-04-native-markdown": {
@@ -259,6 +310,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-05-search-results-feedback": {
@@ -272,6 +327,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-06_native_intents": {
@@ -310,6 +369,12 @@
           "activityEnabled": true
         }
       },
+      "defaultConfig": {
+        "searchEnabled": false,
+        "clearEnabled": false,
+        "activityEnabled": false
+      },
+      "system": "apex",
       "fp": "a0eb55cf566300ed00603ec5"
     },
     "2025-08_default_invite_expiration_guild": {
@@ -335,6 +400,10 @@
           "defaultMaxAge": 5184
         }
       },
+      "defaultConfig": {
+        "defaultMaxAge": 604800
+      },
+      "system": "apex",
       "fp": "2b6f6f9a6ac5124dd26b9e1a"
     },
     "2025-08_portkey_enabled": {
@@ -350,6 +419,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "40ad29d6389561ba73b3f79e"
     },
     "2025-08-browser-hevc": {
@@ -363,6 +436,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-08-voice-user-affinity": {
@@ -384,6 +461,10 @@
           "sortType": "communication_probability"
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "50e6942aade4420e539c9240"
     },
     "2025-09_hotwheels_nvidia_boost": {
@@ -402,6 +483,8 @@
           "label": "ML model V3 - Nvidia big boost"
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "3700e1404d831cc7dabe361c"
     },
     "2025-09-image-attachment-mezzanine-v2": {
@@ -423,6 +506,10 @@
           "maxFileSizeBytes": 262144
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8190905eaee06558a8a91b9a"
     },
     "2025-09-overlay-state-tracking": {
@@ -436,6 +523,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-sensitive-content-self-harm": {
@@ -449,6 +540,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-server-nsfw-level": {
@@ -462,6 +557,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-09-video-qoe-metrics-tracking": {
@@ -478,6 +577,10 @@
           "externalAnalyticsEnabled": true
         }
       },
+      "defaultConfig": {
+        "externalAnalyticsEnabled": false
+      },
+      "system": "apex",
       "fp": "a9e3ffbd5b4e6a46f58431c0"
     },
     "2025-10_community_account_link_onboarding": {
@@ -493,6 +596,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6e1ae08450ac89def944103d"
     },
     "2025-10-collectibles-custom-cursors": {
@@ -509,6 +616,10 @@
           "enableCustomCursors": true
         }
       },
+      "defaultConfig": {
+        "enableCustomCursors": false
+      },
+      "system": "apex",
       "fp": "863b17448dc98aba7d22550a"
     },
     "2025-10-desktop-communication-notifications-emoji": {
@@ -522,6 +633,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-10-force-sdr-emojis-stickers": {
@@ -538,6 +653,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-10-go-live-auto-quality": {
@@ -556,6 +675,8 @@
           "defaultAutoQuality": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "2ce836119459a5067e523584"
     },
     "2025-10-low-latency-rate-control": {
@@ -569,6 +690,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-10-mana-date-inputs": {
@@ -582,6 +707,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "c3cc85d6647269585f1c47fc"
     },
     "2025-11_tida_webform": {
@@ -597,6 +726,10 @@
           "tidaWebformEnabled": true
         }
       },
+      "defaultConfig": {
+        "tidaWebformEnabled": false
+      },
+      "system": "apex",
       "fp": "48b1e0277f12c6a5e122f953"
     },
     "2025-11-age-verification-expressive-everywhere": {
@@ -610,6 +743,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-global-frame-pool-lock": {
@@ -623,6 +760,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-mana-context-menu": {
@@ -636,6 +777,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-overlay-chat": {
@@ -661,6 +806,12 @@
           "showNowPlayingForDifferentGames": true
         }
       },
+      "defaultConfig": {
+        "hasChat": false,
+        "hasFriendList": false,
+        "showNowPlayingForDifferentGames": false
+      },
+      "system": "apex",
       "fp": "ab223023f990ae9cf5733cde"
     },
     "2025-11-rtc-panel-entry-point-new-copy": {
@@ -681,6 +832,12 @@
           "altCta": true
         }
       },
+      "defaultConfig": {
+        "altTitle": false,
+        "altBody": false,
+        "altCta": false
+      },
+      "system": "apex",
       "fp": "fe9f45cffdd5828e44d65af8"
     },
     "2025-11-shockbyte-degraded": {
@@ -694,6 +851,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-11-video-end-card-v2": {
@@ -707,6 +868,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12_voice_channel_hoisting": {
@@ -729,6 +894,11 @@
           "enableHighlight": false
         }
       },
+      "defaultConfig": {
+        "enableWaveformIcon": false,
+        "enableHighlight": false
+      },
+      "system": "apex",
       "fp": "269429199caefe41db01b7e2"
     },
     "2025-12-game-invite-account-linking-entry-point": {
@@ -745,6 +915,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-12-hdr-accessibility-setting": {
@@ -758,6 +932,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-katsudon": {
@@ -774,6 +952,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2025-12-mana-multistep-community-enabled": {
@@ -787,6 +969,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-orb-redemption-thru-orders": {
@@ -800,6 +986,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2025-12-proportional-vad-indicator": {
@@ -827,6 +1017,10 @@
           "dontEmitVolumeOnlySpeakingEvents": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "9c14a6c7cb1f717513b4f015"
     },
     "2025-12-quest-cta-refactor-rollout": {
@@ -858,6 +1052,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "1aaebb0de7d7bf0129046a9a"
     },
     "2025-12-windows-audio-effects": {
@@ -871,6 +1069,8 @@
           "preferSystemEffects": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "d94a9bd14d82a6bdc60ea609"
     },
     "2025-12-wmf-gpu-encode": {
@@ -884,6 +1084,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-bug-reporter": {
@@ -897,6 +1101,10 @@
           "hasBugReporterAccess": true
         }
       },
+      "defaultConfig": {
+        "hasBugReporterAccess": false
+      },
+      "system": "apex",
       "fp": "ccda291fa1cca764ad0b7a19"
     },
     "2026-01-cms-layouts": {
@@ -913,6 +1121,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-01-favorites-server": {
@@ -929,6 +1141,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-01-friends-in-server": {
@@ -942,6 +1158,10 @@
           "guildFriendsEnabled": true
         }
       },
+      "defaultConfig": {
+        "guildFriendsEnabled": false
+      },
+      "system": "apex",
       "fp": "fbb57e81f0e27fbd8de768c8"
     },
     "2026-01-ios-push-notif-json-fix": {
@@ -955,6 +1175,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-less-personalized-ads": {
@@ -971,6 +1195,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-01-voice-dares-v0": {
@@ -984,6 +1212,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-01-wmf-gpu-encode-intel": {
@@ -997,6 +1229,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02_game_claim_coachmark": {
@@ -1012,6 +1248,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "73ae8a9fabf7068bf9365b07"
     },
     "2026-02_hangout_window": {
@@ -1027,6 +1267,10 @@
           "enableHangoutWindow": true
         }
       },
+      "defaultConfig": {
+        "enableHangoutWindow": false
+      },
+      "system": "apex",
       "fp": "ac1e1527b51fe93b8776e195"
     },
     "2026-02_past_vc_activity_messages": {
@@ -1042,6 +1286,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "2809061bf560d1086c4330ca"
     },
     "2026-02-announcement-composer": {
@@ -1055,6 +1303,10 @@
           "announcementComposer": true
         }
       },
+      "defaultConfig": {
+        "announcementComposer": false
+      },
+      "system": "apex",
       "fp": "3b7fb37fc1a31888c36f773e"
     },
     "2026-02-capture-target-window": {
@@ -1068,6 +1320,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-content-classification-presence-filter": {
@@ -1084,6 +1340,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-02-desktop-new-user-onboarding": {
@@ -1097,6 +1357,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-expiring-powerup-coachmark": {
@@ -1113,6 +1377,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-02-friends-list": {
@@ -1126,6 +1394,10 @@
           "hasFriendList": true
         }
       },
+      "defaultConfig": {
+        "hasFriendList": false
+      },
+      "system": "apex",
       "fp": "e92f77c21b2283af05709c12"
     },
     "2026-02-game-server-tab-always-on": {
@@ -1139,6 +1411,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-gift-cards": {
@@ -1152,6 +1428,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-gifting-modal-redesign": {
@@ -1165,6 +1445,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-go-live-hdr": {
@@ -1181,6 +1465,10 @@
           "hdrCaptureMode": "permittedDevicesOnly"
         }
       },
+      "defaultConfig": {
+        "hdrCaptureMode": "never"
+      },
+      "system": "apex",
       "fp": "4767cfa608f7d8fc21e6edc7"
     },
     "2026-02-gsh-game-detection-upsell": {
@@ -1194,6 +1482,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-join-game-community-cta": {
@@ -1207,6 +1499,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-lazy-load-all-images": {
@@ -1220,6 +1516,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-longer-group-dm-invites": {
@@ -1236,6 +1536,10 @@
           "inviteMaxAgeSeconds": 2419200
         }
       },
+      "defaultConfig": {
+        "inviteMaxAgeSeconds": 86400
+      },
+      "system": "apex",
       "fp": "13a50a972001ad6d62fdf3b2"
     },
     "2026-02-mana-playground-access": {
@@ -1249,6 +1553,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-mobile-volume-output-slider-removal": {
@@ -1264,6 +1572,12 @@
           "showTileVolumeIndicator": true
         }
       },
+      "defaultConfig": {
+        "audioOutputPresent": true,
+        "nonContextualStreamOutputPresent": true,
+        "showTileVolumeIndicator": false
+      },
+      "system": "apex",
       "fp": "2336df2c33f9f4300174635e"
     },
     "2026-02-non-dm-gifting-modal-redesign": {
@@ -1277,6 +1591,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-premium-offer-reminder-xp": {
@@ -1290,6 +1608,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-02-private-channel-hiding": {
@@ -1312,6 +1634,11 @@
           "enableIntegrityCheck": false
         }
       },
+      "defaultConfig": {
+        "enableObfuscation": false,
+        "enableIntegrityCheck": false
+      },
+      "system": "apex",
       "fp": "c4238b6aab72aa3eebbcb663"
     },
     "2026-02-process-boost-on-voice": {
@@ -1334,6 +1661,10 @@
           "threadPriorityConfiguration": 3
         }
       },
+      "defaultConfig": {
+        "threadPriorityConfiguration": 0
+      },
+      "system": "apex",
       "fp": "4ce83674ee87c8c4a86bde64"
     },
     "2026-02-voice-channel-link-click": {
@@ -1347,6 +1678,10 @@
           "navigateOnly": true
         }
       },
+      "defaultConfig": {
+        "navigateOnly": false
+      },
+      "system": "apex",
       "fp": "3bf09032c265864a21c67f8a"
     },
     "2026-02-wgc-dirty-regions-all": {
@@ -1360,6 +1695,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03_guild_official_messages": {
@@ -1375,6 +1714,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "51fc2fca7d13d69fc2ad8af6"
     },
     "2026-03_voice_badge": {
@@ -1395,6 +1738,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "9caa31aa1aed37de3e49a22f"
     },
     "2026-03-age-verification-google-wallet": {
@@ -1408,6 +1755,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-app-guild-validation": {
@@ -1424,6 +1775,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "9f382a372863c897e0a106aa"
     },
     "2026-03-application-widget-v2-add-tweak": {
@@ -1440,6 +1795,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-arborium-highlight": {
@@ -1453,6 +1812,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-audio-effects-probe": {
@@ -1466,6 +1829,8 @@
           "probeAudioEffects": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "06f83193ff8cec2d236871c5"
     },
     "2026-03-block-purchases": {
@@ -1479,6 +1844,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-churro": {
@@ -1492,6 +1861,10 @@
           "allowPlayStationStaging": true
         }
       },
+      "defaultConfig": {
+        "allowPlayStationStaging": false
+      },
+      "system": "apex",
       "fp": "685af2ed1334237df652a6ec"
     },
     "2026-03-clips-experiment": {
@@ -1510,6 +1883,11 @@
           "ignorePlatformRestriction": true
         }
       },
+      "defaultConfig": {
+        "enableClips": false,
+        "ignorePlatformRestriction": false
+      },
+      "system": "apex",
       "fp": "ca6246110bc13289553d6828"
     },
     "2026-03-content-inventory-memberlist-and-ranker": {
@@ -1524,6 +1902,11 @@
           "impressionCappingEnabled": false
         }
       },
+      "defaultConfig": {
+        "enabled": true,
+        "impressionCappingEnabled": true
+      },
+      "system": "apex",
       "fp": "05144a1177449290632a3ace"
     },
     "2026-03-conversation-highlighting-utility": {
@@ -1540,6 +1923,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "7fd898ccae761659a86bd9e2"
     },
     "2026-03-croissant": {
@@ -1556,6 +1943,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-debug-experiment": {
@@ -1572,6 +1963,8 @@
           "id": 2
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "f44d6f0eb6e4563019d5aa79"
     },
     "2026-03-denormalized-perks-access-read": {
@@ -1591,6 +1984,8 @@
           "id": 2
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a80296903cc2e06ce785d5ee"
     },
     "2026-03-friend-request-message": {
@@ -1604,6 +1999,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-icymi-desktop": {
@@ -1617,6 +2016,10 @@
           "icymiDesktopEnabled": true
         }
       },
+      "defaultConfig": {
+        "icymiDesktopEnabled": false
+      },
+      "system": "apex",
       "fp": "4589192991cc7aded8370dab"
     },
     "2026-03-icymi-staff-debugging-utility": {
@@ -1630,6 +2033,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-image-load-metrics": {
@@ -1649,6 +2056,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "f15666cb611ca156941a46e0"
     },
     "2026-03-ios-audio-interrupt-handling": {
@@ -1662,6 +2073,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-krisp-stats-collection": {
@@ -1675,6 +2090,8 @@
           "enableStats": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "03a8dcc6b9f48c8c7a1e1515"
     },
     "2026-03-l-3pp": {
@@ -1691,6 +2108,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-media-play-metrics": {
@@ -1707,6 +2128,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-mobile-quest-home-red-dot-notification": {
@@ -1723,6 +2148,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-muted-video-quest-new-defaults": {
@@ -1745,6 +2174,11 @@
           "variant": 2
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
+      "system": "apex",
       "fp": "914d1a29a31c5e9c7b1f9b32"
     },
     "2026-03-new-server-boost-system-messages": {
@@ -1763,6 +2197,11 @@
           "showCta": false
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "showCta": true
+      },
+      "system": "apex",
       "fp": "60beea5e57c8e5136d76b7a9"
     },
     "2026-03-overlay-default-keybind": {
@@ -1782,6 +2221,8 @@
           "keybindOverride": "ctrl+l"
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "7d525d923871d38eab547c14"
     },
     "2026-03-soundmoji-rendering": {
@@ -1795,6 +2236,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-03-soundmoji-sending": {
@@ -1813,6 +2258,11 @@
           "showSoundmojiInEmojiPicker": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "showSoundmojiInEmojiPicker": false
+      },
+      "system": "apex",
       "fp": "6351f4f1c27e0182ae16c581"
     },
     "2026-03-steelseries-3p-recurring": {
@@ -1829,6 +2279,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-03-surface-direct-renderer": {
@@ -1842,6 +2296,10 @@
           "enableSurfaceDirectRenderer": true
         }
       },
+      "defaultConfig": {
+        "enableSurfaceDirectRenderer": false
+      },
+      "system": "apex",
       "fp": "09b896409de62541dfc50292"
     },
     "2026-03-video-capture-device-no-reuse": {
@@ -1855,6 +2313,10 @@
           "overrideDeviceReuse": true
         }
       },
+      "defaultConfig": {
+        "overrideDeviceReuse": false
+      },
+      "system": "apex",
       "fp": "f7f35948720294b2a1b28fd9"
     },
     "2026-03-wysiwyg-user-profile-editing": {
@@ -1868,6 +2330,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04_application_identity_linked_roles": {
@@ -1883,6 +2349,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "00e5a9dfa3cef136c4844ec0"
     },
     "2026-04_guild_verification_role": {
@@ -1898,6 +2368,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "240f5e91a8506674d4963ac0"
     },
     "2026-04_server_theme": {
@@ -1932,6 +2406,13 @@
           "rollbackEnabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "inExperiment": false,
+        "gatesApex": false,
+        "rollbackEnabled": false
+      },
+      "system": "apex",
       "fp": "ec6fdb0a1d1f277fd22d0621"
     },
     "2026-04_voice_call_trigger_point": {
@@ -1947,6 +2428,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "637a0c8120e6a78dd9e6ccaf"
     },
     "2026-04_voice_user_duration": {
@@ -1962,6 +2447,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "e6794fb024321a06ee4879c5"
     },
     "2026-04-browser-transceiver-padding-removal": {
@@ -1975,6 +2464,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-clips-v3-runtime": {
@@ -1991,6 +2484,10 @@
           "enableClipsV3ML": true
         }
       },
+      "defaultConfig": {
+        "enableClipsV3ML": false
+      },
+      "system": "apex",
       "fp": "f87a583780db7834b7f6e9b2"
     },
     "2026-04-composed-quest-player": {
@@ -2004,6 +2501,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-notification-center": {
@@ -2029,6 +2530,12 @@
           "filterStyle": "dropdown"
         }
       },
+      "defaultConfig": {
+        "notificationCenterVariant": null,
+        "entrypoint": null,
+        "filterStyle": null
+      },
+      "system": "apex",
       "fp": "e27973d27039c195c4ae8bb8"
     },
     "2026-04-desktop-tti-dnstcp-warmup": {
@@ -2042,6 +2549,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-tti-early-update-check": {
@@ -2055,6 +2566,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-desktop-tti-update-backoff": {
@@ -2074,6 +2589,10 @@
           "maxBackoffMs": 3
         }
       },
+      "defaultConfig": {
+        "maxBackoffMs": 3
+      },
+      "system": "apex",
       "fp": "74858ab8362331de8a25064a"
     },
     "2026-04-desktop-tti-v8-cache": {
@@ -2087,6 +2606,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-ensure-received-messages-added-in-order": {
@@ -2100,6 +2623,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-gift-promotion-reminder": {
@@ -2113,6 +2640,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-gifting-badge": {
@@ -2126,6 +2657,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-hide-view-full-profile-button": {
@@ -2139,6 +2674,10 @@
           "showButton": false
         }
       },
+      "defaultConfig": {
+        "showButton": true
+      },
+      "system": "apex",
       "fp": "915d8562ce1ef775ab5402b1"
     },
     "2026-04-http-request-sample": {
@@ -2152,6 +2691,10 @@
           "sampleRate": 1
         }
       },
+      "defaultConfig": {
+        "sampleRate": 0
+      },
+      "system": "apex",
       "fp": "2ad20a5e1e83ee071f5bf8bd"
     },
     "2026-04-icymi-staff-only": {
@@ -2165,6 +2708,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-inappropriate-conversations-default-on": {
@@ -2181,6 +2728,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-inappropriate-conversations-prescan": {
@@ -2197,6 +2748,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-one-day-fractional-nitro": {
@@ -2210,6 +2765,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "f168eaf07e491e0688f2b8f8"
     },
     "2026-04-overlay-streamer-mode": {
@@ -2223,6 +2780,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-quests-premium-orb-multiplier-marketing": {
@@ -2239,6 +2800,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-safety-flows": {
@@ -2255,6 +2820,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-04-server-boost-copy-1440p": {
@@ -2268,6 +2837,8 @@
           "streamQualityMarketingResolution": "1440p"
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a5b6df06806e5744ca8a1f52"
     },
     "2026-04-topical-navigation-staff-control": {
@@ -2281,6 +2852,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-upcoming-server-event": {
@@ -2300,6 +2875,10 @@
           "showSettingsToggle": true
         }
       },
+      "defaultConfig": {
+        "showSettingsToggle": false
+      },
+      "system": "apex",
       "fp": "ab171a361b360b6fac913c8d"
     },
     "2026-04-user-profile-performance-analytics": {
@@ -2316,6 +2895,10 @@
           "performanceAnalyticsEnabled": true
         }
       },
+      "defaultConfig": {
+        "performanceAnalyticsEnabled": false
+      },
+      "system": "apex",
       "fp": "984ff5a2a0149f3d90a187ee"
     },
     "2026-04-video-hook-dx12": {
@@ -2329,6 +2912,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-voice-gateway-protocol-version": {
@@ -2342,6 +2929,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-04-wetf-parser": {
@@ -2355,6 +2946,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05_default_invite_expiration_guild_web": {
@@ -2380,6 +2975,10 @@
           "defaultMaxAge": 5184
         }
       },
+      "defaultConfig": {
+        "defaultMaxAge": 604800
+      },
+      "system": "apex",
       "fp": "a1783bf712ffa110047e430f"
     },
     "2026-05_voice_channel_list_invite_embed": {
@@ -2395,6 +2994,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "03513890f61c182145931d0d"
     },
     "2026-05-age-restricted-application-commands": {
@@ -2408,6 +3011,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-app-store-overlay-feature-gate": {
@@ -2421,6 +3028,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-auto-clips-review": {
@@ -2434,6 +3045,10 @@
           "enableAutoClipsReview": true
         }
       },
+      "defaultConfig": {
+        "enableAutoClipsReview": false
+      },
+      "system": "apex",
       "fp": "3953a2b1f219136790168a25"
     },
     "2026-05-av1-bitrate-tuning": {
@@ -2450,6 +3065,10 @@
           "bitrate": 25
         }
       },
+      "defaultConfig": {
+        "bitrate": 35
+      },
+      "system": "apex",
       "fp": "d08c4331553fc89337015106"
     },
     "2026-05-bounty-stale-refresh-quest-home": {
@@ -2466,6 +3085,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-clips-media-comments": {
@@ -2479,6 +3102,10 @@
           "enableMediaComments": true
         }
       },
+      "defaultConfig": {
+        "enableMediaComments": false
+      },
+      "system": "apex",
       "fp": "33ccc5b2b4d20fbb9ca74bd4"
     },
     "2026-05-device-form-factor-indicators": {
@@ -2492,6 +3119,10 @@
           "showDeviceFormFactorIndicators": true
         }
       },
+      "defaultConfig": {
+        "showDeviceFormFactorIndicators": false
+      },
+      "system": "apex",
       "fp": "17973a4ce2710004cb0b44e7"
     },
     "2026-05-dice-roll-slash-command": {
@@ -2505,6 +3136,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-disable-camera-simulcast": {
@@ -2518,6 +3153,10 @@
           "enableSimulcast": false
         }
       },
+      "defaultConfig": {
+        "enableSimulcast": true
+      },
+      "system": "apex",
       "fp": "57be2780167e2c63080915f2"
     },
     "2026-05-distributed-clips": {
@@ -2531,6 +3170,10 @@
           "enableDistributedClips": true
         }
       },
+      "defaultConfig": {
+        "enableDistributedClips": false
+      },
+      "system": "apex",
       "fp": "79494b6356a6616d10337bbe"
     },
     "2026-05-dvp-for-attachments": {
@@ -2547,6 +3190,10 @@
           "useDiscordVideoPlayer": true
         }
       },
+      "defaultConfig": {
+        "useDiscordVideoPlayer": false
+      },
+      "system": "apex",
       "fp": "b00cad5158f64ca437dc72ea"
     },
     "2026-05-electron-multilang-spellcheck": {
@@ -2560,6 +3207,10 @@
           "enableElectronMultilangSpellcheck": true
         }
       },
+      "defaultConfig": {
+        "enableElectronMultilangSpellcheck": false
+      },
+      "system": "apex",
       "fp": "a3cd2049b467f777b57e955a"
     },
     "2026-05-frontier-tuning": {
@@ -2584,6 +3235,8 @@
           "maxBitrate": 5
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "d6d9e1491ea274f7076113f4"
     },
     "2026-05-global-soundboard-wheel-popout": {
@@ -2597,6 +3250,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-ios-video-stabilization": {
@@ -2613,6 +3270,10 @@
           "mode": "low_latency"
         }
       },
+      "defaultConfig": {
+        "mode": "off"
+      },
+      "system": "apex",
       "fp": "949efeeb328d5f2bcb4ffe9c"
     },
     "2026-05-mana-type-consolidation": {
@@ -2626,6 +3287,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-quest-home-tile-redesign": {
@@ -2666,6 +3331,13 @@
           "ctaOnHover": false
         }
       },
+      "defaultConfig": {
+        "useNewLayoutWithSearch": false,
+        "useNewTile": false,
+        "useNewFeaturedTiles": false,
+        "ctaOnHover": false
+      },
+      "system": "apex",
       "fp": "c328b426ceb5abd38e7cfa8f"
     },
     "2026-05-screenshare-picker-wgc": {
@@ -2679,6 +3351,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-server-theme-user": {
@@ -2692,6 +3368,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-05-slayer-storefront-hide-leaderboard": {
@@ -2708,6 +3388,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-social-layer-storefront-game-shops-dropdown": {
@@ -2724,6 +3408,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-05-spatial-audio-for-voice": {
@@ -2738,6 +3426,11 @@
           "defaultOn": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "defaultOn": false
+      },
+      "system": "apex",
       "fp": "45a115d81d6fe127166cd604"
     },
     "2026-05-use-ad-analytics-interface": {
@@ -2771,6 +3464,10 @@
           "maxStep": 4
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "e01baf49918e0ab55422ba7d"
     },
     "2026-06_guild_rooms": {
@@ -2821,6 +3518,13 @@
           "posturesEnabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "interactionsEnabled": false,
+        "multipleRoomsEnabled": false,
+        "posturesEnabled": false
+      },
+      "system": "apex",
       "fp": "6b752f9b2916dcf36c6fa43a"
     },
     "2026-06-age-verification-incode": {
@@ -2834,6 +3538,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-av1-encode-linux": {
@@ -2847,6 +3555,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-battlenet-social-sdk-migration": {
@@ -2863,6 +3575,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-chat-bar-customization": {
@@ -2876,6 +3592,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-clickstream-analytics": {
@@ -2889,6 +3609,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-clips-league-events": {
@@ -2902,6 +3626,10 @@
           "enableLeagueEvents": true
         }
       },
+      "defaultConfig": {
+        "enableLeagueEvents": false
+      },
+      "system": "apex",
       "fp": "5c0b57702553dd006ed5d836"
     },
     "2026-06-clips-secondary-entrypoints": {
@@ -2916,6 +3644,11 @@
           "enableGamePanelEntrypoint": true
         }
       },
+      "defaultConfig": {
+        "enableOverlayEntrypoint": false,
+        "enableGamePanelEntrypoint": false
+      },
+      "system": "apex",
       "fp": "26d47bdfb2fa1706751c5de4"
     },
     "2026-06-content-classification-embedded-activity-filter": {
@@ -2932,6 +3665,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-desktop-tti-http-cdt": {
@@ -2945,6 +3682,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-desktop-tti-splash-asset": {
@@ -2958,6 +3699,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-game-invites-channel": {
@@ -2971,6 +3716,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-06-game-server-hosting-in-shop": {
@@ -2990,6 +3739,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "7916513f2d8f10276925cb73"
     },
     "2026-06-gifting-badge-desktop": {
@@ -3003,6 +3756,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-gummy-bears": {
@@ -3016,6 +3773,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-hero-shelf-ad-tile": {
@@ -3029,6 +3790,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-improved-shop-loading": {
@@ -3045,6 +3810,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-mobile-server-tag": {
@@ -3058,6 +3827,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-nitro-gdm-cap-increase": {
@@ -3074,6 +3847,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-orbs-holdout": {
@@ -3090,6 +3867,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-otp-orders-phase-1": {
@@ -3103,6 +3884,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-post-call-survey-assets": {
@@ -3119,6 +3904,10 @@
           "surveyEmojiKind": "face-refresh"
         }
       },
+      "defaultConfig": {
+        "surveyEmojiKind": "face"
+      },
+      "system": "apex",
       "fp": "be25d865c374dba30f319683"
     },
     "2026-06-quest-fetch-reconnect-jitter": {
@@ -3133,6 +3922,8 @@
           "questHomeHeroJitterMs": 60
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "5fa9381e2fc46e7c3f0f6d7d"
     },
     "2026-06-quest-home-layout-visual-tweaks": {
@@ -3163,6 +3954,11 @@
           "variant": 4
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "variant": 0
+      },
+      "system": "apex",
       "fp": "3ccc771168ed3630929ad128"
     },
     "2026-06-server-ladder": {
@@ -3177,6 +3973,11 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "bitrate": 9,
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "b11ad2cddec442de4dc20e81"
     },
     "2026-06-server-theme-apex-shadow": {
@@ -3217,6 +4018,13 @@
           "rollbackEnabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "inExperiment": false,
+        "gatesApex": false,
+        "rollbackEnabled": false
+      },
+      "system": "apex",
       "fp": "0dce2baa1b5f642eba5137e8"
     },
     "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones": {
@@ -3230,6 +4038,10 @@
           "echoReferenceMode": "auto"
         }
       },
+      "defaultConfig": {
+        "echoReferenceMode": "mix"
+      },
+      "system": "apex",
       "fp": "37edfa3fb32fa2c3644cb6a2"
     },
     "2026-06-topical-navigation-guild": {
@@ -3243,6 +4055,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-06-upscale-small-captured-frames": {
@@ -3257,6 +4073,11 @@
           "minCaptureHeight": 130
         }
       },
+      "defaultConfig": {
+        "minCaptureWidth": 0,
+        "minCaptureHeight": 0
+      },
+      "system": "apex",
       "fp": "f154d3009430b797e6247969"
     },
     "2026-06-use-new-badge-image-source": {
@@ -3273,6 +4094,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-06-user-profile-sidebar-redesign": {
@@ -3286,6 +4111,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-06-web-translate-dom-guard": {
@@ -3299,6 +4128,10 @@
           "enabled": false
         }
       },
+      "defaultConfig": {
+        "enabled": true
+      },
+      "system": "apex",
       "fp": "87105ed873380cd0b0f22936"
     },
     "2026-06-web-vitals-monitoring": {
@@ -3316,6 +4149,11 @@
           "sampleRate": 1
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "sampleRate": 0
+      },
+      "system": "apex",
       "fp": "c2ae07e01bff3291ee1383d3"
     },
     "2026-06-wmf-cpu-encode-intel": {
@@ -3329,6 +4167,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-app-channels": {
@@ -3342,6 +4184,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-07-attachment-image-ladder": {
@@ -3358,6 +4204,8 @@
           "enabled": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-07-autoclipping-marketing": {
@@ -3371,6 +4219,10 @@
           "enableMarketing": true
         }
       },
+      "defaultConfig": {
+        "enableMarketing": false
+      },
+      "system": "apex",
       "fp": "bd393b391cb8b7f8a94083b6"
     },
     "2026-07-call-of-duty-3pp-expired": {
@@ -3387,6 +4239,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-clips-game-events-on-player": {
@@ -3400,6 +4256,10 @@
           "enableGameEventsOnPlayer": true
         }
       },
+      "defaultConfig": {
+        "enableGameEventsOnPlayer": false
+      },
+      "system": "apex",
       "fp": "66da57c597741b567730a97a"
     },
     "2026-07-clips-on-profile-setter": {
@@ -3416,6 +4276,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-clips-on-profile-viewer": {
@@ -3432,6 +4296,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-cobalt": {
@@ -3448,6 +4316,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-custom-app-store-overlay": {
@@ -3461,6 +4333,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-desktop-channel-tabs": {
@@ -3474,6 +4350,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-desktop-tti-update-backoff-algo": {
@@ -3487,6 +4367,10 @@
           "algo": 1
         }
       },
+      "defaultConfig": {
+        "algo": 0
+      },
+      "system": "apex",
       "fp": "6069bf145e03dd69e684a407"
     },
     "2026-07-expressive-modal-v2": {
@@ -3503,6 +4387,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-07-gsimagic": {
@@ -3516,6 +4404,10 @@
           "enableCs2Gsi": true
         }
       },
+      "defaultConfig": {
+        "enableCs2Gsi": false
+      },
+      "system": "apex",
       "fp": "0106ae3121c0b78ee3941437"
     },
     "2026-07-ios-attribution": {
@@ -3529,6 +4421,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-manual-age-assurance-fallback": {
@@ -3542,6 +4438,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-nvenc-reconstructed-frames": {
@@ -3555,6 +4455,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-onyx": {
@@ -3571,6 +4475,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-orbchievements": {
@@ -3584,6 +4492,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-parental-consent-warning-fetch": {
@@ -3597,6 +4509,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-personal-widget": {
@@ -3619,6 +4535,11 @@
           "showCreateEntrypoint": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "showCreateEntrypoint": false
+      },
+      "system": "apex",
       "fp": "16cf26a662162823d69f19eb"
     },
     "2026-07-plan-select-ui-redesign": {
@@ -3635,6 +4556,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-07-powerups-coachmark-scroll-close": {
@@ -3651,6 +4574,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-premium-group-expansion-announcement": {
@@ -3667,6 +4594,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-07-premium-referral-incentives": {
@@ -3697,6 +4626,11 @@
           "useAltReferralCardArt": true
         }
       },
+      "defaultConfig": {
+        "referralRewardType": null,
+        "useAltReferralCardArt": false
+      },
+      "system": "apex",
       "fp": "6c1ed7e08aa93b09e4a6d00a"
     },
     "2026-07-quest-home-default-banner-removal": {
@@ -3706,6 +4640,8 @@
       "label": null,
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a352318c557a1ae211733b52"
     },
     "2026-07-reduce-leave-call-gpu": {
@@ -3719,6 +4655,10 @@
           "useStaticGradient": true
         }
       },
+      "defaultConfig": {
+        "useStaticGradient": false
+      },
+      "system": "apex",
       "fp": "604e7d539a7e75fea98dd4ef"
     },
     "2026-07-reject-with-error-kill-switch": {
@@ -3732,6 +4672,10 @@
           "migrationKilled": true
         }
       },
+      "defaultConfig": {
+        "migrationKilled": false
+      },
+      "system": "apex",
       "fp": "df61b85cea23a3b554f4db07"
     },
     "2026-07-renewable-end-date-sort": {
@@ -3748,6 +4692,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-07-smag-dm-sidebar-nitro-recommendation": {
@@ -3764,6 +4712,10 @@
           "isEnabled": true
         }
       },
+      "defaultConfig": {
+        "isEnabled": false
+      },
+      "system": "apex",
       "fp": "5cba73a0c2c4d6b8225edbd6"
     },
     "2026-07-typing-users-css-dots": {
@@ -3777,6 +4729,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-07-unobtrusive-device-suggestions": {
@@ -3790,6 +4746,10 @@
           "showDeviceDetectedPanel": true
         }
       },
+      "defaultConfig": {
+        "showDeviceDetectedPanel": false
+      },
+      "system": "apex",
       "fp": "ca2606dfa38bf3b2e3e2acf4"
     },
     "2026-07-vibegrations-guild": {
@@ -3806,6 +4766,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-07-wishlist-direct-to-gifting": {
@@ -3824,6 +4788,8 @@
           "showGiftButton": false
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "c747a0d32164ac3da8c4b426"
     },
     "2026-08-ad-topic-opt-out-client": {
@@ -3849,6 +4815,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "d88929023257256cf87514a4"
     },
     "2026-08-android-rn-reparenting-flag": {
@@ -3858,6 +4828,8 @@
       "label": null,
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a352318c557a1ae211733b52"
     },
     "2026-08-audio-fidelity": {
@@ -3908,6 +4880,12 @@
           "condition": "any"
         }
       },
+      "defaultConfig": {
+        "capSampleRate": false,
+        "capChannelCount": false,
+        "condition": "none"
+      },
+      "system": "apex",
       "fp": "0b63d601a5f9bdc0b65156b9"
     },
     "2026-08-automontage": {
@@ -3921,6 +4899,10 @@
           "enableAutomontage": true
         }
       },
+      "defaultConfig": {
+        "enableAutomontage": false
+      },
+      "system": "apex",
       "fp": "6195ec1c011b9e9f2bd13f50"
     },
     "2026-08-badge-management": {
@@ -3939,6 +4921,11 @@
           "tenureBadgeHideable": false
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "tenureBadgeHideable": false
+      },
+      "system": "apex",
       "fp": "b770065750f9b4f5d10a22be"
     },
     "2026-08-bounties-mobile-quest-bar": {
@@ -3987,6 +4974,12 @@
           "hapticFeedbackOnRewardEarnedEnabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "ctrVariant": 0,
+        "hapticFeedbackOnRewardEarnedEnabled": false
+      },
+      "system": "apex",
       "fp": "ffa085d6f15d87730b91d6a2"
     },
     "2026-08-compress-logs": {
@@ -4000,6 +4993,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-dcf-new-user-cooldown": {
@@ -4019,6 +5016,8 @@
           "newUserCooldownMs": 7
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "abac17880c6b0b07f008184b"
     },
     "2026-08-dont-close-chat": {
@@ -4032,6 +5031,10 @@
           "closeChatOnLeave": false
         }
       },
+      "defaultConfig": {
+        "closeChatOnLeave": true
+      },
+      "system": "apex",
       "fp": "06316c00418652b0859b27b2"
     },
     "2026-08-favorites-server": {
@@ -4045,6 +5048,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-forward-age-restricted-destinations": {
@@ -4058,6 +5065,10 @@
           "disableAgeRestrictedDestinations": true
         }
       },
+      "defaultConfig": {
+        "disableAgeRestrictedDestinations": false
+      },
+      "system": "apex",
       "fp": "29e6c710e5d7fa2249f9aee7"
     },
     "2026-08-game-mode": {
@@ -4071,6 +5082,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-game-profiles-vc": {
@@ -4087,6 +5102,8 @@
           "enabled": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-08-gsh-subs-activity-bar": {
@@ -4103,6 +5120,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-hide-gift-shop-upsell": {
@@ -4119,6 +5140,10 @@
           "isHidden": true
         }
       },
+      "defaultConfig": {
+        "isHidden": false
+      },
+      "system": "apex",
       "fp": "8511a82dda710ce003f4bfb5"
     },
     "2026-08-ios-objc-composed-image-cache": {
@@ -4128,6 +5153,8 @@
       "label": null,
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a352318c557a1ae211733b52"
     },
     "2026-08-mark-channel-unread": {
@@ -4141,6 +5168,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-mute-aware-noise-cancellation": {
@@ -4157,6 +5188,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-nitro-tenure-badge-total-progress": {
@@ -4173,6 +5208,10 @@
           "measureFromStreakStart": true
         }
       },
+      "defaultConfig": {
+        "measureFromStreakStart": false
+      },
+      "system": "apex",
       "fp": "c2281007f6c70697dbd73038"
     },
     "2026-08-nitro-tenure-badge-withheld-state": {
@@ -4189,6 +5228,10 @@
           "showWithheldBadge": true
         }
       },
+      "defaultConfig": {
+        "showWithheldBadge": false
+      },
+      "system": "apex",
       "fp": "f098cb3ee3c1abc1c9c50a13"
     },
     "2026-08-no-fill-logging": {
@@ -4205,6 +5248,10 @@
           "enableNoFill": true
         }
       },
+      "defaultConfig": {
+        "enableNoFill": false
+      },
+      "system": "apex",
       "fp": "40dc6f3c379cec02510a26c6"
     },
     "2026-08-profile-embed-rendering": {
@@ -4218,6 +5265,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-profile-embed-share-button": {
@@ -4231,6 +5282,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-profile-read-state-v1": {
@@ -4240,6 +5295,8 @@
       "label": null,
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a352318c557a1ae211733b52"
     },
     "2026-08-rive-web-perf": {
@@ -4253,6 +5310,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-rocketleague-events": {
@@ -4266,6 +5327,10 @@
           "enableRocketLeagueEvents": true
         }
       },
+      "defaultConfig": {
+        "enableRocketLeagueEvents": false
+      },
+      "system": "apex",
       "fp": "86ecd14decee892a07c46b55"
     },
     "2026-08-scheduled-messages": {
@@ -4282,6 +5347,8 @@
           "id": 2
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "f44d6f0eb6e4563019d5aa79"
     },
     "2026-08-show-expressive-modal-subtitle-alt": {
@@ -4295,6 +5362,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-split-payments": {
@@ -4308,6 +5379,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-timestamp-autocomplete-mobile": {
@@ -4324,6 +5399,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-tiny-bronco": {
@@ -4340,6 +5419,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-08-user-bio-max-length": {
@@ -4356,6 +5439,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-08-video-guard": {
@@ -4372,6 +5457,10 @@
           "videoEnabled": false
         }
       },
+      "defaultConfig": {
+        "videoEnabled": true
+      },
+      "system": "apex",
       "fp": "e0fa802fdb155591e79ebcce"
     },
     "2026-08-virtual-backgrounds-ios": {
@@ -4385,6 +5474,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-voice-server-update-immediate": {
@@ -4398,6 +5491,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-vq-remaining-time-truncation": {
@@ -4414,6 +5511,10 @@
           "truncateMoreThanSeconds": 60
         }
       },
+      "defaultConfig": {
+        "truncateMoreThanSeconds": null
+      },
+      "system": "apex",
       "fp": "d789c171ce6100fabdb78b1b"
     },
     "2026-08-web-filter-tag-group-migration": {
@@ -4427,6 +5528,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-a11y-chassis-target-size": {
@@ -4449,6 +5554,11 @@
           "rtcLargerTarget": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "rtcLargerTarget": false
+      },
+      "system": "apex",
       "fp": "2709bf2a9e414a798139a4f0"
     },
     "2026-09-activity-go-live": {
@@ -4462,6 +5572,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-agc2-mobile": {
@@ -4484,6 +5598,11 @@
           "id": 4
         }
       },
+      "defaultConfig": {
+        "agc2Enabled": false,
+        "noiseCancellationDuringProcessing": false
+      },
+      "system": "apex",
       "fp": "5c77e86646335e1936a55a3a"
     },
     "2026-09-application-test-mode-quick-access": {
@@ -4500,6 +5619,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-automod-application-rules": {
@@ -4513,6 +5636,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-09-build-a-bear": {
@@ -4529,6 +5656,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-build-a-bear-cards": {
@@ -4545,6 +5676,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-clips-editor-image-track": {
@@ -4558,6 +5693,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-connected-thread-sidebar": {
@@ -4574,6 +5713,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-conversation-topic-header": {
@@ -4587,6 +5730,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-default-emojis": {
@@ -4603,6 +5750,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-design-systems-notification-components": {
@@ -4616,6 +5767,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-desktop-tti-shader-cache": {
@@ -4629,6 +5784,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-desktop-tti-update-check-deadline": {
@@ -4645,6 +5804,10 @@
           "deadline_ms": 3
         }
       },
+      "defaultConfig": {
+        "deadline_ms": 0
+      },
+      "system": "apex",
       "fp": "56bee9dd463c92d6baf3573d"
     },
     "2026-09-edit-profile-collectibles-ordering": {
@@ -4661,6 +5824,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-friends-sidebar": {
@@ -4683,6 +5850,11 @@
           "appBarToggleEnabled": true
         }
       },
+      "defaultConfig": {
+        "sidebarEnabled": false,
+        "appBarToggleEnabled": false
+      },
+      "system": "apex",
       "fp": "fb260903477484dbc62c9af4"
     },
     "2026-09-game-profiles-v3-commerce-tab": {
@@ -4699,6 +5871,8 @@
           "enabled": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-09-game-profiles-v3-communities-tab": {
@@ -4715,6 +5889,8 @@
           "enabled": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-09-game-search-row": {
@@ -4728,6 +5904,10 @@
           "extraChromeEnabled": true
         }
       },
+      "defaultConfig": {
+        "extraChromeEnabled": false
+      },
+      "system": "apex",
       "fp": "29c34eaac2d9ba6a228532f6"
     },
     "2026-09-gifting-badge-coachmark-audience": {
@@ -4741,6 +5921,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-gifting-badge-complex-art": {
@@ -4757,6 +5941,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-gsimagic2": {
@@ -4770,6 +5958,10 @@
           "enableDotaGsi": true
         }
       },
+      "defaultConfig": {
+        "enableDotaGsi": false
+      },
+      "system": "apex",
       "fp": "6a50f31960df5bca5d42110d"
     },
     "2026-09-guild-sidebar-stream-preview": {
@@ -4786,6 +5978,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-09-guild-spaces": {
@@ -4802,6 +5998,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "64167fa9bf006656ed3cdf3c"
     },
     "2026-09-halloween-holiday": {
@@ -4818,6 +6018,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-halloween-wishlisting-animation": {
@@ -4834,6 +6038,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-invite-accept-age-group-errors": {
@@ -4850,6 +6058,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-invite-expiring-soon": {
@@ -4866,6 +6078,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-invite-silp-education": {
@@ -4882,6 +6098,10 @@
           "variant": "sidebar"
         }
       },
+      "defaultConfig": {
+        "variant": null
+      },
+      "system": "apex",
       "fp": "f74b00b4d1644ed30820654a"
     },
     "2026-09-linked-game-org-invites-dev": {
@@ -4895,6 +6115,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-linux-gpu-decode": {
@@ -4914,6 +6138,10 @@
           "mode": "disable_all"
         }
       },
+      "defaultConfig": {
+        "mode": "all"
+      },
+      "system": "apex",
       "fp": "118ecebebbc8856e87fea412"
     },
     "2026-09-manual-review-inconclusive-copy": {
@@ -4927,6 +6155,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-mobile-quest-home-sort-priority": {
@@ -4943,6 +6175,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-mobile-quest-reward-button-to-secondary-button": {
@@ -4956,6 +6192,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-multi-sku-embed-rendering": {
@@ -4969,6 +6209,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-multisku-embed-builder": {
@@ -4982,6 +6226,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-nameplate-video-preload-none": {
@@ -4995,6 +6243,10 @@
           "preload": "none"
         }
       },
+      "defaultConfig": {
+        "preload": "auto"
+      },
+      "system": "apex",
       "fp": "5a1fa4f5efd6f606a867d357"
     },
     "2026-09-new-horizontal-scroll-shared": {
@@ -5011,6 +6263,10 @@
           "useNewHScroll": true
         }
       },
+      "defaultConfig": {
+        "useNewHScroll": false
+      },
+      "system": "apex",
       "fp": "5d6aff8c2c5f51adfd105c8e"
     },
     "2026-09-new-hscroll": {
@@ -5027,6 +6283,10 @@
           "useNewHScroll": true
         }
       },
+      "defaultConfig": {
+        "useNewHScroll": false
+      },
+      "system": "apex",
       "fp": "5d6aff8c2c5f51adfd105c8e"
     },
     "2026-09-new-orb-reward-visuals": {
@@ -5052,6 +6312,10 @@
           "variant": 2
         }
       },
+      "defaultConfig": {
+        "variant": 0
+      },
+      "system": "apex",
       "fp": "3e34a3faaa0a4d7603b78680"
     },
     "2026-09-nitro-file-upload-rollout": {
@@ -5065,6 +6329,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-non-nitro-file-upload-marketing": {
@@ -5081,6 +6349,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-orbs-hero-carousel": {
@@ -5097,6 +6369,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-profile-link-fetch": {
@@ -5110,6 +6386,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-profile-widget-empty-state-suggestions": {
@@ -5128,6 +6408,11 @@
           "maxWidgetOptions": 6
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "maxWidgetOptions": 0
+      },
+      "system": "apex",
       "fp": "42607203bd6a8a61a8abe786"
     },
     "2026-09-quest-home-bounties-feature-gate": {
@@ -5141,6 +6426,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-quest-mobile-bar-secondary-cta": {
@@ -5154,6 +6443,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-referral-profile-contextual-menu-upsell": {
@@ -5170,6 +6463,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-09-referral-trial-cta": {
@@ -5186,6 +6481,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-09-registration-email-opt-in-copy": {
@@ -5199,6 +6496,10 @@
           "trackingCopy": true
         }
       },
+      "defaultConfig": {
+        "trackingCopy": false
+      },
+      "system": "apex",
       "fp": "08cecc862d6ee19e050de6b8"
     },
     "2026-09-request-to-stream-new-entry-point": {
@@ -5212,6 +6513,10 @@
           "showReminderPanel": true
         }
       },
+      "defaultConfig": {
+        "showReminderPanel": false
+      },
+      "system": "apex",
       "fp": "cbe44a9206a487a4432bbc44"
     },
     "2026-09-rust-3p": {
@@ -5228,6 +6533,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-safety-flows-legacy-required-actions": {
@@ -5265,6 +6574,8 @@
           "id": 8
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "267eec545dc81f6ccc05161e"
     },
     "2026-09-server-onboarding-setup-progress": {
@@ -5283,6 +6594,11 @@
           "boostBeforeAddApp": true
         }
       },
+      "defaultConfig": {
+        "showSetupProgressRow": false,
+        "boostBeforeAddApp": false
+      },
+      "system": "apex",
       "fp": "cc981a8cefd5a586c4f0f053"
     },
     "2026-09-server-tooltip-notification-context": {
@@ -5302,6 +6618,10 @@
           "mode": "mentions_first"
         }
       },
+      "defaultConfig": {
+        "mode": "disabled"
+      },
+      "system": "apex",
       "fp": "03b84e49df85641eab99f6bb"
     },
     "2026-09-silp-app-opened-direct-to-discoverable": {
@@ -5321,6 +6641,10 @@
           "placement": "below_content"
         }
       },
+      "defaultConfig": {
+        "placement": null
+      },
+      "system": "apex",
       "fp": "1e29774f01a21b41e1071999"
     },
     "2026-09-silp-cta-copy-tests": {
@@ -5340,6 +6664,10 @@
           "variant": "low_commitment"
         }
       },
+      "defaultConfig": {
+        "variant": null
+      },
+      "system": "apex",
       "fp": "fc5bf841f481b9b5af34e76b"
     },
     "2026-09-silp-desktop-app-upsell": {
@@ -5359,6 +6687,10 @@
           "label": "get_discord"
         }
       },
+      "defaultConfig": {
+        "label": null
+      },
+      "system": "apex",
       "fp": "6f4892d9a99c0524777313b2"
     },
     "2026-09-silp-direct-to-discoverable": {
@@ -5378,6 +6710,10 @@
           "placement": "below_content"
         }
       },
+      "defaultConfig": {
+        "placement": null
+      },
+      "system": "apex",
       "fp": "1e29774f01a21b41e1071999"
     },
     "2026-09-single-cpu-copy": {
@@ -5391,6 +6727,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-soundboard-echo": {
@@ -5404,6 +6744,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-09-soundboard-favorites": {
@@ -5422,6 +6766,11 @@
           "allowReordering": true
         }
       },
+      "defaultConfig": {
+        "sortOrder": "creation-date",
+        "allowReordering": false
+      },
+      "system": "apex",
       "fp": "a5f66b3569c62be7253f2974"
     },
     "2026-09-soundboard-quick-action": {
@@ -5442,6 +6791,12 @@
           "showOnRTCHover": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "showQuickAccess": false,
+        "showOnRTCHover": false
+      },
+      "system": "apex",
       "fp": "00bf906f070f5a89a6cd2ecc"
     },
     "2026-09-stream-zero-vad-leading": {
@@ -5455,6 +6810,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-three-month-nitro-gifting": {
@@ -5471,6 +6830,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-09-try-display-name-style": {
@@ -5490,6 +6851,8 @@
           "id": 2
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a80296903cc2e06ce785d5ee"
     },
     "2026-09-update-email-settings-copy-subtext": {
@@ -5503,6 +6866,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-video-background-profile-fetch": {
@@ -5519,6 +6886,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-voice-connect-feedback": {
@@ -5537,6 +6908,11 @@
           "showSelfConnectingUI": true
         }
       },
+      "defaultConfig": {
+        "rtcConnectionJoinSounds": false,
+        "showSelfConnectingUI": false
+      },
+      "system": "apex",
       "fp": "335a4e6f4ecaeaa631605a6e"
     },
     "2026-09-web-sticker-picker-upsell-restyle": {
@@ -5553,6 +6929,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-09-windows-native-premap": {
@@ -5566,6 +6944,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-09-youtube-3p": {
@@ -5582,6 +6964,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-09-youtube-3p-nagbar": {
@@ -5595,6 +6981,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-badge-directory-updates": {
@@ -5617,6 +7007,11 @@
           "swipeBetweenBadges": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "swipeBetweenBadges": false
+      },
+      "system": "apex",
       "fp": "3827681dea47d84bba18bfdd"
     },
     "2026-10-bounties-desktop-quest-bar": {
@@ -5630,6 +7025,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-bulk-nitro-gifting-discounts": {
@@ -5643,6 +7042,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-clickable-hero-banner": {
@@ -5656,6 +7059,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-code-blurple-teaser": {
@@ -5672,6 +7079,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-code-blurple-teaser-marketing": {
@@ -5688,6 +7099,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-collectibles-marketing-client-cache": {
@@ -5713,6 +7128,10 @@
           "ttlMs": 864
         }
       },
+      "defaultConfig": {
+        "ttlMs": null
+      },
+      "system": "apex",
       "fp": "16d8167c51dcac325206b9c4"
     },
     "2026-10-contextual-referrals-gdm-member-list": {
@@ -5729,6 +7148,10 @@
           "showEmbed": true
         }
       },
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "system": "apex",
       "fp": "3e826cdc3421d41db9406acb"
     },
     "2026-10-contextual-referrals-server-channel-member-list": {
@@ -5745,6 +7168,10 @@
           "showEmbed": true
         }
       },
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "system": "apex",
       "fp": "3e826cdc3421d41db9406acb"
     },
     "2026-10-desktop-conjure-native-preview-view": {
@@ -5761,6 +7188,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-desktop-game-perf": {
@@ -5777,6 +7208,10 @@
           "nativeSystemCpuTimes": true
         }
       },
+      "defaultConfig": {
+        "nativeSystemCpuTimes": false
+      },
+      "system": "apex",
       "fp": "e69db94fc99d703bb8731909"
     },
     "2026-10-desktop-general-perf": {
@@ -5797,6 +7232,12 @@
           "keepRendererLogFileOpen": true
         }
       },
+      "defaultConfig": {
+        "skipSilentDelayEstimatorFfts": false,
+        "processPollingPerf": false,
+        "keepRendererLogFileOpen": false
+      },
+      "system": "apex",
       "fp": "87f151220ce81b0f369810af"
     },
     "2026-10-desktop-tti-perf": {
@@ -5813,6 +7254,10 @@
           "legacyOverlayWorker": true
         }
       },
+      "defaultConfig": {
+        "legacyOverlayWorker": false
+      },
+      "system": "apex",
       "fp": "7911895979d90deafe41fb78"
     },
     "2026-10-e2e-latency-measurement": {
@@ -5826,6 +7271,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-express-checkout": {
@@ -5844,6 +7293,10 @@
           "configurationType": "payment_selector"
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "d6924653e0e9c7ae0c4a32c2"
     },
     "2026-10-game-profile-mobile-reviews": {
@@ -5860,6 +7313,8 @@
           "enabled": true
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4aa19153bba2426dca27a5a6"
     },
     "2026-10-gdm-duration-timer": {
@@ -5876,6 +7331,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-gift-cards-in-app-marketing": {
@@ -5889,6 +7348,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-gifted-subscriptions": {
@@ -5905,6 +7368,8 @@
           "id": 1
         }
       },
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "4eb58677fe4d82185914eef5"
     },
     "2026-10-guild-tooltip-lazy-content": {
@@ -5921,6 +7386,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-macaron": {
@@ -5943,6 +7412,11 @@
           "phase": 2
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "phase": 0
+      },
+      "system": "apex",
       "fp": "20dcd7d26a41d3fee25a1ee7"
     },
     "2026-10-macaron-non-sub-marketing": {
@@ -5959,6 +7433,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-overlay-native-window-rendering": {
@@ -5977,6 +7455,11 @@
           "enableNVOverlay": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "enableNVOverlay": false
+      },
+      "system": "apex",
       "fp": "a103abbeece8d2b0cf39f0a2"
     },
     "2026-10-profile-default-tab-with-content": {
@@ -5986,6 +7469,8 @@
       "label": null,
       "variationCount": 0,
       "variations": null,
+      "defaultConfig": null,
+      "system": "apex",
       "fp": "a352318c557a1ae211733b52"
     },
     "2026-10-purchase-history": {
@@ -5999,6 +7484,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-referral-refresh-notification": {
@@ -6012,6 +7501,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-remove-quests-from-discovery": {
@@ -6028,6 +7521,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-request-to-stream-non-games": {
@@ -6041,6 +7538,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-10-server-tag-upsell-on-guild-profile": {
@@ -6059,6 +7560,11 @@
           "ignoreSubscriptionPlatform": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "ignoreSubscriptionPlatform": false
+      },
+      "system": "apex",
       "fp": "8a0fc339de68c283207239b6"
     },
     "2026-10-server-tag-upsell-on-profile": {
@@ -6077,6 +7583,11 @@
           "ignoreSubscriptionPlatform": true
         }
       },
+      "defaultConfig": {
+        "enabled": false,
+        "ignoreSubscriptionPlatform": false
+      },
+      "system": "apex",
       "fp": "8a0fc339de68c283207239b6"
     },
     "2026-10-shop-marketing-fatigue": {
@@ -6090,6 +7601,10 @@
           "enforceFatigue": true
         }
       },
+      "defaultConfig": {
+        "enforceFatigue": false
+      },
+      "system": "apex",
       "fp": "c71e2282f098f31709c493b0"
     },
     "2026-10-stage-unified-call": {
@@ -6103,6 +7618,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "8670563f1ccfff9736cc62b2"
     },
     "2026-10-stage-unified-call-user": {
@@ -6116,6 +7635,10 @@
           "enabled": true
         }
       },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
       "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-web-streaming-optimizations": {
@@ -6142,6 +7665,11 @@
           "motionContentHint": false
         }
       },
+      "defaultConfig": {
+        "degradationPreference": "default",
+        "motionContentHint": false
+      },
+      "system": "apex",
       "fp": "a7ed95b2cda7ecbfbb199d6a"
     }
   }
