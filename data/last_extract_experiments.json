@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T11-20-31-049Z_638696_i8kk7c",
-  "buildNumber": "638696",
-  "updatedAt": "2026-10-15T11:20:31.049Z",
-  "count": 379,
+  "runId": "2026-10-15T11-39-40-819Z_638699_zwb0og",
+  "buildNumber": "638699",
+  "updatedAt": "2026-10-15T11:39:40.819Z",
+  "count": 380,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5981,6 +5981,24 @@
         }
       },
       "fp": "6f6f176d6ff21eeffcf7f59e"
+    },
+    "2026-10-server-tag-upsell-on-guild-profile": {
+      "id": "2026-10-server-tag-upsell-on-guild-profile",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "enabled": true,
+          "ignoreSubscriptionPlatform": false
+        },
+        "2": {
+          "enabled": true,
+          "ignoreSubscriptionPlatform": true
+        }
+      },
+      "fp": "8a0fc339de68c283207239b6"
     },
     "2026-10-server-tag-upsell-on-profile": {
       "id": "2026-10-server-tag-upsell-on-profile",
