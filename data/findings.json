@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-15T15-20-06-878Z_638752_lgi03a",
-  "buildNumber": "638752",
-  "scrapedAt": "2026-10-15T15:20:06.878Z",
+  "runId": "2026-10-15T15-37-01-237Z_638762_efa8z7",
+  "buildNumber": "638762",
+  "scrapedAt": "2026-10-15T15:37:01.237Z",
   "totals": {
-    "all": 382
+    "all": 383
   },
   "experiments": [
     {
@@ -7351,6 +7351,28 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-express-checkout",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true,
+          "configurationType": "review_footer"
+        },
+        "2": {
+          "enabled": true,
+          "configurationType": "payment_selector"
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {

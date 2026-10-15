@@ -5840,6 +5840,24 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-express-checkout",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true,
+        "configurationType": "review_footer"
+      },
+      "2": {
+        "enabled": true,
+        "configurationType": "payment_selector"
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-gift-cards-in-app-marketing",
     "defaultConfig": {
       "enabled": false
