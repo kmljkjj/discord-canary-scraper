@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-15T21-43-10-339Z_639486_8gwf3x",
-  "buildNumber": "639486",
-  "updatedAt": "2026-10-15T21:43:10.339Z",
+  "runId": "2026-10-15T21-45-20-670Z_639489_0ceupw",
+  "buildNumber": "639489",
+  "updatedAt": "2026-10-15T21:45:20.670Z",
   "count": 385,
   "experiments": [
     {
@@ -9150,12 +9150,15 @@
         "extraChromeEnabled": false
       },
       "variations": {
+        "0": {
+          "extraChromeEnabled": false
+        },
         "1": {
           "extraChromeEnabled": true
         }
       },
       "treatments": null,
-      "variationCount": 1,
+      "variationCount": 2,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -9164,7 +9167,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "cf375798f0a927a9716a9f497b2775a08592d5905201891d8596608d3ea5037c"
+      "fingerprint": "fb7f61fd884824facc17df27b40864365f16396d17eded860283573522b64de5"
     },
     {
       "id": "2026-09-gifting-badge-coachmark-audience",

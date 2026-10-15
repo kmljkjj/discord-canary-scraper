@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-15T21-43-10-339Z_639486_8gwf3x",
-  "buildNumber": "639486",
-  "updatedAt": "2026-10-15T21:43:10.339Z",
+  "runId": "2026-10-15T21-45-20-670Z_639489_0ceupw",
+  "buildNumber": "639489",
+  "updatedAt": "2026-10-15T21:45:20.670Z",
   "count": 385,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -5898,8 +5898,11 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 1,
+      "variationCount": 2,
       "variations": {
+        "0": {
+          "extraChromeEnabled": false
+        },
         "1": {
           "extraChromeEnabled": true
         }
@@ -5908,7 +5911,7 @@
         "extraChromeEnabled": false
       },
       "system": "apex",
-      "fp": "29c34eaac2d9ba6a228532f6"
+      "fp": "aea94970531ee01f44d13bc5"
     },
     "2026-09-gifting-badge-coachmark-audience": {
       "id": "2026-09-gifting-badge-coachmark-audience",
