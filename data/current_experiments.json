@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T19-01-56-283Z_639192_bpmec0",
-  "buildNumber": "639192",
-  "updatedAt": "2026-10-15T19:01:56.283Z",
-  "count": 383,
+  "runId": "2026-10-15T19-03-54-788Z_639212_bmhphd",
+  "buildNumber": "639212",
+  "updatedAt": "2026-10-15T19:03:54.788Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11342,6 +11342,37 @@
         "value": null
       },
       "fingerprint": "df76cb24054b5cb8a0d2089c61b14d4c86f5cced7a6cfea3587b24465219d110"
+    },
+    {
+      "id": "2026-10-gdm-duration-timer",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "114cb3a3d17bd65ed1e7d7a63b19fdbc5bde3bbc7cf3459f10635db819ccfe3a"
     },
     {
       "id": "2026-10-gift-cards-in-app-marketing",

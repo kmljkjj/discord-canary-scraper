@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-15T19-01-56-283Z_639192_bpmec0",
-  "buildNumber": "639192",
-  "scrapedAt": "2026-10-15T19:01:56.283Z",
+  "runId": "2026-10-15T19-03-54-788Z_639212_bmhphd",
+  "buildNumber": "639212",
+  "scrapedAt": "2026-10-15T19:03:54.788Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -7359,6 +7359,26 @@
       "variations": {
         "0": {
           "id": 0
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-gdm-duration-timer",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
         },
         "1": {
           "enabled": true
