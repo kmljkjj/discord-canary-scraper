@@ -5954,6 +5954,25 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-overlay-native-window-rendering",
+    "defaultConfig": {
+      "enabled": false,
+      "enableNVOverlay": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true,
+        "enableNVOverlay": false
+      },
+      "2": {
+        "enabled": true,
+        "enableNVOverlay": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-profile-default-tab-with-content",
     "defaultConfig": null,
     "variations": null,
