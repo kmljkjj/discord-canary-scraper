@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-15T01-11-20-964Z_638501_0rf3jx",
-  "buildNumber": "638501",
-  "scrapedAt": "2026-10-15T01:11:20.964Z",
+  "runId": "2026-10-15T01-46-02-303Z_638523_l9mikf",
+  "buildNumber": "638523",
+  "scrapedAt": "2026-10-15T01:46:02.303Z",
   "totals": {
-    "all": 380,
+    "all": 381,
     "legacy": 0,
-    "apex": 378
+    "apex": 379
   },
   "experiments": [
     {
@@ -7161,6 +7161,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-code-blurple-teaser",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
