@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-15T18-13-02-800Z_639071_gglooj",
-  "buildNumber": "639071",
-  "scrapedAt": "2026-10-15T18:13:02.800Z",
+  "runId": "2026-10-15T18-17-21-933Z_639073_3rctrh",
+  "buildNumber": "639073",
+  "scrapedAt": "2026-10-15T18:17:21.933Z",
   "totals": {
-    "all": 384,
+    "all": 385,
     "legacy": 0,
-    "apex": 382
+    "apex": 383
   },
   "experiments": [
     {
@@ -7557,6 +7557,23 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-request-to-stream-non-games",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

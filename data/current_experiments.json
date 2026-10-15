@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T18-13-02-800Z_639071_gglooj",
-  "buildNumber": "639071",
-  "updatedAt": "2026-10-15T18:13:02.800Z",
-  "count": 382,
+  "runId": "2026-10-15T18-17-21-933Z_639073_3rctrh",
+  "buildNumber": "639073",
+  "updatedAt": "2026-10-15T18:17:21.933Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11642,6 +11642,34 @@
         "value": null
       },
       "fingerprint": "15d829a40b8a0b0dc5b144002e287e3563208787a9003cc5f1c81bdc11bc2eff"
+    },
+    {
+      "id": "2026-10-request-to-stream-non-games",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 1,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "e179dc2e057cd1adc12ea4c6cb59c17046cf898d5868ac274ac51fa71de279bb"
     },
     {
       "id": "2026-10-server-tag-upsell-on-guild-profile",
