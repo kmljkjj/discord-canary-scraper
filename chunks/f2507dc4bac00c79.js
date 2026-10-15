@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["954994"],{709001(e){e.exports=JSON.parse('{"D3CWUF":["Pe\u0142ne ods\u0142oni\u0119cie nast\u0105pi ",[3,"date","::MMMd"],", w dniu premiery Call of Duty: Modern Warfare 4"],"ugfqKp":["\u015Aci\u015Ble tajne: kod niebieskofioletowy"],"YEsjvt":["Zdob\u0105d\u017A schemat do Call of Duty: MW4 ju\u017C ",[3,"date","::MMMd"],". Wy\u0142\u0105cznie z Nitro."]}')}}]);
+//# sourceMappingURL=f2507dc4bac00c79.js.map

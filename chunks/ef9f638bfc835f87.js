@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["694447"],{303346(i){i.exports=JSON.parse('{"yfwZuy":["N\xe4yt\xe4 oma merkkisi"],"UnPGii":["Merkki on lis\xe4tty profiiliisi."],"nvaTQq":["Ker\xe4sit Orbs-profiilimerkin!"]}')}}]);
+//# sourceMappingURL=ef9f638bfc835f87.js.map

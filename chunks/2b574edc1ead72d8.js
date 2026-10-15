@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["196399"],{697778(i){i.exports=JSON.parse('{"yfwZuy":["Ver minha ins\xedgnia"],"UnPGii":["A ins\xedgnia foi adicionada ao seu perfil."],"nvaTQq":["Voc\xea coletou a ins\xedgnia de perfil dos Orbs!"]}')}}]);
-//# sourceMappingURL=2b574edc1ead72d8.js.map

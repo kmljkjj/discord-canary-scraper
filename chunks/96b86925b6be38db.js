@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["15614"],{131149(i){i.exports=JSON.parse('{"yfwZuy":["Visa mitt m\xe4rke"],"UnPGii":["M\xe4rket har lagts till i din profil."],"nvaTQq":["Du h\xe4mtade Orbs-profilm\xe4rket!"]}')}}]);
-//# sourceMappingURL=96b86925b6be38db.js.map
