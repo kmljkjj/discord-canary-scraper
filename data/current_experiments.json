@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T20-56-36-480Z_639426_nxdwkt",
-  "buildNumber": "639426",
-  "updatedAt": "2026-10-15T20:56:36.480Z",
-  "count": 384,
+  "runId": "2026-10-15T21-11-09-284Z_639453_rybs6s",
+  "buildNumber": "639453",
+  "updatedAt": "2026-10-15T21:11:09.284Z",
+  "count": 385,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11461,6 +11461,37 @@
         "value": null
       },
       "fingerprint": "30c8a246c278c6d20659bf308adc718b74da27b6158e43807dec9fcce80bfda3"
+    },
+    {
+      "id": "2026-10-hd-streaming-contextual-referrals",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "499024414631041510eca62a37e88342fb025d8c8f03cc0a35365dcec92cb60d"
     },
     {
       "id": "2026-10-macaron",

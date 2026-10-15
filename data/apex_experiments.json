@@ -5909,6 +5909,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-hd-streaming-contextual-referrals",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-macaron",
     "defaultConfig": {
       "enabled": false,
