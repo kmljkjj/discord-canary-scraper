@@ -5,9 +5,26 @@ if (t.includes('defaultConfig: e.defaultConfig')) {
   console.log('index already patched');
   process.exit(0);
 }
-const old = `function expSnapshot(e) {\n  return {\n    id: e.id,\n    type: e.type || e.kind || 'user',\n    kind: e.kind || e.type || 'user',\n    label: e.label || null,\n    variationCount:\n      e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,\n    variations: e.variations || null,\n    fp: expFingerprint(e),\n  };\n}`;
-const neu = `function expSnapshot(e) {\n  return {\n    id: e.id,\n    type: e.type || e.kind || 'user',\n    kind: e.kind || e.type || 'user',\n    label: e.label || null,\n    variationCount:\n      e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,\n    variations: e.variations || null,\n    defaultConfig: e.defaultConfig || null,\n    system: e.system || null,\n    fp: expFingerprint(e),\n  };\n}`;
-if (!t.includes(old)) throw new Error('expSnapshot block not found');
-t = t.replace(old, neu);
+const re = /function expSnapshot\(e\) \{[\s\S]*?\n\}\n\nfunction buildGap/;
+if (!re.test(t)) throw new Error('expSnapshot block not found');
+t = t.replace(
+  re,
+  `function expSnapshot(e) {
+  return {
+    id: e.id,
+    type: e.type || e.kind || 'user',
+    kind: e.kind || e.type || 'user',
+    label: e.label || null,
+    variationCount:
+      e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,
+    variations: e.variations || null,
+    defaultConfig: e.defaultConfig || null,
+    system: e.system || null,
+    fp: expFingerprint(e),
+  };
+}
+
+function buildGap`,
+);
 fs.writeFileSync(path, t);
-console.log('patched index');
+console.log('patched index ok');
