@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-15T01:45:49.840Z",
+  "fetchedAt": "2026-10-15T01:52:45.091Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 4
       }
     },
     {
@@ -8600,6 +8600,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-code-blurple-teaser",
+      "hash": 399863367,
+      "type": "user",
+      "title": "2026-10-code-blurple-teaser",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-collectibles-marketing-client-cache",
       "hash": 903517929,
       "type": "user",
@@ -8841,11 +8851,11 @@
     }
   ],
   "summary": {
-    "total": 598,
+    "total": 599,
     "guild": 94,
-    "user": 504,
+    "user": 505,
     "withPercentage": 225,
-    "withoutPercentage": 373,
+    "withoutPercentage": 374,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
