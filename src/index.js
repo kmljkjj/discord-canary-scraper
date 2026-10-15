@@ -113,6 +113,8 @@ function expSnapshot(e) {
     variationCount:
       e.variationCount || (e.variations ? Object.keys(e.variations).length : 0) || 0,
     variations: e.variations || null,
+    defaultConfig: e.defaultConfig || null,
+    system: e.system || null,
     fp: expFingerprint(e),
   };
 }
