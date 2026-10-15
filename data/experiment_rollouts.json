@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-15T17:11:13.438Z",
+  "fetchedAt": "2026-10-15T17:18:09.202Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5076,17 +5076,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 5
       }
     },
     {
@@ -5096,17 +5096,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
+        "0": 5
       }
     },
     {
@@ -8610,6 +8610,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-code-blurple-teaser-marketing",
+      "hash": 676532447,
+      "type": "user",
+      "title": "2026-10-code-blurple-teaser-marketing",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-collectibles-marketing-client-cache",
       "hash": 903517929,
       "type": "user",
@@ -8891,11 +8901,11 @@
     }
   ],
   "summary": {
-    "total": 603,
+    "total": 604,
     "guild": 94,
-    "user": 509,
+    "user": 510,
     "withPercentage": 225,
-    "withoutPercentage": 378,
+    "withoutPercentage": 379,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
