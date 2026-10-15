@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-15T17-01-29-729Z_638902_q68shu",
-  "buildNumber": "638902",
-  "scrapedAt": "2026-10-15T17:01:29.729Z",
+  "runId": "2026-10-15T17-06-59-805Z_638927_241jju",
+  "buildNumber": "638927",
+  "scrapedAt": "2026-10-15T17:06:59.805Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -7163,6 +7163,26 @@
     },
     {
       "id": "2026-10-code-blurple-teaser",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-code-blurple-teaser-marketing",
       "type": "user",
       "kind": "user",
       "label": null,
