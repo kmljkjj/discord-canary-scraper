@@ -78,18 +78,33 @@ function createExperimentFingerprint(exp) {
   return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
+function stableConfigPayload(exp) {
+  if (!exp || typeof exp !== 'object') return null;
+  const dc = exp.defaultConfig && typeof exp.defaultConfig === 'object' ? exp.defaultConfig : null;
+  let vars = null;
+  if (exp.variations && typeof exp.variations === 'object' && !Array.isArray(exp.variations)) {
+    vars = exp.variations;
+  } else if (Array.isArray(exp.treatments)) {
+    vars = {};
+    exp.treatments.forEach((t, i) => {
+      vars[String(i)] = t && typeof t === 'object' ? t : { value: t };
+    });
+  }
+  if (!dc && !vars) return null;
+  return stableObject({ defaultConfig: dc, variations: vars });
+}
+
 function isMeaningfulModification(prev, cur) {
   if (!prev || !cur) return false;
   const prevKeys = variationKeysOnly(prev).join(',');
   const curKeys = variationKeysOnly(cur).join(',');
-  if (prevKeys && curKeys && prevKeys !== curKeys) return true;
+  if (prevKeys !== curKeys) return true;
   const pk = String(prev.kind || prev.type || '').toLowerCase();
   const ck = String(cur.kind || cur.type || '').toLowerCase();
   if (pk && ck && pk !== ck) return true;
   const pl = (prev.label || prev.title || '').trim();
   const cl = (cur.label || cur.title || '').trim();
-  if (pl && cl && pl !== cl) return true;
-  // Percentage change only when both sides have a known numeric value
+  if (pl !== cl && (pl || cl)) return true;
   const num = (p) => {
     if (!p || p.status === 'unknown' || p.value == null) return null;
     const n = Number(p.value);
@@ -101,6 +116,9 @@ function isMeaningfulModification(prev, cur) {
   const pu = num(prev.userPercentage);
   const cu = num(cur.userPercentage);
   if (pu != null && cu != null && Math.abs(pu - cu) >= 0.5) return true;
+  const a = stableConfigPayload(prev);
+  const b = stableConfigPayload(cur);
+  if (a && b && JSON.stringify(a) !== JSON.stringify(b)) return true;
   return false;
 }
 
@@ -258,6 +276,7 @@ function toNotifyExpDiff(diff) {
       if (row && row.after) {
         return {
           ...row.after,
+          _before: row.before || null,
           _prevKeys: Object.keys((row.before && row.before.variations) || {})
             .sort()
             .join(','),
