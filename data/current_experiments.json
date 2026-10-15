@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-15T01-46-02-303Z_638523_l9mikf",
-  "buildNumber": "638523",
-  "updatedAt": "2026-10-15T01:46:02.303Z",
+  "runId": "2026-10-15T02-34-52-421Z_638545_u9furr",
+  "buildNumber": "638545",
+  "updatedAt": "2026-10-15T02:34:52.421Z",
   "count": 379,
   "experiments": [
     {
@@ -11526,7 +11526,7 @@
       "fingerprint": "e3f5b2891467c81af1b2ee3316213a9d39f306ac6c612d3e47d2af8cddd73256"
     },
     {
-      "id": "2026-10-recurring-referral-reminder",
+      "id": "2026-10-referral-refresh-notification",
       "kind": "user",
       "type": "user",
       "system": "apex",
@@ -11534,24 +11534,15 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "enabled": false,
-        "bottomSheetEnabled": false,
-        "notificationEnabled": false
+        "enabled": false
       },
       "variations": {
         "1": {
-          "enabled": true,
-          "bottomSheetEnabled": true,
-          "notificationEnabled": false
-        },
-        "2": {
-          "enabled": true,
-          "bottomSheetEnabled": false,
-          "notificationEnabled": true
+          "enabled": true
         }
       },
       "treatments": null,
-      "variationCount": 2,
+      "variationCount": 1,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -11560,7 +11551,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "6baacdd35ff9724ee2e880cded00cac1e9fca0d90771a31e1d4e2678cd3a5cef"
+      "fingerprint": "34cae9cf47acf062834a0e179e4ba72d9284798169309c46cfce7a5f25d81f27"
     },
     {
       "id": "2026-10-remove-quests-from-discovery",
