@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-15T16-23-38-222Z_638827_3vvmmp",
-  "buildNumber": "638827",
-  "scrapedAt": "2026-10-15T16:23:38.222Z",
+  "runId": "2026-10-15T16-33-16-632Z_638840_ace1cm",
+  "buildNumber": "638840",
+  "scrapedAt": "2026-10-15T16:33:16.632Z",
   "totals": {
-    "all": 383
+    "all": 384
   },
   "experiments": [
     {
@@ -7370,6 +7370,24 @@
         "2": {
           "enabled": true,
           "configurationType": "payment_selector"
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-game-profile-mobile-reviews",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "enabled": true
         }
       },
       "variationCount": 2,

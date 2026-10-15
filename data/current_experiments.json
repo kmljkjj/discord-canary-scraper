@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T16-23-38-222Z_638827_3vvmmp",
-  "buildNumber": "638827",
-  "updatedAt": "2026-10-15T16:23:38.222Z",
-  "count": 381,
+  "runId": "2026-10-15T16-33-16-632Z_638840_ace1cm",
+  "buildNumber": "638840",
+  "updatedAt": "2026-10-15T16:33:16.632Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11350,6 +11350,35 @@
         "value": null
       },
       "fingerprint": "7f42b6f8b249c7397b7a14b361d516240d2be52a2c2da459af0a942f5b511061"
+    },
+    {
+      "id": "2026-10-game-profile-mobile-reviews",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "df76cb24054b5cb8a0d2089c61b14d4c86f5cced7a6cfea3587b24465219d110"
     },
     {
       "id": "2026-10-gift-cards-in-app-marketing",
