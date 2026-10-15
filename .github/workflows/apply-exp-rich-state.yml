@@ -1,0 +1,28 @@
+name: apply-exp-rich-state
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Patch experiment_state + index snapshot
+        run: |
+          node scripts/patch_exp_state_rich.js
+          node scripts/patch_exp_snapshot_rich.js
+          node --check src/lib/experiment_state.js
+          node --check src/index.js
+          node --check src/lib/notify.js
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/lib/experiment_state.js src/index.js
+          git diff --staged --quiet && echo No changes && exit 0
+          git commit -m "feat(experiments): config body diffs + defaultConfig snapshots"
+          git push
