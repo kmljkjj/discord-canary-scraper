@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-15T17-22-13-658Z_638945_6lzlu7",
-  "buildNumber": "638945",
-  "scrapedAt": "2026-10-15T17:22:13.658Z",
+  "runId": "2026-10-15T17-29-39-592Z_638971_d5jf87",
+  "buildNumber": "638971",
+  "scrapedAt": "2026-10-15T17:29:39.592Z",
   "totals": {
-    "all": 386,
+    "all": 384,
     "legacy": 0,
-    "apex": 384
+    "apex": 382
   },
   "experiments": [
     {
@@ -5448,52 +5448,6 @@
         },
         "1": {
           "enabled": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-top-soundboard-sounds",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false,
-        "topSoundsFirst": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true,
-          "topSoundsFirst": true
-        },
-        "2": {
-          "enabled": true,
-          "topSoundsFirst": false
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-top-soundboard-sounds-mobile",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false,
-        "topSoundsFirst": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true,
-          "topSoundsFirst": true
-        },
-        "2": {
-          "enabled": true,
-          "topSoundsFirst": false
         }
       },
       "variationCount": 2,

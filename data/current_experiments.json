@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-15T17-22-13-658Z_638945_6lzlu7",
-  "buildNumber": "638945",
-  "updatedAt": "2026-10-15T17:22:13.658Z",
-  "count": 384,
+  "runId": "2026-10-15T17-29-39-592Z_638971_d5jf87",
+  "buildNumber": "638971",
+  "updatedAt": "2026-10-15T17:29:39.592Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8405,74 +8405,6 @@
         "value": null
       },
       "fingerprint": "26af882753bcbb6c98a31b901de218ba074c3e8b324cf77d1589e11f0bd90c94"
-    },
-    {
-      "id": "2026-08-top-soundboard-sounds",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false,
-        "topSoundsFirst": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true,
-          "topSoundsFirst": true
-        },
-        "2": {
-          "enabled": true,
-          "topSoundsFirst": false
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "38d173d664e7c5eaef73374e9128e6038e203b2047964a709c6f9ad8a8aa92c4"
-    },
-    {
-      "id": "2026-08-top-soundboard-sounds-mobile",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false,
-        "topSoundsFirst": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true,
-          "topSoundsFirst": true
-        },
-        "2": {
-          "enabled": true,
-          "topSoundsFirst": false
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "1590d8e483127c177c14af97d7d50c5507c8fd54c57d048728363c1f16542baf"
     },
     {
       "id": "2026-08-user-bio-max-length",
