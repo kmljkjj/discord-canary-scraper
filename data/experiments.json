@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-16T17-09-48-942Z_640364_xjkqqg",
-  "buildNumber": "640364",
-  "scrapedAt": "2026-10-16T17:09:48.942Z",
+  "runId": "2026-10-16T17-15-02-210Z_640372_pmgx6z",
+  "buildNumber": "640372",
+  "scrapedAt": "2026-10-16T17:15:02.210Z",
   "totals": {
-    "all": 389,
+    "all": 390,
     "legacy": 0,
-    "apex": 387
+    "apex": 388
   },
   "experiments": [
     {
@@ -7118,6 +7118,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-cod-relink",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
