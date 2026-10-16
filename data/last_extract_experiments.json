@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-16T18-13-06-216Z_640465_r4zo98",
-  "buildNumber": "640465",
-  "updatedAt": "2026-10-16T18:13:06.216Z",
-  "count": 395,
+  "runId": "2026-10-16T18-18-09-962Z_640477_ynolqz",
+  "buildNumber": "640477",
+  "updatedAt": "2026-10-16T18:18:09.962Z",
+  "count": 393,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -1126,26 +1126,6 @@
       },
       "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
-    },
-    "2026-01-favorites-server": {
-      "id": "2026-01-favorites-server",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 2,
-      "variations": {
-        "1": {
-          "enabled": true
-        },
-        "2": {
-          "enabled": true
-        }
-      },
-      "defaultConfig": {
-        "enabled": false
-      },
-      "system": "apex",
-      "fp": "88f0cb7634a2641df1ff688a"
     },
     "2026-01-friends-in-server": {
       "id": "2026-01-friends-in-server",
@@ -5058,23 +5038,6 @@
       },
       "system": "apex",
       "fp": "06316c00418652b0859b27b2"
-    },
-    "2026-08-favorites-server": {
-      "id": "2026-08-favorites-server",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 1,
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "defaultConfig": {
-        "enabled": false
-      },
-      "system": "apex",
-      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-08-forward-age-restricted-destinations": {
       "id": "2026-08-forward-age-restricted-destinations",
