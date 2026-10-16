@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-16T16-13-31-968Z_640249_9q2vbl",
-  "buildNumber": "640249",
-  "updatedAt": "2026-10-16T16:13:31.968Z",
-  "count": 386,
+  "runId": "2026-10-16T16-30-58-058Z_640299_ewyj41",
+  "buildNumber": "640299",
+  "updatedAt": "2026-10-16T16:30:58.058Z",
+  "count": 387,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11347,6 +11347,37 @@
         "value": null
       },
       "fingerprint": "7f42b6f8b249c7397b7a14b361d516240d2be52a2c2da459af0a942f5b511061"
+    },
+    {
+      "id": "2026-10-game-exit-promo-rust",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "15090f5f0470f0c1a91d947b159435f76a7c7b57ab5fb2c35a9da78a8da2a21e"
     },
     {
       "id": "2026-10-game-profile-mobile-reviews",

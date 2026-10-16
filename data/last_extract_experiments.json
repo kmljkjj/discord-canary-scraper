@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-16T16-13-31-968Z_640249_9q2vbl",
-  "buildNumber": "640249",
-  "updatedAt": "2026-10-16T16:13:31.968Z",
-  "count": 386,
+  "runId": "2026-10-16T16-30-58-058Z_640299_ewyj41",
+  "buildNumber": "640299",
+  "updatedAt": "2026-10-16T16:30:58.058Z",
+  "count": 387,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7321,6 +7321,26 @@
       },
       "system": "apex",
       "fp": "d6924653e0e9c7ae0c4a32c2"
+    },
+    "2026-10-game-exit-promo-rust": {
+      "id": "2026-10-game-exit-promo-rust",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "6f6f176d6ff21eeffcf7f59e"
     },
     "2026-10-game-profile-mobile-reviews": {
       "id": "2026-10-game-profile-mobile-reviews",
