@@ -5776,6 +5776,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-contextual-referrals-user-dm-sidebar",
+    "defaultConfig": {
+      "showEmbed": false
+    },
+    "variations": {
+      "0": {
+        "showEmbed": false
+      },
+      "1": {
+        "showEmbed": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-desktop-conjure-native-preview-view",
     "defaultConfig": {
       "enabled": false

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-16T19-28-32-497Z_640634_d4h2l4",
-  "buildNumber": "640634",
-  "updatedAt": "2026-10-16T19:28:32.498Z",
-  "count": 393,
+  "runId": "2026-10-16T19-33-01-215Z_640640_akn2yl",
+  "buildNumber": "640640",
+  "updatedAt": "2026-10-16T19:33:01.215Z",
+  "count": 394,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11238,6 +11238,37 @@
         "value": null
       },
       "fingerprint": "697888d2d2d7cfc00d75674cde2951ddca23be145c4930ac6c9c705b8f68fad6"
+    },
+    {
+      "id": "2026-10-contextual-referrals-user-dm-sidebar",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "variations": {
+        "0": {
+          "showEmbed": false
+        },
+        "1": {
+          "showEmbed": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a1a3a2ad3ccdd46a6e70f91d15ace3a335bb7a667fdcb77d60d0e86b6389fb9d"
     },
     {
       "id": "2026-10-desktop-conjure-native-preview-view",

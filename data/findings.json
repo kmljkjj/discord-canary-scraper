@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-16T19-28-32-497Z_640634_d4h2l4",
-  "buildNumber": "640634",
-  "scrapedAt": "2026-10-16T19:28:32.498Z",
+  "runId": "2026-10-16T19-33-01-215Z_640640_akn2yl",
+  "buildNumber": "640640",
+  "scrapedAt": "2026-10-16T19:33:01.215Z",
   "totals": {
-    "all": 395
+    "all": 396
   },
   "experiments": [
     {
@@ -7267,6 +7267,26 @@
     },
     {
       "id": "2026-10-contextual-referrals-server-channel-member-list",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "showEmbed": false
+      },
+      "variations": {
+        "0": {
+          "showEmbed": false
+        },
+        "1": {
+          "showEmbed": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-contextual-referrals-user-dm-sidebar",
       "type": "user",
       "kind": "user",
       "label": null,
