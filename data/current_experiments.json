@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-16T17-30-22-298Z_640404_ze7h5w",
-  "buildNumber": "640404",
-  "updatedAt": "2026-10-16T17:30:22.298Z",
-  "count": 394,
+  "runId": "2026-10-16T17-33-47-422Z_640413_9dz7tb",
+  "buildNumber": "640413",
+  "updatedAt": "2026-10-16T17:33:47.422Z",
+  "count": 395,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11767,6 +11767,37 @@
         "value": null
       },
       "fingerprint": "c89e4be78467eb986288413d3d8e4e7232737cf459da720e15defeb327f18a36"
+    },
+    {
+      "id": "2026-10-nitro-tab-remove-account-age-restriction",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5ce45cac57f9974997f2319393d78a605ed6ac334b9e1fe633ea65b30c3a7bbf"
     },
     {
       "id": "2026-10-overlay-native-window-rendering",
