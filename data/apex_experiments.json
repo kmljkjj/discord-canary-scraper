@@ -4466,22 +4466,6 @@
     "label": null
   },
   {
-    "kind": "user",
-    "name": "2026-09-application-test-mode-quick-access",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "0": {
-        "enabled": false
-      },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
     "kind": "guild",
     "name": "2026-09-automod-application-rules",
     "defaultConfig": {
@@ -4931,19 +4915,6 @@
   {
     "kind": "user",
     "name": "2026-09-multi-sku-embed-rendering",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-09-multisku-embed-builder",
     "defaultConfig": {
       "enabled": false
     },
