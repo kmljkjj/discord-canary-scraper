@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-16T22-16-37-771Z_640963_awrwe2",
-  "buildNumber": "640963",
-  "scrapedAt": "2026-10-16T22:16:37.771Z",
+  "runId": "2026-10-16T22-18-35-264Z_640968_dz5nn6",
+  "buildNumber": "640968",
+  "scrapedAt": "2026-10-16T22:18:35.264Z",
   "totals": {
-    "all": 394
+    "all": 393
   },
   "experiments": [
     {
@@ -3388,26 +3388,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-05-social-layer-storefront-game-shops-dropdown",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-05-spatial-audio-for-voice",
       "type": "user",
       "kind": "user",
@@ -5619,9 +5599,8 @@
     {
       "id": "2026-09-application-test-mode-quick-access",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "enabled": false
       },
@@ -5632,9 +5611,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-09-automod-application-rules",
