@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-16T17:08:18.521Z",
+  "fetchedAt": "2026-10-16T17:21:46.349Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5070,30 +5070,30 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 1,
@@ -8580,6 +8580,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-cod-relink",
+      "hash": 3509277331,
+      "type": "user",
+      "title": "2026-10-cod-relink",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-code-blurple-teaser",
       "hash": 399863367,
       "type": "user",
@@ -8931,11 +8941,11 @@
     }
   ],
   "summary": {
-    "total": 607,
+    "total": 608,
     "guild": 95,
-    "user": 512,
+    "user": 513,
     "withPercentage": 225,
-    "withoutPercentage": 382,
+    "withoutPercentage": 383,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
