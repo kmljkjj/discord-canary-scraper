@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["526230"],{259381(i){i.exports=JSON.parse('{"F3llsQ":["Partajeaz\u0103 c\xe2nd \xeemi actualizez profilul"],"6goWcz":["Permite-le prietenilor s\u0103 primeasc\u0103 o notificare push c\xe2nd \xee\u021Bi actualizezi profilul."]}')}}]);
+//# sourceMappingURL=94536385f3c30f91.js.map

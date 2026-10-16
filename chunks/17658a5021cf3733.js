@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["326943"],{179746(e){e.exports=JSON.parse('{"PhnOeM":["Pr\xfcfe auf Updates\xa0\u2026"],"mpd5Bv":["Hallo! Discord l\xe4uft im Hintergrund weiter, damit du mit deinen Freunden in Kontakt bleibst. Du kannst es mit einem Rechtsklick hier beenden."],"zjuWNH":[[1,"appName"]," \xf6ffnen"],"VuK9sC":[[1,"appName"]," beenden"],"JO5lXN":["Sprach-& Videoeinstellungen \xf6ffnen"]}')}}]);
+//# sourceMappingURL=17658a5021cf3733.js.map
