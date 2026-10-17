@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["392320"],{114691(e){e.exports=JSON.parse('{"PhnOeM":["Check voor updates..."],"mpd5Bv":["Hoi! Discord blijft op de achtergrond actief, zodat je in contact blijft met je vrienden. Klik hier met de rechtermuisknop om te stoppen."],"zjuWNH":["Open ",[1,"appName"]],"VuK9sC":[[1,"appName"]," afsluiten"],"JO5lXN":["Naar Spraak- en videoinstellingen"]}')}}]);
-//# sourceMappingURL=efdb98c785ec76f0.js.map

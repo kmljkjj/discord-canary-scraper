@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["869043"],{979198(a){a.exports=JSON.parse('{"D3CWUF":["Varsinainen paljastus Call of Duty: Modern Warfare 4:n ilmestyess\xe4 ",[3,"date","::MMMd"]],"ugfqKp":["Eritt\xe4in salainen: Koodi Sinipurppura"],"YEsjvt":["Saat Call of Duty: MW4 -asepiirustuksen ",[3,"date","::MMMd"],". Vain Nitro-tilaajille."]}')}}]);
-//# sourceMappingURL=c3147ac2ddef9900.js.map

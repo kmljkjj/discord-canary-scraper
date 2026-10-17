@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["322443"],{430790(e){e.exports=JSON.parse('{"DwBO0x":["Verringere die CPU- und GPU-Nutzung von Discord, w\xe4hrend ein Spiel l\xe4uft."],"rea2Ar":["Spielmodus aktivieren"],"VGcdxP":["Diese Option ist vor\xfcbergehend deaktiviert, solange der Spielmodus aktiv ist."],"QG0axY":["Spielmodus"]}')}}]);
+//# sourceMappingURL=3e22b2abcff4d838.js.map

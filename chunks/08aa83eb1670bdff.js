@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["914025"],{908304(i){i.exports=JSON.parse('{"DwBO0x":["Riduci l\'utilizzo di CPU e scheda video di Discord mentre \xe8 in esecuzione un gioco."],"rea2Ar":["Attiva la modalit\xe0 gioco"],"VGcdxP":["Questa funzione \xe8 temporaneamente disattivata mentre \xe8 attiva la modalit\xe0 gioco."],"QG0axY":["Modalit\xe0 gioco"]}')}}]);
+//# sourceMappingURL=08aa83eb1670bdff.js.map

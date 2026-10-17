@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["41442"],{572729(e){e.exports=JSON.parse('{"DwBO0x":["R\xe9duis l\'utilisation du processeur et de la carte graphique de Discord pendant qu\'un jeu est en cours."],"rea2Ar":["Activer le mode Jeu"],"VGcdxP":["Cette option est temporairement d\xe9sactiv\xe9e tant que le mode Jeu est actif."],"QG0axY":["Mode Jeu"]}')}}]);
+//# sourceMappingURL=8a8f0aef0dfbed75.js.map

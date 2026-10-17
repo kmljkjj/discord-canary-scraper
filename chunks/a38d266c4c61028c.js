@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["168700"],{54007(e){e.exports=JSON.parse('{"WMK6Pg":["L\xe5s opp tilbud"],"7TxNKE":["Dager"],"7pATiR":["Timer"],"dXR9qI":["Minutter"],"uytDvV":["Premie med engangskode. Varer til ",[3,"expirationDate","short"],". ",[8,"$link",["Vilk\xe5r gjelder."],[[1,"termsUrl"]]]],"v5a81e":["Hent premie"],"TaUsG9":["Om ",[6,"days",{"one":[[7]," dag"],"other":[[7]," dager"]},0,"cardinal"]],"vlafDc":["L\xe5s opp premie"],"OejyCi":["Kommende"]}')}}]);
+//# sourceMappingURL=a38d266c4c61028c.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["259274"],{681297(e){e.exports=JSON.parse('{"klSpfs":["Rediger innstillinger"],"NzUuLD":["+",[1,"count"]," ",[6,"count",{"one":["melding"],"other":["meldinger"]},0,"cardinal"]],"O+racd":["Ingen varsler."],"5H2Jd6":["Vis alle"],"Ko8NGn":["Vis bokmerker"],"dcpdhC":["Velg en melding for \xe5 g\xe5 til den."],"VAK+h9":["Velkommen til varslingssenteret!"]}')}}]);
+//# sourceMappingURL=c80f6e6a993127a8.js.map

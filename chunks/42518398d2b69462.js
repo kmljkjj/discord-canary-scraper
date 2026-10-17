@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["610029"],{825020(e){e.exports=JSON.parse('{"D3CWUF":["H\xe9 l\u1ED9 \u0111\u1EA7y \u0111\u1EE7 khi Call of Duty: Modern Warfare 4 ph\xe1t h\xe0nh v\xe0o ",[3,"date","::MMMd"]],"ugfqKp":["Classified: Code Blurple"],"YEsjvt":["Nh\u1EADn blueprint Call of Duty: MW4 v\xe0o ",[3,"date","::MMMd"],". \u0110\u1ED9c quy\u1EC1n cho Nitro."]}')}}]);
+//# sourceMappingURL=42518398d2b69462.js.map

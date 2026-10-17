@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["409615"],{40722(e){e.exports=JSON.parse('{"DwBO0x":["Reduce el uso de la CPU y la GPU que hace Discord mientras juegas."],"rea2Ar":["Habilitar modo juego"],"VGcdxP":["Esto se desactiva temporalmente mientras el modo juego est\xe1 activo."],"QG0axY":["Modo juego"]}')}}]);
+//# sourceMappingURL=87dd54bd550c1ca4.js.map

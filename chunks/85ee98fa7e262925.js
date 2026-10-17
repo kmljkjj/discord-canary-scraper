@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["602304"],{196867(o){o.exports=JSON.parse('{"yfwZuy":["Wy\u015Bwietl moj\u0105 odznak\u0119"],"UnPGii":["Odznaka zosta\u0142a dodana do Twojego profilu."],"nvaTQq":["Zdobyto odznak\u0119 profilow\u0105 \u201EOrbs\u201D!"]}')}}]);
+//# sourceMappingURL=85ee98fa7e262925.js.map

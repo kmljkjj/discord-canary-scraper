@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["521177"],{623872(e){e.exports=JSON.parse('{"PhnOeM":["Se efter opdateringer \u2026"],"mpd5Bv":["Hej! Discord k\xf8rer i baggrunden, s\xe5 du kan holde kontakten med dine venner. Du kan h\xf8jreklikke her for at afslutte."],"zjuWNH":["\xc5bn ",[1,"appName"]],"VuK9sC":["Afslut ",[1,"appName"]],"JO5lXN":["\xc5bn tale- og videoindstillinger"]}')}}]);
+//# sourceMappingURL=3a2b7ecb5ee85bde.js.map
