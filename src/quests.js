@@ -42,19 +42,174 @@ function assetUrl(questId, filename) {
   return CDN + filename.replace(/^\//, '');
 }
 
+/** Official QuestRewardType + labels FR clairs */
 function rewardTypeFr(type) {
   const map = {
-    1: 'Récompense en jeu',
-    2: 'Collectible',
-    3: 'Monnaie virtuelle',
+    1: 'Code redeem',
+    2: 'Récompense en jeu',
+    3: 'Collectible (déco / nameplate)',
     4: 'Orbes',
-    5: 'Fraction d\'orbes',
+    5: 'Nitro fractionnaire',
+    // legacy / extended labels seen in some payloads
     6: 'Décoration de profil',
     7: 'Effet de profil',
     8: 'Avatar / décoration',
   };
   return map[type] || 'Type ' + type;
 }
+
+/** Format a human duration between two ISO timestamps (total campaign length). */
+function formatSpan(startsAt, expiresAt) {
+  if (!startsAt || !expiresAt) return null;
+  const a = new Date(startsAt).getTime();
+  const b = new Date(expiresAt).getTime();
+  if (!Number.isFinite(a) || !Number.isFinite(b) || b <= a) return null;
+  const sec = Math.round((b - a) / 1000);
+  if (sec < 3600) return Math.max(1, Math.round(sec / 60)) + ' min';
+  if (sec < 86400) {
+    const h = Math.floor(sec / 3600);
+    const m = Math.round((sec % 3600) / 60);
+    return m > 0 ? h + ' h ' + m + ' min' : h + ' h';
+  }
+  const d = Math.floor(sec / 86400);
+  const h = Math.round((sec % 86400) / 3600);
+  if (d >= 14 && h === 0) return d + ' jours';
+  if (h === 0) return d + ' jour' + (d > 1 ? 's' : '');
+  return d + ' j ' + h + ' h';
+}
+
+/** Countdown from now to expires_at — "expire dans X j Y h". */
+function formatCountdown(expiresAt, now = Date.now()) {
+  if (!expiresAt) return null;
+  const t = new Date(expiresAt).getTime();
+  if (!Number.isFinite(t)) return null;
+  const diff = t - now;
+  if (diff <= 0) return 'expirée';
+  const sec = Math.floor(diff / 1000);
+  if (sec < 3600) return 'expire dans ' + Math.max(1, Math.round(sec / 60)) + ' min';
+  if (sec < 86400) {
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    return m > 0 ? 'expire dans ' + h + ' h ' + m + ' min' : 'expire dans ' + h + ' h';
+  }
+  const d = Math.floor(sec / 86400);
+  const h = Math.floor((sec % 86400) / 3600);
+  if (h === 0) return 'expire dans ' + d + ' j';
+  return 'expire dans ' + d + ' j ' + h + ' h';
+}
+
+/**
+ * Status badge: preview / pas encore démarrée / en cours / bientôt expirée / expirée.
+ */
+function questStatus(quest, now = Date.now()) {
+  if (quest.preview) return { key: 'preview', label: '⚠️ Aperçu (preview)' };
+  const start = quest.startsAt ? new Date(quest.startsAt).getTime() : null;
+  const end = quest.expiresAt ? new Date(quest.expiresAt).getTime() : null;
+  if (end != null && Number.isFinite(end) && end <= now) {
+    return { key: 'expired', label: '⏹ Expirée' };
+  }
+  if (start != null && Number.isFinite(start) && start > now) {
+    return { key: 'upcoming', label: '🕐 Pas encore démarrée' };
+  }
+  if (end != null && Number.isFinite(end) && end - now < 48 * 3600 * 1000) {
+    return { key: 'ending_soon', label: '🔥 Bientôt expirée (< 48 h)' };
+  }
+  if ((start == null || start <= now) && (end == null || end > now)) {
+    return { key: 'live', label: '🟢 En cours' };
+  }
+  return { key: 'live', label: '🟢 Live' };
+}
+
+/** Extra marketing strings from messages object (besides name/title/publisher). */
+function extractMarketingMessages(messages) {
+  if (!messages || typeof messages !== 'object') return [];
+  const skip = new Set([
+    'quest_name', 'questName', 'game_title', 'gameTitle',
+    'game_publisher', 'gamePublisher', 'name', 'title',
+  ]);
+  const preferred = [
+    'description', 'quest_description', 'subtitle', 'tagline',
+    'cta', 'cta_text', 'cta_label', 'button_label', 'instructions',
+    'reward_description', 'short_description',
+  ];
+  const out = [];
+  const seen = new Set();
+  for (const k of preferred) {
+    const v = messages[k];
+    if (v == null) continue;
+    const s = String(v).trim();
+    if (!s || seen.has(s)) continue;
+    seen.add(s);
+    out.push(s.slice(0, 200));
+  }
+  for (const [k, v] of Object.entries(messages)) {
+    if (skip.has(k) || preferred.includes(k)) continue;
+    if (typeof v !== 'string') continue;
+    const s = v.trim();
+    if (!s || s.length < 8 || seen.has(s)) continue;
+    seen.add(s);
+    out.push(s.slice(0, 200));
+    if (out.length >= 4) break;
+  }
+  return out;
+}
+
+/** Format orbs line with Nitro multiplier when premium_orb_quantity differs. */
+function formatOrbsLine(orbQty, premiumOrbQty) {
+  if (orbQty == null && premiumOrbQty == null) return null;
+  const base = orbQty != null ? Number(orbQty) : null;
+  const prem = premiumOrbQty != null ? Number(premiumOrbQty) : null;
+  if (base != null && prem != null && Number.isFinite(base) && Number.isFinite(prem) && prem !== base) {
+    const mult = base > 0 ? Math.round((prem / base) * 100) / 100 : null;
+    const multTxt = mult != null ? ' · ×' + mult + ' Nitro' : '';
+    return '**' + base + ' orbes** (' + prem + ' avec Nitro' + multTxt + ')';
+  }
+  if (base != null) return '**' + base + ' orbes**';
+  if (prem != null) return '**' + prem + ' orbes (Nitro)**';
+  return null;
+}
+
+/** Quest feature bit/int → short FR labels (docs.discord.food Quest Feature). */
+const QUEST_FEATURE_LABELS = {
+  1: 'CTA post-inscription',
+  2: 'Critère temps de jeu',
+  3: 'Quest Bar v2',
+  4: '🔞 18+',
+  5: 'Hors Russie',
+  6: 'Console first-party',
+  7: 'Console mobile',
+  8: 'CTA démarrer',
+  9: 'Reward highlighting',
+  12: 'Quest Home',
+  14: 'Desktop',
+  15: 'Mobile',
+  16: 'Console',
+  20: '☁️ Cloud Play',
+  21: 'Cloud Play',
+  30: 'Orbes multiplier',
+  41: '⚡ Multiplicateur orbes',
+  42: 'Xbox Game Pass',
+};
+
+function decodeQuestFeatures(features) {
+  if (!Array.isArray(features) || !features.length) return null;
+  const labels = [];
+  const seen = new Set();
+  for (const f of features) {
+    const n = Number(f);
+    const label = QUEST_FEATURE_LABELS[n] || null;
+    if (label && !seen.has(label)) {
+      seen.add(label);
+      labels.push(label);
+    } else if (!label && Number.isFinite(n) && !seen.has(String(n))) {
+      // keep unknown as backtick id for datamine
+      seen.add(String(n));
+      labels.push('`' + n + '`');
+    }
+  }
+  return labels.length ? labels.join(' · ') : null;
+}
+
 
 function formatDurationSeconds(sec) {
   const n = Number(sec);
@@ -340,13 +495,15 @@ function normalizeQuest(raw, regionMap) {
     taskVideos: videoUrl && videoKind === 'task' ? [videoUrl] : [],
     primaryColor: colors.primary || null,
     platforms: platformsFr(root),
-    features: Array.isArray(root.features)
-      ? root.features.map((f) => '`' + f + '`').join(' ')
-      : null,
+    featuresRaw: Array.isArray(root.features) ? root.features.slice() : [],
+    features: decodeQuestFeatures(root.features),
     rewards: (Array.isArray(rewards) ? rewards : []).map((r) => ({
       type: r.type,
       typeLabel: rewardTypeFr(r.type),
       name: (r.messages && (r.messages.name || r.messages.title)) || null,
+      nameWithArticle:
+        (r.messages && (r.messages.name_with_article || r.messages.nameWithArticle)) ||
+        null,
       skuId: r.sku_id || r.skuId || null,
       orbQuantity:
         r.orb_quantity != null
@@ -354,6 +511,14 @@ function normalizeQuest(raw, regionMap) {
           : r.orbQuantity != null
             ? r.orbQuantity
             : null,
+      premiumOrbQuantity:
+        r.premium_orb_quantity != null
+          ? r.premium_orb_quantity
+          : r.premiumOrbQuantity != null
+            ? r.premiumOrbQuantity
+            : null,
+      // type 5 = fractional Nitro days
+      quantity: r.quantity != null ? r.quantity : null,
       asset: assetUrl(id, r.asset),
       assetVideo: assetUrl(id, r.asset_video || r.assetVideo),
       redemptionLink: r.redemption_link || r.redemptionLink || null,
@@ -361,6 +526,16 @@ function normalizeQuest(raw, regionMap) {
     tasksText: formatTasks(root),
     regionFlags: regionMap && regionMap.get(id) ? regionMap.get(id).flags : '🌍',
     preview: !!(raw.preview || root.preview),
+    totalSpan: formatSpan(root.starts_at || root.startsAt, root.expires_at || root.expiresAt),
+    marketingLines: extractMarketingMessages(messages),
+    ctaLink:
+      (root.cta_config && (root.cta_config.link || root.cta_config.url)) ||
+      app.link ||
+      null,
+    ctaLabel:
+      (root.cta_config &&
+        (root.cta_config.button_label || root.cta_config.buttonLabel || root.cta_config.label)) ||
+      null,
   };
 }
 
@@ -410,16 +585,27 @@ function sectionWithThumb(text, imageUrl, desc) {
 function buildQuestComponentsV2(quest) {
   const start = formatDateFr(quest.startsAt);
   const end = formatDateFr(quest.expiresAt);
+  const status = questStatus(quest);
+  const countdown = formatCountdown(quest.expiresAt);
+  const span = quest.totalSpan || formatSpan(quest.startsAt, quest.expiresAt);
+
   let duree = '—';
   if (start && end) duree = start + ' → ' + end;
   else if (start) duree = 'À partir du ' + start;
   else if (end) duree = 'Jusqu’au ' + end;
+  if (span) duree += ' · _' + span + '_';
+  if (countdown && status.key !== 'expired' && status.key !== 'upcoming') {
+    duree += '\n⏱ ' + countdown;
+  } else if (status.key === 'upcoming' && quest.startsAt) {
+    const untilStart = formatCountdown(quest.startsAt);
+    if (untilStart) duree += '\n⏱ démarre ' + untilStart.replace(/^expire /, '');
+  }
 
   const header = [
     '## Nouvelle quête',
     '### ' + String(quest.name).slice(0, 200),
+    status.label,
   ];
-  if (quest.preview) header.push('⚠️ _Aperçu (preview)_');
 
   // game_tile = icone jeu (fiable) ; logotype = wordmark (souvent game_logotype.png en 404)
   const logo =
@@ -455,7 +641,14 @@ function buildQuestComponentsV2(quest) {
     '**Pays** · ' + (quest.regionFlags || '🌍'),
   ];
   if (quest.publisher) info.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
-  if (quest.features) info.push('**Flags** · ' + quest.features);
+  if (quest.features) info.push('**Features** · ' + quest.features);
+  if (quest.marketingLines && quest.marketingLines.length) {
+    info.push('');
+    info.push('**Infos**');
+    for (const m of quest.marketingLines.slice(0, 3)) {
+      info.push('_' + m + '_');
+    }
+  }
   blocks.push({ type: 10, content: info.join('\n').slice(0, 4000) });
 
   if (logo) {
@@ -497,22 +690,24 @@ function buildQuestComponentsV2(quest) {
     for (const r of rewards.slice(0, 8)) {
       const isOrbs =
         r.orbQuantity != null ||
+        r.premiumOrbQuantity != null ||
         r.type === 4 ||
         /orbe/i.test(String(r.typeLabel || ''));
 
-      if (isOrbs && r.orbQuantity != null) {
+      if (isOrbs && (r.orbQuantity != null || r.premiumOrbQuantity != null)) {
+        const orbsTxt = formatOrbsLine(r.orbQuantity, r.premiumOrbQuantity) || 'orbes';
         const line =
           '• **' +
           (r.typeLabel || 'Orbes') +
-          '** · **' +
-          r.orbQuantity +
-          ' orbes**' +
+          '** · ' +
+          orbsTxt +
           (r.skuId ? '\n　SKU `' + r.skuId + '`' : '');
+        const qtyForImg = r.orbQuantity != null ? r.orbQuantity : r.premiumOrbQuantity;
         blocks.push(
           sectionWithThumb(
             line,
-            orbImageUrl(r.orbQuantity),
-            String(r.orbQuantity) + ' orbes',
+            orbImageUrl(qtyForImg),
+            String(qtyForImg) + ' orbes',
           ),
         );
         continue;
@@ -520,7 +715,14 @@ function buildQuestComponentsV2(quest) {
 
       let line = '• **' + r.typeLabel + '**';
       if (r.name) line += ' — ' + r.name;
-      if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
+      else if (r.nameWithArticle) line += ' — ' + r.nameWithArticle;
+      if (r.type === 5 && r.quantity != null) {
+        line += ' · **' + r.quantity + ' jour' + (r.quantity > 1 ? 's' : '') + '**';
+      }
+      if (r.orbQuantity != null || r.premiumOrbQuantity != null) {
+        const ot = formatOrbsLine(r.orbQuantity, r.premiumOrbQuantity);
+        if (ot) line += ' · ' + ot;
+      }
       if (r.skuId) line += '\n　SKU `' + r.skuId + '`';
 
       if (r.asset && isImageUrl(r.asset)) {
@@ -563,12 +765,13 @@ function buildQuestComponentsV2(quest) {
       url: quest.videoUrl.slice(0, 512),
     });
   }
-  if (quest.applicationLink) {
+  const storeLink = quest.ctaLink || quest.applicationLink;
+  if (storeLink) {
     buttons.push({
       type: 2,
       style: 5,
-      label: 'Lien application',
-      url: quest.applicationLink.slice(0, 512),
+      label: String(quest.ctaLabel || 'Lien application').slice(0, 80),
+      url: String(storeLink).slice(0, 512),
     });
   }
   for (const r of rewards) {
@@ -591,7 +794,11 @@ function buildQuestComponentsV2(quest) {
     components: [
       {
         type: 17,
-        accent_color: 0,
+        accent_color: (() => {
+          const hex = String(quest.primaryColor || '').replace(/^#/, '');
+          if (/^[0-9a-fA-F]{6}$/.test(hex)) return parseInt(hex, 16);
+          return 0;
+        })(),
         components: blocks,
       },
     ],
@@ -601,12 +808,19 @@ function buildQuestComponentsV2(quest) {
 function buildQuestEmbed(quest) {
   const start = formatDateFr(quest.startsAt);
   const end = formatDateFr(quest.expiresAt);
+  const status = questStatus(quest);
+  const countdown = formatCountdown(quest.expiresAt);
+  const span = quest.totalSpan || formatSpan(quest.startsAt, quest.expiresAt);
   let duree = '—';
   if (start && end) duree = start + ' → ' + end;
   else if (start) duree = 'À partir du ' + start;
   else if (end) duree = 'Jusqu’au ' + end;
+  if (span) duree += ' · ' + span;
+  if (countdown && status.key !== 'expired') duree += ' · ' + countdown;
 
   const desc = [];
+  desc.push(status.label);
+  desc.push('');
   desc.push('**Durée**');
   desc.push(duree);
   desc.push('');
@@ -614,6 +828,10 @@ function buildQuestEmbed(quest) {
   desc.push('**Pays** · ' + (quest.regionFlags || '🌍'));
   if (quest.gameTitle) desc.push('**Jeu** · ' + String(quest.gameTitle).slice(0, 180));
   if (quest.publisher) desc.push('**Éditeur** · ' + String(quest.publisher).slice(0, 120));
+  if (quest.marketingLines && quest.marketingLines.length) {
+    desc.push('');
+    for (const m of quest.marketingLines.slice(0, 2)) desc.push('_' + m + '_');
+  }
 
   const fields = [];
   if (quest.tasksText) {
@@ -624,7 +842,10 @@ function buildQuestEmbed(quest) {
     const rLines = rewards.slice(0, 6).map((r) => {
       let line = '• **' + r.typeLabel + '**';
       if (r.name) line += ' — ' + r.name;
-      if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
+      if (r.type === 5 && r.quantity != null) line += ' · ' + r.quantity + ' j';
+      const ot = formatOrbsLine(r.orbQuantity, r.premiumOrbQuantity);
+      if (ot) line += ' · ' + ot.replace(/\*\*/g, '');
+      else if (r.orbQuantity != null) line += ' · **' + r.orbQuantity + ' orbes**';
       return line;
     });
     fields.push({ name: 'Récompenses', value: rLines.join('\n').slice(0, 1024) });
