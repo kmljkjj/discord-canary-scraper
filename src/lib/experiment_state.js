@@ -351,11 +351,15 @@ function updateRemovedExperiments({
   buildNumber,
   confirmedRemovedIds,
 }) {
-  const out = [...(existingRemoved || [])];
+  const currentIds = new Set((current || []).map((e) => String(e.id)));
+  // Always drop reappeared experiments from the "currently removed" list.
+  let out = (existingRemoved || []).filter((e) => {
+    const id = String(e && (e.id || e) || '');
+    return id && !currentIds.has(id);
+  });
   const seen = new Set(out.map((e) => String(e.id || e)));
   if (!allowRemovals) return out;
 
-  const currentIds = new Set((current || []).map((e) => String(e.id)));
   const ts = new Date().toISOString();
   const confirmed =
     Array.isArray(confirmedRemovedIds) && confirmedRemovedIds.length
