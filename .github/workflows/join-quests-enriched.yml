@@ -1,0 +1,25 @@
+name: Join quests enriched
+on:
+  workflow_dispatch:
+jobs:
+  join:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Join parts and push
+        run: |
+          set -e
+          node scripts/join_quests_enriched.js
+          node --check src/quests.js
+          grep -q formatCountdown src/quests.js
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/quests.js
+          git commit -m "feat(quests): countdown, status, Nitro orbs, feature labels, marketing" || true
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push origin main
