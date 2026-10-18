@@ -1,14 +1,19 @@
 /**
- * Atomic multi-file publication for data/.
+ * Multi-file publication for data/ with generation pointer.
  *
  * Model:
  *  1) Write a complete generation under data/.generations/<runId>/
  *  2) Validate every JSON file + shared runId/buildNumber
- *  3) Promote each file to fixed paths via atomic rename
- *  4) Write data/generation.json pointer LAST
+ *  3) Mirror each file to fixed paths (compat) via per-file atomic rename
+ *  4) On mid-promote failure, best-effort restore from previous generation
+ *  5) Write data/generation.json pointer LAST
+ *
+ * Durable source of truth is data/.generations/<runId>/ + generation.json.
+ * Fixed paths (experiments.json, …) are compatibility mirrors only.
  *
  * On failure before/during staging validation: published files stay untouched.
- * On failure mid-promote: process exits non-zero so CI does not commit.
+ * On failure mid-promote: rollback attempted, process exits non-zero so CI
+ * does not commit a mixed workspace.
  */
 'use strict';
 
@@ -123,6 +128,14 @@ async function publishDataGeneration(dataDir, opts) {
   await fs.emptyDir(generationDir);
   await fs.copy(staging, generationDir);
 
+  // Capture previous pointer so we can roll back fixed-path files on mid-promote failure.
+  // Generation dirs remain the durable source of truth; fixed paths are compatibility mirrors.
+  const previousPointer = await readCurrentGeneration(dataDir);
+  const previousGenDir =
+    previousPointer && previousPointer.generationDir
+      ? path.join(dataDir, previousPointer.generationDir)
+      : null;
+
   const promoted = [];
   try {
     for (const rel of written) {
@@ -135,11 +148,33 @@ async function publishDataGeneration(dataDir, opts) {
       promoted.push(rel);
     }
   } catch (e) {
+    // Best-effort rollback of already-promoted files from previous generation.
+    if (previousGenDir && (await fs.pathExists(previousGenDir))) {
+      for (const rel of promoted) {
+        try {
+          const fromPrev = path.join(previousGenDir, rel);
+          const to = path.join(dataDir, rel);
+          if (await fs.pathExists(fromPrev)) {
+            const tmp = `${to}.rollback-${process.pid}-${Date.now()}`;
+            await fs.copy(fromPrev, tmp);
+            await fs.move(tmp, to, { overwrite: true });
+          }
+        } catch (rbErr) {
+          console.warn(
+            'publishDataGeneration: rollback failed for',
+            rel,
+            rbErr.message,
+          );
+        }
+      }
+    }
     throw new Error(
       `publishDataGeneration: promote failed after [${promoted.join(', ')}]: ${e.message}`,
     );
   }
 
+  // Pointer is written LAST — only after every fixed-path file was promoted.
+  // Readers that honour generation.json never see a mixed generation.
   const pointer = {
     schemaVersion: 1,
     runId,
