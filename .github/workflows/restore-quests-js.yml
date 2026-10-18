@@ -1,0 +1,21 @@
+name: Restore quests.js
+on:
+  workflow_dispatch:
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore last good quests.js
+        run: |
+          git show 6b0df737397154c57cd4a5a6f35869b7731cf1cc:src/quests.js > src/quests.js
+          node --check src/quests.js
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/quests.js
+          git commit -m "fix(quests): restore quests.js from last good commit" || exit 0
+          git push
