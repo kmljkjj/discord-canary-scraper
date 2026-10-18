@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-18T16-06-30-883Z_641567_jjxyih",
-  "buildNumber": "641567",
-  "updatedAt": "2026-10-18T16:06:30.883Z",
-  "count": 391,
+  "runId": "2026-10-18T18-49-04-100Z_641599_ng2c31",
+  "buildNumber": "641599",
+  "updatedAt": "2026-10-18T18:49:04.100Z",
+  "count": 390,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -7669,34 +7669,6 @@
         "value": null
       },
       "fingerprint": "c2b477672352a5423619077a2e325c144c249554a65a613a59852a1ee29d0263"
-    },
-    {
-      "id": "2026-08-compress-logs",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 1,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "b86acc858885ba15ad60b5ccc354fb30839c9f19ee23bf6f29f2aba0399155fb"
     },
     {
       "id": "2026-08-dcf-new-user-cooldown",
