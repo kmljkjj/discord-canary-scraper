@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T19-09-45-140Z_642256_flms4a",
-  "buildNumber": "642256",
-  "updatedAt": "2026-10-19T19:09:45.140Z",
-  "count": 391,
+  "runId": "2026-10-19T19-13-04-435Z_642260_idi0t3",
+  "buildNumber": "642260",
+  "updatedAt": "2026-10-19T19:13:04.435Z",
+  "count": 390,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6930,35 +6930,6 @@
         "value": null
       },
       "fingerprint": "0321c03a3b15587ac162e90e800f16bbe995f65677e70226675a5ed359056e10"
-    },
-    {
-      "id": "2026-07-plan-select-ui-redesign",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "b5b0d511595ecaddfed8c0d38269705bfd872a2ea0dd7b6f0ae71d2612d1a7ef"
     },
     {
       "id": "2026-07-powerups-coachmark-scroll-close",
