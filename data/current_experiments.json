@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-19T22-22-30-586Z_642636_4n4svf",
-  "buildNumber": "642636",
-  "updatedAt": "2026-10-19T22:22:30.586Z",
+  "runId": "2026-10-19T22-26-53-949Z_642641_cgcq9k",
+  "buildNumber": "642641",
+  "updatedAt": "2026-10-19T22:26:53.949Z",
   "count": 389,
   "experiments": [
     {
@@ -3364,21 +3364,15 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "enabled": false,
-        "showSoundmojiInEmojiPicker": false
+        "enabled": false
       },
       "variations": {
         "1": {
-          "enabled": true,
-          "showSoundmojiInEmojiPicker": false
-        },
-        "2": {
-          "enabled": true,
-          "showSoundmojiInEmojiPicker": true
+          "enabled": true
         }
       },
       "treatments": null,
-      "variationCount": 2,
+      "variationCount": 1,
       "guildPercentage": {
         "status": "unknown",
         "value": null
@@ -3387,7 +3381,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "5b9ec88be18bdd1c2abd060b74e30dbf9b1e567063a27d711254a62ee444d766"
+      "fingerprint": "c3d0e1c17e457a888770e36569486a38002107c342e38f7dd5fc1fe857802368"
     },
     {
       "id": "2026-03-steelseries-3p-recurring",

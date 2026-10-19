@@ -1734,17 +1734,11 @@
     "kind": "user",
     "name": "2026-03-soundmoji-sending",
     "defaultConfig": {
-      "enabled": false,
-      "showSoundmojiInEmojiPicker": false
+      "enabled": false
     },
     "variations": {
       "1": {
-        "enabled": true,
-        "showSoundmojiInEmojiPicker": false
-      },
-      "2": {
-        "enabled": true,
-        "showSoundmojiInEmojiPicker": true
+        "enabled": true
       }
     },
     "label": null
