@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-19T22:34:19.314Z",
+  "fetchedAt": "2026-10-19T22:41:02.193Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,26 +5020,6 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 1,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 1
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 1
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
@@ -5057,6 +5037,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 2
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -7350,16 +7350,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-08-android-rn-reparenting-flag",
-      "hash": 3386450035,
-      "type": "user",
-      "title": "2026-08-android-rn-reparenting-flag",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-08-audio-fidelity",
       "hash": 2450604586,
       "type": "user",
@@ -8864,6 +8854,16 @@
       "hash": 1147043352,
       "type": "user",
       "title": "2026-10-video-player-playback-speed",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-10-wasm-precompressed-brotli",
+      "hash": 1055342401,
+      "type": "user",
+      "title": "2026-10-wasm-precompressed-brotli",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
