@@ -1,0 +1,2 @@
+(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["46501"],{249156(p,s,c){var _=c(681829),t=globalThis.__DISCORD_RESOLVE_WASM_URL__;p.exports="function"==typeof t?t(_):_},681829(p,s,c){"use strict";p.exports=c.p+"0c1890cb87989c66.wasm"}}]);
+//# sourceMappingURL=c138c1300c8c820d.js.map
