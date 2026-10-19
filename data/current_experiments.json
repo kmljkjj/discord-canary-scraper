@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T18-20-00-594Z_642184_n87f2d",
-  "buildNumber": "642184",
-  "updatedAt": "2026-10-19T18:20:00.595Z",
-  "count": 391,
+  "runId": "2026-10-19T18-26-26-418Z_642193_kt1ui5",
+  "buildNumber": "642193",
+  "updatedAt": "2026-10-19T18:26:26.418Z",
+  "count": 390,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -1220,43 +1220,6 @@
         "value": null
       },
       "fingerprint": "d0dd775aa26de3da2310574e8cd846ca6824ee890e4b6d8c801bf11120421d6e"
-    },
-    {
-      "id": "2025-11-rtc-panel-entry-point-new-copy",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "altTitle": false,
-        "altBody": false,
-        "altCta": false
-      },
-      "variations": {
-        "0": {
-          "altTitle": false,
-          "altBody": false,
-          "altCta": false
-        },
-        "1": {
-          "altTitle": true,
-          "altBody": false,
-          "altCta": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "184542ad6521d06f514a1b4cc19f737daddcfbdc21a6801c29a8e9c0f3cef7fe"
     },
     {
       "id": "2025-11-shockbyte-degraded",
