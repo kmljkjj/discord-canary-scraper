@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T21-54-27-087Z_642569_g9eouc",
-  "buildNumber": "642569",
-  "updatedAt": "2026-10-19T21:54:27.088Z",
-  "count": 388,
+  "runId": "2026-10-19T21-58-48-675Z_642573_ivzbki",
+  "buildNumber": "642573",
+  "updatedAt": "2026-10-19T21:58:48.675Z",
+  "count": 389,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7418,6 +7418,23 @@
       },
       "system": "apex",
       "fp": "6f6f176d6ff21eeffcf7f59e"
+    },
+    "2026-10-mana-badge-refresh": {
+      "id": "2026-10-mana-badge-refresh",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "cd22bd20f219f1b2129849b7"
     },
     "2026-10-nitro-tab-remove-account-age-restriction": {
       "id": "2026-10-nitro-tab-remove-account-age-restriction",

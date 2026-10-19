@@ -5924,6 +5924,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-mana-badge-refresh",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-nitro-tab-remove-account-age-restriction",
     "defaultConfig": {
       "enabled": false
