@@ -1,9 +1,9 @@
 {
-  "fetchedAt": "2026-10-19T18:46:34.513Z",
+  "fetchedAt": "2026-10-19T18:53:34.456Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
-      "count": 6
+      "count": 5
     },
     "workerApi": {
       "url": "https://experiments.dscrd.workers.dev/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -139,31 +139,6 @@
       "type": "guild",
       "title": "Guest Voice Invites",
       "source": "discord_api + local_match"
-    },
-    {
-      "hash": 2453702596,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "member_count:[[3399957344,null],[1238858341,\"1470518767757819904\"]]"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_2453702596",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
     },
     {
       "hash": 3633668656,
@@ -333,31 +308,6 @@
       "type": "guild",
       "title": "Guest Voice Invites",
       "source": "discord_api"
-    },
-    {
-      "hash": 2453702596,
-      "name": null,
-      "revision": 1,
-      "percentage": 0,
-      "status": "not_started",
-      "coverage": 0,
-      "populations": 1,
-      "filters": [
-        "member_count:[[3399957344,null],[1238858341,\"1470518767757819904\"]]"
-      ],
-      "treatmentRanges": [],
-      "allRanges": [
-        [
-          0,
-          10000,
-          -1
-        ]
-      ],
-      "id": null,
-      "type": "guild",
-      "title": "hash_2453702596",
-      "source": "discord_api",
-      "note": "No local experiment ID match for this hash"
     },
     {
       "hash": 3633668656,
@@ -5070,43 +5020,23 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 3,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 3
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 3
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 2
       }
     },
     {
@@ -8981,14 +8911,14 @@
     }
   ],
   "summary": {
-    "total": 612,
-    "guild": 95,
-    "user": 517,
-    "withPercentage": 225,
+    "total": 610,
+    "guild": 94,
+    "user": 516,
+    "withPercentage": 223,
     "withoutPercentage": 387,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 177,
-    "fpSampled": 5
+    "notStarted": 175,
+    "fpSampled": 4
   }
 }
