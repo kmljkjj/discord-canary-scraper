@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T17-00-51-107Z_642017_c6fce8",
-  "buildNumber": "642017",
-  "updatedAt": "2026-10-19T17:00:51.107Z",
-  "count": 390,
+  "runId": "2026-10-19T17-04-06-822Z_642022_ej3sq1",
+  "buildNumber": "642022",
+  "updatedAt": "2026-10-19T17:04:06.822Z",
+  "count": 391,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9959,6 +9959,37 @@
         "value": null
       },
       "fingerprint": "8e139cab627ec1b0ce298d190e611a4eee615de7108102a468bdb83121538335"
+    },
+    {
+      "id": "2026-09-request-to-stream-go-live-modal",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "openGoLiveModal": false
+      },
+      "variations": {
+        "0": {
+          "openGoLiveModal": false
+        },
+        "1": {
+          "openGoLiveModal": true
+        }
+      },
+      "treatments": null,
+      "variationCount": 2,
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "6c08964c16a99d497594ab165a18ad8996efddcbc3a76c8362154fb04064756e"
     },
     {
       "id": "2026-09-request-to-stream-new-entry-point",
