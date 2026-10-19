@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-19T17:23:39.977Z",
+  "fetchedAt": "2026-10-19T17:30:30.771Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5096,17 +5096,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
+        "0": 1
       }
     },
     {
@@ -7920,6 +7920,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-desktop-voice-message-recording",
+      "hash": 1939708181,
+      "type": "user",
+      "title": "2026-09-desktop-voice-message-recording",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-edit-profile-collectibles-ordering",
       "hash": 2123326678,
       "type": "user",
@@ -8981,11 +8991,11 @@
     }
   ],
   "summary": {
-    "total": 612,
+    "total": 613,
     "guild": 95,
-    "user": 517,
+    "user": 518,
     "withPercentage": 225,
-    "withoutPercentage": 387,
+    "withoutPercentage": 388,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 177,
