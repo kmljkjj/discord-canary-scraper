@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-19T19-13-04-435Z_642260_idi0t3",
-  "buildNumber": "642260",
-  "scrapedAt": "2026-10-19T19:13:04.435Z",
+  "runId": "2026-10-19T19-14-35-669Z_642261_bxhg2h",
+  "buildNumber": "642261",
+  "scrapedAt": "2026-10-19T19:14:35.669Z",
   "totals": {
-    "all": 393
+    "all": 392
   },
   "experiments": [
     {
@@ -1280,26 +1280,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-02-content-classification-presence-filter",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {

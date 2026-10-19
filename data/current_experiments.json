@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T19-13-04-435Z_642260_idi0t3",
-  "buildNumber": "642260",
-  "updatedAt": "2026-10-19T19:13:04.435Z",
-  "count": 390,
+  "runId": "2026-10-19T19-14-35-669Z_642261_bxhg2h",
+  "buildNumber": "642261",
+  "updatedAt": "2026-10-19T19:14:35.669Z",
+  "count": 389,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -1950,37 +1950,6 @@
         "value": null
       },
       "fingerprint": "b3876c4b843a7096f9957389cb91c3f90f214e88a66f78d0c0084fcd4b086f35"
-    },
-    {
-      "id": "2026-02-content-classification-presence-filter",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "7c80abc71008845befb1c8c63018f8410778a8c51960a6de131c115ccb749a44"
     },
     {
       "id": "2026-02-desktop-new-user-onboarding",
