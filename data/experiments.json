@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-19T18-30-47-114Z_642199_4fswoo",
-  "buildNumber": "642199",
-  "scrapedAt": "2026-10-19T18:30:47.114Z",
+  "runId": "2026-10-19T18-36-12-763Z_642206_g69g9i",
+  "buildNumber": "642206",
+  "scrapedAt": "2026-10-19T18:36:12.763Z",
   "totals": {
-    "all": 393,
+    "all": 394,
     "legacy": 0,
-    "apex": 390
+    "apex": 391
   },
   "experiments": [
     {
@@ -7312,6 +7312,23 @@
     },
     {
       "id": "2026-10-e2e-latency-measurement",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-embedded-app-shim-v2",
       "type": "user",
       "kind": "user",
       "label": null,
