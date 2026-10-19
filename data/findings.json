@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-19T20-44-03-867Z_642429_p483vi",
-  "buildNumber": "642429",
-  "scrapedAt": "2026-10-19T20:44:03.867Z",
+  "runId": "2026-10-19T20-48-26-256Z_642441_kn5jjs",
+  "buildNumber": "642441",
+  "scrapedAt": "2026-10-19T20:48:26.256Z",
   "totals": {
-    "all": 392
+    "all": 391
   },
   "experiments": [
     {
@@ -2079,26 +2079,6 @@
       "defaultConfig": null,
       "variations": null,
       "variationCount": 0,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-mobile-quest-home-red-dot-notification",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {

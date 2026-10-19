@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-19T20-44-03-867Z_642429_p483vi",
-  "buildNumber": "642429",
-  "updatedAt": "2026-10-19T20:44:03.867Z",
-  "count": 389,
+  "runId": "2026-10-19T20-48-26-256Z_642441_kn5jjs",
+  "buildNumber": "642441",
+  "updatedAt": "2026-10-19T20:48:26.256Z",
+  "count": 388,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -3222,37 +3222,6 @@
         "value": null
       },
       "fingerprint": "1d32a6a54d1cc4fe55a50682c937c71cdae34527f1a1cbac2498de055cc321cc"
-    },
-    {
-      "id": "2026-03-mobile-quest-home-red-dot-notification",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationCount": 2,
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "668fe67c9b70d973e26fa63a192631137cc8f07f2be58d0895467274014ebacf"
     },
     {
       "id": "2026-03-muted-video-quest-new-defaults",
