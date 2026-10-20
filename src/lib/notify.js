@@ -17,8 +17,10 @@ const {
   markPosted,
   markFailed,
   claimPosted,
+  wasPosted,
   payloadFingerprint,
   stableExpKey,
+  stableExpEventKey,
   stableMapKey,
 } = require('./webhook_dedupe');
 
@@ -419,6 +421,40 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     console.log('Experiments batch CLAIM skip', batchKey);
     return true;
   }
+
+  // Per-event filter: drop items already sent (partial batch recovery)
+  const filterEv = async (list, changeType) => {
+    const out = [];
+    for (const e of list || []) {
+      const id = typeof e === 'string' ? e : e && e.id;
+      if (!id) {
+        out.push(e);
+        continue;
+      }
+      const ek = 'expev:' + stableExpEventKey(bn, changeType, e);
+      if (await wasPosted(ek)) continue;
+      out.push(e);
+    }
+    return out;
+  };
+  exp = {
+    ...exp,
+    added: await filterEv(exp.added, 'added'),
+    modified: await filterEv(exp.modified, 'modified'),
+    removed: await filterEv(exp.removed, 'removed'),
+    categoryChanged: await filterEv(exp.categoryChanged, 'category'),
+  };
+  const total =
+    exp.added.length +
+    exp.modified.length +
+    exp.removed.length +
+    (exp.categoryChanged || []).length;
+  if (!total) {
+    await markPosted(batchKey);
+    console.log('Experiments all events already sent — skip');
+    return true;
+  }
+
   const sections = [];
   if (exp.added.length) {
     const lines = exp.added.slice(0, 40).map((e) => expLine(e, '+'));
@@ -475,8 +511,20 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     ts,
     sections,
   });
-  if (ok) await markPosted(batchKey);
-  else {
+  if (ok) {
+    await markPosted(batchKey);
+    const markList = async (list, changeType) => {
+      for (const e of list || []) {
+        const id = typeof e === 'string' ? e : e && e.id;
+        if (!id) continue;
+        await markPosted('expev:' + stableExpEventKey(bn, changeType, e));
+      }
+    };
+    await markList(exp.added, 'added');
+    await markList(exp.modified, 'modified');
+    await markList(exp.removed, 'removed');
+    await markList(exp.categoryChanged, 'category');
+  } else {
     console.warn('Experiments webhook failed — batch NOT locked');
     await markFailed(batchKey, 'experiments batch send failed');
   }

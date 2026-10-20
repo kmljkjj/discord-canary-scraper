@@ -185,6 +185,15 @@ async function markFailed(fp, error) {
   }
 }
 
+/** Per-event fingerprint: type + build + experiment id (partial batch safe). */
+function stableExpEventKey(bn, changeType, exp) {
+  const id = String(
+    typeof exp === 'string' ? exp : (exp && (exp.id || exp.name)) || '',
+  ).trim();
+  const raw = ['expev', String(bn), String(changeType || ''), id].join('|');
+  return crypto.createHash('sha256').update(raw).digest('hex').slice(0, 24);
+}
+
 function stableExpKey(bn, exp) {
   const pack = (arr) =>
     (arr || [])
@@ -239,6 +248,7 @@ module.exports = {
   claimPosted,
   payloadFingerprint,
   stableExpKey,
+  stableExpEventKey,
   stableMapKey,
   WINDOW_MS,
   CLAIM_STALE_MS,
