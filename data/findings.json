@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-20T18-05-34-189Z_643649_hl3x8i",
-  "buildNumber": "643649",
-  "scrapedAt": "2026-10-20T18:05:34.189Z",
+  "runId": "2026-10-20T18-07-41-098Z_643651_qhtqrh",
+  "buildNumber": "643651",
+  "scrapedAt": "2026-10-20T18:07:41.098Z",
   "totals": {
-    "all": 392
+    "all": 391
   },
   "experiments": [
     {
@@ -2895,23 +2895,6 @@
         "1": {
           "id": 1,
           "label": "Enable channel-list-style voice invite embed",
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-05-age-restricted-application-commands",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
           "enabled": true
         }
       },

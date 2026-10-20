@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T18-05-34-189Z_643649_hl3x8i",
-  "buildNumber": "643649",
-  "updatedAt": "2026-10-20T18:05:34.189Z",
-  "count": 389,
+  "runId": "2026-10-20T18-07-41-098Z_643651_qhtqrh",
+  "buildNumber": "643651",
+  "updatedAt": "2026-10-20T18:07:41.098Z",
+  "count": 388,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -7545,52 +7545,6 @@
         "value": null
       },
       "fingerprint": "f0acfc506429b9e338d42fc0f8c597b7bca000c6f1bc1918f53880c8cbe3f609"
-    },
-    {
-      "id": "2026-05-age-restricted-application-commands",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-05-age-restricted-application-commands",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "a73eb332eb750bc868bcedfa360cac5be32f8b250b4dec0f9c8cc56ec8a800bb"
     },
     {
       "id": "2026-05-app-store-overlay-feature-gate",
