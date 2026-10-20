@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T21-38-59-028Z_644097_01g5x9",
-  "buildNumber": "644097",
-  "updatedAt": "2026-10-20T21:38:59.028Z",
-  "count": 86,
+  "runId": "2026-10-20T21-41-14-120Z_644098_lk30xm",
+  "buildNumber": "644098",
+  "updatedAt": "2026-10-20T21:41:14.120Z",
+  "count": 91,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -605,6 +605,41 @@
       "label": null,
       "removedAt": "2026-10-20T20:57:49.127Z",
       "lastBuild": "644004"
+    },
+    {
+      "id": "2026-04-desktop-tti-dnstcp-warmup",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T21:41:14.135Z",
+      "lastBuild": "644098"
+    },
+    {
+      "id": "2026-04-desktop-tti-early-update-check",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T21:41:14.135Z",
+      "lastBuild": "644098"
+    },
+    {
+      "id": "2026-04-desktop-tti-update-backoff",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T21:41:14.135Z",
+      "lastBuild": "644098"
+    },
+    {
+      "id": "2026-06-desktop-tti-splash-asset",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T21:41:14.135Z",
+      "lastBuild": "644098"
+    },
+    {
+      "id": "2026-07-desktop-tti-update-backoff-algo",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T21:41:14.135Z",
+      "lastBuild": "644098"
     }
   ]
 }

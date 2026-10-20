@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-20T21-38-59-028Z_644097_01g5x9",
-  "buildNumber": "644097",
-  "scrapedAt": "2026-10-20T21:38:59.028Z",
+  "runId": "2026-10-20T21-41-14-120Z_644098_lk30xm",
+  "buildNumber": "644098",
+  "scrapedAt": "2026-10-20T21:41:14.120Z",
   "totals": {
-    "all": 388
+    "all": 383
   },
   "experiments": [
     {
@@ -2403,63 +2403,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-desktop-tti-dnstcp-warmup",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-04-desktop-tti-early-update-check",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-04-desktop-tti-update-backoff",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "maxBackoffMs": 3
-      },
-      "variations": {
-        "1": {
-          "maxBackoffMs": 2
-        },
-        "2": {
-          "maxBackoffMs": 1
-        },
-        "3": {
-          "maxBackoffMs": 3
-        }
-      },
-      "variationCount": 3,
-      "source": "discord"
-    },
-    {
       "id": "2026-04-desktop-tti-v8-cache",
       "type": "user",
       "kind": "user",
@@ -3459,23 +3402,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-06-desktop-tti-splash-asset",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-06-game-invites-channel",
       "type": "guild",
       "kind": "guild",
@@ -4121,23 +4047,6 @@
       "variations": {
         "1": {
           "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-desktop-tti-update-backoff-algo",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "algo": 0
-      },
-      "variations": {
-        "1": {
-          "algo": 1
         }
       },
       "variationCount": 1,

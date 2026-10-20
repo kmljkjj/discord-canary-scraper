@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T21-38-59-028Z_644097_01g5x9",
-  "buildNumber": "644097",
-  "updatedAt": "2026-10-20T21:38:59.028Z",
-  "count": 385,
+  "runId": "2026-10-20T21-41-14-120Z_644098_lk30xm",
+  "buildNumber": "644098",
+  "updatedAt": "2026-10-20T21:41:14.120Z",
+  "count": 380,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6225,156 +6225,6 @@
       "fingerprint": "4c6a84fe487fdf02a4265516678407a5450023fb0673b523119a4793f3c34c6d"
     },
     {
-      "id": "2026-04-desktop-tti-dnstcp-warmup",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-04-desktop-tti-dnstcp-warmup",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "9c201376ce2e6ed20294ceee6be71b846438a13556d37e5bebab28a3af625bfc"
-    },
-    {
-      "id": "2026-04-desktop-tti-early-update-check",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-04-desktop-tti-early-update-check",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "78b751d0667708296b3271247b8c73f5d8877a9ff25069f21bf68a5d2c8c4400"
-    },
-    {
-      "id": "2026-04-desktop-tti-update-backoff",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "maxBackoffMs": 3
-      },
-      "variations": {
-        "1": {
-          "maxBackoffMs": 2
-        },
-        "2": {
-          "maxBackoffMs": 1
-        },
-        "3": {
-          "maxBackoffMs": 3
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 3,
-      "raw": {
-        "id": "2026-04-desktop-tti-update-backoff",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "maxBackoffMs": 3
-        },
-        "variations": {
-          "1": {
-            "maxBackoffMs": 2
-          },
-          "2": {
-            "maxBackoffMs": 1
-          },
-          "3": {
-            "maxBackoffMs": 3
-          }
-        },
-        "variationCount": 3,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e3854e0c5656f24e516e385a522d646001531731a95c09f47c9a431326b23adc"
-    },
-    {
       "id": "2026-04-desktop-tti-v8-cache",
       "kind": "user",
       "type": "user",
@@ -8973,52 +8823,6 @@
       "fingerprint": "c3ef6ed773b1ebd0f3ad557c12e561751436019d665486087f1c7cb4e6d5378f"
     },
     {
-      "id": "2026-06-desktop-tti-splash-asset",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-06-desktop-tti-splash-asset",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "7696c8eb9d93e9e9d04fa2e85f0484efc5d224313562e811d79e8aab26eb2e90"
-    },
-    {
       "id": "2026-06-game-invites-channel",
       "kind": "guild",
       "type": "guild",
@@ -10715,52 +10519,6 @@
         "value": null
       },
       "fingerprint": "61e0b2204deebcdcc4e6081d09b41fcba5e8855f81a87e3658ca161e4368e7bd"
-    },
-    {
-      "id": "2026-07-desktop-tti-update-backoff-algo",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "algo": 0
-      },
-      "variations": {
-        "1": {
-          "algo": 1
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-07-desktop-tti-update-backoff-algo",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "algo": 0
-        },
-        "variations": {
-          "1": {
-            "algo": 1
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "16a40c6b14cd1d42b5851d9f3e0fa56c230d7d705043ca5169d44a2b374c2364"
     },
     {
       "id": "2026-07-expressive-modal-v2",
