@@ -11,15 +11,16 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Restore and patch
+      - name: Restore and patch webhook + publish_data
         run: |
-          set -e
-          git show 3a15523067ee34baef55fb8a8fbe733cefb7b763:src/lib/webhook.js > src/lib/webhook.js
-          git show 3a15523067ee34baef55fb8a8fbe733cefb7b763:src/lib/publish_data.js > src/lib/publish_data.js
+          set -euo pipefail
+          GOOD=3a15523067ee34baef55fb8a8fbe733cefb7b763
+          git show "$GOOD:src/lib/webhook.js" > src/lib/webhook.js
+          git show "$GOOD:src/lib/publish_data.js" > src/lib/publish_data.js
           sed -i 's/sent += components.length;/sent += 1; \/\/ one Discord message POST/' src/lib/webhook.js
-          python3 - <<'PY'
+          python3 <<'PY'
           from pathlib import Path
-          p = Path('src/lib/publish_data.js')
+          p = Path("src/lib/publish_data.js")
           t = p.read_text()
           old = """  for (const rel of names.sort()) {
     if (rel.includes('..') || path.isAbsolute(rel)) {
@@ -41,49 +42,33 @@ jobs:
     ) {
       throw new Error('publishDataGeneration: path outside staging ' + rel);
     }"""
-          if old not in t: raise SystemExit('path block not found')
+          if old not in t:
+              raise SystemExit("path block not found")
           t = t.replace(old, new, 1)
-          old_prune = """async function pruneGenerations(genRoot, keep, currentRunId) {
-  if (!(await fs.pathExists(genRoot))) return;
-  const entries = await fs.readdir(genRoot);
-  const dirs = [];
-  for (const name of entries) {
-    const full = path.join(genRoot, name);
-    const st = await fs.stat(full);
-    if (st.isDirectory()) {
-      dirs.push({ name, full, mtime: st.mtimeMs });
-    }
-  }
-  dirs.sort((a, b) => b.mtime - a.mtime);
-  let kept = 0;
-  for (const d of dirs) {
-    if (d.name === currentRunId || kept < keep) {
-      kept++;
-      continue;
-    }
-    await fs.remove(d.full);
-  }
-}"""
-          new_prune = """async function pruneGenerations(genRoot, keep, currentRunId) {
-  if (!(await fs.pathExists(genRoot))) return;
-  const entries = await fs.readdir(genRoot);
-  const dirs = [];
-  for (const name of entries) {
-    const full = path.join(genRoot, name);
-    const st = await fs.stat(full);
-    if (!st.isDirectory()) continue;
-    let publishedAt = st.mtimeMs;
-    try {
-      const man = await fs.readJson(path.join(full, '_manifest.json'));
-      if (man && man.publishedAt):
-        ts = Date.parse(man.publishedAt)
-        # keep JS below
-      pass
-    except Exception:
-      pass
-    dirs.append({'name': name, 'full': full, 'publishedAt': publishedAt})
-  # write JS version instead
-  raise SystemExit('use pure js path')
-"""
+          t = t.replace("schemaVersion: 1,", "schemaVersion: 2,", 1)
+          # prune: replace mtime sort with publishedAt when manifest exists
+          t = t.replace(
+              "dirs.push({ name, full, mtime: st.mtimeMs });",
+              """let publishedAt = st.mtimeMs;
+      try {
+        const man = await fs.readJson(path.join(full, '_manifest.json'));
+        if (man && man.publishedAt) {
+          const ts = Date.parse(man.publishedAt);
+          if (Number.isFinite(ts)) publishedAt = ts;
+        }
+      } catch {}
+      dirs.push({ name, full, publishedAt });""",
+              1,
+          )
+          t = t.replace("dirs.sort((a, b) => b.mtime - a.mtime);", "dirs.sort((a, b) => b.publishedAt - a.publishedAt);", 1)
+          p.write_text(t)
+          print("publish_data patched ok")
           PY
-          echo fallback
+          node --check src/lib/webhook.js
+          node --check src/lib/publish_data.js
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/lib/webhook.js src/lib/publish_data.js
+          git commit -m "fix(p0): restore webhook/publish_data + path safety + sent count" || true
+          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git push origin main
