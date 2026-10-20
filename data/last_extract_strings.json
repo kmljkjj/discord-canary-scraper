@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-20T22-13-32-070Z_644153_k4px9u",
-  "buildNumber": "644153",
-  "updatedAt": "2026-10-20T22:13:32.070Z",
+  "runId": "2026-10-20T22-15-52-374Z_644156_fu55v1",
+  "buildNumber": "644156",
+  "updatedAt": "2026-10-20T22:15:52.374Z",
   "count": 28155,
   "data": {
     "bottom": "top",
@@ -11,7 +11,7 @@
     "return": "enter",
     "sender": "receiver",
     "reduce": "no-preference",
-    "active": "primary",
+    "active": "secondary",
     "before": "after",
     "insert": "remove_text",
     "center": "right",
@@ -28120,7 +28120,6 @@
     "BackId": "FrontId",
     "lowest": "highest",
     "appear": "enter",
-    "joined": "invite_to_activity",
     "podium": "in_progress",
     "create": "edit",
     "tunnin": "tuntia",
@@ -28131,7 +28130,10 @@
     "chrome": "browser",
     "answer": "offer",
     "screen": "desktop",
-    "enable": "disable",
+    "enable": "idle",
+    "Copied": "Copy All",
+    "Agreed": "Not agreed",
+    "Cancel": "Start Processing",
     "reload": "starting",
     "string": "unknown",
     "passed": "unknown",
@@ -28146,6 +28148,7 @@
     "latin1": "utf-8",
     "meters": "Unknown",
     "denied": "idle",
+    "joined": "invite_to_activity",
     "BUNDLE": "COLLECTIBLE",
     "minuta": "minutę",
     "minuty": "minut",
@@ -28155,9 +28158,6 @@
     "hodinu": "hodinou",
     "hodiny": "hodin",
     "ultima": "prossima",
-    "Copied": "Copy All",
-    "Agreed": "Not agreed",
-    "Cancel": "Start Processing",
     "Result": "model"
   }
 }
