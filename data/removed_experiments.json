@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T18-30-30-724Z_643698_o85mek",
-  "buildNumber": "643698",
-  "updatedAt": "2026-10-20T18:30:30.724Z",
-  "count": 82,
+  "runId": "2026-10-20T18-36-00-949Z_643705_adpqws",
+  "buildNumber": "643705",
+  "updatedAt": "2026-10-20T18:36:00.949Z",
+  "count": 84,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -577,6 +577,20 @@
       "label": null,
       "removedAt": "2026-10-20T18:07:41.109Z",
       "lastBuild": "643651"
+    },
+    {
+      "id": "2026-03-application-widget-v2-add-tweak",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T18:36:00.962Z",
+      "lastBuild": "643705"
+    },
+    {
+      "id": "2026-05-disable-camera-simulcast",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-20T18:36:00.962Z",
+      "lastBuild": "643705"
     }
   ]
 }

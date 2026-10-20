@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T18-30-30-724Z_643698_o85mek",
-  "buildNumber": "643698",
-  "updatedAt": "2026-10-20T18:30:30.724Z",
-  "count": 389,
+  "runId": "2026-10-20T18-36-00-949Z_643705_adpqws",
+  "buildNumber": "643705",
+  "updatedAt": "2026-10-20T18:36:00.949Z",
+  "count": 387,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -4383,58 +4383,6 @@
       "fingerprint": "156948543c6eb749b14f528e1a6d416949a12438fee885871d49d1a194e50c91"
     },
     {
-      "id": "2026-03-application-widget-v2-add-tweak",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-03-application-widget-v2-add-tweak",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "72520c9e990ad450840f58a006aaae59f14a9fbfb3f27dd61467a570d824fc8a"
-    },
-    {
       "id": "2026-03-arborium-highlight",
       "kind": "user",
       "type": "user",
@@ -7879,52 +7827,6 @@
         "value": null
       },
       "fingerprint": "f2e0845a4c57dc4c46cfb66bbce13fea59d65fb092368ee7abdef545ec657937"
-    },
-    {
-      "id": "2026-05-disable-camera-simulcast",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enableSimulcast": true
-      },
-      "variations": {
-        "1": {
-          "enableSimulcast": false
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-05-disable-camera-simulcast",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enableSimulcast": true
-        },
-        "variations": {
-          "1": {
-            "enableSimulcast": false
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "c8588e7cfb9998511eaa2cdd7429ef601c1adb089a6d7909d178eecb16b742ad"
     },
     {
       "id": "2026-05-distributed-clips",
