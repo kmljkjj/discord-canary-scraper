@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-20T20-53-23-946Z_643998_b5kc3z",
-  "buildNumber": "643998",
-  "scrapedAt": "2026-10-20T20:53:23.946Z",
+  "runId": "2026-10-20T20-57-49-119Z_644004_jkww3r",
+  "buildNumber": "644004",
+  "scrapedAt": "2026-10-20T20:57:49.119Z",
   "totals": {
-    "all": 389,
+    "all": 388,
     "legacy": 0,
-    "apex": 386
+    "apex": 385
   },
   "experiments": [
     {
@@ -1697,23 +1697,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-arborium-highlight",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
