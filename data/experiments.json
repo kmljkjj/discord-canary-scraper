@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-20T17-09-14-438Z_643557_oblcr9",
-  "buildNumber": "643557",
-  "scrapedAt": "2026-10-20T17:09:14.438Z",
+  "runId": "2026-10-20T17-12-35-799Z_643560_mi1sgp",
+  "buildNumber": "643560",
+  "scrapedAt": "2026-10-20T17:12:35.799Z",
   "totals": {
-    "all": 393,
+    "all": 392,
     "legacy": 0,
-    "apex": 390
+    "apex": 389
   },
   "experiments": [
     {
@@ -1083,26 +1083,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-01-cms-layouts",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {
