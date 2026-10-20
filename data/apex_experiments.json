@@ -5514,16 +5514,19 @@
     "name": "2026-10-desktop-game-perf",
     "defaultConfig": {
       "nativeSystemCpuTimes": false,
-      "overlayOnlyAnimatesItself": false
+      "overlayOnlyAnimatesItself": false,
+      "fullscreenPopupOcclusion": false
     },
     "variations": {
       "0": {
         "nativeSystemCpuTimes": false,
-        "overlayOnlyAnimatesItself": false
+        "overlayOnlyAnimatesItself": false,
+        "fullscreenPopupOcclusion": false
       },
       "1": {
         "nativeSystemCpuTimes": true,
-        "overlayOnlyAnimatesItself": true
+        "overlayOnlyAnimatesItself": true,
+        "fullscreenPopupOcclusion": true
       }
     },
     "label": null
