@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T18:35:55.449Z",
+  "fetchedAt": "2026-10-20T18:42:56.768Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,43 +5020,43 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 6,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 6
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 6,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 6
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 1
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -5820,16 +5820,6 @@
       "note": "No rollout data found in Discord API or worker API."
     },
     {
-      "id": "2026-03-application-widget-v2-add-tweak",
-      "hash": 361638677,
-      "type": "user",
-      "title": "2026-03-application-widget-v2-add-tweak",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-03-arborium-highlight",
       "hash": 2983928175,
       "type": "user",
@@ -6520,16 +6510,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-05-disable-camera-simulcast",
-      "hash": 1113274457,
-      "type": "user",
-      "title": "2026-05-disable-camera-simulcast",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-05-distributed-clips",
       "hash": 91343840,
       "type": "user",
@@ -6674,16 +6654,6 @@
       "hash": 703548887,
       "type": "user",
       "title": "2026-06-av1-encode-linux",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-06-battlenet-social-sdk-migration",
-      "hash": 222916659,
-      "type": "user",
-      "title": "2026-06-battlenet-social-sdk-migration",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8911,11 +8881,11 @@
     }
   ],
   "summary": {
-    "total": 609,
+    "total": 606,
     "guild": 94,
-    "user": 515,
+    "user": 512,
     "withPercentage": 224,
-    "withoutPercentage": 385,
+    "withoutPercentage": 382,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
