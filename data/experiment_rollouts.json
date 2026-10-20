@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T21:35:09.953Z",
+  "fetchedAt": "2026-10-20T21:42:04.880Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,10 +5020,10 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -5040,10 +5040,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 1,
@@ -6180,36 +6180,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-04-desktop-tti-dnstcp-warmup",
-      "hash": 1462158869,
-      "type": "user",
-      "title": "2026-04-desktop-tti-dnstcp-warmup",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-04-desktop-tti-early-update-check",
-      "hash": 774978253,
-      "type": "user",
-      "title": "2026-04-desktop-tti-early-update-check",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-04-desktop-tti-update-backoff",
-      "hash": 3213508811,
-      "type": "user",
-      "title": "2026-04-desktop-tti-update-backoff",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-04-desktop-tti-v8-cache",
       "hash": 4249425147,
       "type": "user",
@@ -6710,16 +6680,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-06-desktop-tti-splash-asset",
-      "hash": 1436822309,
-      "type": "user",
-      "title": "2026-06-desktop-tti-splash-asset",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-06-game-invites-channel",
       "hash": 2587967235,
       "type": "guild",
@@ -7044,16 +7004,6 @@
       "hash": 3762073653,
       "type": "user",
       "title": "2026-07-desktop-channel-tabs",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-07-desktop-tti-update-backoff-algo",
-      "hash": 3727124753,
-      "type": "user",
-      "title": "2026-07-desktop-tti-update-backoff-algo",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8871,11 +8821,11 @@
     }
   ],
   "summary": {
-    "total": 605,
+    "total": 600,
     "guild": 94,
-    "user": 511,
+    "user": 506,
     "withPercentage": 224,
-    "withoutPercentage": 381,
+    "withoutPercentage": 376,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
