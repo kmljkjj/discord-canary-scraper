@@ -13,97 +13,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Assemble experiment_state.js from base64 parts
+      - name: Assemble experiment_state and patch index
         run: |
           set -euo pipefail
-          python3 <<'PY'
-          from pathlib import Path
-          import base64
-          parts = []
-          for i in range(12):
-              p = Path(f"scripts/es_b64/{i:02d}.txt")
-              if not p.exists():
-                  raise SystemExit(f"missing {p}")
-              parts.append(p.read_text().strip())
-          raw = base64.b64decode("".join(parts))
-          out = Path("src/lib/experiment_state.js")
-          out.write_bytes(raw)
-          print("wrote", out, "bytes", len(raw))
-          text = raw.decode()
-          for needle in ["retentionRatio", "variationSource", "variationKeysOnly(row.before)", "createExperimentFingerprint"]:
-              if needle not in text:
-                  raise SystemExit(f"missing marker {needle}")
-          print("markers ok")
-          PY
+          python3 scripts/p0_assemble_es.py
           node --check src/lib/experiment_state.js
-
-      - name: Patch index.js fingerprint + confirmedRemovedIds + okN
-        run: |
-          set -euo pipefail
-          python3 <<'PY'
-          from pathlib import Path
-          p = Path("src/index.js")
-          t = p.read_text()
-          # Delegate fingerprint if still local hash implementation
-          old_fp_start = "function expFingerprint(e) {"
-          if "createExperimentFingerprint" not in t and old_fp_start in t:
-              # replace whole function body until next function
-              import re
-              t2, n = re.subn(
-                  r"function expFingerprint\(e\) \{[\s\S]*?\n\}\n\nfunction expSnapshot",
-                  """function expFingerprint(e) {
-  if (!e || typeof e !== 'object') return '';
-  const n = e.fingerprint
-    ? e
-    : experimentState.normalizeExperiment(e) || e;
-  return experimentState.createExperimentFingerprint(n);
-}
-
-function expSnapshot""",
-                  t,
-                  count=1,
-              )
-              if n != 1:
-                  raise SystemExit("expFingerprint replace failed")
-              t = t2
-              print("fingerprint delegated")
-          else:
-              print("fingerprint already ok or different shape")
-
-          old_ok = "const strRtOk = typeof okN === 'undefined' ? true : okN;"
-          if old_ok in t:
-              t = t.replace(old_ok, "const strRtOk = okN === true;", 1)
-              print("okN fixed")
-
-          # confirmedRemovedIds: only if old simple form still present
-          old_conf = """    confirmedRemovedIds: (
-      (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
-      expDiff.removed ||
-      []
-    ).map((e) => String(typeof e === 'string' ? e : e && e.id)),"""
-          new_conf = """    confirmedRemovedIds: (() => {
-      const candidates =
-        (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
-        expDiff.removed ||
-        [];
-      const out = [];
-      const seen = new Set();
-      for (const e of candidates) {
-        const id = String(typeof e === 'string' ? e : (e && e.id) || '');
-        if (!id || seen.has(id) || knownRemoved.has(id)) continue;
-        seen.add(id);
-        out.push(id);
-      }
-      return out;
-    })(),"""
-          if old_conf in t:
-              t = t.replace(old_conf, new_conf, 1)
-              print("confirmedRemovedIds fixed")
-          else:
-              print("confirmedRemovedIds already patched or different")
-
-          p.write_text(t)
-          PY
+          python3 scripts/p0_patch_index.py
           node --check src/index.js
 
       - name: Commit and push
