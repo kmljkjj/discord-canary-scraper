@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T20:53:42.915Z",
+  "fetchedAt": "2026-10-20T21:00:36.148Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5020,26 +5020,6 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 5,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 5
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 5
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
@@ -5818,16 +5798,6 @@
       "status": "no_rollout_data",
       "source": "client_bundle",
       "note": "No rollout data found in Discord API or worker API."
-    },
-    {
-      "id": "2026-03-arborium-highlight",
-      "hash": 2983928175,
-      "type": "user",
-      "title": "2026-03-arborium-highlight",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
       "id": "2026-03-audio-effects-probe",
@@ -8881,14 +8851,14 @@
     }
   ],
   "summary": {
-    "total": 606,
+    "total": 604,
     "guild": 94,
-    "user": 512,
-    "withPercentage": 224,
-    "withoutPercentage": 382,
+    "user": 510,
+    "withPercentage": 223,
+    "withoutPercentage": 381,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 176,
-    "fpSampled": 5
+    "notStarted": 175,
+    "fpSampled": 4
   }
 }
