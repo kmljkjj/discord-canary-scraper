@@ -1,6 +1,8 @@
 name: P0 fix libs
+
 on:
   workflow_dispatch:
+
 jobs:
   fix:
     runs-on: ubuntu-latest
@@ -10,65 +12,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Restore and patch webhook + publish_data
+
+      - name: Restore webhook and publish_data
         run: |
           set -euo pipefail
           GOOD=3a15523067ee34baef55fb8a8fbe733cefb7b763
           git show "$GOOD:src/lib/webhook.js" > src/lib/webhook.js
           git show "$GOOD:src/lib/publish_data.js" > src/lib/publish_data.js
-          sed -i 's/sent += components.length;/sent += 1; \/\/ one Discord message POST/' src/lib/webhook.js
-          python3 <<'PY'
-          from pathlib import Path
-          p = Path("src/lib/publish_data.js")
-          t = p.read_text()
-          old = """  for (const rel of names.sort()) {
-    if (rel.includes('..') || path.isAbsolute(rel)) {
-      throw new Error('publishDataGeneration: invalid path ' + rel);
-    }
-    const value = files[rel];
-    const target = path.join(staging, rel);"""
-          new = """  const stagingResolved = path.resolve(staging);
-  for (const rel of names.sort()) {
-    if (rel.includes('..') || path.isAbsolute(rel) || rel.includes('\\0')) {
-      throw new Error('publishDataGeneration: invalid path ' + rel);
-    }
-    const value = files[rel];
-    const target = path.join(staging, rel);
-    const targetResolved = path.resolve(target);
-    if (
-      targetResolved !== stagingResolved &&
-      !targetResolved.startsWith(stagingResolved + path.sep)
-    ) {
-      throw new Error('publishDataGeneration: path outside staging ' + rel);
-    }"""
-          if old not in t:
-              raise SystemExit("path block not found")
-          t = t.replace(old, new, 1)
-          t = t.replace("schemaVersion: 1,", "schemaVersion: 2,", 1)
-          # prune: replace mtime sort with publishedAt when manifest exists
-          t = t.replace(
-              "dirs.push({ name, full, mtime: st.mtimeMs });",
-              """let publishedAt = st.mtimeMs;
-      try {
-        const man = await fs.readJson(path.join(full, '_manifest.json'));
-        if (man && man.publishedAt) {
-          const ts = Date.parse(man.publishedAt);
-          if (Number.isFinite(ts)) publishedAt = ts;
-        }
-      } catch {}
-      dirs.push({ name, full, publishedAt });""",
-              1,
-          )
-          t = t.replace("dirs.sort((a, b) => b.mtime - a.mtime);", "dirs.sort((a, b) => b.publishedAt - a.publishedAt);", 1)
-          p.write_text(t)
-          print("publish_data patched ok")
-          PY
+          sed -i 's/sent += components.length;/sent += 1;/' src/lib/webhook.js
           node --check src/lib/webhook.js
           node --check src/lib/publish_data.js
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/lib/webhook.js src/lib/publish_data.js
-          git commit -m "fix(p0): restore webhook/publish_data + path safety + sent count" || true
-          git pull --rebase origin main || git pull --rebase --autostash origin main
+          git commit -m "fix(p0): restore webhook/publish_data (undo placeholder)" || true
+          git pull --rebase origin main || true
           git push origin main
