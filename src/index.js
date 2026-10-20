@@ -86,22 +86,10 @@ function stableObject(value) {
 
 function expFingerprint(e) {
   if (!e || typeof e !== 'object') return '';
-  const type = e.type === 'guild' || e.kind === 'guild' ? 'guild' : 'user';
-  let keys = [];
-  if (e.variations && typeof e.variations === 'object')
-    keys = Object.keys(e.variations).sort((a, b) => Number(a) - Number(b));
-  else if (Array.isArray(e.treatments))
-    keys = e.treatments.map((_, i) => String(i));
-  else if (typeof e.variationCount === 'number' && e.variationCount > 0)
-    keys = Array.from({ length: e.variationCount }, (_, i) => String(i));
-  const payload = stableObject({
-    type,
-    label: e.label || null,
-    keys,
-    variationCount: keys.length || e.variationCount || 0,
-    variations: e.variations || null,
-  });
-  return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 24);
+  const n = e.fingerprint
+    ? e
+    : experimentState.normalizeExperiment(e) || e;
+  return experimentState.createExperimentFingerprint(n);
 }
 
 function expSnapshot(e) {
@@ -756,7 +744,7 @@ async function main() {
   // Full transactional gate: nothing durable advances if normal notify failed
   // when there was something to announce (strings/routes). Experiments last_extract
   // and saveState are also gated so the next run can retry webhooks.
-  const strRtOk = typeof okN === 'undefined' ? true : okN;
+  const strRtOk = okN === true;
   const hadNormalDiff =
     Object.keys(strDiff.added).length +
       Object.keys(strDiff.modified).length +
@@ -824,11 +812,21 @@ async function main() {
     existingRemoved: previousRemoved,
     allowRemovals: !!cov.reliable || (expDiff.removed.length > 0),
     buildNumber: bn,
-    confirmedRemovedIds: (
-      (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
-      expDiff.removed ||
-      []
-    ).map((e) => String(typeof e === 'string' ? e : e && e.id)),
+    confirmedRemovedIds: (() => {
+      const candidates =
+        (rawDiff && (rawDiff.removedAll || rawDiff.removed)) ||
+        expDiff.removed ||
+        [];
+      const out = [];
+      const seen = new Set();
+      for (const e of candidates) {
+        const id = String(typeof e === 'string' ? e : (e && e.id) || '');
+        if (!id || seen.has(id) || knownRemoved.has(id)) continue;
+        seen.add(id);
+        out.push(id);
+      }
+      return out;
+    })(),
   });
 
   const allExps = findings.experiments || [];

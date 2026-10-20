@@ -78,22 +78,10 @@ function createExperimentFingerprint(exp) {
   return crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
-function stableConfigPayload(exp) {
-  if (!exp || typeof exp !== 'object') return null;
-  const dc = exp.defaultConfig && typeof exp.defaultConfig === 'object' ? exp.defaultConfig : null;
-  let vars = null;
-  if (exp.variations && typeof exp.variations === 'object' && !Array.isArray(exp.variations)) {
-    vars = exp.variations;
-  } else if (Array.isArray(exp.treatments)) {
-    vars = {};
-    exp.treatments.forEach((t, i) => {
-      vars[String(i)] = t && typeof t === 'object' ? t : { value: t };
-    });
-  }
-  if (!dc && !vars) return null;
-  return stableObject({ defaultConfig: dc, variations: vars });
-}
-
+/**
+ * Modification = structure only (keys, kind, system, label, percentages).
+ * Deep variation/defaultConfig bodies are build noise — intentionally ignored.
+ */
 function isMeaningfulModification(prev, cur) {
   if (!prev || !cur) return false;
   const prevKeys = variationKeysOnly(prev).join(',');
@@ -102,6 +90,9 @@ function isMeaningfulModification(prev, cur) {
   const pk = String(prev.kind || prev.type || '').toLowerCase();
   const ck = String(cur.kind || cur.type || '').toLowerCase();
   if (pk && ck && pk !== ck) return true;
+  const ps = String(prev.system || '').toLowerCase();
+  const cs = String(cur.system || '').toLowerCase();
+  if (ps && cs && ps !== cs) return true;
   const pl = (prev.label || prev.title || '').trim();
   const cl = (cur.label || cur.title || '').trim();
   if (pl !== cl && (pl || cl)) return true;
@@ -116,9 +107,6 @@ function isMeaningfulModification(prev, cur) {
   const pu = num(prev.userPercentage);
   const cu = num(cur.userPercentage);
   if (pu != null && cu != null && Math.abs(pu - cu) >= 0.5) return true;
-  const a = stableConfigPayload(prev);
-  const b = stableConfigPayload(cur);
-  if (a && b && JSON.stringify(a) !== JSON.stringify(b)) return true;
   return false;
 }
 
@@ -129,7 +117,21 @@ function normalizeExperiment(raw) {
   const kind = normalizeKind(raw);
   const label = raw.label || raw.title || null;
   const system = raw.system || null;
-  const variations = raw.variations || raw.treatments || null;
+  let variationSource = null;
+  let variations = null;
+  let treatments = null;
+  if (raw.variations && typeof raw.variations === 'object' && !Array.isArray(raw.variations)) {
+    variations = raw.variations;
+    variationSource = 'variations';
+  } else if (Array.isArray(raw.treatments)) {
+    treatments = raw.treatments;
+    variations = raw.treatments; // legacy consumers still read variations
+    variationSource = 'treatments';
+  } else if (raw.variations != null) {
+    variations = raw.variations;
+    variationSource = 'variations';
+  }
+  const keys = variationKeysOnly({ variations, treatments, variationCount: raw.variationCount });
   const base = {
     id,
     kind,
@@ -140,50 +142,107 @@ function normalizeExperiment(raw) {
     description: raw.description || null,
     defaultConfig: raw.defaultConfig || null,
     variations,
-    treatments: raw.treatments || null,
-    variationCount:
-      raw.variationCount ||
-      (variations && typeof variations === 'object'
-        ? Object.keys(variations).length
-        : 0) ||
-      0,
+    treatments: treatments || raw.treatments || null,
+    variationSource,
+    variationCount: keys.length || Number(raw.variationCount) || 0,
     percentage: raw.percentage,
     percent: raw.percent,
     rate: raw.rate,
     rollout: raw.rollout,
     rolloutPercentage: raw.rolloutPercentage,
     pct: raw.pct,
+    // Preserve unknown fields for datamine / future normalizers
+    raw: { ...raw },
   };
   const withPct = attachPercentages(base);
   withPct.fingerprint = createExperimentFingerprint(withPct);
   return withPct;
 }
 
-function assessCoverage({ currentCount, previousCount, extractionStatus }) {
+/**
+ * Multi-signal coverage gate.
+ * Count ratio alone is insufficient (can hide ID churn at same size).
+ */
+function assessCoverage({
+  currentCount,
+  previousCount,
+  extractionStatus,
+  currentIds,
+  previousIds,
+  chunksExpected,
+  chunksRead,
+  readErrors,
+  parseErrors,
+}) {
   if (
     extractionStatus &&
     extractionStatus !== 'complete' &&
     extractionStatus !== 'ok'
   ) {
-    return { reliable: false, reason: 'extraction_not_complete', ratio: 0 };
+    return {
+      reliable: false,
+      status: 'coverage_degraded',
+      reason: 'extraction_not_complete',
+      ratio: 0,
+      retentionRatio: null,
+      chunkRatio: null,
+    };
   }
   if (previousCount <= 0) {
     return {
       reliable: currentCount > 0,
+      status: currentCount > 0 ? 'coverage_reliable' : 'coverage_unknown',
       reason: currentCount > 0 ? 'bootstrap' : 'empty',
       ratio: currentCount > 0 ? 1 : 0,
+      retentionRatio: null,
+      chunkRatio: null,
     };
   }
   const ratio = currentCount / previousCount;
   const minRatio = Number(process.env.EXP_COVERAGE_MIN_RATIO || 0.8);
   const maxRatio = Number(process.env.EXP_COVERAGE_MAX_RATIO || 1.25);
-  const reliable = ratio >= minRatio && ratio <= maxRatio;
+  const minRetention = Number(process.env.EXP_COVERAGE_MIN_RETENTION || 0.75);
+
+  let retentionRatio = null;
+  if (Array.isArray(previousIds) && Array.isArray(currentIds)) {
+    const cur = new Set(currentIds.map(String));
+    const prev = previousIds.map(String).filter(Boolean);
+    const retained = prev.filter((id) => cur.has(id)).length;
+    retentionRatio = prev.length ? retained / prev.length : 1;
+  }
+
+  let chunkRatio = null;
+  if (chunksExpected != null && Number(chunksExpected) > 0) {
+    chunkRatio = Number(chunksRead || 0) / Number(chunksExpected);
+  }
+
+  const re = Number(readErrors || 0);
+  const pe = Number(parseErrors || 0);
+
+  const ratioOk = ratio >= minRatio && ratio <= maxRatio;
+  const retentionOk = retentionRatio == null || retentionRatio >= minRetention;
+  const chunkOk = chunkRatio == null || chunkRatio >= 0.9;
+  const errorsOk = re === 0 && pe === 0;
+  const reliable = ratioOk && retentionOk && chunkOk && errorsOk;
+
+  let reason = 'ok';
+  if (!ratioOk) reason = 'coverage_out_of_range';
+  else if (!retentionOk) reason = 'retention_too_low';
+  else if (!chunkOk) reason = 'chunk_coverage_low';
+  else if (!errorsOk) reason = 'read_or_parse_errors';
+
   return {
     reliable,
-    reason: reliable ? 'ok' : 'coverage_out_of_range',
+    status: reliable ? 'coverage_reliable' : 'coverage_degraded',
+    reason,
     ratio,
+    retentionRatio,
+    chunkRatio,
+    readErrors: re,
+    parseErrors: pe,
     minRatio,
     maxRatio,
+    minRetention,
   };
 }
 
@@ -277,12 +336,8 @@ function toNotifyExpDiff(diff) {
         return {
           ...row.after,
           _before: row.before || null,
-          _prevKeys: Object.keys((row.before && row.before.variations) || {})
-            .sort()
-            .join(','),
-          _nextKeys: Object.keys((row.after && row.after.variations) || {})
-            .sort()
-            .join(','),
+          _prevKeys: variationKeysOnly(row.before).join(','),
+          _nextKeys: variationKeysOnly(row.after).join(','),
         };
       }
       return row;
