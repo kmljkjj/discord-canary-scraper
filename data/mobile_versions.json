@@ -1,26 +1,26 @@
 {
-  "scrapedAt": "2026-10-20T12:57:35.895Z",
+  "scrapedAt": "2026-10-20T13:04:49.605Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
-      "version": null,
+      "version": "350.0",
       "build": null,
-      "releaseDate": null,
-      "releaseNotes": null,
+      "releaseDate": "2026-10-19T17:19:49Z",
+      "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
-      "available": false,
-      "checkedAt": "2026-10-20T12:57:35.895Z"
+      "available": true,
+      "checkedAt": "2026-10-20T13:04:49.605Z"
     },
     {
       "platform": "ios",
       "channel": "beta",
       "version": null,
       "available": false,
-      "note": "No App Store version available",
+      "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-20T12:57:35.895Z"
+      "checkedAt": "2026-10-20T13:04:49.605Z"
     },
     {
       "platform": "android",
@@ -32,7 +32,7 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-20T12:57:35.895Z"
+      "checkedAt": "2026-10-20T13:04:49.605Z"
     },
     {
       "platform": "android",
@@ -45,7 +45,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-10-20T12:57:35.895Z"
+      "checkedAt": "2026-10-20T13:04:49.605Z"
     },
     {
       "platform": "android",
@@ -54,7 +54,7 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-20T12:57:35.895Z"
+      "checkedAt": "2026-10-20T13:04:49.605Z"
     }
   ],
   "otaIndex": {
@@ -160,36 +160,6 @@
         "build": "106116",
         "commit": "bf7e9471b96871f7b7438679a8943c23d5140ab5",
         "releaseName": null
-      },
-      {
-        "version": "334.0",
-        "build": "105137",
-        "commit": "e3330747ba5682792c3f688c7a115364e67aa678",
-        "releaseName": null
-      },
-      {
-        "version": "333.1",
-        "build": "103826",
-        "commit": "ecb6ce6a5a3119f92456407cb87d9ffd22b15661",
-        "releaseName": null
-      },
-      {
-        "version": "333.0",
-        "build": "103825",
-        "commit": "8663bf12c202e81e4970f0c74c305a4e21cefce9",
-        "releaseName": null
-      },
-      {
-        "version": "332.2",
-        "build": "103833",
-        "commit": "680b71624880cc88fd410e3f702ab4ec9284b610",
-        "releaseName": null
-      },
-      {
-        "version": "331.0",
-        "build": "103362",
-        "commit": "ccd30499bd3b408c0cd6ee5a3fa3fa7d21f27a58",
-        "releaseName": null
       }
     ],
     "android": [
@@ -294,24 +264,6 @@
         "build": "33501100407690",
         "commit": "ce867c7351af823feeb2e897c2e01913e5872e95",
         "releaseName": "discord_android@335.11.407690-0+33501100407690"
-      },
-      {
-        "version": "334.11",
-        "build": "33401100402187",
-        "commit": "b70187f3af8f48d9aa3aee3a6d74c5e7401c1959",
-        "releaseName": "discord_android@334.11.402187-0+33401100402187"
-      },
-      {
-        "version": "332.11",
-        "build": "33201100394507",
-        "commit": "586384563f73e01274aff572da648af96f91a662",
-        "releaseName": "discord_android@332.11.394507-0+33201100394507"
-      },
-      {
-        "version": "331.14",
-        "build": "33101400395249",
-        "commit": "1222d4237447d30b06284884bb01771cf99af182",
-        "releaseName": "discord_android@331.14.395249-0+33101400395249"
       }
     ]
   },
@@ -399,7 +351,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-20T12:50:54.261Z",
+  "previousScrapedAt": "2026-10-20T12:57:35.895Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
