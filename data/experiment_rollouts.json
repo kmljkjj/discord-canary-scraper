@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T12:30:47.689Z",
+  "fetchedAt": "2026-10-20T12:37:32.689Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,10 +5020,10 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -5040,10 +5040,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -8870,6 +8870,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-web-screen-share-audio",
+      "hash": 1270334976,
+      "type": "user",
+      "title": "2026-10-web-screen-share-audio",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-web-streaming-optimizations",
       "hash": 2004834486,
       "type": "user",
@@ -8911,11 +8921,11 @@
     }
   ],
   "summary": {
-    "total": 609,
+    "total": 610,
     "guild": 94,
-    "user": 515,
+    "user": 516,
     "withPercentage": 224,
-    "withoutPercentage": 385,
+    "withoutPercentage": 386,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
