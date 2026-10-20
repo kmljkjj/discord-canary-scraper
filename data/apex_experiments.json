@@ -5597,14 +5597,17 @@
     "kind": "user",
     "name": "2026-10-desktop-game-perf",
     "defaultConfig": {
-      "nativeSystemCpuTimes": false
+      "nativeSystemCpuTimes": false,
+      "overlayOnlyAnimatesItself": false
     },
     "variations": {
       "0": {
-        "nativeSystemCpuTimes": false
+        "nativeSystemCpuTimes": false,
+        "overlayOnlyAnimatesItself": false
       },
       "1": {
-        "nativeSystemCpuTimes": true
+        "nativeSystemCpuTimes": true,
+        "overlayOnlyAnimatesItself": true
       }
     },
     "label": null

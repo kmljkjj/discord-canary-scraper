@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-20T19-21-27-754Z_643799_cbrey5",
-  "buildNumber": "643799",
-  "updatedAt": "2026-10-20T19:21:27.754Z",
+  "runId": "2026-10-20T19-26-54-706Z_643818_b7wtud",
+  "buildNumber": "643818",
+  "updatedAt": "2026-10-20T19:26:54.706Z",
   "count": 386,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -7014,14 +7014,17 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "nativeSystemCpuTimes": false
+          "nativeSystemCpuTimes": false,
+          "overlayOnlyAnimatesItself": false
         },
         "1": {
-          "nativeSystemCpuTimes": true
+          "nativeSystemCpuTimes": true,
+          "overlayOnlyAnimatesItself": true
         }
       },
       "defaultConfig": {
-        "nativeSystemCpuTimes": false
+        "nativeSystemCpuTimes": false,
+        "overlayOnlyAnimatesItself": false
       },
       "system": "apex",
       "fp": "31f572c1b66019e409bb6a1c91ef9cbf732b1ebc9bf1105e8790603ec110efaf"
