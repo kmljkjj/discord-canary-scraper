@@ -5707,6 +5707,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-embedded-app-frame-policy",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-embedded-app-shim-v2",
     "defaultConfig": {
       "enabled": false

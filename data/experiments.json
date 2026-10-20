@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-20T18-07-41-098Z_643651_qhtqrh",
-  "buildNumber": "643651",
-  "scrapedAt": "2026-10-20T18:07:41.098Z",
+  "runId": "2026-10-20T18-09-54-770Z_643656_uyzkqq",
+  "buildNumber": "643656",
+  "scrapedAt": "2026-10-20T18:09:54.770Z",
   "totals": {
-    "all": 391,
+    "all": 392,
     "legacy": 0,
-    "apex": 388
+    "apex": 389
   },
   "experiments": [
     {
@@ -7200,6 +7200,23 @@
     },
     {
       "id": "2026-10-e2e-latency-measurement",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-embedded-app-frame-policy",
       "type": "user",
       "kind": "user",
       "label": null,
