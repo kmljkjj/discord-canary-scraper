@@ -1,0 +1,89 @@
+name: P0 fix libs
+on:
+  workflow_dispatch:
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Restore and patch
+        run: |
+          set -e
+          git show 3a15523067ee34baef55fb8a8fbe733cefb7b763:src/lib/webhook.js > src/lib/webhook.js
+          git show 3a15523067ee34baef55fb8a8fbe733cefb7b763:src/lib/publish_data.js > src/lib/publish_data.js
+          sed -i 's/sent += components.length;/sent += 1; \/\/ one Discord message POST/' src/lib/webhook.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('src/lib/publish_data.js')
+          t = p.read_text()
+          old = """  for (const rel of names.sort()) {
+    if (rel.includes('..') || path.isAbsolute(rel)) {
+      throw new Error('publishDataGeneration: invalid path ' + rel);
+    }
+    const value = files[rel];
+    const target = path.join(staging, rel);"""
+          new = """  const stagingResolved = path.resolve(staging);
+  for (const rel of names.sort()) {
+    if (rel.includes('..') || path.isAbsolute(rel) || rel.includes('\\0')) {
+      throw new Error('publishDataGeneration: invalid path ' + rel);
+    }
+    const value = files[rel];
+    const target = path.join(staging, rel);
+    const targetResolved = path.resolve(target);
+    if (
+      targetResolved !== stagingResolved &&
+      !targetResolved.startsWith(stagingResolved + path.sep)
+    ) {
+      throw new Error('publishDataGeneration: path outside staging ' + rel);
+    }"""
+          if old not in t: raise SystemExit('path block not found')
+          t = t.replace(old, new, 1)
+          old_prune = """async function pruneGenerations(genRoot, keep, currentRunId) {
+  if (!(await fs.pathExists(genRoot))) return;
+  const entries = await fs.readdir(genRoot);
+  const dirs = [];
+  for (const name of entries) {
+    const full = path.join(genRoot, name);
+    const st = await fs.stat(full);
+    if (st.isDirectory()) {
+      dirs.push({ name, full, mtime: st.mtimeMs });
+    }
+  }
+  dirs.sort((a, b) => b.mtime - a.mtime);
+  let kept = 0;
+  for (const d of dirs) {
+    if (d.name === currentRunId || kept < keep) {
+      kept++;
+      continue;
+    }
+    await fs.remove(d.full);
+  }
+}"""
+          new_prune = """async function pruneGenerations(genRoot, keep, currentRunId) {
+  if (!(await fs.pathExists(genRoot))) return;
+  const entries = await fs.readdir(genRoot);
+  const dirs = [];
+  for (const name of entries) {
+    const full = path.join(genRoot, name);
+    const st = await fs.stat(full);
+    if (!st.isDirectory()) continue;
+    let publishedAt = st.mtimeMs;
+    try {
+      const man = await fs.readJson(path.join(full, '_manifest.json'));
+      if (man && man.publishedAt):
+        ts = Date.parse(man.publishedAt)
+        # keep JS below
+      pass
+    except Exception:
+      pass
+    dirs.append({'name': name, 'full': full, 'publishedAt': publishedAt})
+  # write JS version instead
+  raise SystemExit('use pure js path')
+"""
+          PY
+          echo fallback
