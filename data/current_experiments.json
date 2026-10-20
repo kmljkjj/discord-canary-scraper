@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-20T18-36-00-949Z_643705_adpqws",
-  "buildNumber": "643705",
-  "updatedAt": "2026-10-20T18:36:00.949Z",
-  "count": 387,
+  "runId": "2026-10-20T18-38-09-467Z_643715_0wosb6",
+  "buildNumber": "643715",
+  "updatedAt": "2026-10-20T18:38:09.467Z",
+  "count": 386,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8731,58 +8731,6 @@
         "value": null
       },
       "fingerprint": "3616e7ed9543ff3071cf1a2d1bf0f82c9841f341fa7100ac43ea879e884dc412"
-    },
-    {
-      "id": "2026-06-battlenet-social-sdk-migration",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-06-battlenet-social-sdk-migration",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "b9cd17596a18ee7cc6279695e8a3f0c19df97e1cd1bb9cad9cd2515adbe12760"
     },
     {
       "id": "2026-06-chat-bar-customization",

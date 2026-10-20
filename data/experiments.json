@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-20T18-36-00-949Z_643705_adpqws",
-  "buildNumber": "643705",
-  "scrapedAt": "2026-10-20T18:36:00.949Z",
+  "runId": "2026-10-20T18-38-09-467Z_643715_0wosb6",
+  "buildNumber": "643715",
+  "scrapedAt": "2026-10-20T18:38:09.467Z",
   "totals": {
-    "all": 390,
+    "all": 389,
     "legacy": 0,
-    "apex": 387
+    "apex": 386
   },
   "experiments": [
     {
@@ -3368,26 +3368,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-battlenet-social-sdk-migration",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {
