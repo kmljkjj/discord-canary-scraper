@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["730504"],{664699(i,d,p){p.d(d,{A:()=>t});var s=p(483510),a=p(378570);function t(i,d){(0,s.ci)(i.getGuildId(),i.id),(0,a.iN)(i.id,{source:d,state:{appChannelClosed:!0}})}}}]);
+//# sourceMappingURL=70d06670b415a700.js.map
