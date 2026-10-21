@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-21T18-53-52-862Z_645444_ttjsae",
-  "buildNumber": "645444",
-  "updatedAt": "2026-10-21T18:53:52.862Z",
-  "count": 380,
+  "runId": "2026-10-21T19-01-35-915Z_645463_bsmwwh",
+  "buildNumber": "645463",
+  "updatedAt": "2026-10-21T19:01:35.915Z",
+  "count": 381,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7472,6 +7472,28 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "2c6cfb4b538e22d715f4686fdebc2203dd3312a653b3d48b62453fd73344355c"
+    },
+    "2026-10-user-profile-widget-suggestions": {
+      "id": "2026-10-user-profile-widget-suggestions",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "enabled": true,
+          "suggestionsLocation": "below"
+        },
+        "2": {
+          "enabled": true,
+          "suggestionsLocation": "above"
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "e65dca5103fd3c5a13b99d75aeb7e5d86878541ddd1882849bcadcd9fe97a646"
     },
     "2026-10-video-player-playback-speed": {
       "id": "2026-10-video-player-playback-speed",

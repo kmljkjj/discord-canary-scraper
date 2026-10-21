@@ -5966,6 +5966,24 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-user-profile-widget-suggestions",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true,
+        "suggestionsLocation": "below"
+      },
+      "2": {
+        "enabled": true,
+        "suggestionsLocation": "above"
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-video-player-playback-speed",
     "defaultConfig": {
       "enabled": false
