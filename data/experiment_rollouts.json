@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-21T09:11:33.657Z",
+  "fetchedAt": "2026-10-21T09:18:33.322Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -12,7 +12,7 @@
     "fingerprintSampling": {
       "samples": 50,
       "uniqueHashes": 4,
-      "matched": 1
+      "matched": 2
     }
   },
   "guildExperiments": [
@@ -5000,23 +5000,23 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
       "type": "user",
-      "title": "hash_704914099",
+      "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 50,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 50
       },
       "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "note": null,
+      "fpSamples": 50,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 50
       }
     },
     {
@@ -5294,16 +5294,6 @@
       "hash": 511860492,
       "type": "user",
       "title": "Calendar",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2025-11_tida_webform",
-      "hash": 4055210228,
-      "type": "user",
-      "title": "Tida Webform",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8811,11 +8801,11 @@
     }
   ],
   "summary": {
-    "total": 600,
+    "total": 599,
     "guild": 94,
-    "user": 506,
+    "user": 505,
     "withPercentage": 223,
-    "withoutPercentage": 377,
+    "withoutPercentage": 376,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 175,
