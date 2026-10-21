@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["339757"],{196284(p){p.exports=JSON.parse('{"jBvMiO":["\u041E\u0431\u0445\u0456\u0434 \u0437\u0431\u0456\u0440\u043A\u0438 \u0430\u043A\u0442\u0438\u0432\u043D\u0438\u0439"],"d11XdP":["\u041E\u0431\u0445\u0456\u0434 \u0437\u0431\u0456\u0440\u043A\u0438:"],"VBPcR9":["\u0406\u043D\u0441\u0442\u0440\u0443\u043C\u0435\u043D\u0442\u0438 \u0440\u043E\u0437\u0440\u043E\u0431\u043D\u0438\u043A\u0430"]}')}}]);
-//# sourceMappingURL=ef54f2de02b51cc2.js.map

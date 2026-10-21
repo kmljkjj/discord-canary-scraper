@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["62100"],{262143(i){i.exports=JSON.parse('{"F3llsQ":["Jaa tieto profiilini p\xe4ivityksest\xe4"],"6goWcz":["Salli push-ilmoituksen l\xe4hetys kavereille, kun p\xe4ivit\xe4t profiiliasi."]}')}}]);
+//# sourceMappingURL=e0e7100f1c0eea0b.js.map

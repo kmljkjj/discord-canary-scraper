@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["599940"],{672303(i){i.exports=JSON.parse('{"jBvMiO":["Koontiversion ohitus aktiivinen"],"d11XdP":["Koontiversion ohitus:"],"VBPcR9":["Kehitt\xe4j\xe4ty\xf6kalut"]}')}}]);
+//# sourceMappingURL=62b215237b1e4b1b.js.map

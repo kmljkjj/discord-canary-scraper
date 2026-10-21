@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["179659"],{672006(s){s.exports=JSON.parse('{"jBvMiO":["Versijos ap\u0117jimas veikia"],"d11XdP":["Versijos ap\u0117jimas:"],"VBPcR9":["K\u016Br\u0117j\u0173 \u012Frankiai"]}')}}]);
+//# sourceMappingURL=3768e55de046e5ea.js.map

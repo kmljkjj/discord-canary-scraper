@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["908829"],{511724(e){e.exports=JSON.parse('{"D3CWUF":["Revelaci\xf3n completa con el lanzamiento de Call of Duty: Modern Warfare 4 el ",[3,"date","::MMMd"]],"ugfqKp":["Confidencial: C\xf3digo Blurple"],"YEsjvt":["Consigue un plano de Call of Duty: MW4 el ",[3,"date","::MMMd"],". Solo con Nitro."]}')}}]);
+//# sourceMappingURL=9dccb70d453ed626.js.map

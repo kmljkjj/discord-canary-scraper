@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["337363"],{140190(e){e.exports=JSON.parse('{"PhnOeM":["Check for Updates..."],"mpd5Bv":["Hi! Discord will run in the background to keep you in touch with your friends. You can right-click here to quit."],"zjuWNH":["Open ",[1,"appName"]],"VuK9sC":["Quit ",[1,"appName"]],"JO5lXN":["Open Voice & Video Settings"]}')}}]);
+//# sourceMappingURL=2b69f0f0249b8d10.js.map
