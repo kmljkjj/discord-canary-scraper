@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["515122"],{634121(e,s,t){t.r(s),t.d(s,{default:()=>a});let a=JSON.parse('{"J0YWRq":["Create your own Server Tag"],"xyVEtZ":["Translation pilot test message"]}')}}]);
-//# sourceMappingURL=6ddf0d08fb0603a3.js.map
