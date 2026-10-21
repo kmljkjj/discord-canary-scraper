@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-21T20-41-16-294Z_645673_33o01l",
-  "buildNumber": "645673",
-  "updatedAt": "2026-10-21T20:41:16.294Z",
-  "count": 381,
+  "runId": "2026-10-21T20-44-29-535Z_645676_d6s28m",
+  "buildNumber": "645676",
+  "updatedAt": "2026-10-21T20:44:29.535Z",
+  "count": 383,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -6728,6 +6728,46 @@
       },
       "system": "apex",
       "fp": "063c6773340e1ec671798160b352a040def2c879bd59b84e64ca6fe73c99b732"
+    },
+    "2026-10-code-blurple": {
+      "id": "2026-10-code-blurple",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "984911e38729942107430b88d04982c279eebc30f38f94aed62dad7418928e02"
+    },
+    "2026-10-code-blurple-marketing-holdout": {
+      "id": "2026-10-code-blurple-marketing-holdout",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "8f14a0c71885480d693cd26be7da72d700cfd7bad3c827d5541cf01389ad7fd3"
     },
     "2026-10-code-blurple-teaser": {
       "id": "2026-10-code-blurple-teaser",
