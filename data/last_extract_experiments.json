@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-22T19-11-52-759Z_647312_7wrlqj",
-  "buildNumber": "647312",
-  "updatedAt": "2026-10-22T19:11:52.759Z",
+  "runId": "2026-10-22T19-15-03-350Z_647327_xk6yi2",
+  "buildNumber": "647327",
+  "updatedAt": "2026-10-22T19:15:03.350Z",
   "count": 383,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -6974,18 +6974,21 @@
         "0": {
           "skipSilentDelayEstimatorFfts": false,
           "processPollingPerf": false,
-          "keepRendererLogFileOpen": false
+          "keepRendererLogFileOpen": false,
+          "questRingVisibleSteps": false
         },
         "1": {
           "skipSilentDelayEstimatorFfts": true,
           "processPollingPerf": true,
-          "keepRendererLogFileOpen": true
+          "keepRendererLogFileOpen": true,
+          "questRingVisibleSteps": true
         }
       },
       "defaultConfig": {
         "skipSilentDelayEstimatorFfts": false,
         "processPollingPerf": false,
-        "keepRendererLogFileOpen": false
+        "keepRendererLogFileOpen": false,
+        "questRingVisibleSteps": false
       },
       "system": "apex",
       "fp": "b1c8d36ee752af80557389690c5ef3a825e18fb8947b7aad0744bb6cdf6425da"
