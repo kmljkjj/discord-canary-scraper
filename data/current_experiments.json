@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-22T01-08-28-029Z_646223_0vap3x",
-  "buildNumber": "646223",
-  "updatedAt": "2026-10-22T01:08:28.029Z",
-  "count": 383,
+  "runId": "2026-10-22T01-11-45-502Z_646225_h7c8go",
+  "buildNumber": "646225",
+  "updatedAt": "2026-10-22T01:11:45.502Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -2225,58 +2225,6 @@
         "value": null
       },
       "fingerprint": "bd671cf10ed1e6285635c1bf64e5526e4b801f7d40f818c4addfc0bb990d393d"
-    },
-    {
-      "id": "2025-12-game-invite-account-linking-entry-point",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2025-12-game-invite-account-linking-entry-point",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "452b94b13a4801fa4392091da8ccd04f9adb9e3a577956f31f88260da4413b81"
     },
     {
       "id": "2025-12-hdr-accessibility-setting",
