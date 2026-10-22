@@ -6,7 +6,7 @@ function escapeHtml(s) {
     .replace(/>/g, amp + 'gt;')
     .replace(/"/g, amp + 'quot;');
 }
-/* Rollouts page — fetch experiment_rollouts.json and render cards */
+/* Rollouts page — guild: experiment_rollouts.json · user: user_rollouts.json (v11, % EXACTS) */
 (async () => {
   const grid = document.getElementById('grid');
   const meta = document.getElementById('meta');
@@ -17,30 +17,111 @@ function escapeHtml(s) {
   let currentFilter = 'all';
   let currentSearch = '';
 
-  // Load data
-  let data;
+  // Load data — les deux sources en parallèle
+  let data = null;
+  let userData = null;
   try {
-    const res = await fetch('data/experiment_rollouts.json');
-    data = await res.json();
+    [data, userData] = await Promise.all([
+      fetch('data/experiment_rollouts.json').then((r) => r.json()).catch(() => null),
+      fetch('data/user_rollouts.json').then((r) => r.json()).catch(() => null),
+    ]);
+    if (!data && !userData) {
+      grid.innerHTML = '<div class="empty">Erreur de chargement</div>';
+      return;
+    }
   } catch (e) {
     grid.innerHTML = '<div class="empty">Erreur de chargement</div>';
     return;
   }
 
-  allExps = (data.matchedExperiments || []).slice().sort((a, b) => {
-    const aPct = a.percentage != null ? a.percentage : -1;
-    const bPct = b.percentage != null ? b.percentage : -1;
-    if (bPct !== aPct) return bPct - aPct;
-    return (a.id || a.title || '').localeCompare(b.id || b.title || '');
-  });
+  // ---- User experiments : % EXACTS depuis user_rollouts.json (v11) ----
+  // Chaque expérience a des ranges de rollout réelles (échelle 0–10000),
+  // le % est calculé depuis ces ranges — pas d'estimation.
+  const userExact = new Map();
+  let userExactCommunity = 0;
+  let userExactWorker = 0;
+  let userDetected = 0;
 
-  document.getElementById('stat-total').textContent = data.summary?.total ?? allExps.length;
-  document.getElementById('stat-pct').textContent = data.summary?.withPercentage ?? 0;
-  document.getElementById('stat-full').textContent = data.summary?.fullRollout ?? 0;
-  document.getElementById('stat-fp').textContent = data.summary?.fpSampled ?? 0;
+  function treatmentPct(treatments) {
+    let best = null;
+    for (const t of treatments) {
+      if (t.bucket >= 1 && (best == null || t.pct > best)) best = t.pct;
+    }
+    if (best != null) return best;
+    for (const t of treatments) {
+      if (t.bucket === 0) return t.pct;
+    }
+    return treatments[0].pct;
+  }
 
-  const sources = data.sources || {};
+  if (userData && Array.isArray(userData.experiments)) {
+    for (const e of userData.experiments) {
+      if (!e || e.type !== 'user' || !e.id) continue;
+      const treatments = (e.treatments || []).filter(
+        (t) => t && t.pctKnown && t.pct != null && Number.isFinite(t.pct),
+      );
+      if (e.status === 'detected' || !treatments.length) {
+        // Détecté sans ranges → ?% honnête
+        userDetected++;
+        userExact.set(String(e.hash), {
+          id: e.id,
+          title: e.title || e.id,
+          type: 'user',
+          hash: e.hash,
+          source: 'fingerprint_sampling',
+          status: e.status,
+          percentage: null,
+          platforms: [],
+          detected: true,
+        });
+        continue;
+      }
+      if (e.source === 'community_ranges') userExactCommunity++;
+      else userExactWorker++;
+      userExact.set(String(e.hash), {
+        id: e.id,
+        title: e.title || e.id,
+        type: 'user',
+        hash: e.hash,
+        source: e.source === 'community_ranges' ? 'community_ranges' : 'worker_api',
+        status: e.rolloutStatus || null,
+        percentage: treatmentPct(treatments),
+        platforms: e.platforms || [],
+        treatments,
+      });
+    }
+  }
+
+  // ---- Merge : les user exps EXACTES remplacent celles de l'ancien fichier ----
+  allExps = ((data && data.matchedExperiments) || [])
+    .filter((e) => !(e && e.type === 'user' && userExact.has(String(e.hash))))
+    .concat([...userExact.values()])
+    .sort((a, b) => {
+      const aPct = a.percentage != null ? a.percentage : -1;
+      const bPct = b.percentage != null ? b.percentage : -1;
+      if (bPct !== aPct) return bPct - aPct;
+      return (a.id || a.title || '').localeCompare(b.id || b.title || '');
+    });
+
+  document.getElementById('stat-total').textContent = allExps.length;
+  document.getElementById('stat-pct').textContent =
+    allExps.filter((e) => e.percentage != null).length;
+  document.getElementById('stat-full').textContent =
+    allExps.filter((e) => e.percentage != null && e.percentage >= 100).length;
+  document.getElementById('stat-fp').textContent =
+    userExactCommunity + userExactWorker;
+
+  const sources = (data && data.sources) || {};
   const sourceParts = [];
+  if (userExactCommunity) {
+    sourceParts.push(`User exact (community ranges): ${userExactCommunity}`);
+  }
+  if (userExactWorker) {
+    sourceParts.push(`User exact (worker API): ${userExactWorker}`);
+  }
+  if (userDetected) {
+    sourceParts.push(`User detectes (?%): ${userDetected}`);
+  }
   if (sources.discordApi) {
     sourceParts.push(`Discord API: ${sources.discordApi.count ?? 0} guild exps`);
   }
@@ -55,18 +136,28 @@ function escapeHtml(s) {
       sourceParts.push(`Fingerprint: erreur`);
     }
   }
-  sourcesEl.innerHTML = sourceParts.map(s => `<span class="source-tag">${s}</span>`).join('');
+  sourcesEl.innerHTML = sourceParts.map((s) => `<span class="source-tag">${escapeHtml(s)}</span>`).join('');
 
-  const fetchedAt = data.fetchedAt ? new Date(data.fetchedAt).toLocaleString('fr-FR') : '-';
+  const dates = [(data && data.fetchedAt), (userData && userData.scrapedAt)]
+    .filter(Boolean)
+    .sort()
+    .reverse();
+  const fetchedAt = dates[0] ? new Date(dates[0]).toLocaleString('fr-FR') : '-';
   meta.textContent = `${allExps.length} experiences · ${fetchedAt}`;
   document.getElementById('updated').textContent = fetchedAt;
 
   function statusBadge(status) {
     const labels = {
       full_rollout: { text: '100%', cls: 'badge-full' },
+      full: { text: 'Full', cls: 'badge-full' },
+      rolling_out: { text: 'En cours', cls: 'badge-partial' },
+      ab_test: { text: 'A/B', cls: 'badge-partial' },
+      segmented: { text: 'Segmented', cls: 'badge-partial' },
       partial: { text: 'Partiel', cls: 'badge-partial' },
       not_started: { text: '0%', cls: 'badge-zero' },
+      not_rolled_out: { text: '0%', cls: 'badge-zero' },
       no_rollout_data: { text: 'N/A', cls: 'badge-na' },
+      detected: { text: '?', cls: 'badge-na' },
       unknown: { text: '?', cls: 'badge-na' },
     };
     const l = labels[status] || labels.unknown;
@@ -87,9 +178,26 @@ function escapeHtml(s) {
       worker_api: 'Worker API',
       fingerprint_sampling: 'Fingerprint',
       client_bundle: 'Client',
+      community_ranges: 'Community · EXACT',
     };
     const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
+  }
+
+  /* Variants exacts d'une expérience user v11 (ranges 0–10000) */
+  function exactDetails(exp) {
+    if (!exp.treatments || !exp.treatments.length) return '';
+    const parts = [`<div class="fp-details">`];
+    for (const t of exp.treatments) {
+      parts.push(
+        `<span class="fp-stat">${escapeHtml(t.label || 'Bucket ' + t.bucket)}: ${t.pct}%</span>`,
+      );
+    }
+    if (exp.platforms && exp.platforms.length) {
+      parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
+    }
+    parts.push('</div>');
+    return parts.join('');
   }
 
   function fpDetails(exp) {
@@ -147,7 +255,7 @@ function escapeHtml(s) {
           ${statusBadge(e.status)}
           ${sourceTag(source)}
         </div>
-        ${fpDetails(e)}
+        ${exactDetails(e) || fpDetails(e)}
         ${note ? `<div class="card-note">${escapeHtml(note)}</div>` : ''}
       </div>`;
     }).join('');

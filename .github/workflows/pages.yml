@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - 'data/experiments.json'
       - 'data/experiment_rollouts.json'
+      - 'data/user_rollouts.json'
       - 'data/findings.json'
       - 'data/routes.json'
       - 'data/build.json'
@@ -49,7 +50,7 @@ jobs:
             cp docs/data/experiments.json docs/data/findings.json
             echo "Placeholder experiments.json"
           fi
-          for f in routes build last_run_meta mobile_versions mobile_experiments experiment_rollouts; do
+          for f in routes build last_run_meta mobile_versions mobile_experiments experiment_rollouts user_rollouts; do
             if [ -f "data/$f.json" ]; then cp "data/$f.json" "docs/data/$f.json"; fi
           done
 
