@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-22T20-09-30-200Z_647428_an8r79",
-  "buildNumber": "647428",
-  "updatedAt": "2026-10-22T20:09:30.200Z",
+  "runId": "2026-10-22T20-11-17-509Z_647434_9himvn",
+  "buildNumber": "647434",
+  "updatedAt": "2026-10-22T20:11:17.509Z",
   "count": 381,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -6914,18 +6914,21 @@
         "0": {
           "nativeSystemCpuTimes": false,
           "overlayOnlyAnimatesItself": false,
-          "fullscreenPopupOcclusion": false
+          "fullscreenPopupOcclusion": false,
+          "overlayHiddenWavePaused": false
         },
         "1": {
           "nativeSystemCpuTimes": true,
           "overlayOnlyAnimatesItself": true,
-          "fullscreenPopupOcclusion": true
+          "fullscreenPopupOcclusion": true,
+          "overlayHiddenWavePaused": true
         }
       },
       "defaultConfig": {
         "nativeSystemCpuTimes": false,
         "overlayOnlyAnimatesItself": false,
-        "fullscreenPopupOcclusion": false
+        "fullscreenPopupOcclusion": false,
+        "overlayHiddenWavePaused": false
       },
       "system": "apex",
       "fp": "31f572c1b66019e409bb6a1c91ef9cbf732b1ebc9bf1105e8790603ec110efaf"

@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-22T20-09-30-200Z_647428_an8r79",
-  "buildNumber": "647428",
-  "scrapedAt": "2026-10-22T20:09:30.200Z",
+  "runId": "2026-10-22T20-11-17-509Z_647434_9himvn",
+  "buildNumber": "647434",
+  "scrapedAt": "2026-10-22T20:11:17.509Z",
   "totals": {
     "all": 384,
     "legacy": 0,
@@ -6982,18 +6982,21 @@
       "defaultConfig": {
         "nativeSystemCpuTimes": false,
         "overlayOnlyAnimatesItself": false,
-        "fullscreenPopupOcclusion": false
+        "fullscreenPopupOcclusion": false,
+        "overlayHiddenWavePaused": false
       },
       "variations": {
         "0": {
           "nativeSystemCpuTimes": false,
           "overlayOnlyAnimatesItself": false,
-          "fullscreenPopupOcclusion": false
+          "fullscreenPopupOcclusion": false,
+          "overlayHiddenWavePaused": false
         },
         "1": {
           "nativeSystemCpuTimes": true,
           "overlayOnlyAnimatesItself": true,
-          "fullscreenPopupOcclusion": true
+          "fullscreenPopupOcclusion": true,
+          "overlayHiddenWavePaused": true
         }
       },
       "variationCount": 2,
