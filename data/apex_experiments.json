@@ -5280,6 +5280,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-avx512-entropy-histogram",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-badge-directory-updates",
     "defaultConfig": {
       "enabled": false,

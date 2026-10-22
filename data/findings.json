@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-22T01-57-16-810Z_646311_8povu2",
-  "buildNumber": "646311",
-  "scrapedAt": "2026-10-22T01:57:16.810Z",
+  "runId": "2026-10-22T02-08-10-901Z_646323_747srs",
+  "buildNumber": "646323",
+  "scrapedAt": "2026-10-22T02:08:10.901Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -6676,6 +6676,26 @@
       "defaultConfig": null,
       "variations": null,
       "variationCount": 0,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-avx512-entropy-histogram",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
