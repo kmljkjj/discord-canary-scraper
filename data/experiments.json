@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-22T19-41-07-512Z_647383_xbqh34",
-  "buildNumber": "647383",
-  "scrapedAt": "2026-10-22T19:41:07.512Z",
+  "runId": "2026-10-22T19-43-16-445Z_647390_fg9xlt",
+  "buildNumber": "647390",
+  "scrapedAt": "2026-10-22T19:43:16.445Z",
   "totals": {
-    "all": 385,
+    "all": 384,
     "legacy": 0,
-    "apex": 382
+    "apex": 381
   },
   "experiments": [
     {
@@ -240,23 +240,6 @@
         }
       },
       "variationCount": 6,
-      "source": "discord"
-    },
-    {
-      "id": "2025-01-allow-nonstaff-to-preview-app-collections",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {

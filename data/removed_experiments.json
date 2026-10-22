@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-22T19-41-07-512Z_647383_xbqh34",
-  "buildNumber": "647383",
-  "updatedAt": "2026-10-22T19:41:07.512Z",
-  "count": 93,
+  "runId": "2026-10-22T19-43-16-445Z_647390_fg9xlt",
+  "buildNumber": "647390",
+  "updatedAt": "2026-10-22T19:43:16.445Z",
+  "count": 94,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -654,6 +654,13 @@
       "label": null,
       "removedAt": "2026-10-22T19:34:33.235Z",
       "lastBuild": "647368"
+    },
+    {
+      "id": "2025-01-allow-nonstaff-to-preview-app-collections",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-22T19:43:16.456Z",
+      "lastBuild": "647390"
     }
   ]
 }
