@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-22T19-32-15-870Z_647366_0u364r",
-  "buildNumber": "647366",
-  "updatedAt": "2026-10-22T19:32:15.870Z",
-  "count": 383,
+  "runId": "2026-10-22T19-34-33-223Z_647368_9r9tpr",
+  "buildNumber": "647368",
+  "updatedAt": "2026-10-22T19:34:33.223Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -5953,52 +5953,6 @@
         "value": null
       },
       "fingerprint": "945fa8bc2ca25746beb651216279617d26fd100aec8d95961d4ce3cf741cc7f0"
-    },
-    {
-      "id": "2026-04-browser-transceiver-padding-removal",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-04-browser-transceiver-padding-removal",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "d468cd48c4f03dedcdaeaed77ea412b06bb7fee1ec324681c563b81ce38c3dc9"
     },
     {
       "id": "2026-04-clips-v3-runtime",
