@@ -139,3 +139,48 @@ if (process.exitCode) {
     a.ok(noiseMargin(0, 150) > 0, 'plancher aux extrêmes');
   });
 }
+
+// --- v11 : ranges de rollout communautaires (gist agnonotdev) ---
+{
+  const nodeTest = require('node:test');
+  const a = require('node:assert/strict');
+  const {
+    parseRangeStrings,
+    rangesPercentExclusive,
+  } = require('../src/lib/rollout_math');
+
+  nodeTest('parseRangeStrings : "0 - 1500" → [[0, 1500]]', () => {
+    a.deepEqual(parseRangeStrings(['0 - 1500']), [[0, 1500]]);
+  });
+
+  nodeTest('parseRangeStrings : tirets fantaisistes acceptés, ordures ignorées', () => {
+    a.deepEqual(parseRangeStrings(['150 – 3000', 'abc', '5 - 2', '10 - 20']), [
+      [150, 3000],
+      [10, 20],
+    ]);
+    a.deepEqual(parseRangeStrings([]), []);
+    a.deepEqual(parseRangeStrings(null), []);
+  });
+
+  nodeTest('rangesPercentExclusive : full 0-10000 = 100%', () => {
+    a.equal(rangesPercentExclusive(parseRangeStrings(['0 - 10000'])), 100);
+  });
+
+  nodeTest('rangesPercentExclusive : ranges du gist public → 50% exact', () => {
+    // 0-1500 + 3000-4000 + 5000-7500 = 1500+1000+2500 = 5000/10000 = 50%
+    a.equal(
+      rangesPercentExclusive(parseRangeStrings(['0 - 1500', '3000 - 4000', '5000 - 7500'])),
+      50,
+    );
+  });
+
+  nodeTest('rangesPercentExclusive : décimales exactes (28,5%)', () => {
+    a.equal(rangesPercentExclusive(parseRangeStrings(['150 - 3000'])), 28.5);
+  });
+
+  nodeTest('rangesPercentExclusive : vide = 0, chevauchement sans double comptage, plafond 100%', () => {
+    a.equal(rangesPercentExclusive([]), 0);
+    a.equal(rangesPercentExclusive([[0, 2500], [2000, 2500]]), 25);
+    a.equal(rangesPercentExclusive([[0, 20000]]), 100);
+  });
+}

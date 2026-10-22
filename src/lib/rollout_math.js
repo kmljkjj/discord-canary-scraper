@@ -159,6 +159,30 @@ function normalizeRanges(ranges) {
   return mergeIntervals(ranges || []).map(([a, b]) => [a, b]);
 }
 
+/**
+ * Parse human-readable rollout range strings ("150 - 3000", accepts – and —)
+ * into numeric [start, end) intervals.
+ */
+function parseRangeStrings(rawRanges) {
+  return (rawRanges || [])
+    .map((s) => String(s).split(/\s*[-–—]\s*/))
+    .map((parts) => [Number(parts[0]), Number(parts[1])])
+    .filter(([a, b]) => Number.isFinite(a) && Number.isFinite(b) && b > a);
+}
+
+/**
+ * Exact percentage for half-open ranges on Discord's 0–10000 hash space:
+ * % = Σ(end − start) / scale. Matches the totals published by community
+ * trackers (e.g. 0-1500 + 3000-4000 + 5000-7500 → 15 + 10 + 25 = 50%).
+ */
+function rangesPercentExclusive(intervals, scale = DEFAULT_SCALE) {
+  if (!scale || scale <= 0) return 0;
+  const merged = mergeIntervals(intervals);
+  if (!merged.length) return 0;
+  const covered = merged.reduce((sum, [a, b]) => sum + (b - a), 0);
+  return Math.round((Math.min(Math.max(covered, 0), scale) / scale) * 10000) / 100;
+}
+
 module.exports = {
   noiseMargin,
   DEFAULT_SCALE,
@@ -170,4 +194,7 @@ module.exports = {
   classifyChange,
   stableChangeFingerprint,
   normalizeRanges,
+  parseRangeStrings,
+  rangesPercentExclusive,
 };
+

@@ -1,12 +1,23 @@
 /**
- * User experiment rollouts v10 — EXACT percentages + filter-aware segments.
+ * User experiment rollouts v11 — EXACT percentages, plus aucun faux %.
  *
- * Key changes vs v9:
- *  - Populations filtrées (feature, member_count, range_by_hash, id, hub_type)
- *    analysées et affichées à part (snippet Apex Research / Comunidade Escoteiros)
- *  - % globaux (sans filtres) restent la source principale des notifs
- *  - Embeds enrichis : scope global/filtré + résumé des filtres
- *  - Fingerprint sampling + fallback estimation inchangés
+ * Sources, par priorité :
+ *  1. Gist communautaire des rollouts (agnonotdev) — expériences user avec
+ *     ranges exactes par variante (échelle 0–10000, intervalles [start, end)).
+ *     % exact = Σ(end − start) / 10000. Même technique que les trackers
+ *     communautaires (Wumpus Central & co) : on lit les ranges, on ne devine pas.
+ *  2. Worker API (experiments.dscrd.workers.dev) — définitions avec bucket
+ *     ranges (exact aussi, souvent moins à jour que le gist).
+ *  3. Fingerprint sampling — DÉTECTION UNIQUEMENT. Les % estimés sont
+ *     désactivés par défaut : une expérience sans ranges s'affiche « ?% ».
+ *     (USER_ROLLOUT_ALLOW_ESTIMATE=1 pour réactiver l'ancien comportement.)
+ *
+ * Key changes vs v10:
+ *  - Source primaire : gist communautaire (ranges exactes des user rollouts)
+ *  - % estimés par sampling désactivés par défaut → plus de faux pourcentages
+ *  - Nouvelle expérience détectée sans ranges → notif honnête « ?% »
+ *  - Bump état v11 : premier run après upgrade = seed silencieux (pas de flood
+ *    de « corrections » lors du passage estimé → exact)
  *
  * Env:
  *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..5
@@ -17,6 +28,8 @@
  *   APEX_MIN_PCT_DELTA         default 3
  *   USER_ROLLOUT_NOTIFY_HASH   default 0 (do not notify unknown hash names)
  *   USER_ROLLOUT_MIN_OK        default 25 (min successful samples before any %)
+ *   USER_ROLLOUT_COMMUNITY_URL default agnonotdev rollouts gist (raw)
+ *   USER_ROLLOUT_ALLOW_ESTIMATE default 0 (never publish estimated %)
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -35,6 +48,8 @@ const {
   noiseMargin,
   stableChangeFingerprint,
   estimateFromPoints,
+  parseRangeStrings,
+  rangesPercentExclusive,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
 
@@ -64,6 +79,13 @@ const DEFS_URL =
   'https://experiments.dscrd.workers.dev/experiments';
 const WORKERS_URL =
   process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
+// Gist communautaire (agnonotdev) : rollouts des expériences Discord avec les
+// ranges exactes par variante. Source primaire des % user.
+const COMMUNITY_URL =
+  process.env.USER_ROLLOUT_COMMUNITY_URL ||
+  'https://gist.githubusercontent.com/agnonotdev/fb2b6a7ba1301733aa5c2050b3e59a18/raw/rollouts.json';
+// v11 : par défaut on ne publie JAMAIS de % estimé (v10 publiait des faux %).
+const ALLOW_ESTIMATE = String(process.env.USER_ROLLOUT_ALLOW_ESTIMATE || '0') === '1';
 
 function tLabel(bucket) {
   const b = Number(bucket);
@@ -156,6 +178,83 @@ async function loadExperimentDefs() {
 
   console.log('Total experiment defs:', defs.size, '(worker:', [...defs.values()].filter((d) => d.source === 'worker_api').length, 'local:', [...defs.values()].filter((d) => d.source === 'local').length, ')');
   return defs;
+}
+
+/**
+ * Load the community user rollouts gist (agnonotdev) — the same technique used
+ * by community trackers: read the exact per-variant rollout ranges instead of
+ * estimating from samples. Ranges are half-open [start, end) on Discord's
+ * 0–10000 hash space, so the exact % is Σ(end − start) / 10000.
+ * Returns a Map of hash → { id, title, treatments, rolloutStatus, platforms, total }.
+ */
+async function loadCommunityUserRollouts() {
+  const map = new Map();
+  const urls = [...new Set([COMMUNITY_URL].filter(Boolean))];
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
+        timeout: 30000,
+      });
+      if (!res.ok) {
+        console.warn('Community rollouts HTTP', res.status);
+        continue;
+      }
+      const data = await safeJson(res);
+      const list = Array.isArray(data) ? data : [];
+      let n = 0;
+      for (const e of list) {
+        if (!e || e.kind !== 'user' || !e.id) continue;
+        const hash = e.hash != null ? Number(e.hash) : murmur3(String(e.id));
+        if (!Number.isFinite(hash)) continue;
+        const treatments = [];
+        let hasRanges = false;
+        for (const v of Array.isArray(e.variants) ? e.variants : []) {
+          const bucket = Number(v.variant);
+          if (!Number.isFinite(bucket)) continue;
+          const ranges = mergeIntervals(parseRangeStrings(v.ranges));
+          if (!ranges.length) continue;
+          hasRanges = true;
+          const pct = rangesPercentExclusive(ranges);
+          treatments.push({
+            bucket,
+            label: tLabel(bucket),
+            percentage: pct,
+            pct,
+            pctKnown: true,
+            status: 'exact',
+            confidence: 'high',
+            sampleCount: 0,
+            samples: 0,
+            coverage: pct / 100,
+            intervals: ranges,
+            ranges,
+            observed: null,
+            gapFill: 0,
+            sourceKind: 'exact_from_community_ranges',
+            reported: { from: v.from, to: v.to, change: v.change },
+          });
+        }
+        if (!hasRanges) continue; // pas de ranges → pas de % (pas de faux %)
+        treatments.sort((a, b) => a.bucket - b.bucket);
+        map.set(hash, {
+          hash,
+          id: String(e.id),
+          title: e.title || String(e.id),
+          treatments,
+          rolloutStatus: e.rollout_status || null,
+          platforms: Array.isArray(e.platforms) ? e.platforms : [],
+          total: e.total || null,
+        });
+        n++;
+      }
+      console.log('Community user rollouts loaded:', n, 'from', url.split('/').slice(-2).join('/'));
+      break;
+    } catch (e) {
+      console.warn('Community rollouts fail:', e.message);
+    }
+  }
+  return map;
 }
 
 
@@ -578,13 +677,28 @@ function buildEmbeds(changes) {
         title: '+ ' + c.id,
         description: [
           '**' + c.title + '**',
-          'Type · `user` · ' + (c.status === 'exact' ? '**EXACT** (bucket ranges)' : '**ESTIMATED** (sampling)'),
+          'Type · `user` · ' + (c.status === 'exact'
+            ? '**EXACT** (rollout ranges)'
+            : c.status === 'detected'
+              ? '`détecté` · % inconnu (pas de ranges)'
+              : '**ESTIMATED** (sampling)'),
           (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),
+          (c.platforms && c.platforms.length ? 'Platforms · `' + c.platforms.join(', ') + '`' : null),
+          (c.rolloutStatus ? 'Status · `' + c.rolloutStatus + '`' : null),
           '',
           lines.join('\n') || '_no treatments_',
         ].join('\n').slice(0, 4000),
         color: 0x57f287,
-        footer: { text: c.status === 'exact' ? 'exact % from bucket ranges' : 'user sampling · not exact Discord %' },
+        footer: {
+          text:
+            c.status === 'exact'
+              ? c.source === 'community_ranges'
+                ? 'exact % from community rollout ranges (0–10000)'
+                : 'exact % from bucket ranges'
+              : c.status === 'detected'
+                ? 'detected via sampling · no exact ranges yet'
+                : 'user sampling · not exact Discord %',
+        },
       });
     } else if (c.kind === 'pct') {
       const lines = (c.deltas || []).slice(0, 12).map((d) => {
@@ -631,13 +745,17 @@ function hasName(id) {
 
 async function main() {
   await fs.ensureDir(DATA);
-  console.log('📊 User rollouts v10 (EXACT + filter-aware segments)');
+  console.log('📊 User rollouts v11 (EXACT community ranges · no fake %)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
+  console.log('Estimated % (sampling):', ALLOW_ESTIMATE ? 'ENABLED (legacy)' : 'disabled — exact only');
 
   // Load experiment definitions with bucket ranges
   const defs = await loadExperimentDefs();
+
+  // Primary exact source: community rollout ranges (user experiments)
+  const community = await loadCommunityUserRollouts();
 
   // Fetch token snapshot FIRST (authenticated endpoint returns more experiments)
   const tokenSnap = await fetchTokenSnapshot(defs);
@@ -657,6 +775,36 @@ async function main() {
 
   const experiments = [];
   const processedHashes = new Set();
+
+  // 0. Process community rollout entries FIRST — freshest EXACT ranges.
+  for (const [hash, c] of community) {
+    if (processedHashes.has(hash)) continue;
+    const coveredAll = c.treatments.reduce((s, t) => s + (t.coverage || 0), 0);
+    processedHashes.add(hash);
+    experiments.push({
+      hash,
+      id: c.id,
+      title: c.title,
+      type: 'user',
+      quality: 'exact',
+      status: 'exact',
+      confidence: 1,
+      coverage: Math.round(Math.min(coveredAll, 1) * 1000) / 1000,
+      sumPct: Math.round(c.treatments.reduce((s, t) => s + (t.pctKnown ? t.pct : 0), 0) * 100) / 100,
+      treatments: c.treatments,
+      fingerprint: fingerprintOf(c.treatments),
+      source: 'community_ranges',
+      named: hasName(c.id),
+      segments: [],
+      hasFilters: false,
+      filterSummary: 'global',
+      usedFallbackFiltered: false,
+      platforms: c.platforms,
+      rolloutStatus: c.rolloutStatus,
+      communityTotal: c.total,
+    });
+  }
+  console.log('Community experiments with rollout:', experiments.filter((e) => e.source === 'community_ranges').length);
 
   // 1. Process ALL worker API definitions that have an active rollout
   //    (non-None bucket with non-zero range) — these give EXACT percentages
@@ -729,8 +877,9 @@ async function main() {
   }
   console.log('Worker API experiments with active rollout:', experiments.length);
 
-  // 2. Process experiments detected via fingerprint sampling but NOT in worker API
-  //    (fallback to estimation from hash_result spread)
+  // 2. Experiments detected via fingerprint sampling but with NO exact ranges.
+  //    v11: estimation DISABLED by default — report an honest "detected ?%"
+  //    entry instead of publishing fake percentages.
   for (const [hash, bucketMap] of byHash) {
     if (processedHashes.has(hash)) continue;
     if (ok < MIN_OK) continue;
@@ -742,6 +891,54 @@ async function main() {
       populations: [],
       source: 'unknown',
     };
+
+    if (!ALLOW_ESTIMATE) {
+      // Detection only: list observed buckets with UNKNOWN percentages.
+      const treatments = [...bucketMap.keys()]
+        .map((bucket) => {
+          const n = bucketMap.get(bucket)?.length || 0;
+          return {
+            bucket: Number(bucket),
+            label: tLabel(bucket),
+            percentage: null,
+            pct: null,
+            pctKnown: false,
+            status: 'detected',
+            confidence: 'none',
+            sampleCount: n,
+            samples: n,
+            coverage: 0,
+            intervals: [],
+            ranges: [],
+            observed: null,
+            gapFill: 0,
+            sourceKind: 'detected_by_sampling',
+          };
+        })
+        .filter((t) => Number.isFinite(t.bucket))
+        .sort((a, b) => a.bucket - b.bucket);
+      if (!treatments.length) continue;
+      processedHashes.add(hash);
+      experiments.push({
+        hash,
+        id: def.id,
+        title: def.title,
+        type: 'user',
+        quality: 'detected',
+        status: 'detected',
+        confidence: 0,
+        coverage: 0,
+        sumPct: 0,
+        treatments,
+        fingerprint: fingerprintOf(treatments),
+        source: 'fingerprint-sample',
+        named: hasName(def.id),
+      });
+      continue;
+    }
+
+    // Legacy behavior (opt-in via USER_ROLLOUT_ALLOW_ESTIMATE=1):
+    // estimate % from hash_result spread.
     const { treatments, conf, status: rollStatus, coverage: rollCov, sumPct } =
       buildTreatments(def, bucketMap, ok);
     if (!treatments.length) continue;
@@ -792,6 +989,9 @@ async function main() {
   }
   const announced = prev.announced && typeof prev.announced === 'object' ? { ...prev.announced } : {};
   const isFirst = !(prev.experiments && prev.experiments.length);
+  // Upgrade v10 → v11 : les % exacts remplacent les anciens % estimés — on
+  // re-seed silencieusement pour éviter un flood de « corrections ».
+  const isUpgrade = !isFirst && Number(prev.version) !== 11 && Number(prev.schemaVersion) !== 11;
 
   const changes = [];
   if (!isFirst) {
@@ -895,8 +1095,8 @@ async function main() {
       STATE,
       {
         scrapedAt: new Date().toISOString(),
-        version: 10,
-        schemaVersion: 10,
+        version: 11,
+        schemaVersion: 11,
         runId:
           extra.runId ||
           new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
@@ -914,14 +1114,15 @@ async function main() {
     );
   }
 
-  // First run: seed experiments + announced fingerprints WITHOUT webhooks (no flood).
-  if (isFirst) {
+  // First run OR upgrade v10 → v11: seed experiments + announced fingerprints
+  // WITHOUT webhooks (no flood, no one-time wave of "corrected" percentages).
+  if (isFirst || isUpgrade) {
     const seedAnnounced = { ...announced };
     for (const e of experiments) {
       if (e.named || NOTIFY_HASH) seedAnnounced[String(e.hash)] = e.fingerprint;
     }
     await writeState(seedAnnounced);
-    console.log('Seed', experiments.length, '· no notify');
+    console.log(isUpgrade ? 'Upgrade seed v10 → v11 (exact %)' : 'Seed', experiments.length, '· no notify');
     return;
   }
 
@@ -966,4 +1167,5 @@ if (require.main === module)
     process.exit(1);
   });
 
-module.exports = { main, murmur3, loadExperimentDefs, calculateBucketPercentages, buildTreatments, classifyChange, mergeIntervals };
+module.exports = { main, murmur3, loadExperimentDefs, loadCommunityUserRollouts, calculateBucketPercentages, buildTreatments, classifyChange, mergeIntervals };
+
