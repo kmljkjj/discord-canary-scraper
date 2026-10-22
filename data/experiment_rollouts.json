@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-22T19:43:11.534Z",
+  "fetchedAt": "2026-10-22T19:50:09.265Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5026,17 +5026,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -5094,16 +5094,6 @@
       "hash": 175769529,
       "type": "user",
       "title": "RTC Pacer & Golive Simulcast",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2025-01-allow-nonstaff-to-preview-app-collections",
-      "hash": 3554976801,
-      "type": "user",
-      "title": "2025-01-allow-nonstaff-to-preview-app-collections",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8841,11 +8831,11 @@
     }
   ],
   "summary": {
-    "total": 602,
+    "total": 601,
     "guild": 94,
-    "user": 508,
+    "user": 507,
     "withPercentage": 224,
-    "withoutPercentage": 378,
+    "withoutPercentage": 377,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
