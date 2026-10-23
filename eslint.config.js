@@ -2,7 +2,18 @@
 const globals = require('globals');
 
 module.exports = [
-  { ignores: ['node_modules/**', 'builds/**', 'assets/**', 'data/**', 'chunks/**', 'css/**'] },
+  {
+    ignores: [
+      'node_modules/**',
+      'builds/**',
+      'assets/**',
+      'data/**',
+      'chunks/**',
+      'css/**',
+      // Fragment injecté dans quests.js (pas un module autonome)
+      'scripts/build_quest_v2_snippet.js',
+    ],
+  },
   {
     files: ['**/*.js'],
     languageOptions: {
