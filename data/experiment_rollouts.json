@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-23T02:42:16.085Z",
+  "fetchedAt": "2026-10-23T02:49:13.747Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -5026,6 +5026,26 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
       "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
@@ -7770,6 +7790,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-hexagon-campaign-client",
+      "hash": 2646394310,
+      "type": "user",
+      "title": "2026-09-hexagon-campaign-client",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-09-invite-accept-age-group-errors",
       "hash": 2089015883,
       "type": "user",
@@ -8798,27 +8828,17 @@
       "status": "no_rollout_data",
       "source": "client_bundle",
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-09-hexagon-campaign-client",
-      "hash": 2646394310,
-      "type": "user",
-      "title": "2026-09-hexagon-campaign-client",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     }
   ],
   "summary": {
-    "total": 600,
+    "total": 601,
     "guild": 94,
-    "user": 506,
-    "withPercentage": 223,
+    "user": 507,
+    "withPercentage": 224,
     "withoutPercentage": 377,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 175,
-    "fpSampled": 4
+    "notStarted": 176,
+    "fpSampled": 5
   }
 }
