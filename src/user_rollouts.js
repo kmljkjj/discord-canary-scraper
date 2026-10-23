@@ -18,10 +18,12 @@
  *  - Nouvelle expérience détectée sans ranges → notif honnête « ?% »
  *  - Bump état v11 : premier run après upgrade = seed silencieux (pas de flood
  *    de « corrections » lors du passage estimé → exact)
+ *  - Webhook UNIQUE : la première var définie gagne (USER_ROLLOUT_WEBHOOK_URL
+ *    → APEX_WEBHOOK_URL → ROLLOUT_WEBHOOK_URL → DISCORD_WEBHOOK_URL)
  *
  * Env:
  *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..5
- *   APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
+ *   USER_ROLLOUT_WEBHOOK_URL | APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
  *   USER_ROLLOUT_SAMPLES       default 80
  *   USER_ROLLOUT_CONCURRENCY   default 2
  *   USER_ROLLOUT_DELAY_MS      default 300
@@ -61,11 +63,17 @@ const BASELINE = path.join(DATA, 'baseline_experiments.json');
 const APEX_EXP = path.join(DATA, 'apex_experiments.json');
 
 const TOKENS = loadTokens();
-const WEBHOOK =
-  process.env.APEX_WEBHOOK_URL ||
-  process.env.ROLLOUT_WEBHOOK_URL ||
-  process.env.DISCORD_WEBHOOK_URL ||
-  null;
+// Webhook UNIQUE pour les notifs user rollouts : la première var définie gagne.
+// Ordre : salon dédié (USER_ROLLOUT_WEBHOOK_URL) → APEX → ROLLOUT → DISCORD.
+const WEBHOOK_CANDIDATES = [
+  ['USER_ROLLOUT_WEBHOOK_URL', process.env.USER_ROLLOUT_WEBHOOK_URL],
+  ['APEX_WEBHOOK_URL', process.env.APEX_WEBHOOK_URL],
+  ['ROLLOUT_WEBHOOK_URL', process.env.ROLLOUT_WEBHOOK_URL],
+  ['DISCORD_WEBHOOK_URL', process.env.DISCORD_WEBHOOK_URL],
+];
+const firstWebhook = WEBHOOK_CANDIDATES.find(([, v]) => v && String(v).trim());
+const WEBHOOK = firstWebhook ? String(firstWebhook[1]).trim() : null;
+const WEBHOOK_SOURCE = firstWebhook ? firstWebhook[0] : null;
 const SAMPLES = Math.max(20, Math.min(400, Number(process.env.USER_ROLLOUT_SAMPLES || 80)));
 const CONC = Math.max(1, Math.min(4, Number(process.env.USER_ROLLOUT_CONCURRENCY || 2)));
 const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DELAY_MS || 300)));
@@ -661,68 +669,106 @@ async function fetchTokenSnapshot(defs) {
   return out;
 }
 
+// ─── Embed helpers — messages webhook lisibles (compatibles Components V2) ───
+
+function fmtPct(pct) {
+  const v = Number(pct);
+  if (pct == null || !Number.isFinite(v)) return '?';
+  return String(Math.round(v * 10) / 10);
+}
+
+/** Barre de progression ▰▱ sur 10 cases. */
+function pctBar(pct, width = 10) {
+  const v = Math.max(0, Math.min(100, Number(pct) || 0));
+  const n = Math.round((v / 100) * width);
+  return '▰'.repeat(n) + '▱'.repeat(width - n);
+}
+
+/** Icône par variante : ⚫ None · ⬜ Control · 🟦 Variant N. */
+function bucketIcon(bucket) {
+  const b = Number(bucket);
+  if (b === -1) return '⚫';
+  if (b === 0) return '⬜';
+  return '🟦';
+}
+
 function buildEmbeds(changes) {
   const embeds = [];
   for (const c of changes.slice(0, 10)) {
     if (c.kind === 'new') {
-      const lines = (c.treatments || []).slice(0, 10).map((t) => {
-        const pct = t.pctKnown && t.pct != null ? '`' + t.pct + '%`' : '`?%`';
-        const st = t.status === 'exact' ? ' · **exact**' : t.status && t.status !== 'estimated' ? ' · `' + t.status + '`' : ' · `est.`';
-        const n = t.sampleCount || t.samples || 0;
-        const band = n > 0 ? ' · n=' + n : '';
-        const scope = t.scope === 'filtered' ? ' · `filtered`' : '';
-        return '• **' + t.label + '** · ' + pct + st + scope + band;
-      });
+      const detected = c.status === 'detected';
+      const fields = [];
+      for (const t of (c.treatments || []).slice(0, 12)) {
+        const pctTxt = t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%';
+        const name = (bucketIcon(t.bucket) + ' ' + t.label + ' · **' + pctTxt + '**').slice(0, 256);
+        const value = (
+          t.pctKnown && t.pct != null
+            ? '`' + pctBar(t.pct) + '`'
+            : '_pas encore de ranges (pas de faux %)_'
+        ).slice(0, 1024);
+        fields.push({ name, value, inline: true });
+      }
+      const desc = [
+        '`' + c.id + '` · expérience **user**',
+        c.platforms && c.platforms.length ? '📱 Plateformes · `' + c.platforms.join(', ') + '`' : null,
+        c.rolloutStatus ? '📍 Statut · `' + c.rolloutStatus + '`' : null,
+        c.filterSummary && c.filterSummary !== 'global' ? '🔎 Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null,
+        detected ? '👁 Détectée via sampling · pourcentage inconnu pour l\u2019instant' : null,
+      ]
+        .filter(Boolean)
+        .join('\n')
+        .slice(0, 4000);
       embeds.push({
-        title: '+ ' + c.id,
-        description: [
-          '**' + c.title + '**',
-          'Type · `user` · ' + (c.status === 'exact'
-            ? '**EXACT** (rollout ranges)'
-            : c.status === 'detected'
-              ? '`détecté` · % inconnu (pas de ranges)'
-              : '**ESTIMATED** (sampling)'),
-          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),
-          (c.platforms && c.platforms.length ? 'Platforms · `' + c.platforms.join(', ') + '`' : null),
-          (c.rolloutStatus ? 'Status · `' + c.rolloutStatus + '`' : null),
-          '',
-          lines.join('\n') || '_no treatments_',
-        ].join('\n').slice(0, 4000),
-        color: 0x57f287,
+        title: ((detected ? '👁 Nouvelle expérience détectée · ' : '🆕 Nouveau rollout user · ') + c.title).slice(0, 256),
+        description: desc,
+        fields,
+        color: detected ? 0x99aab5 : 0x57f287,
         footer: {
-          text:
-            c.status === 'exact'
-              ? c.source === 'community_ranges'
-                ? 'exact % from community rollout ranges (0–10000)'
-                : 'exact % from bucket ranges'
-              : c.status === 'detected'
-                ? 'detected via sampling · no exact ranges yet'
-                : 'user sampling · not exact Discord %',
+          text: detected
+            ? 'détectée via sampling · % inconnu (pas de faux pourcentage)'
+            : c.status !== 'exact'
+              ? 'user sampling · % estimés (pas des % exacts Discord)'
+              : c.source === 'community_ranges'
+                ? '✅ % EXACTS · ranges de rollout Discord (0–10000)'
+                : '✅ % exacts · bucket ranges (worker API)',
         },
       });
     } else if (c.kind === 'pct') {
-      const lines = (c.deltas || []).slice(0, 12).map((d) => {
-        return '• **' + d.label + '** · `' + d.from + '%` → `' + d.to + '%`' + (d.exact ? ' (exact)' : ' (est.)');
-      });
+      const deltas = c.deltas || [];
+      const maxTo = Math.max(...deltas.map((d) => Number(d.to) || 0));
+      const minTo = Math.min(...deltas.map((d) => Number(d.to) || 0));
+      const completed = maxTo >= 100;
+      const removed = minTo <= 0;
+      const fields = [];
+      for (const d of deltas.slice(0, 12)) {
+        const name = (bucketIcon(d.bucket) + ' ' + d.label + ' · `' + fmtPct(d.from) + '%` → **' + fmtPct(d.to) + '%**').slice(0, 256);
+        const pts = Number(d.to) - Number(d.from);
+        const arrow = pts >= 0 ? '📈 +' : '📉 −';
+        const value = ('`' + pctBar(d.to) + '`\n' + arrow + fmtPct(Math.abs(pts)) + ' pts').slice(0, 1024);
+        fields.push({ name, value, inline: true });
+      }
+      const desc = [
+        '`' + c.id + '` · expérience **user**',
+        c.filterSummary && c.filterSummary !== 'global' ? '🔎 Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null,
+      ]
+        .filter(Boolean)
+        .join('\n')
+        .slice(0, 4000);
       embeds.push({
-        title: '~ ' + c.id,
-        description: [
-          '**' + c.title + '**',
-          'Type · `user`',
-          (c.filterSummary && c.filterSummary !== 'global' ? 'Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null),
-          '',
-          lines.join('\n'),
-        ].join('\n').slice(0, 4000),
-        color: 0xe67e22,
-        footer: { text: c.exact ? 'exact % from bucket ranges' : 'user sampling · noise possible' },
+        title: ((completed ? '🏁 Rollout complet · ' : removed ? '🔻 Rollout retiré · ' : '📈 Rollout user · ') + c.title).slice(0, 256),
+        description: desc,
+        fields,
+        color: completed ? 0x57f287 : removed ? 0xed4245 : 0xe67e22,
+        footer: {
+          text: c.exact ? '✅ % EXACTS · changement réel détecté' : 'user sampling · bruit possible',
+        },
       });
     } else if (c.kind === 'revision') {
       embeds.push({
-        title: '~ ' + c.id + ' revision',
-        description:
-          '**' + c.title + '**\nRevision `' + c.fromRev + '` → `' + c.toRev + '` · bucket `' + c.bucket + '`',
+        title: ('♻️ Revision · ' + c.title).slice(0, 256),
+        description: ('`' + c.id + '` · expérience **user**\nRevision `' + c.fromRev + '` → `' + c.toRev + '` · bucket `' + c.bucket + '`').slice(0, 4000),
         color: 0x5865f2,
-        footer: { text: 'assignment revision' },
+        footer: { text: 'revision d\u2019assignation' },
       });
     }
   }
@@ -747,7 +793,7 @@ async function main() {
   await fs.ensureDir(DATA);
   console.log('📊 User rollouts v11 (EXACT community ranges · no fake %)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
-  console.log('Webhook:', WEBHOOK ? 'set' : 'MISSING');
+  console.log('Webhook:', WEBHOOK ? 'set (' + WEBHOOK_SOURCE + ')' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
   console.log('Estimated % (sampling):', ALLOW_ESTIMATE ? 'ENABLED (legacy)' : 'disabled — exact only');
 
@@ -1168,4 +1214,3 @@ if (require.main === module)
   });
 
 module.exports = { main, murmur3, loadExperimentDefs, loadCommunityUserRollouts, calculateBucketPercentages, buildTreatments, classifyChange, mergeIntervals };
-
