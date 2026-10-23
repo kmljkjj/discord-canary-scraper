@@ -58,11 +58,23 @@ jobs:
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
         run: node src/user_rollouts.js
 
-      - name: Commit state
+      - name: Guild rollouts
+        id: guild
         if: always() && steps.rollouts.outcome != 'cancelled'
+        env:
+          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
+          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
+          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
+          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GUILD_ROLLOUT_MIN_DELTA: "1"
+        run: node src/guild_rollouts.js
+
+      - name: Commit state
+        if: always() && steps.rollouts.outcome != 'cancelled' && steps.guild.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json
+          scripts/commit-state.sh "data: user + guild rollouts" data/user_rollouts.json data/guild_rollouts.json
 
       - name: Fail if rollouts failed
-        if: always() && steps.rollouts.outcome == 'failure'
+        if: always() && (steps.rollouts.outcome == 'failure' || steps.guild.outcome == 'failure')
         run: exit 1
