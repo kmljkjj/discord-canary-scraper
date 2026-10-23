@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-23T00-49-51-444Z_648169_iwvnov",
-  "buildNumber": "648169",
-  "updatedAt": "2026-10-23T00:49:51.444Z",
+  "runId": "2026-10-23T00-52-58-626Z_648172_zwz790",
+  "buildNumber": "648172",
+  "updatedAt": "2026-10-23T00:52:58.626Z",
   "count": 381,
   "experiments": [
     {
@@ -17968,20 +17968,23 @@
         "nativeSystemCpuTimes": false,
         "overlayOnlyAnimatesItself": false,
         "fullscreenPopupOcclusion": false,
-        "overlayHiddenWavePaused": false
+        "overlayHiddenWavePaused": false,
+        "renderOverlayWhileMinimized": false
       },
       "variations": {
         "0": {
           "nativeSystemCpuTimes": false,
           "overlayOnlyAnimatesItself": false,
           "fullscreenPopupOcclusion": false,
-          "overlayHiddenWavePaused": false
+          "overlayHiddenWavePaused": false,
+          "renderOverlayWhileMinimized": false
         },
         "1": {
           "nativeSystemCpuTimes": true,
           "overlayOnlyAnimatesItself": true,
           "fullscreenPopupOcclusion": true,
-          "overlayHiddenWavePaused": true
+          "overlayHiddenWavePaused": true,
+          "renderOverlayWhileMinimized": true
         }
       },
       "treatments": null,
@@ -17997,20 +18000,23 @@
           "nativeSystemCpuTimes": false,
           "overlayOnlyAnimatesItself": false,
           "fullscreenPopupOcclusion": false,
-          "overlayHiddenWavePaused": false
+          "overlayHiddenWavePaused": false,
+          "renderOverlayWhileMinimized": false
         },
         "variations": {
           "0": {
             "nativeSystemCpuTimes": false,
             "overlayOnlyAnimatesItself": false,
             "fullscreenPopupOcclusion": false,
-            "overlayHiddenWavePaused": false
+            "overlayHiddenWavePaused": false,
+            "renderOverlayWhileMinimized": false
           },
           "1": {
             "nativeSystemCpuTimes": true,
             "overlayOnlyAnimatesItself": true,
             "fullscreenPopupOcclusion": true,
-            "overlayHiddenWavePaused": true
+            "overlayHiddenWavePaused": true,
+            "renderOverlayWhileMinimized": true
           }
         },
         "variationCount": 2,
