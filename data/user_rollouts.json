@@ -1,8 +1,8 @@
 {
-  "scrapedAt": "2026-10-23T13:05:27.337Z",
+  "scrapedAt": "2026-10-23T17:52:44.109Z",
   "version": 11,
   "schemaVersion": 11,
-  "runId": "2026-10-23T13-05-27-337Z_np733m",
+  "runId": "2026-10-23T17-52-44-109Z_uqwwih",
   "samples": 150,
   "ok": 150,
   "fail": 0,
@@ -6491,43 +6491,75 @@
       "quality": "exact",
       "status": "exact",
       "confidence": 1,
-      "coverage": 0.2,
-      "sumPct": 20,
+      "coverage": 1,
+      "sumPct": 100,
       "treatments": [
         {
-          "bucket": 2,
-          "label": "Variant 2",
-          "percentage": 20,
-          "pct": 20,
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 50,
+          "pct": 50,
           "pctKnown": true,
           "status": "exact",
           "confidence": "high",
           "sampleCount": 0,
           "samples": 0,
-          "coverage": 0.2,
+          "coverage": 0.5,
           "intervals": [
             [
-              0,
-              2000
+              5000,
+              10000
             ]
           ],
           "ranges": [
             [
-              0,
-              2000
+              5000,
+              10000
             ]
           ],
           "observed": null,
           "gapFill": 0,
           "sourceKind": "exact_from_community_ranges",
           "reported": {
-            "from": 10,
-            "to": 20,
-            "change": 10
+            "from": 0,
+            "to": 50,
+            "change": 50
+          }
+        },
+        {
+          "bucket": 2,
+          "label": "Variant 2",
+          "percentage": 50,
+          "pct": 50,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.5,
+          "intervals": [
+            [
+              0,
+              5000
+            ]
+          ],
+          "ranges": [
+            [
+              0,
+              5000
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_community_ranges",
+          "reported": {
+            "from": 20,
+            "to": 50,
+            "change": 30
           }
         }
       ],
-      "fingerprint": "2:20.0",
+      "fingerprint": "1:50.0|2:50.0",
       "source": "community_ranges",
       "named": true,
       "segments": [],
@@ -6538,11 +6570,11 @@
         "android",
         "desktop"
       ],
-      "rolloutStatus": "rolling_out",
+      "rolloutStatus": "full",
       "communityTotal": {
-        "from": 10,
-        "to": 20,
-        "change": 10
+        "from": 20,
+        "to": 100,
+        "change": 80
       }
     },
     {
@@ -54308,7 +54340,7 @@
     "4179398339": "0:10.0|1:10.0",
     "4184216579": "0:10.0|2:10.0",
     "4185663115": "0:50.0|1:50.0",
-    "4189865450": "2:20.0",
+    "4189865450": "1:50.0|2:50.0",
     "4190308464": "1:100.0",
     "4190408036": "1:100.0",
     "4206392105": "1:5.0",
@@ -54324,13 +54356,6 @@
     "4292436570": "1:100.0"
   },
   "history": [
-    {
-      "ts": "2026-10-22T22:55:03.103Z",
-      "ok": 150,
-      "fail": 0,
-      "experimentCount": 36,
-      "changeCount": 0
-    },
     {
       "ts": "2026-10-22T23:02:34.988Z",
       "ok": 150,
@@ -54599,6 +54624,13 @@
     },
     {
       "ts": "2026-10-23T13:05:27.337Z",
+      "ok": 150,
+      "fail": 0,
+      "experimentCount": 599,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-23T17:52:44.109Z",
       "ok": 150,
       "fail": 0,
       "experimentCount": 599,
