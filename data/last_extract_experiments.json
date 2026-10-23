@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-23T08-14-16-793Z_648650_gi455l",
-  "buildNumber": "648650",
-  "updatedAt": "2026-10-23T08:14:16.794Z",
+  "runId": "2026-10-23T12-26-40-345Z_648803_dy5t6g",
+  "buildNumber": "648803",
+  "updatedAt": "2026-10-23T12:26:40.345Z",
   "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -7593,31 +7593,46 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 4,
+      "variationCount": 6,
       "variations": {
         "1": {
           "degradationPreference": "maintain-framerate",
-          "motionContentHint": false
+          "motionContentHint": false,
+          "cpuFallback": false
         },
         "2": {
           "degradationPreference": "default",
-          "motionContentHint": true
+          "motionContentHint": true,
+          "cpuFallback": false
         },
         "3": {
           "degradationPreference": "maintain-framerate",
-          "motionContentHint": true
+          "motionContentHint": true,
+          "cpuFallback": false
         },
         "4": {
           "degradationPreference": "balanced",
-          "motionContentHint": false
+          "motionContentHint": false,
+          "cpuFallback": false
+        },
+        "5": {
+          "degradationPreference": "maintain-resolution",
+          "motionContentHint": true,
+          "cpuFallback": false
+        },
+        "6": {
+          "degradationPreference": "maintain-resolution",
+          "motionContentHint": true,
+          "cpuFallback": true
         }
       },
       "defaultConfig": {
         "degradationPreference": "default",
-        "motionContentHint": false
+        "motionContentHint": false,
+        "cpuFallback": false
       },
       "system": "apex",
-      "fp": "d9ee6bba22664c29860522aae25d78a96305a7c8cf2c7b8615a713d3718c85f6"
+      "fp": "ca770474a1f47b681dc61a2070b171de128aa9b4b8a8cbcaa3732c387e796011"
     }
   }
 }
