@@ -29,6 +29,7 @@ jobs:
         id: versions
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MOBILE_VERSIONS_WEBHOOK_URL: ${{ secrets.MOBILE_VERSIONS_WEBHOOK_URL }}
           ORBIT_BOT_NAME: Datamining
         run: node src/mobile_versions.js
 
