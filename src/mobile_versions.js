@@ -36,9 +36,9 @@ const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
 const EXTERNAL_FILE = path.join(DATA_DIR, 'external_versions.json');
 // Webhook UNIQUE pour les versions mobiles : la première var définie gagne.
-// MOBILE_VERSIONS_WEBHOOK_URL (salon dédié) → DISCORD_WEBHOOK_URL.
+// MOBILE_WEBHOOK_URL (salon dédié) → DISCORD_WEBHOOK_URL.
 const WEBHOOK_CANDIDATES = [
-  ['MOBILE_VERSIONS_WEBHOOK_URL', process.env.MOBILE_VERSIONS_WEBHOOK_URL],
+  ['MOBILE_WEBHOOK_URL', process.env.MOBILE_WEBHOOK_URL],
   ['DISCORD_WEBHOOK_URL', process.env.DISCORD_WEBHOOK_URL],
 ];
 const firstWebhook = WEBHOOK_CANDIDATES.find(([, v]) => v && String(v).trim());
