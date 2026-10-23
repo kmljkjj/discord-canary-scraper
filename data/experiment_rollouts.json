@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-23T13:28:51.341Z",
+  "fetchedAt": "2026-10-23T18:23:28.431Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,43 +5020,43 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 3,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 3
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 3
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 1
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
       }
     },
     {
@@ -8730,6 +8730,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-soundboard-mute-indicator",
+      "hash": 549099094,
+      "type": "user",
+      "title": "2026-10-soundboard-mute-indicator",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-stage-unified-call",
       "hash": 2224434251,
       "type": "guild",
@@ -8831,11 +8841,11 @@
     }
   ],
   "summary": {
-    "total": 601,
+    "total": 602,
     "guild": 94,
-    "user": 507,
+    "user": 508,
     "withPercentage": 224,
-    "withoutPercentage": 377,
+    "withoutPercentage": 378,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
