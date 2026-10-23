@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-23T02:35:26.186Z",
+  "fetchedAt": "2026-10-23T02:42:16.085Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -11,7 +11,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 2
     }
   },
@@ -5000,23 +5000,23 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
       "type": "user",
-      "title": "hash_704914099",
+      "title": "Tida Webform",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 50,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 50
       },
       "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "note": null,
+      "fpSamples": 50,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 50
       }
     },
     {
@@ -5037,26 +5037,6 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 2
-      }
-    },
-    {
-      "hash": 4055210228,
-      "id": "2025-11_tida_webform",
-      "type": "user",
-      "title": "Tida Webform",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 50,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 50
-      },
-      "source": "fingerprint_sampling",
-      "note": null,
-      "fpSamples": 50,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 50
       }
     },
     {
@@ -8831,14 +8811,14 @@
     }
   ],
   "summary": {
-    "total": 601,
+    "total": 600,
     "guild": 94,
-    "user": 507,
-    "withPercentage": 224,
+    "user": 506,
+    "withPercentage": 223,
     "withoutPercentage": 377,
     "fullRollout": 39,
     "partial": 9,
-    "notStarted": 176,
-    "fpSampled": 5
+    "notStarted": 175,
+    "fpSampled": 4
   }
 }
