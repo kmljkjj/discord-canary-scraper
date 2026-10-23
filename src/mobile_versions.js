@@ -11,8 +11,9 @@
  *  - Android alpha: APKMirror (lists alpha track) / Aptoide
  *
  * The OTA manifest at https://discord.com/{platform}/{version}/manifest.json
- * serves stable builds only. Beta/alpha versions are distributed via Google Play
- * testing tracks and third-party mirrors (Aptoide, APKMirror).
+ * also serves beta/alpha builds — the build number encodes the track
+ * (MMM T NN PPPPPPPPP → T: 0=stable, 1=bêta, 2=alpha, 3=dev), so beta/alpha
+ * are decoded directly from Discord's OTA. Aptoide/APKMirror are fallback labels.
  *
  * Build number format (from Discord Userdoccers):
  *   MMM T NN PPPPPPP
@@ -562,9 +563,36 @@ function classifyAndroidChannels(storeVersion, otaVersions, externalBeta, extern
     });
   }
 
-  // Android beta — prefer external (Aptoide/APKMirror), fall back to OTA
-  if (externalBeta && externalBeta.version) {
-    // Try to find build/commit from OTA manifest
+  // Versions OTA en avance sur la stable
+  const ahead = stableVersion
+    ? otaVersions.filter((v) => cmpVersion(v.version, stableVersion) > 0)
+    : [];
+
+  // Track EXACT décodé du build number : MMM T NN PPPPPPP → T
+  // (0 = stable, 1 = bêta, 2 = alpha, 3 = dev). On lit le manifeste OTA de
+  // Discord directement — plus fiable que les miroirs (Aptoide/APKMirror).
+  const otaByTrack = (track) =>
+    ahead.find((v) => (decodeAndroidBuild(v.build) || {}).track === track) || null;
+  const otaBeta = otaByTrack(1);
+  const otaAlpha = otaByTrack(2);
+
+  const otaEntry = (v, note, channel) => ({
+    platform: 'android',
+    channel,
+    version: v.version,
+    build: v.build,
+    commit: v.commit,
+    releaseName: v.releaseName,
+    source: 'discord_ota_manifest',
+    storeUrl: PLAY_STORE_URL,
+    available: true,
+    note,
+  });
+
+  // Android bêta — track décodé (OTA) > label miroir (Aptoide/APKMirror) > inférence
+  if (otaBeta) {
+    channels.push(otaEntry(otaBeta, 'Track bêta décodé du build number', 'beta'));
+  } else if (externalBeta && externalBeta.version) {
     const otaMatch = otaVersions.find((v) => v.version === externalBeta.version);
     channels.push({
       platform: 'android',
@@ -578,59 +606,26 @@ function classifyAndroidChannels(storeVersion, otaVersions, externalBeta, extern
       available: true,
       note: externalBeta.date ? `Track-labeled on ${externalBeta.source}` : 'Track-labeled version',
     });
-  } else if (stableVersion) {
-    // Fallback: OTA versions ahead of stable
-    const ahead = otaVersions.filter((v) => cmpVersion(v.version, stableVersion) > 0);
-    if (ahead.length >= 1) {
-      // If 2+ ahead, beta is the second; if 1 ahead, it could be beta or alpha
-      if (ahead.length >= 2) {
-        const beta = ahead[1];
-        const otaMatch = otaVersions.find((v) => v.version === beta.version);
-        channels.push({
-          platform: 'android',
-          channel: 'beta',
-          version: beta.version,
-          build: otaMatch?.build || beta.build,
-          commit: otaMatch?.commit || beta.commit,
-          releaseName: otaMatch?.releaseName || beta.releaseName,
-          source: 'discord_ota_manifest',
-          storeUrl: PLAY_STORE_URL,
-          available: true,
-          note: 'OTA version ahead of stable (inferred)',
-        });
-      } else {
-        channels.push({
-          platform: 'android',
-          channel: 'beta',
-          version: null,
-          available: false,
-          note: 'No track-labeled beta found',
-          storeUrl: PLAY_STORE_URL,
-        });
-      }
-    } else {
-      channels.push({
-        platform: 'android',
-        channel: 'beta',
-        version: null,
-        available: false,
-        note: 'No OTA version ahead of stable',
-        storeUrl: PLAY_STORE_URL,
-      });
-    }
+  } else if (ahead.length >= 2) {
+    // 2+ versions en avance sans track décodé → la 2e est probablement la bêta
+    channels.push(otaEntry(ahead[1], 'OTA en avance sur la stable (bêta inférée)', 'beta'));
   } else {
     channels.push({
       platform: 'android',
       channel: 'beta',
       version: null,
       available: false,
-      note: 'No stable version to compare',
+      note: ahead.length
+        ? 'Une seule version OTA en avance — track indéterminé'
+        : 'No OTA version ahead of stable',
       storeUrl: PLAY_STORE_URL,
     });
   }
 
-  // Android alpha — prefer external (APKMirror/Aptoide), fall back to OTA
-  if (externalAlpha && externalAlpha.version) {
+  // Android alpha — track décodé (OTA) > label miroir > plus haute OTA en avance
+  if (otaAlpha) {
+    channels.push(otaEntry(otaAlpha, 'Track alpha décodé du build number', 'alpha'));
+  } else if (externalAlpha && externalAlpha.version) {
     const otaMatch = otaVersions.find((v) => v.version === externalAlpha.version);
     channels.push({
       platform: 'android',
@@ -644,43 +639,20 @@ function classifyAndroidChannels(storeVersion, otaVersions, externalBeta, extern
       available: true,
       note: externalAlpha.date ? `Track-labeled on ${externalAlpha.source}` : 'Track-labeled version',
     });
-  } else if (stableVersion) {
-    // Fallback: highest OTA version ahead of stable
-    const ahead = otaVersions.filter((v) => cmpVersion(v.version, stableVersion) > 0);
-    if (ahead.length >= 1) {
-      const alpha = ahead[0]; // highest
-      const otaMatch = otaVersions.find((v) => v.version === alpha.version);
-      channels.push({
-        platform: 'android',
-        channel: 'alpha',
-        version: alpha.version,
-        build: otaMatch?.build || alpha.build,
-        commit: otaMatch?.commit || alpha.commit,
-        releaseName: otaMatch?.releaseName || alpha.releaseName,
-        source: 'discord_ota_manifest',
-        storeUrl: PLAY_STORE_URL,
-        available: true,
-        note: 'OTA version ahead of stable (inferred)',
-      });
+  } else {
+    const alphaCand = ahead.find((v) => !otaBeta || v.version !== otaBeta.version);
+    if (alphaCand) {
+      channels.push(otaEntry(alphaCand, 'OTA en avance sur la stable (alpha inférée)', 'alpha'));
     } else {
       channels.push({
         platform: 'android',
         channel: 'alpha',
         version: null,
         available: false,
-        note: 'No OTA version ahead of stable',
+        note: 'No alpha version found (OTA + mirrors)',
         storeUrl: PLAY_STORE_URL,
       });
     }
-  } else {
-    channels.push({
-      platform: 'android',
-      channel: 'alpha',
-      version: null,
-      available: false,
-      note: 'No stable version to compare',
-      storeUrl: PLAY_STORE_URL,
-    });
   }
 
   return channels;
