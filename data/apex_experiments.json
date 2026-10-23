@@ -5973,6 +5973,19 @@
     "label": null
   },
   {
+    "kind": "user",
+    "name": "2026-10-soundboard-mute-indicator",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
     "kind": "guild",
     "name": "2026-10-stage-unified-call",
     "defaultConfig": {
