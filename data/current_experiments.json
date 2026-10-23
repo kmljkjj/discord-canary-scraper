@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-23T01-40-42-543Z_648234_vjpd7u",
-  "buildNumber": "648234",
-  "updatedAt": "2026-10-23T01:40:42.543Z",
+  "runId": "2026-10-23T01-47-07-903Z_648251_xnkljj",
+  "buildNumber": "648251",
+  "updatedAt": "2026-10-23T01:47:07.903Z",
   "count": 381,
   "experiments": [
     {
@@ -17969,7 +17969,8 @@
         "overlayOnlyAnimatesItself": false,
         "fullscreenPopupOcclusion": false,
         "overlayHiddenWavePaused": false,
-        "renderOverlayWhileMinimized": false
+        "renderOverlayWhileMinimized": false,
+        "notificationIconCpuCanvas": false
       },
       "variations": {
         "0": {
@@ -17977,14 +17978,16 @@
           "overlayOnlyAnimatesItself": false,
           "fullscreenPopupOcclusion": false,
           "overlayHiddenWavePaused": false,
-          "renderOverlayWhileMinimized": false
+          "renderOverlayWhileMinimized": false,
+          "notificationIconCpuCanvas": false
         },
         "1": {
           "nativeSystemCpuTimes": true,
           "overlayOnlyAnimatesItself": true,
           "fullscreenPopupOcclusion": true,
           "overlayHiddenWavePaused": true,
-          "renderOverlayWhileMinimized": true
+          "renderOverlayWhileMinimized": true,
+          "notificationIconCpuCanvas": true
         }
       },
       "treatments": null,
@@ -18001,7 +18004,8 @@
           "overlayOnlyAnimatesItself": false,
           "fullscreenPopupOcclusion": false,
           "overlayHiddenWavePaused": false,
-          "renderOverlayWhileMinimized": false
+          "renderOverlayWhileMinimized": false,
+          "notificationIconCpuCanvas": false
         },
         "variations": {
           "0": {
@@ -18009,14 +18013,16 @@
             "overlayOnlyAnimatesItself": false,
             "fullscreenPopupOcclusion": false,
             "overlayHiddenWavePaused": false,
-            "renderOverlayWhileMinimized": false
+            "renderOverlayWhileMinimized": false,
+            "notificationIconCpuCanvas": false
           },
           "1": {
             "nativeSystemCpuTimes": true,
             "overlayOnlyAnimatesItself": true,
             "fullscreenPopupOcclusion": true,
             "overlayHiddenWavePaused": true,
-            "renderOverlayWhileMinimized": true
+            "renderOverlayWhileMinimized": true,
+            "notificationIconCpuCanvas": true
           }
         },
         "variationCount": 2,

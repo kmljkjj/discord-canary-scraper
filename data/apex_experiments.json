@@ -5523,7 +5523,8 @@
       "overlayOnlyAnimatesItself": false,
       "fullscreenPopupOcclusion": false,
       "overlayHiddenWavePaused": false,
-      "renderOverlayWhileMinimized": false
+      "renderOverlayWhileMinimized": false,
+      "notificationIconCpuCanvas": false
     },
     "variations": {
       "0": {
@@ -5531,14 +5532,16 @@
         "overlayOnlyAnimatesItself": false,
         "fullscreenPopupOcclusion": false,
         "overlayHiddenWavePaused": false,
-        "renderOverlayWhileMinimized": false
+        "renderOverlayWhileMinimized": false,
+        "notificationIconCpuCanvas": false
       },
       "1": {
         "nativeSystemCpuTimes": true,
         "overlayOnlyAnimatesItself": true,
         "fullscreenPopupOcclusion": true,
         "overlayHiddenWavePaused": true,
-        "renderOverlayWhileMinimized": true
+        "renderOverlayWhileMinimized": true,
+        "notificationIconCpuCanvas": true
       }
     },
     "label": null
