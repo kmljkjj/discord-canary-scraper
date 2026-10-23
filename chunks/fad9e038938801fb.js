@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["742152"],{315176(e){e.exports=JSON.parse('{"Y/4agX":["D\xe9voilement complet dans MW4 le ",[3,"date","::MMMd"]],"UvhjEc":["C\'est bient\xf4t l\xe0\xa0!"],"D3CWUF":["D\xe9voilement complet lors de la sortie de Call of Duty: Modern Warfare\xa04 le ",[3,"date","::MMMd"]],"ugfqKp":["Classifi\xe9\xa0: code viobleu"],"YEsjvt":["Obtiens un plan pour Call of Duty\xa0: MW4 le ",[3,"date","::MMMd"],". Exclusivit\xe9 Nitro."]}')}}]);
+//# sourceMappingURL=fad9e038938801fb.js.map

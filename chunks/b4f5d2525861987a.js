@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["980231"],{542330(t){t.exports=JSON.parse('{"D3CWUF":["Sar\xe0 rivelato il ",[3,"date","::MMMd"],", in concomitanza con l\'uscita di Call of Duty: Modern Warfrare 4"],"ugfqKp":["Secretato: codice blurple"],"YEsjvt":["Ottieni un progetto di Call of Duty: MW4 il ",[3,"date","::MMMd"],". Esclusiva Nitro."]}')}}]);
-//# sourceMappingURL=b4f5d2525861987a.js.map
