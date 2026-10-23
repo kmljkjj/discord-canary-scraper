@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-23T02-39-23-607Z_648333_x1hjdx",
-  "buildNumber": "648333",
-  "scrapedAt": "2026-10-23T02:39:23.608Z",
+  "runId": "2026-10-23T02-46-52-658Z_648342_kzgld3",
+  "buildNumber": "648342",
+  "scrapedAt": "2026-10-23T02:46:52.658Z",
   "totals": {
     "all": 384,
     "legacy": 0,
-    "apex": 381
+    "apex": 382
   },
   "experiments": [
     {
@@ -5646,8 +5646,9 @@
     {
       "id": "2026-09-hexagon-campaign-client",
       "type": "user",
-      "title": null,
-      "description": null,
+      "kind": "user",
+      "label": null,
+      "system": "apex",
       "defaultConfig": {
         "enabled": false,
         "questHomeRedirect": false
@@ -5665,7 +5666,9 @@
           "enabled": true,
           "questHomeRedirect": false
         }
-      }
+      },
+      "variationCount": 3,
+      "source": "discord"
     },
     {
       "id": "2026-09-invite-accept-age-group-errors",

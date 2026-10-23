@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-23T02-39-23-607Z_648333_x1hjdx",
-  "buildNumber": "648333",
-  "updatedAt": "2026-10-23T02:39:23.608Z",
-  "count": 381,
+  "runId": "2026-10-23T02-46-52-658Z_648342_kzgld3",
+  "buildNumber": "648342",
+  "updatedAt": "2026-10-23T02:46:52.658Z",
+  "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5597,6 +5597,33 @@
       },
       "system": "apex",
       "fp": "476067cbc482cde06d7ef7f54112d9a58547b2481ef6146c30d0dd80f775f00a"
+    },
+    "2026-09-hexagon-campaign-client": {
+      "id": "2026-09-hexagon-campaign-client",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "0": {
+          "enabled": false,
+          "questHomeRedirect": false
+        },
+        "1": {
+          "enabled": true,
+          "questHomeRedirect": true
+        },
+        "2": {
+          "enabled": true,
+          "questHomeRedirect": false
+        }
+      },
+      "defaultConfig": {
+        "enabled": false,
+        "questHomeRedirect": false
+      },
+      "system": "apex",
+      "fp": "e79f28104a0a581b06528af1f592172fbca407d789d124b3dd567605c25de3fa"
     },
     "2026-09-invite-accept-age-group-errors": {
       "id": "2026-09-invite-accept-age-group-errors",
