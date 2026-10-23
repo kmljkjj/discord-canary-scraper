@@ -671,7 +671,7 @@ async function fetchTokenSnapshot(defs) {
   return out;
 }
 
-// ─── Embed helpers — messages webhook lisibles (compatibles Components V2) ───
+// ─── Embeds — format sobre, sans emojis ──────────────────────────────────────
 
 function fmtPct(pct) {
   const v = Number(pct);
@@ -679,100 +679,53 @@ function fmtPct(pct) {
   return String(Math.round(v * 10) / 10);
 }
 
-/** Barre de progression ▰▱ sur 10 cases. */
-function pctBar(pct, width = 10) {
-  const v = Math.max(0, Math.min(100, Number(pct) || 0));
-  const n = Math.round((v / 100) * width);
-  return '▰'.repeat(n) + '▱'.repeat(width - n);
+/** Label de variante au format communautaire : None / Variant N. */
+function variantLabel(bucket) {
+  return Number(bucket) === -1 ? 'None' : 'Variant ' + bucket;
 }
 
-/** Icône par variante : ⚫ None · ⬜ Control · 🟦 Variant N. */
-function bucketIcon(bucket) {
-  const b = Number(bucket);
-  if (b === -1) return '⚫';
-  if (b === 0) return '⬜';
-  return '🟦';
-}
-
+/**
+ * Format des messages (style communautaire, sans emojis) :
+ *   2026-10-gdm-duration-timer (user)
+ *   Platform must be one of these: android, desktop, web, iOS
+ *   Variant 0 0% -> 3.5%
+ *   Variant 1 0% -> 8.5%
+ *   -# Rollouts Changes
+ */
 function buildEmbeds(changes) {
   const embeds = [];
   for (const c of changes.slice(0, 10)) {
+    const title = (String(c.id || c.title) + ' (user)').slice(0, 256);
+    const lines = [];
+
+    // Ligne description / nom si différent de l'id
+    if (c.title && c.title !== c.id) lines.push(String(c.title).slice(0, 300));
+
     if (c.kind === 'new') {
-      const detected = c.status === 'detected';
-      const fields = [];
       for (const t of (c.treatments || []).slice(0, 12)) {
-        const pctTxt = t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%';
-        const name = (bucketIcon(t.bucket) + ' ' + t.label + ' · **' + pctTxt + '**').slice(0, 256);
-        const value = (
-          t.pctKnown && t.pct != null
-            ? '`' + pctBar(t.pct) + '`'
-            : '_pas encore de ranges (pas de faux %)_'
-        ).slice(0, 1024);
-        fields.push({ name, value, inline: true });
+        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%'));
       }
-      const desc = [
-        '`' + c.id + '` · expérience **user**',
-        c.platforms && c.platforms.length ? '📱 Plateformes · `' + c.platforms.join(', ') + '`' : null,
-        c.rolloutStatus ? '📍 Statut · `' + c.rolloutStatus + '`' : null,
-        c.filterSummary && c.filterSummary !== 'global' ? '🔎 Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null,
-        detected ? '👁 Détectée via sampling · pourcentage inconnu pour l\u2019instant' : null,
-      ]
-        .filter(Boolean)
-        .join('\n')
-        .slice(0, 4000);
-      embeds.push({
-        title: ((detected ? '👁 Nouvelle expérience détectée · ' : '🆕 Nouveau rollout user · ') + c.title).slice(0, 256),
-        description: desc,
-        fields,
-        color: detected ? 0x99aab5 : 0x57f287,
-        footer: {
-          text: detected
-            ? 'détectée via sampling · % inconnu (pas de faux pourcentage)'
-            : c.status !== 'exact'
-              ? 'user sampling · % estimés (pas des % exacts Discord)'
-              : c.source === 'community_ranges'
-                ? '✅ % EXACTS · ranges de rollout Discord (0–10000)'
-                : '✅ % exacts · bucket ranges (worker API)',
-        },
-      });
     } else if (c.kind === 'pct') {
-      const deltas = c.deltas || [];
-      const maxTo = Math.max(...deltas.map((d) => Number(d.to) || 0));
-      const minTo = Math.min(...deltas.map((d) => Number(d.to) || 0));
-      const completed = maxTo >= 100;
-      const removed = minTo <= 0;
-      const fields = [];
-      for (const d of deltas.slice(0, 12)) {
-        const name = (bucketIcon(d.bucket) + ' ' + d.label + ' · `' + fmtPct(d.from) + '%` → **' + fmtPct(d.to) + '%**').slice(0, 256);
-        const pts = Number(d.to) - Number(d.from);
-        const arrow = pts >= 0 ? '📈 +' : '📉 −';
-        const value = ('`' + pctBar(d.to) + '`\n' + arrow + fmtPct(Math.abs(pts)) + ' pts').slice(0, 1024);
-        fields.push({ name, value, inline: true });
+      for (const d of (c.deltas || []).slice(0, 12)) {
+        lines.push(variantLabel(d.bucket) + ' ' + fmtPct(d.from) + '% -> ' + fmtPct(d.to) + '%');
       }
-      const desc = [
-        '`' + c.id + '` · expérience **user**',
-        c.filterSummary && c.filterSummary !== 'global' ? '🔎 Filtres · `' + String(c.filterSummary).slice(0, 120) + '`' : null,
-      ]
-        .filter(Boolean)
-        .join('\n')
-        .slice(0, 4000);
-      embeds.push({
-        title: ((completed ? '🏁 Rollout complet · ' : removed ? '🔻 Rollout retiré · ' : '📈 Rollout user · ') + c.title).slice(0, 256),
-        description: desc,
-        fields,
-        color: completed ? 0x57f287 : removed ? 0xed4245 : 0xe67e22,
-        footer: {
-          text: c.exact ? '✅ % EXACTS · changement réel détecté' : 'user sampling · bruit possible',
-        },
-      });
     } else if (c.kind === 'revision') {
-      embeds.push({
-        title: ('♻️ Revision · ' + c.title).slice(0, 256),
-        description: ('`' + c.id + '` · expérience **user**\nRevision `' + c.fromRev + '` → `' + c.toRev + '` · bucket `' + c.bucket + '`').slice(0, 4000),
-        color: 0x5865f2,
-        footer: { text: 'revision d\u2019assignation' },
-      });
+      lines.push('Revision ' + c.fromRev + ' -> ' + c.toRev + ' - ' + variantLabel(c.bucket));
     }
+
+    embeds.push({
+      title,
+      description: lines.join('\n').slice(0, 4000),
+      color:
+        c.kind === 'pct'
+          ? (c.deltas || []).some((d) => Number(d.to) >= 100)
+            ? 0x57f287
+            : (c.deltas || []).some((d) => Number(d.to) <= 0)
+              ? 0xed4245
+              : 0xe67e22
+          : 0x5865f2,
+      footer: { text: c.kind === 'revision' ? 'Rollouts Revision' : 'Rollouts Changes' },
+    });
   }
   return embeds;
 }
@@ -1071,7 +1024,28 @@ async function main() {
         if (!t.pctKnown || t.pct == null) continue;
         if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
         const oldT = pt.get(t.bucket);
-        if (!oldT || !oldT.pctKnown || oldT.pct == null) continue;
+        if (!oldT || !oldT.pctKnown || oldT.pct == null) {
+          // Nouvelle variante dans le rollout, ou % qui devient connu :
+          // signaler l'apparition (from = null → affiché « ?% -> X% »).
+          if (Number(t.pct) > 0) {
+            deltas.push({
+              label: t.label,
+              bucket: t.bucket,
+              from: null,
+              to: Number(t.pct),
+              change: Number(t.pct),
+              changeType: 'ROLLOUT_APPEARED',
+              observed: t.observed,
+              ranges: t.intervals || t.ranges || null,
+              confidence: t.confidence,
+              status: t.status,
+              exact: isExact,
+              population: 'user',
+              treatment: t.label,
+            });
+          }
+          continue;
+        }
         const from = Number(oldT.pct);
         const to = Number(t.pct);
         // For exact percentages: no noise margin needed (exact values)
