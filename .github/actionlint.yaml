@@ -1,10 +1,13 @@
 # Configuration actionlint.
 #
-# Le workflow user-rollouts tourne volontairement toutes les 2 minutes
-# (le cog dispatch aussi trigger-user-rollouts) : actionlint exige >= 5 min
-# pour les jobs planifies par defaut, on ignore donc ce message pour ce
-# fichier uniquement.
+# Les workflows user-rollouts et guild-rollouts tournent volontairement toutes
+# les 2 minutes (le cog dispatch aussi trigger-user-rollouts) : actionlint
+# exige >= 5 min pour les jobs planifies par defaut, on ignore donc ce
+# message pour ces deux fichiers uniquement.
 paths:
   .github/workflows/user-rollouts.yml:
+    ignore:
+      - 'scheduled job runs too frequently'
+  .github/workflows/guild-rollouts.yml:
     ignore:
       - 'scheduled job runs too frequently'

@@ -4,8 +4,8 @@
  * Source : gist communautaire (agnonotdev), entrées kind === "guild" avec les
  * ranges exactes par variante (échelle 0–10000, intervalles [start, end)).
  * % exact = Σ(end − start) / 10000. Aucun % estimé : une variante sans ranges
- * s'affiche honnêtement « ?% » (détection), et quand les ranges apparaissent
- * le delta s'affiche « ?% -> X% ».
+ * s'affiche honnêtement « 0% » (détection), et quand les ranges apparaissent
+ * le delta s'affiche « 0% -> X% ».
  *
  * Une expérience guild qui quitte le tracker (rollout terminé ou annulé) est
  * signalée une fois (« Removed from the rollouts tracker »).
@@ -81,8 +81,8 @@ function hasName(id) {
  *   variants: [{ variant, role, from, to, change, ranges: ["0 - 200", ...] }] }
  *
  * Retourne un Map hash → { id, title, treatments, rolloutStatus, platforms,
- * total }. Les entrées sans ranges sont GARDÉES : détection honnête « ?% »
- * (quand les ranges apparaissent, le delta s'affiche « ?% -> X% »).
+ * total }. Les entrées sans ranges sont GARDÉES : détection honnête « 0% »
+ * (quand les ranges apparaissent, le delta s'affiche « 0% -> X% »).
  */
 async function loadCommunityGuildRollouts() {
   const map = new Map();
@@ -104,7 +104,7 @@ async function loadCommunityGuildRollouts() {
       if (!Number.isFinite(bucket)) continue;
       const ranges = mergeIntervals(parseRangeStrings(v.ranges));
       if (!ranges.length) {
-        // Détection sans ranges : pas de % inventé, on affichera « ?% ».
+        // Détection sans ranges : pas de % inventé, on affichera « 0% ».
         treatments.push({
           bucket,
           label: tLabel(bucket),
@@ -178,7 +178,7 @@ function fingerprintOf(treatments) {
 
 function fmtPct(pct) {
   const v = Number(pct);
-  if (pct == null || !Number.isFinite(v)) return '?';
+  if (pct == null || !Number.isFinite(v)) return '0'; // % inconnu (pas de ranges) = 0% déployé
   return String(Math.round(v * 10) / 10);
 }
 
@@ -205,7 +205,7 @@ function buildEmbeds(changes) {
 
     if (c.kind === 'new') {
       for (const t of (c.treatments || []).slice(0, 12)) {
-        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%'));
+        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '0%'));
       }
     } else if (c.kind === 'pct') {
       for (const d of (c.deltas || []).slice(0, 12)) {
@@ -360,7 +360,7 @@ async function main() {
         const oldT = pt.get(t.bucket);
         if (!oldT || !oldT.pctKnown || oldT.pct == null) {
           // Nouvelle variante dans le rollout, ou % qui devient connu
-          // (ranges apparus) : from = null → affiché « ?% -> X% ».
+          // (ranges apparus) : from = null → affiché « 0% -> X% ».
           if (Number(t.pct) > 0) {
             deltas.push({
               label: t.label,

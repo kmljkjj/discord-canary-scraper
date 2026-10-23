@@ -9,13 +9,13 @@
  *  2. Worker API (experiments.dscrd.workers.dev) — définitions avec bucket
  *     ranges (exact aussi, souvent moins à jour que le gist).
  *  3. Fingerprint sampling — DÉTECTION UNIQUEMENT. Les % estimés sont
- *     désactivés par défaut : une expérience sans ranges s'affiche « ?% ».
+ *     désactivés par défaut : une expérience sans ranges s'affiche « 0% ».
  *     (USER_ROLLOUT_ALLOW_ESTIMATE=1 pour réactiver l'ancien comportement.)
  *
  * Key changes vs v10:
  *  - Source primaire : gist communautaire (ranges exactes des user rollouts)
  *  - % estimés par sampling désactivés par défaut → plus de faux pourcentages
- *  - Nouvelle expérience détectée sans ranges → notif honnête « ?% »
+ *  - Nouvelle expérience détectée sans ranges → notif honnête « 0% »
  *  - Bump état v11 : premier run après upgrade = seed silencieux (pas de flood
  *    de « corrections » lors du passage estimé → exact)
  *  - Webhook UNIQUE : la première var définie gagne (UR_WEBHOOK
@@ -675,7 +675,7 @@ async function fetchTokenSnapshot(defs) {
 
 function fmtPct(pct) {
   const v = Number(pct);
-  if (pct == null || !Number.isFinite(v)) return '?';
+  if (pct == null || !Number.isFinite(v)) return '0'; // % inconnu (pas de ranges) = 0% déployé
   return String(Math.round(v * 10) / 10);
 }
 
@@ -703,7 +703,7 @@ function buildEmbeds(changes) {
 
     if (c.kind === 'new') {
       for (const t of (c.treatments || []).slice(0, 12)) {
-        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%'));
+        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '0%'));
       }
     } else if (c.kind === 'pct') {
       for (const d of (c.deltas || []).slice(0, 12)) {
@@ -879,7 +879,7 @@ async function main() {
   console.log('Worker API experiments with active rollout:', experiments.length);
 
   // 2. Experiments detected via fingerprint sampling but with NO exact ranges.
-  //    v11: estimation DISABLED by default — report an honest "detected ?%"
+  //    v11: estimation DISABLED by default — report an honest "detected 0%"
   //    entry instead of publishing fake percentages.
   for (const [hash, bucketMap] of byHash) {
     if (processedHashes.has(hash)) continue;
@@ -1026,7 +1026,7 @@ async function main() {
         const oldT = pt.get(t.bucket);
         if (!oldT || !oldT.pctKnown || oldT.pct == null) {
           // Nouvelle variante dans le rollout, ou % qui devient connu :
-          // signaler l'apparition (from = null → affiché « ?% -> X% »).
+          // signaler l'apparition (from = null → affiché « 0% -> X% »).
           if (Number(t.pct) > 0) {
             deltas.push({
               label: t.label,

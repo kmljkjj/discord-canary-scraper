@@ -24,10 +24,9 @@ jobs:
         with:
           fetch-depth: 1
 
+      # Setup = Node 22 + cache npm + npm ci --omit=dev (les deps runtime)
+      # Inutile de refaire un npm ci complet ici : plus rapide à chaque run.
       - uses: ./.github/actions/setup
-
-      - name: Install dependencies
-        run: npm ci --no-audit --no-fund
 
       - name: Unit tests (rollout math)
         run: node --test test/rollout_math.test.js
@@ -48,33 +47,23 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          USER_ROLLOUT_SAMPLES: "150"
+          # Plus rapide : 100 échantillons au lieu de 150, délai 200 ms — la
+          # détection vient surtout du gist communautaire + token snapshot.
+          USER_ROLLOUT_SAMPLES: "100"
           USER_ROLLOUT_CONCURRENCY: "2"
-          USER_ROLLOUT_DELAY_MS: "300"
-          USER_ROLLOUT_MIN_OK: "35"
+          USER_ROLLOUT_DELAY_MS: "200"
+          USER_ROLLOUT_MIN_OK: "25"
           USER_ROLLOUT_NOTIFY_HASH: "0"
           APEX_MIN_PCT_DELTA: "1"
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
         run: node src/user_rollouts.js
 
-      - name: Guild rollouts
-        id: guild
-        if: always() && steps.rollouts.outcome != 'cancelled'
-        env:
-          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
-          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
-          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
-          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          GUILD_ROLLOUT_MIN_DELTA: "1"
-        run: node src/guild_rollouts.js
-
       - name: Commit state
-        if: always() && steps.rollouts.outcome != 'cancelled' && steps.guild.outcome != 'cancelled'
+        if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: user + guild rollouts" data/user_rollouts.json data/guild_rollouts.json
+          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json
 
       - name: Fail if rollouts failed
-        if: always() && (steps.rollouts.outcome == 'failure' || steps.guild.outcome == 'failure')
+        if: always() && steps.rollouts.outcome == 'failure'
         run: exit 1
