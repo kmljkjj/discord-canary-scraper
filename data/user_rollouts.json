@@ -1,13 +1,195 @@
 {
-  "scrapedAt": "2026-10-23T01:37:35.235Z",
+  "scrapedAt": "2026-10-23T01:43:37.779Z",
   "version": 11,
   "schemaVersion": 11,
-  "runId": "2026-10-23T01-37-35-235Z_69arm5",
+  "runId": "2026-10-23T01-43-37-779Z_oj07m3",
   "samples": 150,
   "ok": 150,
   "fail": 0,
   "tokensConfigured": 1,
   "experiments": [
+    {
+      "hash": 3477309199,
+      "id": "2026-10-gdm-duration-timer",
+      "title": "Gdm duration timer",
+      "type": "user",
+      "quality": "exact",
+      "status": "exact",
+      "confidence": 1,
+      "coverage": 0.12,
+      "sumPct": 12,
+      "treatments": [
+        {
+          "bucket": 0,
+          "label": "Control",
+          "percentage": 3.5,
+          "pct": 3.5,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.035,
+          "intervals": [
+            [
+              1000,
+              1100
+            ],
+            [
+              1450,
+              1500
+            ],
+            [
+              2600,
+              2650
+            ],
+            [
+              4500,
+              4525
+            ],
+            [
+              5550,
+              5600
+            ],
+            [
+              6800,
+              6825
+            ],
+            [
+              7750,
+              7800
+            ]
+          ],
+          "ranges": [
+            [
+              1000,
+              1100
+            ],
+            [
+              1450,
+              1500
+            ],
+            [
+              2600,
+              2650
+            ],
+            [
+              4500,
+              4525
+            ],
+            [
+              5550,
+              5600
+            ],
+            [
+              6800,
+              6825
+            ],
+            [
+              7750,
+              7800
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_community_ranges",
+          "reported": {
+            "from": 0,
+            "to": 3.5,
+            "change": 3.5
+          }
+        },
+        {
+          "bucket": 1,
+          "label": "Variant 1",
+          "percentage": 8.5,
+          "pct": 8.5,
+          "pctKnown": true,
+          "status": "exact",
+          "confidence": "high",
+          "sampleCount": 0,
+          "samples": 0,
+          "coverage": 0.085,
+          "intervals": [
+            [
+              2850,
+              2900
+            ],
+            [
+              4525,
+              4550
+            ],
+            [
+              5850,
+              6250
+            ],
+            [
+              6825,
+              7000
+            ],
+            [
+              8350,
+              8400
+            ],
+            [
+              9550,
+              9700
+            ]
+          ],
+          "ranges": [
+            [
+              2850,
+              2900
+            ],
+            [
+              4525,
+              4550
+            ],
+            [
+              5850,
+              6250
+            ],
+            [
+              6825,
+              7000
+            ],
+            [
+              8350,
+              8400
+            ],
+            [
+              9550,
+              9700
+            ]
+          ],
+          "observed": null,
+          "gapFill": 0,
+          "sourceKind": "exact_from_community_ranges",
+          "reported": {
+            "from": 0,
+            "to": 8.5,
+            "change": 8.5
+          }
+        }
+      ],
+      "fingerprint": "0:4.0|1:9.0",
+      "source": "community_ranges",
+      "named": true,
+      "segments": [],
+      "hasFilters": false,
+      "filterSummary": "global",
+      "usedFallbackFiltered": false,
+      "platforms": [
+        "android",
+        "desktop"
+      ],
+      "rolloutStatus": "ab_test",
+      "communityTotal": {
+        "from": 0,
+        "to": 8.5,
+        "change": 8.5
+      }
+    },
     {
       "hash": 1664530717,
       "id": "2026-10-code-blurple",
@@ -53530,6 +53712,15 @@
       "revision": 0,
       "bucket": 1,
       "hash_result": 5162
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 2399
     }
   ],
   "announced": {
@@ -54008,6 +54199,7 @@
     "3445234122": "1:100.0",
     "3449313318": "0:50.0|1:50.0",
     "3463472513": "0:5.0|1:5.0|2:5.0",
+    "3477309199": "0:4.0|1:9.0",
     "3485209992": "1:100.0",
     "3496230683": "1:100.0",
     "3501546019": "0:50.0|1:50.0",
@@ -54132,13 +54324,6 @@
     "4292436570": "1:100.0"
   },
   "history": [
-    {
-      "ts": "2026-10-22T21:27:41.616Z",
-      "ok": 150,
-      "fail": 0,
-      "experimentCount": 36,
-      "changeCount": 0
-    },
     {
       "ts": "2026-10-22T21:34:18.253Z",
       "ok": 150,
@@ -54410,6 +54595,13 @@
       "ok": 150,
       "fail": 0,
       "experimentCount": 598,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-23T01:43:37.779Z",
+      "ok": 150,
+      "fail": 0,
+      "experimentCount": 599,
       "changeCount": 0
     }
   ],
