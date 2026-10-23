@@ -1,15 +1,9 @@
 {
-  "updatedAt": "2026-09-27T22:14:47Z",
+  "updatedAt": "2026-10-23T20:54:10.109Z",
   "sources": {
-    "aptoide": {
-      "url": "https://discord.bd.aptoide.com/versions",
-      "lastAccessible": false,
-      "note": "Aptoide versions page — behind Cloudflare. Data extracted via content fetch."
-    },
-    "apkmirror": {
-      "url": "https://www.apkmirror.com/uploads/?appcategory=discord-chat-for-gamers",
-      "lastAccessible": false,
-      "note": "APKMirror latest uploads — behind Cloudflare."
+    "dataminingCommits": {
+      "url": "https://api.github.com/repos/Wumpus-Central/discord-mobile-datamining/commits?per_page=50",
+      "lastAccessible": true
     }
   },
   "android": {
@@ -19,11 +13,11 @@
       "source": "aptoide",
       "track": "beta"
     },
-    "alpha": null,
-    "note": "Alpha track not listed on Aptoide. APKMirror last had alpha (291.4) in July 2025."
-  },
-  "ios": {
-    "beta": null,
-    "note": "TestFlight beta not publicly queryable. OTA manifest shows no version ahead of App Store stable (346.0)."
+    "alpha": {
+      "version": "352.6",
+      "date": "2026-10-23T09:56:16Z",
+      "source": "datamining_commits",
+      "track": "alpha"
+    }
   }
 }
