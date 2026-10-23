@@ -2,6 +2,12 @@
  * Discord Shop / Collectibles tracker
  * Source: official API with user token
  *
+ * Message (Components V2, sobre) :
+ *   Boutique Discord • NEW item
+ *   ### [Nom de l'item](https://discord.com/shop)
+ *   [image]
+ *   — rien d'autre —
+ *
  * Env:
  *   SHOP_WEBHOOK_URL | DISCORD_WEBHOOK_URL
  *   DISCORD_USER_TOKEN (preferred) | DISCORD_TOKEN | DISCORD_USER_TOKEN_1
@@ -11,7 +17,13 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
-const { sendEmbeds } = require('./lib/webhook');
+const { sendWebhook, withComponentsUrl } = require('./lib/webhook');
+const {
+  IS_COMPONENTS_V2_FLAG,
+  textDisplay,
+  mediaGalleryFromUrls,
+  chunkIntoMessages,
+} = require('./lib/components_v2');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, firstToken, redactSecrets, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 
@@ -22,6 +34,12 @@ const WEBHOOK =
   process.env.SHOP_WEBHOOK_URL ||
   process.env.DISCORD_WEBHOOK_URL ||
   null;
+
+const SHOP_COLOR = 0x5865f2;
+const SHOP_URL = 'https://discord.com/shop';
+// Pas de deep-link public par item (SPA) → le titre pointe vers la boutique.
+const MAX_NOTIFY_PER_RUN = 20;
+const ANNOUNCED_KEEP_DAYS = 90;
 
 function normalizeToken(t) {
   let s = String(t || '')
@@ -327,41 +345,58 @@ async function fetchShopCatalog() {
   return [...map.values()];
 }
 
-function buildEmbed(item) {
-  const fields = [];
-  if (item.type != null)
-    fields.push({ name: 'Type', value: '`' + item.type + '`', inline: true });
-  if (item.id)
-    fields.push({ name: 'SKU', value: '`' + item.id + '`', inline: true });
-  if (item.summary) {
-    fields.push({ name: 'Description', value: item.summary.slice(0, 1024) });
-  }
-  return {
-    author: { name: 'Boutique Discord · Nouvel item', icon_url: AVATAR },
-    title: String(item.name).slice(0, 256),
-    description: 'Nouvel article détecté dans la boutique collectibles.',
-    color: 0x5865f2,
-    fields,
-    image: item.image ? { url: item.image } : undefined,
-    thumbnail: item.image ? { url: item.image } : undefined,
-    footer: { text: 'Shop tracker · token API' },
-    timestamp: new Date().toISOString(),
-  };
+// ── Message (Components V2, sobre) ────────────────────
+
+function escapeMdTitle(t) {
+  return String(t || 'Item')
+    .slice(0, 200)
+    .replace(/\[/g, '\\[')
+    .replace(/\]/g, '\\]');
 }
 
-async function postWebhook(embeds) {
-  if (!WEBHOOK || !embeds.length) return { ok: false, status: 0, text: 'skip' };
-  return sendEmbeds(
-    WEBHOOK,
-    { username: BOT.slice(0, 80), avatar_url: AVATAR },
-    embeds,
-    { label: 'shop', withDismiss: true },
+/**
+ * « Boutique Discord • NEW item » : titre cliquable + image, rien d'autre.
+ */
+function buildItemComponents(item) {
+  const comps = [
+    textDisplay('Boutique Discord • NEW item'),
+    textDisplay(`### [${escapeMdTitle(item.name)}](${SHOP_URL})`),
+  ];
+  const gallery = mediaGalleryFromUrls(
+    item.image && /^https?:\/\//i.test(String(item.image)) ? [item.image] : [],
   );
+  if (gallery) comps.push(gallery);
+  return comps;
 }
+
+/** Envoie des composants Components V2 sur la webhook. */
+async function postComponents(comps) {
+  if (!WEBHOOK) return false;
+  const messages = chunkIntoMessages(comps, SHOP_COLOR, true);
+  for (const componentsMsg of messages) {
+    const r = await sendWebhook(
+      withComponentsUrl(WEBHOOK),
+      {
+        username: BOT.slice(0, 80),
+        avatar_url: AVATAR,
+        flags: IS_COMPONENTS_V2_FLAG,
+        components: componentsMsg,
+      },
+      { label: 'shop' },
+    );
+    if (!r.ok) {
+      console.warn('shop webhook fail', r.status, (r.text || '').slice(0, 160));
+      return false;
+    }
+  }
+  return true;
+}
+
+// ── Main ──────────────────────────────────────────────
 
 async function main() {
   await fs.ensureDir(DATA);
-  console.log('🛒 Discord Shop tracker');
+  console.log('Discord Shop tracker');
   console.log('Token:', TOKEN ? 'configured' : 'MISSING');
   console.log(
     'Webhook:',
@@ -461,26 +496,49 @@ async function main() {
     return;
   }
 
-  let remaining = newItems.slice();
+  // Notifications — 1 message sobre par item, granularité d'échec par item.
+  // Un item non envoyé n'est pas marqué announced → re-notifié au prochain run.
   const announced = { ...(prev.announced || {}) };
   const notified = [];
-  while (remaining.length) {
-    const batch = remaining.slice(0, 15);
-    remaining = remaining.slice(15);
-    const sent = await postWebhook(batch.map(buildEmbed));
-    console.log('Webhook batch', batch.length, sent.status, sent.ok ? 'OK' : sent.text);
-    if (!sent.ok) {
-      console.warn('NOTIFY_FAIL shop — remaining will retry');
-      process.exitCode = 2;
-      remaining = batch.concat(remaining);
-      break;
+  const pendingIds = [];
+  const batch = newItems.slice(0, MAX_NOTIFY_PER_RUN);
+  let failed = 0;
+  for (const it of batch) {
+    let ok = false;
+    try {
+      ok = await postComponents(buildItemComponents(it));
+    } catch (e) {
+      console.warn('notify error', redactSecrets(e.message || e));
+      ok = false;
     }
-    const ts = new Date().toISOString();
-    for (const it of batch) {
-      announced[it.id] = ts;
+    if (ok) {
+      announced[it.id] = new Date().toISOString();
       notified.push(it.id);
+      console.log('sent', it.name);
+    } else {
+      failed++;
+      pendingIds.push(it.id);
+      console.warn('NOTIFY_FAIL shop', it.id, it.name);
+    }
+    await sleep(300);
+  }
+  for (const it of newItems.slice(MAX_NOTIFY_PER_RUN)) {
+    pendingIds.push(it.id);
+  }
+  if (newItems.length > MAX_NOTIFY_PER_RUN) {
+    console.log('Pending (next run):', newItems.length - MAX_NOTIFY_PER_RUN);
+  }
+  if (failed > 0) process.exitCode = 2;
+
+  // Pruning: entrées announced hors catalogue et > 90 jours
+  const catalogIds = new Set(allIds);
+  const cutoff = Date.now() - ANNOUNCED_KEEP_DAYS * 86400000;
+  for (const [id, ts] of Object.entries(announced)) {
+    if (!catalogIds.has(id) && Date.parse(ts || '') < cutoff) {
+      delete announced[id];
     }
   }
+
   const knownIds = new Set([...(prev.ids || []), ...Object.keys(announced)]);
   const nextIds = allIds.filter((id) => knownIds.has(id));
   await writeJsonAtomic(
@@ -497,11 +555,11 @@ async function main() {
       })),
       announced,
       lastNew: notified,
-      pendingNew: remaining.map((i) => i.id),
+      pendingNew: pendingIds,
     },
     2,
   );
-  console.log('✅ Shop done — announced', notified.length, 'pending', remaining.length);
+  console.log('Shop done — announced', notified.length, 'failed', failed, 'pending', pendingIds.length);
 }
 
 if (require.main === module) {
