@@ -1,17 +1,20 @@
 {
-  "scrapedAt": "2026-10-23T02:49:02.688Z",
+  "scrapedAt": "2026-10-23T07:34:30.904Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
       "version": "350.0",
       "build": null,
+      "size": "241.3 MB",
+      "requires": "iOS 16.0+",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
       "releaseDate": "2026-10-19T17:19:49Z",
       "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-10-23T02:49:02.688Z"
+      "checkedAt": "2026-10-23T07:34:30.904Z"
     },
     {
       "platform": "ios",
@@ -20,7 +23,8 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-23T02:49:02.688Z"
+      "checkedAt": "2026-10-23T07:34:30.904Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
@@ -32,7 +36,8 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-23T02:49:02.688Z"
+      "checkedAt": "2026-10-23T07:34:30.904Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
@@ -45,16 +50,18 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-10-23T02:49:02.688Z"
+      "checkedAt": "2026-10-23T07:34:30.904Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
       "channel": "alpha",
       "version": null,
       "available": false,
-      "note": "No OTA version ahead of stable",
+      "note": "No alpha version found (OTA + mirrors)",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-23T02:49:02.688Z"
+      "checkedAt": "2026-10-23T07:34:30.904Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     }
   ],
   "otaIndex": {
@@ -351,7 +358,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-23T02:42:08.293Z",
+  "previousScrapedAt": "2026-10-23T02:49:02.688Z",
   "notifiedFingerprints": [
     "android|beta|347.8",
     "android|stable|343.12",
