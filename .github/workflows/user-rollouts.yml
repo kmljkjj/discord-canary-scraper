@@ -47,12 +47,15 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # Plus rapide : 100 échantillons au lieu de 150, délai 200 ms — la
-          # détection vient surtout du gist communautaire + token snapshot.
-          USER_ROLLOUT_SAMPLES: "100"
+          # V12 sampling adaptatif : 80 échantillons max mais sortie anticipée
+          # dès que la détection est stable (plateau 30) ou budget 75 s —
+          # typiquement ~35 requêtes au lieu de 100 → job bien < 2 min.
+          USER_ROLLOUT_SAMPLES: "80"
           USER_ROLLOUT_CONCURRENCY: "2"
-          USER_ROLLOUT_DELAY_MS: "200"
-          USER_ROLLOUT_MIN_OK: "25"
+          USER_ROLLOUT_DELAY_MS: "150"
+          USER_ROLLOUT_MIN_OK: "20"
+          USER_ROLLOUT_MAX_MS: "75000"
+          USER_ROLLOUT_PLATEAU: "30"
           USER_ROLLOUT_NOTIFY_HASH: "0"
           APEX_MIN_PCT_DELTA: "1"
           ORBIT_BOT_NAME: Datamining
@@ -67,3 +70,4 @@ jobs:
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'
         run: exit 1
+

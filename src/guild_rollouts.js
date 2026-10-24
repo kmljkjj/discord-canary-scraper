@@ -32,7 +32,7 @@ const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
-const { safeJson } = require('./lib/http');
+const { safeJson, fetchWithRetry } = require('./lib/http');
 const {
   mergeIntervals,
   parseRangeStrings,
@@ -86,9 +86,12 @@ function hasName(id) {
  */
 async function loadCommunityGuildRollouts() {
   const map = new Map();
-  const res = await fetch(COMMUNITY_URL, {
+  // Stabilité : fetchWithRetry (backoff 429/5xx/erreurs réseau, 3 tentatives).
+  // Le gist est la source unique des % guild — un échec = un poll manqué.
+  const res = await fetchWithRetry(COMMUNITY_URL, {
     headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
     timeout: 30000,
+    label: 'community gist',
   });
   if (!res.ok) throw new Error('community gist HTTP ' + res.status);
   const data = await safeJson(res);
@@ -531,3 +534,4 @@ if (require.main === module)
   });
 
 module.exports = { main, loadCommunityGuildRollouts, buildEmbeds, fingerprintOf, variantLabel };
+

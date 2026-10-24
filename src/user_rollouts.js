@@ -1,5 +1,14 @@
 /**
- * User experiment rollouts v11 — EXACT percentages, plus aucun faux %.
+ * User experiment rollouts v12 — EXACT percentages, runs rapides et stables.
+ *
+ * V12 (rapidité + stabilité) :
+ *  - phases réseau en parallèle : defs + gist, puis token snapshot + sampling
+ *  - sampling adaptatif : arrêt anticipé sur plateau de découverte + budget
+ *    temps → le job tient largement dans la cadence 2 min (jamais de file)
+ *  - fetchWithRetry (lib/http) sur defs + gist : backoff 429/5xx/réseau
+ *  - URLs defs dédoublonnées (un seul fetch au lieu de deux identiques)
+ *  - timeout d'un échantillon 25s → 15s (une requête qui traîne ne bloque
+ *    plus un worker un quart de minute)
  *
  * Sources, par priorité :
  *  1. Gist communautaire des rollouts (agnonotdev) — expériences user avec
@@ -30,6 +39,9 @@
  *   APEX_MIN_PCT_DELTA         default 3
  *   USER_ROLLOUT_NOTIFY_HASH   default 0 (do not notify unknown hash names)
  *   USER_ROLLOUT_MIN_OK        default 25 (min successful samples before any %)
+ *   USER_ROLLOUT_MAX_MS        default 90000 (budget temps du sampling)
+ *   USER_ROLLOUT_PLATEAU       default 30 (échantillons consécutifs sans
+ *                              nouvelle paire hash/bucket → arrêt anticipé)
  *   USER_ROLLOUT_COMMUNITY_URL default agnonotdev rollouts gist (raw)
  *   USER_ROLLOUT_ALLOW_ESTIMATE default 0 (never publish estimated %)
  */
@@ -41,7 +53,7 @@ const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
-const { safeJson } = require('./lib/http');
+const { safeJson, fetchWithRetry } = require('./lib/http');
 const {
   mergeIntervals,
   intervalsCoverage,
@@ -81,6 +93,10 @@ const CONC = Math.max(1, Math.min(4, Number(process.env.USER_ROLLOUT_CONCURRENCY
 const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DELAY_MS || 300)));
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);
 const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
+// V12 rapidité : sampling adaptatif — budget temps max et sortie sur plateau
+// de découverte (N échantillons consécutifs sans nouvelle paire hash/bucket).
+const MAX_MS = Math.max(15000, Number(process.env.USER_ROLLOUT_MAX_MS || 90000));
+const PLATEAU = Math.max(10, Number(process.env.USER_ROLLOUT_PLATEAU || 30));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
 const NOISE_Z = Math.max(0, Number(process.env.USER_ROLLOUT_NOISE_Z ?? 2));
 const SCALE = DEFAULT_SCALE;
@@ -113,11 +129,14 @@ async function loadExperimentDefs() {
   const defs = new Map();
 
   // 1. Fetch from worker API (primary source — has bucket ranges)
-  for (const url of [DEFS_URL, WORKERS_URL]) {
+  // V12 : URLs dédoublonnées (DEFS_URL et WORKERS_URL pointent par défaut
+  // vers la même API — un seul fetch au lieu de deux) + retry robuste.
+  for (const url of [...new Set([DEFS_URL, WORKERS_URL].filter(Boolean))]) {
     try {
-      const res = await fetch(url, {
+      const res = await fetchWithRetry(url, {
         headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
         timeout: 20000,
+        label: 'defs',
       });
       if (!res.ok) continue;
       const data = await safeJson(res);
@@ -202,9 +221,10 @@ async function loadCommunityUserRollouts() {
   const urls = [...new Set([COMMUNITY_URL].filter(Boolean))];
   for (const url of urls) {
     try {
-      const res = await fetch(url, {
+      const res = await fetchWithRetry(url, {
         headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
         timeout: 30000,
+        label: 'community gist',
       });
       if (!res.ok) {
         console.warn('Community rollouts HTTP', res.status);
@@ -541,7 +561,7 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
       'Cache-Control': 'no-cache',
       ...extraHeaders,
     },
-    timeout: 25000,
+    timeout: 15000, // V12 : 15s au lieu de 25s — une requête lente ne bloque pas un worker
   });
 
   // Update rate limit state from headers
@@ -577,11 +597,22 @@ async function sampleFingerprints(n, concurrency) {
   let ok = 0;
   let fail = 0;
   let next = 0;
+  // V12 rapidité : budget temps + sortie sur plateau de découverte.
+  // La détection n'a pas besoin d'un N fixe : dès que PLATEAU échantillons
+  // consécutifs ne découvrent plus aucune nouvelle paire (hash, bucket),
+  // l'ensemble détecté est stable → arrêt anticipé (typiquement ~35 requêtes
+  // au lieu de 100). MAX_MS garantit un run rapide quoi qu'il arrive.
+  const deadline = Date.now() + MAX_MS;
+  let sinceNew = 0;
+  let stopReason = null;
 
   async function worker() {
     while (true) {
       const my = next++;
       if (my >= n) break;
+      if (!stopReason && ok >= MIN_OK && sinceNew >= PLATEAU) stopReason = 'plateau';
+      if (!stopReason && Date.now() > deadline) stopReason = 'budget';
+      if (stopReason) break;
       if (rateLimit.consecutive429 > 15) {
         fail++;
         continue;
@@ -593,18 +624,20 @@ async function sampleFingerprints(n, concurrency) {
         const { assignments } = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
         });
+        let foundNew = false;
         for (const a of assignments) {
           if (!Array.isArray(a) || a.length < 6) continue;
           const hash = Number(a[0]);
           const bucket = Number(a[2]);
           const hr = Number(a[5]);
           if (!Number.isFinite(hash) || !Number.isFinite(hr)) continue;
-          if (!byHash.has(hash)) byHash.set(hash, new Map());
+          if (!byHash.has(hash)) { byHash.set(hash, new Map()); foundNew = true; }
           const bm = byHash.get(hash);
-          if (!bm.has(bucket)) bm.set(bucket, []);
+          if (!bm.has(bucket)) { bm.set(bucket, []); foundNew = true; }
           bm.get(bucket).push(hr);
         }
         ok++;
+        sinceNew = foundNew ? 0 : sinceNew + 1;
       } catch (e) {
         fail++;
         if (String(e.message).includes('429')) {
@@ -619,7 +652,7 @@ async function sampleFingerprints(n, concurrency) {
   }
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
-  console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429);
+  console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429, stopReason ? '· early stop: ' + stopReason : '(all ' + n + ')');
   return { byHash, ok, fail };
 }
 
@@ -752,18 +785,29 @@ async function main() {
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
   console.log('Estimated % (sampling):', ALLOW_ESTIMATE ? 'ENABLED (legacy)' : 'disabled — exact only');
 
-  // Load experiment definitions with bucket ranges
-  const defs = await loadExperimentDefs();
+  // V12 rapidité : phases indépendantes en parallèle.
+  //  1) defs (worker API) + gist communautaire : sources disjointes.
+  //  2) token snapshot (auth) + sampling (unauth) : ils partagent le rate
+  //     limiter, donc la pression réseau reste maîtrisée.
+  const [defsR, communityR] = await Promise.allSettled([
+    loadExperimentDefs(),
+    loadCommunityUserRollouts(),
+  ]);
+  const defs = defsR.status === 'fulfilled' ? defsR.value : new Map();
+  const community = communityR.status === 'fulfilled' ? communityR.value : new Map();
+  if (defsR.status === 'rejected')
+    console.warn('defs indisponibles:', String((defsR.reason && defsR.reason.message) || defsR.reason));
+  if (communityR.status === 'rejected')
+    console.warn('community gist indisponible:', String((communityR.reason && communityR.reason.message) || communityR.reason));
 
-  // Primary exact source: community rollout ranges (user experiments)
-  const community = await loadCommunityUserRollouts();
-
-  // Fetch token snapshot FIRST (authenticated endpoint returns more experiments)
-  const tokenSnap = await fetchTokenSnapshot(defs);
+  const [tokenSnapR, sampledR] = await Promise.allSettled([
+    fetchTokenSnapshot(defs),
+    sampleFingerprints(SAMPLES, CONC),
+  ]);
+  const tokenSnap = tokenSnapR.status === 'fulfilled' ? tokenSnapR.value : [];
+  const sampled = sampledR.status === 'fulfilled' ? sampledR.value : { byHash: new Map(), ok: 0, fail: 0 };
+  const { byHash, ok, fail } = sampled;
   console.log('Token snapshot:', tokenSnap.length, 'experiments');
-
-  // Sample fingerprints (unauthenticated — for detection + fallback estimation)
-  const { byHash, ok, fail } = await sampleFingerprints(SAMPLES, CONC);
 
   if (ok < MIN_OK) {
     console.warn('Too few ok samples', ok, '<', MIN_OK, '— skip estimates (avoid noise)');
@@ -1190,3 +1234,4 @@ if (require.main === module)
   });
 
 module.exports = { main, murmur3, loadExperimentDefs, loadCommunityUserRollouts, calculateBucketPercentages, buildTreatments, classifyChange, mergeIntervals };
+
