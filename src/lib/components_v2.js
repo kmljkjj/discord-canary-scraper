@@ -159,27 +159,20 @@ function dismissButton(label = 'Dismiss') {
 }
 
 /**
- * Add a dismiss button to the last container of each message.
- * If the last component is a Container, adds the ActionRow inside it.
- * Otherwise, adds the ActionRow as a top-level component.
+ * N'ajoute plus le bouton « Dismiss » aux messages.
+ *
+ * Historiquement, cette fonction ajoutait un ActionRow avec un bouton lien
+ * « Dismiss » à chaque message. Retiré sur demande : le bouton apparaissait
+ * sur tous les embeds. C'est le point de passage unique de tous les envois
+ * (sendEmbeds, buildSectionMessages, embedToComponents, embedsToComponents
+ * passent toujours withDismiss) — la fonction reste donc appelée partout
+ * mais ne modifie plus les messages. Restaurer l'ancien corps de fonction
+ * pour réactiver le bouton.
  *
  * @param {Array<Array>} messages - Array of message component arrays
- * @returns {Array<Array>} Messages with dismiss button added
+ * @returns {Array<Array>} Messages inchangés
  */
 function addDismissToMessages(messages) {
-  for (const msg of messages) {
-    // Find the last container in the message
-    let lastContainer = null;
-    for (const comp of msg) {
-      if (comp.type === 17) lastContainer = comp;
-    }
-    if (lastContainer && lastContainer.components.length < CONTAINER_MAX_COMPONENTS) {
-      lastContainer.components.push(dismissButton());
-    } else {
-      // No container or container is full — add as top-level
-      msg.push(dismissButton());
-    }
-  }
   return messages;
 }
 
@@ -188,7 +181,7 @@ function addDismissToMessages(messages) {
  * Each message gets its own Container with the accent color.
  * @param {Array} components - Flat list of components
  * @param {number} [accentColor] - Container accent color
- * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
+ * @param {boolean} [withDismiss=false] - Ignoré : le bouton « Dismiss » a été retiré
  * @returns {Array<Array>} Array of message component arrays
  */
 function chunkIntoMessages(components, accentColor, withDismiss = false) {
@@ -226,7 +219,7 @@ function chunkIntoMessages(components, accentColor, withDismiss = false) {
  * @param {string} [params.botName] - Bot name for header
  * @param {string} [params.avatarUrl] - Avatar URL
  * @param {Array} params.sections - Array of {label, color, count, lines}
- * @param {boolean} [params.withDismiss=false] - Add a dismiss button to each message
+ * @param {boolean} [params.withDismiss=false] - Ignoré : le bouton « Dismiss » a été retiré
  * @returns {Array<Array>} Array of message payloads (each is a components array)
  */
 function buildSectionMessages({ title, bn, ts, sections, withDismiss = false }) {
@@ -272,7 +265,7 @@ function buildSectionMessages({ title, bn, ts, sections, withDismiss = false }) 
  * Handles title, description, fields, color, footer, author.
  *
  * @param {Object} embed - Legacy Discord embed
- * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
+ * @param {boolean} [withDismiss=false] - Ignoré : le bouton « Dismiss » a été retiré
  * @returns {Array<Array>} Array of message component arrays
  */
 function embedToComponents(embed, withDismiss = false) {
@@ -331,7 +324,7 @@ function embedToComponents(embed, withDismiss = false) {
  * Embeds are concatenated and split respecting limits.
  *
  * @param {Array} embeds - Array of legacy Discord embeds
- * @param {boolean} [withDismiss=false] - Add a dismiss button to each message
+ * @param {boolean} [withDismiss=false] - Ignoré : le bouton « Dismiss » a été retiré
  * @returns {Array<Array>} Array of message component arrays
  */
 function embedsToComponents(embeds, withDismiss = false) {

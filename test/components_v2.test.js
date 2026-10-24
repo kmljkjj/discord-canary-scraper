@@ -266,43 +266,42 @@ test('dismissButton accepts custom label', () => {
   assert.strictEqual(row.components[0].label, 'Effacer');
 });
 
-test('addDismissToMessages adds button to container', () => {
+test('addDismissToMessages is a no-op (bouton Dismiss retiré)', () => {
   const messages = [[
     container([textDisplay('hello')], 0xff0000),
   ]];
   addDismissToMessages(messages);
   const c = messages[0][0];
-  // Container should now have 2 components: textDisplay + dismiss ActionRow
-  assert.strictEqual(c.components.length, 2);
-  assert.strictEqual(c.components[1].type, 1); // ActionRow
-  assert.strictEqual(c.components[1].components[0].style, 5); // Link button
+  // Le bouton Dismiss a été retiré : le message ne doit pas être modifié
+  assert.strictEqual(messages[0].length, 1);
+  assert.strictEqual(c.components.length, 1);
+  assert.strictEqual(c.components[0].type, 10); // TextDisplay
 });
 
-test('addDismissToMessages handles full container', () => {
+test('addDismissToMessages handles full container without modifying it', () => {
   // Fill container to max
   const children = [];
   for (let i = 0; i < 10; i++) children.push(textDisplay(`item ${i}`));
   const messages = [[container(children, 0xff0000)]];
   addDismissToMessages(messages);
-  // Dismiss button should be added as top-level component
-  assert.ok(messages[0].length >= 2);
-  const last = messages[0][messages[0].length - 1];
-  assert.strictEqual(last.type, 1); // ActionRow
+  // Plus de bouton Dismiss : le message doit rester inchangé
+  assert.strictEqual(messages[0].length, 1);
+  assert.strictEqual(messages[0][0].components.length, 10);
 });
 
-test('embedsToComponents with withDismiss=true adds dismiss button', () => {
+test('embedsToComponents with withDismiss=true adds no dismiss button', () => {
   const embeds = [{ title: 'Test', description: 'Hello' }];
   const messages = embedsToComponents(embeds, true);
   assert.ok(messages.length >= 1);
-  // Last component of last message should be an ActionRow (dismiss button)
-  const lastMsg = messages[messages.length - 1];
-  const container = lastMsg[0];
-  const lastComp = container.components[container.components.length - 1];
-  assert.strictEqual(lastComp.type, 1); // ActionRow
-  assert.strictEqual(lastComp.components[0].style, 5); // Link button
+  // Le bouton Dismiss a été retiré : aucun ActionRow ne doit être ajouté
+  const flat = [];
+  const walk = (comps) => { for (const c of comps || []) { flat.push(c.type); if (c.components) walk(c.components); } };
+  walk(messages.flat());
+  assert.ok(!flat.includes(1)); // ActionRow
+  assert.ok(!JSON.stringify(messages).toLowerCase().includes('dismiss'));
 });
 
-test('buildSectionMessages with withDismiss=true adds dismiss button', () => {
+test('buildSectionMessages with withDismiss=true adds no dismiss button', () => {
   const sections = [
     { label: 'Experiments', color: 0x5865f2, count: 2, lines: ['exp1', 'exp2'] },
   ];
@@ -314,8 +313,10 @@ test('buildSectionMessages with withDismiss=true adds dismiss button', () => {
     withDismiss: true,
   });
   assert.ok(messages.length >= 1);
-  const container = messages[0][0];
-  const lastComp = container.components[container.components.length - 1];
-  assert.strictEqual(lastComp.type, 1); // ActionRow
-  assert.strictEqual(lastComp.components[0].style, 5); // Link button
+  // Le bouton Dismiss a été retiré : aucun ActionRow ne doit être ajouté
+  const flat = [];
+  const walk = (comps) => { for (const c of comps || []) { flat.push(c.type); if (c.components) walk(c.components); } };
+  walk(messages.flat());
+  assert.ok(!flat.includes(1)); // ActionRow
+  assert.ok(!JSON.stringify(messages).toLowerCase().includes('dismiss'));
 });
