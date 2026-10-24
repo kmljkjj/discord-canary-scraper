@@ -11,6 +11,10 @@
  * contenu bouge : détection + webhook immédiat → notification ~20-45 s
  * après la mise à jour du gist, compétitive avec un poll serveur.
  *
+ * Source des données : gist communautaire (agnonotdev), également collecté et
+ * publié par Wumpus Central — tout le crédit des données leur revient
+ * (disclaimer complet dans lib/community.js).
+ *
  * Comportement :
  *  - au démarrage : un passage complet (couvre les changements survenus
  *    pendant l'éventuel trou entre deux jobs)

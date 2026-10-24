@@ -21,6 +21,10 @@
  *     désactivés par défaut : une expérience sans ranges s'affiche « 0% ».
  *     (USER_ROLLOUT_ALLOW_ESTIMATE=1 pour réactiver l'ancien comportement.)
  *
+ * Source des données : gist communautaire (agnonotdev), également collecté et
+ * publié par Wumpus Central — tout le crédit des données leur revient
+ * (disclaimer complet dans lib/community.js).
+ *
  * Key changes vs v10:
  *  - Source primaire : gist communautaire (ranges exactes des user rollouts)
  *  - % estimés par sampling désactivés par défaut → plus de faux pourcentages
@@ -715,7 +719,7 @@ function variantLabel(bucket) {
  *   Platform must be one of these: android, desktop, web, iOS
  *   Variant 0 0% -> 3.5%
  *   Variant 1 0% -> 8.5%
- *   -# Rollouts Changes
+ *   -# Rollouts Changes · Source: Wumpus Central
  */
 function buildEmbeds(changes) {
   const embeds = [];
@@ -749,7 +753,7 @@ function buildEmbeds(changes) {
               ? 0xed4245
               : 0xe67e22
           : 0x5865f2,
-      footer: { text: c.kind === 'revision' ? 'Rollouts Revision' : 'Rollouts Changes' },
+      footer: { text: (c.kind === 'revision' ? 'Rollouts Revision' : 'Rollouts Changes') + ' · Source: Wumpus Central' },
     });
   }
   return embeds;

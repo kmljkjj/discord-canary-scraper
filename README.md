@@ -2,6 +2,19 @@
 
 Datamining du client Discord Canary : builds, expériences, strings, routes, rollouts Apex / utilisateurs, quêtes, boutique, blog, versions mobiles, veille X. Les nouveautés sont postées sur Discord via webhooks.
 
+## Sources & crédits
+
+Les pourcentages de rollouts (expériences user et guild) proviennent du gist
+communautaire maintenu par **agnonotdev** — la même source de données que celle
+collectée et publiée par **Wumpus Central**. Tout le crédit de ces données leur
+revient : ce dépôt ne fait que les lire et les formater (disclaimer complet
+dans `src/lib/community.js`).
+
+Tout le reste de ce dépôt (code, sampling murmur3, watchers, notifications) est
+de notre cru et est publié **sans aucune affiliation avec Wumpus Central**.
+Les pourcentages Apex (`apex_rollouts.js`) sont calculés exactement depuis
+l'API Discord (« EXACT · discord ») et ne dépendent pas de cette source.
+
 ## Structure
 
 | Dossier | Rôle |

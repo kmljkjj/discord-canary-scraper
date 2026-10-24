@@ -1,4 +1,30 @@
 /**
+ * ⚠️ DISCLAIMER / AVERTISSEMENT — SOURCE DES DONNÉES DE ROLLOUTS ⚠️
+ *
+ * EN — The rollout percentage data (user + guild experiments) served by this
+ * module comes from the community rollouts gist maintained by agnonotdev —
+ * the same data source that is collected and published by Wumpus Central.
+ * Full credit for that data belongs to agnonotdev and Wumpus Central; this
+ * repository only reads and formats it.
+ *
+ * FR — Les pourcentages de rollouts (expériences user + guild) servis par ce
+ * module proviennent du gist communautaire maintenu par agnonotdev — la même
+ * source de données que celle collectée et publiée par Wumpus Central. Tout
+ * le crédit de ces données revient à agnonotdev et à Wumpus Central ; ce
+ * dépôt ne fait que les lire et les formater.
+ *
+ * NOTE — Everything else in this repository (code, murmur3 sampling,
+ * watchers, notifications, exact percentages computed from the Discord API
+ * in apex_rollouts.js) is our own work and is NOT affiliated with Wumpus
+ * Central in any way.
+ *
+ * NOTE — Tout le reste de ce dépôt (code, sampling murmur3, watchers,
+ * notifications, pourcentages exacts calculés depuis l'API Discord dans
+ * apex_rollouts.js) est de notre cru et n'a aucune affiliation avec
+ * Wumpus Central.
+ */
+
+/**
  * Gist communautaire (agnonotdev) — source FRAÎCHE, sans cache CDN.
  *
  * Problème : l'URL raw (gist.githubusercontent.com) est servie avec

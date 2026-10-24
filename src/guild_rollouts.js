@@ -10,6 +10,10 @@
  * Une expérience guild qui quitte le tracker (rollout terminé ou annulé) est
  * signalée une fois (« Removed from the rollouts tracker »).
  *
+ * Source des données : gist communautaire (agnonotdev), également collecté et
+ * publié par Wumpus Central — tout le crédit des données leur revient
+ * (disclaimer complet dans lib/community.js).
+ *
  * Webhook : même chaîne que les user rollouts (première var définie gagne) :
  *   UR_WEBHOOK → USER_ROLLOUT_WEBHOOK_URL → APEX_WEBHOOK_URL
  *   → ROLLOUT_WEBHOOK_URL → DISCORD_WEBHOOK_URL
@@ -18,7 +22,7 @@
  *   2026-10-stage-unified-call (guild)
  *   Stage unified call
  *   Variant 1 0% -> 3.5%
- *   -# Rollouts Changes
+ *   -# Rollouts Changes · Source: Wumpus Central
  *
  * Env:
  *   GUILD_ROLLOUT_COMMUNITY_URL  default agnonotdev rollouts gist (raw)
@@ -190,7 +194,7 @@ function variantLabel(bucket) {
  *   2026-10-stage-unified-call (guild)
  *   Stage unified call
  *   Variant 1 0% -> 3.5%
- *   -# Rollouts Changes
+ *   -# Rollouts Changes · Source: Wumpus Central
  */
 function buildEmbeds(changes) {
   const embeds = [];
@@ -230,7 +234,7 @@ function buildEmbeds(changes) {
                 ? 0xed4245
                 : 0xe67e22
             : 0x5865f2,
-      footer: { text: 'Rollouts Changes' },
+      footer: { text: 'Rollouts Changes · Source: Wumpus Central' },
     });
   }
   return embeds;
