@@ -1,10 +1,11 @@
 name: Guild Rollouts %
 
 on:
-  schedule:
-    # Toutes les 2 minutes — workflow dédié, job minimal (~1 min) pour
-    # recevoir les % guild le plus vite possible (gist = seule source).
-    - cron: "*/2 * * * *"
+  # Schedule remplacé par rollouts-watch.yml (job « long poll » de 19 min :
+  # poll du gist toutes les 15 s → % guild notifiés en ~20-30 s).
+  # Ce workflow reste disponible en manuel / dispatch.
+  # schedule:
+  #   - cron: "*/2 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-guild-rollouts]

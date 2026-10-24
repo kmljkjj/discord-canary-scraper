@@ -33,6 +33,7 @@ const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const { safeJson, fetchWithRetry } = require('./lib/http');
+const { fetchCommunityJson } = require('./lib/community');
 const {
   mergeIntervals,
   parseRangeStrings,
@@ -86,16 +87,10 @@ function hasName(id) {
  */
 async function loadCommunityGuildRollouts() {
   const map = new Map();
-  // Stabilité : fetchWithRetry (backoff 429/5xx/erreurs réseau, 3 tentatives).
-  // Le gist est la source unique des % guild — un échec = un poll manqué.
-  const res = await fetchWithRetry(COMMUNITY_URL, {
-    headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
-    timeout: 30000,
-    label: 'community gist',
-  });
-  if (!res.ok) throw new Error('community gist HTTP ' + res.status);
-  const data = await safeJson(res);
-  const list = Array.isArray(data) ? data : [];
+  // Source fraîche : API GitHub du gist (jamais cachée — cf. lib/community.js)
+  // + fallback raw cache-buster, avec retries. Le gist étant la source unique
+  // des % guild, un échec total propage l'erreur (poll en échec, état intact).
+  const list = await fetchCommunityJson();
   let n = 0;
   for (const e of list) {
     if (!e || e.kind !== 'guild' || !e.id) continue;

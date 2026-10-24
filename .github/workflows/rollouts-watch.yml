@@ -1,0 +1,72 @@
+name: Rollouts Watch
+
+# Job « long poll » : UN job de ~19 min toutes les 20 min qui re-poll le gist
+# via l'API GitHub toutes les 15 s (source toujours fraîche, cf. src/lib/community.js).
+# Dès que le gist bouge → détection + webhook immédiat → % notifiés en ~20-45 s,
+# compétitif avec les trackers qui tournent sur un serveur dédié.
+# (Un cron classique est décalé de 0-10 min par GitHub aux heures de pointe
+# et le job met ~40 s à démarrer : c'est l'origine de notre retard.)
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Ne JAMAIS annuler un run en cours (sinon trou de détection entre deux jobs)
+concurrency:
+  group: rollouts-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Setup = Node 22 + cache npm + npm ci --omit=dev (deps runtime only)
+      - uses: ./.github/actions/setup
+
+      - name: Syntax check
+        run: |
+          node --check src/rollouts_watch.js
+          node --check src/lib/community.js
+          node --check src/guild_rollouts.js
+          node --check src/user_rollouts.js
+
+      - name: Rollouts watcher (poll 15 s pendant ~19 min)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
+          DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
+          DISCORD_USER_TOKEN_1: ${{ secrets.DISCORD_USER_TOKEN_1 }}
+          DISCORD_USER_TOKEN_2: ${{ secrets.DISCORD_USER_TOKEN_2 }}
+          DISCORD_USER_TOKEN_3: ${{ secrets.DISCORD_USER_TOKEN_3 }}
+          DISCORD_USER_TOKEN_4: ${{ secrets.DISCORD_USER_TOKEN_4 }}
+          DISCORD_USER_TOKEN_5: ${{ secrets.DISCORD_USER_TOKEN_5 }}
+          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
+          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
+          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
+          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GUILD_ROLLOUT_MIN_DELTA: "1"
+          APEX_MIN_PCT_DELTA: "1"
+          # Sampling léger pour les passes périodiques (le gist reste LA source
+          # des % ; le sampling ne détecte que les expériences sans ranges).
+          # Ces valeurs sont aussi les défauts dans src/rollouts_watch.js.
+          USER_ROLLOUT_SAMPLES: "30"
+          USER_ROLLOUT_CONCURRENCY: "2"
+          USER_ROLLOUT_DELAY_MS: "150"
+          USER_ROLLOUT_MIN_OK: "20"
+          USER_ROLLOUT_PLATEAU: "20"
+          USER_ROLLOUT_MAX_MS: "30000"
+          USER_ROLLOUT_NOTIFY_HASH: "0"
+          ORBIT_BOT_NAME: Datamining
+          ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
+        run: node src/rollouts_watch.js

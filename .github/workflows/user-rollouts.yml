@@ -1,9 +1,12 @@
 name: User Rollouts %
 
 on:
-  schedule:
-    # Toutes les 2 minutes (le cog dispatch aussi trigger-user-rollouts)
-    - cron: "*/2 * * * *"
+  # Schedule remplacé par rollouts-watch.yml : job « long poll » de 19 min
+  # toutes les 20 min qui re-poll le gist toutes les 15 s → % notifiés en
+  # ~20-45 s au lieu de plusieurs minutes (retard cron + cache CDN 5 min).
+  # Ce workflow reste disponible en manuel / dispatch (le cog, apex…).
+  # schedule:
+  #   - cron: "*/2 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-user-rollouts, trigger-apex-rollouts]

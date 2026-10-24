@@ -54,6 +54,7 @@ const { murmur3 } = require('./lib/murmur3');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const { safeJson, fetchWithRetry } = require('./lib/http');
+const { fetchCommunityJson } = require('./lib/community');
 const {
   mergeIntervals,
   intervalsCoverage,
@@ -218,72 +219,63 @@ async function loadExperimentDefs() {
  */
 async function loadCommunityUserRollouts() {
   const map = new Map();
-  const urls = [...new Set([COMMUNITY_URL].filter(Boolean))];
-  for (const url of urls) {
-    try {
-      const res = await fetchWithRetry(url, {
-        headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
-        timeout: 30000,
-        label: 'community gist',
-      });
-      if (!res.ok) {
-        console.warn('Community rollouts HTTP', res.status);
-        continue;
-      }
-      const data = await safeJson(res);
-      const list = Array.isArray(data) ? data : [];
-      let n = 0;
-      for (const e of list) {
-        if (!e || e.kind !== 'user' || !e.id) continue;
-        const hash = e.hash != null ? Number(e.hash) : murmur3(String(e.id));
-        if (!Number.isFinite(hash)) continue;
-        const treatments = [];
-        let hasRanges = false;
-        for (const v of Array.isArray(e.variants) ? e.variants : []) {
-          const bucket = Number(v.variant);
-          if (!Number.isFinite(bucket)) continue;
-          const ranges = mergeIntervals(parseRangeStrings(v.ranges));
-          if (!ranges.length) continue;
-          hasRanges = true;
-          const pct = rangesPercentExclusive(ranges);
-          treatments.push({
-            bucket,
-            label: tLabel(bucket),
-            percentage: pct,
-            pct,
-            pctKnown: true,
-            status: 'exact',
-            confidence: 'high',
-            sampleCount: 0,
-            samples: 0,
-            coverage: pct / 100,
-            intervals: ranges,
-            ranges,
-            observed: null,
-            gapFill: 0,
-            sourceKind: 'exact_from_community_ranges',
-            reported: { from: v.from, to: v.to, change: v.change },
-          });
-        }
-        if (!hasRanges) continue; // pas de ranges → pas de % (pas de faux %)
-        treatments.sort((a, b) => a.bucket - b.bucket);
-        map.set(hash, {
-          hash,
-          id: String(e.id),
-          title: e.title || String(e.id),
-          treatments,
-          rolloutStatus: e.rollout_status || null,
-          platforms: Array.isArray(e.platforms) ? e.platforms : [],
-          total: e.total || null,
-        });
-        n++;
-      }
-      console.log('Community user rollouts loaded:', n, 'from', url.split('/').slice(-2).join('/'));
-      break;
-    } catch (e) {
-      console.warn('Community rollouts fail:', e.message);
-    }
+  // Source fraîche : API GitHub du gist (jamais cachée — cf. lib/community.js),
+  // fallback raw + cache-buster. Un échec total ne fait pas planter le run :
+  // worker API + sampling prennent le relais.
+  let list;
+  try {
+    list = await fetchCommunityJson();
+  } catch (e) {
+    console.warn('Community gist indisponible:', String((e && e.message) || e).slice(0, 150));
+    return map;
   }
+  let n = 0;
+  for (const e of list) {
+    if (!e || e.kind !== 'user' || !e.id) continue;
+    const hash = e.hash != null ? Number(e.hash) : murmur3(String(e.id));
+    if (!Number.isFinite(hash)) continue;
+    const treatments = [];
+    let hasRanges = false;
+    for (const v of Array.isArray(e.variants) ? e.variants : []) {
+      const bucket = Number(v.variant);
+      if (!Number.isFinite(bucket)) continue;
+      const ranges = mergeIntervals(parseRangeStrings(v.ranges));
+      if (!ranges.length) continue;
+      hasRanges = true;
+      const pct = rangesPercentExclusive(ranges);
+      treatments.push({
+        bucket,
+        label: tLabel(bucket),
+        percentage: pct,
+        pct,
+        pctKnown: true,
+        status: 'exact',
+        confidence: 'high',
+        sampleCount: 0,
+        samples: 0,
+        coverage: pct / 100,
+        intervals: ranges,
+        ranges,
+        observed: null,
+        gapFill: 0,
+        sourceKind: 'exact_from_community_ranges',
+        reported: { from: v.from, to: v.to, change: v.change },
+      });
+    }
+    if (!hasRanges) continue; // pas de ranges → pas de % (pas de faux %)
+    treatments.sort((a, b) => a.bucket - b.bucket);
+    map.set(hash, {
+      hash,
+      id: String(e.id),
+      title: e.title || String(e.id),
+      treatments,
+      rolloutStatus: e.rollout_status || null,
+      platforms: Array.isArray(e.platforms) ? e.platforms : [],
+      total: e.total || null,
+    });
+    n++;
+  }
+  console.log('Community user rollouts loaded:', n, 'of', list.length, 'gist entries');
   return map;
 }
 
