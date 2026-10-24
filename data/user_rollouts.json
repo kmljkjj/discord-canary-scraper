@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-10-24T22:51:14.288Z",
+  "scrapedAt": "2026-10-24T22:52:10.177Z",
   "version": 11,
   "schemaVersion": 11,
-  "runId": "2026-10-24T22-51-14-288Z_03gr9a",
+  "runId": "2026-10-24T22-52-10-177Z_jzl3pu",
   "samples": 80,
-  "ok": 56,
+  "ok": 59,
   "fail": 0,
   "tokensConfigured": 1,
   "experiments": [
@@ -53602,8 +53602,8 @@
           "pctKnown": false,
           "status": "detected",
           "confidence": "none",
-          "sampleCount": 56,
-          "samples": 56,
+          "sampleCount": 59,
+          "samples": 59,
           "coverage": 0,
           "intervals": [],
           "ranges": [],
@@ -54248,13 +54248,6 @@
   },
   "history": [
     {
-      "ts": "2026-10-24T21:46:20.666Z",
-      "ok": 65,
-      "fail": 0,
-      "experimentCount": 598,
-      "changeCount": 0
-    },
-    {
       "ts": "2026-10-24T21:47:21.493Z",
       "ok": 53,
       "fail": 0,
@@ -54523,6 +54516,13 @@
     {
       "ts": "2026-10-24T22:51:14.288Z",
       "ok": 56,
+      "fail": 0,
+      "experimentCount": 598,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-24T22:52:10.177Z",
+      "ok": 59,
       "fail": 0,
       "experimentCount": 598,
       "changeCount": 0
