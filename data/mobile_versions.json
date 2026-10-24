@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-24T09:37:16.083Z",
+  "scrapedAt": "2026-10-24T09:44:01.923Z",
   "channels": [
     {
       "platform": "ios",
@@ -14,7 +14,7 @@
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-10-24T09:37:16.083Z"
+      "checkedAt": "2026-10-24T09:44:01.923Z"
     },
     {
       "platform": "ios",
@@ -23,7 +23,7 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-24T09:37:16.083Z",
+      "checkedAt": "2026-10-24T09:44:01.923Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
@@ -36,7 +36,7 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-24T09:37:16.083Z",
+      "checkedAt": "2026-10-24T09:44:01.923Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
@@ -50,7 +50,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on aptoide",
-      "checkedAt": "2026-10-24T09:37:16.083Z",
+      "checkedAt": "2026-10-24T09:44:01.923Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
@@ -64,7 +64,7 @@
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
       "note": "Track-labeled on datamining_commits",
-      "checkedAt": "2026-10-24T09:37:16.083Z",
+      "checkedAt": "2026-10-24T09:44:01.923Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/3f/31/f93f310e-890e-e076-7184-a4fa123e4f90/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     }
   ],
@@ -280,7 +280,7 @@
   },
   "sources": {
     "externalFallback": true,
-    "externalFallbackDate": "2026-10-23T20:54:10.109Z",
+    "externalFallbackDate": "2026-10-24T09:37:16.083Z",
     "dataminingCommits": true,
     "discordMinVersion": "388"
   },
@@ -377,7 +377,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-24T09:30:30.324Z",
+  "previousScrapedAt": "2026-10-24T09:37:16.083Z",
   "notifiedFingerprints": [
     "android|alpha|352.6",
     "android|alpha|352.7",
@@ -399,15 +399,7 @@
     "ios|stable|349.0",
     "ios|stable|350.0"
   ],
-  "changes": [
-    {
-      "type": "updated",
-      "key": "android/alpha",
-      "from": "352.6",
-      "to": "352.7",
-      "build": null
-    }
-  ],
+  "changes": [],
   "paused": false,
   "notifyOk": true
 }
