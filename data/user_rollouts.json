@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-10-25T01:40:07.879Z",
+  "scrapedAt": "2026-10-25T01:40:54.446Z",
   "version": 11,
   "schemaVersion": 11,
-  "runId": "2026-10-25T01-40-07-879Z_46k960",
+  "runId": "2026-10-25T01-40-54-446Z_gisfch",
   "samples": 80,
-  "ok": 43,
+  "ok": 35,
   "fail": 0,
   "tokensConfigured": 1,
   "experiments": [
@@ -53602,8 +53602,8 @@
           "pctKnown": false,
           "status": "detected",
           "confidence": "none",
-          "sampleCount": 43,
-          "samples": 43,
+          "sampleCount": 35,
+          "samples": 35,
           "coverage": 0,
           "intervals": [],
           "ranges": [],
@@ -54248,13 +54248,6 @@
   },
   "history": [
     {
-      "ts": "2026-10-25T00:34:01.655Z",
-      "ok": 61,
-      "fail": 0,
-      "experimentCount": 598,
-      "changeCount": 0
-    },
-    {
       "ts": "2026-10-25T00:36:24.325Z",
       "ok": 53,
       "fail": 0,
@@ -54523,6 +54516,13 @@
     {
       "ts": "2026-10-25T01:40:07.878Z",
       "ok": 43,
+      "fail": 0,
+      "experimentCount": 598,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-25T01:40:54.446Z",
+      "ok": 35,
       "fail": 0,
       "experimentCount": 598,
       "changeCount": 0
