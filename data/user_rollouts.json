@@ -1,10 +1,10 @@
 {
-  "scrapedAt": "2026-10-25T04:08:22.969Z",
+  "scrapedAt": "2026-10-25T04:09:58.345Z",
   "version": 11,
   "schemaVersion": 11,
-  "runId": "2026-10-25T04-08-22-969Z_4bbmkg",
+  "runId": "2026-10-25T04-09-58-345Z_ominru",
   "samples": 80,
-  "ok": 36,
+  "ok": 57,
   "fail": 0,
   "tokensConfigured": 1,
   "experiments": [
@@ -53602,8 +53602,8 @@
           "pctKnown": false,
           "status": "detected",
           "confidence": "none",
-          "sampleCount": 36,
-          "samples": 36,
+          "sampleCount": 57,
+          "samples": 57,
           "coverage": 0,
           "intervals": [],
           "ranges": [],
@@ -53635,6 +53635,15 @@
       "revision": 0,
       "bucket": 1,
       "hash_result": 5162
+    },
+    {
+      "hash": 4055210228,
+      "id": "2025-11_tida_webform",
+      "title": "Tida Webform",
+      "type": "user",
+      "revision": 0,
+      "bucket": 1,
+      "hash_result": 2399
     }
   ],
   "announced": {
@@ -54239,13 +54248,6 @@
   },
   "history": [
     {
-      "ts": "2026-10-25T03:04:31.377Z",
-      "ok": 41,
-      "fail": 0,
-      "experimentCount": 598,
-      "changeCount": 0
-    },
-    {
       "ts": "2026-10-25T03:05:48.568Z",
       "ok": 75,
       "fail": 0,
@@ -54514,6 +54516,13 @@
     {
       "ts": "2026-10-25T04:08:22.969Z",
       "ok": 36,
+      "fail": 0,
+      "experimentCount": 598,
+      "changeCount": 0
+    },
+    {
+      "ts": "2026-10-25T04:09:58.345Z",
+      "ok": 57,
       "fail": 0,
       "experimentCount": 598,
       "changeCount": 0
