@@ -1,6 +1,6 @@
 /**
- * Apex rollouts v6 — EXACT guild % (Discord wire) + optional advaith cache
- * User global % is handled by user_rollouts.js (ESTIMATED).
+ * Apex rollouts v7 — EXACT guild % (Discord wire uniquement, aucune source externe)
+ * User global % is handled by user_rollouts.js (own sampling).
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -13,14 +13,8 @@ const { safeJson } = require('./lib/http');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
-const ADVAITH_CACHE = path.join(DATA_DIR, 'advaith_cache.json');
 const LOCAL_EXP = path.join(DATA_DIR, 'experiments.json');
 const KNOWN_EXP = path.join(DATA_DIR, 'known_experiment_ids.json');
-const DEFS_URL =
-  process.env.APEX_DEFS_URL ||
-  'https://gist.githubusercontent.com/DiscrapperManager/05962f6137eacd9dbbc589d97c8ece3f/raw/experiments.json';
-const WORKERS_URL =
-  process.env.APEX_API_URL || 'https://experiments.dscrd.workers.dev/experiments';
 
 const WEBHOOK =
   process.env.APEX_WEBHOOK_URL ||
@@ -171,30 +165,7 @@ async function buildHashMap() {
       }
     } catch (_) {}
   }
-  for (const url of [DEFS_URL, WORKERS_URL]) {
-    try {
-      const res = await fetch(url, {
-        headers: { 'User-Agent': DEFAULT_UA, Accept: 'application/json' },
-        timeout: 20000,
-      });
-      if (!res.ok) continue;
-      const data = await safeJson(res);
-      let n = 0;
-      for (const e of Array.isArray(data) ? data : data.experiments || []) {
-        if (typeof e === 'string') {
-          addId(e);
-          n++;
-        } else if (e && (e.id || e.name)) {
-          addId(String(e.id || e.name));
-          n++;
-        }
-      }
-      console.log('Defs remote:', n);
-    } catch (e) {
-      console.warn('Defs:', e.message);
-    }
-  }
-  console.log('Hash map:', Math.floor(map.size / 2), 'ids');
+  console.log('Hash map (fichiers locaux):', Math.floor(map.size / 2), 'ids');
   return map;
 }
 
@@ -252,31 +223,6 @@ async function fetchDiscordGuild(hashMap) {
     }
   }
   return [...byId.values()];
-}
-
-async function loadAdvaithCache(hashMap) {
-  if (!(await fs.pathExists(ADVAITH_CACHE))) return [];
-  try {
-    const data = await fs.readJson(ADVAITH_CACHE);
-    const list = Array.isArray(data) ? data : data.experiments || data.data || [];
-    const out = [];
-    for (const raw of list) {
-      if (!raw) continue;
-      if (raw.data && Array.isArray(raw.data.rollout)) {
-        const e = decodeGuildWire(raw.data.rollout, hashMap);
-        if (e) {
-          e.source = 'advaith';
-          e.title = String(raw.data.title || e.id);
-          if (e.hasGlobalPct) out.push(e);
-        }
-      }
-    }
-    console.log('Advaith cache:', out.length);
-    return out;
-  } catch (e) {
-    console.warn('Advaith cache', e.message);
-    return [];
-  }
 }
 
 function pctKey(e) {
@@ -398,18 +344,14 @@ async function main() {
 
   const hashMap = await buildHashMap();
   const fromDiscord = await fetchDiscordGuild(hashMap);
-  const fromCache = await loadAdvaithCache(hashMap);
   const byId = new Map();
-  for (const e of [...fromCache, ...fromDiscord]) {
+  for (const e of fromDiscord) {
     if (!e || !e.id || !e.hasGlobalPct) continue;
     if (String(e.id).startsWith('hash:')) continue;
     byId.set(e.id, e);
   }
   const experiments = [...byId.values()];
-  console.log('Live exact:', experiments.length, {
-    discord: fromDiscord.length,
-    advaith: fromCache.length,
-  });
+  console.log('Live exact (wire Discord):', experiments.length);
 
   let previous = { experiments: [], announced: {} };
   if (await fs.pathExists(STATE_FILE)) {

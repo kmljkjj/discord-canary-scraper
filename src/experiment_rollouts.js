@@ -5,9 +5,7 @@
  *
  * 1. Discord API /experiments (no auth required) — returns guild experiment
  *    rollouts with bucket ranges. This gives the most up-to-date guild data.
- * 2. Worker API (experiments.dscrd.workers.dev) — has experiment definitions
- *    with bucket ranges for older experiments (guild + user).
- * 3. Local experiments.json — experiment IDs extracted from the client JS bundle.
+ * 2. Local experiments.json — experiment IDs extracted from the client JS bundle.
  *
  * For GUILD experiments: calculates exact percentages from bucket ranges.
  * For USER experiments: the Discord API only returns assignments for the current
@@ -31,7 +29,6 @@ const EXPERIMENTS_FILE = path.join(DATA, 'experiments.json');
 const CURRENT_FILE = path.join(DATA, 'current_experiments.json');
 
 const DISCORD_API = 'https://discord.com/api/v9';
-const WORKER_API = 'https://experiments.dscrd.workers.dev/experiments';
 const SCALE = DEFAULT_SCALE; // 10000
 const FP_SAMPLES = Math.max(0, Math.min(500, Number(process.env.EXP_FP_SAMPLES || 50)));
 const FP_CONCURRENCY = 1; // Must be 1 — Discord rate-limits fingerprint generation
@@ -142,74 +139,6 @@ function describeFilters(filters) {
     }
   }
   return parts.join('; ') || 'all';
-}
-
-// ── Parse worker API experiment definitions ───────────
-
-/**
- * Parse experiment definitions from the worker API.
- * Returns percentages for both guild and user experiments.
- */
-function parseWorkerExperiment(e) {
-  if (!e || !e.rollout || !e.rollout.populations) return null;
-  const id = String(e.id || e.name || '');
-  if (!id) return null;
-  const hash = e.hash != null ? Number(e.hash) : murmur3(id);
-  const type = e.type || e.kind || 'unknown';
-  const title = e.title || e.label || id;
-
-  const treatmentRanges = [];
-  const filtersByPop = [];
-
-  for (const pop of e.rollout.populations) {
-    const positions = pop.position || [];
-    const filters = pop.filters || [];
-    const filterDesc = filters.map((f) => {
-      if (f.type === 'feature') return 'feature:' + (f.features || []).join(',');
-      if (f.type === 'member_count') return 'member_count';
-      return f.type || 'unknown';
-    }).join('; ') || 'all';
-    filtersByPop.push(filterDesc);
-
-    for (const pos of positions) {
-      const bucket = pos.bucket;
-      const rollouts = pos.rollouts || [];
-      for (const r of rollouts) {
-        if (bucket > 0) {
-          treatmentRanges.push([r.start, r.end]);
-        }
-      }
-    }
-  }
-
-  // Also check overrides_formatted (these are for staff/internal)
-  // Overrides are for specific users/guilds, not overall rollout — skipped
-
-  const merged = mergeIntervals(treatmentRanges);
-  const coverage = intervalsCoverage(merged, SCALE);
-  const pct = coveragePercent(treatmentRanges, SCALE);
-
-  let status = 'unknown';
-  if (pct != null) {
-    if (pct <= 0) status = 'not_started';
-    else if (pct >= 100) status = 'full_rollout';
-    else status = 'partial';
-  }
-
-  return {
-    id,
-    hash,
-    type,
-    title,
-    percentage: pct,
-    status,
-    coverage,
-    populations: e.rollout.populations.length,
-    filters: filtersByPop,
-    revision: e.rollout.revision,
-    buckets: e.buckets,
-    treatmentRanges: merged,
-  };
 }
 
 // ── Fingerprint-based user experiment sampling ──────
@@ -444,32 +373,6 @@ async function main() {
     results.sources.discordApi = { error: e.message };
   }
 
-  // 3. Fetch experiment definitions from worker API
-  let workerExperiments = [];
-  try {
-    const data = await fetchJson(WORKER_API);
-    const list = Array.isArray(data) ? data : data.experiments || [];
-    console.log('Worker API experiments:', list.length);
-    results.sources.workerApi = { url: WORKER_API, count: list.length };
-
-    for (const e of list) {
-      const parsed = parseWorkerExperiment(e);
-      if (!parsed) continue;
-
-      // Check if this experiment exists in local data
-      const localMatch = localExperiments.find((le) => le.id === parsed.id);
-      if (localMatch) {
-        parsed.inClient = true;
-        parsed.clientKind = localMatch.kind || localMatch.type;
-      }
-
-      workerExperiments.push(parsed);
-    }
-  } catch (e) {
-    console.warn('Worker API fetch failed:', e.message);
-    results.sources.workerApi = { error: e.message };
-  }
-
   // 4. Sample user experiment rollouts via anonymous fingerprints
   //    This generates N fingerprints, queries /experiments for each, and
   //    estimates rollout percentages based on treatment assignment rates.
@@ -489,31 +392,13 @@ async function main() {
     results.sources.fingerprintSampling = { error: e.message };
   }
 
-  // 5. Merge guild rollouts from Discord API with worker API data
-  // Discord API has the latest guild data, worker API has experiment IDs
+  // 5. Merge guild rollouts from Discord API with fingerprint samples
   const mergedExperiments = new Map();
 
   // Add Discord API guild experiments
   for (const ge of guildRollouts) {
     const key = ge.id || `hash_${ge.hash}`;
     mergedExperiments.set(key, { ...ge, source: 'discord_api' });
-  }
-
-  // Add worker API experiments (both guild and user)
-  for (const we of workerExperiments) {
-    const key = we.id;
-    if (mergedExperiments.has(key)) {
-      // Merge: prefer Discord API data for guild experiments, worker for user
-      const existing = mergedExperiments.get(key);
-      if (existing.type === 'guild' && existing.source === 'discord_api') {
-        // Keep Discord API data, add worker info
-        existing.workerTitle = we.title;
-        existing.workerRevision = we.revision;
-        existing.buckets = we.buckets;
-      }
-    } else {
-      mergedExperiments.set(key, { ...we, source: 'worker_api' });
-    }
   }
 
   // Add fingerprint-sampled user experiments
@@ -560,7 +445,7 @@ async function main() {
         source: 'client_bundle',
         note: kind === 'user'
           ? 'User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation.'
-          : 'No rollout data found in Discord API or worker API.',
+          : 'No rollout data found in the Discord API.',
       });
     }
   }
