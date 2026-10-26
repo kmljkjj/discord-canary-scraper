@@ -26,7 +26,7 @@
  *    bruit z·√(2p(1−p)/n)).
  *
  * Env:
- *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..5
+ *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..10
  *   UR_WEBHOOK | USER_ROLLOUT_WEBHOOK_URL | APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
  *   USER_ROLLOUT_SAMPLES        default 150 (échantillons par run)
  *   USER_ROLLOUT_CONCURRENCY    default 2
@@ -471,7 +471,7 @@ function fingerprintOf(treatments) {
 async function fetchTokenSnapshot(defs) {
   if (!TOKENS.length) return [];
   const out = [];
-  for (const token of TOKENS.slice(0, 5)) {
+  for (const token of TOKENS.slice(0, 10)) {
     try {
       const data = await fetchAssignments({ Authorization: token }, true);
       for (const a of data.assignments || []) {

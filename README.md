@@ -59,7 +59,7 @@ npm start          # scrape Canary
 
 ## Secrets / variables
 
-Secrets : `DISCORD_WEBHOOK_URL` (obligatoire), `APEX_WEBHOOK_URL`, `ROLLOUT_WEBHOOK_URL`, `QUEST_WEBHOOK_URL`, `DISCORD_TOKEN`, `DISCORD_USER_TOKEN(S)`, `DISCORD_USER_TOKEN_1..5`, `ORBIT_BOT_NAME`, `EMOJI_*`, `MOBILE_DATAMINE_REPO`.
+Secrets : `DISCORD_WEBHOOK_URL` (obligatoire), `APEX_WEBHOOK_URL`, `ROLLOUT_WEBHOOK_URL`, `QUEST_WEBHOOK_URL`, `DISCORD_TOKEN`, `DISCORD_USER_TOKEN(S)`, `DISCORD_USER_TOKEN_1..10`, `ORBIT_BOT_NAME`, `EMOJI_*`, `MOBILE_DATAMINE_REPO`.
 
 Secret optionnel : `ALERT_WEBHOOK_URL` (salon d'alertes quand un workflow échoue).
 

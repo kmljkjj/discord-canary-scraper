@@ -46,6 +46,11 @@ jobs:
           DISCORD_USER_TOKEN_3: ${{ secrets.DISCORD_USER_TOKEN_3 }}
           DISCORD_USER_TOKEN_4: ${{ secrets.DISCORD_USER_TOKEN_4 }}
           DISCORD_USER_TOKEN_5: ${{ secrets.DISCORD_USER_TOKEN_5 }}
+          DISCORD_USER_TOKEN_6: ${{ secrets.DISCORD_USER_TOKEN_6 }}
+          DISCORD_USER_TOKEN_7: ${{ secrets.DISCORD_USER_TOKEN_7 }}
+          DISCORD_USER_TOKEN_8: ${{ secrets.DISCORD_USER_TOKEN_8 }}
+          DISCORD_USER_TOKEN_9: ${{ secrets.DISCORD_USER_TOKEN_9 }}
+          DISCORD_USER_TOKEN_10: ${{ secrets.DISCORD_USER_TOKEN_10 }}
           UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
           USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
