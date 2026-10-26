@@ -30,8 +30,6 @@ jobs:
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           MOBILE_WEBHOOK_URL: ${{ secrets.MOBILE_WEBHOOK_URL }}
-          # API GitHub (commits du repo de datamining mobile) — évite le rate limit anonyme
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ORBIT_BOT_NAME: Datamining
         run: node src/mobile_versions.js
 

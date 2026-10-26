@@ -1,9 +1,8 @@
 name: User Rollouts %
 
 on:
-  # Schedule remplacé par rollouts-watch.yml : job « long poll » de 19 min
-  # toutes les 20 min qui re-poll le gist toutes les 15 s → % notifiés en
-  # ~20-45 s au lieu de plusieurs minutes (retard cron + cache CDN 5 min).
+  # Schedule remplacé par rollouts-watch.yml : passes de mesure pendant
+  # ~19 min toutes les 20 min (fenêtre glissante, % binomial k/n).
   # Ce workflow reste disponible en manuel / dispatch (le cog, apex…).
   # schedule:
   #   - cron: "*/2 * * * *"
@@ -50,15 +49,16 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          # V12 sampling adaptatif : 80 échantillons max mais sortie anticipée
-          # dès que la détection est stable (plateau 30) ou budget 75 s —
-          # typiquement ~35 requêtes au lieu de 100 → job bien < 2 min.
-          USER_ROLLOUT_SAMPLES: "80"
+          # V13 mesure propre : 150 échantillons par passe, chaque passe
+          # enrichit la fenêtre glissante (4 h) → n cumulé vers plusieurs
+          # milliers, % binomial k/n à 2 décimales.
+          USER_ROLLOUT_SAMPLES: "150"
           USER_ROLLOUT_CONCURRENCY: "2"
           USER_ROLLOUT_DELAY_MS: "150"
-          USER_ROLLOUT_MIN_OK: "20"
+          USER_ROLLOUT_MIN_OK: "30"
           USER_ROLLOUT_MAX_MS: "75000"
           USER_ROLLOUT_PLATEAU: "30"
+          USER_ROLLOUT_WINDOW_H: "4"
           USER_ROLLOUT_NOTIFY_HASH: "0"
           APEX_MIN_PCT_DELTA: "1"
           ORBIT_BOT_NAME: Datamining

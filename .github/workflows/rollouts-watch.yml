@@ -1,11 +1,9 @@
 name: Rollouts Watch
 
-# Job « long poll » : UN job de ~19 min toutes les 20 min qui re-poll le gist
-# via l'API GitHub toutes les 15 s (source toujours fraîche, cf. src/lib/community.js).
-# Dès que le gist bouge → détection + webhook immédiat → % notifiés en ~20-45 s,
-# compétitif avec les trackers qui tournent sur un serveur dédié.
-# (Un cron classique est décalé de 0-10 min par GitHub aux heures de pointe
-# et le job met ~40 s à démarrer : c'est l'origine de notre retard.)
+# Job « mesure propre » : passes d'échantillonnage anonyme de l'API Discord
+# pendant ~19 min toutes les 20 min (fenêtre glissante 4 h, % binomial k/n).
+# Chaque passe enrichit la fenêtre → % à 2 décimales avec n affiché, sans
+# aucune source externe (cf. src/user_rollouts.js v13).
 
 on:
   schedule:
@@ -35,11 +33,9 @@ jobs:
       - name: Syntax check
         run: |
           node --check src/rollouts_watch.js
-          node --check src/lib/community.js
-          node --check src/guild_rollouts.js
           node --check src/user_rollouts.js
 
-      - name: Rollouts watcher (poll 15 s pendant ~19 min)
+      - name: Rollouts watcher (passes de mesure pendant ~19 min)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
@@ -55,17 +51,17 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          GUILD_ROLLOUT_MIN_DELTA: "1"
           APEX_MIN_PCT_DELTA: "1"
-          # Sampling léger pour les passes périodiques (le gist reste LA source
-          # des % ; le sampling ne détecte que les expériences sans ranges).
+          # Sampling pour les passes périodiques : chaque passe enrichit la
+          # fenêtre glissante (4 h) → n croît vers plusieurs milliers.
           # Ces valeurs sont aussi les défauts dans src/rollouts_watch.js.
-          USER_ROLLOUT_SAMPLES: "30"
+          USER_ROLLOUT_SAMPLES: "120"
           USER_ROLLOUT_CONCURRENCY: "2"
           USER_ROLLOUT_DELAY_MS: "150"
-          USER_ROLLOUT_MIN_OK: "20"
-          USER_ROLLOUT_PLATEAU: "20"
-          USER_ROLLOUT_MAX_MS: "30000"
+          USER_ROLLOUT_MIN_OK: "30"
+          USER_ROLLOUT_PLATEAU: "25"
+          USER_ROLLOUT_MAX_MS: "45000"
+          USER_ROLLOUT_WINDOW_H: "4"
           USER_ROLLOUT_NOTIFY_HASH: "0"
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
