@@ -2,18 +2,19 @@
 
 Datamining du client Discord Canary : builds, expériences, strings, routes, rollouts Apex / utilisateurs, quêtes, boutique, blog, versions mobiles, veille X. Les nouveautés sont postées sur Discord via webhooks.
 
-## Sources & crédits
+## Sources
 
-Les pourcentages de rollouts (expériences user et guild) proviennent du gist
-communautaire maintenu par **agnonotdev** — la même source de données que celle
-collectée et publiée par **Wumpus Central**. Tout le crédit de ces données leur
-revient : ce dépôt ne fait que les lire et les formater (disclaimer complet
-dans `src/lib/community.js`).
+Toutes les données publiées par ce dépôt sont mesurées ou extraites par
+nous-mêmes, directement depuis les serveurs de Discord :
 
-Tout le reste de ce dépôt (code, sampling murmur3, watchers, notifications) est
-de notre cru et est publié **sans aucune affiliation avec Wumpus Central**.
-Les pourcentages Apex (`apex_rollouts.js`) sont calculés exactement depuis
-l'API Discord (« EXACT · discord ») et ne dépendent pas de cette source.
+- **% user** : mesure propre (`src/user_rollouts.js` v13) — échantillonnage
+  anonyme de l'API `/experiments` avec fenêtre glissante (4 h) et % binomial
+  k/n à 2 décimales ;
+- **% guild** : exact, décodé du wire Discord (`src/apex_rollouts.js` v7) ;
+- **noms d'expériences** : extraits de nos propres scrapes du client Canary ;
+- **versions mobiles** : manifestes OTA de Discord + stores publics.
+
+Aucune source de données externe ou communautaire n'est lue.
 
 ## Structure
 
@@ -26,7 +27,7 @@ l'API Discord (« EXACT · discord ») et ne dépendent pas de cette source.
 | `builds/` | Archive des derniers builds (manifest + bundle web), limitée par `ARCHIVE_KEEP_BUILDS` |
 | `docs/` | Site GitHub Pages (expériences, boutique, statut) |
 | `media/` | Avatar du bot (`datamining-avatar.png`, utilisé par les webhooks) |
-| `scripts/` | `check.js` (syntaxe), `commit-state.sh` (commit/push d'état sûr), `summary.js` (résumé Actions), `trigger_host.py` / `canary_trigger.py` (déclencheurs externes), `sync_advaith.py` |
+| `scripts/` | `check.js` (syntaxe), `commit-state.sh` (commit/push d'état sûr), `summary.js` (résumé Actions), `trigger_host.py` / `canary_trigger.py` (déclencheurs externes) |
 | `.github/actions/setup` | Action composite : Node 22 + cache npm + `npm ci` |
 | `cogs/` | Cog discord.py équivalent au déclencheur |
 
@@ -50,7 +51,8 @@ npm start          # scrape Canary
 | `scrape.yml` | */5 min + dispatch `trigger-scraping` | `src/index.js` |
 | `quests.yml` | */5 min | `src/quests.js` |
 | `apex-rollouts.yml` | */20 min | `src/apex_rollouts.js` |
-| `user-rollouts.yml` | :10/:30/:50 | `src/user_rollouts.js` |
+| `rollouts-watch.yml` | */20 min | `src/rollouts_watch.js` + `src/user_rollouts.js` |
+| `user-rollouts.yml` | dispatch manuel (repli) | `src/user_rollouts.js` |
 | `mobile-versions.yml`, `shop.yml`, `blog-tracker.yml`, `x-news.yml`, `x-watch.yml` | planifiés | scripts correspondants |
 | `pages.yml` | push sur `docs/` ou données | déploiement Pages |
 | `alerts.yml` | après chaque échec | alerte Discord (si `ALERT_WEBHOOK_URL`), une seule tant que ça reste rouge |
@@ -61,7 +63,7 @@ Secrets : `DISCORD_WEBHOOK_URL` (obligatoire), `APEX_WEBHOOK_URL`, `ROLLOUT_WEBH
 
 Secret optionnel : `ALERT_WEBHOOK_URL` (salon d'alertes quand un workflow échoue).
 
-Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_MS` (20000), `ARCHIVE_KEEP_BUILDS` (8), `COMMIT_MAX_ATTEMPTS` (8), `MAX_CHUNK_SCAN_BYTES` (16 Mo), `USER_ROLLOUT_NOISE_Z` (2, seuil de bruit statistique ; 0 = désactivé).
+Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_MS` (20000), `ARCHIVE_KEEP_BUILDS` (8), `COMMIT_MAX_ATTEMPTS` (8), `MAX_CHUNK_SCAN_BYTES` (16 Mo), `USER_ROLLOUT_NOISE_Z` (2, seuil de bruit statistique ; 0 = désactivé), `USER_ROLLOUT_WINDOW_H` (4, fenêtre glissante des % user en heures).
 
 Variable optionnelle : `ORBIT_AVATAR_URL`. Par défaut, l'avatar est `media/datamining-avatar.png` servi par jsDelivr, ce qui ne fonctionne que si le dépôt est public. Sur un dépôt privé, définir `ORBIT_AVATAR_URL` vers une image PNG/JPG publique (Discord n'accepte pas le SVG).
 
@@ -112,3 +114,11 @@ python3 scripts/trigger_host.py
 - **User rollouts** : le snapshot du token réessaie après un 429. Avant, il était perdu à chaque fois après l'échantillonnage.
 - **Shop** : `/shop/search` renvoie 400 (`ENUM_TYPE_COERCE`, types refusés par Discord). Le script s'arrête au premier 400 et logge la raison. Le catalogue (1688 items) reste complet.
 - **Scrape** : la limite de scan passe de 6 à 16 Mo, car un chunk de 6,15 Mo n'était jamais analysé. Les IDs Discord numériques ne sont plus pris pour des chunks (404 en moins).
+
+### v2.5 — Indépendance totale des données (mesure propre)
+
+- **User rollouts v13** (`src/user_rollouts.js`) : les % user sont maintenant une **mesure propre** — échantillonnage anonyme de l'API Discord avec fenêtre glissante de 4 h (~15 passes/heure), % binomial k/n à 2 décimales, marge de bruit par expérience pour éviter les faux changements, et n (nombre d'échantillons) affiché. Chiffres naturellement différents et plus fins que toute publication tierce.
+- **Purge des sources externes** : toutes les sources de données tierces sont retirées. `apex_rollouts.js` v7 ne lit plus que le wire Discord ; `experiment_rollouts.js` n'appelle plus que l'API Discord ; `mobile_versions.js` s'appuie sur l'OTA Discord.
+- **Watcher v2** (`rollouts-watch.yml`, */20 min) : passes de mesure régulières, plus aucun poll de source externe.
+- **Supprimés** : les modules et workflows dédiés aux sources tierces, ainsi que les caches liés.
+- **Footer honnête** sur chaque annonce : « Source: mesure propre · API Discord ».
