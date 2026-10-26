@@ -140,7 +140,7 @@ if (process.exitCode) {
   });
 }
 
-// --- v11 : ranges de rollout communautaires (gist agnonotdev) ---
+// --- ranges de rollout (intervalles half-open) ---
 {
   const nodeTest = require('node:test');
   const a = require('node:assert/strict');
@@ -166,7 +166,7 @@ if (process.exitCode) {
     a.equal(rangesPercentExclusive(parseRangeStrings(['0 - 10000'])), 100);
   });
 
-  nodeTest('rangesPercentExclusive : ranges du gist public → 50% exact', () => {
+  nodeTest('rangesPercentExclusive : intervalles multiples → 50% exact', () => {
     // 0-1500 + 3000-4000 + 5000-7500 = 1500+1000+2500 = 5000/10000 = 50%
     a.equal(
       rangesPercentExclusive(parseRangeStrings(['0 - 1500', '3000 - 4000', '5000 - 7500'])),

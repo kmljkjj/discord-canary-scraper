@@ -6,7 +6,7 @@ function escapeHtml(s) {
     .replace(/>/g, amp + 'gt;')
     .replace(/"/g, amp + 'quot;');
 }
-/* Rollouts page — guild: experiment_rollouts.json · user: user_rollouts.json (v11, % EXACTS) */
+/* Rollouts page — guild: experiment_rollouts.json · user: user_rollouts.json (v13, mesure propre) */
 (async () => {
   const grid = document.getElementById('grid');
   const meta = document.getElementById('meta');
@@ -34,12 +34,11 @@ function escapeHtml(s) {
     return;
   }
 
-  // ---- User experiments : % EXACTS depuis user_rollouts.json (v11) ----
-  // Chaque expérience a des ranges de rollout réelles (échelle 0–10000),
-  // le % est calculé depuis ces ranges — pas d'estimation.
+  // ---- User experiments : mesure propre depuis user_rollouts.json (v13) ----
+  // % binomial (k/n) sur une fenêtre glissante d'échantillons anonymes,
+  // 2 décimales, avec un n (windowN) par expérience.
   const userExact = new Map();
-  let userExactCommunity = 0;
-  let userExactWorker = 0;
+  let userMeasured = 0;
   let userDetected = 0;
 
   function treatmentPct(treatments) {
@@ -76,15 +75,14 @@ function escapeHtml(s) {
         });
         continue;
       }
-      if (e.source === 'community_ranges') userExactCommunity++;
-      else userExactWorker++;
+      userMeasured++;
       userExact.set(String(e.hash), {
         id: e.id,
         title: e.title || e.id,
         type: 'user',
         hash: e.hash,
-        source: e.source === 'community_ranges' ? 'community_ranges' : 'worker_api',
-        status: e.rolloutStatus || null,
+        source: e.source || 'own_sampling',
+        status: e.status || null,
         percentage: treatmentPct(treatments),
         platforms: e.platforms || [],
         treatments,
@@ -108,25 +106,18 @@ function escapeHtml(s) {
     allExps.filter((e) => e.percentage != null).length;
   document.getElementById('stat-full').textContent =
     allExps.filter((e) => e.percentage != null && e.percentage >= 100).length;
-  document.getElementById('stat-fp').textContent =
-    userExactCommunity + userExactWorker;
+  document.getElementById('stat-fp').textContent = userMeasured;
 
   const sources = (data && data.sources) || {};
   const sourceParts = [];
-  if (userExactCommunity) {
-    sourceParts.push(`User exact (community ranges): ${userExactCommunity}`);
-  }
-  if (userExactWorker) {
-    sourceParts.push(`User exact (worker API): ${userExactWorker}`);
+  if (userMeasured) {
+    sourceParts.push(`User (mesure propre): ${userMeasured}`);
   }
   if (userDetected) {
     sourceParts.push(`User detectes (?%): ${userDetected}`);
   }
   if (sources.discordApi) {
     sourceParts.push(`Discord API: ${sources.discordApi.count ?? 0} guild exps`);
-  }
-  if (sources.workerApi) {
-    sourceParts.push(`Worker API: ${sources.workerApi.count ?? 0} exps`);
   }
   if (sources.fingerprintSampling) {
     const fp = sources.fingerprintSampling;
@@ -152,6 +143,8 @@ function escapeHtml(s) {
       full: { text: 'Full', cls: 'badge-full' },
       rolling_out: { text: 'En cours', cls: 'badge-partial' },
       ab_test: { text: 'A/B', cls: 'badge-partial' },
+      estimated: { text: 'Mesuré', cls: 'badge-partial' },
+      degraded: { text: 'n faible', cls: 'badge-na' },
       segmented: { text: 'Segmented', cls: 'badge-partial' },
       partial: { text: 'Partiel', cls: 'badge-partial' },
       not_started: { text: '0%', cls: 'badge-zero' },
@@ -175,16 +168,15 @@ function escapeHtml(s) {
     if (!source) return '';
     const labels = {
       discord_api: 'Discord API',
-      worker_api: 'Worker API',
       fingerprint_sampling: 'Fingerprint',
       client_bundle: 'Client',
-      community_ranges: 'Community · EXACT',
+      own_sampling: 'Mesure propre',
     };
     const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
   }
 
-  /* Variants exacts d'une expérience user v11 (ranges 0–10000) */
+  /* Variants mesurés d'une expérience user v13 (binomial k/n) */
   function exactDetails(exp) {
     if (!exp.treatments || !exp.treatments.length) return '';
     const parts = [`<div class="fp-details">`];
@@ -192,6 +184,9 @@ function escapeHtml(s) {
       parts.push(
         `<span class="fp-stat">${escapeHtml(t.label || 'Bucket ' + t.bucket)}: ${t.pct}%</span>`,
       );
+    }
+    if (exp.windowN) {
+      parts.push(`<span class="fp-stat">n=${exp.windowN}</span>`);
     }
     if (exp.platforms && exp.platforms.length) {
       parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
