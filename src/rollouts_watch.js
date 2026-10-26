@@ -39,7 +39,7 @@ process.env.USER_ROLLOUT_MIN_OK = process.env.USER_ROLLOUT_MIN_OK || '30';
 process.env.USER_ROLLOUT_PLATEAU = process.env.USER_ROLLOUT_PLATEAU || '25';
 process.env.USER_ROLLOUT_MAX_MS = process.env.USER_ROLLOUT_MAX_MS || '45000';
 
-const STATE_FILES = ['data/user_rollouts.json'];
+const STATE_FILES = ['data/user_rollouts.json', 'data/user_rollouts.md'];
 
 /** Rafraîchit l'état depuis origin (reprises / dispatch manuels). */
 function gitRefreshState() {

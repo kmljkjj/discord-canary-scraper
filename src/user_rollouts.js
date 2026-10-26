@@ -568,6 +568,40 @@ function hasName(id) {
   return id && !String(id).startsWith('hash:');
 }
 
+/** Rapport texte lisible (data/user_rollouts.md) — régénéré avec le JSON. */
+function writeReport(state) {
+  try {
+    const fmt = (p) => String(p).replace('.', ',') + ' %';
+    const conf = (c) => (c === 'high' ? 'élevée' : c === 'medium' ? 'moyenne' : 'faible');
+    const exps = (state.experiments || []).slice();
+    const n = exps.reduce((m, e) => Math.max(m, Number(e.windowN) || 0), 0);
+    const gen = new Date().toISOString().slice(0, 16).replace('T', ' ');
+    const out = [];
+    out.push('# Rollouts user — mesure propre (v13)', '');
+    out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
+    out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
+    out.push('## Expériences mesurées (' + exps.length + ')', '');
+    out.push('| Expérience | % mesuré | k/n | Confiance | Statut |');
+    out.push('|---|---:|---:|---|---|');
+    for (const e of exps) {
+      const ts = e.treatments || [];
+      const best = ts.reduce((a, t) => ((t.bucket || 0) > 0 && (a == null || (t.pct || 0) > a) ? t.pct : a), null);
+      const k = (ts[0] || {}).sampleCount;
+      const st = e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
+      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + (k != null ? k + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf((ts[0] || {}).confidence) + ' | ' + st + ' |');
+    }
+    out.push('', '## Détail par variante');
+    for (const e of exps) {
+      out.push('', '### ' + (e.title || e.id || 'hash:' + e.hash));
+      for (const t of e.treatments || []) {
+        out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
+      }
+    }
+    fs.writeFileSync(path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
+  } catch (e) {
+    console.warn('report skip:', String((e && e.message) || e).slice(0, 80));
+  }
+}
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -815,9 +849,7 @@ async function main() {
       changeCount: (extra.changes && extra.changes.length) || 0,
     };
     const history = [...prevHist, histEntry].slice(-40);
-    await writeJsonAtomic(
-      STATE,
-      {
+    const stateObj = {
         scrapedAt: new Date().toISOString(),
         version: 13,
         schemaVersion: 13,
@@ -834,9 +866,9 @@ async function main() {
         history,
         lastChanges: extra.changes || prev.lastChanges || [],
         posWindow: nextWindow,
-      },
-      2,
-    );
+    };
+    await writeJsonAtomic(STATE, stateObj, 2);
+    writeReport(stateObj);
   }
 
   // Premier run OU upgrade ≤ v12 → v13 : seed silencieux (pas de flood).

@@ -190,10 +190,6 @@ function escapeHtml(s) {
     if (exp.windowN) {
       parts.push(`<span class="fp-stat">n=${exp.windowN}</span>`);
     }
-    if (exp.fingerprint) {
-      const fpPct = exp.fingerprint.split('|').map((p) => parseFloat(p.split(':')[1]) + '%').join(' + ');
-      parts.push('<span class="fp-stat">Discord annonce: ' + escapeHtml(fpPct) + '</span>');
-    }
     if (exp.platforms && exp.platforms.length) {
       parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
     }
