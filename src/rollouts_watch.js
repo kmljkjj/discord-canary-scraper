@@ -1,64 +1,45 @@
 /**
- * Rollouts watcher — mode « long poll » pour battre la latence des crons.
+ * Rollouts watcher V2 — passes de mesure rapprochées.
  *
- * Problème : GitHub Actions décale les schedules (0 à 10+ min aux heures de
- * pointe) et un job met ~40 s à démarrer. Résultat : nos % arrivaient ~6 min
- * après les trackers qui lisent le même gist depuis un serveur dédié.
+ * V13 : plus AUCUNE source externe à surveiller (fini le long-poll du gist).
+ * La mesure EST notre sampling de l'API Discord : ce watcher enchaîne des
+ * passes user_rollouts toutes les ROLLOUTS_FULL_PASS_MS (défaut 4 min)
+ * pendant ROLLOUTS_WATCH_MS (~19 min, cron toutes les 20 min). Chaque passe
+ * ajoute ses échantillons à la fenêtre glissante (USER_ROLLOUT_WINDOW_H)
+ * → la précision s'affine en continu, ~15 passes par heure.
  *
- * Solution : UN job qui reste vivant ~19 min (cron toutes les 20 min, cf.
- * rollouts-watch.yml) et re-poll le gist toutes les 15 s via l'API GitHub
- * (source fraîche, pas de cache CDN — cf. lib/community.js). Dès que le
- * contenu bouge : détection + webhook immédiat → notification ~20-45 s
- * après la mise à jour du gist, compétitive avec un poll serveur.
- *
- * Source des données : gist communautaire (agnonotdev), également collecté et
- * publié par Wumpus Central — tout le crédit des données leur revient
- * (disclaimer complet dans lib/community.js).
+ * (Un cron GitHub classique est décalé de 0 à 10+ min aux heures de pointe :
+ * le watcher garantit des passes régulières même avec un schedule en retard.)
  *
  * Comportement :
- *  - au démarrage : un passage complet (couvre les changements survenus
- *    pendant l'éventuel trou entre deux jobs)
- *  - gist changé → passage détection immédiat (guild puis user)
- *  - sinon, passage périodique toutes les ROLLOUTS_FULL_PASS_MS (4 min) pour
- *    la détection par sampling / token snapshot
- *  - état rechargé depuis origin avant chaque passage (dispatch manuels,
- *    reprises), commit + push après chaque passage
+ *  - passe complète au démarrage (couvre le trou entre deux jobs)
+ *  - passes périodiques jusqu'à la fin du budget temps
+ *  - état rechargé depuis origin avant chaque passe (dispatch manuels),
+ *    commit + push après chaque passe
  *
  * Env :
  *   ROLLOUTS_WATCH_MS        default 19 min (durée du watch)
- *   ROLLOUTS_POLL_MS         default 15 s (intervalle de poll du gist)
- *   ROLLOUTS_FULL_PASS_MS    default 4 min (passe détection périodique)
- *   ROLLOUTS_MAX_POLLS       optionnel — borne le nombre de polls (tests)
- *   GITHUB_TOKEN             pour l'API gist (limite large)
+ *   ROLLOUTS_FULL_PASS_MS    default 4 min (intervalle entre passes)
+ *   ROLLOUTS_MAX_PASSES      optionnel — borne le nombre de passes (tests)
  */
-const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const { sleep } = require('./lib/utils');
-const { fetchCommunityText } = require('./lib/community');
-
-const WATCH_MS = Math.max(60000, Number(process.env.ROLLOUTS_WATCH_MS || 19 * 60 * 1000));
-const POLL_MS = Math.max(10, Number(process.env.ROLLOUTS_POLL_MS || 15000));
-const FULL_PASS_MS = Math.max(60000, Number(process.env.ROLLOUTS_FULL_PASS_MS || 4 * 60 * 1000));
-const MAX_POLLS = Number(process.env.ROLLOUTS_MAX_POLLS || 0); // 0 = illimité
-
-// Sampling léger pour les passes détection : le gist reste LA source des %,
-// le sampling ne sert qu'à détecter les expériences sans ranges (~22 requêtes
-// par passe grâce à la sortie plateau, au lieu de 100 tous les 2 min avant).
-process.env.USER_ROLLOUT_SAMPLES = process.env.USER_ROLLOUT_SAMPLES || '30';
-process.env.USER_ROLLOUT_CONCURRENCY = process.env.USER_ROLLOUT_CONCURRENCY || '2';
-process.env.USER_ROLLOUT_DELAY_MS = process.env.USER_ROLLOUT_DELAY_MS || '150';
-process.env.USER_ROLLOUT_MIN_OK = process.env.USER_ROLLOUT_MIN_OK || '20';
-process.env.USER_ROLLOUT_PLATEAU = process.env.USER_ROLLOUT_PLATEAU || '20';
-process.env.USER_ROLLOUT_MAX_MS = process.env.USER_ROLLOUT_MAX_MS || '30000';
-
-const guildRollouts = require('./guild_rollouts');
 const userRollouts = require('./user_rollouts');
 
-const STATE_FILES = ['data/user_rollouts.json', 'data/guild_rollouts.json'];
+const WATCH_MS = Math.max(60000, Number(process.env.ROLLOUTS_WATCH_MS || 19 * 60 * 1000));
+const PASS_MS = Math.max(60000, Number(process.env.ROLLOUTS_FULL_PASS_MS || 4 * 60 * 1000));
+const MAX_PASSES = Number(process.env.ROLLOUTS_MAX_PASSES || 0); // 0 = illimité
 
-function hashOf(text) {
-  return crypto.createHash('sha256').update(text).digest('hex');
-}
+// Sampling des passes du watcher : plus léger qu'un run complet, mais assez
+// dense pour la mesure (la fenêtre cumule les passes entre elles).
+process.env.USER_ROLLOUT_SAMPLES = process.env.USER_ROLLOUT_SAMPLES || '120';
+process.env.USER_ROLLOUT_CONCURRENCY = process.env.USER_ROLLOUT_CONCURRENCY || '2';
+process.env.USER_ROLLOUT_DELAY_MS = process.env.USER_ROLLOUT_DELAY_MS || '150';
+process.env.USER_ROLLOUT_MIN_OK = process.env.USER_ROLLOUT_MIN_OK || '30';
+process.env.USER_ROLLOUT_PLATEAU = process.env.USER_ROLLOUT_PLATEAU || '25';
+process.env.USER_ROLLOUT_MAX_MS = process.env.USER_ROLLOUT_MAX_MS || '45000';
+
+const STATE_FILES = ['data/user_rollouts.json'];
 
 /** Rafraîchit l'état depuis origin (reprises / dispatch manuels). */
 function gitRefreshState() {
@@ -86,16 +67,11 @@ function commitState() {
   }
 }
 
-/** Passe de détection : guild puis user, état rafraîchi puis commité. */
+/** Passe de mesure : user rollouts, état rafraîchi puis commité. */
 async function detectionPass(reason) {
-  console.log('── Passage détection (' + reason + ') ──');
+  console.log('── Passage mesure (' + reason + ') ──');
   gitRefreshState();
   process.exitCode = undefined; // exitCode 2 (webhook KO) est géré par passe
-  try {
-    await guildRollouts.main();
-  } catch (e) {
-    console.warn('guild pass fail:', String((e && e.message) || e).slice(0, 120));
-  }
   try {
     await userRollouts.main();
   } catch (e) {
@@ -106,40 +82,21 @@ async function detectionPass(reason) {
 
 async function main() {
   const deadline = Date.now() + WATCH_MS;
-  let lastHash = null;
-  let lastFull = 0;
-  let polls = 0;
+  let passes = 0;
   console.log(
-    'Rollouts watcher — poll', Math.round(POLL_MS / 1000) + 's, passe périodique',
-    Math.round(FULL_PASS_MS / 60000) + ' min, watch', Math.round(WATCH_MS / 60000) + 'min',
+    'Rollouts watcher V2 — passes de mesure toutes les',
+    Math.round(PASS_MS / 1000) + 's, watch',
+    Math.round(WATCH_MS / 60000) + 'min',
   );
   while (Date.now() < deadline) {
-    if (MAX_POLLS > 0 && polls >= MAX_POLLS) break;
-    polls++;
-
-    let h = null;
-    try {
-      h = hashOf(await fetchCommunityText());
-    } catch (e) {
-      console.warn('poll fail:', String((e && e.message) || e).slice(0, 100));
-    }
-
-    const first = lastHash == null;
-    const changed = !first && h != null && h !== lastHash;
-    if (changed) console.log('Gist changé → passage immédiat');
-    if (h != null) lastHash = h;
-
-    const now = Date.now();
-    const due = now - lastFull >= FULL_PASS_MS;
-
-    if (first || changed || due) {
-      await detectionPass(first ? 'démarrage (couvre le trou entre jobs)' : changed ? 'gist changé' : 'périodique');
-      lastFull = now;
-    }
-
-    await sleep(POLL_MS);
+    if (MAX_PASSES > 0 && passes >= MAX_PASSES) break;
+    await detectionPass(passes === 0 ? 'démarrage (couvre le trou entre jobs)' : 'périodique');
+    passes++;
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) break;
+    await sleep(Math.min(PASS_MS, remaining));
   }
-  console.log('Watcher terminé —', polls, 'polls');
+  console.log('Watcher terminé —', passes, 'passes');
   // exitCode laissé tel quel : 2 si le dernier passage a eu un webhook KO.
 }
 
@@ -149,4 +106,4 @@ if (require.main === module)
     process.exit(1);
   });
 
-module.exports = { main, detectionPass, gitRefreshState, commitState, hashOf };
+module.exports = { main, detectionPass, gitRefreshState, commitState };
