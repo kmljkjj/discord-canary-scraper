@@ -597,6 +597,27 @@ function writeReport(state) {
         out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
       }
     }
+    // Guild — % exacts + expériences en attente (experiment_rollouts.json, nos propres sources)
+    try {
+      const er = JSON.parse(fs.readFileSync(path.join(DATA, 'experiment_rollouts.json'), 'utf8'));
+      const guild = (er.matchedExperiments || []).filter((g) => g && g.type === 'guild' && g.percentage != null);
+      if (guild.length) {
+        out.push('', '## Guild — % exacts (API Discord, toutes les 20 min) — ' + guild.length, '');
+        out.push('| Expérience | % | Statut |');
+        out.push('|---|---:|---|');
+        for (const g of guild) {
+          const st = g.status === 'full_rollout' ? 'Rollout complet' : g.status === 'not_started' ? 'Pas commencé' : (g.status || '');
+          out.push('| ' + (g.title || g.id || 'hash_' + g.hash) + ' | ' + g.percentage + ' % | ' + st + ' |');
+        }
+      }
+      const waiting = (er.matchedExperiments || []).filter((g) => g && g.type === 'user' && g.percentage == null && (g.id || g.title));
+      if (waiting.length) {
+        out.push('', '## En attente de rollout — ' + waiting.length + ' expériences user', '');
+        out.push('Discord ne publie pas encore leur pourcentage. Dès qu\'un rollout démarre, l\'expérience monte dans la section mesurées avec son % réel (2 décimales).');
+        out.push('');
+        out.push(waiting.map((g) => '- ' + (g.title || g.id)).join('\n'));
+      }
+    } catch (e2) { /* experiment_rollouts.json absent au premier run */ }
     fs.writeFileSync(path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
   } catch (e) {
     console.warn('report skip:', String((e && e.message) || e).slice(0, 80));
