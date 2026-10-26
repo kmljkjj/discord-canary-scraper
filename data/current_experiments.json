@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-25T04-43-09-695Z_650180_rkytbx",
-  "buildNumber": "650180",
-  "updatedAt": "2026-10-25T04:43:09.695Z",
-  "count": 383,
+  "runId": "2026-10-26T15-25-24-862Z_650542_kl8hb1",
+  "buildNumber": "650542",
+  "updatedAt": "2026-10-26T15:25:24.862Z",
+  "count": 381,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8089,92 +8089,6 @@
       "fingerprint": "31db781dc1110dec2dde4a4e4154ee672a06a876638cdad8a3274a7c2ab1c18a"
     },
     {
-      "id": "2026-05-use-ad-analytics-interface",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true,
-          "maxStep": 0
-        },
-        "2": {
-          "enabled": true,
-          "maxStep": 1
-        },
-        "3": {
-          "enabled": true,
-          "maxStep": 2
-        },
-        "4": {
-          "enabled": true,
-          "maxStep": 3
-        },
-        "5": {
-          "enabled": true,
-          "maxStep": 4
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 6,
-      "raw": {
-        "id": "2026-05-use-ad-analytics-interface",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true,
-            "maxStep": 0
-          },
-          "2": {
-            "enabled": true,
-            "maxStep": 1
-          },
-          "3": {
-            "enabled": true,
-            "maxStep": 2
-          },
-          "4": {
-            "enabled": true,
-            "maxStep": 3
-          },
-          "5": {
-            "enabled": true,
-            "maxStep": 4
-          }
-        },
-        "variationCount": 6,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "d9d4c48abbfa3b0513126e134c09db682e90228c509ff836c070686becf6d4b4"
-    },
-    {
       "id": "2026-06_guild_rooms",
       "kind": "guild",
       "type": "guild",
@@ -13789,52 +13703,6 @@
         "value": null
       },
       "fingerprint": "5eff64b0ef434ea393caa6fce9de56e614d74ba38be024083ed48097c751edf5"
-    },
-    {
-      "id": "2026-09-design-systems-notification-components",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-09-design-systems-notification-components",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "418eb825d4da9a6ba78c70d319b34fa1a76759a85acf0eabea293273616e1390"
     },
     {
       "id": "2026-09-desktop-tti-shader-cache",
