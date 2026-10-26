@@ -38,6 +38,8 @@
  *   USER_ROLLOUT_WINDOW_BATCHES default 60 (max runs gardés dans la fenêtre)
  *   USER_ROLLOUT_NOISE_Z       default 2 (seuil de bruit statistique ; 0 = off)
  *   USER_ROLLOUT_NOTIFY_HASH   default 0 (notifier aussi les hash sans nom)
+ *   USER_ROLLOUT_PLATFORM_UAS  optionnel — User-Agents séparés par ||
+ *                             (défaut : web + app desktop + Android + iOS)
  *   APEX_MIN_PCT_DELTA         default 1 (% min, en plus de la marge de bruit)
  */
 const fetch = require('node-fetch');
@@ -95,6 +97,26 @@ const WINDOW_H_MS = WINDOW_H * 3600 * 1000;
 const MAX_BATCHES = Math.max(5, Number(process.env.USER_ROLLOUT_WINDOW_BATCHES || 60));
 // Anneau de positions récentes par bucket (ranges indicatives seulement).
 const RING_CAP = 60;
+
+/**
+ * Rotation de plateformes (V13.1) : certains rollouts sont ciblés par
+ * plateforme (ex. « android, desktop »). Avec un seul UA web, nos
+ * échantillons sont exclus de ces rollouts et l'expérience devient
+ * invisible. Chaque échantillon tire un contexte de plateforme → couverture
+ * de tous les rollouts, % toujours mesuré par nous-mêmes.
+ */
+const PLATFORM_UAS = String(process.env.USER_ROLLOUT_PLATFORM_UAS || '')
+  .split('||')
+  .map((s) => s.trim())
+  .filter(Boolean);
+const UAS = PLATFORM_UAS.length
+  ? PLATFORM_UAS
+  : [
+      DEFAULT_UA,
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9203 Chrome/124.0.0.0 Electron/30.5.0 Safari/537.36',
+      'Discord-Android/261223; Android 15; PKQ1.241001.002',
+      'Discord iOS/261223; iOS 18.5; iPhone16,2',
+    ];
 
 function tLabel(bucket) {
   const b = Number(bucket);
@@ -422,6 +444,7 @@ async function sampleFingerprints(n, concurrency) {
         await sleep(delay);
         const { assignments } = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
+          'User-Agent': UAS[my % UAS.length],
         });
         let foundNew = false;
         for (const a of assignments) {
@@ -471,9 +494,15 @@ function fingerprintOf(treatments) {
 async function fetchTokenSnapshot(defs) {
   if (!TOKENS.length) return [];
   const out = [];
-  for (const token of TOKENS.slice(0, 10)) {
+  const list = TOKENS.slice(0, 10);
+  const runOffset = Math.floor(Date.now() / (20 * 60 * 1000));
+  for (let i = 0; i < list.length; i++) {
+    const token = list[i];
     try {
-      const data = await fetchAssignments({ Authorization: token }, true);
+      const data = await fetchAssignments(
+        { Authorization: token, 'User-Agent': UAS[(i + runOffset) % UAS.length] },
+        true,
+      );
       for (const a of data.assignments || []) {
         if (!Array.isArray(a) || a.length < 3) continue;
         const hash = Number(a[0]);
