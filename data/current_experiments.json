@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T17-48-27-354Z_650717_qjsgim",
-  "buildNumber": "650717",
-  "updatedAt": "2026-10-26T17:48:27.354Z",
-  "count": 380,
+  "runId": "2026-10-26T17-51-40-529Z_650745_u33gb7",
+  "buildNumber": "650745",
+  "updatedAt": "2026-10-26T17:51:40.529Z",
+  "count": 379,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -13553,52 +13553,6 @@
         "value": null
       },
       "fingerprint": "b9edfe3e7151d9835a92361504669cdd870df6dd25747e28d4eb6cff8eb34d2b"
-    },
-    {
-      "id": "2026-09-conversation-topic-header",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-09-conversation-topic-header",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "52553f8bee5f515ef71bd2e1c3014cfbc7e435c2f7130df80596a70f0ff5fdfe"
     },
     {
       "id": "2026-09-default-emojis",
