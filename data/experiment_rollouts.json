@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-26T21:20:51.988Z",
+  "fetchedAt": "2026-10-26T21:27:51.002Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -390,17 +390,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 4
       }
     },
     {
@@ -3604,6 +3604,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-add-server-join-first",
+      "hash": 3810560064,
+      "type": "user",
+      "title": "2026-10-add-server-join-first",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-android-chat-preinflation",
       "hash": 3976434403,
       "type": "user",
@@ -3738,6 +3748,16 @@
       "hash": 903517929,
       "type": "user",
       "title": "2026-10-collectibles-marketing-client-cache",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-10-conjure-mcp-ui",
+      "hash": 3245012025,
+      "type": "user",
+      "title": "2026-10-conjure-mcp-ui",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4175,11 +4195,11 @@
     }
   ],
   "summary": {
-    "total": 385,
+    "total": 387,
     "guild": 35,
-    "user": 350,
+    "user": 352,
     "withPercentage": 10,
-    "withoutPercentage": 375,
+    "withoutPercentage": 377,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 4,
