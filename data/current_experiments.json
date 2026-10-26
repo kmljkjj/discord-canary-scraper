@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T22-00-43-945Z_651216_ft8ssg",
-  "buildNumber": "651216",
-  "updatedAt": "2026-10-26T22:00:43.945Z",
-  "count": 379,
+  "runId": "2026-10-26T22-02-54-915Z_651229_vmt8nz",
+  "buildNumber": "651229",
+  "updatedAt": "2026-10-26T22:02:54.915Z",
+  "count": 380,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -14845,6 +14845,58 @@
         "value": null
       },
       "fingerprint": "8db85b43b7d9f3e49a9ac2d61c5b7f95b99408957ab9a7ae8da7a9b585388448"
+    },
+    {
+      "id": "2026-09-mobile-request-to-stream",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-09-mobile-request-to-stream",
+        "type": "guild",
+        "kind": "guild",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "49330af50b822c2d4a77657225c68a0c6372aeab9bc28c2cf1fa54217e538f81"
     },
     {
       "id": "2026-09-multi-sku-embed-rendering",
