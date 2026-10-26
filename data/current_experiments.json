@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T19-33-36-262Z_650940_41bhea",
-  "buildNumber": "650940",
-  "updatedAt": "2026-10-26T19:33:36.262Z",
-  "count": 380,
+  "runId": "2026-10-26T19-35-36-650Z_650944_5opa42",
+  "buildNumber": "650944",
+  "updatedAt": "2026-10-26T19:35:36.650Z",
+  "count": 379,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -14969,58 +14969,6 @@
         "value": null
       },
       "fingerprint": "3155b47abf2b3211e817804d3da3a92a9454d34bd0088ca019a0d1a5e6b69b8b"
-    },
-    {
-      "id": "2026-09-new-hscroll",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "useNewHScroll": false
-      },
-      "variations": {
-        "0": {
-          "useNewHScroll": false
-        },
-        "1": {
-          "useNewHScroll": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-09-new-hscroll",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "useNewHScroll": false
-        },
-        "variations": {
-          "0": {
-            "useNewHScroll": false
-          },
-          "1": {
-            "useNewHScroll": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "95d235d577dc9a538184e78d0bdd0f8c057955889c7a33ab0aa610ef053ab6c5"
     },
     {
       "id": "2026-09-new-orb-reward-visuals",
