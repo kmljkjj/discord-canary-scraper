@@ -1,0 +1,53 @@
+name: Rollouts notify test
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/rollouts-notify-test.yml']
+  workflow_dispatch:
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Envoyer un message de test
+        env:
+          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
+          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
+          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
+          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          node <<'EOF'
+          const fs = require('fs');
+          const cands = [
+            ['UR_WEBHOOK', process.env.UR_WEBHOOK],
+            ['USER_ROLLOUT_WEBHOOK_URL', process.env.USER_ROLLOUT_WEBHOOK_URL],
+            ['APEX_WEBHOOK_URL', process.env.APEX_WEBHOOK_URL],
+            ['ROLLOUT_WEBHOOK_URL', process.env.ROLLOUT_WEBHOOK_URL],
+            ['DISCORD_WEBHOOK_URL', process.env.DISCORD_WEBHOOK_URL],
+          ];
+          const w = cands.find(([, v]) => v && String(v).trim());
+          if (!w) { console.log('AUCUN WEBHOOK CONFIGURE — verifier les secrets'); process.exit(0); }
+          const j = JSON.parse(fs.readFileSync('data/user_rollouts.json', 'utf8'));
+          const lines = [];
+          for (const e of (j.experiments || [])) {
+            const t = (e.treatments || [])[0] || {};
+            lines.push('**' + (e.title || e.id) + '** : ' + (t.pct != null ? t.pct + '%' : '?') + ' (n=' + (e.windowN || '?') + ')');
+          }
+          const embed = {
+            title: 'Rollouts user — ' + ((j.experiments || []).length) + ' experiences mesurees',
+            description: lines.join('\n').slice(0, 4000),
+            color: 0x5865f2,
+            footer: { text: 'Test webhook · Source: mesure propre · API Discord · mesure du ' + (j.scrapedAt || '?') },
+          };
+          fetch(String(w[1]).trim() + '?wait=true', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: 'Datamining', embeds: [embed] }),
+          }).then(async (r) => {
+            console.log('Webhook (' + w[0] + ')', r.status);
+            if (!r.ok) console.log(await r.text());
+          });
+          EOF

@@ -64,7 +64,7 @@ jobs:
           USER_ROLLOUT_MAX_MS: "75000"
           USER_ROLLOUT_PLATEAU: "30"
           USER_ROLLOUT_WINDOW_H: "4"
-          USER_ROLLOUT_NOTIFY_HASH: "0"
+          USER_ROLLOUT_NOTIFY_HASH: "1"
           APEX_MIN_PCT_DELTA: "1"
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
