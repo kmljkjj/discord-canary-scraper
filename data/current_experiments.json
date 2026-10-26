@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T19-18-22-916Z_650917_sbrbsv",
-  "buildNumber": "650917",
-  "updatedAt": "2026-10-26T19:18:22.916Z",
-  "count": 379,
+  "runId": "2026-10-26T19-20-29-791Z_650922_xqys8t",
+  "buildNumber": "650922",
+  "updatedAt": "2026-10-26T19:20:29.791Z",
+  "count": 380,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -18189,6 +18189,48 @@
         "value": null
       },
       "fingerprint": "7f42b6f8b249c7397b7a14b361d516240d2be52a2c2da459af0a942f5b511061"
+    },
+    {
+      "id": "2026-10-fix-soundboard-muting-iconography",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 1,
+      "raw": {
+        "id": "2026-10-fix-soundboard-muting-iconography",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": null,
+        "variations": {
+          "1": {
+            "id": 1
+          }
+        },
+        "variationCount": 1,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "8f2d29378b7b20eee73d81e8323627cdaafc6684b82baf6d7d9eac970c95db50"
     },
     {
       "id": "2026-10-game-exit-promo-rust",
