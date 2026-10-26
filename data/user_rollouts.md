@@ -1,35 +1,35 @@
-# Rollouts — mesure propre (v13)
+# Rollouts user — mesure propre (v13)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-26 20:02 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-26 23:23 UTC
 
-**Fenêtre glissante 4 h — n = 2842 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 2851 échantillons — 7 tokens actifs**
 
-## User — expériences mesurées (5)
+## Expériences mesurées (5)
 
 | Expérience | % mesuré | k/n | Confiance | Statut |
 |---|---:|---:|---|---|
-| hash:704914099 | **5,17 %** | 147/2842 | élevée | Mesuré |
-| hash:1144304849 | **5,17 %** | 145/2803 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | 2842/2842 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | 2842/2842 | élevée | Mesuré |
-| Tida Webform | **100 %** | 2842/2842 | élevée | Mesuré |
+| hash:704914099 | **4,24 %** | 121/2851 | élevée | Mesuré |
+| hash:1144304849 | **6,17 %** | 176/2851 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | 2851/2851 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | 2851/2851 | élevée | Mesuré |
+| Tida Webform | **94,04 %** | 2681/2851 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,17 % (147/2842, confiance élevée)
+- Variant 1 : 4,24 % (121/2851, confiance élevée)
 
 ### hash:1144304849
-- Variant 1 : 5,17 % (145/2803, confiance élevée)
+- Variant 1 : 6,17 % (176/2851, confiance élevée)
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (2842/2842, confiance élevée)
+- Variant 1 : 100 % (2851/2851, confiance élevée)
 
 ### hash:3013881204
-- Variant 11 : 100 % (2842/2842, confiance élevée)
+- Variant 11 : 100 % (2851/2851, confiance élevée)
 
 ### Tida Webform
-- Variant 1 : 100 % (2842/2842, confiance élevée)
+- Variant 1 : 94,04 % (2681/2851, confiance élevée)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -160,7 +160,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-04-user-profile-performance-analytics
 - 2026-04-video-hook-dx12
 - 2026-04-voice-gateway-protocol-version
-- 2026-04-wetf-parser
 - 2026-05-app-store-overlay-feature-gate
 - 2026-05-auto-clips-review
 - 2026-05-av1-bitrate-tuning
@@ -234,6 +233,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-07-smag-dm-sidebar-nitro-recommendation
 - 2026-07-typing-users-css-dots
 - 2026-07-unobtrusive-device-suggestions
+- 2026-07-vibegrations-user
 - 2026-07-wishlist-direct-to-gifting
 - 2026-08-ad-topic-opt-out-client
 - 2026-08-android-jank-per-screen
@@ -312,7 +312,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-quest-mobile-bar-secondary-cta
 - 2026-09-referral-profile-contextual-menu-upsell
 - 2026-09-referral-trial-cta
-- 2026-09-registration-email-opt-in-copy
 - 2026-09-request-to-stream-go-live-modal
 - 2026-09-request-to-stream-new-entry-point
 - 2026-09-rust-3p
@@ -329,13 +328,13 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-stream-zero-vad-leading
 - 2026-09-three-month-nitro-gifting
 - 2026-09-try-display-name-style
-- 2026-09-update-email-settings-copy-subtext
 - 2026-09-video-background-profile-fetch
 - 2026-09-voice-connect-feedback
 - 2026-09-web-sticker-picker-upsell-restyle
 - 2026-09-windows-native-premap
 - 2026-09-youtube-3p
 - 2026-09-youtube-3p-nagbar
+- 2026-10-add-server-join-first
 - 2026-10-android-chat-preinflation
 - 2026-10-android-ui-manager-constants-cache
 - 2026-10-avx512-entropy-histogram
@@ -350,6 +349,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-code-blurple-teaser-marketing
 - 2026-10-collectibles-interactive-jumble-bar
 - 2026-10-collectibles-marketing-client-cache
+- 2026-10-conjure-mcp-ui
 - 2026-10-contextual-referrals-gdm-member-list
 - 2026-10-contextual-referrals-server-channel-member-list
 - 2026-10-contextual-referrals-user-dm-sidebar
@@ -363,7 +363,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-express-checkout
 - 2026-10-fix-soundboard-muting-iconography
 - 2026-10-game-exit-promo-rust
-- 2026-10-game-profile-mobile-reviews
 - 2026-10-gdm-duration-timer
 - 2026-10-gift-cards-in-app-marketing
 - 2026-10-gifted-subscriptions
@@ -391,3 +390,4 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-web-streaming-optimizations
 - 2026-08-gift-recipient-display-name-search
 - 2026-09-application-test-mode-quick-access
+- 2026-09-update-email-settings-copy-subtext
