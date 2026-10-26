@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-26T21-27-20-274Z_651143_j7yc56",
-  "buildNumber": "651143",
-  "scrapedAt": "2026-10-26T21:27:20.274Z",
+  "runId": "2026-10-26T21-29-23-822Z_651147_uj1esw",
+  "buildNumber": "651147",
+  "scrapedAt": "2026-10-26T21:29:23.822Z",
   "totals": {
-    "all": 382,
+    "all": 381,
     "legacy": 0,
-    "apex": 380
+    "apex": 379
   },
   "experiments": [
     {
@@ -5975,23 +5975,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-09-registration-email-opt-in-copy",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "trackingCopy": false
-      },
-      "variations": {
-        "1": {
-          "trackingCopy": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {

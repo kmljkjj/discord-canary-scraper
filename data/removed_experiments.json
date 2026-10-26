@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T21-27-20-274Z_651143_j7yc56",
-  "buildNumber": "651143",
-  "updatedAt": "2026-10-26T21:27:20.274Z",
-  "count": 100,
+  "runId": "2026-10-26T21-29-23-822Z_651147_uj1esw",
+  "buildNumber": "651147",
+  "updatedAt": "2026-10-26T21:29:23.822Z",
+  "count": 101,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -703,6 +703,13 @@
       "label": null,
       "removedAt": "2026-10-26T20:21:09.555Z",
       "lastBuild": "651013"
+    },
+    {
+      "id": "2026-09-registration-email-opt-in-copy",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-10-26T21:29:23.838Z",
+      "lastBuild": "651147"
     }
   ]
 }

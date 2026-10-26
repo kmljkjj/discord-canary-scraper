@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T21-27-20-274Z_651143_j7yc56",
-  "buildNumber": "651143",
-  "updatedAt": "2026-10-26T21:27:20.274Z",
-  "count": 380,
+  "runId": "2026-10-26T21-29-23-822Z_651147_uj1esw",
+  "buildNumber": "651147",
+  "updatedAt": "2026-10-26T21:29:23.822Z",
+  "count": 379,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -15435,52 +15435,6 @@
         "value": null
       },
       "fingerprint": "9d07ae215d6a8467ced8cedf384a6a1d129de7b44fbff6a8cde4d0d28710f1c8"
-    },
-    {
-      "id": "2026-09-registration-email-opt-in-copy",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "trackingCopy": false
-      },
-      "variations": {
-        "1": {
-          "trackingCopy": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-09-registration-email-opt-in-copy",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "trackingCopy": false
-        },
-        "variations": {
-          "1": {
-            "trackingCopy": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "8e139cab627ec1b0ce298d190e611a4eee615de7108102a468bdb83121538335"
     },
     {
       "id": "2026-09-request-to-stream-go-live-modal",
