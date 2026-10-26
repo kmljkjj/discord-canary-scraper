@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T21-24-00-216Z_651141_t60oi7",
-  "buildNumber": "651141",
-  "updatedAt": "2026-10-26T21:24:00.217Z",
-  "count": 379,
+  "runId": "2026-10-26T21-27-20-274Z_651143_j7yc56",
+  "buildNumber": "651143",
+  "updatedAt": "2026-10-26T21:27:20.274Z",
+  "count": 380,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -6742,6 +6742,26 @@
       },
       "system": "apex",
       "fp": "16a5732e60ae8db8b6b053477af69482e57d62d4324d6982ebcfb381ad4e79f9"
+    },
+    "2026-10-conjure-mcp-ui": {
+      "id": "2026-10-conjure-mcp-ui",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "enabled": false
+        },
+        "2": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "40f4bbe22098a0ba3bb73b82d21795570b9b20a1e52d16c521ae4ea5e16060e9"
     },
     "2026-10-contextual-referrals-gdm-member-list": {
       "id": "2026-10-contextual-referrals-gdm-member-list",

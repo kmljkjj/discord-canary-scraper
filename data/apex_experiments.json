@@ -5388,6 +5388,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-conjure-mcp-ui",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": false
+      },
+      "2": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-contextual-referrals-gdm-member-list",
     "defaultConfig": {
       "showEmbed": false
