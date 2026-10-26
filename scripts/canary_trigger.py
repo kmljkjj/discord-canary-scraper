@@ -3,7 +3,7 @@
 Déclencheur rapide Canary → GitHub Actions
 
 Pourquoi : le cron GitHub (*/5) a souvent 5–20 min de retard.
-Wumpus tourne hors Actions. Ce script poll canary.discord.com
+Ce script poll canary.discord.com
 et ne dispatch QUE si le BUILD_NUMBER change.
 
 Usage:

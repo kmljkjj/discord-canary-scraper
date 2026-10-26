@@ -9,9 +9,6 @@
  *  - Android stable: APKCombo / Google Play (or OTA if it matches)
  *  - Android beta: Aptoide versions page (lists track labels) / APKMirror
  *  - Android alpha: APKMirror (lists alpha track) / Aptoide
- *  - Android beta/alpha: commits du repo public de datamining mobile — chaque build
- *    y arrive avec un message « X.Y (MMMTNN) » (track T décodé du build court).
- *    Source fiable, sans Cloudflare (Aptoide/APKMirror sont bloqués depuis 09/2026).
  *
  * The OTA manifest at https://discord.com/{platform}/{version}/manifest.json
  * also serves beta/alpha builds — the build number encodes the track
@@ -66,12 +63,6 @@ const TESTFLIGHT_URL = 'https://testflight.apple.com/join/gdE4pRzI';
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.discord';
 const APTOIDE_VERSIONS_URL = 'https://discord.bd.aptoide.com/versions';
 const APKMIRROR_UPLOADS_URL = 'https://www.apkmirror.com/uploads/?appcategory=discord-chat-for-gamers';
-// Repo public de datamining mobile : chaque build Android publié y arrive avec un
-// commit « X.Y (MMMTNN) » (ex. « 352.6 (352206) » → 352|2|06 = alpha 352.6).
-// Source la plus fiable pour bêta/alpha Android — pas de Cloudflare.
-const DATAMINE_COMMITS_URL =
-  process.env.MOBILE_DATAMINE_COMMITS_URL ||
-  'https://api.github.com/repos/Wumpus-Central/discord-mobile-datamining/commits?per_page=50';
 
 // ── Version helpers ───────────────────────────────────
 
@@ -389,52 +380,6 @@ async function androidFromAptoide() {
     }
   }
   return null;
-}
-
-// ── Android beta/alpha from datamining repo ──────────
-
-/**
- * Source fiable (pas de Cloudflare) : les commits du repo public de datamining
- * mobile. Chaque build Android publié y arrive avec un message « X.Y (MMMTNN) »
- * où MMMTNN est le début du build number Discord — le track T s'y décode
- * directement (0=stable, 1=bêta, 2=alpha). Ex. « 352.6 (352206) » → alpha.
- * Utilise GITHUB_TOKEN quand il est défini (rate limit anonyme partagé en CI).
- */
-async function androidFromDataminingRepo() {
-  try {
-    const headers = { Accept: 'application/vnd.github+json' };
-    const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-    if (token) headers.Authorization = 'Bearer ' + token;
-    const commits = await fetchJson(DATAMINE_COMMITS_URL, { headers });
-    const re = /^(\d{3})\.(\d{1,2})\s+\((\d{3})(\d)(\d{2})/;
-    const found = [];
-    for (const c of Array.isArray(commits) ? commits : []) {
-      const msg = String((c.commit && c.commit.message) || '').trim();
-      const m = msg.match(re);
-      if (!m) continue;
-      if (m[1] !== m[3] || Number(m[2]) !== Number(m[5])) continue; // message incohérent
-      const track = Number(m[4]);
-      if (track !== 1 && track !== 2) continue; // 0 = stable, déjà couverte
-      found.push({
-        version: m[1] + '.' + m[2],
-        track,
-        date: (c.commit && c.commit.author && c.commit.author.date) || null,
-      });
-    }
-    const best = (track) =>
-      found.filter((v) => v.track === track).sort((a, b) => cmpVersion(b.version, a.version))[0] || null;
-    const beta = best(1);
-    const alpha = best(2);
-    if (beta || alpha) {
-      console.log('Datamining repo: beta', beta && beta.version, '| alpha', alpha && alpha.version);
-      return { beta, alpha, source: 'datamining_commits' };
-    }
-    console.warn('Datamining repo: aucun commit de version exploitable');
-    return null;
-  } catch (e) {
-    console.warn('Datamining repo:', e.message);
-    return null;
-  }
 }
 
 // ── Android beta/alpha from APKMirror ─────────────────
@@ -826,30 +771,6 @@ async function collectAll() {
         console.log('iOS beta (fallback)', externalData.ios.beta.version, 'from', externalData.updatedAt);
       }
     }
-  }
-
-  // 5bis. Android beta/alpha — commits du repo de datamining mobile (public,
-  // pas de Cloudflare) ; prioritaire sur les fallbacks périmés d'Aptoide.
-  const datamineData = await androidFromDataminingRepo();
-  if (datamineData) {
-    sources.dataminingCommits = true;
-    if (datamineData.beta && (!externalBeta || cmpVersion(datamineData.beta.version, externalBeta.version) > 0)) {
-      externalBeta = { version: datamineData.beta.version, source: 'datamining_commits', date: datamineData.beta.date };
-      console.log('Android beta (datamining repo)', externalBeta.version);
-    }
-    if (datamineData.alpha && (!externalAlpha || cmpVersion(datamineData.alpha.version, externalAlpha.version) > 0)) {
-      externalAlpha = { version: datamineData.alpha.version, source: 'datamining_commits', date: datamineData.alpha.date };
-      console.log('Android alpha (datamining repo)', externalAlpha.version);
-    }
-    // Garde le fallback data/external_versions.json à jour avec cette source.
-    await saveExternalVersions({
-      updatedAt: checkedAt,
-      sources: { dataminingCommits: { url: DATAMINE_COMMITS_URL, lastAccessible: true } },
-      android: {
-        beta: externalBeta ? { version: externalBeta.version, date: externalBeta.date || null, source: externalBeta.source || 'datamining_commits', track: 'beta' } : null,
-        alpha: externalAlpha ? { version: externalAlpha.version, date: externalAlpha.date || null, source: externalAlpha.source || 'datamining_commits', track: 'alpha' } : null,
-      },
-    });
   }
 
   // 6. Android beta/alpha from APKMirror (fallback)

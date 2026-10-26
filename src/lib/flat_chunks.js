@@ -1,5 +1,5 @@
 /**
- * Flat chunks system — inspired by Wumpus-Central/discrapper-canary.
+ * Flat chunks system — publication plate et diffable des chunks du build.
  *
  * Publie le build courant dans un format plat et diffable sur GitHub :
  * - chunks/{chunkId}.js  (tous les chunks webpack, hash strippé du nom)
@@ -30,7 +30,7 @@ const ENABLED = () => process.env.FLAT_CHUNKS !== '0';
 function chunkIdFromName(name) {
   if (!name) return null;
   const base = name.replace(/\.(js|css)$/, '');
-  // web.*.js → -1 (convention discrapper-canary pour le bundle principal)
+  // web.*.js → -1 (convention interne pour le bundle principal)
   if (/^web\./i.test(name)) return '-1';
   // Pattern: {chunkId}.{hash}.js → garder seulement chunkId
   const m = base.match(/^(\d+)\./);
