@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T20-18-52-093Z_651011_semsd7",
-  "buildNumber": "651011",
-  "updatedAt": "2026-10-26T20:18:52.093Z",
-  "count": 379,
+  "runId": "2026-10-26T20-21-09-543Z_651013_uui0gm",
+  "buildNumber": "651013",
+  "updatedAt": "2026-10-26T20:21:09.543Z",
+  "count": 378,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -6987,52 +6987,6 @@
         "value": null
       },
       "fingerprint": "9f46bee03e76ee2df97a141a418b0aef589f16e6e76bdcece7efe5a378a494be"
-    },
-    {
-      "id": "2026-04-wetf-parser",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-04-wetf-parser",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "3f0e14abaf222f7fbe5d175ec8508e8ef37493a54453dab8655e3e176edf02f8"
     },
     {
       "id": "2026-05_default_invite_expiration_guild_web",
