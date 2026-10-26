@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-26T22:02:36.483Z",
+  "fetchedAt": "2026-10-26T22:09:23.325Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -7,7 +7,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -381,6 +381,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 50
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 5,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 5
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 5,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 5
       }
     },
     {
@@ -3214,6 +3234,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-09-mobile-request-to-stream",
+      "hash": 1658838297,
+      "type": "guild",
+      "title": "2026-09-mobile-request-to-stream",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in the Discord API."
+    },
+    {
       "id": "2026-09-multi-sku-embed-rendering",
       "hash": 3733834381,
       "type": "user",
@@ -4175,14 +4205,14 @@
     }
   ],
   "summary": {
-    "total": 386,
-    "guild": 35,
-    "user": 351,
-    "withPercentage": 9,
-    "withoutPercentage": 377,
+    "total": 388,
+    "guild": 36,
+    "user": 352,
+    "withPercentage": 10,
+    "withoutPercentage": 378,
     "fullRollout": 6,
     "partial": 0,
-    "notStarted": 3,
-    "fpSampled": 4
+    "notStarted": 4,
+    "fpSampled": 5
   }
 }
