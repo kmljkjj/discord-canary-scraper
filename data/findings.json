@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-26T21-54-13-661Z_651205_a4qndq",
-  "buildNumber": "651205",
-  "scrapedAt": "2026-10-26T21:54:13.662Z",
+  "runId": "2026-10-26T22-00-43-945Z_651216_ft8ssg",
+  "buildNumber": "651216",
+  "scrapedAt": "2026-10-26T22:00:43.945Z",
   "totals": {
-    "all": 381
+    "all": 382
   },
   "experiments": [
     {
@@ -4309,6 +4309,33 @@
       "id": "2026-07-vibegrations-guild",
       "type": "guild",
       "kind": "guild",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false,
+        "requiresUserExperiment": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false,
+          "requiresUserExperiment": false
+        },
+        "1": {
+          "enabled": true,
+          "requiresUserExperiment": false
+        },
+        "2": {
+          "enabled": true,
+          "requiresUserExperiment": true
+        }
+      },
+      "variationCount": 3,
+      "source": "discord"
+    },
+    {
+      "id": "2026-07-vibegrations-user",
+      "type": "user",
+      "kind": "user",
       "label": null,
       "system": "apex",
       "defaultConfig": {

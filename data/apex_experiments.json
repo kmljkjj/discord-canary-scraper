@@ -3438,6 +3438,29 @@
     "kind": "guild",
     "name": "2026-07-vibegrations-guild",
     "defaultConfig": {
+      "enabled": false,
+      "requiresUserExperiment": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false,
+        "requiresUserExperiment": false
+      },
+      "1": {
+        "enabled": true,
+        "requiresUserExperiment": false
+      },
+      "2": {
+        "enabled": true,
+        "requiresUserExperiment": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-07-vibegrations-user",
+    "defaultConfig": {
       "enabled": false
     },
     "variations": {
