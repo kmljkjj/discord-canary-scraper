@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-25T05:51:19.425Z",
+  "fetchedAt": "2026-10-26T15:28:26.989Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -5020,26 +5020,6 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
@@ -5057,6 +5037,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 2
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -6550,16 +6550,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-05-use-ad-analytics-interface",
-      "hash": 1057161765,
-      "type": "user",
-      "title": "2026-05-use-ad-analytics-interface",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-06_guild_rooms",
       "hash": 3030912869,
       "type": "guild",
@@ -7634,16 +7624,6 @@
       "hash": 2285512203,
       "type": "user",
       "title": "2026-09-default-emojis",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-09-design-systems-notification-components",
-      "hash": 2610851252,
-      "type": "user",
-      "title": "2026-09-design-systems-notification-components",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -8841,11 +8821,11 @@
     }
   ],
   "summary": {
-    "total": 602,
+    "total": 600,
     "guild": 94,
-    "user": 508,
+    "user": 506,
     "withPercentage": 224,
-    "withoutPercentage": 378,
+    "withoutPercentage": 376,
     "fullRollout": 39,
     "partial": 9,
     "notStarted": 176,
