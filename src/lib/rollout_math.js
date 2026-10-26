@@ -172,8 +172,8 @@ function parseRangeStrings(rawRanges) {
 
 /**
  * Exact percentage for half-open ranges on Discord's 0–10000 hash space:
- * % = Σ(end − start) / scale. Matches the totals published by community
- * trackers (e.g. 0-1500 + 3000-4000 + 5000-7500 → 15 + 10 + 25 = 50%).
+ * % = Σ(end − start) / scale (ex. 0-1500 + 3000-4000 + 5000-7500
+ * → 15 + 10 + 25 = 50%).
  */
 function rangesPercentExclusive(intervals, scale = DEFAULT_SCALE) {
   if (!scale || scale <= 0) return 0;
