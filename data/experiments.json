@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-26T21-29-23-822Z_651147_uj1esw",
-  "buildNumber": "651147",
-  "scrapedAt": "2026-10-26T21:29:23.822Z",
+  "runId": "2026-10-26T21-31-32-253Z_651159_k3mz2a",
+  "buildNumber": "651159",
+  "scrapedAt": "2026-10-26T21:31:32.253Z",
   "totals": {
     "all": 381,
     "legacy": 0,
-    "apex": 379
+    "apex": 378
   },
   "experiments": [
     {
@@ -6353,9 +6353,8 @@
     {
       "id": "2026-09-update-email-settings-copy-subtext",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "enabled": false
       },
@@ -6363,9 +6362,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 1,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-09-video-background-profile-fetch",

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T21-29-23-822Z_651147_uj1esw",
-  "buildNumber": "651147",
-  "updatedAt": "2026-10-26T21:29:23.822Z",
-  "count": 379,
+  "runId": "2026-10-26T21-31-32-253Z_651159_k3mz2a",
+  "buildNumber": "651159",
+  "updatedAt": "2026-10-26T21:31:32.253Z",
+  "count": 378,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -16385,52 +16385,6 @@
         "value": null
       },
       "fingerprint": "902db01da59a39a63cc891a8c3d5c9f046fe22478236c125afa9c85e7fcda714"
-    },
-    {
-      "id": "2026-09-update-email-settings-copy-subtext",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-09-update-email-settings-copy-subtext",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "c7d3567c1702ce2a2eb878b84da44855817a5d095101ba7aa7157fb426972250"
     },
     {
       "id": "2026-09-video-background-profile-fetch",
