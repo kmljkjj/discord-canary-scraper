@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-26T16-12-05-319Z_650594_ef2rac",
-  "buildNumber": "650594",
-  "updatedAt": "2026-10-26T16:12:05.319Z",
-  "count": 381,
+  "runId": "2026-10-26T16-13-27-318Z_650597_nkr0li",
+  "buildNumber": "650597",
+  "updatedAt": "2026-10-26T16:13:27.318Z",
+  "count": 380,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -12785,58 +12785,6 @@
         "value": null
       },
       "fingerprint": "c850820e0330d714b779b6833157e1616a7cc362c45e2e194a121252a0462ef7"
-    },
-    {
-      "id": "2026-08-timestamp-autocomplete-mobile",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-08-timestamp-autocomplete-mobile",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "c736bc4307cf6096ffdd90690194a6e4ae09dbac885e056b9a04713399a285f5"
     },
     {
       "id": "2026-08-tiny-bronco",
