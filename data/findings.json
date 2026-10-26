@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-26T21-20-38-061Z_651133_5nljaq",
-  "buildNumber": "651133",
-  "scrapedAt": "2026-10-26T21:20:38.061Z",
+  "runId": "2026-10-26T21-22-07-964Z_651137_9mrjjo",
+  "buildNumber": "651137",
+  "scrapedAt": "2026-10-26T21:22:07.964Z",
   "totals": {
-    "all": 380
+    "all": 381
   },
   "experiments": [
     {
@@ -6495,6 +6495,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-add-server-join-first",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
