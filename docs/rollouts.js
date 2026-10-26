@@ -86,6 +86,8 @@ function escapeHtml(s) {
         percentage: treatmentPct(treatments),
         platforms: e.platforms || [],
         treatments,
+        windowN: e.windowN || null,
+        fingerprint: e.fingerprint || null,
       });
     }
   }
@@ -182,11 +184,15 @@ function escapeHtml(s) {
     const parts = [`<div class="fp-details">`];
     for (const t of exp.treatments) {
       parts.push(
-        `<span class="fp-stat">${escapeHtml(t.label || 'Bucket ' + t.bucket)}: ${t.pct}%</span>`,
+        '<span class="fp-stat">' + escapeHtml(t.label || 'Bucket ' + t.bucket) + ': ' + t.pct + '%' + (t.sampleCount != null ? ' (' + t.sampleCount + '/' + exp.windowN + ')' : '') + '</span>',
       );
     }
     if (exp.windowN) {
       parts.push(`<span class="fp-stat">n=${exp.windowN}</span>`);
+    }
+    if (exp.fingerprint) {
+      const fpPct = exp.fingerprint.split('|').map((p) => parseFloat(p.split(':')[1]) + '%').join(' + ');
+      parts.push('<span class="fp-stat">Discord annonce: ' + escapeHtml(fpPct) + '</span>');
     }
     if (exp.platforms && exp.platforms.length) {
       parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
@@ -237,7 +243,10 @@ function escapeHtml(s) {
       const type = e.type || 'unknown';
       const pct = e.percentage;
       const source = e.source || '';
-      const note = e.note || '';
+      let note = e.note || '';
+      if (type === 'user' && source === 'client_bundle' && pct == null) {
+        note = 'Pas encore mesuré — Discord ne publie pas ce pourcentage. Apparaîtra automatiquement dès le début du rollout.';
+      }
 
       return `<div class="card ${type}" data-id="${id}">
         <div class="card-head">
