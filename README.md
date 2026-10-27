@@ -83,10 +83,13 @@ Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_
   bucket/position contrôlés.
 - **Double mesure** : % = k/n + IC de Wilson (référence, non biaisé), PLUS une
   reconstruction indicative des bornes depuis les positions hash_result
-  (ordre-statistiques + correction « German tank »). Sur un rollout réel à
-  5 %, la reconstruction donne ~5,0 % ± 0,3 alors que k/n sur 400 échantillons
-  peut osciller à ± 2 pts — les bornes reconstruites sont affichées à côté du
-  k/n, jamais présentées comme exactes.
+  (ordre-statistiques + correction « German tank »), affichée comme ordre de
+  grandeur à côté du k/n — jamais présentée comme exacte. Sur les deux
+  rollouts partiels observés en production, les positions étaient groupées
+  sur ~5 % de l'espace [0, 10000) ; la reconstruction n'est pas une preuve de
+  la valeur exacte (la couverture réelle d'un rollout n'est pas vérifiable
+  depuis l'API), mais elle met en évidence des clusters cohérents et complète
+  utilement le k/n quand l'échantillon est petit.
 - **Marge de bruit exacte** : Var(Δp̂) calculée au niveau batch — les
   échantillons partagés entre deux fenêtres glissantes ne sont plus comptés
   deux fois (l'ancienne formule z·√(2p(1−p)/n) sur-estimait l'indépendance).

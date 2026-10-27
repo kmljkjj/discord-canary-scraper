@@ -61,6 +61,7 @@ const { safeJson } = require('./lib/http');
 const {
   classifyChange,
   stableChangeFingerprint,
+  noiseMargin,
   wilsonPctInterval,
   slidingWindowDeltaMargin,
   reconstructBucketRanges,
@@ -187,13 +188,16 @@ function pruneWindow(raw, now) {
     .slice(-MAX_BATCHES);
   const posIn = w.pos && typeof w.pos === 'object' ? w.pos : {};
   const pos = {};
-  for (const [hashS, buckets] of Object.entries(posIn)) {
+  for (const [hashS, entry] of Object.entries(posIn)) {
+    const src = entry && typeof entry === 'object' && entry.b && typeof entry.b === 'object' ? entry : null;
     const nb = {};
-    for (const [bS, arr] of Object.entries(buckets || {})) {
-      const a = Array.isArray(arr) ? arr.filter((x) => Number.isFinite(x)) : [];
-      if (a.length) nb[bS] = a.slice(-RING_CAP);
+    if (src) {
+      for (const [bS, arr] of Object.entries(src.b)) {
+        const a = Array.isArray(arr) ? arr.filter((x) => Number.isFinite(x)) : [];
+        if (a.length) nb[bS] = a.slice(-RING_CAP);
+      }
     }
-    if (Object.keys(nb).length) pos[hashS] = nb;
+    if (Object.keys(nb).length) pos[hashS] = { rev: src && src.rev != null ? src.rev : null, b: nb };
   }
   return { batches, pos };
 }
@@ -299,7 +303,7 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
     // Reconstruction INDICATIVE des plages depuis l'anneau de positions.
     const pts = [
       ...new Set(
-        ((ringPos && ringPos[String(bucket)]) || [])
+        ((ringPos && ringPos.b && ringPos.b[String(bucket)]) || [])
           .map(Number)
           .filter((x) => Number.isFinite(x) && x >= 0 && x < SCALE),
       ),
@@ -509,7 +513,13 @@ function recordAssignments(byHash, byRev, assignments) {
     seenInResponse.add(hash);
     if (!Number.isFinite(bucket) || bucket < -1 || !Number.isInteger(bucket)) continue;
     if (!Number.isFinite(hr) || hr < 0 || hr >= SCALE || !Number.isInteger(hr)) continue;
-    if (rev != null && Number.isFinite(rev)) byRev.set(hash, rev);
+    if (rev != null && Number.isFinite(rev)) {
+      // Changement de revision AU MILIEU du run : les observations de
+      // l'ancienne configuration sont jetées (pas mélangées avec la nouvelle).
+      const prevRev = byRev.get(hash);
+      if (prevRev != null && prevRev !== rev) byHash.set(hash, new Map());
+      byRev.set(hash, rev);
+    }
     if (!byHash.has(hash)) byHash.set(hash, new Map());
     const bm = byHash.get(hash);
     if (!bm.has(bucket)) bm.set(bucket, []);
@@ -644,8 +654,8 @@ function hasName(id) {
   return id && !String(id).startsWith('hash:');
 }
 
-/** Rapport texte lisible (data/user_rollouts.md) — régénéré avec le JSON. */
-function writeReport(state) {
+/** Rapport texte lisible — régénéré avec le JSON. */
+function writeReport(state, reportFile) {
   try {
     const fmt = (p) => String(p).replace('.', ',') + ' %';
     const conf = (c) => (c === 'high' ? 'élevée' : c === 'medium' ? 'moyenne' : 'faible');
@@ -656,7 +666,8 @@ function writeReport(state) {
     out.push('# Rollouts user — mesure propre (v14)', '');
     out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
     out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
-    out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson ; plages reconstruites depuis les positions (ordre-statistiques, indicatif).', '');
+    out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
+    out.push('Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statistiques, dépendante du modèle) : un heuristique de séparation peut fragmenter une plage uniforme → à lire comme un ordre de grandeur, pas une certitude.', '');
     out.push('## Expériences mesurées (' + exps.length + ')', '');
     out.push('| Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |');
     out.push('|---|---:|---|---:|---|---|');
@@ -674,7 +685,7 @@ function writeReport(state) {
       for (const t of e.treatments || []) {
         out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (IC 95 % [' + String((t.ci || {}).lo ?? '?').replace('.', ',') + ' ; ' + String((t.ci || {}).hi ?? '?').replace('.', ',') + '], ' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
         if (t.ranges && t.ranges.length) {
-          out.push('  - plages reconstruites (indicatif) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct) + ' ± ' + String(t.indicativeCi || '?').replace('.', ',') + ' pts');
+          out.push('  - plages reconstruites (indicatif, ordre de grandeur) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct));
         }
       }
     }
@@ -699,7 +710,7 @@ function writeReport(state) {
         out.push(waiting.map((g) => '- ' + (g.title || g.id)).join('\n'));
       }
     } catch (e2) { /* experiment_rollouts.json absent au premier run */ }
-    fs.writeFileSync(path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
+    fs.writeFileSync(reportFile || path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
   } catch (e) {
     console.warn('report skip:', String((e && e.message) || e).slice(0, 80));
   }
@@ -707,26 +718,34 @@ function writeReport(state) {
 
 // ─── Main ───────────────────────────────────────────────────────────────────
 
-/** Extrait un snapshot {bucket: pct} d'une entrée d'expérience. */
-function ackSnapshot(exp) {
-  const snap = {};
+/** Extrait un snapshot acknowledged {rev, n, b:{bucket:pct}} d'une expérience. */
+function ackSnapshot(exp, rev, n) {
+  const b = {};
   for (const t of (exp && exp.treatments) || []) {
-    if (t && t.pctKnown && t.pct != null) snap[String(t.bucket)] = Number(t.pct);
+    if (t && t.pctKnown && t.pct != null) b[String(t.bucket)] = Number(t.pct);
   }
-  return snap;
+  return { rev: rev ?? null, n: n ?? null, b };
 }
 
-async function main() {
-  await fs.ensureDir(DATA);
+async function main(deps = {}) {
+  // Injection (tests d'intégration) : stateFile/reportFile pour un état
+  // temporaire, sampler/tokenSnapshot/postWebhook pour des doubles purs.
+  const stateFile = deps.stateFile || STATE;
+  const reportFile = deps.reportFile || path.join(DATA, 'user_rollouts.md');
+  const sampler = deps.sampler || sampleFingerprints;
+  const tokenSnapFn = deps.tokenSnapshot || fetchTokenSnapshot;
+  const postWebhookFn = deps.postWebhook || postWebhook;
+
+  await fs.ensureDir(path.dirname(stateFile));
   console.log('📊 User rollouts v14 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set (' + WEBHOOK_SOURCE + ')' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
 
   let prev = { experiments: [], token: [], announced: {}, acknowledged: {} };
-  if (await fs.pathExists(STATE)) {
+  if (await fs.pathExists(stateFile)) {
     try {
-      prev = await fs.readJson(STATE);
+      prev = await fs.readJson(stateFile);
     } catch (_) {}
   }
   const announced = prev.announced && typeof prev.announced === 'object' ? { ...prev.announced } : {};
@@ -739,8 +758,15 @@ async function main() {
   if (isUpgrade) {
     // Migration : initialise acknowledged depuis la dernière mesure connue.
     acknowledged = {};
+    const prevTokRev = new Map((prev.token || []).map((t) => [String(t.hash), t.revision]));
     for (const e of prev.experiments || []) {
-      if (e && e.hash != null) acknowledged[String(e.hash)] = ackSnapshot(e);
+      if (e && e.hash != null) {
+        acknowledged[String(e.hash)] = ackSnapshot(
+          e,
+          prevTokRev.get(String(e.hash)) ?? null,
+          e.windowN ?? null,
+        );
+      }
     }
   }
 
@@ -748,8 +774,8 @@ async function main() {
   const defs = await loadExperimentDefs();
 
   const [tokenSnapR, sampledR] = await Promise.allSettled([
-    fetchTokenSnapshot(defs),
-    sampleFingerprints(SAMPLES, CONC),
+    tokenSnapFn(defs),
+    sampler(SAMPLES, CONC),
   ]);
   const tokenSnap = tokenSnapR.status === 'fulfilled' ? tokenSnapR.value : [];
   const sampled = sampledR.status === 'fulfilled'
@@ -772,13 +798,18 @@ async function main() {
   }
   const nextWindow = buildNextWindow(winOld, curCounts, byRev, ok, now);
 
-  // Anneaux de positions : anciens + run courant, capés.
+  // Anneaux de positions : anciens (revision identique seulement) + run courant.
   const mergedPos = {};
   const posKeys = new Set([...Object.keys(winOld.pos || {}), ...[...curCounts.keys()].map(String)]);
   for (const hashS of posKeys) {
+    const curRev = byRev.get(Number(hashS)) ?? null;
+    const old = (winOld.pos || {})[hashS];
     const buckets = {};
-    for (const [bS, arr] of Object.entries(((winOld.pos || {})[hashS]) || {})) {
-      if (Array.isArray(arr) && arr.length) buckets[bS] = [...arr];
+    // Positions conservées uniquement si la revision n'a pas changé.
+    if (old && old.b && (curRev == null || old.rev == null || old.rev === curRev)) {
+      for (const [bS, arr] of Object.entries(old.b)) {
+        if (Array.isArray(arr) && arr.length) buckets[bS] = [...arr];
+      }
     }
     const cur = byHash.get(Number(hashS));
     if (cur) {
@@ -787,7 +818,7 @@ async function main() {
         buckets[key] = [...(buckets[key] || []), ...(positions || [])].slice(-RING_CAP);
       }
     }
-    if (Object.keys(buckets).length) mergedPos[hashS] = buckets;
+    if (Object.keys(buckets).length) mergedPos[hashS] = { rev: curRev, b: buckets };
   }
   nextWindow.pos = mergedPos;
 
@@ -843,9 +874,9 @@ async function main() {
 
   const changes = [];
   if (!isFirst && !isUpgrade) {
-    // Base de comparaison : acknowledged (dernier état NOTIFIÉ), avec repli
-    // sur la dernière mesure pour les hash jamais notifiés.
-    const prevByHash = new Map((prev.experiments || []).map((e) => [String(e.hash || e.id), e]));
+    // Base de comparaison : acknowledged (dernier état NOTIFIÉ). L'absence
+    // d'entrée acknowledged signifie JAMAIS livré → annonce « new » (le
+    // fingerprint announced évite de répéter deux fois le même état).
     for (const nExp of experiments) {
       if (!nExp.named && !NOTIFY_HASH) continue;
 
@@ -854,18 +885,14 @@ async function main() {
       if (announced[key] === fp) continue;
 
       const ack = acknowledged[key];
-      const ackTreatments = ack
-        ? Object.entries(ack).map(([bucket, pct]) => ({ bucket: Number(bucket), pctKnown: true, pct }))
-        : null;
+      const ackTreatments =
+        ack && ack.b && Object.keys(ack.b).length
+          ? Object.entries(ack.b).map(([bucket, pct]) => ({ bucket: Number(bucket), pctKnown: true, pct }))
+          : null;
 
-      if (!ackTreatments || !ackTreatments.length) {
-        const p = prevByHash.get(key);
-        if (!p) {
-          if (nExp.status === 'insufficient_data' || nExp.status === 'degraded') continue;
-          changes.push({ kind: 'new', ...nExp });
-          continue;
-        }
-        // Repli migration : pas de notification sur la base de l'ancien état.
+      if (!ackTreatments) {
+        if (nExp.status === 'insufficient_data' || nExp.status === 'degraded') continue;
+        changes.push({ kind: 'new', ...nExp });
         continue;
       }
       if (nExp.status === 'degraded' || nExp.status === 'insufficient_data' || nExp.status === 'unknown') {
@@ -874,8 +901,10 @@ async function main() {
 
       const deltas = [];
       const pt = new Map(ackTreatments.map((t) => [t.bucket, t]));
-      // Marge de bruit V14 : variance exacte au niveau batch (fenêtres
-      // glissantes partageant leurs échantillons).
+      // Marge de bruit CONSERVATRICE : la formule exacte au niveau batch ne
+      // décrit que la fenêtre précédente immédiate ; la baseline acknowledged
+      // peut être plus vieille → on prend aussi la marge binomiale sur le
+      // plus petit des deux n (acknowledged vs courant).
       for (const t of nExp.treatments || []) {
         if (!t.pctKnown || t.pct == null) continue;
         if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
@@ -904,11 +933,10 @@ async function main() {
         }
         const from = Number(oldT.pct);
         const to = Number(t.pct);
-        const margin = slidingWindowDeltaMargin(
-          winOld.batches,
-          nextWindow.batches,
-          Math.max(from, to),
-          NOISE_Z,
+        const nAck = Number(ack && ack.n) || 0;
+        const margin = Math.max(
+          slidingWindowDeltaMargin(winOld.batches, nextWindow.batches, Math.max(from, to), NOISE_Z),
+          noiseMargin(Math.max(from, to), Math.max(1, Math.min(nAck || nExp.windowN, nExp.windowN)), NOISE_Z),
         );
         const { changeType, change } = classifyChange(from, to, Math.max(MIN_DELTA, margin));
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
@@ -947,16 +975,21 @@ async function main() {
       }
     }
 
+    // Revisions : comparées au dernier état NOTIFIÉ (acknowledged.rev),
+    // avec repli sur le dernier état mesuré — un échec de webhook ne perd
+    // plus l'annonce de revision.
     const prevTok = new Map((prev.token || []).map((t) => [t.hash, t]));
     for (const t of tokenSnap) {
       if (!hasName(t.id) && !NOTIFY_HASH) continue;
-      const p = prevTok.get(t.hash);
-      if (p && p.revision !== t.revision) {
+      const ack = acknowledged[String(t.hash)];
+      const prevRev = ack && ack.rev != null ? ack.rev : (prevTok.get(t.hash) || {}).revision;
+      if (prevRev != null && prevRev !== t.revision) {
         changes.push({
           kind: 'revision',
           id: t.id,
           title: t.title,
-          fromRev: p.revision,
+          hash: t.hash,
+          fromRev: prevRev,
           toRev: t.revision,
           bucket: t.bucket,
         });
@@ -993,8 +1026,8 @@ async function main() {
       lastChanges: extra.changes || prev.lastChanges || [],
       posWindow: nextWindow,
     };
-    await writeJsonAtomic(STATE, stateObj, 2);
-    writeReport(stateObj);
+    await writeJsonAtomic(stateFile, stateObj, 2);
+    writeReport(stateObj, reportFile);
     return stateObj;
   }
 
@@ -1005,7 +1038,7 @@ async function main() {
     for (const e of experiments) {
       if (e.named || NOTIFY_HASH) {
         seedAnnounced[String(e.hash)] = e.fingerprint;
-        seedAck[String(e.hash)] = ackSnapshot(e);
+        seedAck[String(e.hash)] = ackSnapshot(e, byRev.get(e.hash) ?? null, e.windowN);
       }
     }
     await writeState(seedAck, { announcedMap: seedAnnounced });
@@ -1032,7 +1065,7 @@ async function main() {
   for (let i = 0; i < changes.length; i += EMBED_BATCH) {
     const chunk = changes.slice(i, i + EMBED_BATCH);
     const embeds = buildEmbeds(chunk);
-    const sent = await postWebhook(embeds);
+    const sent = await postWebhookFn(embeds);
     console.log('Webhook lot', Math.floor(i / EMBED_BATCH) + 1, sent.status, sent.ok ? 'OK' : sent.text);
     if (!sent.ok) {
       sendFailed = true;
@@ -1040,9 +1073,15 @@ async function main() {
     }
     delivered += chunk.length;
     for (const c of chunk) {
+      const key = String(c.hash != null ? c.hash : '');
+      if (c.kind === 'revision' && c.hash != null) {
+        const ack = acknowledged[key] || { rev: null, n: null, b: {} };
+        acknowledged[key] = { ...ack, rev: c.toRev };
+        continue;
+      }
       const exp = expForChange(c);
       if (exp) {
-        acknowledged[String(exp.hash)] = ackSnapshot(exp);
+        acknowledged[String(exp.hash)] = ackSnapshot(exp, byRev.get(exp.hash) ?? null, exp.windowN);
         announced[String(exp.hash)] = exp.fingerprint;
       }
     }

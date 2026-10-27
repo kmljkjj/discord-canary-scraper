@@ -38,20 +38,28 @@ function batch(bid, ts, ok, c, rev) {
 // de l'expérience avait déjà changé → le changement n'était plus détecté.
 // V14 : acknowledged (dernier état notifié) fait office de baseline.
 
-test('ackSnapshot extrait {bucket: pct} du dernier état notifié', () => {
-  const snap = ackSnapshot({
-    treatments: [
-      { bucket: -1, pctKnown: true, pct: 95 },
-      { bucket: 1, pctKnown: true, pct: 5 },
-      { bucket: 2, pctKnown: false, pct: null },
-    ],
-  });
-  assert.deepEqual(snap, { '-1': 95, '1': 5 });
+test('ackSnapshot extrait {rev, n, b} du dernier état notifié', () => {
+  const snap = ackSnapshot(
+    {
+      treatments: [
+        { bucket: -1, pctKnown: true, pct: 95 },
+        { bucket: 1, pctKnown: true, pct: 5 },
+        { bucket: 2, pctKnown: false, pct: null },
+      ],
+    },
+    7,
+    400,
+  );
+  assert.deepEqual(snap, { rev: 7, n: 400, b: { '-1': 95, '1': 5 } });
 });
 
 test('ackSnapshot ignore les entrées sans pct', () => {
-  assert.deepEqual(ackSnapshot({ treatments: [{ bucket: 3 }] }), {});
-  assert.deepEqual(ackSnapshot(null), {});
+  assert.deepEqual(ackSnapshot({ treatments: [{ bucket: 3 }] }, null, 10), {
+    rev: null,
+    n: 10,
+    b: {},
+  });
+  assert.deepEqual(ackSnapshot(null), { rev: null, n: null, b: {} });
 });
 
 // ─── Bug V13 #2 : dénominateur incohérent entre runs ─────────────────────────
@@ -92,12 +100,13 @@ test('pruneWindow jette les batches hors fenêtre et normalise', () => {
       batch('old', NOW - 10 * 3600 * 1000, 50, { '1': { '1': 5 } }),
       batch('b1', NOW - 1000, 50, { '1': { '1': 5 } }),
     ],
-    pos: { '1': { '1': Array.from({ length: 400 }, (_, i) => i) } },
+    pos: { '1': { rev: 7, b: { '1': Array.from({ length: 400 }, (_, i) => i) } } },
   };
   const w = pruneWindow(raw, NOW);
   assert.equal(w.batches.length, 1);
   assert.equal(w.batches[0].bid, 'b1');
-  assert.ok(w.pos['1']['1'].length <= 150); // RING_CAP
+  assert.ok(w.pos['1'].b['1'].length <= 150); // RING_CAP
+  assert.equal(w.pos['1'].rev, 7);
 });
 
 // ─── Revisions : un rollout reconfiguré repart de zéro ──────────────────────
@@ -150,13 +159,30 @@ test('recordAssignments ignore une réponse sans assignments', () => {
   assert.equal(byHash.size, 0);
 });
 
+test('recordAssignments : changement de revision en cours de run jette l\'ancien historique', () => {
+  const byHash = new Map();
+  const byRev = new Map();
+  for (let i = 0; i < 5; i++) {
+    recordAssignments(byHash, byRev, [[111, 1, 1, -1, 1, 100 * (i + 1), 0, 0, null, null, null]]);
+  }
+  assert.equal(byHash.get(111).get(1).length, 5);
+  // Revision passe à 2 → les observations de la revision 1 sont jetées.
+  recordAssignments(byHash, byRev, [[111, 2, 1, -1, 1, 500, 0, 0, null, null, null]]);
+  assert.equal(byRev.get(111), 2);
+  assert.equal(byHash.get(111).get(1).length, 1);
+  assert.equal(byHash.get(111).get(1)[0], 500);
+});
+
 // ─── Estimation : k/n + Wilson + bornes indicatives ──────────────────────────
 
 test('buildWindowTreatments : pct k/n, Wilson CI, bornes indicatives', () => {
   const counts = new Map([[1, 29]]);
   const ring = {
-    '1': [9513, 9525, 9534, 9568, 9578, 9630, 9649, 9660, 9681, 9700, 9721,
-      9744, 9768, 9776, 9783, 9790, 9800, 9824, 9863, 9894, 9922, 9945, 9960],
+    rev: 5,
+    b: {
+      '1': [9513, 9525, 9534, 9568, 9578, 9630, 9649, 9660, 9681, 9700, 9721,
+        9744, 9768, 9776, 9783, 9790, 9800, 9824, 9863, 9894, 9922, 9945, 9960],
+    },
   };
   const { treatments, status } = buildWindowTreatments(counts, 399, ring);
   assert.equal(status, 'estimated');
@@ -180,7 +206,8 @@ test('buildWindowTreatments : Wilson couvre les extrêmes k=0 et k=n', () => {
   assert.equal(treatments.length, 0);
 
   const full = buildWindowTreatments(new Map([[1, 100]]), 100, {
-    '1': [5, 150, 900, 5000, 9800],
+    rev: 1,
+    b: { '1': [5, 150, 900, 5000, 9800] },
   });
   assert.ok(Math.abs(full.treatments[0].pct - 100) < 0.01);
   assert.ok(full.treatments[0].ci.hi <= 100);
@@ -260,11 +287,12 @@ test('wilsonPctInterval : propriétés de base', () => {
   const mid = wilsonPctInterval(50, 100, 2);
   assert.ok(mid.lo < 50 && mid.hi > 50);
   const zero = wilsonPctInterval(0, 100, 2);
-  assert.ok(zero.lo <= 0.1);
-  assert.ok(zero.hi > 0 && zero.hi < 5);
+  // Endpoints exacts de Wilson : k=0 → [0, 3.85], k=n → [96.15, 100].
+  assert.ok(Math.abs(zero.lo - 0) < 0.01);
+  assert.ok(Math.abs(zero.hi - 3.85) < 0.02, 'hi ≈ 3.85, obtenu ' + zero.hi);
   const all = wilsonPctInterval(100, 100, 2);
-  assert.ok(all.hi > 99 && all.hi <= 100);
-  assert.ok(all.lo > 95);
+  assert.ok(Math.abs(all.hi - 100) < 0.01);
+  assert.ok(Math.abs(all.lo - 96.15) < 0.02, 'lo ≈ 96.15, obtenu ' + all.lo);
   const empty = wilsonPctInterval(0, 0, 2);
   assert.deepEqual(empty, { lo: 0, hi: 100, sigma: 100 });
 });

@@ -372,30 +372,6 @@ async function main() {
     process.exit(1);
   }
 
-  let diff = diffExperiments(prev, experiments);
-  if (!isFirst) {
-    const filter = (arr, getId, getKey) =>
-      arr.filter((x) => {
-        const id = getId(x);
-        const key = getKey(x);
-        if (!id || !key) return false;
-        if (announced[id] === key) return false;
-        return true;
-      });
-    diff = {
-      added: filter(diff.added, (e) => e.id, (e) => pctKey(e)),
-      changed: filter(diff.changed, (c) => c.after && c.after.id, (c) => pctKey(c.after)),
-      removed: diff.removed.filter((e) => e && e.id && announced[e.id] !== 'REMOVED'),
-    };
-  }
-
-  console.log('Diff', {
-    added: diff.added.length,
-    changed: diff.changed.length,
-    removed: diff.removed.length,
-    first: isFirst,
-  });
-
   const compact = experiments.map((e) => ({
     id: e.id,
     type: e.type,
@@ -411,8 +387,17 @@ async function main() {
     hasGlobalPct: true,
     quality: 'exact',
   }));
+  const compactById = new Map(compact.map((e) => [e.id, e]));
 
-  async function writeState(announcedMap) {
+  // V14 : ackExperiments = dernière collection NOTIFIÉE avec succès. Un
+  // échec de webhook ne perd plus les changements (l'ancien code sauvait la
+  // nouvelle collection avant l'envoi → au run suivant, plus de diff).
+  let ackList = Array.isArray(previous.ackExperiments)
+    ? previous.ackExperiments.slice()
+    : null;
+  const ackMapFrom = (list) => new Map((list || []).map((e) => [e.id, e]));
+
+  async function writeState(announcedMap, ackExperiments) {
     await writeJsonAtomic(
       STATE_FILE,
       {
@@ -420,53 +405,113 @@ async function main() {
         count: compact.length,
         experiments: compact,
         announced: announcedMap,
+        ackExperiments: ackExperiments != null ? ackExperiments : undefined,
       },
       2,
     );
   }
 
-  if (isFirst) {
+  // Premier run OU migration (< ackExperiments) : seed silencieux.
+  if (isFirst || ackList == null) {
     const seedAnn = { ...announced };
     for (const e of compact) {
       if (e.id && e.fingerprint) seedAnn[e.id] = e.fingerprint;
     }
-    await writeState(seedAnn);
+    await writeState(seedAnn, compact);
     console.log('Seed', compact.length, '- no notify');
     return;
   }
 
-  if (!(diff.added.length || diff.changed.length || diff.removed.length)) {
-    await writeState(announced);
+  // Diff contre la dernière collection NOTIFIÉE (pas contre la dernière
+  // mesure) — un échec de webhook laisse le diff intact pour le run suivant.
+  const ackMap = ackMapFrom(ackList);
+  let diff = diffExperiments(ackList, experiments);
+  const filter = (arr, getId, getKey) =>
+    arr.filter((x) => {
+      const id = getId(x);
+      const key = getKey(x);
+      if (!id || !key) return false;
+      if (announced[id] === key) return false;
+      return true;
+    });
+  diff = {
+    added: filter(diff.added, (e) => e.id, (e) => pctKey(e)),
+    changed: filter(diff.changed, (c) => c.after && c.after.id, (c) => pctKey(c.after)),
+    removed: diff.removed.filter((e) => e && e.id && announced[e.id] !== 'REMOVED'),
+  };
+
+  console.log('Diff', {
+    added: diff.added.length,
+    changed: diff.changed.length,
+    removed: diff.removed.length,
+  });
+
+  const changes = [
+    ...diff.added.map((e) => ({ kind: 'added', e })),
+    ...diff.changed.map((c) => ({ kind: 'changed', e: c.after, deltas: c.deltas, maxAbs: c.maxAbs })),
+    ...diff.removed.map((e) => ({ kind: 'removed', e })),
+  ];
+
+  if (!changes.length) {
+    await writeState(announced, ackList);
     console.log('No significant % change');
     return;
   }
 
   if (!WEBHOOK) {
-    await writeState(announced);
-    console.warn('No webhook - state saved without advancing announced');
+    await writeState(announced, ackList);
+    console.warn('No webhook - state saved without advancing acknowledged');
     return;
   }
 
-  const embeds = buildEmbeds(diff);
-  const sent = await postWebhook(embeds);
-  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
-  if (sent.ok) {
-    const nextAnn = { ...announced };
-    for (const e of diff.added) if (e && e.id) nextAnn[e.id] = pctKey(e);
-    for (const c of diff.changed) if (c.after && c.after.id) nextAnn[c.after.id] = pctKey(c.after);
-    for (const e of diff.removed) if (e && e.id) nextAnn[e.id] = 'REMOVED';
-    for (const e of compact) {
-      if (e.id && e.fingerprint && nextAnn[e.id] !== 'REMOVED') {
-        if (!(e.id in nextAnn) || nextAnn[e.id] === e.fingerprint) nextAnn[e.id] = e.fingerprint;
+  // V14 : envoi par lots de 10 embeds ; ackExperiments n'avance que pour les
+  // lots réellement livrés (fin sur échec → exit 2, retry au run suivant).
+  const EMBED_BATCH = 10;
+  let sendFailed = false;
+  let delivered = 0;
+  for (let i = 0; i < changes.length; i += EMBED_BATCH) {
+    const chunk = changes.slice(i, i + EMBED_BATCH);
+    const part = {
+      added: chunk.filter((c) => c.kind === 'added').map((c) => c.e),
+      changed: chunk.filter((c) => c.kind === 'changed').map((c) => ({ after: c.e, deltas: c.deltas, maxAbs: c.maxAbs })),
+      removed: chunk.filter((c) => c.kind === 'removed').map((c) => c.e),
+    };
+    const embeds = buildEmbeds(part);
+    if (!embeds.length) {
+      delivered += chunk.length;
+      continue;
+    }
+    const sent = await postWebhook(embeds);
+    console.log('Webhook lot', Math.floor(i / EMBED_BATCH) + 1, sent.status, sent.ok ? 'OK' : sent.text);
+    if (!sent.ok) {
+      sendFailed = true;
+      break;
+    }
+    delivered += chunk.length;
+    for (const c of chunk) {
+      const e = c.e;
+      if (!e || !e.id) continue;
+      if (c.kind === 'removed') {
+        ackMap.delete(e.id);
+        announced[e.id] = 'REMOVED';
+      } else {
+        const ce = compactById.get(e.id);
+        if (ce) {
+          ackMap.set(e.id, ce);
+          announced[e.id] = ce.fingerprint;
+        }
       }
     }
-    await writeState(nextAnn);
-    console.log('Done - announced advanced after successful webhook');
-  } else {
-    await writeState(announced);
-    console.warn('Webhook failed - announced NOT advanced (will retry next run)');
-    process.exit(2);
+    ackList = [...ackMap.values()];
+    await writeState(announced, ackList);
   }
+
+  if (sendFailed) {
+    console.warn('Webhook failed - acknowledged avancé pour les ' + delivered + ' changements livrés seulement (retry au prochain run)');
+    process.exit(2);
+    return;
+  }
+  console.log('Done - ' + delivered + ' changements notifiés');
 }
 
 if (require.main === module)

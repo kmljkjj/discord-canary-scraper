@@ -231,10 +231,11 @@ function wilsonPctInterval(k, n, z = 2) {
   const p = kk / nn;
   const z2 = z * z;
   const denom = 1 + z2 / nn;
-  const centre = p + z2 / (2 * nn);
+  // Intervalle de Wilson : (p̂ + z²/2n ± z·√(p̂(1−p̂)/n + z²/4n²)) / (1 + z²/n)
+  const centre = (p + z2 / (2 * nn)) / denom;
   const half = (z * Math.sqrt((p * (1 - p) + z2 / (4 * nn)) / nn)) / denom;
-  const lo = Math.max(0, (centre - half) / denom);
-  const hi = Math.min(1, (centre + half) / denom);
+  const lo = Math.max(0, centre - half);
+  const hi = Math.min(1, centre + half);
   return {
     lo: Math.round(lo * 10000) / 100,
     hi: Math.round(hi * 10000) / 100,
