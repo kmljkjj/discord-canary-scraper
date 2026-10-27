@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T15-46-08-485Z_652460_5nusmv",
-  "buildNumber": "652460",
-  "updatedAt": "2026-10-27T15:46:08.486Z",
-  "count": 382,
+  "runId": "2026-10-27T16-02-20-907Z_652467_z14kgb",
+  "buildNumber": "652467",
+  "updatedAt": "2026-10-27T16:02:20.907Z",
+  "count": 381,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -12107,58 +12107,6 @@
         "value": null
       },
       "fingerprint": "c94cca6defb377a3ece2036f7bc2c332abd6482f44230d1fa824ea546a6a96fb"
-    },
-    {
-      "id": "2026-08-hide-gift-shop-upsell",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "isHidden": false
-      },
-      "variations": {
-        "0": {
-          "isHidden": false
-        },
-        "1": {
-          "isHidden": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-08-hide-gift-shop-upsell",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "isHidden": false
-        },
-        "variations": {
-          "0": {
-            "isHidden": false
-          },
-          "1": {
-            "isHidden": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "4233f957c577b3bb505c6df4bd9068ffa3f9bb0e7f200b30f86cfce9bfd9344d"
     },
     {
       "id": "2026-08-ios-objc-composed-image-cache",
