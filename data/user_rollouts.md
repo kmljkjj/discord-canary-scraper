@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:46 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:48 UTC
 
-**Fenêtre glissante 4 h — n = 4930 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 4980 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,79 %** | [4,21 – 5,43] | 236/4930 | élevée | Mesuré |
-| hash:1144304849 | **4,54 %** | [3,99 – 5,17] | 224/4930 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,92 – 100] | 4930/4930 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,92 – 100] | 4930/4930 | élevée | Mesuré |
-| Tida Webform | **99,11 %** | [98,8 – 99,34] | 4886/4930 | élevée | Mesuré |
+| hash:704914099 | **4,92 %** | [4,34 – 5,57] | 245/4980 | élevée | Mesuré |
+| hash:1144304849 | **4,6 %** | [4,04 – 5,23] | 229/4980 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,92 – 100] | 4980/4980 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,92 – 100] | 4980/4980 | élevée | Mesuré |
+| Tida Webform | **99,12 %** | [98,81 – 99,35] | 4936/4980 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,79 % (IC 95 % [4,21 ; 5,43], 236/4930, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.3, 9651.7] + [9671.05, 10000] → 4,84 %
+- Variant 1 : 4,92 % (IC 95 % [4,34 ; 5,57], 245/4980, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9508.23, 10000] → 4,92 %
 
 ### hash:1144304849
-- Variant 1 : 4,54 % (IC 95 % [3,99 ; 5,17], 224/4930, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [1.71, 215.29] + [233.06, 496.94] → 4,77 %
+- Variant 1 : 4,6 % (IC 95 % [4,04 ; 5,23], 229/4980, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [1.96, 212.04] + [232.94, 497.06] → 4,74 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,92 ; 100], 4930/4930, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 6979.77] + [7258.74, 10000] → 97,21 %
-
-### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,92 ; 100], 4930/4930, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [99,92 ; 100], 4980/4980, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
+### hash:3013881204
+- Variant 11 : 100 % (IC 95 % [99,92 ; 100], 4980/4980, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9981.76] → 99,82 %
+
 ### Tida Webform
-- Variant 1 : 99,11 % (IC 95 % [98,8 ; 99,34], 4886/4930, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9860.34] → 98,6 %
+- Variant 1 : 99,12 % (IC 95 % [98,81 ; 99,35], 4936/4980, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -336,6 +336,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-stream-zero-vad-leading
 - 2026-09-three-month-nitro-gifting
 - 2026-09-try-display-name-style
+- 2026-09-update-email-settings-copy-subtext
 - 2026-09-video-background-profile-fetch
 - 2026-09-voice-connect-feedback
 - 2026-09-web-sticker-picker-upsell-restyle
@@ -400,4 +401,3 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-web-streaming-optimizations
 - 2026-08-gift-recipient-display-name-search
 - 2026-09-application-test-mode-quick-access
-- 2026-09-update-email-settings-copy-subtext
