@@ -7,11 +7,13 @@ Datamining du client Discord Canary : builds, expériences, strings, routes, rol
 Toutes les données publiées par ce dépôt sont mesurées ou extraites par
 nous-mêmes, directement depuis les serveurs de Discord :
 
-- **% user** : mesure propre (`src/user_rollouts.js` v14) — échantillonnage
-  anonyme de l'API `/experiments` avec fenêtre glissante (4 h), % binomial
-  k/n à 2 décimales + intervalle de confiance de Wilson, marge de bruit
-  exacte au niveau batch, et reconstruction INDICATIVE des bornes de
-  bucket depuis les positions (ordre-statistiques) ;
+- **% user** : mesure propre (`src/user_rollouts.js` v15) — échantillonnage
+  anonyme de l'API `/experiments` avec fenêtre glissante (4 h), et
+  reconstruction des PLAGES EXACTES des rollouts (changepoint + snap grille
+  25 + confiance par frontière) : quand toutes les frontières sont fiables
+  et cohérentes avec k/n, le % publié est celui des plages (2 décimales,
+  exact au sens du rollout) ; sinon k/n + IC de Wilson reste la mesure
+  publiée et les plages ne sont qu'indicatives ;
 - **% guild** : exact, décodé du wire Discord (`src/apex_rollouts.js` v7) ;
 - **noms d'expériences** : extraits de nos propres scrapes du client Canary ;
 - **versions mobiles** : manifestes OTA de Discord + stores publics.
@@ -66,6 +68,53 @@ Secrets : `DISCORD_WEBHOOK_URL` (obligatoire), `APEX_WEBHOOK_URL`, `ROLLOUT_WEBH
 Secret optionnel : `ALERT_WEBHOOK_URL` (salon d'alertes quand un workflow échoue).
 
 Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_MS` (20000), `ARCHIVE_KEEP_BUILDS` (8), `COMMIT_MAX_ATTEMPTS` (8), `MAX_CHUNK_SCAN_BYTES` (16 Mo), `USER_ROLLOUT_NOISE_Z` (2, seuil de bruit statistique ; 0 = désactivé), `USER_ROLLOUT_WINDOW_H` (4, fenêtre glissante des % user en heures).
+
+### v15 — % user : plages exactes (mesurées, pas copiées)
+
+L'API `/experiments` renvoie pour chaque échantillon la position du
+fingerprint dans l'espace de rollout [0, 10000) (`hash_result`). Un rollout
+user est une partition de cet espace en plages assignées à des buckets —
+le format que publient certains gists communautaires. Cette version les
+RECONSTRUIT depuis nos propres mesures, sans rien lire d'externe :
+
+- **Reconstruction changepoint** (`src/lib/range_recon.js`) : chaque
+  frontière entre deux échantillons adjacents de buckets différents est
+  bornée dans (x, y] ; son posterior exp(−λL(t−x) − λR(y−t)) (densités
+  d'échantillons par label, log-space stable) est évalué pour chaque
+  candidat de la grille des bornes Discord (multiples de 25) ; la
+  frontière est « snappée » au gagnant avec sa CONFIANCE (masse de
+  Voronoï normalisée).
+- **Qualité honnête** : `exact` (toutes frontières ≥ 0,9 de confiance ET %
+  des plages cohérent avec k/n à la marge de bruit près), `likely`,
+  `indicative`, `insufficient`. Le % des plages ne remplace k/n que si
+  quality = exact ; k/n + Wilson restent TOUJOURS stockés comme
+  contre-vérification, et la marge de bruit exacte au niveau batch est
+  conservée.
+- **Vérification du fingerprint (auto, inerte si la formule diffère)** : la
+  réponse contient le fingerprint du tirage ; on vérifie que
+  murmur3(nom + ':' + fingerprint) % 10000 == hash_result sur les
+  expériences nommées. Après ≥ 100 vérifications à ≥ 99 %, le mode
+  « outside » s'active : les positions NON enrôlées deviennent observables
+  (clé « o »), révélant aussi les plages multiples d'un même bucket
+  (structure fine invisible sinon). Si la formule réelle diffère, tout
+  reste inerte — aucun faux positif possible.
+- **Mining adaptatif (auto-désactivé)** : une fois la formule vérifiée ET le
+  contrôle du fingerprint confirmé (l'API renvoie bien le X-Fingerprint
+  envoyé), on génère des fingerprints localement et on n'envoie QUE ceux
+  qui tombent dans les zones d'incertitude des frontières (~25 req/run) →
+  convergence des plages exactes accélérée après un changement de revision.
+- **Reconfigurations détectées** : quand les plages sont exactes, leur
+  signature fait partie de l'empreinte de l'expérience — un rollout
+  reconfiguré (mêmes %, plages différentes) est ré-annoncé.
+- **Zéro source externe** : rien n'est copié d'aucun gist ou publication
+  tierce. Si deux systèmes sont exacts, ils convergent vers la même vraie
+  valeur ; notre apport est la précision (2 décimales, frontières +
+  confiance), l'indépendance et la fraîcheur (fenêtre 4 h, runs 20 min).
+
+Nouvelles variables : `USER_ROLLOUT_RING_CAP` (400, positions gardées par
+bucket), `USER_ROLLOUT_RANGE_GRID` (25), `USER_ROLLOUT_RANGE_MIN_CONF`
+(0,9), `USER_ROLLOUT_ADAPTIVE` (1), `USER_ROLLOUT_ADAPTIVE_SAMPLES` (25),
+`USER_ROLLOUT_OUTSIDE_POS` (1).
 
 ### v14 — % user : fiabilité + double mesure
 
