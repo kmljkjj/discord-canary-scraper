@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 22:37 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 22:38 UTC
 
-**Fenêtre glissante 4 h — n = 6792 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6882 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,32 +12,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,02 %** | [4,52 – 5,58] | 341/6792 | élevée | Mesuré |
-| hash:1144304849 | **4,87 %** | [4,38 – 5,42] | 331/6792 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6792/6792 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6792/6792 | élevée | Mesuré |
-| Tida Webform | **97,79 %** | [97,41 – 98,12] | 6642/6792 | élevée | Mesuré |
+| hash:704914099 | **4,98 %** | [4,49 – 5,54] | 343/6882 | élevée | Mesuré |
+| hash:1144304849 | **4,77 %** | [4,28 – 5,31] | 328/6882 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6882/6882 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6882/6882 | élevée | Mesuré |
+| Tida Webform | **97,82 %** | [97,44 – 98,15] | 6732/6882 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,02 % (IC 95 % [4,52 ; 5,58], 341/6792, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.14, 10000] → 5,03 %
+- Variant 1 : 4,98 % (IC 95 % [4,49 ; 5,54], 343/6882, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.08, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 4,87 % (IC 95 % [4,38 ; 5,42], 331/6792, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.96] → 5 %
+- Variant 1 : 4,77 % (IC 95 % [4,28 ; 5,31], 328/6882, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.93] → 5 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6792/6792, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 5482.95] + [5822.32, 9961.68] → 96,22 %
+- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6882/6882, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2820.71] + [3149.08, 5236.92] + [5535.02, 9953.98] → 93,28 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6792/6792, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [91.45, 9989.55] → 98,98 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6882/6882, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [165.83, 10000] → 98,34 %
 
 ### Tida Webform
-- Variant 1 : 97,79 % (IC 95 % [97,41 ; 98,12], 6642/6792, confiance élevée)
+- Variant 1 : 97,82 % (IC 95 % [97,44 ; 98,15], 6732/6882, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 348 expériences user
+## En attente de rollout — 347 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -272,7 +272,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-08-user-bio-max-length
 - 2026-08-video-guard
 - 2026-08-virtual-backgrounds-ios
-- 2026-08-voice-server-update-immediate
 - 2026-08-vq-remaining-time-truncation
 - 2026-08-web-filter-tag-group-migration
 - 2026-09-a11y-chassis-target-size
