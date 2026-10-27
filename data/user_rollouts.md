@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 18:14 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 18:16 UTC
 
-**Fenêtre glissante 4 h — n = 5593 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 5638 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:1144304849 | **4,72 %** | [4,18 – 5,32] | 264/5593 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,93 – 100] | 5593/5593 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,93 – 100] | 5593/5593 | élevée | Mesuré |
-| Tida Webform | **100 %** | [99,93 – 100] | 5593/5593 | élevée | Mesuré |
-| hash:704914099 | **4,95 %** | [4,4 – 5,56] | 274/5538 | élevée | Mesuré |
+| hash:1144304849 | **4,68 %** | [4,15 – 5,28] | 264/5638 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,93 – 100] | 5638/5638 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,93 – 100] | 5638/5638 | élevée | Mesuré |
+| Tida Webform | **100 %** | [99,93 – 100] | 5638/5638 | élevée | Mesuré |
+| hash:704914099 | **4,98 %** | [4,43 – 5,59] | 278/5583 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:1144304849
-- Variant 1 : 4,72 % (IC 95 % [4,18 ; 5,32], 264/5593, confiance élevée)
+- Variant 1 : 4,68 % (IC 95 % [4,15 ; 5,28], 264/5638, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 497.02] → 4,97 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5593/5593, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2329.9] + [2629.84, 10000] → 97 %
+- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5638/5638, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 7329.34] + [7628.13, 10000] → 97,01 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5593/5593, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [80.79, 10000] → 99,19 %
+- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5638/5638, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [107.07, 10000] → 98,93 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5593/5593, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5638/5638, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:704914099
-- Variant 1 : 4,95 % (IC 95 % [4,4 ; 5,56], 274/5538, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.18, 9652.82] + [9671.18, 9999.82] → 4,85 %
+- Variant 1 : 4,98 % (IC 95 % [4,43 ; 5,59], 278/5583, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.08, 9652.92] + [9671.27, 9999.73] → 4,85 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 348 expériences user
+## En attente de rollout — 347 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -78,7 +78,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-10-go-live-auto-quality
 - 2025-10-low-latency-rate-control
 - Calendar
-- Tida Webform
 - 2025-11-age-verification-expressive-everywhere
 - 2025-11-global-frame-pool-lock
 - 2025-11-mana-context-menu
