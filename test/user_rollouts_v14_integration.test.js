@@ -61,6 +61,9 @@ function makeWebhook(results) {
 }
 
 async function runMain(deps) {
+  // gistSnapshot par défaut : échec propre (pas de réseau dans les tests) ;
+  // un test peut l'écraser en passant le sien dans deps.
+  const d = { gistSnapshot: () => ({ ok: false }), ...deps };
   // main() loggue beaucoup ; sous `node --test` ces écritures stdout peuvent
   // corrompre le canal d'événements du test runner (échec intermittent en
   // CI : « Unable to deserialize cloned data »). On neutralise la console
@@ -70,7 +73,7 @@ async function runMain(deps) {
   console.warn = () => {};
   console.error = () => {};
   try {
-    await main(deps);
+    await main(d);
     const code = process.exitCode;
     process.exitCode = 0;
     return code;

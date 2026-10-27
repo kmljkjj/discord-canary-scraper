@@ -16,14 +16,18 @@ function escapeHtml(s) {
   let allExps = [];
   let currentFilter = 'all';
   let currentSearch = '';
+  const PAGE_SIZE = 500; // pagination : les ~1000 expériences publiées ne
+  let shownCount = PAGE_SIZE; // doivent pas enterrer les petits rollouts
 
-  // Load data — les deux sources en parallèle
+  // Load data — les trois sources en parallèle
   let data = null;
   let userData = null;
+  let exactData = null;
   try {
-    [data, userData] = await Promise.all([
+    [data, userData, exactData] = await Promise.all([
       fetch('data/experiment_rollouts.json').then((r) => r.json()).catch(() => null),
       fetch('data/user_rollouts.json').then((r) => r.json()).catch(() => null),
+      fetch('data/user_rollouts_exact.json').then((r) => r.json()).catch(() => null),
     ]);
     if (!data && !userData) {
       grid.innerHTML = '<div class="empty">Erreur de chargement</div>';
@@ -53,11 +57,40 @@ function escapeHtml(s) {
     return treatments[0].pct;
   }
 
+  // ---- Plages publiées par la communauté (gist) — couverture CONFIGURÉE ----
+  // Deuxième source, jamais fusionnée avec la mesure : le % affiché pour
+  // ces expériences est la couverture des plages parmi la population
+  // ÉLIGIBLE (les filtres ne sont pas exportés) — pas un % d'utilisateurs.
+  const configByHash = new Map();
+  let configCount = 0;
+  let configStale = false;
+  if (exactData && Array.isArray(exactData.experiments)) {
+    configCount = exactData.count ?? exactData.experiments.length;
+    configStale = !!exactData.stale;
+    for (const g of exactData.experiments) {
+      if (g && g.hash != null) configByHash.set(String(g.hash), g);
+    }
+  }
+
   if (userData && Array.isArray(userData.experiments)) {
     for (const e of userData.experiments) {
       if (!e || e.type !== 'user' || !e.id) continue;
       const treatments = (e.treatments || []).filter(
         (t) => t && t.pctKnown && t.pct != null && Number.isFinite(t.pct),
+      );
+      // Normalisation explicite des DEUX schémas de config (advisor) :
+      // état v15 → e.config = { pct, b } ; table exacte → { treatmentPct }.
+      // Priorité à l'état (frais), repli sur la table (conservée).
+      const cfgState = e.config || null;
+      const cfgTable = configByHash.get(String(e.hash)) || null;
+      const configPct =
+        cfgState && cfgState.pct != null
+          ? cfgState.pct
+          : cfgTable && cfgTable.treatmentPct != null
+            ? cfgTable.treatmentPct
+            : null;
+      const configAmbiguous = !!(
+        (cfgState && cfgState.ambiguous) || (cfgTable && cfgTable.ambiguous)
       );
       if (e.status === 'detected' || !treatments.length) {
         // Détecté sans ranges → ?% honnête
@@ -72,6 +105,8 @@ function escapeHtml(s) {
           percentage: null,
           platforms: [],
           detected: true,
+          configPct,
+          configAmbiguous,
         });
         continue;
       }
@@ -88,14 +123,34 @@ function escapeHtml(s) {
         treatments,
         windowN: e.windowN || null,
         fingerprint: e.fingerprint || null,
+        configPct,
+        configAmbiguous,
       });
     }
   }
 
-  // ---- Merge : les user exps EXACTES remplacent celles de l'ancien fichier ----
+  // ---- Merge : user exactes > user mesurées > plages publiées ----
+  const configOnly = [];
+  for (const [hash, g] of configByHash.entries()) {
+    if (userExact.has(hash)) continue;
+    // Type résolu depuis la table (définitions locales) ; sinon null —
+    // le gist mélange user et guild, on ne devine JAMAIS depuis le nom.
+    configOnly.push({
+      id: g.id || 'hash:' + hash,
+      title: g.id || 'hash:' + hash,
+      type: g.type != null ? g.type : null,
+      hash: Number(hash),
+      source: 'community_gist',
+      status: 'config',
+      percentage: g.treatmentPct != null ? g.treatmentPct : null,
+      configAmbiguous: !!g.ambiguous,
+    });
+  }
   allExps = ((data && data.matchedExperiments) || [])
     .filter((e) => !(e && e.type === 'user' && userExact.has(String(e.hash))))
+    .filter((e) => !(e && e.type === 'user' && e.hash != null && configByHash.has(String(e.hash))))
     .concat([...userExact.values()])
+    .concat(configOnly)
     .sort((a, b) => {
       const aPct = a.percentage != null ? a.percentage : -1;
       const bPct = b.percentage != null ? b.percentage : -1;
@@ -118,6 +173,11 @@ function escapeHtml(s) {
   if (userDetected) {
     sourceParts.push(`User detectes (?%): ${userDetected}`);
   }
+  if (configCount) {
+    sourceParts.push(
+      `Plages publiées (gist${configStale ? ', stale' : ''}): ${configCount}`,
+    );
+  }
   if (sources.discordApi) {
     sourceParts.push(`Discord API: ${sources.discordApi.count ?? 0} guild exps`);
   }
@@ -139,6 +199,25 @@ function escapeHtml(s) {
   meta.textContent = `${allExps.length} experiences · ${fetchedAt}`;
   document.getElementById('updated').textContent = fetchedAt;
 
+  // Provenance du gist — lien cliquable (advisor #5) : ne pas se cacher
+  // derrière un label « communauté » quand l'URL exacte est disponible.
+  if (exactData && exactData.provenance && exactData.provenance.url) {
+    const prov = document.createElement('div');
+    prov.className = 'source-line';
+    prov.style.cssText = 'font-size:12px;color:var(--text-muted,#9aa4b2);margin-top:4px;';
+    const link = document.createElement('a');
+    link.href = exactData.provenance.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent =
+      'Plages publiées : ' +
+      (exactData.provenance.id || 'gist') +
+      (exactData.stale ? ' (dernier rafraîchissement indisponible — snapshot conservé)' : '');
+    prov.appendChild(link);
+    const metaEl = document.getElementById('meta');
+    if (metaEl && metaEl.parentNode) metaEl.parentNode.insertBefore(prov, metaEl.nextSibling);
+  }
+
   function statusBadge(status) {
     const labels = {
       full_rollout: { text: '100%', cls: 'badge-full' },
@@ -153,6 +232,7 @@ function escapeHtml(s) {
       not_rolled_out: { text: '0%', cls: 'badge-zero' },
       no_rollout_data: { text: 'N/A', cls: 'badge-na' },
       detected: { text: '?', cls: 'badge-na' },
+      config: { text: 'Config', cls: 'badge-partial' },
       unknown: { text: '?', cls: 'badge-na' },
     };
     const l = labels[status] || labels.unknown;
@@ -173,6 +253,7 @@ function escapeHtml(s) {
       fingerprint_sampling: 'Fingerprint',
       client_bundle: 'Client',
       own_sampling: 'Mesure propre',
+      community_gist: 'Plages publiées (gist)',
     };
     const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
@@ -199,6 +280,13 @@ function escapeHtml(s) {
     }
     if (exp.windowN) {
       parts.push(`<span class="fp-stat">n=${exp.windowN}</span>`);
+    }
+    if (exp.configPct != null) {
+      parts.push(
+        `<span class="fp-stat">couverture publiée: ${exp.configPct}% (population éligible)` +
+        (exp.configAmbiguous ? ' — plages ambiguës' : '') +
+        '</span>',
+      );
     }
     if (exp.platforms && exp.platforms.length) {
       parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
@@ -242,7 +330,10 @@ function escapeHtml(s) {
       return;
     }
 
-    grid.innerHTML = filtered.slice(0, 500).map((e) => {
+    const visible = filtered.slice(0, shownCount);
+    const remaining = filtered.length - visible.length;
+    grid.innerHTML =
+      visible.map((e) => {
       const rawId = e.id || `hash_${e.hash}`;
       const id = escapeHtml(rawId);
       const title = escapeHtml(e.title || rawId);
@@ -252,6 +343,12 @@ function escapeHtml(s) {
       let note = e.note || '';
       if (type === 'user' && source === 'client_bundle' && pct == null) {
         note = 'Pas encore mesuré — Discord ne publie pas ce pourcentage. Apparaîtra automatiquement dès le début du rollout.';
+      }
+      if (source === 'community_gist') {
+        note =
+          'Couverture CONFIGURÉE (plages publiées par la communauté, population éligible — filtres non exportés). Pas un % d\'utilisateurs réels.' +
+          (e.configAmbiguous ? ' Plages ambiguës (union géométrique, chevauchements).' : '') +
+          (configStale ? ' Dernier rafraîchissement du gist indisponible — snapshot conservé.' : '');
       }
 
       return `<div class="card ${type}" data-id="${id}">
@@ -268,11 +365,22 @@ function escapeHtml(s) {
         ${exactDetails(e) || fpDetails(e)}
         ${note ? `<div class="card-note">${escapeHtml(note)}</div>` : ''}
       </div>`;
-    }).join('');
+      }).join('') +
+      (remaining > 0
+        ? `<button id="show-more" class="chip" style="margin:12px auto;display:block">Afficher plus (${remaining} restantes)</button>`
+        : '');
+    const moreBtn = document.getElementById('show-more');
+    if (moreBtn) {
+      moreBtn.addEventListener('click', () => {
+        shownCount += PAGE_SIZE;
+        render();
+      });
+    }
   }
 
   search.addEventListener('input', (e) => {
     currentSearch = e.target.value;
+    shownCount = PAGE_SIZE; // nouveau filtre → retour à la première page
     render();
   });
 
@@ -281,6 +389,7 @@ function escapeHtml(s) {
       filterChips.forEach((c) => c.classList.remove('active'));
       chip.classList.add('active');
       currentFilter = chip.dataset.filter;
+      shownCount = PAGE_SIZE;
       render();
     });
   });

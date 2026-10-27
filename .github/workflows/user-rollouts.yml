@@ -38,6 +38,9 @@ jobs:
       - name: Sample user rollouts
         id: rollouts
         env:
+          # Token GitHub explicite pour l'API gists (provenance complète) —
+          # sans lui, le repli brut fonctionne mais sans métadonnées.
+          GITHUB_TOKEN: ${{ github.token }}
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
           DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
@@ -74,7 +77,7 @@ jobs:
       - name: Commit state
         if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json data/user_rollouts.md
+          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json data/user_rollouts.md data/user_rollouts_exact.json
 
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'
