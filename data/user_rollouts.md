@@ -1,35 +1,35 @@
 # Rollouts user — mesure propre (v13)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 08:24 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 08:29 UTC
 
-**Fenêtre glissante 4 h — n = 2802 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 2777 échantillons — 7 tokens actifs**
 
 ## Expériences mesurées (5)
 
 | Expérience | % mesuré | k/n | Confiance | Statut |
 |---|---:|---:|---|---|
-| hash:704914099 | **5,28 %** | 148/2802 | élevée | Mesuré |
-| hash:1144304849 | **4,66 %** | 129/2768 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | 2802/2802 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | 2802/2802 | élevée | Mesuré |
-| Tida Webform | **97,07 %** | 2720/2802 | élevée | Mesuré |
+| hash:1144304849 | **4,72 %** | 131/2777 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | 2777/2777 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | 2777/2777 | élevée | Mesuré |
+| Tida Webform | **97,05 %** | 2695/2777 | élevée | Mesuré |
+| hash:704914099 | **5,54 %** | 150/2709 | élevée | Mesuré |
 
 ## Détail par variante
 
-### hash:704914099
-- Variant 1 : 5,28 % (148/2802, confiance élevée)
-
 ### hash:1144304849
-- Variant 1 : 4,66 % (129/2768, confiance élevée)
+- Variant 1 : 4,72 % (131/2777, confiance élevée)
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (2802/2802, confiance élevée)
+- Variant 1 : 100 % (2777/2777, confiance élevée)
 
 ### hash:3013881204
-- Variant 11 : 100 % (2802/2802, confiance élevée)
+- Variant 11 : 100 % (2777/2777, confiance élevée)
 
 ### Tida Webform
-- Variant 1 : 97,07 % (2720/2802, confiance élevée)
+- Variant 1 : 97,05 % (2695/2777, confiance élevée)
+
+### hash:704914099
+- Variant 1 : 5,54 % (150/2709, confiance élevée)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
