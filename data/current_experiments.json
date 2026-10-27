@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T16-26-33-600Z_652507_e639d2",
-  "buildNumber": "652507",
-  "updatedAt": "2026-10-27T16:26:33.600Z",
-  "count": 381,
+  "runId": "2026-10-27T16-29-17-099Z_652514_hx4oym",
+  "buildNumber": "652514",
+  "updatedAt": "2026-10-27T16:29:17.100Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -18677,6 +18677,58 @@
         "value": null
       },
       "fingerprint": "18393cee2dd16904cb44fd48b404a04e99ec4969802717ed431f8a2689c9d0a9"
+    },
+    {
+      "id": "2026-10-native-markdown-setting",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-native-markdown-setting",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "1e37b9c4ced490e0a20aff12ccc3417087bbb2488811ab17b5a811cff30b7fc0"
     },
     {
       "id": "2026-10-nitro-tab-remove-account-age-restriction",
