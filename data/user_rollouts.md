@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:31 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:32 UTC
 
-**Fenêtre glissante 4 h — n = 4608 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 4684 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,95 %** | [4,35 – 5,63] | 228/4608 | élevée | Mesuré |
-| hash:1144304849 | **4,56 %** | [3,98 – 5,21] | 210/4608 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,91 – 100] | 4608/4608 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,91 – 100] | 4608/4608 | élevée | Mesuré |
-| Tida Webform | **99,05 %** | [98,71 – 99,29] | 4564/4608 | élevée | Mesuré |
+| hash:704914099 | **4,91 %** | [4,32 – 5,58] | 230/4684 | élevée | Mesuré |
+| hash:1144304849 | **4,48 %** | [3,92 – 5,13] | 210/4684 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,91 – 100] | 4684/4684 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,91 – 100] | 4684/4684 | élevée | Mesuré |
+| Tida Webform | **99,06 %** | [98,73 – 99,3] | 4640/4684 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,95 % (IC 95 % [4,35 ; 5,63], 228/4608, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9505.99, 10000] → 4,94 %
+- Variant 1 : 4,91 % (IC 95 % [4,32 ; 5,58], 230/4684, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9508.04, 10000] → 4,92 %
 
 ### hash:1144304849
-- Variant 1 : 4,56 % (IC 95 % [3,98 ; 5,21], 210/4608, confiance élevée)
+- Variant 1 : 4,48 % (IC 95 % [3,92 ; 5,13], 210/4684, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 495.87] → 4,96 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,91 ; 100], 4608/4608, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+- Variant 1 : 100 % (IC 95 % [99,91 ; 100], 4684/4684, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [5.48, 10000] → 99,95 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,91 ; 100], 4608/4608, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9997.48] → 99,97 %
+- Variant 11 : 100 % (IC 95 % [99,91 ; 100], 4684/4684, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### Tida Webform
-- Variant 1 : 99,05 % (IC 95 % [98,71 ; 99,29], 4564/4608, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2721.45] + [3153.03, 10000] → 95,68 %
+- Variant 1 : 99,06 % (IC 95 % [98,73 ; 99,3], 4640/4684, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 347 expériences user
+## En attente de rollout — 346 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -78,7 +78,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-10-go-live-auto-quality
 - 2025-10-low-latency-rate-control
 - Calendar
-- Tida Webform
 - 2025-11-age-verification-expressive-everywhere
 - 2025-11-global-frame-pool-lock
 - 2025-11-mana-context-menu
