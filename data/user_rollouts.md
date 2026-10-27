@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:23 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:25 UTC
 
-**Fenêtre glissante 4 h — n = 4571 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 4608 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,94 %** | [4,34 – 5,63] | 226/4571 | élevée | Mesuré |
-| hash:1144304849 | **4,55 %** | [3,97 – 5,21] | 208/4571 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,91 – 100] | 4571/4571 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,91 – 100] | 4571/4571 | élevée | Mesuré |
-| Tida Webform | **99,04 %** | [98,7 – 99,29] | 4527/4571 | élevée | Mesuré |
+| hash:704914099 | **4,97 %** | [4,37 – 5,65] | 229/4608 | élevée | Mesuré |
+| hash:1144304849 | **4,49 %** | [3,92 – 5,14] | 207/4608 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,91 – 100] | 4608/4608 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,91 – 100] | 4608/4608 | élevée | Mesuré |
+| Tida Webform | **99,05 %** | [98,71 – 99,29] | 4564/4608 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,94 % (IC 95 % [4,34 ; 5,63], 226/4571, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9506.06, 10000] → 4,94 %
+- Variant 1 : 4,97 % (IC 95 % [4,37 ; 5,65], 229/4608, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9506.09, 10000] → 4,94 %
 
 ### hash:1144304849
-- Variant 1 : 4,55 % (IC 95 % [3,97 ; 5,21], 208/4571, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 495.81] → 4,96 %
+- Variant 1 : 4,49 % (IC 95 % [3,92 ; 5,14], 207/4608, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 495.78] → 4,96 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,91 ; 100], 4571/4571, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [7.24, 10000] → 99,93 %
+- Variant 1 : 100 % (IC 95 % [99,91 ; 100], 4608/4608, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [66.63, 400.38] + [762.67, 9974.33] → 95,45 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,91 ; 100], 4571/4571, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9994.42] → 99,94 %
+- Variant 11 : 100 % (IC 95 % [99,91 ; 100], 4608/4608, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 433.5] + [768.83, 1923.17] + [2283.21, 9992.79] → 92,97 %
 
 ### Tida Webform
-- Variant 1 : 99,04 % (IC 95 % [98,7 ; 99,29], 4527/4571, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [64.23, 10000] → 99,36 %
+- Variant 1 : 99,05 % (IC 95 % [98,71 ; 99,29], 4564/4608, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [40.73, 7570.27] + [7967.03, 9949.97] → 95,12 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 346 expériences user
+## En attente de rollout — 347 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -78,6 +78,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-10-go-live-auto-quality
 - 2025-10-low-latency-rate-control
 - Calendar
+- Tida Webform
 - 2025-11-age-verification-expressive-everywhere
 - 2025-11-global-frame-pool-lock
 - 2025-11-mana-context-menu
