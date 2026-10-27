@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 16:14 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 16:15 UTC
 
-**Fenêtre glissante 4 h — n = 3301 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 3358 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:1144304849 | **4,6 %** | [3,93 – 5,39] | 152/3301 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,88 – 100] | 3301/3301 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,88 – 100] | 3301/3301 | élevée | Mesuré |
-| Tida Webform | **97,43 %** | [96,81 – 97,92] | 3216/3301 | élevée | Mesuré |
-| hash:704914099 | **5 %** | [4,29 – 5,82] | 163/3259 | élevée | Mesuré |
+| hash:1144304849 | **4,56 %** | [3,89 – 5,33] | 153/3358 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,88 – 100] | 3358/3358 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,88 – 100] | 3358/3358 | élevée | Mesuré |
+| Tida Webform | **97,47 %** | [96,87 – 97,96] | 3273/3358 | élevée | Mesuré |
+| hash:704914099 | **4,86 %** | [4,16 – 5,66] | 161/3316 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:1144304849
-- Variant 1 : 4,6 % (IC 95 % [3,93 ; 5,39], 152/3301, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 190.67] + [245.72, 496.28] → 4,41 %
+- Variant 1 : 4,56 % (IC 95 % [3,89 ; 5,33], 153/3358, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 498.17] → 4,98 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,88 ; 100], 3301/3301, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2345.39] + [2640.45, 4765.55] + [5124.28, 10000] → 93,46 %
+- Variant 1 : 100 % (IC 95 % [99,88 ; 100], 3358/3358, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9971.76] → 99,72 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,88 ; 100], 3301/3301, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 4551.66] + [4882.3, 9980.7] → 96,5 %
+- Variant 11 : 100 % (IC 95 % [99,88 ; 100], 3358/3358, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [20.26, 10000] → 99,8 %
 
 ### Tida Webform
-- Variant 1 : 97,43 % (IC 95 % [96,81 ; 97,92], 3216/3301, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [438.11, 10000] → 95,62 %
+- Variant 1 : 97,47 % (IC 95 % [96,87 ; 97,96], 3273/3358, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:704914099
-- Variant 1 : 5 % (IC 95 % [4,29 ; 5,82], 163/3259, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9499.64, 10000] → 5 %
+- Variant 1 : 4,86 % (IC 95 % [4,16 ; 5,66], 161/3316, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9499.85, 10000] → 5 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 347 expériences user
+## En attente de rollout — 346 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -256,7 +256,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-08-game-mode
 - 2026-08-game-profiles-vc
 - 2026-08-gsh-subs-activity-bar
-- 2026-08-hide-gift-shop-upsell
 - 2026-08-ios-objc-composed-image-cache
 - 2026-08-mark-channel-unread
 - 2026-08-mute-aware-noise-cancellation
