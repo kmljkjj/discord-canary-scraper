@@ -3837,13 +3837,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-08-profile-read-state-v1",
-    "defaultConfig": null,
-    "variations": null,
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-08-rive-web-perf",
     "defaultConfig": {
       "enabled": false
@@ -5839,6 +5832,13 @@
   {
     "kind": "user",
     "name": "2026-10-profile-default-tab-with-content",
+    "defaultConfig": null,
+    "variations": null,
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-profile-read-state",
     "defaultConfig": null,
     "variations": null,
     "label": null
