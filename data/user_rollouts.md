@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 18:21 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 18:22 UTC
 
-**Fenêtre glissante 4 h — n = 5746 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 5683 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:1144304849 | **4,8 %** | [4,27 – 5,4] | 276/5746 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,93 – 100] | 5746/5746 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,93 – 100] | 5746/5746 | élevée | Mesuré |
-| Tida Webform | **100 %** | [99,93 – 100] | 5746/5746 | élevée | Mesuré |
-| hash:704914099 | **4,97 %** | [4,43 – 5,58] | 284/5714 | élevée | Mesuré |
+| hash:1144304849 | **4,79 %** | [4,25 – 5,39] | 272/5683 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,93 – 100] | 5683/5683 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,93 – 100] | 5683/5683 | élevée | Mesuré |
+| Tida Webform | **100 %** | [99,93 – 100] | 5683/5683 | élevée | Mesuré |
+| hash:704914099 | **5,06 %** | [4,51 – 5,68] | 286/5651 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:1144304849
-- Variant 1 : 4,8 % (IC 95 % [4,27 ; 5,4], 276/5746, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 497.13] → 4,97 %
+- Variant 1 : 4,79 % (IC 95 % [4,25 ; 5,39], 272/5683, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 497.06] → 4,97 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5746/5746, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9902.86] → 99,03 %
+- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5683/5683, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5746/5746, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5683/5683, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [39.77, 9974.23] → 99,34 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5746/5746, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+- Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5683/5683, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9954.65] → 99,55 %
 
 ### hash:704914099
-- Variant 1 : 4,97 % (IC 95 % [4,43 ; 5,58], 284/5714, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9495.97, 10000] → 5,04 %
+- Variant 1 : 5,06 % (IC 95 % [4,51 ; 5,68], 286/5651, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.37, 9652.63] + [9670.99, 10000] → 4,85 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 347 expériences user
+## En attente de rollout — 348 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -390,6 +390,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-remove-quests-from-discovery
 - 2026-10-server-tag-upsell-on-guild-profile
 - 2026-10-server-tag-upsell-on-profile
+- 2026-10-sfp-bloons-orb-split-tender
 - 2026-10-shop-marketing-fatigue
 - 2026-10-soundboard-mute-indicator
 - 2026-10-stage-unified-call-user
