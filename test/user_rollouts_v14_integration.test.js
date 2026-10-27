@@ -61,10 +61,24 @@ function makeWebhook(results) {
 }
 
 async function runMain(deps) {
-  await main(deps);
-  const code = process.exitCode;
-  process.exitCode = 0;
-  return code;
+  // main() loggue beaucoup ; sous `node --test` ces écritures stdout peuvent
+  // corrompre le canal d'événements du test runner (échec intermittent en
+  // CI : « Unable to deserialize cloned data »). On neutralise la console
+  // pendant l'exécution.
+  const orig = { log: console.log, warn: console.warn, error: console.error };
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+  try {
+    await main(deps);
+    const code = process.exitCode;
+    process.exitCode = 0;
+    return code;
+  } finally {
+    console.log = orig.log;
+    console.warn = orig.warn;
+    console.error = orig.error;
+  }
 }
 
 function readState(dir) {
