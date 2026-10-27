@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-27T18-05-52-566Z_652664_g9xiga",
-  "buildNumber": "652664",
-  "scrapedAt": "2026-10-27T18:05:52.566Z",
+  "runId": "2026-10-27T18-10-01-809Z_652684_zc5neh",
+  "buildNumber": "652684",
+  "scrapedAt": "2026-10-27T18:10:01.809Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -7490,6 +7490,37 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-sfp-bloons-orb-split-tender",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "discountPercent": null,
+        "offerSkuId": null
+      },
+      "variations": {
+        "0": {
+          "discountPercent": null,
+          "offerSkuId": null
+        },
+        "1": {
+          "discountPercent": 10,
+          "offerSkuId": "1560340689907089505"
+        },
+        "2": {
+          "discountPercent": 15,
+          "offerSkuId": "1560711732412940429"
+        },
+        "3": {
+          "discountPercent": 20,
+          "offerSkuId": "1560711810007699506"
+        }
+      },
+      "variationCount": 4,
       "source": "discord"
     },
     {

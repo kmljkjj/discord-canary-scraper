@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T18-05-52-566Z_652664_g9xiga",
-  "buildNumber": "652664",
-  "updatedAt": "2026-10-27T18:05:52.566Z",
-  "count": 383,
+  "runId": "2026-10-27T18-10-01-809Z_652684_zc5neh",
+  "buildNumber": "652684",
+  "updatedAt": "2026-10-27T18:10:01.809Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -19369,6 +19369,80 @@
         "value": null
       },
       "fingerprint": "cbd890b50110a65cd5d717602ba98efdcdc7450e748cd84d1f7f764b9d0ca2af"
+    },
+    {
+      "id": "2026-10-sfp-bloons-orb-split-tender",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "discountPercent": null,
+        "offerSkuId": null
+      },
+      "variations": {
+        "0": {
+          "discountPercent": null,
+          "offerSkuId": null
+        },
+        "1": {
+          "discountPercent": 10,
+          "offerSkuId": "1560340689907089505"
+        },
+        "2": {
+          "discountPercent": 15,
+          "offerSkuId": "1560711732412940429"
+        },
+        "3": {
+          "discountPercent": 20,
+          "offerSkuId": "1560711810007699506"
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 4,
+      "raw": {
+        "id": "2026-10-sfp-bloons-orb-split-tender",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "discountPercent": null,
+          "offerSkuId": null
+        },
+        "variations": {
+          "0": {
+            "discountPercent": null,
+            "offerSkuId": null
+          },
+          "1": {
+            "discountPercent": 10,
+            "offerSkuId": "1560340689907089505"
+          },
+          "2": {
+            "discountPercent": 15,
+            "offerSkuId": "1560711732412940429"
+          },
+          "3": {
+            "discountPercent": 20,
+            "offerSkuId": "1560711810007699506"
+          }
+        },
+        "variationCount": 4,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "5833a15f3bdbbfb4aa86a1530be1f208f65473e3401898cfaa49854b9f4f1833"
     },
     {
       "id": "2026-10-shop-marketing-fatigue",
