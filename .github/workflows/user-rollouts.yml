@@ -2,7 +2,7 @@ name: User Rollouts %
 
 on:
   # Schedule remplacé par rollouts-watch.yml : passes de mesure pendant
-  # ~19 min toutes les 20 min (fenêtre glissante, % binomial k/n).
+  # ~19 min toutes les 20 min (fenêtre glissante, k/n + Wilson + bornes indicatives).
   # Ce workflow reste disponible en manuel / dispatch (le cog, apex…).
   # schedule:
   #   - cron: "*/2 * * * *"
@@ -13,8 +13,10 @@ on:
 permissions:
   contents: write
 
+# Même groupe de concurrence que rollouts-watch.yml : les deux écrivent
+# data/user_rollouts.json — ils doivent être sérialisés entre eux.
 concurrency:
-  group: user-rollouts
+  group: rollouts-watch
   cancel-in-progress: false
 
 jobs:
@@ -56,13 +58,12 @@ jobs:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           # V13 mesure propre : 150 échantillons par passe, chaque passe
           # enrichit la fenêtre glissante (4 h) → n cumulé vers plusieurs
-          # milliers, % binomial k/n à 2 décimales.
+          # milliers, % k/n à 2 décimales + IC de Wilson + bornes indicatives.
           USER_ROLLOUT_SAMPLES: "150"
           USER_ROLLOUT_CONCURRENCY: "2"
           USER_ROLLOUT_DELAY_MS: "150"
           USER_ROLLOUT_MIN_OK: "30"
           USER_ROLLOUT_MAX_MS: "75000"
-          USER_ROLLOUT_PLATEAU: "30"
           USER_ROLLOUT_WINDOW_H: "4"
           USER_ROLLOUT_NOTIFY_HASH: "1"
           APEX_MIN_PCT_DELTA: "1"
@@ -73,7 +74,7 @@ jobs:
       - name: Commit state
         if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json
+          scripts/commit-state.sh "data: user rollouts" data/user_rollouts.json data/user_rollouts.md
 
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'

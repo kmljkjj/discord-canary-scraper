@@ -7,9 +7,11 @@ Datamining du client Discord Canary : builds, expériences, strings, routes, rol
 Toutes les données publiées par ce dépôt sont mesurées ou extraites par
 nous-mêmes, directement depuis les serveurs de Discord :
 
-- **% user** : mesure propre (`src/user_rollouts.js` v13) — échantillonnage
-  anonyme de l'API `/experiments` avec fenêtre glissante (4 h) et % binomial
-  k/n à 2 décimales ;
+- **% user** : mesure propre (`src/user_rollouts.js` v14) — échantillonnage
+  anonyme de l'API `/experiments` avec fenêtre glissante (4 h), % binomial
+  k/n à 2 décimales + intervalle de confiance de Wilson, marge de bruit
+  exacte au niveau batch, et reconstruction INDICATIVE des bornes de
+  bucket depuis les positions (ordre-statistiques) ;
 - **% guild** : exact, décodé du wire Discord (`src/apex_rollouts.js` v7) ;
 - **noms d'expériences** : extraits de nos propres scrapes du client Canary ;
 - **versions mobiles** : manifestes OTA de Discord + stores publics.
@@ -64,6 +66,40 @@ Secrets : `DISCORD_WEBHOOK_URL` (obligatoire), `APEX_WEBHOOK_URL`, `ROLLOUT_WEBH
 Secret optionnel : `ALERT_WEBHOOK_URL` (salon d'alertes quand un workflow échoue).
 
 Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_MS` (20000), `ARCHIVE_KEEP_BUILDS` (8), `COMMIT_MAX_ATTEMPTS` (8), `MAX_CHUNK_SCAN_BYTES` (16 Mo), `USER_ROLLOUT_NOISE_Z` (2, seuil de bruit statistique ; 0 = désactivé), `USER_ROLLOUT_WINDOW_H` (4, fenêtre glissante des % user en heures).
+
+### v14 — % user : fiabilité + double mesure
+
+- **Notifications perdues corrigées** : les deltas sont comparés au dernier
+  état NOTIFIÉ (`acknowledged`), plus au dernier état mesuré. Un échec de
+  webhook ne fait plus disparaître le changement ; il est retenté au run
+  suivant. TOUS les changements partent (lots de 10 embeds) et `acknowledged`
+  n'avance que pour les lots réellement livrés.
+- **Fenêtre unifiée** : le dénominateur n'est plus incohérent entre deux runs
+  (un hash absent du batch courant voyait son n changer au run suivant).
+- **Revisions** : un changement de revision d'une expérience remet son
+  historique à zéro dans la fenêtre (rollout reconfiguré ≠ bruit).
+- **Wire validé** : une réponse sans `assignments` est un échec (avant : un
+  succès vide qui gonflait n), doublons d'une même réponse ignorés,
+  bucket/position contrôlés.
+- **Double mesure** : % = k/n + IC de Wilson (référence, non biaisé), PLUS une
+  reconstruction indicative des bornes depuis les positions hash_result
+  (ordre-statistiques + correction « German tank »). Sur un rollout réel à
+  5 %, la reconstruction donne ~5,0 % ± 0,3 alors que k/n sur 400 échantillons
+  peut osciller à ± 2 pts — les bornes reconstruites sont affichées à côté du
+  k/n, jamais présentées comme exactes.
+- **Marge de bruit exacte** : Var(Δp̂) calculée au niveau batch — les
+  échantillons partagés entre deux fenêtres glissantes ne sont plus comptés
+  deux fois (l'ancienne formule z·√(2p(1−p)/n) sur-estimait l'indépendance).
+- **Bug des plages corrigé** : la fusion de plages demi-ouvertes ne remplit
+  plus les trous (avant, `[0,1)+[2,3)` devenait `[0,3)` → % surestimés) ;
+  les plages qui se chevauchent ne comptent plus double (`guild_decode`).
+- **Watcher** : ses replis d'environnement s'appliquent désormais (ils
+  étaient posés après le chargement du module) ; workflows watcher +
+  dispatch manuel sérialisés (même groupe de concurrence, mêmes fichiers
+  d'état) ; le rapport markdown est commité avec le JSON.
+- **Nettoyage** : suppression des workflows ponctuels `p0-*` qui modifiaient
+  et poussaient le code source, des payloads base64, des chunks de patch
+  et du bytecode tracké (~50 fichiers morts).
 
 Variable optionnelle : `ORBIT_AVATAR_URL`. Par défaut, l'avatar est `media/datamining-avatar.png` servi par jsDelivr, ce qui ne fonctionne que si le dépôt est public. Sur un dépôt privé, définir `ORBIT_AVATAR_URL` vers une image PNG/JPG publique (Discord n'accepte pas le SVG).
 

@@ -178,14 +178,24 @@ function escapeHtml(s) {
     return `<span class="source-tag small">${label}</span>`;
   }
 
-  /* Variants mesurés d'une expérience user v13 (binomial k/n) */
+  /* Variants mesurés d'une expérience user v14 (k/n + Wilson + bornes indicatives) */
   function exactDetails(exp) {
     if (!exp.treatments || !exp.treatments.length) return '';
     const parts = [`<div class="fp-details">`];
     for (const t of exp.treatments) {
-      parts.push(
-        '<span class="fp-stat">' + escapeHtml(t.label || 'Bucket ' + t.bucket) + ': ' + t.pct + '%' + (t.sampleCount != null ? ' (' + t.sampleCount + '/' + exp.windowN + ')' : '') + '</span>',
-      );
+      let line =
+        '<span class="fp-stat">' + escapeHtml(t.label || 'Bucket ' + t.bucket) + ': ' + t.pct + '%' + (t.sampleCount != null ? ' (' + t.sampleCount + '/' + exp.windowN + ')' : '') + '</span>';
+      if (t.ci && Number.isFinite(t.ci.lo) && Number.isFinite(t.ci.hi)) {
+        line += `<span class="fp-stat">IC 95%: [${t.ci.lo}, ${t.ci.hi}]</span>`;
+      }
+      parts.push(line);
+      if (t.ranges && t.ranges.length) {
+        const bounds = t.ranges.map((r) => `[${Math.round(r[0])}, ${Math.round(r[1])}]`).join(' + ');
+        parts.push(
+          `<span class="fp-stat">bornes reconstruites (indicatif): ${escapeHtml(bounds)}` +
+          (t.indicativePct != null ? ` → ${t.indicativePct}%` + (t.indicativeCi != null ? ` ± ${t.indicativeCi}` : '') : '') + '</span>',
+        );
+      }
     }
     if (exp.windowN) {
       parts.push(`<span class="fp-stat">n=${exp.windowN}</span>`);
