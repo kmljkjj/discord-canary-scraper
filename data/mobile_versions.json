@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-27T17:30:43.078Z",
+  "scrapedAt": "2026-10-27T17:37:53.965Z",
   "channels": [
     {
       "platform": "ios",
@@ -14,7 +14,7 @@
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-10-27T17:30:43.078Z"
+      "checkedAt": "2026-10-27T17:37:53.965Z"
     },
     {
       "platform": "ios",
@@ -23,20 +23,20 @@
       "available": false,
       "note": "OTA not ahead of App Store",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-10-27T17:30:43.078Z",
+      "checkedAt": "2026-10-27T17:37:53.965Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/69/3b/7e/693b7e6b-55ba-51ba-2608-6b38dabd6021/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
       "channel": "stable",
-      "version": "350.8",
-      "build": "35000800468839",
-      "commit": "ecea7bf2c2afd49b79c87c66274f163c76b078b8",
-      "releaseName": "discord_android@350.8.468839-0+35000800468839",
+      "version": "351.11",
+      "build": "35101100468874",
+      "commit": "3f562d0035d2495681e21d7ed0127a86b7263950",
+      "releaseName": "discord_android@351.11.468874-0+35101100468874",
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-10-27T17:30:43.078Z",
+      "checkedAt": "2026-10-27T17:37:53.965Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/69/3b/7e/693b7e6b-55ba-51ba-2608-6b38dabd6021/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
@@ -46,7 +46,7 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-27T17:30:43.078Z",
+      "checkedAt": "2026-10-27T17:37:53.965Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/69/3b/7e/693b7e6b-55ba-51ba-2608-6b38dabd6021/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     },
     {
@@ -56,7 +56,7 @@
       "available": false,
       "note": "No alpha version found (OTA + mirrors)",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-10-27T17:30:43.078Z",
+      "checkedAt": "2026-10-27T17:37:53.965Z",
       "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/69/3b/7e/693b7e6b-55ba-51ba-2608-6b38dabd6021/AppIcon-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
     }
   ],
@@ -161,6 +161,12 @@
     ],
     "android": [
       {
+        "version": "351.11",
+        "build": "35101100468874",
+        "commit": "3f562d0035d2495681e21d7ed0127a86b7263950",
+        "releaseName": "discord_android@351.11.468874-0+35101100468874"
+      },
+      {
         "version": "350.8",
         "build": "35000800468839",
         "commit": "ecea7bf2c2afd49b79c87c66274f163c76b078b8",
@@ -262,6 +268,13 @@
     "discordMinVersion": "388"
   },
   "history": [
+    {
+      "at": "2026-10-27T17:37:53.965Z",
+      "key": "android/stable",
+      "from": "350.8",
+      "to": "351.11",
+      "build": "35101100468874"
+    },
     {
       "at": "2026-10-27T00:40:15.642Z",
       "key": "ios/stable",
@@ -368,7 +381,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-10-27T17:23:36.872Z",
+  "previousScrapedAt": "2026-10-27T17:30:43.078Z",
   "notifiedFingerprints": [
     "android|alpha|352.6",
     "android|alpha|352.7",
@@ -380,6 +393,7 @@
     "android|stable|348.10",
     "android|stable|349.9",
     "android|stable|350.8",
+    "android|stable|351.11",
     "ios|beta|343.0",
     "ios|beta|349.0",
     "ios|beta|350.0",
@@ -392,7 +406,15 @@
     "ios|stable|350.0",
     "ios|stable|351.0"
   ],
-  "changes": [],
+  "changes": [
+    {
+      "type": "updated",
+      "key": "android/stable",
+      "from": "350.8",
+      "to": "351.11",
+      "build": "35101100468874"
+    }
+  ],
   "paused": false,
   "notifyOk": true
 }
