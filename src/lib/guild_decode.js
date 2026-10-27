@@ -6,6 +6,7 @@
 'use strict';
 
 const { murmur3 } = require('./murmur3');
+const { mergeIntervalsHalfOpen } = require('./rollout_math');
 
 const SCALE = 10000;
 
@@ -33,10 +34,13 @@ const DATA_KEYS = {
 
 function intervalsToPct(intervals) {
   if (!intervals || !intervals.length) return 0;
+  // Fusion demi-ouverte AVANT sommation : sans ça, deux plages qui se
+  // chevauchent (ou se touchent) étaient comptées deux fois → % surestimé.
+  const merged = mergeIntervalsHalfOpen(
+    intervals.map((r) => [Number(r.start ?? r.s ?? r[0]), Number(r.end ?? r.e ?? r[1])]),
+  );
   let c = 0;
-  for (const r of intervals) {
-    const a = Number(r.start ?? r.s ?? r[0]);
-    const b = Number(r.end ?? r.e ?? r[1]);
+  for (const [a, b] of merged) {
     if (Number.isFinite(a) && Number.isFinite(b) && b > a) c += b - a;
   }
   return Math.min(100, Math.round((c / SCALE) * 10000) / 100);

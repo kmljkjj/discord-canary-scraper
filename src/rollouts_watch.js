@@ -1,7 +1,7 @@
 /**
  * Rollouts watcher V2 — passes de mesure rapprochées.
  *
- * V13 : plus AUCUNE source externe à surveiller (fini le long-poll du gist).
+ * V14 : plus AUCUNE source externe à surveiller (fini le long-poll du gist).
  * La mesure EST notre sampling de l'API Discord : ce watcher enchaîne des
  * passes user_rollouts toutes les ROLLOUTS_FULL_PASS_MS (défaut 4 min)
  * pendant ROLLOUTS_WATCH_MS (~19 min, cron toutes les 20 min). Chaque passe
@@ -22,6 +22,14 @@
  *   ROLLOUTS_FULL_PASS_MS    default 4 min (intervalle entre passes)
  *   ROLLOUTS_MAX_PASSES      optionnel — borne le nombre de passes (tests)
  */
+// IMPORTANT : les replis d'environnement doivent être posés AVANT le
+// require('./user_rollouts') — le module lit ses env au chargement.
+process.env.USER_ROLLOUT_SAMPLES = process.env.USER_ROLLOUT_SAMPLES || '120';
+process.env.USER_ROLLOUT_CONCURRENCY = process.env.USER_ROLLOUT_CONCURRENCY || '2';
+process.env.USER_ROLLOUT_DELAY_MS = process.env.USER_ROLLOUT_DELAY_MS || '150';
+process.env.USER_ROLLOUT_MIN_OK = process.env.USER_ROLLOUT_MIN_OK || '30';
+process.env.USER_ROLLOUT_MAX_MS = process.env.USER_ROLLOUT_MAX_MS || '45000';
+
 const { execFileSync } = require('child_process');
 const { sleep } = require('./lib/utils');
 const userRollouts = require('./user_rollouts');
@@ -29,15 +37,6 @@ const userRollouts = require('./user_rollouts');
 const WATCH_MS = Math.max(60000, Number(process.env.ROLLOUTS_WATCH_MS || 19 * 60 * 1000));
 const PASS_MS = Math.max(60000, Number(process.env.ROLLOUTS_FULL_PASS_MS || 4 * 60 * 1000));
 const MAX_PASSES = Number(process.env.ROLLOUTS_MAX_PASSES || 0); // 0 = illimité
-
-// Sampling des passes du watcher : plus léger qu'un run complet, mais assez
-// dense pour la mesure (la fenêtre cumule les passes entre elles).
-process.env.USER_ROLLOUT_SAMPLES = process.env.USER_ROLLOUT_SAMPLES || '120';
-process.env.USER_ROLLOUT_CONCURRENCY = process.env.USER_ROLLOUT_CONCURRENCY || '2';
-process.env.USER_ROLLOUT_DELAY_MS = process.env.USER_ROLLOUT_DELAY_MS || '150';
-process.env.USER_ROLLOUT_MIN_OK = process.env.USER_ROLLOUT_MIN_OK || '30';
-process.env.USER_ROLLOUT_PLATEAU = process.env.USER_ROLLOUT_PLATEAU || '25';
-process.env.USER_ROLLOUT_MAX_MS = process.env.USER_ROLLOUT_MAX_MS || '45000';
 
 const STATE_FILES = ['data/user_rollouts.json', 'data/user_rollouts.md'];
 
@@ -71,11 +70,13 @@ function commitState() {
 async function detectionPass(reason) {
   console.log('── Passage mesure (' + reason + ') ──');
   gitRefreshState();
-  process.exitCode = undefined; // exitCode 2 (webhook KO) est géré par passe
+  // Un exitCode 2 (webhook KO) est délibérément conservé après la passe : il
+  // marque l'échec de notification, la passe suivante la retentera.
   try {
     await userRollouts.main();
   } catch (e) {
     console.warn('user pass fail:', String((e && e.message) || e).slice(0, 120));
+    process.exitCode = 1;
   }
   commitState();
 }

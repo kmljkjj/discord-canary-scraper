@@ -1,46 +1,53 @@
 /**
- * User experiment rollouts v13 — MESURE PROPRE, zéro source communautaire.
+ * User experiment rollouts v14 — MESURE PROPRE, zéro source communautaire.
  *
- * V13 (indépendance totale) :
- *  - plus aucun gist ni API tierce : les % sont MESURÉS par notre propre
- *    sampling de l'API Discord (empreintes anonymes → assignments user).
- *  - fenêtre glissante : chaque run ajoute ses échantillons à un historique
- *    de USER_ROLLOUT_WINDOW_H heures (défaut 4 h) → plusieurs milliers
- *    d'observations cumulées au lieu de 80 isolées.
- *  - estimation binomiale par variante : pct = k/n (insensible aux trous de
- *    densité), marge de bruit statistique (noiseMargin) appliquée à chaque
- *    delta → on ne notifie que les changements réels.
- *  - noms : uniquement nos propres fichiers de scrape (data/*.json issus du
- *    bundle client / build mobile) — aucune liste externe.
+ * V14 (fiabilité + précision honnête) :
+ *  - FENÊTRE UNIFIÉE : l'estimation est TOUJOURS agrégée sur la fenêtre
+ *    complète (batches précédents élagués + batch du run courant) avec une
+ *    seule politique de comptage. Avant, le dénominateur du run courant
+ *    différait de celui que la fenêtre donnerait au run suivant.
+ *  - RÉVISIONS : un changement de revision d'une expérience remet à zéro
+ *    son historique dans la fenêtre (rollout reconfiguré ≠ bruit).
+ *  - VALIDATION DU WIRE : réponse sans `assignments` = échec (avant : succès
+ *    vide), doublons d'une même réponse ignorés, bucket/position validés.
+ *  - NOTIFICATIONS PERDUES CORRIGÉES : les deltas sont calculés contre un
+ *    « acknowledged » (dernier état NOTIFIÉ avec succès), pas contre le
+ *    dernier état mesuré. Un échec de webhook ne perd plus le changement.
+ *  - TOUS les changements sont envoyés (lots de 10 embeds) ; seuls les lots
+ *    réellement livrés font avancer « acknowledged ».
+ *  - MARGE DE BRUIT EXACTE : Var(Δp̂) calculée au niveau batch — les
+ *    échantillons partagés entre deux fenêtres glissantes ne sont plus
+ *    comptés deux fois (l'ancienne formule z·√(2p(1−p)/n) sur-estimait
+ *    l'indépendance des fenêtres).
+ *  - WILSON : intervalle de confiance de Wilson sur chaque % (valide aux
+ *    extrêmes k=0 / k=n, contrairement à σ binomial brut).
+ *  - BORNES RECONSTRUITES (INDICATIVES) : les positions hash_result
+ *    observées permettent de reconstruire les plages d'un bucket
+ *    (ordre-statistiques + correction « German tank »). C'est une seconde
+ *    mesure, dépendante du modèle, affichée à côté de k/n — jamais
+ *    présentée comme exacte.
  *
- * Méthode (V13) :
+ * Méthode de mesure (inchangée dans son principe) :
  *  - /experiments anonyme (X-Request-Id unique par requête) → pour chaque
- *    échantillon : hash de l'expérience, bucket assigné, hash_result.
+ *    échantillon : hash de l'expérience, revision, bucket assigné, position.
  *  - Par variante : k = nombre d'échantillons assignés, n = nombre total
- *    d'échantillons de la fenêtre → pct = k/n. σ = √(p(1−p)/n) donne la
- *    confiance (high ≤ 1,5 pt, medium ≤ ~3 pts, low = dégradé).
- *  - Les positions hash_result récentes (anneau de 60/valeur) servent à
- *    reconstruire des ranges INDICATIVES pour l'affichage — le % affiché
- *    reste toujours k/n (non biaisé).
- *  - Un changement n'est publié que s'il dépasse max(MIN_DELTA, marge de
- *    bruit z·√(2p(1−p)/n)).
+ *    d'échantillons de la fenêtre → pct = k/n + IC de Wilson.
  *
  * Env:
  *   DISCORD_USER_TOKEN(S) / DISCORD_USER_TOKEN_1..10
  *   UR_WEBHOOK | USER_ROLLOUT_WEBHOOK_URL | APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
- *   USER_ROLLOUT_SAMPLES        default 150 (échantillons par run)
+ *   USER_ROLLOUT_SAMPLES        default 150 (échantillons par run — cible fixe)
  *   USER_ROLLOUT_CONCURRENCY    default 2
- *   USER_ROLLOUT_DELAY_MS      default 300
- *   USER_ROLLOUT_MIN_OK        default 25 (min samples OK pour estimer)
- *   USER_ROLLOUT_MAX_MS        default 90000 (budget temps du sampling)
- *   USER_ROLLOUT_PLATEAU       default 30 (arrêt anticipé sur plateau)
- *   USER_ROLLOUT_WINDOW_H      default 4 (fenêtre glissante, en heures)
+ *   USER_ROLLOUT_DELAY_MS       default 300
+ *   USER_ROLLOUT_MIN_OK         default 25 (min samples OK pour estimer)
+ *   USER_ROLLOUT_MAX_MS         default 90000 (budget temps du sampling)
+ *   USER_ROLLOUT_WINDOW_H       default 4 (fenêtre glissante, en heures)
  *   USER_ROLLOUT_WINDOW_BATCHES default 60 (max runs gardés dans la fenêtre)
- *   USER_ROLLOUT_NOISE_Z       default 2 (seuil de bruit statistique ; 0 = off)
- *   USER_ROLLOUT_NOTIFY_HASH   default 0 (notifier aussi les hash sans nom)
- *   USER_ROLLOUT_PLATFORM_UAS  optionnel — User-Agents séparés par ||
- *                             (défaut : web + app desktop + Android + iOS)
- *   APEX_MIN_PCT_DELTA         default 1 (% min, en plus de la marge de bruit)
+ *   USER_ROLLOUT_NOISE_Z        default 2 (seuil de bruit statistique ; 0 = off)
+ *   USER_ROLLOUT_NOTIFY_HASH    default 0 (notifier aussi les hash sans nom)
+ *   USER_ROLLOUT_PLATFORM_UAS   optionnel — User-Agents séparés par ||
+ *                              (défaut : web + app desktop + Android + iOS)
+ *   APEX_MIN_PCT_DELTA          default 1 (% min, en plus de la marge de bruit)
  */
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
@@ -52,11 +59,12 @@ const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
 const {
-  mergeIntervals,
   classifyChange,
-  noiseMargin,
   stableChangeFingerprint,
-  pointsToIntervals,
+  noiseMargin,
+  wilsonPctInterval,
+  slidingWindowDeltaMargin,
+  reconstructBucketRanges,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
 
@@ -69,7 +77,6 @@ const APEX_EXP = path.join(DATA, 'apex_experiments.json');
 
 const TOKENS = loadTokens();
 // Webhook UNIQUE pour les notifs user rollouts : la première var définie gagne.
-// Ordre : salon dédié (UR_WEBHOOK) → USER_ROLLOUT_WEBHOOK_URL → APEX → ROLLOUT → DISCORD.
 const WEBHOOK_CANDIDATES = [
   ['UR_WEBHOOK', process.env.UR_WEBHOOK],
   ['USER_ROLLOUT_WEBHOOK_URL', process.env.USER_ROLLOUT_WEBHOOK_URL],
@@ -86,24 +93,22 @@ const DELAY_MS = Math.max(80, Math.min(5000, Number(process.env.USER_ROLLOUT_DEL
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || 1);
 const MIN_OK = Math.max(10, Number(process.env.USER_ROLLOUT_MIN_OK || 25));
 const MAX_MS = Math.max(15000, Number(process.env.USER_ROLLOUT_MAX_MS || 90000));
-const PLATEAU = Math.max(10, Number(process.env.USER_ROLLOUT_PLATEAU || 30));
 const NOTIFY_HASH = String(process.env.USER_ROLLOUT_NOTIFY_HASH || '0') === '1';
 const NOISE_Z = Math.max(0, Number(process.env.USER_ROLLOUT_NOISE_Z ?? 2));
 const SCALE = DEFAULT_SCALE;
-// V13 fenêtre glissante : les échantillons des N derniers runs cumulent
-// leurs observations → estimation fine (σ ~ 0,5-1 pt sur une fenêtre pleine).
 const WINDOW_H = Math.max(1, Number(process.env.USER_ROLLOUT_WINDOW_H || 4));
 const WINDOW_H_MS = WINDOW_H * 3600 * 1000;
 const MAX_BATCHES = Math.max(5, Number(process.env.USER_ROLLOUT_WINDOW_BATCHES || 60));
-// Anneau de positions récentes par bucket (ranges indicatives seulement).
-const RING_CAP = 60;
+// Anneau de positions par (hash, bucket) — alimente la reconstruction de
+// bornes (indicative). Capé pour garder l'état JSON compact.
+const RING_CAP = 150;
+// Limite Discord : 10 embeds par message → lots de 10 changements.
+const EMBED_BATCH = 10;
 
 /**
- * Rotation de plateformes (V13.1) : certains rollouts sont ciblés par
- * plateforme (ex. « android, desktop »). Avec un seul UA web, nos
- * échantillons sont exclus de ces rollouts et l'expérience devient
- * invisible. Chaque échantillon tire un contexte de plateforme → couverture
- * de tous les rollouts, % toujours mesuré par nous-mêmes.
+ * Rotation de plateformes : certains rollouts sont ciblés par plateforme
+ * (ex. « android, desktop »). Chaque échantillon tire un contexte de
+ * plateforme → couverture de tous les rollouts.
  */
 const PLATFORM_UAS = String(process.env.USER_ROLLOUT_PLATFORM_UAS || '')
   .split('||')
@@ -168,11 +173,12 @@ async function loadExperimentDefs() {
   return defs;
 }
 
-// ─── Fenêtre glissante ──────────────────────────────────────────────────────
+// ─── Fenêtre glissante (V14 : politique unique, revisions) ──────────────────
 
 /**
  * Normalise + élague la fenêtre : batches plus vieux que WINDOW_H jetés,
  * au plus MAX_BATCHES gardées, anneaux de positions capés à RING_CAP.
+ * Un batch = { bid, ts, ok, rev: {hash: revision}, c: {hash: {bucket: k}} }.
  */
 function pruneWindow(raw, now) {
   const w = raw && typeof raw === 'object' && Array.isArray(raw.batches) ? raw : { batches: [], pos: {} };
@@ -182,82 +188,103 @@ function pruneWindow(raw, now) {
     .slice(-MAX_BATCHES);
   const posIn = w.pos && typeof w.pos === 'object' ? w.pos : {};
   const pos = {};
-  for (const [hashS, buckets] of Object.entries(posIn)) {
+  for (const [hashS, entry] of Object.entries(posIn)) {
+    const src = entry && typeof entry === 'object' && entry.b && typeof entry.b === 'object' ? entry : null;
     const nb = {};
-    for (const [bS, arr] of Object.entries(buckets || {})) {
-      const a = Array.isArray(arr) ? arr.filter((x) => Number.isFinite(x)) : [];
-      if (a.length) nb[bS] = a.slice(-RING_CAP);
+    if (src) {
+      for (const [bS, arr] of Object.entries(src.b)) {
+        const a = Array.isArray(arr) ? arr.filter((x) => Number.isFinite(x)) : [];
+        if (a.length) nb[bS] = a.slice(-RING_CAP);
+      }
     }
-    if (Object.keys(nb).length) pos[hashS] = nb;
+    if (Object.keys(nb).length) pos[hashS] = { rev: src && src.rev != null ? src.rev : null, b: nb };
   }
   return { batches, pos };
 }
 
 /**
- * Agrège les batches de la fenêtre :
- *  - winCounts : hash → Map(bucket → k)  (observations cumulées)
- *  - winN      : hash → n (échantillons comptés DEPUIS la première apparition
- *    du hash dans la fenêtre — un hash absent d'un batch y compte quand même
- *    dans n : chaque échantillon avait sa chance d'être assigné).
+ * Agrège les batches d'une fenêtre en UNE passe cohérente :
+ *  - counts : hash → Map(bucket → k) (observations cumulées)
+ *  - n      : hash → échantillons comptés DEPUIS la dernière apparition
+ *    (ou le dernier changement de revision) du hash — chaque échantillon
+ *    de chaque batch avait sa chance d'être assigné.
+ * Un changement de revision remet le hash à zéro : un rollout reconfiguré
+ * n'est pas mélangé avec ses anciennes mesures.
  */
 function windowAggregate(win) {
-  const firstIdx = new Map();
-  win.batches.forEach((b, i) => {
-    for (const hashS of Object.keys(b.c)) {
+  const state = new Map(); // hash → { counts: Map, n, rev }
+  const batches = (win && Array.isArray(win.batches)) ? win.batches : [];
+  for (const b of batches) {
+    const c = b.c && typeof b.c === 'object' ? b.c : {};
+    const rev = b.rev && typeof b.rev === 'object' ? b.rev : {};
+    const ok = Math.max(0, Number(b.ok) || 0);
+
+    // 1. Découverte / reset : hash vu pour la première fois ou revision changée.
+    for (const hashS of Object.keys(c)) {
       const hash = Number(hashS);
       if (!Number.isFinite(hash)) continue;
-      if (!firstIdx.has(hash)) firstIdx.set(hash, i);
+      const r = rev[hashS];
+      const cur = state.get(hash);
+      if (!cur || (r != null && cur.rev != null && cur.rev !== r)) {
+        state.set(hash, { counts: new Map(), n: 0, rev: r != null ? r : null });
+      } else if (cur && r != null && cur.rev == null) {
+        cur.rev = r;
+      }
     }
-  });
-  const winCounts = new Map();
-  for (const hash of firstIdx.keys()) winCounts.set(hash, new Map());
-  win.batches.forEach((b, i) => {
-    for (const [hash, first] of firstIdx) {
-      if (i < first) continue;
-      const buckets = b.c[String(hash)];
+
+    // 2. Accumulation : chaque hash connu voit TOUT le batch.
+    for (const [hashS, cur] of state) {
+      cur.n += ok;
+      const buckets = c[hashS];
       if (!buckets) continue;
-      const m = winCounts.get(hash);
       for (const [bS, k] of Object.entries(buckets)) {
         const bucket = Number(bS);
         const kk = Number(k);
         if (!Number.isFinite(bucket) || !Number.isFinite(kk)) continue;
-        m.set(bucket, (m.get(bucket) || 0) + kk);
+        cur.counts.set(bucket, (cur.counts.get(bucket) || 0) + kk);
       }
     }
-  });
+  }
+
+  const winCounts = new Map();
   const winN = new Map();
-  for (const [hash, first] of firstIdx) {
-    let n = 0;
-    for (let i = first; i < win.batches.length; i++) n += Number(win.batches[i].ok) || 0;
-    winN.set(hash, n);
+  for (const [hash, cur] of state) {
+    winCounts.set(hash, cur.counts);
+    winN.set(hash, cur.n);
   }
   return { winCounts, winN };
 }
 
 /**
  * Construit la fenêtre POUR SAUVEGARDE : batches précédentes (déjà élaguées)
- * + le batch du run courant (comptes compacts hash → bucket → k).
+ * + le batch du run courant (comptes compacts hash → bucket → k + revisions).
+ * Chaque batch reçoit un identifiant unique (bid) pour la marge de bruit.
  */
-function buildNextWindow(win, curCounts, ok, now) {
+function buildNextWindow(win, curCounts, curRevs, ok, now) {
   const c = {};
   for (const [hash, buckets] of curCounts) {
     const nb = {};
     for (const [bucket, k] of buckets) nb[String(bucket)] = k;
     c[String(hash)] = nb;
   }
-  const batches = [...win.batches, { ts: now, ok, c }].slice(-MAX_BATCHES);
-  return { batches, pos: {} };
+  const rev = {};
+  for (const [hash, r] of curRevs) rev[String(hash)] = r;
+  const bid = 'b' + now + '_' + crypto.randomBytes(4).toString('hex');
+  const batches = [...win.batches, { bid, ts: now, ok, rev, c }].slice(-MAX_BATCHES);
+  return { batches, pos: win.pos || {} };
 }
 
-// ─── Estimation binomiale (V13) ─────────────────────────────────────────────
+// ─── Estimation (V14 : k/n + Wilson + bornes indicatives) ──────────────────
 
 /**
  * Traitements d'une expérience depuis les comptes cumulés de la fenêtre.
  * mergedCounts : Map(bucket → k) ; n : total d'échantillons de la fenêtre ;
- * ringPos : { bucket: [hash_result, ...] } positions récentes (indicatives).
+ * ringPos : { bucket: [position, ...] } positions récentes (anneau).
  *
- * pct = k/n (binomial, non biaisé). Les ranges sont reconstruites depuis
- * l'anneau de positions avec un gap adapté à la densité → purement indicatif.
+ * pct = k/n (binomial, non biaisé) + IC de Wilson.
+ * Les positions servent à une reconstruction INDICATIVE des plages
+ * (ordre-statistiques, correction German tank) — jamais présentée comme
+ * exacte, affichée comme seconde mesure.
  */
 function buildWindowTreatments(mergedCounts, n, ringPos) {
   const treatments = [];
@@ -267,28 +294,22 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
     if (!Number.isFinite(bucket) || kk <= 0 || nn <= 0) continue;
     const p = Math.min(1, Math.max(0, kk / nn));
     const pct = Math.round(p * 100 * 100) / 100;
-    const sigma = 100 * Math.sqrt(Math.max(p * (1 - p), 1 / Math.max(nn, 1)) / Math.max(nn, 1));
+    const ci = wilsonPctInterval(kk, nn, NOISE_Z || 2);
     let confidence = 'low';
-    if (kk >= 30 && sigma <= 1.5) confidence = 'high';
+    if (kk >= 30 && ci.sigma <= 1.5) confidence = 'high';
     else if (kk >= 12) confidence = 'medium';
     const status = confidence === 'low' ? 'degraded' : 'estimated';
 
-    // Ranges indicatives depuis l'anneau de positions récentes.
+    // Reconstruction INDICATIVE des plages depuis l'anneau de positions.
     const pts = [
       ...new Set(
-        ((ringPos && ringPos[String(bucket)]) || [])
+        ((ringPos && ringPos.b && ringPos.b[String(bucket)]) || [])
           .map(Number)
           .filter((x) => Number.isFinite(x) && x >= 0 && x < SCALE),
       ),
-    ].sort((a, b) => a - b);
-    let ranges = [];
-    let gapFill = 0;
-    if (pts.length >= 3) {
-      // Gap ≈ espacement attendu si la couverture estimée est juste.
-      gapFill = Math.max(1, Math.min(80, Math.round((p * SCALE) / pts.length) || 1));
-      ranges = pointsToIntervals(pts, gapFill, SCALE);
-    }
-    const observed = pts.length ? [pts[0], pts[pts.length - 1]] : null;
+    ];
+    const rec = pts.length >= 3 ? reconstructBucketRanges(pts, SCALE) : null;
+    const observed = pts.length ? [Math.min(...pts), Math.max(...pts)] : null;
     treatments.push({
       bucket: Number(bucket),
       label: tLabel(bucket),
@@ -300,10 +321,12 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
       sampleCount: kk,
       samples: kk,
       coverage: Math.round(p * 1000) / 1000,
-      intervals: ranges,
-      ranges,
+      ci: { lo: ci.lo, hi: ci.hi, sigma: ci.sigma },
+      // Bornes reconstruites (MODÈLE ordre-statistiques — indicatif).
+      ranges: rec ? rec.ranges : [],
+      indicativePct: rec ? rec.pct : null,
+      indicativeCi: rec ? rec.ci : null,
       observed,
-      gapFill,
       sourceKind: 'window_binomial',
     });
   }
@@ -406,33 +429,36 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
   if (!res.ok) throw new Error('HTTP ' + res.status);
   rateLimit.success();
   const data = await safeJson(res);
-  if (!data) throw new Error('réponse JSON invalide');
+  // V14 : une réponse sans tableau `assignments` est INVALIDE (avant : elle
+  // comptait comme un échantillon vide réussi et gonflait n à tort).
+  if (!data || !Array.isArray(data.assignments)) throw new Error('réponse sans assignments');
   return {
     fingerprint: data.fingerprint,
-    assignments: Array.isArray(data.assignments) ? data.assignments : [],
+    assignments: data.assignments,
   };
 }
 
 /**
  * Sample fingerprints to detect + measure user experiments.
- * Returns { byHash, ok, fail } avec byHash : hash → bucket → hash_result[].
+ * Protocole FIXE : cible SAMPLES échantillons (plus d'arrêt sur « plateau »
+ * de découverte, qui biaisait la densité de la fenêtre) ; le budget temps
+ * reste la seule sortie anticipée.
+ * Returns { byHash, byRev, ok, fail } avec
+ * byHash : hash → Map(bucket → positions[]) ; byRev : hash → revision.
  */
 async function sampleFingerprints(n, concurrency) {
   const byHash = new Map();
+  const byRev = new Map();
   let ok = 0;
   let fail = 0;
   let next = 0;
-  // Budget temps + sortie sur plateau de découverte (la mesure continue via
-  // la fenêtre : chaque run ajoute ses échantillons aux précédents).
   const deadline = Date.now() + MAX_MS;
-  let sinceNew = 0;
   let stopReason = null;
 
   async function worker() {
     while (true) {
       const my = next++;
       if (my >= n) break;
-      if (!stopReason && ok >= MIN_OK && sinceNew >= PLATEAU) stopReason = 'plateau';
       if (!stopReason && Date.now() > deadline) stopReason = 'budget';
       if (stopReason) break;
       if (rateLimit.consecutive429 > 15) {
@@ -446,20 +472,9 @@ async function sampleFingerprints(n, concurrency) {
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
           'User-Agent': UAS[my % UAS.length],
         });
-        let foundNew = false;
-        for (const a of assignments) {
-          if (!Array.isArray(a) || a.length < 6) continue;
-          const hash = Number(a[0]);
-          const bucket = Number(a[2]);
-          const hr = Number(a[5]);
-          if (!Number.isFinite(hash) || !Number.isFinite(hr)) continue;
-          if (!byHash.has(hash)) { byHash.set(hash, new Map()); foundNew = true; }
-          const bm = byHash.get(hash);
-          if (!bm.has(bucket)) { bm.set(bucket, []); foundNew = true; }
-          bm.get(bucket).push(hr);
-        }
+        // V14 : validation stricte + dédoublonnage (cf. recordAssignments).
+        recordAssignments(byHash, byRev, assignments);
         ok++;
-        sinceNew = foundNew ? 0 : sinceNew + 1;
       } catch (e) {
         fail++;
         if (String(e.message).includes('429')) {
@@ -474,7 +489,44 @@ async function sampleFingerprints(n, concurrency) {
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429, stopReason ? '· early stop: ' + stopReason : '(all ' + n + ')');
-  return { byHash, ok, fail };
+  return { byHash, byRev, ok, fail };
+}
+
+/**
+ * Applique une réponse d'assignments aux structures de sampling (PURE et
+ * testable) : validation stricte + dédoublonnage par réponse.
+ *  - bucket : entier ≥ -1
+ *  - position (hash_result) : entier dans [0, SCALE)
+ *  - un hash n'est compté qu'une fois par réponse (doublon ignoré)
+ */
+function recordAssignments(byHash, byRev, assignments) {
+  if (!Array.isArray(assignments)) return 0;
+  const seenInResponse = new Set();
+  let recorded = 0;
+  for (const a of assignments) {
+    if (!Array.isArray(a) || a.length < 6) continue;
+    const hash = Number(a[0]);
+    const rev = a[1] == null ? null : Number(a[1]);
+    const bucket = Number(a[2]);
+    const hr = Number(a[5]);
+    if (!Number.isFinite(hash) || seenInResponse.has(hash)) continue;
+    seenInResponse.add(hash);
+    if (!Number.isFinite(bucket) || bucket < -1 || !Number.isInteger(bucket)) continue;
+    if (!Number.isFinite(hr) || hr < 0 || hr >= SCALE || !Number.isInteger(hr)) continue;
+    if (rev != null && Number.isFinite(rev)) {
+      // Changement de revision AU MILIEU du run : les observations de
+      // l'ancienne configuration sont jetées (pas mélangées avec la nouvelle).
+      const prevRev = byRev.get(hash);
+      if (prevRev != null && prevRev !== rev) byHash.set(hash, new Map());
+      byRev.set(hash, rev);
+    }
+    if (!byHash.has(hash)) byHash.set(hash, new Map());
+    const bm = byHash.get(hash);
+    if (!bm.has(bucket)) bm.set(bucket, []);
+    bm.get(bucket).push(hr);
+    recorded++;
+  }
+  return recorded;
 }
 
 function fingerprintOf(treatments) {
@@ -529,7 +581,7 @@ async function fetchTokenSnapshot(defs) {
   return out;
 }
 
-// ─── Embeds — format sobre, sans emojis ────────────────────────────────────
+// ─── Embeds — format sobre, sans emojis ─────────────────────────────────────
 
 function fmtPct(pct) {
   const v = Number(pct);
@@ -544,7 +596,7 @@ function variantLabel(bucket) {
 
 function buildEmbeds(changes) {
   const embeds = [];
-  for (const c of changes.slice(0, 10)) {
+  for (const c of changes.slice(0, EMBED_BATCH)) {
     const title = (String(c.id || c.title) + ' (user)').slice(0, 256);
     const lines = [];
 
@@ -556,7 +608,12 @@ function buildEmbeds(changes) {
       }
     } else if (c.kind === 'pct') {
       for (const d of (c.deltas || []).slice(0, 12)) {
-        lines.push(variantLabel(d.bucket) + ' ' + fmtPct(d.from) + '% -> ' + fmtPct(d.to) + '%');
+        let line = variantLabel(d.bucket) + ' ' + fmtPct(d.from) + '% -> ' + fmtPct(d.to) + '%';
+        if (d.ci) line += ' (±' + fmtPct(d.ci) + ')';
+        lines.push(line);
+        if (d.ranges && d.ranges.length) {
+          lines.push('  bornes reconstruites (indicatif) : ' + d.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + '));
+        }
       }
     } else if (c.kind === 'revision') {
       lines.push('Revision ' + c.fromRev + ' -> ' + c.toRev + ' - ' + variantLabel(c.bucket));
@@ -597,8 +654,8 @@ function hasName(id) {
   return id && !String(id).startsWith('hash:');
 }
 
-/** Rapport texte lisible (data/user_rollouts.md) — régénéré avec le JSON. */
-function writeReport(state) {
+/** Rapport texte lisible — régénéré avec le JSON. */
+function writeReport(state, reportFile) {
   try {
     const fmt = (p) => String(p).replace('.', ',') + ' %';
     const conf = (c) => (c === 'high' ? 'élevée' : c === 'medium' ? 'moyenne' : 'faible');
@@ -606,24 +663,30 @@ function writeReport(state) {
     const n = exps.reduce((m, e) => Math.max(m, Number(e.windowN) || 0), 0);
     const gen = new Date().toISOString().slice(0, 16).replace('T', ' ');
     const out = [];
-    out.push('# Rollouts user — mesure propre (v13)', '');
+    out.push('# Rollouts user — mesure propre (v14)', '');
     out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
     out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
+    out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
+    out.push('Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statistiques, dépendante du modèle) : un heuristique de séparation peut fragmenter une plage uniforme → à lire comme un ordre de grandeur, pas une certitude.', '');
     out.push('## Expériences mesurées (' + exps.length + ')', '');
-    out.push('| Expérience | % mesuré | k/n | Confiance | Statut |');
-    out.push('|---|---:|---:|---|---|');
+    out.push('| Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |');
+    out.push('|---|---:|---|---:|---|---|');
     for (const e of exps) {
       const ts = e.treatments || [];
       const best = ts.reduce((a, t) => ((t.bucket || 0) > 0 && (a == null || (t.pct || 0) > a) ? t.pct : a), null);
-      const k = (ts[0] || {}).sampleCount;
+      const bestT = ts.find((t) => t.pct === best) || ts[0] || {};
       const st = e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
-      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + (k != null ? k + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf((ts[0] || {}).confidence) + ' | ' + st + ' |');
+      const ci = bestT.ci ? '[' + String(bestT.ci.lo).replace('.', ',') + ' – ' + String(bestT.ci.hi).replace('.', ',') + ']' : '—';
+      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + ci + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf(bestT.confidence) + ' | ' + st + ' |');
     }
     out.push('', '## Détail par variante');
     for (const e of exps) {
       out.push('', '### ' + (e.title || e.id || 'hash:' + e.hash));
       for (const t of e.treatments || []) {
-        out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
+        out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (IC 95 % [' + String((t.ci || {}).lo ?? '?').replace('.', ',') + ' ; ' + String((t.ci || {}).hi ?? '?').replace('.', ',') + '], ' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
+        if (t.ranges && t.ranges.length) {
+          out.push('  - plages reconstruites (indicatif, ordre de grandeur) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct));
+        }
       }
     }
     // Guild — % exacts + expériences en attente (experiment_rollouts.json, nos propres sources)
@@ -647,90 +710,125 @@ function writeReport(state) {
         out.push(waiting.map((g) => '- ' + (g.title || g.id)).join('\n'));
       }
     } catch (e2) { /* experiment_rollouts.json absent au premier run */ }
-    fs.writeFileSync(path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
+    fs.writeFileSync(reportFile || path.join(DATA, 'user_rollouts.md'), out.join('\n') + '\n');
   } catch (e) {
     console.warn('report skip:', String((e && e.message) || e).slice(0, 80));
   }
 }
+
 // ─── Main ───────────────────────────────────────────────────────────────────
 
-async function main() {
-  await fs.ensureDir(DATA);
-  console.log('📊 User rollouts v13 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
+/** Extrait un snapshot acknowledged {rev, n, b:{bucket:pct}} d'une expérience. */
+function ackSnapshot(exp, rev, n) {
+  const b = {};
+  for (const t of (exp && exp.treatments) || []) {
+    if (t && t.pctKnown && t.pct != null) b[String(t.bucket)] = Number(t.pct);
+  }
+  return { rev: rev ?? null, n: n ?? null, b };
+}
+
+async function main(deps = {}) {
+  // Injection (tests d'intégration) : stateFile/reportFile pour un état
+  // temporaire, sampler/tokenSnapshot/postWebhook pour des doubles purs.
+  const stateFile = deps.stateFile || STATE;
+  const reportFile = deps.reportFile || path.join(DATA, 'user_rollouts.md');
+  const sampler = deps.sampler || sampleFingerprints;
+  const tokenSnapFn = deps.tokenSnapshot || fetchTokenSnapshot;
+  const postWebhookFn = deps.postWebhook || postWebhook;
+
+  await fs.ensureDir(path.dirname(stateFile));
+  console.log('📊 User rollouts v14 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set (' + WEBHOOK_SOURCE + ')' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
 
-  let prev = { experiments: [], token: [], announced: {} };
-  if (await fs.pathExists(STATE)) {
+  let prev = { experiments: [], token: [], announced: {}, acknowledged: {} };
+  if (await fs.pathExists(stateFile)) {
     try {
-      prev = await fs.readJson(STATE);
+      prev = await fs.readJson(stateFile);
     } catch (_) {}
   }
   const announced = prev.announced && typeof prev.announced === 'object' ? { ...prev.announced } : {};
+  let acknowledged =
+    prev.acknowledged && typeof prev.acknowledged === 'object' ? { ...prev.acknowledged } : {};
   const isFirst = !(prev.experiments && prev.experiments.length);
-  // Upgrade ≤ v12 → v13 : changement de méthode de mesure — re-seed silencieux
-  // (pas de flood de « corrections » au premier run).
-  const isUpgrade = !isFirst && Number(prev.version) !== 13;
+  // Upgrade < v14 : passage au acknowledged (baseline de notification) —
+  // re-seed silencieux, pas de flood de « rattrapage ».
+  const isUpgrade = !isFirst && Number(prev.version) !== 14;
+  if (isUpgrade) {
+    // Migration : initialise acknowledged depuis la dernière mesure connue.
+    acknowledged = {};
+    const prevTokRev = new Map((prev.token || []).map((t) => [String(t.hash), t.revision]));
+    for (const e of prev.experiments || []) {
+      if (e && e.hash != null) {
+        acknowledged[String(e.hash)] = ackSnapshot(
+          e,
+          prevTokRev.get(String(e.hash)) ?? null,
+          e.windowN ?? null,
+        );
+      }
+    }
+  }
 
   // Noms : fichiers locaux uniquement.
   const defs = await loadExperimentDefs();
 
   const [tokenSnapR, sampledR] = await Promise.allSettled([
-    fetchTokenSnapshot(defs),
-    sampleFingerprints(SAMPLES, CONC),
+    tokenSnapFn(defs),
+    sampler(SAMPLES, CONC),
   ]);
   const tokenSnap = tokenSnapR.status === 'fulfilled' ? tokenSnapR.value : [];
-  const sampled = sampledR.status === 'fulfilled' ? sampledR.value : { byHash: new Map(), ok: 0, fail: 0 };
-  const { byHash, ok, fail } = sampled;
+  const sampled = sampledR.status === 'fulfilled'
+    ? sampledR.value
+    : { byHash: new Map(), byRev: new Map(), ok: 0, fail: 0 };
+  const { byHash, byRev, ok, fail } = sampled;
   console.log('Token snapshot:', tokenSnap.length, 'experiments');
   if (ok < MIN_OK) {
     console.warn('Too few ok samples', ok, '<', MIN_OK, '— estimation fenêtre seulement');
   }
 
-  // ---- Fenêtre : aggège l'historique, merge le run courant ----
+  // ---- Fenêtre : agrégation UNIFIÉE (batches précédents + run courant) ----
   const now = Date.now();
-  const win = pruneWindow(prev.posWindow, now);
-  const { winCounts, winN } = windowAggregate(win);
-
+  const winOld = pruneWindow(prev.posWindow, now);
   const curCounts = new Map(); // hash → Map(bucket → k)
   for (const [hash, bucketMap] of byHash) {
     const m = new Map();
-    for (const [bucket, hrs] of bucketMap) m.set(Number(bucket), hrs.length);
+    for (const [bucket, positions] of bucketMap) m.set(Number(bucket), positions.length);
     curCounts.set(hash, m);
   }
+  const nextWindow = buildNextWindow(winOld, curCounts, byRev, ok, now);
 
-  // Anneaux de positions : anciens + run courant, capés.
+  // Anneaux de positions : anciens (revision identique seulement) + run courant.
   const mergedPos = {};
-  const posKeys = new Set([...Object.keys(win.pos || {}), ...[...curCounts.keys()].map(String)]);
+  const posKeys = new Set([...Object.keys(winOld.pos || {}), ...[...curCounts.keys()].map(String)]);
   for (const hashS of posKeys) {
+    const curRev = byRev.get(Number(hashS)) ?? null;
+    const old = (winOld.pos || {})[hashS];
     const buckets = {};
-    for (const [bS, arr] of Object.entries(((win.pos || {})[hashS]) || {})) {
-      if (Array.isArray(arr) && arr.length) buckets[bS] = [...arr];
+    // Positions conservées uniquement si la revision n'a pas changé.
+    if (old && old.b && (curRev == null || old.rev == null || old.rev === curRev)) {
+      for (const [bS, arr] of Object.entries(old.b)) {
+        if (Array.isArray(arr) && arr.length) buckets[bS] = [...arr];
+      }
     }
     const cur = byHash.get(Number(hashS));
     if (cur) {
-      for (const [bucket, hrs] of cur) {
+      for (const [bucket, positions] of cur) {
         const key = String(bucket);
-        buckets[key] = [...(buckets[key] || []), ...(hrs || [])].slice(-RING_CAP);
+        buckets[key] = [...(buckets[key] || []), ...(positions || [])].slice(-RING_CAP);
       }
     }
-    if (Object.keys(buckets).length) mergedPos[hashS] = buckets;
+    if (Object.keys(buckets).length) mergedPos[hashS] = { rev: curRev, b: buckets };
   }
+  nextWindow.pos = mergedPos;
 
-  // ---- Estimation par expérience (fenêtre + run courant) ----
+  // ---- Estimation par expérience : UNE SEULE fenêtre (V14) ----
+  const { winCounts, winN } = windowAggregate(nextWindow);
   const experiments = [];
-  const allHashes = new Set([...winCounts.keys(), ...curCounts.keys()]);
-  for (const hash of allHashes) {
-    const cur = curCounts.get(hash) || new Map();
-    const wC = winCounts.get(hash) || new Map();
-    // n courant : le run compte pour les hash détectés maintenant.
-    const n = (winN.get(hash) || 0) + (cur.size ? ok : 0);
+  for (const [hash, m] of winCounts) {
+    const n = winN.get(hash) || 0;
     if (n < MIN_OK) continue;
-    const mergedCounts = new Map();
-    for (const [b, k] of wC) mergedCounts.set(b, (mergedCounts.get(b) || 0) + k);
-    for (const [b, k] of cur) mergedCounts.set(b, (mergedCounts.get(b) || 0) + k);
-    const totalK = [...mergedCounts.values()].reduce((s, x) => s + x, 0);
+    const totalK = [...m.values()].reduce((s, x) => s + x, 0);
     if (totalK < 3) continue; // trop peu d'observations → attendre la fenêtre
 
     const def = defs.get(hash) || {
@@ -740,7 +838,7 @@ async function main() {
       type: 'user',
     };
     const { treatments, status: rollStatus, sumPct } = buildWindowTreatments(
-      mergedCounts,
+      m,
       n,
       mergedPos[String(hash)] || {},
     );
@@ -774,13 +872,11 @@ async function main() {
     experiments.filter((e) => e.status === 'degraded').length,
   );
 
-  // Fenêtre à persister (batch courant inclus).
-  const nextWindow = buildNextWindow(win, curCounts, ok, now);
-  nextWindow.pos = mergedPos;
-
   const changes = [];
-  if (!isFirst) {
-    const pMap = new Map((prev.experiments || []).map((e) => [String(e.hash || e.id), e]));
+  if (!isFirst && !isUpgrade) {
+    // Base de comparaison : acknowledged (dernier état NOTIFIÉ). L'absence
+    // d'entrée acknowledged signifie JAMAIS livré → annonce « new » (le
+    // fingerprint announced évite de répéter deux fois le même état).
     for (const nExp of experiments) {
       if (!nExp.named && !NOTIFY_HASH) continue;
 
@@ -788,21 +884,27 @@ async function main() {
       const fp = nExp.fingerprint;
       if (announced[key] === fp) continue;
 
-      const p = pMap.get(key) || pMap.get(nExp.id);
-      if (!p) {
+      const ack = acknowledged[key];
+      const ackTreatments =
+        ack && ack.b && Object.keys(ack.b).length
+          ? Object.entries(ack.b).map(([bucket, pct]) => ({ bucket: Number(bucket), pctKnown: true, pct }))
+          : null;
+
+      if (!ackTreatments) {
         if (nExp.status === 'insufficient_data' || nExp.status === 'degraded') continue;
         changes.push({ kind: 'new', ...nExp });
         continue;
       }
-      if (p.fingerprint === nExp.fingerprint) continue;
-      const deltas = [];
-      const pt = new Map((p.treatments || []).map((t) => [t.bucket, t]));
       if (nExp.status === 'degraded' || nExp.status === 'insufficient_data' || nExp.status === 'unknown') {
         continue;
       }
-      if (p.status === 'degraded' || p.status === 'insufficient_data') {
-        continue;
-      }
+
+      const deltas = [];
+      const pt = new Map(ackTreatments.map((t) => [t.bucket, t]));
+      // Marge de bruit CONSERVATRICE : la formule exacte au niveau batch ne
+      // décrit que la fenêtre précédente immédiate ; la baseline acknowledged
+      // peut être plus vieille → on prend aussi la marge binomiale sur le
+      // plus petit des deux n (acknowledged vs courant).
       for (const t of nExp.treatments || []) {
         if (!t.pctKnown || t.pct == null) continue;
         if (t.status === 'degraded' || t.status === 'insufficient_data') continue;
@@ -818,7 +920,8 @@ async function main() {
               change: Number(t.pct),
               changeType: 'ROLLOUT_APPEARED',
               observed: t.observed,
-              ranges: t.intervals || t.ranges || null,
+              ranges: t.ranges || null,
+              ci: t.ci ? t.ci.sigma : null,
               confidence: t.confidence,
               status: t.status,
               exact: false,
@@ -830,12 +933,10 @@ async function main() {
         }
         const from = Number(oldT.pct);
         const to = Number(t.pct);
-        // Marge de bruit binomiale sur la fenêtre (z·√(2p(1−p)/n)) — un
-        // changement n'est publié que s'il la dépasse.
-        const margin = noiseMargin(
-          Math.max(from, to),
-          Math.max(Number(nExp.windowN || 0), Number(p.windowN || 0)),
-          NOISE_Z,
+        const nAck = Number(ack && ack.n) || 0;
+        const margin = Math.max(
+          slidingWindowDeltaMargin(winOld.batches, nextWindow.batches, Math.max(from, to), NOISE_Z),
+          noiseMargin(Math.max(from, to), Math.max(1, Math.min(nAck || nExp.windowN, nExp.windowN)), NOISE_Z),
         );
         const { changeType, change } = classifyChange(from, to, Math.max(MIN_DELTA, margin));
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
@@ -847,7 +948,8 @@ async function main() {
           change,
           changeType,
           observed: t.observed,
-          ranges: t.intervals || t.ranges || null,
+          ranges: t.ranges || null,
+          ci: t.ci ? t.ci.sigma : null,
           confidence: t.confidence,
           status: t.status,
           exact: false,
@@ -864,6 +966,7 @@ async function main() {
           kind: 'pct',
           id: nExp.id,
           title: nExp.title,
+          hash: nExp.hash,
           deltas,
           named: nExp.named,
           changeFingerprint: fp2,
@@ -872,16 +975,21 @@ async function main() {
       }
     }
 
+    // Revisions : comparées au dernier état NOTIFIÉ (acknowledged.rev),
+    // avec repli sur le dernier état mesuré — un échec de webhook ne perd
+    // plus l'annonce de revision.
     const prevTok = new Map((prev.token || []).map((t) => [t.hash, t]));
     for (const t of tokenSnap) {
       if (!hasName(t.id) && !NOTIFY_HASH) continue;
-      const p = prevTok.get(t.hash);
-      if (p && p.revision !== t.revision) {
+      const ack = acknowledged[String(t.hash)];
+      const prevRev = ack && ack.rev != null ? ack.rev : (prevTok.get(t.hash) || {}).revision;
+      if (prevRev != null && prevRev !== t.revision) {
         changes.push({
           kind: 'revision',
           id: t.id,
           title: t.title,
-          fromRev: p.revision,
+          hash: t.hash,
+          fromRev: prevRev,
           toRev: t.revision,
           bucket: t.bucket,
         });
@@ -889,7 +997,7 @@ async function main() {
     }
   }
 
-  async function writeState(announcedMap, extra = {}) {
+  async function writeState(ackMap, extra = {}) {
     const prevHist = Array.isArray(prev.history) ? prev.history : [];
     const histEntry = {
       ts: new Date().toISOString(),
@@ -900,39 +1008,45 @@ async function main() {
     };
     const history = [...prevHist, histEntry].slice(-40);
     const stateObj = {
-        scrapedAt: new Date().toISOString(),
-        version: 13,
-        schemaVersion: 13,
-        runId:
-          extra.runId ||
-          new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
-        samples: SAMPLES,
-        ok,
-        fail,
-        tokensConfigured: TOKENS.length,
-        experiments,
-        token: tokenSnap,
-        announced: announcedMap,
-        history,
-        lastChanges: extra.changes || prev.lastChanges || [],
-        posWindow: nextWindow,
+      scrapedAt: new Date().toISOString(),
+      version: 14,
+      schemaVersion: 14,
+      runId:
+        extra.runId ||
+        new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
+      samples: SAMPLES,
+      ok,
+      fail,
+      tokensConfigured: TOKENS.length,
+      experiments,
+      token: tokenSnap,
+      announced: extra.announcedMap ?? announced,
+      acknowledged: ackMap,
+      history,
+      lastChanges: extra.changes || prev.lastChanges || [],
+      posWindow: nextWindow,
     };
-    await writeJsonAtomic(STATE, stateObj, 2);
-    writeReport(stateObj);
+    await writeJsonAtomic(stateFile, stateObj, 2);
+    writeReport(stateObj, reportFile);
+    return stateObj;
   }
 
-  // Premier run OU upgrade ≤ v12 → v13 : seed silencieux (pas de flood).
+  // Premier run OU upgrade < v14 : seed silencieux (pas de flood).
   if (isFirst || isUpgrade) {
+    const seedAck = { ...acknowledged };
     const seedAnnounced = { ...announced };
     for (const e of experiments) {
-      if (e.named || NOTIFY_HASH) seedAnnounced[String(e.hash)] = e.fingerprint;
+      if (e.named || NOTIFY_HASH) {
+        seedAnnounced[String(e.hash)] = e.fingerprint;
+        seedAck[String(e.hash)] = ackSnapshot(e, byRev.get(e.hash) ?? null, e.windowN);
+      }
     }
-    await writeState(seedAnnounced);
-    console.log(isUpgrade ? 'Upgrade seed → v13 (mesure propre)' : 'Seed', experiments.length, '· no notify');
+    await writeState(seedAck, { announcedMap: seedAnnounced });
+    console.log(isUpgrade ? 'Upgrade seed → v14 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
     return;
   }
 
-  await writeState(announced);
+  await writeState(acknowledged);
 
   console.log('Changes', changes.length);
   if (!changes.length) {
@@ -940,27 +1054,47 @@ async function main() {
     return;
   }
 
-  const embeds = buildEmbeds(changes);
-  const sent = await postWebhook(embeds);
-  console.log('Webhook', sent.status, sent.ok ? 'OK' : sent.text);
+  // V14 : TOUS les changements partent, par lots de 10 embeds ; acknowledged
+  // n'avance que pour les lots réellement livrés (fin sur échec → exit 2).
+  const expByHash = new Map(experiments.map((e) => [String(e.hash), e]));
+  const expForChange = (c) =>
+    expByHash.get(String(c.hash)) ||
+    (c.id ? experiments.find((e) => e.id === c.id) : null);
+  let delivered = 0;
+  let sendFailed = false;
+  for (let i = 0; i < changes.length; i += EMBED_BATCH) {
+    const chunk = changes.slice(i, i + EMBED_BATCH);
+    const embeds = buildEmbeds(chunk);
+    const sent = await postWebhookFn(embeds);
+    console.log('Webhook lot', Math.floor(i / EMBED_BATCH) + 1, sent.status, sent.ok ? 'OK' : sent.text);
+    if (!sent.ok) {
+      sendFailed = true;
+      break;
+    }
+    delivered += chunk.length;
+    for (const c of chunk) {
+      const key = String(c.hash != null ? c.hash : '');
+      if (c.kind === 'revision' && c.hash != null) {
+        const ack = acknowledged[key] || { rev: null, n: null, b: {} };
+        acknowledged[key] = { ...ack, rev: c.toRev };
+        continue;
+      }
+      const exp = expForChange(c);
+      if (exp) {
+        acknowledged[String(exp.hash)] = ackSnapshot(exp, byRev.get(exp.hash) ?? null, exp.windowN);
+        announced[String(exp.hash)] = exp.fingerprint;
+      }
+    }
+  }
 
-  if (!sent.ok) {
-    console.warn('NOTIFY_FAIL user_rollouts — announced NOT advanced; will retry next run');
+  await writeState(acknowledged, { changes: changes.slice(0, delivered) });
+
+  if (sendFailed) {
+    console.warn('NOTIFY_FAIL user_rollouts — acknowledged avancé pour les ' + delivered + ' changements livrés seulement ; le reste sera retenté');
     process.exitCode = 2;
     return;
   }
-
-  for (const c of changes) {
-    if (c.kind === 'new' && c.hash != null && c.fingerprint) {
-      announced[String(c.hash)] = c.fingerprint;
-    }
-    if (c.kind === 'pct' && c.id) {
-      const exp = experiments.find((e) => e.id === c.id);
-      if (exp) announced[String(exp.hash)] = exp.fingerprint;
-    }
-  }
-  await writeState(announced);
-  console.log('✅ Done (announced advanced after webhook OK)');
+  console.log('✅ Done — ' + delivered + ' changements notifiés, acknowledged à jour');
 }
 
 if (require.main === module)
@@ -979,5 +1113,6 @@ module.exports = {
   buildNextWindow,
   fingerprintOf,
   classifyChange,
-  mergeIntervals,
+  ackSnapshot,
+  recordAssignments,
 };

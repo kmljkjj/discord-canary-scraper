@@ -1,9 +1,9 @@
 name: Rollouts Watch
 
 # Job « mesure propre » : passes d'échantillonnage anonyme de l'API Discord
-# pendant ~19 min toutes les 20 min (fenêtre glissante 4 h, % binomial k/n).
+# pendant ~19 min toutes les 20 min (fenêtre glissante 4 h, k/n + Wilson + bornes indicatives).
 # Chaque passe enrichit la fenêtre → % à 2 décimales avec n affiché, sans
-# aucune source externe (cf. src/user_rollouts.js v13).
+# aucune source externe (cf. src/user_rollouts.js v14).
 
 on:
   schedule:
@@ -64,7 +64,6 @@ jobs:
           USER_ROLLOUT_CONCURRENCY: "2"
           USER_ROLLOUT_DELAY_MS: "150"
           USER_ROLLOUT_MIN_OK: "30"
-          USER_ROLLOUT_PLATEAU: "25"
           USER_ROLLOUT_MAX_MS: "45000"
           USER_ROLLOUT_WINDOW_H: "4"
           USER_ROLLOUT_NOTIFY_HASH: "1"
