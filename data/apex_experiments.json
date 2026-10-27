@@ -5059,6 +5059,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-09-update-email-settings-copy-subtext",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-09-video-background-profile-fetch",
     "defaultConfig": {
       "enabled": false
