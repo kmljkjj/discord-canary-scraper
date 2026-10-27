@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-27T22-25-36-279Z_653154_sfu49k",
-  "buildNumber": "653154",
-  "scrapedAt": "2026-10-27T22:25:36.279Z",
+  "runId": "2026-10-27T22-27-51-284Z_653173_gyjefh",
+  "buildNumber": "653173",
+  "scrapedAt": "2026-10-27T22:27:51.284Z",
   "totals": {
-    "all": 386
+    "all": 385
   },
   "experiments": [
     {
@@ -4972,23 +4972,6 @@
     },
     {
       "id": "2026-08-virtual-backgrounds-ios",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-08-voice-server-update-immediate",
       "type": "user",
       "kind": "user",
       "label": null,

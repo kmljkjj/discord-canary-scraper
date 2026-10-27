@@ -3962,19 +3962,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-08-voice-server-update-immediate",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-08-vq-remaining-time-truncation",
     "defaultConfig": {
       "truncateMoreThanSeconds": null

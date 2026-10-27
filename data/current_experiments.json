@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T22-25-36-279Z_653154_sfu49k",
-  "buildNumber": "653154",
-  "updatedAt": "2026-10-27T22:25:36.279Z",
-  "count": 383,
+  "runId": "2026-10-27T22-27-51-284Z_653173_gyjefh",
+  "buildNumber": "653173",
+  "updatedAt": "2026-10-27T22:27:51.284Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -12865,52 +12865,6 @@
         "value": null
       },
       "fingerprint": "0ef2c282fa1b7f9709f5462e7d1548892954d6c70e72ba2a44f60ef40aad9aab"
-    },
-    {
-      "id": "2026-08-voice-server-update-immediate",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-08-voice-server-update-immediate",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "74eda8b1bfd89a80fb6839e7e454d6c01c1830eb7f7e26aa6835ea488412aee8"
     },
     {
       "id": "2026-08-vq-remaining-time-truncation",
