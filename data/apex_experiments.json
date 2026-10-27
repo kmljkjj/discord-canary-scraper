@@ -5547,6 +5547,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-embedded-app-storage-access",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-express-checkout",
     "defaultConfig": {
       "enabled": false,

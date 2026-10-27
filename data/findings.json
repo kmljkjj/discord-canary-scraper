@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-27T22-33-11-763Z_653195_a2fovv",
-  "buildNumber": "653195",
-  "scrapedAt": "2026-10-27T22:33:11.763Z",
+  "runId": "2026-10-27T22-36-32-197Z_653239_wdp9va",
+  "buildNumber": "653239",
+  "scrapedAt": "2026-10-27T22:36:32.197Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -6970,6 +6970,23 @@
     },
     {
       "id": "2026-10-embedded-app-shim-v2",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-embedded-app-storage-access",
       "type": "user",
       "kind": "user",
       "label": null,
