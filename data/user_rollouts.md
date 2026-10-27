@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:38 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 17:40 UTC
 
-**Fenêtre glissante 4 h — n = 4753 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 4809 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,32 +12,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,82 %** | [4,23 – 5,48] | 229/4753 | élevée | Mesuré |
-| hash:1144304849 | **4,44 %** | [3,88 – 5,08] | 211/4753 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,92 – 100] | 4753/4753 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,92 – 100] | 4753/4753 | élevée | Mesuré |
-| Tida Webform | **99,07 %** | [98,75 – 99,31] | 4709/4753 | élevée | Mesuré |
+| hash:704914099 | **4,82 %** | [4,24 – 5,48] | 232/4809 | élevée | Mesuré |
+| hash:1144304849 | **4,51 %** | [3,95 – 5,15] | 217/4809 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,92 – 100] | 4809/4809 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,92 – 100] | 4809/4809 | élevée | Mesuré |
+| Tida Webform | **99,09 %** | [98,77 – 99,32] | 4765/4809 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,82 % (IC 95 % [4,23 ; 5,48], 229/4753, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9507.98, 10000] → 4,92 %
+- Variant 1 : 4,82 % (IC 95 % [4,24 ; 5,48], 232/4809, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9508.68, 9651.32] + [9670.9, 10000] → 4,72 %
 
 ### hash:1144304849
-- Variant 1 : 4,44 % (IC 95 % [3,88 ; 5,08], 211/4753, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [1.19, 496.81] → 4,96 %
+- Variant 1 : 4,51 % (IC 95 % [3,95 ; 5,15], 217/4809, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [1.27, 496.73] → 4,95 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,92 ; 100], 4753/4753, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [19.43, 8149.57] + [8447.88, 10000] → 96,82 %
+- Variant 1 : 100 % (IC 95 % [99,92 ; 100], 4809/4809, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,92 ; 100], 4753/4753, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9863.53] → 98,64 %
+- Variant 11 : 100 % (IC 95 % [99,92 ; 100], 4809/4809, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9996.86] → 99,97 %
 
 ### Tida Webform
-- Variant 1 : 99,07 % (IC 95 % [98,75 ; 99,31], 4709/4753, confiance élevée)
+- Variant 1 : 99,09 % (IC 95 % [98,77 ; 99,32], 4765/4809, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 346 expériences user
+## En attente de rollout — 347 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -320,6 +320,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-quest-mobile-bar-secondary-cta
 - 2026-09-referral-profile-contextual-menu-upsell
 - 2026-09-referral-trial-cta
+- 2026-09-registration-email-opt-in-copy
 - 2026-09-request-to-stream-go-live-modal
 - 2026-09-request-to-stream-new-entry-point
 - 2026-09-rust-3p
