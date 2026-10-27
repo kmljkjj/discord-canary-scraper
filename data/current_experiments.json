@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T18-29-34-983Z_652721_vnhtg6",
-  "buildNumber": "652721",
-  "updatedAt": "2026-10-27T18:29:34.983Z",
-  "count": 384,
+  "runId": "2026-10-27T18-52-36-420Z_652757_8ew9xf",
+  "buildNumber": "652757",
+  "updatedAt": "2026-10-27T18:52:36.420Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -10689,58 +10689,6 @@
         "value": null
       },
       "fingerprint": "0321c03a3b15587ac162e90e800f16bbe995f65677e70226675a5ed359056e10"
-    },
-    {
-      "id": "2026-07-powerups-coachmark-scroll-close",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-07-powerups-coachmark-scroll-close",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "0": {
-            "enabled": false
-          },
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "9daa7fb247d93c5d7a314db733cd1338f058b49ab8c6d1da472d55305288a5af"
     },
     {
       "id": "2026-07-premium-group-expansion-announcement",
