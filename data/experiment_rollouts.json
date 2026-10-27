@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-27T15:05:34.689Z",
+  "fetchedAt": "2026-10-27T15:12:26.760Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -390,17 +390,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 6,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 6
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 6,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 6
+        "0": 4
       }
     },
     {
@@ -410,17 +410,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 4,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 4
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 4,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 4
       }
     },
     {
@@ -3994,6 +3994,36 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-pinot-admin",
+      "hash": 4034054128,
+      "type": "guild",
+      "title": "2026-10-pinot-admin",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in the Discord API."
+    },
+    {
+      "id": "2026-10-pinot-member",
+      "hash": 2275742042,
+      "type": "user",
+      "title": "2026-10-pinot-member",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-10-pinot-member-notice",
+      "hash": 1587754668,
+      "type": "guild",
+      "title": "2026-10-pinot-member-notice",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in the Discord API."
+    },
+    {
       "id": "2026-10-profile-default-tab-with-content",
       "hash": 1908672925,
       "type": "user",
@@ -4195,11 +4225,11 @@
     }
   ],
   "summary": {
-    "total": 387,
-    "guild": 36,
-    "user": 351,
+    "total": 390,
+    "guild": 38,
+    "user": 352,
     "withPercentage": 10,
-    "withoutPercentage": 377,
+    "withoutPercentage": 380,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 4,
