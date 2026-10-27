@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-27T22-23-32-032Z_653143_dh36jf",
-  "buildNumber": "653143",
-  "scrapedAt": "2026-10-27T22:23:32.032Z",
+  "runId": "2026-10-27T22-25-36-279Z_653154_sfu49k",
+  "buildNumber": "653154",
+  "scrapedAt": "2026-10-27T22:25:36.279Z",
   "totals": {
     "all": 386,
     "legacy": 0,
@@ -7011,19 +7011,16 @@
       "label": null,
       "system": "apex",
       "defaultConfig": {
-        "enabled": false
+        "enabled": false,
+        "variation": 0
       },
       "variations": {
         "1": {
           "enabled": true,
-          "configurationType": "review_footer"
-        },
-        "2": {
-          "enabled": true,
-          "configurationType": "payment_selector"
+          "variation": 1
         }
       },
-      "variationCount": 2,
+      "variationCount": 1,
       "source": "discord"
     },
     {

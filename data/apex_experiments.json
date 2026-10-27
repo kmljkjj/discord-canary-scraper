@@ -5562,16 +5562,13 @@
     "kind": "user",
     "name": "2026-10-express-checkout",
     "defaultConfig": {
-      "enabled": false
+      "enabled": false,
+      "variation": 0
     },
     "variations": {
       "1": {
         "enabled": true,
-        "configurationType": "review_footer"
-      },
-      "2": {
-        "enabled": true,
-        "configurationType": "payment_selector"
+        "variation": 1
       }
     },
     "label": null

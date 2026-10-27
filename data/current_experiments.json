@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-27T22-23-32-032Z_653143_dh36jf",
-  "buildNumber": "653143",
-  "updatedAt": "2026-10-27T22:23:32.032Z",
+  "runId": "2026-10-27T22-25-36-279Z_653154_sfu49k",
+  "buildNumber": "653154",
+  "updatedAt": "2026-10-27T22:25:36.279Z",
   "count": 383,
   "experiments": [
     {
@@ -18071,21 +18071,18 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "enabled": false
+        "enabled": false,
+        "variation": 0
       },
       "variations": {
         "1": {
           "enabled": true,
-          "configurationType": "review_footer"
-        },
-        "2": {
-          "enabled": true,
-          "configurationType": "payment_selector"
+          "variation": 1
         }
       },
       "treatments": null,
       "variationSource": "variations",
-      "variationCount": 2,
+      "variationCount": 1,
       "raw": {
         "id": "2026-10-express-checkout",
         "type": "user",
@@ -18093,19 +18090,16 @@
         "label": null,
         "system": "apex",
         "defaultConfig": {
-          "enabled": false
+          "enabled": false,
+          "variation": 0
         },
         "variations": {
           "1": {
             "enabled": true,
-            "configurationType": "review_footer"
-          },
-          "2": {
-            "enabled": true,
-            "configurationType": "payment_selector"
+            "variation": 1
           }
         },
-        "variationCount": 2,
+        "variationCount": 1,
         "source": "discord"
       },
       "guildPercentage": {
@@ -18116,7 +18110,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "7f42b6f8b249c7397b7a14b361d516240d2be52a2c2da459af0a942f5b511061"
+      "fingerprint": "ba91ee6bd50be2ba33dd6c596afd451631e56be779f12b11244bf70dd163adb6"
     },
     {
       "id": "2026-10-fix-soundboard-muting-iconography",
