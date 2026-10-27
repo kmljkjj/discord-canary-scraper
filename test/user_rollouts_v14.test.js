@@ -14,6 +14,7 @@ const {
   buildWindowTreatments,
   ackSnapshot,
   recordAssignments,
+  RING_CAP,
 } = require('../src/user_rollouts');
 const {
   mergeIntervalsHalfOpen,
@@ -105,7 +106,7 @@ test('pruneWindow jette les batches hors fenêtre et normalise', () => {
   const w = pruneWindow(raw, NOW);
   assert.equal(w.batches.length, 1);
   assert.equal(w.batches[0].bid, 'b1');
-  assert.ok(w.pos['1'].b['1'].length <= 150); // RING_CAP
+  assert.ok(w.pos['1'].b['1'].length <= RING_CAP); // RING_CAP (v15 : 400 par défaut)
   assert.equal(w.pos['1'].rev, 7);
 });
 

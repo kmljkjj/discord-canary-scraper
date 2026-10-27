@@ -1,5 +1,35 @@
 /**
- * User experiment rollouts v14 — MESURE PROPRE, zéro source communautaire.
+ * User experiment rollouts v15 — MESURE PROPRE, zéro source communautaire.
+ *
+ * V15 (plages EXACTES + % au centième) :
+ *  - PLAGES EXACTES : les positions hash_result de la fenêtre alimentent une
+ *    reconstruction changepoint (src/lib/range_recon.js) : chaque frontière
+ *    entre deux buckets est bornée par les échantillons adjacents, son
+ *    posterior est calculé en log-space (densités d'échantillons par
+ *    label), puis « snappé » sur la grille des bornes Discord (multiples
+ *    de 25) avec une CONFIANCE par frontière. Quand toutes les frontières
+ *    sont fiables et que le % des plages est cohérent avec le k/n, les
+ *    plages sont EXACTES : le % publié est celui des plages (2 décimales,
+ *    exact au sens du rollout) — sinon le k/n + Wilson reste la mesure
+ *    publiée et les plages ne sont qu'indicatives. Honnêteté conservée.
+ *  - VÉRIFICATION DU FINGERPRINT (auto, inerte si la formule diffère) :
+ *    la réponse /experiments contient le fingerprint du tirage ; on
+ *    vérifie que murmur3(nom + ':' + fingerprint) % 10000 == hash_result
+ *    sur les expériences nommées. Après ≥100 vérifications à ≥99 %, le
+ *    mode « outside » s'active : les positions NON enrôlées deviennent
+ *    observables → les plages multiples d'un même bucket (structure fine)
+ *    sont reconstruisibles aussi.
+ *  - MINING ADAPTATIF (auto, derrière la vérification) : une fois la
+ *    formule vérifiée ET le contrôle du fingerprint confirmé (X-Fingerprint
+ *    renvoyé tel quel par l'API), on génère des fingerprints localement,
+ *    on calcule leurs positions et on n'envoie QUE ceux qui tombent dans
+ *    les zones d'incertitude des frontières → convergence des plages
+ *    exactes accélérée après un changement de revision. Chaque requête
+ *    continue d'échantillonner TOUTES les expériences.
+ *  - AUCUNE source externe n'est lue : les % publiés sont mesurés par
+ *    nous-mêmes. Des plages exactes convergent vers la même vérité que
+ *    n'importe quel autre système exact ; notre apport est la précision
+ *    (2 décimales, frontières, confiance), l'indépendance et la fraîcheur.
  *
  * V14 (fiabilité + précision honnête) :
  *  - FENÊTRE UNIFIÉE : l'estimation est TOUJOURS agrégée sur la fenêtre
@@ -47,6 +77,17 @@
  *   USER_ROLLOUT_NOTIFY_HASH    default 0 (notifier aussi les hash sans nom)
  *   USER_ROLLOUT_PLATFORM_UAS   optionnel — User-Agents séparés par ||
  *                              (défaut : web + app desktop + Android + iOS)
+ *   USER_ROLLOUT_RING_CAP       default 400 (positions gardées par bucket
+ *                              pour la reconstruction ; plus haut = bornes
+ *                              plus précises, état plus lourd)
+ *   USER_ROLLOUT_RANGE_GRID     default 25 (grille des bornes ; 0 = off)
+ *   USER_ROLLOUT_RANGE_MIN_CONF default 0.9 (confiance min par frontière
+ *                              pour qualifier les plages d'« exactes »)
+ *   USER_ROLLOUT_ADAPTIVE       default 1 (mining adaptatif auto-désactivé
+ *                              tant que fingerprint non vérifié/contrôlé)
+ *   USER_ROLLOUT_ADAPTIVE_SAMPLES default 25 (requêtes de mining par run)
+ *   USER_ROLLOUT_OUTSIDE_POS    default 1 (positions non enrôlées si
+ *                              formule vérifiée)
  *   APEX_MIN_PCT_DELTA          default 1 (% min, en plus de la marge de bruit)
  */
 const fetch = require('node-fetch');
@@ -67,6 +108,7 @@ const {
   reconstructBucketRanges,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
+const { reconstructRanges, rangesToStrings } = require('./lib/range_recon');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'user_rollouts.json');
@@ -100,8 +142,19 @@ const WINDOW_H = Math.max(1, Number(process.env.USER_ROLLOUT_WINDOW_H || 4));
 const WINDOW_H_MS = WINDOW_H * 3600 * 1000;
 const MAX_BATCHES = Math.max(5, Number(process.env.USER_ROLLOUT_WINDOW_BATCHES || 60));
 // Anneau de positions par (hash, bucket) — alimente la reconstruction de
-// bornes (indicative). Capé pour garder l'état JSON compact.
-const RING_CAP = 150;
+// plages (v15 : exacte). Capé pour garder l'état JSON compact ; plus haut =
+// frontières plus précises (les frontières vivent entre échantillons
+// adjacents, la précision ≈ largeur de l'espace / échantillons).
+const RING_CAP = Math.max(50, Math.min(4000, Number(process.env.USER_ROLLOUT_RING_CAP || 400)));
+// Grille des bornes de rollout user Discord (observées : multiples de 25).
+const RANGE_GRID = Number(process.env.USER_ROLLOUT_RANGE_GRID ?? 25);
+// Confiance minimale par frontière pour qualifier les plages d'exactes.
+const RANGE_MIN_CONF = Math.min(0.999, Math.max(0.5, Number(process.env.USER_ROLLOUT_RANGE_MIN_CONF || 0.9)));
+// Positions non enrôlées observables une fois la formule vérifiée.
+const OUTSIDE_POS = String(process.env.USER_ROLLOUT_OUTSIDE_POS ?? '1') !== '0';
+// Mining adaptatif : auto-désactivé tant que formule + contrôle non vérifiés.
+const ADAPTIVE = String(process.env.USER_ROLLOUT_ADAPTIVE ?? '1') !== '0';
+const ADAPTIVE_SAMPLES = Math.max(0, Math.min(100, Number(process.env.USER_ROLLOUT_ADAPTIVE_SAMPLES || 25)));
 // Limite Discord : 10 embeds par message → lots de 10 changements.
 const EMBED_BATCH = 10;
 
@@ -274,20 +327,79 @@ function buildNextWindow(win, curCounts, curRevs, ok, now) {
   return { batches, pos: win.pos || {} };
 }
 
-// ─── Estimation (V14 : k/n + Wilson + bornes indicatives) ──────────────────
+// ─── Estimation (V15 : plages exactes + k/n de contre-vérification) ─────────
 
 /**
  * Traitements d'une expérience depuis les comptes cumulés de la fenêtre.
  * mergedCounts : Map(bucket → k) ; n : total d'échantillons de la fenêtre ;
- * ringPos : { bucket: [position, ...] } positions récentes (anneau).
+ * ringPos : { b: { bucket|'o': [position, ...] } } positions récentes
+ * (anneau ; clé 'o' = positions NON enrôlées, observables seulement en
+ * mode fingerprint vérifié).
  *
- * pct = k/n (binomial, non biaisé) + IC de Wilson.
- * Les positions servent à une reconstruction INDICATIVE des plages
- * (ordre-statistiques, correction German tank) — jamais présentée comme
- * exacte, affichée comme seconde mesure.
+ * V15 — DOUBLE MESURE :
+ *  1. k/n (binomial, non biaisé) + IC de Wilson.
+ *  2. Reconstruction des plages (src/lib/range_recon.js) : frontières
+ *     changepoint + posterior + snap grille 25 + confiance par frontière.
+ *     Si quality = 'exact' (toutes frontières fiables + % des plages
+ *     cohérent avec k/n à la marge de bruit près), le % PUBLIÉ devient
+ *     celui des plages (pctSource = 'ranges', exact au sens du rollout) ;
+ *     k/n reste stocké comme contre-vérification (knPct). Sinon k/n reste
+ *     la mesure publiée et les plages ne sont qu'indicatives.
  */
 function buildWindowTreatments(mergedCounts, n, ringPos) {
   const treatments = [];
+  // k/n par bucket (sert de densité + de contre-vérification à la recon).
+  const knPct = {};
+  for (const [bucket, k] of mergedCounts) {
+    const kk = Math.max(0, Number(k) || 0);
+    const nn = Math.max(0, Number(n) || 0);
+    if (!Number.isFinite(bucket) || kk <= 0 || nn <= 0) continue;
+    knPct[String(bucket)] = Math.round((kk / nn) * 100 * 100) / 100;
+  }
+
+  // ── Reconstruction v15 : échantillons = positions de l'anneau ──
+  // clé 'o' = positions non enrôlées (mode fingerprint vérifié seulement).
+  const rb = ringPos && ringPos.b && typeof ringPos.b === 'object' ? ringPos.b : {};
+  const samples = [];
+  for (const [bS, arr] of Object.entries(rb)) {
+    const isOut = bS === 'o';
+    const b = isOut ? null : Number(bS);
+    if (!isOut && !Number.isFinite(b)) continue;
+    for (const pos of Array.isArray(arr) ? arr : []) {
+      const pp = Number(pos);
+      if (Number.isFinite(pp) && pp >= 0 && pp < SCALE) samples.push({ p: pp, b });
+    }
+  }
+  const knSum = Object.values(knPct).reduce((s, v) => s + Number(v || 0), 0);
+  if (Array.isArray(rb.o) && Object.keys(knPct).length) {
+    knPct.null = Math.max(0, Math.round((100 - knSum) * 100) / 100);
+  }
+  // Tolérance de cohérence k/n ↔ plages : marge de bruit binomial de la
+  // fenêtre (la plus large des buckets), plancher 1 point.
+  let tolRanges = 1;
+  for (const v of Object.values(knPct)) tolRanges = Math.max(tolRanges, noiseMargin(Number(v), n, NOISE_Z));
+  const recon =
+    samples.length >= 3
+      ? reconstructRanges(samples, {
+          scale: SCALE,
+          grid: RANGE_GRID,
+          minConf: RANGE_MIN_CONF,
+          tolerance: tolRanges,
+          knPct,
+        })
+      : null;
+  const recFor = (bucket) => {
+    if (!recon) return null;
+    const rs = recon.rangesByBucket[String(bucket)];
+    if (!rs || !rs.length) return null;
+    return {
+      ranges: rs,
+      pct: recon.pctByBucket[String(bucket)] ?? null,
+      quality: recon.quality,
+      confidence: recon.minConfidence,
+    };
+  };
+
   for (const [bucket, k] of mergedCounts) {
     const kk = Math.max(0, Number(k) || 0);
     const nn = Math.max(0, Number(n) || 0);
@@ -300,34 +412,43 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
     else if (kk >= 12) confidence = 'medium';
     const status = confidence === 'low' ? 'degraded' : 'estimated';
 
-    // Reconstruction INDICATIVE des plages depuis l'anneau de positions.
-    const pts = [
+    // Reconstruction : plages snappées (v15) ; repli indicatif historique
+    // (points seuls, ordre-statistiques) quand la recon n'a rien pour ce bucket.
+    const rec = recFor(bucket);
+    let fallbackRec = null;
+    const bucketPts = [
       ...new Set(
         ((ringPos && ringPos.b && ringPos.b[String(bucket)]) || [])
           .map(Number)
           .filter((x) => Number.isFinite(x) && x >= 0 && x < SCALE),
       ),
     ];
-    const rec = pts.length >= 3 ? reconstructBucketRanges(pts, SCALE) : null;
-    const observed = pts.length ? [Math.min(...pts), Math.max(...pts)] : null;
+    if (!rec && bucketPts.length >= 3) fallbackRec = reconstructBucketRanges(bucketPts, SCALE);
+    const observed = bucketPts.length ? [Math.min(...bucketPts), Math.max(...bucketPts)] : null;
+    const exact = rec && rec.quality === 'exact' && rec.pct != null;
     treatments.push({
       bucket: Number(bucket),
       label: tLabel(bucket),
-      percentage: pct,
-      pct,
+      percentage: exact ? rec.pct : pct,
+      pct: exact ? rec.pct : pct,
+      pctSource: exact ? 'ranges' : 'binomial',
+      knPct: pct, // contre-vérification k/n (toujours conservée)
       pctKnown: true,
       status,
       confidence,
       sampleCount: kk,
       samples: kk,
-      coverage: Math.round(p * 1000) / 1000,
+      coverage: Math.round(((exact ? rec.pct : pct) / 100) * 1000) / 1000,
       ci: { lo: ci.lo, hi: ci.hi, sigma: ci.sigma },
-      // Bornes reconstruites (MODÈLE ordre-statistiques — indicatif).
-      ranges: rec ? rec.ranges : [],
-      indicativePct: rec ? rec.pct : null,
-      indicativeCi: rec ? rec.ci : null,
+      // Plages reconstruites (v15 : snappées grille + confiance par frontière).
+      ranges: rec ? rec.ranges : fallbackRec ? fallbackRec.ranges : [],
+      rangesPct: rec ? rec.pct : null,
+      rangesQuality: rec ? rec.quality : fallbackRec ? 'indicative' : null,
+      rangesConfidence: rec ? rec.confidence : null,
+      indicativePct: rec ? rec.pct : fallbackRec ? fallbackRec.pct : null,
+      indicativeCi: fallbackRec ? fallbackRec.ci : null,
       observed,
-      sourceKind: 'window_binomial',
+      sourceKind: exact ? 'ranges_exact' : 'window_binomial',
     });
   }
   treatments.sort((a, b) => a.bucket - b.bucket);
@@ -340,7 +461,14 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
   const sigmaAll = treatments.length
     ? 100 * Math.sqrt(Math.max(0, sumPct / 100) * Math.max(0, 1 - sumPct / 100) / Math.max(n, 1))
     : Infinity;
-  return { treatments, status: globalStatus, sumPct, sigma: Math.round(sigmaAll * 100) / 100 };
+  return {
+    treatments,
+    status: globalStatus,
+    sumPct,
+    sigma: Math.round(sigmaAll * 100) / 100,
+    rangesQuality: recon ? recon.quality : null,
+    rangesBoundaries: recon ? recon.boundaries : [],
+  };
 }
 
 // ─── Sampling ───────────────────────────────────────────────────────────────
@@ -443,12 +571,16 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
  * Protocole FIXE : cible SAMPLES échantillons (plus d'arrêt sur « plateau »
  * de découverte, qui biaisait la densité de la fenêtre) ; le budget temps
  * reste la seule sortie anticipée.
- * Returns { byHash, byRev, ok, fail } avec
- * byHash : hash → Map(bucket → positions[]) ; byRev : hash → revision.
+ * Returns { byHash, byRev, ok, fail, responses } avec
+ * byHash : hash → Map(bucket → positions[]) ; byRev : hash → revision ;
+ * responses : [{ fp, assignments }] (cappé) — sert à la vérification du
+ * fingerprint (murmur3(nom:fp) % 10000 == hash_result) et aux positions
+ * non enrôlées (« o ») une fois la formule vérifiée.
  */
 async function sampleFingerprints(n, concurrency) {
   const byHash = new Map();
   const byRev = new Map();
+  const responses = [];
   let ok = 0;
   let fail = 0;
   let next = 0;
@@ -468,12 +600,13 @@ async function sampleFingerprints(n, concurrency) {
       try {
         const delay = rateLimit.dynamicDelayMs + Math.floor(Math.random() * 150);
         await sleep(delay);
-        const { assignments } = await fetchAssignments({
+        const data = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
           'User-Agent': UAS[my % UAS.length],
         });
         // V14 : validation stricte + dédoublonnage (cf. recordAssignments).
-        recordAssignments(byHash, byRev, assignments);
+        recordAssignments(byHash, byRev, data.assignments);
+        if (responses.length < 500) responses.push({ fp: data.fingerprint, assignments: data.assignments });
         ok++;
       } catch (e) {
         fail++;
@@ -489,7 +622,7 @@ async function sampleFingerprints(n, concurrency) {
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429, stopReason ? '· early stop: ' + stopReason : '(all ' + n + ')');
-  return { byHash, byRev, ok, fail };
+  return { byHash, byRev, ok, fail, responses };
 }
 
 /**
@@ -537,10 +670,135 @@ function fingerprintOf(treatments) {
       }
       const step = t.confidence === 'low' ? 5 : 1;
       const rounded = Math.round(Number(t.pct) / step) * step;
-      return t.bucket + ':' + rounded.toFixed(1);
+      let token = t.bucket + ':' + rounded.toFixed(1);
+      // V15 : quand les plages sont EXACTES, leur signature fait partie de
+      // l'empreinte → une reconfiguration des plages (même %) est ré-annoncée.
+      if (t.rangesQuality === 'exact' && Array.isArray(t.ranges) && t.ranges.length) {
+        token += '@' + t.ranges.map(([a, b]) => a + '-' + b).join(',');
+      }
+      return token;
     })
     .sort()
     .join('|');
+}
+
+// ─── V15 : fingerprint local, vérification, positions outside, mining ──────
+
+/** Position locale d'un fingerprint : murmur3(nom:fp) % SCALE (à vérifier). */
+function localPos(name, fp) {
+  return murmur3(String(name) + ':' + String(fp)) % SCALE;
+}
+
+/** Fingerprint au format client Discord (« NNNNNN.NNNNNNNNNN »). */
+function genFingerprint() {
+  return 100000 + Math.floor(Math.random() * 900000) + '.' + Math.floor(Math.random() * 1e10);
+}
+
+/**
+ * Vérifie la formule de position : pour chaque expérience NOMMÉE de chaque
+ * réponse, murmur3(nom + ':' + fingerprint) % 10000 doit égaler le
+ * hash_result renvoyé par l'API. PURE + testable.
+ * @returns {{tried:number, matched:number}}
+ */
+function verifyPositions(responses, defs) {
+  let tried = 0;
+  let matched = 0;
+  for (const r of responses || []) {
+    if (!r || !r.fp || !Array.isArray(r.assignments)) continue;
+    for (const asg of r.assignments) {
+      if (!Array.isArray(asg) || asg.length < 6) continue;
+      const def = defs.get(Number(asg[0]));
+      if (!def || !def.id || String(def.id).startsWith('hash:')) continue;
+      tried++;
+      if (localPos(def.id, r.fp) === Number(asg[5])) matched++;
+    }
+  }
+  return { tried, matched };
+}
+
+/**
+ * Enregistre les positions NON enrôlées (« o ») des expériences déjà
+ * observées enrôlées dans la fenêtre : chaque réponse couvre toutes les
+ * expériences nommées ; celles absentes des assignments sont non enrôlées
+ * à la position locale du fingerprint. PURE + testable.
+ * @returns {number} positions ajoutées
+ */
+function recordOutsidePositions(byHash, responses, defs) {
+  let added = 0;
+  for (const r of responses || []) {
+    if (!r || !r.fp || !Array.isArray(r.assignments)) continue;
+    const seen = new Set();
+    for (const asg of r.assignments) {
+      if (Array.isArray(asg)) seen.add(Number(asg[0]));
+    }
+    for (const [hash, def] of defs) {
+      if (seen.has(hash)) continue;
+      // Seulement les expériences déjà observées (mesurées) et nommées.
+      if (!byHash.has(hash)) continue;
+      if (!def.id || String(def.id).startsWith('hash:')) continue;
+      const bm = byHash.get(hash);
+      if (!bm.has('o')) bm.set('o', []);
+      bm.get('o').push(localPos(def.id, r.fp));
+      added++;
+    }
+  }
+  return added;
+}
+
+/**
+ * Mining adaptatif (V15) : génère des fingerprints localement, calcule leurs
+ * positions pour les expériences ciblées et n'envoie QUE ceux qui tombent
+ * dans une zone d'incertitude de frontière — chaque requête échantillonne
+ * quand même toutes les expériences. Vérifie au passage que l'API renvoie
+ * bien le fingerprint envoyé (X-Fingerprint) ; sinon controlVerified
+ * reste faux et le mining sera désactivé.
+ * @returns {{ok:number, fail:number, controlVerified:boolean}}
+ */
+async function mineFingerprints({ byHash, byRev, targets = [], responses = [], count = ADAPTIVE_SAMPLES }) {
+  const fps = [];
+  const MAX_TRIES = 20000;
+  if (targets.length && count > 0) {
+    for (let i = 0; i < MAX_TRIES && fps.length < count; i++) {
+      const fp = genFingerprint();
+      let score = 0;
+      for (const t of targets) {
+        const p = localPos(t.id, fp);
+        for (const gap of t.gaps) {
+          if (p > gap[0] && p <= gap[1]) {
+            score++;
+            break;
+          }
+        }
+        if (score) break;
+      }
+      if (score > 0) fps.push(fp);
+    }
+  } else if (count > 0) {
+    // Mode sonde : vérifier que l'API accepte notre X-Fingerprint.
+    for (let i = 0; i < Math.min(3, count); i++) fps.push(genFingerprint());
+  }
+  let ok = 0;
+  let fail = 0;
+  let controlVerified = false;
+  for (const fp of fps) {
+    try {
+      const delay = rateLimit.dynamicDelayMs + Math.floor(Math.random() * 150);
+      await sleep(delay);
+      const data = await fetchAssignments({
+        'X-Fingerprint': fp,
+        'X-Request-Id': crypto.randomBytes(16).toString('hex'),
+      });
+      if (String(data.fingerprint) === String(fp)) controlVerified = true;
+      recordAssignments(byHash, byRev, data.assignments);
+      if (responses.length < 500) responses.push({ fp: data.fingerprint, assignments: data.assignments });
+      ok++;
+    } catch (e) {
+      fail++;
+      if (String(e.message).includes('429')) await sleep(rateLimit.waitMs());
+      else if (fail <= 3) console.warn('mine fail', redactSecrets(e.message));
+    }
+  }
+  return { ok, fail, controlVerified };
 }
 
 async function fetchTokenSnapshot(defs) {
@@ -604,15 +862,28 @@ function buildEmbeds(changes) {
 
     if (c.kind === 'new') {
       for (const t of (c.treatments || []).slice(0, 12)) {
-        lines.push(variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%'));
+        let line = variantLabel(t.bucket) + ' ' + (t.pctKnown && t.pct != null ? fmtPct(t.pct) + '%' : '?%');
+        if (t.pctSource === 'ranges') line += ' (plages exactes)';
+        lines.push(line);
+        if (t.rangesQuality === 'exact' && t.ranges && t.ranges.length) {
+          lines.push('  plages : ' + rangesToStrings(t.ranges));
+        }
       }
     } else if (c.kind === 'pct') {
       for (const d of (c.deltas || []).slice(0, 12)) {
         let line = variantLabel(d.bucket) + ' ' + fmtPct(d.from) + '% -> ' + fmtPct(d.to) + '%';
-        if (d.ci) line += ' (±' + fmtPct(d.ci) + ')';
+        if (d.pctSource === 'ranges') {
+          line += ' (plages exactes, conf ' + Math.round((d.rangesConfidence || 0) * 100) + '%)';
+        } else if (d.ci) {
+          line += ' (±' + fmtPct(d.ci) + ')';
+        }
         lines.push(line);
         if (d.ranges && d.ranges.length) {
-          lines.push('  bornes reconstruites (indicatif) : ' + d.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + '));
+          if (d.rangesQuality === 'exact') {
+            lines.push('  plages exactes : ' + rangesToStrings(d.ranges));
+          } else {
+            lines.push('  plages reconstruites (indicatif) : ' + d.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + '));
+          }
         }
       }
     } else if (c.kind === 'revision') {
@@ -663,29 +934,34 @@ function writeReport(state, reportFile) {
     const n = exps.reduce((m, e) => Math.max(m, Number(e.windowN) || 0), 0);
     const gen = new Date().toISOString().slice(0, 16).replace('T', ' ');
     const out = [];
-    out.push('# Rollouts user — mesure propre (v14)', '');
+    out.push('# Rollouts user — mesure propre (v15)', '');
     out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
-    out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
-    out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
-    out.push('Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statistiques, dépendante du modèle) : un heuristique de séparation peut fragmenter une plage uniforme → à lire comme un ordre de grandeur, pas une certitude.', '');
+    out.push('**Fenêtre glissante ' + WINDOW_H + ' h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
+    out.push('**Méthode** : double mesure. 1) % depuis les **plages reconstruites** (frontières changepoint + snap grille 25 + confiance par frontière) — publié quand la reconstruction est qualifiée d\'« exacte » : % à 2 décimales, exact au sens du rollout. 2) k/n binomial + intervalle de confiance de Wilson — mesure publiée sinon, et contre-vérification permanente des plages. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
+    out.push('Les plages « indicatives » (frontières non snappées, cohérence k/n insuffisante ou structure invisible faute de positions non enrôlées) restent un ordre de grandeur : à lire comme telles.', '');
     out.push('## Expériences mesurées (' + exps.length + ')', '');
-    out.push('| Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |');
-    out.push('|---|---:|---|---:|---|---|');
+    out.push('| Expérience | % | Source | IC 95 % (k/n) | k/n | Plages | Confiance |');
+    out.push('|---|---:|---|---|---:|---|---|');
     for (const e of exps) {
       const ts = e.treatments || [];
       const best = ts.reduce((a, t) => ((t.bucket || 0) > 0 && (a == null || (t.pct || 0) > a) ? t.pct : a), null);
       const bestT = ts.find((t) => t.pct === best) || ts[0] || {};
-      const st = e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
       const ci = bestT.ci ? '[' + String(bestT.ci.lo).replace('.', ',') + ' – ' + String(bestT.ci.hi).replace('.', ',') + ']' : '—';
-      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + ci + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf(bestT.confidence) + ' | ' + st + ' |');
+      const src = bestT.pctSource === 'ranges' ? 'Plages exactes' : 'k/n';
+      const rg = bestT.rangesQuality === 'exact' && bestT.ranges ? rangesToStrings(bestT.ranges) : '—';
+      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + src + ' | ' + ci + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + rg + ' | ' + conf(bestT.confidence) + ' |');
     }
     out.push('', '## Détail par variante');
     for (const e of exps) {
       out.push('', '### ' + (e.title || e.id || 'hash:' + e.hash));
       for (const t of e.treatments || []) {
-        out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (IC 95 % [' + String((t.ci || {}).lo ?? '?').replace('.', ',') + ' ; ' + String((t.ci || {}).hi ?? '?').replace('.', ',') + '], ' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
+        out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (' + (t.pctSource === 'ranges' ? 'plages exactes, conf ' + Math.round((t.rangesConfidence || 0) * 100) + ' %' : 'k/n') + ', IC 95 % [' + String((t.ci || {}).lo ?? '?').replace('.', ',') + ' ; ' + String((t.ci || {}).hi ?? '?').replace('.', ',') + '], ' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
         if (t.ranges && t.ranges.length) {
-          out.push('  - plages reconstruites (indicatif, ordre de grandeur) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct));
+          if (t.rangesQuality === 'exact') {
+            out.push('  - plages exactes : ' + rangesToStrings(t.ranges) + ' → ' + fmt(t.rangesPct) + ' (contre-vérification k/n : ' + fmt(t.knPct) + ')');
+          } else {
+            out.push('  - plages reconstruites (indicatif, ordre de grandeur) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct));
+          }
         }
       }
     }
@@ -737,7 +1013,7 @@ async function main(deps = {}) {
   const postWebhookFn = deps.postWebhook || postWebhook;
 
   await fs.ensureDir(path.dirname(stateFile));
-  console.log('📊 User rollouts v14 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
+  console.log('📊 User rollouts v15 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h + plages exactes)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set (' + WEBHOOK_SOURCE + ')' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
@@ -754,7 +1030,7 @@ async function main(deps = {}) {
   const isFirst = !(prev.experiments && prev.experiments.length);
   // Upgrade < v14 : passage au acknowledged (baseline de notification) —
   // re-seed silencieux, pas de flood de « rattrapage ».
-  const isUpgrade = !isFirst && Number(prev.version) !== 14;
+  const isUpgrade = !isFirst && Number(prev.version) !== 15;
   if (isUpgrade) {
     // Migration : initialise acknowledged depuis la dernière mesure connue.
     acknowledged = {};
@@ -782,9 +1058,68 @@ async function main(deps = {}) {
     ? sampledR.value
     : { byHash: new Map(), byRev: new Map(), ok: 0, fail: 0 };
   const { byHash, byRev, ok, fail } = sampled;
+  const responses = Array.isArray(sampled.responses) ? sampled.responses : [];
   console.log('Token snapshot:', tokenSnap.length, 'experiments');
   if (ok < MIN_OK) {
     console.warn('Too few ok samples', ok, '<', MIN_OK, '— estimation fenêtre seulement');
+  }
+
+  // ---- V15 : vérification du fingerprint + mining adaptatif + outside ----
+  const prevVerify =
+    prev.posVerify && typeof prev.posVerify === 'object'
+      ? prev.posVerify
+      : { tried: 0, matched: 0, verified: false, controlVerified: false };
+  const ver = verifyPositions(responses, defs);
+  const posVerify = {
+    tried: (Number(prevVerify.tried) || 0) + ver.tried,
+    matched: (Number(prevVerify.matched) || 0) + ver.matched,
+  };
+  posVerify.verified =
+    prevVerify.verified === true ||
+    (posVerify.tried >= 100 && posVerify.matched >= 0.99 * posVerify.tried);
+  posVerify.controlVerified = prevVerify.controlVerified === true;
+
+  let mine = { ok: 0, fail: 0, controlVerified: false };
+  if (ADAPTIVE && ADAPTIVE_SAMPLES > 0 && posVerify.verified) {
+    if (posVerify.controlVerified) {
+      // Cibles : frontières encore incertaines de l'état précédent.
+      const targets = (prev.experiments || [])
+        .filter(
+          (e) =>
+            e &&
+            e.named &&
+            Array.isArray(e.reconBoundaries) &&
+            e.reconBoundaries.some((b) => Number(b.confidence) < RANGE_MIN_CONF),
+        )
+        .map((e) => ({
+          hash: e.hash,
+          id: e.id,
+          gaps: e.reconBoundaries
+            .filter((b) => Number(b.confidence) < RANGE_MIN_CONF)
+            .map((b) => [Number(b.lo), Number(b.hi)]),
+        }));
+      if (targets.length) {
+        mine = await mineFingerprints({ byHash, byRev, targets, responses, count: ADAPTIVE_SAMPLES });
+        console.log('Mining adaptatif :', mine.ok, 'req ·', targets.length, 'cibles ·', mine.fail, 'fail');
+      }
+    } else {
+      // Sonde : l'API renvoie-t-elle le fingerprint qu'on lui envoie ?
+      mine = await mineFingerprints({ byHash, byRev, targets: [], responses, count: 3 });
+      console.log('Sonde X-Fingerprint :', mine.controlVerified ? 'contrôle OK' : 'non contrôlé (API → mining off)');
+    }
+  }
+  posVerify.controlVerified = posVerify.controlVerified || mine.controlVerified === true;
+
+  if (posVerify.verified && OUTSIDE_POS) {
+    const added = recordOutsidePositions(byHash, responses, defs);
+    console.log(
+      'Positions outside :',
+      added,
+      '· formule fingerprint vérifiée :',
+      posVerify.matched + '/' + posVerify.tried,
+    );
+  } else if (!posVerify.verified) {
+    console.log('Formule fingerprint : non vérifiée (' + ver.matched + '/' + ver.tried + ' ce run) → mode fallback');
   }
 
   // ---- Fenêtre : agrégation UNIFIÉE (batches précédents + run courant) ----
@@ -793,8 +1128,11 @@ async function main(deps = {}) {
   const curCounts = new Map(); // hash → Map(bucket → k)
   for (const [hash, bucketMap] of byHash) {
     const m = new Map();
-    for (const [bucket, positions] of bucketMap) m.set(Number(bucket), positions.length);
-    curCounts.set(hash, m);
+    for (const [bucket, positions] of bucketMap) {
+      if (bucket === 'o') continue; // outside ≠ compte binomial
+      m.set(Number(bucket), positions.length);
+    }
+    if (m.size) curCounts.set(hash, m);
   }
   const nextWindow = buildNextWindow(winOld, curCounts, byRev, ok, now);
 
@@ -837,11 +1175,8 @@ async function main(deps = {}) {
       title: 'hash:' + hash,
       type: 'user',
     };
-    const { treatments, status: rollStatus, sumPct } = buildWindowTreatments(
-      m,
-      n,
-      mergedPos[String(hash)] || {},
-    );
+    const { treatments, status: rollStatus, sumPct, rangesQuality, rangesBoundaries } =
+      buildWindowTreatments(m, n, mergedPos[String(hash)] || {});
     if (!treatments.length) continue;
     experiments.push({
       hash,
@@ -855,6 +1190,9 @@ async function main(deps = {}) {
       sumPct,
       treatments,
       fingerprint: fingerprintOf(treatments),
+      // V15 : frontières reconstruites (cibles du mining adaptatif).
+      rangesQuality: rangesQuality || null,
+      reconBoundaries: rangesBoundaries || [],
       source: 'own_sampling',
       named: hasName(def.id),
       windowN: n,
@@ -921,6 +1259,9 @@ async function main(deps = {}) {
               changeType: 'ROLLOUT_APPEARED',
               observed: t.observed,
               ranges: t.ranges || null,
+              rangesQuality: t.rangesQuality || null,
+              rangesConfidence: t.rangesConfidence ?? null,
+              pctSource: t.pctSource || 'binomial',
               ci: t.ci ? t.ci.sigma : null,
               confidence: t.confidence,
               status: t.status,
@@ -949,6 +1290,9 @@ async function main(deps = {}) {
           changeType,
           observed: t.observed,
           ranges: t.ranges || null,
+          rangesQuality: t.rangesQuality || null,
+          rangesConfidence: t.rangesConfidence ?? null,
+          pctSource: t.pctSource || 'binomial',
           ci: t.ci ? t.ci.sigma : null,
           confidence: t.confidence,
           status: t.status,
@@ -1009,8 +1353,8 @@ async function main(deps = {}) {
     const history = [...prevHist, histEntry].slice(-40);
     const stateObj = {
       scrapedAt: new Date().toISOString(),
-      version: 14,
-      schemaVersion: 14,
+      version: 15,
+      schemaVersion: 15,
       runId:
         extra.runId ||
         new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
@@ -1024,6 +1368,7 @@ async function main(deps = {}) {
       acknowledged: ackMap,
       history,
       lastChanges: extra.changes || prev.lastChanges || [],
+      posVerify,
       posWindow: nextWindow,
     };
     await writeJsonAtomic(stateFile, stateObj, 2);
@@ -1042,7 +1387,7 @@ async function main(deps = {}) {
       }
     }
     await writeState(seedAck, { announcedMap: seedAnnounced });
-    console.log(isUpgrade ? 'Upgrade seed → v14 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
+    console.log(isUpgrade ? 'Upgrade seed → v15 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
     return;
   }
 
@@ -1115,4 +1460,9 @@ module.exports = {
   classifyChange,
   ackSnapshot,
   recordAssignments,
+  verifyPositions,
+  recordOutsidePositions,
+  localPos,
+  RING_CAP,
 };
+
