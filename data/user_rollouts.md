@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 16:41 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-27 16:42 UTC
 
-**Fenêtre glissante 4 h — n = 3707 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 3829 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,75 %** | [4,1 – 5,5] | 176/3707 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,89 – 100] | 3707/3707 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,89 – 100] | 3707/3707 | élevée | Mesuré |
-| Tida Webform | **98,81 %** | [98,4 – 99,12] | 3663/3707 | élevée | Mesuré |
-| hash:1144304849 | **4,57 %** | [3,93 – 5,31] | 168/3675 | élevée | Mesuré |
+| hash:704914099 | **4,73 %** | [4,09 – 5,46] | 181/3829 | élevée | Mesuré |
+| hash:1144304849 | **4,62 %** | [3,99 – 5,35] | 177/3829 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,9 – 100] | 3829/3829 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,9 – 100] | 3829/3829 | élevée | Mesuré |
+| Tida Webform | **98,85 %** | [98,45 – 99,15] | 3785/3829 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,75 % (IC 95 % [4,1 ; 5,5], 176/3707, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9503.73, 10000] → 4,96 %
-
-### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,89 ; 100], 3707/3707, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [20.72, 10000] → 99,79 %
-
-### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,89 ; 100], 3707/3707, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9908.03] → 99,08 %
-
-### Tida Webform
-- Variant 1 : 98,81 % (IC 95 % [98,4 ; 99,12], 3663/3707, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [234.28, 10000] → 97,66 %
+- Variant 1 : 4,73 % (IC 95 % [4,09 ; 5,46], 181/3829, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9504.04, 10000] → 4,96 %
 
 ### hash:1144304849
-- Variant 1 : 4,57 % (IC 95 % [3,93 ; 5,31], 168/3675, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 498.39] → 4,98 %
+- Variant 1 : 4,62 % (IC 95 % [3,99 ; 5,35], 177/3829, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 497.79] → 4,98 %
+
+### Safety Experience IAR User Reporting
+- Variant 1 : 100 % (IC 95 % [99,9 ; 100], 3829/3829, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [43.93, 7865.07] + [8099, 8687] + [8910.38, 10000] → 94,99 %
+
+### hash:3013881204
+- Variant 11 : 100 % (IC 95 % [99,9 ; 100], 3829/3829, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 4852.26] + [5140.71, 9884.29] → 95,96 %
+
+### Tida Webform
+- Variant 1 : 98,85 % (IC 95 % [98,45 ; 99,15], 3785/3829, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -331,7 +331,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - download_discord_app
 - 2026-09-silp-direct-to-discoverable
 - 2026-09-single-cpu-copy
-- 2026-09-soundboard-favorites
 - 2026-09-soundboard-quick-action
 - 2026-09-stream-zero-vad-leading
 - 2026-09-three-month-nitro-gifting
@@ -379,6 +378,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-macaron
 - 2026-10-macaron-non-sub-marketing
 - 2026-10-mana-badge-refresh
+- 2026-10-native-markdown-setting
 - 2026-10-nitro-tab-remove-account-age-restriction
 - 2026-10-overlay-native-window-rendering
 - 2026-10-pinot-member
