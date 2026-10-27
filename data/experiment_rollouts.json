@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-27T16:26:54.515Z",
+  "fetchedAt": "2026-10-27T16:33:58.612Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -384,43 +384,43 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 3
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -3484,16 +3484,6 @@
       "note": "No rollout data found in the Discord API."
     },
     {
-      "id": "2026-09-soundboard-favorites",
-      "hash": 2268468082,
-      "type": "user",
-      "title": "2026-09-soundboard-favorites",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-09-soundboard-quick-action",
       "hash": 2848664599,
       "type": "user",
@@ -3958,6 +3948,16 @@
       "hash": 6234811,
       "type": "user",
       "title": "2026-10-mana-badge-refresh",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-10-native-markdown-setting",
+      "hash": 1150221120,
+      "type": "user",
+      "title": "2026-10-native-markdown-setting",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
