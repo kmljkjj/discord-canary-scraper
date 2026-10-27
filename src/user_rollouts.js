@@ -55,6 +55,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
+const { fetchGistSnapshot } = require('./lib/gist_source');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
@@ -617,6 +618,13 @@ function buildEmbeds(changes) {
       }
     } else if (c.kind === 'revision') {
       lines.push('Revision ' + c.fromRev + ' -> ' + c.toRev + ' - ' + variantLabel(c.bucket));
+    } else if (c.kind === 'config') {
+      lines.push(
+        'Couverture publiée : ' + fmtPct(c.fromPct) + '% -> ' + fmtPct(c.toPct) + '%',
+      );
+      lines.push('Mesure indépendante k/n non incluse — voir le rapport.');
+    } else if (c.kind === 'config-new') {
+      lines.push('Nouvelle expérience dans les plages publiées : ' + fmtPct(c.configPct) + '%');
     }
 
     embeds.push({
@@ -632,8 +640,12 @@ function buildEmbeds(changes) {
           : 0x5865f2,
       footer: {
         text:
-          (c.kind === 'revision' ? 'Rollouts Revision' : 'Rollouts Changes') +
-          ' · Source: mesure propre · API Discord',
+          (c.kind === 'revision'
+            ? 'Rollouts Revision'
+            : c.kind === 'config' || c.kind === 'config-new'
+              ? 'Rollouts Config (gist communautaire)'
+              : 'Rollouts Changes') +
+          (c.source === 'community_gist' ? ' · Source: plages publiées par la communauté' : ' · Source: mesure propre · API Discord'),
       },
     });
   }
@@ -664,20 +676,80 @@ function writeReport(state, reportFile) {
     const gen = new Date().toISOString().slice(0, 16).replace('T', ' ');
     const out = [];
     out.push('# Rollouts user — mesure propre (v14)', '');
-    out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
+    const gistInfo = state.gist || null;
+    out.push(
+      '> Mis à jour automatiquement toutes les 20 min · Source : API Discord + gist communautaire (plages publiées) · Généré le ' +
+        gen +
+        ' UTC',
+      '',
+    );
+    if (gistInfo && !gistInfo.stale) {
+      const pub = gistInfo.publishedAt
+        ? 'publié le ' + gistInfo.publishedAt
+        : 'date de publication inconnue (repli brut)';
+      out.push(
+        '**Plages publiées** : ' +
+          (gistInfo.count || 0) +
+          ' expériences · gist ' +
+          (gistInfo.gistId || '?') +
+          ' · ' +
+          pub +
+          ' · [plages publiées par la communauté — producteur non identifié]',
+        '',
+      );
+    } else if (gistInfo && gistInfo.stale) {
+      out.push('> Plages publiées : dernier snapshot indisponible (stale) — publié le ' + (gistInfo.publishedAt || '?'), '');
+    }
     out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
     out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
+    out.push('**Deux mesures distinctes** : le % mesuré (k/n + IC, population échantillonnée) et la couverture publiée (plages du gist, parmi la population éligible — filtres non exportés). Un écart entre les deux est signalé « écart non expliqué », sans interprétation.', '');
     out.push('Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statistiques, dépendante du modèle) : un heuristique de séparation peut fragmenter une plage uniforme → à lire comme un ordre de grandeur, pas une certitude.', '');
+
+    // ── Comparabilité (V15) : bucket à bucket, jamais union contre un seul
+    // bucket mesuré. La couverture publiée d'un BUCKET doit tomber dans
+    // l'IC de Wilson du BUCKET mesuré correspondant. Les enregistrements
+    // aux plages ambiguës (populations aplaties) sont EXCLUS de la
+    // comparaison statistique — l'union est géométrique, elle ne se
+    // prétend pas « % de la population éligible ».
+    const comparability = (e, ts) => {
+      if (!e.config) return { cmp: '—', cfg: '—' };
+      const cfg = e.config.pct != null ? fmt(e.config.pct) : '—';
+      if (e.config.ambiguous) {
+        return { cmp: 'plages ambiguës — union géométrique, pas de comparaison', cfg };
+      }
+      let anyCompared = false;
+      let allInside = true;
+      for (const t of ts) {
+        if (!(t.bucket > 0) || !t.ci || t.ci.lo == null) continue;
+        const pub = e.config.b && e.config.b[t.bucket];
+        if (pub == null) continue;
+        anyCompared = true;
+        if (pub < t.ci.lo - 1e-9 || pub > t.ci.hi + 1e-9) allInside = false;
+      }
+      if (!anyCompared) return { cmp: '—', cfg };
+      return { cmp: allInside ? 'cohérent' : 'écart non expliqué', cfg };
+    };
+
     out.push('## Expériences mesurées (' + exps.length + ')', '');
-    out.push('| Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |');
-    out.push('|---|---:|---|---:|---|---|');
+    out.push('| Expérience | % mesuré | IC 95 % | Config publiée (union) | Comparabilité (bucket à bucket) | k/n | Confiance | Statut |');
+    out.push('|---|---:|---|---:|---|---:|---|---|');
     for (const e of exps) {
       const ts = e.treatments || [];
       const best = ts.reduce((a, t) => ((t.bucket || 0) > 0 && (a == null || (t.pct || 0) > a) ? t.pct : a), null);
       const bestT = ts.find((t) => t.pct === best) || ts[0] || {};
       const st = e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
       const ci = bestT.ci ? '[' + String(bestT.ci.lo).replace('.', ',') + ' – ' + String(bestT.ci.hi).replace('.', ',') + ']' : '—';
-      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + ci + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf(bestT.confidence) + ' | ' + st + ' |');
+      const { cmp, cfg } = comparability(e, ts);
+      out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + ci + ' | ' + cfg + ' | ' + cmp + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf(bestT.confidence) + ' | ' + st + ' |');
+    }
+    out.push('', '## Couverture publiée — résumé', '');
+    out.push(
+      'Table complète (' +
+        ((gistInfo && gistInfo.count) || 0) +
+        ' expériences, plages exactes) : `data/user_rollouts_exact.json` — couverture CONFIGURÉE (population éligible), pas le % d\'utilisateurs réels.',
+    );
+    if (gistInfo && gistInfo.url) {
+      out.push('', 'Provenance : [gist ' + (gistInfo.gistId || '?') + '](' + gistInfo.url + ')');
     }
     out.push('', '## Détail par variante');
     for (const e of exps) {
@@ -735,6 +807,7 @@ async function main(deps = {}) {
   const sampler = deps.sampler || sampleFingerprints;
   const tokenSnapFn = deps.tokenSnapshot || fetchTokenSnapshot;
   const postWebhookFn = deps.postWebhook || postWebhook;
+  const gistSnapshotFn = deps.gistSnapshot || fetchGistSnapshot;
 
   await fs.ensureDir(path.dirname(stateFile));
   console.log('📊 User rollouts v14 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
@@ -751,7 +824,12 @@ async function main(deps = {}) {
   const announced = prev.announced && typeof prev.announced === 'object' ? { ...prev.announced } : {};
   let acknowledged =
     prev.acknowledged && typeof prev.acknowledged === 'object' ? { ...prev.acknowledged } : {};
-  const isFirst = !(prev.experiments && prev.experiments.length);
+  // « Premier run » : aucune mesure ET aucune baseline de couverture publiée
+  // (une run sans expérience mesurée mais avec ackConfig n'est PAS un premier
+  // run — sinon les changements de couverture publiée seraient perdus).
+  const isFirst =
+    !(prev.experiments && prev.experiments.length) &&
+    !(prev.ackConfig && Object.keys(prev.ackConfig).length);
   // Upgrade < v14 : passage au acknowledged (baseline de notification) —
   // re-seed silencieux, pas de flood de « rattrapage ».
   const isUpgrade = !isFirst && Number(prev.version) !== 14;
@@ -871,6 +949,198 @@ async function main(deps = {}) {
     'degraded',
     experiments.filter((e) => e.status === 'degraded').length,
   );
+
+  // ---- Source communautaire (gist agnonotdev) : plages exactes publiées ----
+  // Deux mesures DISTINCTES, jamais fusionnées : la couverture CONFIGURÉE
+  // (plages publiées, parmi la population éligible — filtres non exportés)
+  // et le taux OBSERVÉ par notre échantillonnage (k/n + Wilson). Les
+  // écarts entre les deux sont AFFICHÉS, jamais « expliqués ».
+  let gist = { ok: false, stale: true, parsed: { byHash: new Map(), count: 0 }, provenance: null };
+  try {
+    const r = await gistSnapshotFn();
+    if (r && r.ok) gist = r;
+  } catch (_) {}
+  const gistOk = !!(gist && gist.ok && gist.parsed && gist.parsed.byHash);
+  let ackConfig =
+    prev.ackConfig && typeof prev.ackConfig === 'object' ? { ...prev.ackConfig } : {};
+
+  const exactFile = path.join(path.dirname(stateFile), 'user_rollouts_exact.json');
+  // configByHash : hash → { pct, b: {bucket: pct}, publishedAt, ambiguous }
+  // (depuis le gist frais, OU depuis la dernière table valide si le gist
+  // est indisponible — jamais de config « fantôme » ni de 0 % inventé).
+  let configByHash = null;
+  let tableToWrite = null;
+  if (gistOk) {
+    console.log(
+      'Gist communautaire:',
+      gist.parsed.count,
+      'expériences · publié',
+      gist.provenance && gist.provenance.publishedAt,
+      gist.parsed.hashCollisions ? '· ' + gist.parsed.hashCollisions + ' collisions hash' : '',
+    );
+
+    configByHash = new Map();
+    const entries = [];
+    for (const g of gist.parsed.byHash.values()) {
+      // % publié PAR VARIANT (bucket) — la comparaison avec la mesure se
+      // fait bucket à bucket, jamais union contre un seul bucket mesuré.
+      const b = {};
+      for (const r of g.roles) {
+        if (r.role === 'treatment' && r.bucket != null) b[r.bucket] = r.pct;
+      }
+      const def = defs.get(g.hash);
+      configByHash.set(g.hash, {
+        pct: g.treatment ? g.treatment.pct : null,
+        b,
+        publishedAt: gist.provenance ? gist.provenance.publishedAt : null,
+        gistId: gist.provenance ? gist.provenance.gistId : null,
+        url: gist.provenance ? gist.provenance.url : null,
+        ambiguous: !!g.ambiguous,
+      });
+      entries.push({
+        hash: g.hash,
+        id: g.id,
+        // Type résolu via les définitions locales ; sinon null (inconnu —
+        // le gist mélange expériences user et guild, on ne devine JAMAIS).
+        type: def && def.type ? def.type : null,
+        treatmentPct: g.treatment ? g.treatment.pct : null,
+        controlPct: g.control ? g.control.pct : null,
+        b,
+        ambiguous: !!g.ambiguous,
+      });
+    }
+    tableToWrite = {
+      fetchedAt: new Date().toISOString(),
+      provenance: gist.provenance,
+      stale: !!gist.stale,
+      hashCollisions: gist.parsed.hashCollisions || 0,
+      count: entries.length,
+      experiments: entries,
+    };
+  } else if (prev.gist && typeof prev.gist === 'object') {
+    // Gist indisponible : réutiliser la dernière table valide, marquée
+    // stale — état et page restent cohérents (la page lit la table).
+    console.warn('Gist communautaire indisponible — dernier snapshot conservé (stale)');
+    try {
+      if (await fs.pathExists(exactFile)) {
+        const t = await fs.readJson(exactFile);
+        if (Array.isArray(t.experiments) && t.experiments.length) {
+          configByHash = new Map();
+          for (const g of t.experiments) {
+            configByHash.set(g.hash, {
+              pct: g.treatmentPct != null ? g.treatmentPct : null,
+              b: g.b || {},
+              publishedAt: (t.provenance && t.provenance.publishedAt) || null,
+              gistId: (t.provenance && t.provenance.gistId) || null,
+              url: (t.provenance && t.provenance.url) || null,
+              ambiguous: !!g.ambiguous,
+              retained: true,
+            });
+          }
+          // Réécriture avec stale: true (provenance conservée).
+          tableToWrite = { ...t, stale: true };
+        }
+      }
+    } catch (_) {}
+  } else {
+    console.warn('Gist communautaire indisponible — pas encore de snapshot');
+  }
+
+  // 1) Attache la couverture publiée aux expériences MESURÉES (même hash).
+  if (configByHash) {
+    for (const e of experiments) {
+      const c = configByHash.get(Number(e.hash));
+      if (c && c.pct != null) {
+        e.config = {
+          pct: c.pct,
+          b: c.b || {},
+          publishedAt: c.publishedAt,
+          gistId: c.gistId,
+          url: c.url,
+          ambiguous: !!c.ambiguous,
+        };
+      }
+    }
+  }
+
+  // 2) Table complète pour la page (data/user_rollouts_exact.json),
+  //    écrite même si l'échantillonnage est dégradé.
+  if (tableToWrite) {
+    await writeJsonAtomic(exactFile, tableToWrite, 2);
+  }
+
+  // 3) Changements de couverture publiée : même pipeline de notification
+  //    (acknowledged, lots de 10, retry) — jamais perdus.
+  //    Détection à la résolution PUBLIÉE (0,01 pt — les plages sont des
+  //    entiers exacts, un changement n'est jamais du bruit statistique),
+  //    par bucket (une redistribution entre variants est un changement)
+  //    ; la suppression éventuelle est une POLITIQUE explicite
+  //    (USER_ROLLOUTS_CONFIG_MIN_DELTA, défaut 0,01 pt).
+  const configChanges = [];
+  const CONFIG_MIN_DELTA = Number(process.env.USER_ROLLOUTS_CONFIG_MIN_DELTA || '0.01') || 0.01;
+  if (configByHash && gistOk) {
+    const isConfigFirst = !prev.ackConfig; // pas encore de baseline → seed
+    for (const g of gist.parsed.byHash.values()) {
+      if (!g.treatment) continue;
+      if (!hasName(g.id) && !NOTIFY_HASH) continue;
+      const key = String(g.hash);
+      const pct = g.treatment.pct;
+      const b = {};
+      for (const r of g.roles) {
+        if (r.role === 'treatment' && r.bucket != null) b[r.bucket] = r.pct;
+      }
+      const prevEntry = ackConfig[key];
+      if (prevEntry == null || typeof prevEntry !== 'object') {
+        if (pct <= 0) continue; // pas de rollout → rien à annoncer
+        if (isConfigFirst) {
+          ackConfig[key] = { pct, v: b }; // seed silencieux de la baseline
+          continue;
+        }
+        configChanges.push({
+          kind: 'config-new',
+          hash: g.hash,
+          id: g.id,
+          title: g.id,
+          configPct: pct,
+          configV: b,
+          source: 'community_gist',
+        });
+        continue;
+      }
+      const prevPct = typeof prevEntry === 'object' ? prevEntry.pct : prevEntry;
+      const prevV = (prevEntry && prevEntry.v) || {};
+      const totalChanged =
+        prevPct != null && pct != null && Math.abs(prevPct - pct) >= CONFIG_MIN_DELTA;
+      // Redistribution : un bucket apparaît/disparaît ou change (résolution
+      // publiée), même si l'union totale ne bouge pas.
+      const bucketChanged = (a, bb) =>
+        (a == null) !== (bb == null) || (a != null && bb != null && Math.abs(a - bb) >= CONFIG_MIN_DELTA);
+      const allBuckets = new Set([...Object.keys(prevV), ...Object.keys(b)]);
+      let redistributed = false;
+      for (const bk of allBuckets) {
+        if (bucketChanged(prevV[bk], b[bk])) {
+          redistributed = true;
+          break;
+        }
+      }
+      if (totalChanged || redistributed) {
+        configChanges.push({
+          kind: 'config',
+          hash: g.hash,
+          id: g.id,
+          title: g.id,
+          fromPct: prevPct,
+          toPct: pct,
+          fromV: prevV,
+          toV: b,
+          redistributed,
+          source: 'community_gist',
+        });
+      }
+    }
+    // Les expériences absentes du gist ne sont NI supprimées de ackConfig
+    // NI annoncées « terminées » — aucune invention (advisor: pas de 0 %).
+  }
 
   const changes = [];
   if (!isFirst && !isUpgrade) {
@@ -1022,6 +1292,12 @@ async function main(deps = {}) {
       token: tokenSnap,
       announced: extra.announcedMap ?? announced,
       acknowledged: ackMap,
+      ackConfig: extra.ackConfig ?? ackConfig,
+      gist: gistOk
+        ? { ...gist.provenance, stale: !!gist.stale, count: gist.parsed.count }
+        : prev.gist && typeof prev.gist === 'object'
+          ? { ...prev.gist, stale: true }
+          : null,
       history,
       lastChanges: extra.changes || prev.lastChanges || [],
       posWindow: nextWindow,
@@ -1046,9 +1322,13 @@ async function main(deps = {}) {
     return;
   }
 
+  // Les changements de couverture publiée rejoignent le MÊME pipeline de
+  // livraison (lots de 10, acknowledged, retry) que les mesures propres.
+  changes.push(...configChanges);
+
   await writeState(acknowledged);
 
-  console.log('Changes', changes.length);
+  console.log('Changes', changes.length, '(dont config publiée:', configChanges.length + ')');
   if (!changes.length) {
     console.log('No significant named user % change');
     return;
@@ -1074,6 +1354,13 @@ async function main(deps = {}) {
     delivered += chunk.length;
     for (const c of chunk) {
       const key = String(c.hash != null ? c.hash : '');
+      if (c.kind === 'config' || c.kind === 'config-new') {
+        // Même format que le seed ({ pct, v }) — la redistribution par
+        // bucket est la baseline de comparaison, pas juste l'union.
+        ackConfig[key] =
+          c.kind === 'config' ? { pct: c.toPct, v: c.toV } : { pct: c.configPct, v: c.configV };
+        continue;
+      }
       if (c.kind === 'revision' && c.hash != null) {
         const ack = acknowledged[key] || { rev: null, n: null, b: {} };
         acknowledged[key] = { ...ack, rev: c.toRev };
@@ -1087,7 +1374,7 @@ async function main(deps = {}) {
     }
   }
 
-  await writeState(acknowledged, { changes: changes.slice(0, delivered) });
+  await writeState(acknowledged, { changes: changes.slice(0, delivered), ackConfig });
 
   if (sendFailed) {
     console.warn('NOTIFY_FAIL user_rollouts — acknowledged avancé pour les ' + delivered + ' changements livrés seulement ; le reste sera retenté');

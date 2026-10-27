@@ -38,7 +38,13 @@ const WATCH_MS = Math.max(60000, Number(process.env.ROLLOUTS_WATCH_MS || 19 * 60
 const PASS_MS = Math.max(60000, Number(process.env.ROLLOUTS_FULL_PASS_MS || 4 * 60 * 1000));
 const MAX_PASSES = Number(process.env.ROLLOUTS_MAX_PASSES || 0); // 0 = illimité
 
-const STATE_FILES = ['data/user_rollouts.json', 'data/user_rollouts.md'];
+// V15 : user_rollouts_exact.json (table des plages publiées) est écrit par
+// chaque passe de user_rollouts → commité comme le reste de l'état.
+const STATE_FILES = [
+  'data/user_rollouts.json',
+  'data/user_rollouts.md',
+  'data/user_rollouts_exact.json',
+];
 
 /** Rafraîchit l'état depuis origin (reprises / dispatch manuels). */
 function gitRefreshState() {

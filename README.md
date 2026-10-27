@@ -104,6 +104,59 @@ Variables d'environnement utiles : `WEBHOOK_MAX_ATTEMPTS` (5), `WEBHOOK_TIMEOUT_
   et poussaient le code source, des payloads base64, des chunks de patch
   et du bytecode tracké (~50 fichiers morts).
 
+### v15 — plages publiées par la communauté (gist) en source complémentaire
+
+- **Nouvelle source** : un gist communautaire (compte `agnonotdev`, mis à jour
+  quasi quotidiennement) publie les plages de positions exactes
+  (« 0 - 10000 », échelle [0, 10000)) de ~1000 expériences — la même
+  source d'information que celle utilisée par la communauté autour de
+  Wumpus Central. Le gist mélange expériences user ET guild : le type est
+  résolu via nos définitions locales, sinon affiché « inconnu » — jamais
+  deviné depuis le nom. Adaptateur : `src/lib/gist_source.js`.
+- **Deux mesures, jamais fusionnées** :
+  1. **Couverture CONFIGURÉE** — union exacte des plages publiées (par
+     variante, chevauchements et doublons jamais comptés double, variants
+     « none »/not_eligible exclus). C'est la part de la population ÉLIGIBLE
+     (les filtres ne sont pas exportés) — pas un % d'utilisateurs réels.
+  2. **Taux OBSERVÉ** — notre mesure propre k/n + IC de Wilson sur
+     échantillons anonymes.
+  Les deux s'affichent côte à côte ; un écart est signalé « écart non
+  expliqué », sans interprétation (filtres, révision, snapshot périmé —
+  aucune de ces causes n'est inventée).
+- **Provenance conservée** : id du gist, version du commit, date de
+  publication, compteur d'expériences. Un échec de fetch garde le dernier
+  snapshot, marqué `stale` — jamais de 0 % inventé, jamais d'expérience
+  déclarée « terminée » parce qu'elle a disparu du gist.
+- **Notifications unifiées** : les changements de couverture publiée
+  passent par le même pipeline robuste que les mesures — baseline
+  `ackConfig`, lots de 10 embeds, retry après échec, exit 2. Détection à
+  la résolution PUBLIÉE (0,01 pt — les plages sont des entiers exacts,
+  un changement n'est jamais du bruit statistique), PAR BUCKET : une
+  redistribution entre variants (ex. 25 % + 25 % → 50 % sur un seul
+  variant, union inchangée) est un changement notifié. Les expériences
+  absentes du gist ne sont ni supprimées ni annoncées « terminées ».
+- **Page rollouts** : les expériences issues des plages publiées
+  apparaissent avec un badge « Config » et une note honnête ; la table
+  complète est dans `data/user_rollouts_exact.json`. Lien de provenance
+  cliquable vers le gist (état `stale` affiché si le dernier rafraîchissement
+  a échoué) ; pagination « Afficher plus » par lots de 500 pour que les
+  petits rollouts ne soient pas enterrés par les ~1000 expériences
+  publiées.
+- Validation croisée effectuée : 850/850 positions observées en production
+  tombent dans les plages publiées ; les % publiés correspondent aux
+  mesures k/n quand la configuration est comparable (5 % ↔ ~5 % mesuré,
+  100 % ↔ 100 % mesuré).
+
+Variable optionnelle : `USER_ROLLOUTS_GIST_IDS` (liste d'ids de gist
+séparés par des virgules — par défaut, les deux copies connues du gist
+communautaire).
+
+Variable optionnelle : `USER_ROLLOUTS_CONFIG_MIN_DELTA` (défaut 0,01 pt) —
+résolution minimale de détection d'un changement de couverture publiée
+(union totale ou par bucket). Avec GITHUB_TOKEN, la provenance complète
+(id du gist, version, date de publication) est récupérée ; sans lui, le
+repli brut fonctionne mais sans métadonnées.
+
 Variable optionnelle : `ORBIT_AVATAR_URL`. Par défaut, l'avatar est `media/datamining-avatar.png` servi par jsDelivr, ce qui ne fonctionne que si le dépôt est public. Sur un dépôt privé, définir `ORBIT_AVATAR_URL` vers une image PNG/JPG publique (Discord n'accepte pas le SVG).
 
 ## Déclencheur rapide (optionnel)
