@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T16-29-17-099Z_652514_hx4oym",
-  "buildNumber": "652514",
-  "updatedAt": "2026-10-27T16:29:17.100Z",
-  "count": 382,
+  "runId": "2026-10-27T16-32-26-803Z_652519_7z4zu6",
+  "buildNumber": "652519",
+  "updatedAt": "2026-10-27T16:32:26.803Z",
+  "count": 381,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -16181,64 +16181,6 @@
         "value": null
       },
       "fingerprint": "657c9a9a554798f4cc86131857e5b89bb8599e3a81188f60e4d2c850f1a7e87d"
-    },
-    {
-      "id": "2026-09-soundboard-favorites",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "sortOrder": "creation-date",
-        "allowReordering": false
-      },
-      "variations": {
-        "1": {
-          "sortOrder": "favorite-date",
-          "allowReordering": false
-        },
-        "2": {
-          "sortOrder": "favorite-date",
-          "allowReordering": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-09-soundboard-favorites",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "sortOrder": "creation-date",
-          "allowReordering": false
-        },
-        "variations": {
-          "1": {
-            "sortOrder": "favorite-date",
-            "allowReordering": false
-          },
-          "2": {
-            "sortOrder": "favorite-date",
-            "allowReordering": true
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "212c31b8823e65c8db548130c20d7dbbd8d99f12614a37eb01e7f3e3b6059b55"
     },
     {
       "id": "2026-09-soundboard-quick-action",
