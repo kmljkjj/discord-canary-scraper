@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T17-26-56-444Z_652586_jy4a5o",
-  "buildNumber": "652586",
-  "updatedAt": "2026-10-27T17:26:56.444Z",
-  "count": 381,
+  "runId": "2026-10-27T17-28-10-957Z_652608_exfkvb",
+  "buildNumber": "652608",
+  "updatedAt": "2026-10-27T17:28:10.957Z",
+  "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5958,6 +5958,23 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "9d07ae215d6a8467ced8cedf384a6a1d129de7b44fbff6a8cde4d0d28710f1c8"
+    },
+    "2026-09-registration-email-opt-in-copy": {
+      "id": "2026-09-registration-email-opt-in-copy",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "trackingCopy": true
+        }
+      },
+      "defaultConfig": {
+        "trackingCopy": false
+      },
+      "system": "apex",
+      "fp": "8e139cab627ec1b0ce298d190e611a4eee615de7108102a468bdb83121538335"
     },
     "2026-09-request-to-stream-go-live-modal": {
       "id": "2026-09-request-to-stream-go-live-modal",
