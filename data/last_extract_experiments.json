@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-27T15-05-59-227Z_652401_ndtnq8",
-  "buildNumber": "652401",
-  "updatedAt": "2026-10-27T15:05:59.227Z",
-  "count": 379,
+  "runId": "2026-10-27T15-08-04-530Z_652402_fyxe99",
+  "buildNumber": "652402",
+  "updatedAt": "2026-10-27T15:08:04.530Z",
+  "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7249,6 +7249,66 @@
       },
       "system": "apex",
       "fp": "4503897b212dce9e4c1de05ad92eae5dbfbcd3536644390821940c4d4bab726c"
+    },
+    "2026-10-pinot-admin": {
+      "id": "2026-10-pinot-admin",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "cf4d43e2e92c8c2881cbdd9bacda8ed2064710080b018756f9b7895304e0107d"
+    },
+    "2026-10-pinot-member": {
+      "id": "2026-10-pinot-member",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "b2671a47e27a291c86458c7d574921b7b65cb9da59b549974358f5539d06219f"
+    },
+    "2026-10-pinot-member-notice": {
+      "id": "2026-10-pinot-member-notice",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "fb843e36bbaff8bcde096e4779f41a079e8e26d9f5b6734ad4e677dc3943dc21"
     },
     "2026-10-profile-default-tab-with-content": {
       "id": "2026-10-profile-default-tab-with-content",
