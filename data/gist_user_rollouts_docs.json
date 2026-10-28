@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-28T22:42:15.074Z",
+ "generatedAt": "2026-10-28T23:10:23.949Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
@@ -9,10 +9,10 @@
  },
  "stats": {
   "total": 1006,
-  "user": 355,
+  "user": 356,
   "userData": 149,
   "guild": 38,
-  "unclassified": 613,
+  "unclassified": 612,
   "noData": 270
  },
  "experiments": [
@@ -1076,6 +1076,24 @@
   {
    "id": "2026-09-server-tooltip-notification-context",
    "title": "2026-09-server-tooltip-notification-context",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "projectedTreatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-server-onboarding-setup-progress",
+   "title": "2026-09-server-onboarding-setup-progress",
    "type": "user",
    "hasData": false,
    "totalsAvailable": false,
