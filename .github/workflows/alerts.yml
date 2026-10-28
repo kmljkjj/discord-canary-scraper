@@ -60,7 +60,7 @@ jobs:
             --arg name "$NAME" --arg url "$URL" --arg branch "$BRANCH" \
             --arg sha "${SHA:0:7}" --arg event "$EVENT" --arg repo "$GITHUB_REPOSITORY" \
             --arg prev "${{ steps.prev.outputs.previous }}" \
-            '{username: "Datamining · Alertes",
+            '{username: "Datamining · Alertes", avatar_url: "https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@2600f26572392c44397e72766660521332ce56ee/media/avatar-alerts.png",
               embeds: [{
                 title: ("❌ " + $name + " a échoué"),
                 url: $url,

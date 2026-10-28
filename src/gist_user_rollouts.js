@@ -850,7 +850,7 @@ async function postWebhook(embeds) {
     return false;
   }
   try {
-    const res = await sendEmbeds(WEBHOOK, { username: BOT, avatar_url: AVATAR }, embeds);
+    const res = await sendEmbeds(WEBHOOK, { username: BOT, avatar_url: AVATAR }, embeds, { identity: 'gistRollouts' });
     return Boolean(res && res.ok && res.sent > 0);
   } catch (e) {
     console.warn('webhook fail:', String(e.message).slice(0, 120));

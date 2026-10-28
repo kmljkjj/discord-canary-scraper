@@ -373,7 +373,7 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
-async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey }) {
+async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey, identity }) {
   let ok = true;
   for (let si = 0; si < sections.length; si++) {
     const sec = sections[si];
@@ -419,7 +419,7 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey
     // considérés comme déjà envoyés et JAMAIS postés.
     for (let i = 0; i < embeds.length; i++) {
       const key = batchKey ? `${batchKey}:s${si}:p${i}:${embeds.length}` : null;
-      const r = await post(webhookUrl, { embeds: [embeds[i]] }, key);
+      const r = await post(webhookUrl, { embeds: [embeds[i]] }, key, identity);
       if (!r) ok = false;
     }
   }
@@ -518,6 +518,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   const ok = await sendSectionEmbeds({
     webhookUrl,
     title: label(E.exp, 'Experiments'),
+    identity: 'experiments',
     bn,
     ts,
     sections,
@@ -603,6 +604,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   const ok = await sendSectionEmbeds({
     webhookUrl,
     title: label(kindEmoji, kind),
+    identity: isRoutes ? 'routes' : 'strings',
     bn,
     ts,
     sections,
@@ -617,7 +619,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
-async function post(url, body, dedupeKey) {
+async function post(url, body, dedupeKey, identity) {
   body.username = BOT;
   body.avatar_url = AVATAR;
   const fp = dedupeKey ? 'msg:' + dedupeKey : payloadFingerprint(body);
@@ -628,7 +630,7 @@ async function post(url, body, dedupeKey) {
   const title = body.embeds?.[0]?.title || '';
   const embeds = body.embeds || [];
   const base = { username: body.username, avatar_url: body.avatar_url };
-  const r = await sendEmbeds(url, base, embeds, { label: title, minGapMs: 50, withDismiss: true });
+  const r = await sendEmbeds(url, base, embeds, { identity, label: title, minGapMs: 50, withDismiss: true });
   console.log('webhook', r.status, title);
   if (r.ok) {
     await markPosted(fp);

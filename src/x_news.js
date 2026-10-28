@@ -25,6 +25,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sendEmbeds } = require('./lib/webhook');
+const { webhookIdentity } = require('./lib/webhook_identity');
 const { sleep, DEFAULT_UA } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
 
@@ -435,7 +436,7 @@ async function maybeWarnCredits(seen) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: 'Datamining · X',
+        ...webhookIdentity('x'),
         embeds: [
           {
             title: 'X — auth_token manquant / invalide',
@@ -640,7 +641,7 @@ async function postWebhook(p) {
     WEBHOOK,
     { username: 'Datamining · X' },
     [embed],
-    { label: 'x-news ' + p.id, timeoutMs: 15000, withDismiss: true },
+    { identity: 'x', label: 'x-news ' + p.id, timeoutMs: 15000, withDismiss: true },
   );
   console.log('webhook', r.status, p.id);
   return r.ok;

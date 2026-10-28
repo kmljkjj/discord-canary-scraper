@@ -888,11 +888,11 @@ function webhookUrlWithComponents() {
 async function postWebhook(url, body) {
   if (!url) return { ok: false, status: 0, text: 'no webhook' };
   if (body && Array.isArray(body.components) && body.components.length) {
-    return sendWebhook(url, body, { label: 'quests-v2' });
+    return sendWebhook(url, body, { identity: 'quests', label: 'quests-v2' });
   }
   const embeds = body.embeds || [];
   const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || AVATAR };
-  return sendEmbeds(url, base, embeds, { label: 'quests', withDismiss: true });
+  return sendEmbeds(url, base, embeds, { identity: 'quests', label: 'quests', withDismiss: true });
 }
 
 async function sendQuestWebhook(quest) {

@@ -682,7 +682,7 @@ async function postComponents(comps, accentColor) {
         flags: IS_COMPONENTS_V2_FLAG,
         components: componentsMsg,
       },
-      { label: 'blog' },
+      { identity: 'blog', label: 'blog' },
     );
     if (!r.ok) {
       console.warn('blog webhook fail', r.status, (r.text || '').slice(0, 200));

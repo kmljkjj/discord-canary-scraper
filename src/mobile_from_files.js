@@ -225,7 +225,7 @@ async function postWebhook(payload) {
     avatar_url: BOT_AVATAR,
     ...payload,
   };
-  const r = await sendWebhook(WEBHOOK_URL, body, { label: 'mobile', timeoutMs: 30000, minGapMs: 400 });
+  const r = await sendWebhook(WEBHOOK_URL, body, { identity: 'mobile', label: 'mobile', timeoutMs: 30000, minGapMs: 400 });
   if (r.ok) {
     console.log('Webhook OK');
     return true;

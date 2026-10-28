@@ -11,6 +11,7 @@
 const fetch = require('node-fetch');
 const { sleep } = require('./utils');
 const { IS_COMPONENTS_V2_FLAG, embedsToComponents } = require('./components_v2');
+const { webhookIdentity } = require('./webhook_identity');
 
 const DEFAULTS = {
   maxAttempts: Number(process.env.WEBHOOK_MAX_ATTEMPTS || 5),
@@ -131,7 +132,8 @@ async function sendWebhook(url, body, options = {}) {
 async function _sendWebhook(url, body, options = {}) {
   const opts = { ...DEFAULTS, ...options };
   if (!url) return { ok: false, status: 0, text: 'no webhook url', attempts: 0 };
-  const payload = typeof body === 'string' ? body : JSON.stringify(body);
+  const data = opts.identity ? { ...body, ...webhookIdentity(opts.identity) } : body;
+  const payload = typeof data === 'string' ? data : JSON.stringify(data);
   const label = opts.label || '';
   let last = { ok: false, status: 0, text: '', attempts: 0 };
 

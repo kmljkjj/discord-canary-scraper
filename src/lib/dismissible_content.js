@@ -118,7 +118,7 @@ async function notifyDismissible({ webhookUrl, buildNumber, diff }) {
     const slice = embeds.slice(i, i + 5);
     const fp = payloadFingerprint({ embeds: slice });
     if (!(await claimPosted(fp))) continue;
-    const r = await sendEmbeds(webhookUrl, base, slice, { label: 'Dismissible Content', minGapMs: 50, withDismiss: true });
+    const r = await sendEmbeds(webhookUrl, base, slice, { identity: 'dismissible', label: 'Dismissible Content', minGapMs: 50, withDismiss: true });
     console.log('webhook dismissible', r.status);
     if (r.ok) await markPosted(fp);
     else { ok = false; await markFailed(fp, 'HTTP ' + r.status); }

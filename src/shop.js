@@ -382,7 +382,7 @@ async function postComponents(comps) {
         flags: IS_COMPONENTS_V2_FLAG,
         components: componentsMsg,
       },
-      { label: 'shop' },
+      { identity: 'shop', label: 'shop' },
     );
     if (!r.ok) {
       console.warn('shop webhook fail', r.status, (r.text || '').slice(0, 160));

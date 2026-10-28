@@ -122,7 +122,7 @@ async function postWebhook(payload) {
   };
   const embeds = body.embeds || [];
   const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || BOT_AVATAR };
-  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { label: 'mobile', timeoutMs: 30000, minGapMs: 200, withDismiss: true });
+  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { identity: 'mobile', label: 'mobile', timeoutMs: 30000, minGapMs: 200, withDismiss: true });
   if (r.ok) {
     console.log('Webhook OK');
     return true;
@@ -969,7 +969,7 @@ async function postComponents(components, accentColor) {
       avatar_url: BOT_AVATAR,
       flags: IS_COMPONENTS_V2_FLAG,
       components: componentsMsg,
-    }, { label: 'mobile', timeoutMs: 30000, minGapMs: 200 });
+    }, { identity: 'mobile', label: 'mobile', timeoutMs: 30000, minGapMs: 200 });
     if (!r.ok) {
       if (r.status >= 400 && r.status < 500 && r.status !== 429) {
         throw new Error('Webhook HTTP ' + r.status);

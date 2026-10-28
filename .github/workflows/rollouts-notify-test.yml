@@ -21,6 +21,7 @@ jobs:
         run: |
           node <<'EOF'
           const fs = require('fs');
+          const { webhookIdentity } = require('./src/lib/webhook_identity');
           const cands = [
             ['UR_WEBHOOK', process.env.UR_WEBHOOK],
             ['USER_ROLLOUT_WEBHOOK_URL', process.env.USER_ROLLOUT_WEBHOOK_URL],
@@ -45,7 +46,7 @@ jobs:
           fetch(String(w[1]).trim() + '?wait=true', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: 'Datamining', embeds: [embed] }),
+            body: JSON.stringify({ ...webhookIdentity('userRollouts'), embeds: [embed] }),
           }).then(async (r) => {
             console.log('Webhook (' + w[0] + ')', r.status);
             if (!r.ok) console.log(await r.text());
