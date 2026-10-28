@@ -1,5 +1,15 @@
 /**
- * User experiment rollouts v14 — MESURE PROPRE, zéro source communautaire.
+ * User experiment rollouts v15 — MESURE PROPRE, zéro source communautaire.
+ *
+ * V15 (précision) :
+ *  - % EXACTS pour les expériences NOMMÉES : la position d'un fingerprint
+ *    est déterministe (murmur3(`id:fingerprintId`) % 10000). On la recalcule
+ *    pour CHAQUE échantillon de la fenêtre — y compris ceux HORS rollout —
+ *    et on la vérifie contre hash_result. Points positifs + négatifs →
+ *    chaque borne est encadrée → plages et % exacts (± 10000/n) au lieu
+ *    de k/n (±0,5 % typiquement, notifications bruitées).
+ *  - Repli automatique sur k/n si la vérification échoue ou si le rollout
+ *    est filtré (plateforme, ancienneté…) — détecté par points contradictoires.
  *
  * V14 (fiabilité + précision honnête) :
  *  - FENÊTRE UNIFIÉE : l'estimation est TOUJOURS agrégée sur la fenêtre
@@ -43,6 +53,7 @@
  *   USER_ROLLOUT_MAX_MS         default 90000 (budget temps du sampling)
  *   USER_ROLLOUT_WINDOW_H       default 4 (fenêtre glissante, en heures)
  *   USER_ROLLOUT_WINDOW_BATCHES default 60 (max runs gardés dans la fenêtre)
+ *   USER_ROLLOUT_SAMPLE_CAP     default 4000 (échantillons gardés pour la mesure exacte)
  *   USER_ROLLOUT_NOISE_Z        default 2 (seuil de bruit statistique ; 0 = off)
  *   USER_ROLLOUT_NOTIFY_HASH    default 0 (notifier aussi les hash sans nom)
  *   USER_ROLLOUT_PLATFORM_UAS   optionnel — User-Agents séparés par ||
@@ -67,6 +78,7 @@ const {
   reconstructBucketRanges,
   DEFAULT_SCALE,
 } = require('./lib/rollout_math');
+const { inferExactRanges } = require('./lib/exact_ranges');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'user_rollouts.json');
@@ -104,6 +116,12 @@ const MAX_BATCHES = Math.max(5, Number(process.env.USER_ROLLOUT_WINDOW_BATCHES |
 const RING_CAP = 150;
 // Limite Discord : 10 embeds par message → lots de 10 changements.
 const EMBED_BATCH = 10;
+// V15 : échantillons individuels gardés pour la mesure EXACTE (positions
+// recalculées pour TOUS les fingerprints, y compris hors rollout).
+const SAMPLE_CAP = Math.max(500, Number(process.env.USER_ROLLOUT_SAMPLE_CAP || 4000));
+// Label interne « absent des assignments » (hors rollout).
+const ABSENT = -99;
+const STATE_VERSION = 15;
 
 /**
  * Rotation de plateformes : certains rollouts sont ciblés par plateforme
@@ -199,7 +217,11 @@ function pruneWindow(raw, now) {
     }
     if (Object.keys(nb).length) pos[hashS] = { rev: src && src.rev != null ? src.rev : null, b: nb };
   }
-  return { batches, pos };
+  const samples = (Array.isArray(w.samples) ? w.samples : [])
+    .filter((x) => x && typeof x.f === 'string' && Number.isFinite(x.t) && x.t >= cutoff && x.a && typeof x.a === 'object')
+    .slice(-SAMPLE_CAP);
+  const since = w.since && typeof w.since === 'object' ? { ...w.since } : {};
+  return { batches, pos, samples, since };
 }
 
 /**
@@ -271,7 +293,7 @@ function buildNextWindow(win, curCounts, curRevs, ok, now) {
   for (const [hash, r] of curRevs) rev[String(hash)] = r;
   const bid = 'b' + now + '_' + crypto.randomBytes(4).toString('hex');
   const batches = [...win.batches, { bid, ts: now, ok, rev, c }].slice(-MAX_BATCHES);
-  return { batches, pos: win.pos || {} };
+  return { batches, pos: win.pos || {}, samples: win.samples || [], since: win.since || {} };
 }
 
 // ─── Estimation (V14 : k/n + Wilson + bornes indicatives) ──────────────────
@@ -279,15 +301,16 @@ function buildNextWindow(win, curCounts, curRevs, ok, now) {
 /**
  * Traitements d'une expérience depuis les comptes cumulés de la fenêtre.
  * mergedCounts : Map(bucket → k) ; n : total d'échantillons de la fenêtre ;
- * ringPos : { bucket: [position, ...] } positions récentes (anneau).
+ * ringPos : { bucket: [position, ...] } positions récentes (anneau) ;
+ * exact : résultat de exactForExperiment (V15) ou null.
  *
- * pct = k/n (binomial, non biaisé) + IC de Wilson.
- * Les positions servent à une reconstruction INDICATIVE des plages
- * (ordre-statistiques, correction German tank) — jamais présentée comme
- * exacte, affichée comme seconde mesure.
+ * Si `exact.ok` : pct = couverture EXACTE des plages (V15).
+ * Sinon pct = k/n (binomial, non biaisé) + IC de Wilson, et les positions
+ * servent à une reconstruction INDICATIVE des plages.
  */
-function buildWindowTreatments(mergedCounts, n, ringPos) {
+function buildWindowTreatments(mergedCounts, n, ringPos, exact) {
   const treatments = [];
+  const useExact = !!(exact && exact.ok);
   for (const [bucket, k] of mergedCounts) {
     const kk = Math.max(0, Number(k) || 0);
     const nn = Math.max(0, Number(n) || 0);
@@ -310,6 +333,33 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
     ];
     const rec = pts.length >= 3 ? reconstructBucketRanges(pts, SCALE) : null;
     const observed = pts.length ? [Math.min(...pts), Math.max(...pts)] : null;
+    const ex = useExact ? exact.pct[String(bucket)] : undefined;
+    if (useExact && ex != null && Number.isFinite(ex)) {
+      // V15 : plages EXACTES (bornes encadrées par points positifs ET négatifs).
+      const u = Number(exact.uncertainty[String(bucket)]) || 0;
+      treatments.push({
+        bucket: Number(bucket),
+        label: tLabel(bucket),
+        percentage: ex,
+        pct: ex,
+        pctKnown: true,
+        status: 'exact',
+        confidence: exact.points >= 500 ? 'high' : 'medium',
+        sampleCount: kk,
+        samples: kk,
+        coverage: Math.round((ex / 100) * 1000) / 1000,
+        ci: { lo: Math.max(0, Math.round((ex - u) * 100) / 100), hi: Math.min(100, Math.round((ex + u) * 100) / 100), sigma: u },
+        ranges: exact.ranges[String(bucket)] || [],
+        binomialPct: pct,
+        binomialCi: { lo: ci.lo, hi: ci.hi, sigma: ci.sigma },
+        indicativePct: null,
+        indicativeCi: null,
+        observed,
+        exactPoints: exact.points,
+        sourceKind: 'exact_ranges',
+      });
+      continue;
+    }
     treatments.push({
       bucket: Number(bucket),
       label: tLabel(bucket),
@@ -336,6 +386,7 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
   ) / 100;
   let globalStatus = 'estimated';
   if (!treatments.length) globalStatus = 'insufficient_data';
+  else if (treatments.every((t) => t.status === 'exact')) globalStatus = 'exact';
   else if (treatments.some((t) => t.status === 'degraded')) globalStatus = 'degraded';
   const sigmaAll = treatments.length
     ? 100 * Math.sqrt(Math.max(0, sumPct / 100) * Math.max(0, 1 - sumPct / 100) / Math.max(n, 1))
@@ -343,7 +394,7 @@ function buildWindowTreatments(mergedCounts, n, ringPos) {
   return { treatments, status: globalStatus, sumPct, sigma: Math.round(sigmaAll * 100) / 100 };
 }
 
-// ─── Sampling ───────────────────────────────────────────────────────────────
+// ─── Sampling ─────────────────────────────────────────────────────────────────────────
 
 /**
  * Global rate limiter — tracks Discord's rate limit headers and pauses
@@ -443,12 +494,15 @@ async function fetchAssignments(extraHeaders = {}, withGuild = false, attempt = 
  * Protocole FIXE : cible SAMPLES échantillons (plus d'arrêt sur « plateau »
  * de découverte, qui biaisait la densité de la fenêtre) ; le budget temps
  * reste la seule sortie anticipée.
- * Returns { byHash, byRev, ok, fail } avec
- * byHash : hash → Map(bucket → positions[]) ; byRev : hash → revision.
+ * Returns { byHash, byRev, ok, fail, samples } avec
+ * byHash : hash → Map(bucket → positions[]) ; byRev : hash → revision ;
+ * samples : échantillons individuels (V15, cf. sampleRecord).
  */
 async function sampleFingerprints(n, concurrency) {
   const byHash = new Map();
   const byRev = new Map();
+  const samples = [];
+  const seenFp = new Set();
   let ok = 0;
   let fail = 0;
   let next = 0;
@@ -468,12 +522,19 @@ async function sampleFingerprints(n, concurrency) {
       try {
         const delay = rateLimit.dynamicDelayMs + Math.floor(Math.random() * 150);
         await sleep(delay);
-        const { assignments } = await fetchAssignments({
+        const { assignments, fingerprint } = await fetchAssignments({
           'X-Request-Id': crypto.randomBytes(16).toString('hex'),
           'User-Agent': UAS[my % UAS.length],
         });
         // V14 : validation stricte + dédoublonnage (cf. recordAssignments).
         recordAssignments(byHash, byRev, assignments);
+        // V15 : échantillon individuel (fingerprint + assignments) pour la
+        // mesure exacte. Un fingerprint déjà vu n'est pas recompté.
+        const rec = sampleRecord(fingerprint, assignments, Date.now());
+        if (rec && !seenFp.has(rec.f)) {
+          seenFp.add(rec.f);
+          samples.push(rec);
+        }
         ok++;
       } catch (e) {
         fail++;
@@ -489,7 +550,65 @@ async function sampleFingerprints(n, concurrency) {
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log('Samples ok', ok, 'fail', fail, 'hashes', byHash.size, '429s', rateLimit.consecutive429, stopReason ? '· early stop: ' + stopReason : '(all ' + n + ')');
-  return { byHash, byRev, ok, fail };
+  return { byHash, byRev, ok, fail, samples };
+}
+
+/**
+ * V15 — échantillon compact : { f: fingerprintId, t: ts, a: {hash: [bucket, pos]} }.
+ * fingerprintId = partie avant le « . » du fingerprint Discord.
+ */
+function sampleRecord(fingerprint, assignments, ts) {
+  const f = String(fingerprint || '').split('.')[0];
+  if (!/^\d{5,25}$/.test(f) || !Array.isArray(assignments)) return null;
+  const a = {};
+  for (const x of assignments) {
+    if (!Array.isArray(x) || x.length < 6) continue;
+    const hash = Number(x[0]);
+    const bucket = Number(x[2]);
+    const pos = Number(x[5]);
+    if (!Number.isFinite(hash) || !Number.isInteger(bucket) || bucket < -1) continue;
+    if (!Number.isInteger(pos) || pos < 0 || pos >= SCALE) continue;
+    if (a[String(hash)]) continue;
+    a[String(hash)] = [bucket, pos];
+  }
+  return { f, t: ts, a };
+}
+
+/** Position d'un fingerprint dans une expérience user (déterministe). */
+function userPosition(expId, fingerprintId) {
+  return murmur3(String(expId) + ':' + String(fingerprintId)) % SCALE;
+}
+
+/**
+ * V15 — mesure EXACTE d'une expérience NOMMÉE : chaque échantillon de la
+ * fenêtre donne un point (position recalculée, label = bucket ou ABSENT).
+ * Garde-fous : la position recalculée doit égaler hash_result renvoyé par
+ * Discord pour TOUS les échantillons assignés ; sinon (formule différente,
+ * expérience filtrée…) → null et repli sur k/n.
+ */
+function exactForExperiment(expId, hash, samples, since) {
+  if (!expId || String(expId).startsWith('hash:')) return null;
+  const key = String(hash);
+  const minTs = Number(since) || 0;
+  const pts = [];
+  let assigned = 0;
+  for (const s of samples || []) {
+    if (!s || s.t < minTs) continue;
+    const pos = userPosition(expId, s.f);
+    const hit = s.a && s.a[key];
+    if (hit) {
+      if (Number(hit[1]) !== pos) return null; // formule de hash invalide
+      assigned++;
+      pts.push({ pos, label: Number(hit[0]) });
+    } else {
+      pts.push({ pos, label: ABSENT });
+    }
+  }
+  if (assigned < 3) return null;
+  const res = inferExactRanges(pts, SCALE);
+  if (!res) return null;
+  res.assigned = assigned;
+  return res;
 }
 
 /**
@@ -535,7 +654,7 @@ function fingerprintOf(treatments) {
       if (!t.pctKnown || t.pct == null || t.status === 'insufficient_data') {
         return t.bucket + ':?';
       }
-      const step = t.confidence === 'low' ? 5 : 1;
+      const step = t.status === 'exact' ? 0.1 : t.confidence === 'low' ? 5 : 1;
       const rounded = Math.round(Number(t.pct) / step) * step;
       return t.bucket + ':' + rounded.toFixed(1);
     })
@@ -612,7 +731,7 @@ function buildEmbeds(changes) {
         if (d.ci) line += ' (±' + fmtPct(d.ci) + ')';
         lines.push(line);
         if (d.ranges && d.ranges.length) {
-          lines.push('  bornes reconstruites (indicatif) : ' + d.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + '));
+          lines.push((d.status === 'exact' ? '  plages exactes : ' : '  bornes reconstruites (indicatif) : ') + d.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + '));
         }
       }
     } else if (c.kind === 'revision') {
@@ -663,9 +782,10 @@ function writeReport(state, reportFile) {
     const n = exps.reduce((m, e) => Math.max(m, Number(e.windowN) || 0), 0);
     const gen = new Date().toISOString().slice(0, 16).replace('T', ' ');
     const out = [];
-    out.push('# Rollouts user — mesure propre (v14)', '');
+    out.push('# Rollouts user — mesure propre (v15)', '');
     out.push('> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le ' + gen + ' UTC', '');
     out.push('**Fenêtre glissante 4 h — n = ' + n + ' échantillons — ' + (state.tokensConfigured || 0) + ' tokens actifs**', '');
+    out.push('**Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).', '');
     out.push('**Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.', '');
     out.push('Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statistiques, dépendante du modèle) : un heuristique de séparation peut fragmenter une plage uniforme → à lire comme un ordre de grandeur, pas une certitude.', '');
     out.push('## Expériences mesurées (' + exps.length + ')', '');
@@ -675,7 +795,7 @@ function writeReport(state, reportFile) {
       const ts = e.treatments || [];
       const best = ts.reduce((a, t) => ((t.bucket || 0) > 0 && (a == null || (t.pct || 0) > a) ? t.pct : a), null);
       const bestT = ts.find((t) => t.pct === best) || ts[0] || {};
-      const st = e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
+      const st = e.status === 'exact' ? 'Exact (plages)' : e.status === 'degraded' ? 'Mesuré (n faible)' : 'Mesuré';
       const ci = bestT.ci ? '[' + String(bestT.ci.lo).replace('.', ',') + ' – ' + String(bestT.ci.hi).replace('.', ',') + ']' : '—';
       out.push('| ' + (e.title || e.id || 'hash:' + e.hash) + ' | **' + (best == null ? '—' : fmt(best)) + '** | ' + ci + ' | ' + (bestT.sampleCount != null ? bestT.sampleCount + '/' + (e.windowN || '?') : (e.windowN || '?')) + ' | ' + conf(bestT.confidence) + ' | ' + st + ' |');
     }
@@ -684,7 +804,9 @@ function writeReport(state, reportFile) {
       out.push('', '### ' + (e.title || e.id || 'hash:' + e.hash));
       for (const t of e.treatments || []) {
         out.push('- ' + (t.label || 'Bucket ' + t.bucket) + ' : ' + fmt(t.pct) + ' (IC 95 % [' + String((t.ci || {}).lo ?? '?').replace('.', ',') + ' ; ' + String((t.ci || {}).hi ?? '?').replace('.', ',') + '], ' + (t.sampleCount != null ? t.sampleCount + '/' + e.windowN : 'n=' + e.windowN) + ', confiance ' + conf(t.confidence) + ')');
-        if (t.ranges && t.ranges.length) {
+        if (t.status === 'exact' && t.ranges && t.ranges.length) {
+          out.push('  - plages exactes : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ')').join(' + ') + ' → ' + fmt(t.pct) + ' (k/n : ' + fmt(t.binomialPct) + ')');
+        } else if (t.ranges && t.ranges.length) {
           out.push('  - plages reconstruites (indicatif, ordre de grandeur) : ' + t.ranges.map(([a, b]) => '[' + a + ', ' + b + ']').join(' + ') + ' → ' + fmt(t.indicativePct));
         }
       }
@@ -716,7 +838,7 @@ function writeReport(state, reportFile) {
   }
 }
 
-// ─── Main ───────────────────────────────────────────────────────────────────
+// ─── Main ─────────────────────────────────────────────────────────────────────────────
 
 /** Extrait un snapshot acknowledged {rev, n, b:{bucket:pct}} d'une expérience. */
 function ackSnapshot(exp, rev, n) {
@@ -737,7 +859,7 @@ async function main(deps = {}) {
   const postWebhookFn = deps.postWebhook || postWebhook;
 
   await fs.ensureDir(path.dirname(stateFile));
-  console.log('📊 User rollouts v14 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h)');
+  console.log('📊 User rollouts v15 (MESURE PROPRE · sampling + fenêtre ' + WINDOW_H + ' h · plages exactes)');
   console.log('Samples:', SAMPLES, 'concurrency:', CONC, 'tokens:', TOKENS.length);
   console.log('Webhook:', WEBHOOK ? 'set (' + WEBHOOK_SOURCE + ')' : 'MISSING');
   console.log('Notify unresolved hash:', NOTIFY_HASH ? 'yes' : 'no');
@@ -754,7 +876,8 @@ async function main(deps = {}) {
   const isFirst = !(prev.experiments && prev.experiments.length);
   // Upgrade < v14 : passage au acknowledged (baseline de notification) —
   // re-seed silencieux, pas de flood de « rattrapage ».
-  const isUpgrade = !isFirst && Number(prev.version) !== 14;
+  // V15 garde le schéma V14 (champs ajoutés seulement) → pas de re-seed.
+  const isUpgrade = !isFirst && ![14, STATE_VERSION].includes(Number(prev.version));
   if (isUpgrade) {
     // Migration : initialise acknowledged depuis la dernière mesure connue.
     acknowledged = {};
@@ -780,8 +903,9 @@ async function main(deps = {}) {
   const tokenSnap = tokenSnapR.status === 'fulfilled' ? tokenSnapR.value : [];
   const sampled = sampledR.status === 'fulfilled'
     ? sampledR.value
-    : { byHash: new Map(), byRev: new Map(), ok: 0, fail: 0 };
+    : { byHash: new Map(), byRev: new Map(), ok: 0, fail: 0, samples: [] };
   const { byHash, byRev, ok, fail } = sampled;
+  const curSamples = Array.isArray(sampled.samples) ? sampled.samples : [];
   console.log('Token snapshot:', tokenSnap.length, 'experiments');
   if (ok < MIN_OK) {
     console.warn('Too few ok samples', ok, '<', MIN_OK, '— estimation fenêtre seulement');
@@ -822,6 +946,26 @@ async function main(deps = {}) {
   }
   nextWindow.pos = mergedPos;
 
+  // V15 : échantillons individuels (dédoublonnés par fingerprint) + date de
+  // départ par hash — un changement de revision ignore les échantillons
+  // antérieurs pour la mesure exacte.
+  const since = { ...(winOld.since || {}) };
+  for (const [hash, rev] of byRev) {
+    const old = (winOld.pos || {})[String(hash)];
+    if (old && old.rev != null && rev != null && old.rev !== rev) since[String(hash)] = now - 1;
+  }
+  const seenF = new Set();
+  const allSamples = [];
+  for (const smp of [...curSamples.slice().reverse(), ...(winOld.samples || []).slice().reverse()]) {
+    if (!smp || seenF.has(smp.f)) continue;
+    seenF.add(smp.f);
+    allSamples.push(smp);
+  }
+  allSamples.reverse();
+  nextWindow.samples = allSamples.slice(-SAMPLE_CAP);
+  for (const k of Object.keys(since)) if (!(k in mergedPos)) delete since[k];
+  nextWindow.since = since;
+
   // ---- Estimation par expérience : UNE SEULE fenêtre (V14) ----
   const { winCounts, winN } = windowAggregate(nextWindow);
   const experiments = [];
@@ -837,10 +981,12 @@ async function main(deps = {}) {
       title: 'hash:' + hash,
       type: 'user',
     };
+    const exact = exactForExperiment(def.id, hash, nextWindow.samples, since[String(hash)]);
     const { treatments, status: rollStatus, sumPct } = buildWindowTreatments(
       m,
       n,
       mergedPos[String(hash)] || {},
+      exact,
     );
     if (!treatments.length) continue;
     experiments.push({
@@ -848,9 +994,11 @@ async function main(deps = {}) {
       id: def.id,
       title: def.title,
       type: 'user',
-      quality: rollStatus === 'estimated' ? 'estimated' : 'degraded',
+      quality: rollStatus === 'exact' ? 'exact' : rollStatus === 'estimated' ? 'estimated' : 'degraded',
       status: rollStatus,
-      confidence: rollStatus === 'estimated' ? 0.8 : 0.3,
+      confidence: rollStatus === 'exact' ? 0.99 : rollStatus === 'estimated' ? 0.8 : 0.3,
+      method: exact && exact.ok ? 'exact_ranges' : 'binomial',
+      exactCheck: exact ? { ok: exact.ok, points: exact.points, runs: exact.runs, conflicts: exact.conflicts, isolated: exact.isolated } : null,
       coverage: Math.round(Math.min(sumPct, 100) * 10) / 1000,
       sumPct,
       treatments,
@@ -868,6 +1016,8 @@ async function main(deps = {}) {
     experiments.filter((e) => e.named).length,
     'estimated',
     experiments.filter((e) => e.status === 'estimated').length,
+    'exact',
+    experiments.filter((e) => e.status === 'exact').length,
     'degraded',
     experiments.filter((e) => e.status === 'degraded').length,
   );
@@ -924,7 +1074,7 @@ async function main(deps = {}) {
               ci: t.ci ? t.ci.sigma : null,
               confidence: t.confidence,
               status: t.status,
-              exact: false,
+              exact: t.status === 'exact',
               population: 'user',
               treatment: t.label,
             });
@@ -938,7 +1088,12 @@ async function main(deps = {}) {
           slidingWindowDeltaMargin(winOld.batches, nextWindow.batches, Math.max(from, to), NOISE_Z),
           noiseMargin(Math.max(from, to), Math.max(1, Math.min(nAck || nExp.windowN, nExp.windowN)), NOISE_Z),
         );
-        const { changeType, change } = classifyChange(from, to, Math.max(MIN_DELTA, margin));
+        // V15 : mesure exacte → seuil = incertitude des bornes (≥ 0,1 pt),
+        // plus besoin de la marge de bruit statistique ni de APEX_MIN_PCT_DELTA.
+        const threshold = t.status === 'exact'
+          ? Math.max(0.1, 2 * (Number(t.ci && t.ci.sigma) || 0))
+          : Math.max(MIN_DELTA, margin);
+        const { changeType, change } = classifyChange(from, to, threshold);
         if (!changeType || changeType === 'ROLLOUT_DATA_DEGRADED') continue;
         deltas.push({
           label: t.label,
@@ -952,7 +1107,7 @@ async function main(deps = {}) {
           ci: t.ci ? t.ci.sigma : null,
           confidence: t.confidence,
           status: t.status,
-          exact: false,
+          exact: t.status === 'exact',
           population: 'user',
           treatment: t.label,
         });
@@ -970,7 +1125,7 @@ async function main(deps = {}) {
           deltas,
           named: nExp.named,
           changeFingerprint: fp2,
-          exact: false,
+          exact: deltas.every((d) => d.exact),
         });
       }
     }
@@ -1009,8 +1164,8 @@ async function main(deps = {}) {
     const history = [...prevHist, histEntry].slice(-40);
     const stateObj = {
       scrapedAt: new Date().toISOString(),
-      version: 14,
-      schemaVersion: 14,
+      version: STATE_VERSION,
+      schemaVersion: STATE_VERSION,
       runId:
         extra.runId ||
         new Date().toISOString().replace(/[:.]/g, '-') + '_' + Math.random().toString(36).slice(2, 8),
@@ -1042,7 +1197,7 @@ async function main(deps = {}) {
       }
     }
     await writeState(seedAck, { announcedMap: seedAnnounced });
-    console.log(isUpgrade ? 'Upgrade seed → v14 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
+    console.log(isUpgrade ? 'Upgrade seed → v15 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
     return;
   }
 
@@ -1115,4 +1270,7 @@ module.exports = {
   classifyChange,
   ackSnapshot,
   recordAssignments,
+  sampleRecord,
+  userPosition,
+  exactForExperiment,
 };
