@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:01 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:03 UTC
 
-**Fenêtre glissante 4 h — n = 6838 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6843 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,26 %** | [4,75 – 5,83] | 360/6838 | élevée | Mesuré |
-| hash:1144304849 | **5,15 %** | [4,64 – 5,71] | 352/6838 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6838/6838 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6838/6838 | élevée | Mesuré |
-| Tida Webform | **100 %** | [99,94 – 100] | 6838/6838 | élevée | Mesuré |
+| hash:704914099 | **5,23 %** | [4,72 – 5,8] | 358/6843 | élevée | Mesuré |
+| hash:1144304849 | **5,28 %** | [4,76 – 5,84] | 361/6843 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6843/6843 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6843/6843 | élevée | Mesuré |
+| Tida Webform | **100 %** | [99,94 – 100] | 6843/6843 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,26 % (IC 95 % [4,75 ; 5,83], 360/6838, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.18, 10000] → 5,03 %
+- Variant 1 : 5,23 % (IC 95 % [4,72 ; 5,8], 358/6843, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.13, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 5,15 % (IC 95 % [4,64 ; 5,71], 352/6838, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [5.3, 500.7] → 4,95 %
+- Variant 1 : 5,28 % (IC 95 % [4,76 ; 5,84], 361/6843, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [5.25, 499.75] → 4,95 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6838/6838, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9897.41] → 98,97 %
+- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6843/6843, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 3025.83] + [3303.21, 10000] → 97,23 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6838/6838, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [52.61, 9944.39] → 98,92 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6843/6843, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9996.42] → 99,96 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6838/6838, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [1.84, 9841.16] → 98,39 %
+- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6843/6843, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9998.97] → 99,99 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 348 expériences user
+## En attente de rollout — 350 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -78,6 +78,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-10-go-live-auto-quality
 - 2025-10-low-latency-rate-control
 - Calendar
+- Tida Webform
 - 2025-11-age-verification-expressive-everywhere
 - 2025-11-global-frame-pool-lock
 - 2025-11-mana-context-menu
@@ -347,6 +348,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-badge-directory-updates
 - 2026-10-bounties-desktop-quest-bar
 - 2026-10-bulk-nitro-gifting-discounts
+- 2026-10-camp-in-dm
 - 2026-10-clickable-hero-banner
 - 2026-10-cod-relink
 - 2026-10-code-blurple
