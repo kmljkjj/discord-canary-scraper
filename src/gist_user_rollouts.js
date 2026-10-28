@@ -67,19 +67,14 @@ const DATA = path.join(__dirname, '..', 'data');
 // multi_population) ont un total PROJETÉ non pondéré (marqué projected),
 // pas un pourcentage exact.
 const SEMANTICS_VERSION = 2;
+// v2 : classification complétée par le champ `kind` du gist complet (user | guild).
+const CLASSIFIER_VERSION = 2;
 const STATE = path.join(DATA, 'gist_user_rollouts.json');
 const REPORT = path.join(DATA, 'gist_user_rollouts.md');
 
-const DEFAULT_GIST_IDS = [
-  'e3e99062983e6bd0feaef833f14fd931', // canonique
-  '192b2ce20539ce1021b5c8cb01b17ff0', // miroir (comparaison + repli explicite)
-];
-// Propriétaires connus des gists par défaut — servent UNIQUEMENT au repli
-// CDN brut (dernier recours) : https://gist.githubusercontent.com/<owner>/<id>/raw
-const RAW_FALLBACK_OWNERS = {
-  e3e99062983e6bd0feaef833f14fd931: 'agnonotdev',
-  '192b2ce20539ce1021b5c8cb01b17ff0': 'agnonotdev',
-};
+const { wireByHash, wireField } = require('./lib/wire_reconcile');
+const { murmur3 } = require('./lib/murmur3');
+const { DEFAULT_GIST_IDS, RAW_FALLBACK_OWNERS, LEGACY_IDS, normalizeGistEntries } = require('./lib/gist_sources');
 const GIST_IDS = String(process.env.GIST_ROLLOUT_GIST_IDS || '')
   .split(',')
   .map((s) => s.trim())
@@ -213,13 +208,13 @@ async function fetchJsonUrl(url, timeoutMs = 20000) {
 async function fetchGistInto(id, token) {
   try {
     const meta = await fetchGistMeta(id, token);
-    const data = await fetchJsonUrl(meta.rawUrl);
+    const data = normalizeGistEntries(await fetchJsonUrl(meta.rawUrl));
     return { meta, data };
   } catch (e) {
     const owner = RAW_FALLBACK_OWNERS[id];
     if (!owner) throw e;
     const rawUrl = 'https://gist.githubusercontent.com/' + owner + '/' + id + '/raw';
-    const data = await fetchJsonUrl(rawUrl);
+    const data = normalizeGistEntries(await fetchJsonUrl(rawUrl));
     return {
       meta: {
         gistId: id,
@@ -289,9 +284,17 @@ function computeAll(gistData, defs) {
     const c = computeExperiment(raw);
     if (!c.id) continue;
     const def = defs.get(c.id) || {};
-    const type = def.type === 'user' || def.type === 'guild' ? def.type : 'unclassified';
+    // Type : définitions locales d'abord (comportement historique inchangé) ;
+    // à défaut, le champ `kind` publié par le gist complet (user | guild).
+    // apex_user / installation / absent restent « unclassified » (suivis, non notifiés).
+    const gistKind = raw && (raw.kind === 'user' || raw.kind === 'guild') ? raw.kind : null;
+    const type = def.type === 'user' || def.type === 'guild' ? def.type : gistKind || 'unclassified';
     typeCounts[type] += 1;
-    const entry = { ...c, type, title: def.title || c.id };
+    const entry = {
+      ...c,
+      type,
+      title: (def.title && def.title !== c.id ? def.title : raw.title && String(raw.title).trim()) || c.id,
+    };
     byId[c.id] = entry;
     list.push(entry);
   }
@@ -423,6 +426,11 @@ function buildEmbed(change, sourceMeta) {
       value: `treatment ${before.treatment.pct != null ? fmtPct(before.treatment.pct) : 'indisponible'} · ${before.variantsCount || (before.variants || []).length} variante(s)`,
       inline: false,
     });
+  }
+  // Mesure API Discord attachée (un seul message, deux chiffres côte à côte).
+  if (change.wire && after && after.hasData && after.totalsAvailable && after.treatment.pct != null) {
+    const wf = wireField(after.treatment.pct, change.wire);
+    if (wf) fields.push(wf);
   }
   if (kind !== 'new' && deltaPct != null) {
     fields.push({
@@ -743,17 +751,45 @@ async function main(deps = {}) {
         ' expérience(s) prouvées inchangées ré-acquittée(s) en silence ; acquittements valides conservés, vrais changements notifiés.',
     );
   }
-  const changes = isFirst
+  // Migration de source / de classification : les expériences qui deviennent
+  // « user » (ou qui arrivent avec la nouvelle source) sont acquittées EN SILENCE
+  // (sinon ~500 « Nouvelle expérience suivie » d'un coup). Les expériences déjà
+  // suivies gardent leur acquittement : leurs vrais changements restent notifiés.
+  const migratingSource = Boolean(
+    prev && !isFirst &&
+      ((prev.source && LEGACY_IDS.includes(prev.source.gistId)) || prev.classifierVersion !== CLASSIFIER_VERSION),
+  );
+  let changes = isFirst
     ? []
     : diffExperiments(acknowledged || {}, notifiable, MIN_DELTA_PCT, allCurIds);
+  const silentAck = new Set();
+  if (migratingSource) {
+    changes = changes.filter((c) => {
+      if (c.kind === 'new' && !(acknowledged && acknowledged[c.id])) {
+        silentAck.add(c.id);
+        return false;
+      }
+      return true;
+    });
+    log('Migration de source/classification : ' + silentAck.size + ' expérience(s) nouvellement suivie(s) acquittée(s) en silence.');
+  }
 
   // 6) Notifications : UN embed PAR envoi — la livraison partielle est
   //    identifiable précisément (1 changement = 1 envoi = 1 acquittement).
   let delivered = 0;
   if (changes.length) {
     log('Changements vs acknowledged:', changes.length);
+    let wireMap = deps.wireMap;
+    if (!wireMap) {
+      try {
+        wireMap = wireByHash(await fs.readJson(path.join(DATA, 'user_rollouts.json')));
+      } catch (_) {
+        wireMap = new Map();
+      }
+    }
     for (const c of changes) {
-      const embed = buildEmbed(c, source);
+      const wire = wireMap.get(murmur3(c.id));
+      const embed = buildEmbed(wire ? { ...c, wire } : c, source);
       const ok = await postWebhookFn([embed]);
       if (!ok) break; // acknowledged n'avance QUE sur les envois livrés.
       delivered += 1;
@@ -775,6 +811,7 @@ async function main(deps = {}) {
       if (c.kind === 'removed') delete newAcknowledged[c.id];
       else newAcknowledged[c.id] = ackEntry(c.after);
     }
+    for (const id of silentAck) if (notifiable[id]) newAcknowledged[id] = ackEntry(notifiable[id]);
     // Sortie du périmètre user (toujours au gist, ex. reclassée guild) :
     // silencieux — plus notifiable, plus surveillée, mais pas un retrait.
     for (const id of Object.keys(newAcknowledged)) {
@@ -785,6 +822,7 @@ async function main(deps = {}) {
     version: 1,
     schemaVersion: 1,
     semanticsVersion: SEMANTICS_VERSION,
+    classifierVersion: CLASSIFIER_VERSION,
     runId: new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15) + '_gist',
     scrapedAt: new Date().toISOString(),
     source: {
@@ -808,6 +846,7 @@ async function main(deps = {}) {
       delivered,
       firstRun: isFirst,
       semanticsMigrated: migrated,
+      silentAck: silentAck.size,
     },
     history: capHistory([
       ...(prev && Array.isArray(prev.history) ? prev.history : []),
