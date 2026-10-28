@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-28T01-03-46-274Z_653536_08enjm",
-  "buildNumber": "653536",
-  "scrapedAt": "2026-10-28T01:03:46.274Z",
+  "runId": "2026-10-28T01-05-57-468Z_653552_gs1553",
+  "buildNumber": "653552",
+  "scrapedAt": "2026-10-28T01:05:57.469Z",
   "totals": {
-    "all": 387
+    "all": 386
   },
   "experiments": [
     {
@@ -3402,23 +3402,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-mobile-server-tag",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
