@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T01:00:27.159Z",
+  "fetchedAt": "2026-10-28T01:07:07.424Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -390,17 +390,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 6,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 6
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 6,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 6
       }
     },
     {
@@ -410,17 +410,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 5,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 5
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 5,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 5
+        "0": 3
       }
     },
     {
@@ -2068,16 +2068,6 @@
       "hash": 3119548606,
       "type": "user",
       "title": "2026-06-improved-shop-loading",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-06-mobile-server-tag",
-      "hash": 1137365772,
-      "type": "user",
-      "title": "2026-06-mobile-server-tag",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4245,11 +4235,11 @@
     }
   ],
   "summary": {
-    "total": 392,
+    "total": 391,
     "guild": 38,
-    "user": 354,
+    "user": 353,
     "withPercentage": 10,
-    "withoutPercentage": 382,
+    "withoutPercentage": 381,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 4,
