@@ -1,0 +1,5163 @@
+{
+ "version": 1,
+ "schemaVersion": 1,
+ "runId": "20261028T012332_gist",
+ "scrapedAt": "2026-10-28T01:23:32.454Z",
+ "source": {
+  "gistId": "e3e99062983e6bd0feaef833f14fd931",
+  "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/f78019d6384dec34fcde5c7b782d8075dfb3f001/rollouts-tag.json",
+  "updatedAt": "2026-10-27T23:45:42Z",
+  "revision": "12a86606c0a6063f0b2e7461d6fa26ba66d0afee",
+  "fetchedAt": "2026-10-28T01:23:32.454Z",
+  "fallback": false,
+  "rawFallback": false,
+  "canonicalId": null
+ },
+ "mirror": {
+  "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
+  "diverged": true,
+  "divergingIds": [
+   "2026-09-new-orb-reward-visuals"
+  ]
+ },
+ "stats": {
+  "total": 1005,
+  "user": 356,
+  "userData": 148,
+  "guild": 37,
+  "unclassified": 612,
+  "noData": 271
+ },
+ "acknowledged": {
+  "2026-10-web-streaming-optimizations": {
+   "key": "a8fbcd888ee52c64",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment|3:treatment|4:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 4,
+     "role": "control"
+    },
+    "1": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "4": {
+     "pct": 4,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 16
+   },
+   "control": {
+    "pct": 4
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 5
+  },
+  "2026-10-stage-unified-call-user": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-soundboard-mute-indicator": {
+   "key": "19a2e309986d6b83",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 1
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-shop-marketing-fatigue": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-server-tag-upsell-on-profile": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-remove-quests-from-discovery": {
+   "key": "a4a56f033996ad22",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-purchase-history": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-10-profile-default-tab-with-content": {
+   "key": "b70149498bd33300",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 30
+   },
+   "control": {
+    "pct": 30
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-pinot-member": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-10-nitro-tab-remove-account-age-restriction": {
+   "key": "6b150cca95c591ec",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-macaron-non-sub-marketing": {
+   "key": "e8f1ed4f2b4e73de",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 9.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 90.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 90.5
+   },
+   "control": {
+    "pct": 9.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-macaron": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-10-guild-tooltip-lazy-content": {
+   "key": "a624203af7186263",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-gift-cards-in-app-marketing": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-gdm-duration-timer": {
+   "key": "6b01735ef180f054",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 3.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 8.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 8.5
+   },
+   "control": {
+    "pct": 3.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-game-exit-promo-rust": {
+   "key": "15b6a0377bfaeed7",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-fix-soundboard-muting-iconography": {
+   "key": "19a2e309986d6b83",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 1
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-e2e-latency-measurement": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-desktop-tti-perf": {
+   "key": "b3b9adcf2eca826f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-desktop-general-perf": {
+   "key": "b3b9adcf2eca826f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-desktop-game-perf": {
+   "key": "b3b9adcf2eca826f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-contextual-referrals-server-channel-member-list": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-contextual-referrals-gdm-member-list": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-collectibles-marketing-client-cache": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-collectibles-interactive-jumble-bar": {
+   "key": "eb8dce761bc0b516",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 15
+   },
+   "control": {
+    "pct": 15
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-code-blurple-marketing-holdout": {
+   "key": "78fb9d935c86f452",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 95,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 95
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-code-blurple": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-10-cod-relink": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-10-clickable-hero-banner": {
+   "key": "04f9ee8c20115439",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-bounties-desktop-quest-bar": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-10-badge-directory-updates": {
+   "key": "e3881d4c3a02478c",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 85,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 85
+   },
+   "control": {
+    "pct": 15
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-10-avx512-entropy-histogram": {
+   "key": "185e645741bce961",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 15
+   },
+   "control": {
+    "pct": 15
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-youtube-3p-nagbar": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-youtube-3p": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-windows-native-premap": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-web-sticker-picker-upsell-restyle": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-voice-connect-feedback": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-video-background-profile-fetch": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-update-email-settings-copy-subtext": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-try-display-name-style": {
+   "key": "12b1a347539b10ee",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 13.33,
+     "role": "control"
+    },
+    "1": {
+     "pct": 13.33,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 13.33,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 26.66
+   },
+   "control": {
+    "pct": 13.33
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-09-three-month-nitro-gifting": {
+   "key": "46439952c83bead3",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 20
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-stream-zero-vad-leading": {
+   "key": "7e06d9c2c1a0aa80",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-soundboard-quick-action": {
+   "key": "265e4af2b88fc4a9",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 95,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 95
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-single-cpu-copy": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-silp-direct-to-discoverable": {
+   "key": "0bd8478bd6ebfb5c",
+   "hasData": true,
+   "sig": "0:control",
+   "byVariant": {
+    "0": {
+     "pct": 3,
+     "role": "control"
+    }
+   },
+   "treatment": {
+    "pct": 0
+   },
+   "control": {
+    "pct": 3
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-silp-desktop-app-upsell": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-silp-cta-copy-tests": {
+   "key": "e04bc04a10232282",
+   "hasData": true,
+   "sig": "0:control",
+   "byVariant": {
+    "0": {
+     "pct": 4,
+     "role": "control"
+    }
+   },
+   "treatment": {
+    "pct": 0
+   },
+   "control": {
+    "pct": 4
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-silp-app-opened-direct-to-discoverable": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-server-tooltip-notification-context": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-server-onboarding-setup-progress": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-safety-flows-legacy-required-actions": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-rust-3p": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-request-to-stream-new-entry-point": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-request-to-stream-go-live-modal": {
+   "key": "e8f737ca78fc1eb7",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-registration-email-opt-in-copy": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-referral-trial-cta": {
+   "key": "94459194139dcd9f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-referral-profile-contextual-menu-upsell": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-quest-mobile-bar-secondary-cta": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-quest-home-bounties-feature-gate": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-profile-widget-empty-state-suggestions": {
+   "key": "764b4df6bbc5111a",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-09-profile-link-fetch": {
+   "key": "a624203af7186263",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-orbs-hero-carousel": {
+   "key": "b9f0969c2e61421e",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-non-nitro-file-upload-marketing": {
+   "key": "f3b7a8e468d5bba4",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 76.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 76.5
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-nitro-file-upload-rollout": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-new-orb-reward-visuals": {
+   "key": "3f39928c7a29cfde",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 49.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 49.5
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-new-horizontal-scroll-shared": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-nameplate-video-preload-none": {
+   "key": "f9c510f15ba1c115",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-multi-sku-embed-rendering": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-mobile-sticker-picker-upsell-restyle": {
+   "key": "94459194139dcd9f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-mobile-quest-reward-button-to-secondary-button": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-mobile-quest-home-sort-priority": {
+   "key": "f82485db99bac722",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-manual-review-inconclusive-copy": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-linux-gpu-decode": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-linked-game-org-invites-dev": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-invite-silp-education": {
+   "key": "a7014f051eaf1480",
+   "hasData": true,
+   "sig": "0:control",
+   "byVariant": {
+    "0": {
+     "pct": 2.5,
+     "role": "control"
+    }
+   },
+   "treatment": {
+    "pct": 0
+   },
+   "control": {
+    "pct": 2.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-invite-expiring-soon": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-invite-accept-age-group-errors": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-halloween-wishlisting-animation": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-halloween-holiday": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-gsimagic2": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-gifting-badge-coachmark-audience": {
+   "key": "c0d835d6edda6165",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 25
+   },
+   "control": {
+    "pct": 25
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-game-search-row": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-game-profiles-v3-communities-tab": {
+   "key": "e8f737ca78fc1eb7",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-game-profiles-v3-commerce-tab": {
+   "key": "bfb651c748e21566",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-friends-sidebar": {
+   "key": "cc7d2a9d205151e5",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-09-edit-profile-collectibles-ordering": {
+   "key": "e2ab4be1fb953170",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 2.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 2.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 2.5
+   },
+   "control": {
+    "pct": 2.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-09-desktop-tti-update-check-deadline": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-desktop-tti-shader-cache": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-default-emojis": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-connected-thread-sidebar": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-clips-editor-image-track": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-build-a-bear": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-application-test-mode-quick-access": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-09-agc2-mobile": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-activity-go-live": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-a11y-chassis-target-size": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-web-filter-tag-group-migration": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-vq-remaining-time-truncation": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-virtual-backgrounds-ios": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-video-guard": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-user-bio-max-length": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-top-soundboard-sounds-mobile": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-top-soundboard-sounds": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-tiny-bronco": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-timestamp-autocomplete-mobile": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-split-payments": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-show-expressive-modal-subtitle-alt": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-scheduled-messages": {
+   "key": "2b0c41f07983869e",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-08-rocketleague-events": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-rive-web-perf": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-profile-read-state-v1": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-profile-embed-share-button": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-profile-embed-rendering": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-premium-gifting-gogo-promotion": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-no-fill-logging": {
+   "key": "6bc3491353a4a792",
+   "hasData": true,
+   "sig": "1:treatment|2:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 75,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-08-nitro-tenure-badge-withheld-state": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-nitro-tenure-badge-total-progress": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-mute-aware-noise-cancellation": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-mobile-emoji-picker-upsell-restyle": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-mark-channel-unread": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-guilds-bar-media-state-store": {
+   "key": "dc6996c724bb242e",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-08-gsh-subs-activity-bar": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-gift-recipient-display-name-search": {
+   "key": "f5553488981eb4d4",
+   "hasData": true,
+   "sig": "1:treatment|2:treatment|3:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 75
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-08-game-profiles-vc": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-game-mode": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-game-community-add-server-entry": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-forward-age-restricted-destinations": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-favorites-server": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-dont-close-chat": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-08-dcf-new-user-cooldown": {
+   "key": "db5a4d76a7658a9a",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment|3:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 75
+   },
+   "control": {
+    "pct": 25
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 4
+  },
+  "2026-08-compress-logs": {
+   "key": "a624203af7186263",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-08-bounties-mobile-quest-bar": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-badge-management": {
+   "key": "1f7c50e41ac27fcb",
+   "hasData": true,
+   "sig": "1:treatment|2:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 92.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-08-automontage": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-audio-fidelity": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-08-ad-topic-opt-out-client": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-you-bar-guild-tag": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-wishlist-direct-to-gifting": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-unobtrusive-device-suggestions": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-typing-users-css-dots": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-smag-mobile-wishlist-suggestions": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-smag-dm-sidebar-nitro-recommendation": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-shop-this-look-mobile": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-renewable-end-date-sort": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-reject-with-error-kill-switch": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-reduce-leave-call-gpu": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-quest-home-default-banner-removal": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-premium-referral-incentives": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-premium-group-expansion-announcement": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-personal-widget": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-parental-consent-warning-fetch": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-orbchievements": {
+   "key": "9edd28ff827491b3",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 30
+   },
+   "control": {
+    "pct": 30
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-07-onyx": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-nvenc-reconstructed-frames": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-mobile-emoji-suggestions": {
+   "key": "d85e4077484089c1",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment|3:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 3
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 4
+  },
+  "2026-07-mobile-boosting-optimizations": {
+   "key": "b7cc46e129e30b47",
+   "hasData": true,
+   "sig": "4:treatment",
+   "byVariant": {
+    "4": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-manual-age-assurance-fallback": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-krisp-cpu-disablement": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-ios-attribution": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-gsimagic": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-expressive-modal-v2": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-07-desktop-channel-tabs": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-custom-typing-indicator": {
+   "key": "ad2aea87de76d3b0",
+   "hasData": true,
+   "sig": "1:treatment|2:treatment|3:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 70,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 90
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-07-custom-app-store-overlay": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-cobalt": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-clips-on-profile-viewer": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-clips-on-profile-setter": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-clips-game-events-on-player": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-call-of-duty-3pp-expired": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-autoclipping-marketing": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-autoclipping-default-override": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-07-attachment-image-ladder": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-wmf-cpu-encode-intel": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-web-vitals-monitoring": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-web-translate-dom-guard": {
+   "key": "10713d2ffb9c0089",
+   "hasData": true,
+   "sig": "0:control",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    }
+   },
+   "treatment": {
+    "pct": 0
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-user-profile-sidebar-redesign": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-use-new-badge-image-source": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-upscale-small-captured-frames": {
+   "key": "c9bfcb1824209f9c",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 0.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 0.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 0.5
+   },
+   "control": {
+    "pct": 0.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-server-ladder": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-quest-home-layout-visual-tweaks": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-quest-fetch-reconnect-jitter": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-post-call-survey-assets": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-otp-orders-phase-1": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-orbs-holdout": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-nitro-gdm-cap-increase": {
+   "key": "1e70f3a43ffcb582",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 1
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-mobile-server-tag": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-mobile-media-viewer-share": {
+   "key": "0b398f2ef8e2a004",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-06-improved-shop-loading": {
+   "key": "8835997b714debd9",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-06-hero-shelf-ad-tile": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-gummy-bears": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-gifting-badge-desktop": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-gift-acom-order": {
+   "key": "3e512a40b2210ef9",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 25
+   },
+   "control": {
+    "pct": 25
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-06-game-server-hosting-in-shop": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-dont-badge-muted-vcs": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-06-desktop-tti-http-cdt": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-content-classification-embedded-activity-filter": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-clips-secondary-entrypoints": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-clips-league-events": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-clickstream-analytics": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-chat-bar-customization": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-battlenet-social-sdk-migration": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-av1-encode-linux": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-06-age-verification-incode": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-use-ad-analytics-interface": {
+   "key": "85674c591c204a05",
+   "hasData": true,
+   "sig": "5:treatment",
+   "byVariant": {
+    "5": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-05-spatial-audio-for-voice": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-server-theme-user": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-screenshare-picker-wgc": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-quest-home-tile-redesign": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-mana-type-consolidation": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-05-ios-video-stabilization": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-global-soundboard-wheel-popout": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-electron-multilang-spellcheck": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-dvp-for-attachments": {
+   "key": "3a2ecc07c350ff5c",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-05-distributed-clips": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-disable-camera-simulcast": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-05-dice-roll-slash-command": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-device-form-factor-indicators": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-clips-media-comments": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-bounty-stale-refresh-quest-home": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-av1-bitrate-tuning": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-auto-clips-review": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-app-store-overlay-feature-gate": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-05-age-restricted-application-commands": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-voice-gateway-protocol-version": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-video-hook-dx12": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-user-profile-performance-analytics": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-upcoming-server-event": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-topical-navigation-staff-control": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-server-boost-copy-1440p": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-safety-flows": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-04-quests-premium-orb-multiplier-marketing": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-overlay-streamer-mode": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-one-day-fractional-nitro": {
+   "key": "9a2aa6af7421bcb5",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-04-inappropriate-conversations-prescan": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-inappropriate-conversations-default-on": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-icymi-staff-only": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-http-request-sample": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-hide-view-full-profile-button": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-gifting-badge": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-gift-promotion-reminder": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-ensure-received-messages-added-in-order": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-desktop-tti-v8-cache": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-desktop-notification-center": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-declarative-notif-settings": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-04-composed-quest-player": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-collectibles-profile-frames-purchase": {
+   "key": "6b4f1d6310a94e4e",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 15
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-04-clips-v3-runtime": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-04-browser-transceiver-padding-removal": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-03-wysiwyg-user-profile-editing": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-video-capture-device-no-reuse": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-steelseries-3p-recurring": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-soundmoji-sending": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-soundmoji-rendering": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-overlay-default-keybind": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-nitro-acom-subscription": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-03-new-server-boost-system-messages": {
+   "key": "023d3ee81cd45d39",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-03-muted-video-quest-new-defaults": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-mobile-quest-home-red-dot-notification": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-message-bookmarks": {
+   "key": "764b4df6bbc5111a",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2026-03-media-play-metrics": {
+   "key": "9c791b8cc848a02c",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 90,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 90
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-03-l-3pp": {
+   "key": "421fd97b1eeb0f0f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-03-krisp-stats-collection": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-ios-audio-interrupt-handling": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-image-load-metrics": {
+   "key": "7a7ec01f0768a5e0",
+   "hasData": true,
+   "sig": "0:control|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 90,
+     "role": "control"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 90
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-03-icymi-staff-debugging-utility": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-icymi-desktop": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-friend-request-message": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-03-denormalized-perks-access-read": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-03-debug-experiment": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-croissant": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-conversation-highlighting-utility": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-content-inventory-memberlist-and-ranker": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-clips-experiment": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-churro": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-block-purchases": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-audio-effects-probe": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-03-age-verification-google-wallet": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-wgc-dirty-regions-all": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-voice-channel-link-click": {
+   "key": "c52c1a195a61c67e",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 30
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-silence-warning-aggression": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-referral-reminder-dc": {
+   "key": "b12c98e584bc9a36",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 0.4,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 0.4
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-pubsub-bulk-ban-users": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-process-boost-on-voice": {
+   "key": "82ae69e94a322b09",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-private-channel-hiding": {
+   "key": "f03c290bb5e886b1",
+   "hasData": true,
+   "sig": "3:treatment",
+   "byVariant": {
+    "3": {
+     "pct": 2,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 2
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-premium-offer-reminder-xp": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-non-dm-gifting-modal-redesign": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-mobile-volume-output-slider-removal": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-mana-playground-access": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-longer-group-dm-invites": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-lazy-load-all-images": {
+   "key": "ced768fd36b31231",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 30
+   },
+   "control": {
+    "pct": 30
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-join-game-community-cta": {
+   "key": "dc6996c724bb242e",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-gsh-game-detection-upsell": {
+   "key": "705ae5913859378c",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-go-live-video-preset-resolution": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-go-live-hdr": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-gifting-modal-redesign": {
+   "key": "f0468c150e9f4ca9",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-gift-cards": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-02-game-server-tab-always-on": {
+   "key": "a117639a20a76426",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 20
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-friends-list": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-expiring-powerup-coachmark": {
+   "key": "b6a07a4a89fe67bc",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 20
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-desktop-new-user-onboarding": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-content-classification-presence-filter": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-capture-target-window": {
+   "key": "7c8734ebd90a28dd",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 20
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-02-announcement-composer": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-02-activity-privacy-matching": {
+   "key": "39e81c52939ed1fa",
+   "hasData": true,
+   "sig": "0:control",
+   "byVariant": {
+    "0": {
+     "pct": 21,
+     "role": "control"
+    }
+   },
+   "treatment": {
+    "pct": 0
+   },
+   "control": {
+    "pct": 21
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-01-wmf-gpu-encode-intel": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-01-voice-dares-v0": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-01-less-personalized-ads": {
+   "key": "7969daec1f1ff520",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2026-01-ios-push-notif-json-fix": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-01-friends-in-server": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-01-favorites-server": {
+   "key": "a678845e3d9e377c",
+   "hasData": true,
+   "sig": "0:control|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2026-01-bug-reporter": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-wmf-gpu-encode": {
+   "key": "0b398f2ef8e2a004",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2025-12-windows-audio-effects": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-quest-cta-refactor-rollout": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2025-12-proportional-vad-indicator": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-orb-redemption-thru-orders": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-nitro-s-rewards": {
+   "key": "511501017e81861d",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2025-12-mana-multistep-community-enabled": {
+   "key": "b3b9adcf2eca826f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2025-12-katsudon": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-hdr-accessibility-setting": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-12-09-ptt-education": {
+   "key": "16e432fd014af240",
+   "hasData": true,
+   "sig": "2:treatment",
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2025-11-video-end-card-v2": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-11-shockbyte-degraded": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-11-overlay-chat": {
+   "key": "c92ff39c79c8f491",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 33,
+     "role": "control"
+    },
+    "1": {
+     "pct": 33,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 33,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 66
+   },
+   "control": {
+    "pct": 33
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 3
+  },
+  "2025-11-mana-context-menu": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-11-hide-manual-link": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2025-11-global-frame-pool-lock": {
+   "key": "dc6996c724bb242e",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 10
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2025-11-age-verification-expressive-everywhere": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-11_tida_webform": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2025-10-mana-date-inputs": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-10-low-latency-rate-control": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-10-go-live-auto-quality": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-10-friend-request-alerts-v2": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2025-10-force-sdr-emojis-stickers": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-10-desktop-communication-notifications-emoji": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-10-collectibles-custom-cursors": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-09-video-qoe-metrics-tracking": {
+   "key": "48c9538f5b25cc6b",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 1
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 2
+  },
+  "2025-09-server-nsfw-level": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-09-sensitive-content-self-harm": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-09-overlay-state-tracking": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-09-image-attachment-mezzanine-v2": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-09_hotwheels_nvidia_boost": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-08-voice-user-affinity": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-08-browser-hevc": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-06_native_intents": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-05-search-results-feedback": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-04-native-markdown": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-04-desktop-refresh-fast-follows": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2025-01-allow-nonstaff-to-preview-app-collections": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2024-06_rtc_pacer__simulcast": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2023-09_iar_user_reporting": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2023-09_iar_dsa_webform": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2021-12_inferno_spam_redaction": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "variantsCount": 1
+  },
+  "2021-10_runtime_accessibility_system": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2021-02_staff_qc_debugging": {
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  }
+ },
+ "lastRun": {
+  "changes": 0,
+  "delivered": 0,
+  "firstRun": true
+ },
+ "history": [
+  {
+   "at": "2026-10-28T01:23:32.454Z",
+   "revision": "12a86606c0a6063f0b2e7461d6fa26ba66d0afee",
+   "changes": 0,
+   "delivered": 0
+  }
+ ]
+}
