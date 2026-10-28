@@ -1,0 +1,71 @@
+name: Apply fix strings/routes/notify
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/patches/fix-strings-routes.patch'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-fix-strings-routes
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Restore extract.js (last good d5c9e6d) + apply patch
+        run: |
+          set -euo pipefail
+          git show d5c9e6dff22cd59b0fdd6f1c1a52a051a74418d8:src/lib/extract.js > src/lib/extract.js
+          git apply --check .github/patches/fix-strings-routes.patch
+          git apply .github/patches/fix-strings-routes.patch
+
+      - name: Verify exact file hashes
+        run: |
+          set -euo pipefail
+          check() { got=$(git hash-object "$2"); if [ "$got" != "$1" ]; then echo "HASH MISMATCH $2: $got != $1"; exit 1; fi; echo "OK $2"; }
+          check 7a26c1f5dcca7aa49b00d8582d4f5018fdad99c1 src/index.js
+          check 3b5d2e7e028f3ce80f9722ef9fde476d8e15ee56 src/lib/components_v2.js
+          check ea64c53af2242a42f787b5f168b8c0bebf4ce294 src/lib/extract.js
+          check b034796319c1029f83ba2fcc6f990165f89132f3 src/lib/notify.js
+          check 8fd11189c7d952e71fd850a19e5a90ad917514bd test/extract_strings_routes_fix.test.js
+
+      - name: Tests
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          node --check src/lib/extract.js
+          npm test
+
+      - name: Commit + push
+        run: |
+          set -euo pipefail
+          git config user.name "kmljkjj"
+          git config user.email "jbouzeau7@icloud.com"
+          git rm -q .github/patches/fix-strings-routes.patch
+          git add src/index.js src/lib/components_v2.js src/lib/extract.js src/lib/notify.js test/extract_strings_routes_fix.test.js
+          git commit -m "fix(extract+notify): faux strings, routes manquantes, notifs non envoyées" -m "- extract.js restauré (était PLACEHOLDER_WILL_FAIL sur main)
+          - strings uniquement depuis les locales en-US, décodage JSON.parse correct, ICU complet
+          - routes minifiées USER:e=>\`/users/\${e}\` etc. (+~400 routes)
+          - Components V2 ≤ 4000 caractères/message (sinon HTTP 400 → non envoyé)
+          - plus de troncature silencieuse des notifs (exp/strings/routes)
+          - reseed one-shot des strings/routes (extractVersion=2) sans spam"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          exit 1
