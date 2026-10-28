@@ -1,0 +1,222 @@
+name: Fix extract strings routes
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 30
+
+      - name: Restore extract.js from last good + apply patch
+        run: |
+          set -euo pipefail
+          # last known good before placeholder overwrite
+          git show 9b938bcb1e550cc52d22a162e2e1a385d0ce798d:src/lib/extract.js > src/lib/extract.js
+          python3 << 'PY'
+          from pathlib import Path
+          p = Path('src/lib/extract.js')
+          t = p.read_text()
+
+          old_scan = """      extractRoutes(item.content, routes);
+      extractExperiments(item.content, expSet);
+      if (item.size < 500_000) extractStrings(item.content, strings);
+      extractDismissibleContent(item.content, dismissibleContent);"""
+          new_scan = """      extractRoutes(item.content, routes);
+      extractExperiments(item.content, expSet);
+      // Strings: UNIQUEMENT depuis les locales en-US (pas les chunks JS → faux positifs)
+      extractDismissibleContent(item.content, dismissibleContent);"""
+          if old_scan not in t:
+              raise SystemExit('scan block missing')
+          t = t.replace(old_scan, new_scan, 1)
+
+          old_core = """async function extractCoreParallel(webContent, { routes, expSet, strings }) {
+  await Promise.all([
+    Promise.resolve().then(() => extractRoutes(webContent, routes)),
+    Promise.resolve().then(() => extractExperiments(webContent, expSet)),
+    Promise.resolve().then(() => extractStrings(webContent, strings)),
+  ]);
+}"""
+          new_core = """async function extractCoreParallel(webContent, { routes, expSet, strings }) {
+  // strings absents ici : uniquement via en-US locales (anti faux positifs)
+  await Promise.all([
+    Promise.resolve().then(() => extractRoutes(webContent, routes)),
+    Promise.resolve().then(() => extractExperiments(webContent, expSet)),
+  ]);
+}"""
+          if old_core not in t:
+              raise SystemExit('core parallel missing')
+          t = t.replace(old_core, new_core, 1)
+
+          old_key = """function isGoodStringKey(k) {
+  if (typeof k !== 'string' || k.length !== 6) return false;
+  if (!/^[A-Za-z0-9+/_-]{6}$/.test(k)) return false;
+  if (/^[0-9a-f]{6}$/i.test(k)) return false;
+  return true;
+}"""
+          new_key = """function isGoodStringKey(k) {
+  if (typeof k !== 'string' || k.length !== 6) return false;
+  if (!/^[A-Za-z0-9+/_-]{6}$/.test(k)) return false;
+  if (/^[0-9a-f]{6}$/i.test(k)) return false;
+  if (/^[0-9]{6}$/.test(k)) return false;
+  if (!/[A-Za-z]/.test(k)) return false;
+  return true;
+}"""
+          if old_key not in t:
+              raise SystemExit('isGoodStringKey missing')
+          t = t.replace(old_key, new_key, 1)
+
+          old_val = """function isGoodStringVal(s) {
+  if (typeof s !== 'string') return false;
+  if (s.length < 1 || s.length > 800) return false;
+  if (/^discord_web-/i.test(s) || /^release:/i.test(s)) return false;
+  return true;
+}"""
+          new_val = """function isGoodStringVal(s) {
+  if (typeof s !== 'string') return false;
+  if (s.length < 2 || s.length > 800) return false;
+  if (/^discord_web-/i.test(s) || /^release:/i.test(s)) return false;
+  if (!/[A-Za-z\u00C0-\u024F]/.test(s)) return false;
+  if (s.length < 12 && !/\s/.test(s) && /^[a-z][a-zA-Z0-9]*$/.test(s)) return false;
+  if (/^(function|undefined|object|string|number|boolean|null|true|false)$/i.test(s)) return false;
+  if (/\.(js|css|map|json|png|jpg|webp|svg)(\?|$)/i.test(s)) return false;
+  if (/^data:image\//i.test(s)) return false;
+  if (/^[0-9a-f]{8,}$/i.test(s)) return false;
+  return true;
+}"""
+          if old_val not in t:
+              raise SystemExit('isGoodStringVal missing')
+          t = t.replace(old_val, new_val, 1)
+
+          old_norm = """function normalizePath(raw) {
+  if (typeof raw !== 'string') return null;
+  let p = raw.trim();
+  if (!p.startsWith('/')) return null;
+  if (p.length < 2 || p.length > 300) return null;
+  p = p.replace(/\$\{[^}]+\}/g, ':param');
+  if (/\.(js|css|map|png|jpg|webp|svg|woff2?)$/i.test(p)) return null;
+  if (p.startsWith('/assets/')) return null;
+  return p;
+}"""
+          new_norm = """function normalizePath(raw) {
+  if (typeof raw !== 'string') return null;
+  let p = raw.trim();
+  if (!p.startsWith('/')) return null;
+  if (p.length < 2 || p.length > 300) return null;
+  p = p.replace(/\$\{[^}]+\}/g, ':param');
+  if (/\.(js|css|map|png|jpg|webp|svg|woff2?)$/i.test(p)) return null;
+  if (p.startsWith('/assets/') || p.startsWith('/static/')) return null;
+  if (!isLikelyApiPath(p)) return null;
+  return p;
+}
+
+function isLikelyApiPath(p) {
+  if (!p || p === '/') return false;
+  if (/^\/(api|users|guilds|channels|auth|oauth2|applications|webhooks|store|partners|discoverable|activities|quests|hypesquad|science|track|metrics|gateway|voice|attachments|emojis|stickers|interactions|billing|entitlements|stage-instances|scheduled-events|soundboard|cdn-proxy|unfurler|collectibles|user-profile|presences|read-states|notifications|gifs|remote-auth|handoff)/i.test(p)) {
+    return true;
+  }
+  if ((p.match(/\//g) || []).length >= 2 && p.length >= 6) return true;
+  return false;
+}"""
+          if old_norm not in t:
+              raise SystemExit('normalizePath missing')
+          t = t.replace(old_norm, new_norm, 1)
+
+          old_rt = """function extractRoutes(content, out) {
+  const re =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*:\\s*["'`](\\/[a-zA-Z0-9_\\-./{}@:$]+)["'`]/g;
+  let m;
+  while ((m = re.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
+  const re2 =
+    /["']([A-Z][A-Z0-9_]{2,100})["']\\s*:\\s*["'](\\/[^"']{1,250})["']/g;
+  while ((m = re2.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
+  const re3 =
+    /\\.([A-Z][A-Z0-9_]{2,100})\\s*=\\s*["'](\\/[a-zA-Z0-9_\\-./{}@:$]+)["']/g;
+  while ((m = re3.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
+  const re4 =
+    /(?:Endpoints|Routes|API_ENDPOINTS|APIRoutes)\\s*(?:\\.|\\[)\\s*["']?([A-Z][A-Z0-9_]{2,100})["']?\\s*(?:\\])?\\s*=\\s*["'`](\\/[^"'`]{1,250})["'`]/g;
+  while ((m = re4.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
+  const re5 =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*:\\s*(?:\\([^)]*\\)\\s*=>\\s*)?["'`](\\/[a-zA-Z0-9_\\-./{}@:$]+)["'`]/g;
+  while ((m = re5.exec(content)) !== null) {
+    const p = normalizePath(m[2]);
+    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+  }
+}"""
+          # Use actual file content match without double escaping issues
+          import re as _re
+          m = _re.search(r'function extractRoutes\(content, out\) \{[\s\S]*?\n\}', t)
+          if not m:
+              raise SystemExit('extractRoutes block not found')
+          new_rt = '''function extractRoutes(content, out) {
+  const add = (key, pathRaw) => {
+    const p = normalizePath(pathRaw);
+    if (isValidRouteKey(key) && p) out[key] = p;
+  };
+  let m;
+  const re =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*:\\s*["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re.exec(content)) !== null) add(m[1], m[2]);
+  const re2 =
+    /["']([A-Z][A-Z0-9_]{2,100})["']\\s*:\\s*["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re2.exec(content)) !== null) add(m[1], m[2]);
+  const re3 =
+    /\\.([A-Z][A-Z0-9_]{2,100})\\s*=\\s*["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re3.exec(content)) !== null) add(m[1], m[2]);
+  const re4 =
+    /(?:Endpoints|Routes|API_ENDPOINTS|APIRoutes)\\s*(?:\\.|\\[)\\s*["']?([A-Z][A-Z0-9_]{2,100})["']?\\s*(?:\\])?\\s*=\\s*["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re4.exec(content)) !== null) add(m[1], m[2]);
+  const re5 =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*:\\s*(?:\\([^)]*\\)\\s*=>\\s*)?["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re5.exec(content)) !== null) add(m[1], m[2]);
+  const re6 =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*=\\s*(?:\\([^)]*\\)\\s*=>\\s*)?["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re6.exec(content)) !== null) add(m[1], m[2]);
+  const re7 =
+    /\\b([A-Z][A-Z0-9_]{2,100})\\s*:\\s*function\\s*\\([^)]*\\)\\s*\\{\\s*return\\s*["'`](\\/[^"'`;\\n]{1,250})["'`]/g;
+  while ((m = re7.exec(content)) !== null) add(m[1], m[2]);
+}'''
+          # fix Python string: we need real backslashes in JS source
+          new_rt = new_rt.replace('\\\\', '\\')
+          t = t[:m.start()] + new_rt + t[m.end():]
+
+          if 'isLikelyApiPath' not in t.split('module.exports')[-1]:
+              t = t.replace('  normalizePath,\n', '  normalizePath,\n  isLikelyApiPath,\n', 1)
+
+          p.write_text(t)
+          print('patched size', p.stat().st_size)
+          assert 'extractStrings(item.content, strings)' not in t
+          assert 'isLikelyApiPath' in t
+          PY
+          node --check src/lib/extract.js
+          echo syntax OK
+
+      - name: Commit fix and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/extract.js
+          git commit -m "fix(extract): fewer false strings + more reliable routes"
+          rm -f .github/workflows/fix-extract-str-rt.yml
+          git add -A .github/workflows/fix-extract-str-rt.yml || true
+          git commit -m "chore: remove one-shot fix-extract workflow" || true
+          git push
