@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["821198"],{980822(l,n,a){a.d(n,{A:()=>i});var u=a(582128),d=a(429913),e=a(454908);function i(l){let{applicationId:n,gameId:a}=l,i=(0,d.h)(null==a?n:void 0),s=null==a&&null!=n&&null==i,c=u.useMemo(()=>null!=a?a:null==i?null:i.getCanonicalGameId(),[a,i]),{data:o,isLoading:t}=(0,e.I)(c);return{gameId:c,gameRecord:o??null,isLoading:s||t}}},353874(l,n,a){a.d(n,{c:()=>d});var u,d=((u={})[u.GAME_DISABLED=1]="GAME_DISABLED",u)}}]);
+//# sourceMappingURL=96f8a15e8a9752c3.js.map
