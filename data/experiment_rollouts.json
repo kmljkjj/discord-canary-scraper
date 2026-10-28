@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T16:19:25.586Z",
+  "fetchedAt": "2026-10-28T16:26:39.645Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -364,26 +364,6 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
       "hash": 4055210228,
       "id": "2025-11_tida_webform",
       "type": "user",
@@ -410,17 +390,37 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 2
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
       }
     },
     {
@@ -1268,16 +1268,6 @@
       "hash": 1191872187,
       "type": "user",
       "title": "2026-03-denormalized-perks-access-read",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-friend-request-message",
-      "hash": 4073141925,
-      "type": "user",
-      "title": "2026-03-friend-request-message",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4235,11 +4225,11 @@
     }
   ],
   "summary": {
-    "total": 391,
+    "total": 390,
     "guild": 38,
-    "user": 353,
+    "user": 352,
     "withPercentage": 10,
-    "withoutPercentage": 381,
+    "withoutPercentage": 380,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 4,
