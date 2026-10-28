@@ -6,7 +6,7 @@ function escapeHtml(s) {
     .replace(/>/g, amp + 'gt;')
     .replace(/"/g, amp + 'quot;');
 }
-/* Rollouts page — guild: experiment_rollouts.json · user: gist agnonotdev (référence, v2.6) ; l'ancienne mesure par sampling n'est plus qu'un diagnostic */
+/* Rollouts page — guild: experiment_rollouts.json · user: couverture du gist agnonotdev (non vérifiée) et mesure API Discord, deux panneaux séparés (user_rollout_comparison.json) */
 (async () => {
   const grid = document.getElementById('grid');
   const meta = document.getElementById('meta');
@@ -16,18 +16,22 @@ function escapeHtml(s) {
   let allExps = [];
   let currentFilter = 'all';
   let currentSearch = '';
+  const PAGE = 100;
+  let limit = PAGE;
 
   // Load data — les sources en parallèle (gist = référence user depuis v2.6)
   let data = null;
   let userData = null;
   let gistData = null;
+  let cmpData = null;
   try {
-    [data, userData, gistData] = await Promise.all([
+    [data, userData, gistData, cmpData] = await Promise.all([
       fetch('data/experiment_rollouts.json').then((r) => r.json()).catch(() => null),
       fetch('data/user_rollouts.json').then((r) => r.json()).catch(() => null),
       fetch('data/gist_user_rollouts_docs.json').then((r) => r.json()).catch(() => null),
+      fetch('data/user_rollout_comparison.json').then((r) => r.json()).catch(() => null),
     ]);
-    if (!data && !userData) {
+    if (!data && !userData && !gistData && !cmpData) {
       grid.innerHTML = '<div class="empty">Erreur de chargement</div>';
       return;
     }
@@ -94,6 +98,21 @@ function escapeHtml(s) {
     }
   }
 
+  // ---- Comparaison : couverture gist non vérifiée / mesure API Discord ----
+  // Jamais fusionnées : deux sources, deux dates, deux panneaux. Une carte par
+  // expérience : les mesures par hash sont rattachées au nom quand il est connu.
+  const cmpList = cmpData && Array.isArray(cmpData.experiments)
+    ? cmpData.experiments.filter((c) => c && c.type === 'user' && c.id)
+    : [];
+  const cmpById = new Map(cmpList.map((c) => [String(c.id), c]));
+  const cmpHashes = new Set(cmpList.filter((c) => c.hash != null).map((c) => String(c.hash)));
+  const gistTreatmentPct = (g) =>
+    g && g.totalsAvailable && g.treatmentPct != null
+      ? g.treatmentPct
+      : g && g.projected && g.projectedTreatmentPct != null
+        ? g.projectedTreatmentPct
+        : null;
+
   // ---- User : couverture gist (RÉFÉRENCE depuis v2.6) ----
   // Le gist communautaire agnonotdev décrit la couverture de buckets de ~350
   // expériences user : c'est la source de référence. L'ancienne mesure par
@@ -127,14 +146,30 @@ function escapeHtml(s) {
               ? e.projectedTreatmentPct
               : null,
         gist: e,
+        cmp: cmpById.get(String(e.id)) || null,
       });
     }
   }
+  // Expériences observées par l'API mais absentes de l'export gist (non classées
+  // localement, nom connu par le gist brut, ou hash sans nom) : une carte aussi.
+  const cmpOnly = cmpList
+    .filter((c) => !gistUser.has(String(c.id)))
+    .map((c) => ({
+      id: c.id,
+      title: c.title || c.id,
+      type: 'user',
+      source: 'api_comparison',
+      status: c.coverage ? 'gist' : 'detected',
+      percentage: gistTreatmentPct(c.coverage),
+      gist: null,
+      cmp: c,
+    }));
 
   // ---- Merge : gist (référence) > mesure propre > ancien fichier ----
   allExps = ((data && data.matchedExperiments) || [])
-    .filter((e) => !(e && e.type === 'user' && (userExact.has(String(e.hash)) || gistUser.has(String(e.id)))))
-    .concat([...userExact.values()].filter((e) => !gistUser.has(String(e.id))))
+    .filter((e) => !(e && e.type === 'user' && (userExact.has(String(e.hash)) || gistUser.has(String(e.id)) || cmpById.has(String(e.id)))))
+    .concat([...userExact.values()].filter((e) => !gistUser.has(String(e.id)) && !cmpHashes.has(String(e.hash))))
+    .concat(cmpOnly)
     .concat([...gistUser.values()])
     .sort((a, b) => {
       const aPct = a.percentage != null ? a.percentage : -1;
@@ -148,14 +183,18 @@ function escapeHtml(s) {
     allExps.filter((e) => e.percentage != null).length;
   document.getElementById('stat-full').textContent =
     allExps.filter((e) => e.percentage != null && e.percentage >= 100).length;
-  document.getElementById('stat-fp').textContent = userMeasured;
+  const measuredCount = allExps.filter((e) => e.cmp && e.cmp.measurement && e.cmp.measurement.status === 'measured').length;
+  document.getElementById('stat-fp').textContent = measuredCount || userMeasured;
 
   const sources = (data && data.sources) || {};
   const sourceParts = [];
   if (gistCount) {
     sourceParts.push(`Gist (référence): ${gistCount}`);
   }
-  if (userMeasured) {
+  if (measuredCount) {
+    const when = cmpData && cmpData.sources && cmpData.sources.sampling && cmpData.sources.sampling.observedAt;
+    sourceParts.push(`Mesure Discord API: ${measuredCount} user` + (when ? ` · ${new Date(when).toLocaleString('fr-FR')}` : ''));
+  } else if (userMeasured) {
     sourceParts.push(`User (mesure propre): ${userMeasured}`);
   }
   if (userDetected) {
@@ -174,7 +213,7 @@ function escapeHtml(s) {
   }
   sourcesEl.innerHTML = sourceParts.map((s) => `<span class="source-tag">${escapeHtml(s)}</span>`).join('');
 
-  const dates = [(data && data.fetchedAt), (userData && userData.scrapedAt)]
+  const dates = [(data && data.fetchedAt), (userData && userData.scrapedAt), (cmpData && cmpData.generatedAt)]
     .filter(Boolean)
     .sort()
     .reverse();
@@ -226,6 +265,7 @@ function escapeHtml(s) {
       client_bundle: 'Client',
       own_sampling: 'Sampling (diagnostic)',
       gist_coverage: 'Gist (couverture)',
+      api_comparison: 'Gist + API',
     };
     const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
@@ -295,6 +335,134 @@ function escapeHtml(s) {
     return parts.join('');
   }
 
+  /* Fraîcheur calculée à l'affichage : une vieille mesure reste visible mais datée. */
+  function ageLabel(iso, staleH) {
+    const t = Date.parse(iso || '');
+    if (!Number.isFinite(t)) return { text: 'date inconnue', stale: true };
+    const h = Math.max(0, (Date.now() - t) / 3600000);
+    const text = h < 1 ? 'il y a moins d\'1 h' : h < 48 ? `il y a ${Math.round(h)} h` : `il y a ${Math.round(h / 24)} j`;
+    return { text, stale: h > staleH };
+  }
+  const fmtDate = (iso) => (Number.isFinite(Date.parse(iso || '')) ? new Date(iso).toLocaleString('fr-FR') : 'inconnue');
+  const fmtRange = (r) => `[${r[0]} ; ${r[1]}[`;
+
+  function gistPanel(exp) {
+    const g = exp.gist || (exp.cmp && exp.cmp.coverage);
+    const c = exp.cmp && exp.cmp.coverage;
+    const parts = ['<section class="cmp-panel" aria-label="Couverture gist">'];
+    parts.push('<h4>Couverture gist <span class="cmp-tag">non vérifiée</span></h4>');
+    if (!g || !g.hasData) {
+      parts.push('<p class="cmp-big cmp-none">Pas de plage exploitable</p>');
+      parts.push('</section>');
+      return parts.join('');
+    }
+    const pct = gistTreatmentPct(g);
+    parts.push(pct != null
+      ? `<p class="cmp-big">${fmtPct2(pct)}&nbsp;%${g.projected ? ' <span class="cmp-sub">projeté</span>' : ''}</p>`
+      : '<p class="cmp-big cmp-none">Total indisponible</p>');
+    parts.push('<p class="cmp-line">Part de l\'espace de buckets décrite par le gist, pas une proportion d\'utilisateurs.</p>');
+    if (g.projected) parts.push('<p class="cmp-line">Multi-populations : union non pondérée.</p>');
+    const ranges = c && Array.isArray(c.sourceRanges) ? c.sourceRanges : null;
+    if (ranges) {
+      for (const v of ranges) {
+        parts.push(`<p class="cmp-line">Variant ${escapeHtml(v.variant)} · ${escapeHtml(v.role)} : ${escapeHtml((v.ranges || []).map(fmtRange).join(' + '))}</p>`);
+      }
+    } else {
+      for (const [k, v] of Object.entries(g.byVariant || {})) {
+        parts.push(`<p class="cmp-line">Variant ${escapeHtml(k)} · ${escapeHtml(v.role || '?')} : ${v.pct != null ? fmtPct2(v.pct) + ' %' : 'indéterminé'}</p>`);
+      }
+    }
+    if (g.ambiguous && g.flags && g.flags.length) parts.push(`<p class="cmp-line">⚠ ${escapeHtml(g.flags.join(', '))}</p>`);
+    const upd = c && c.updatedAt;
+    if (upd) {
+      const age = ageLabel(upd, 72);
+      parts.push(`<p class="cmp-line">Gist modifié : ${escapeHtml(fmtDate(upd))}${age.stale ? ' <span class="cmp-stale">ancien</span>' : ''}</p>`);
+    }
+    if (c && c.htmlUrl && /^https:\/\/gist\.github\.com\//.test(c.htmlUrl)) {
+      parts.push(`<p class="cmp-line"><a href="${escapeHtml(c.htmlUrl)}" target="_blank" rel="noopener">Voir la source</a></p>`);
+    }
+    parts.push('</section>');
+    return parts.join('');
+  }
+
+  // Bornes issues des positions observées (cumul entre runs) : plus précis que l'IC de Wilson.
+  function positionsBlock(exp) {
+    const p = exp.cmp && exp.cmp.positions;
+    if (!p) return '';
+    const lines = ['<div class="cmp-pos">'];
+    lines.push(`<p class="cmp-pos-title">Positions observées <span class="cmp-tag">bornes</span></p>`);
+    if (p.estPct != null) {
+      lines.push(`<p class="cmp-pos-big">${fmtPct2(p.minPct)} – ${fmtPct2(p.maxPct)}&nbsp;%</p>`);
+      lines.push(`<p class="cmp-line">Estimation ${fmtPct2(p.estPct)} % · incertitude ${fmtPct2(p.widthPoints)} pt</p>`);
+    } else {
+      lines.push(`<p class="cmp-line">Aucune position « dedans » connue : aucune borne haute.</p>`);
+    }
+    lines.push(`<p class="cmp-line">${escapeHtml(p.knownPositions)} positions distinctes connues sur 10 000 (${escapeHtml(p.inPositions)} dedans, ${escapeHtml(p.outPositions)} dehors)${p.conflicts ? ' · ' + escapeHtml(p.conflicts) + ' conflit(s) ignoré(s)' : ''}</p>`);
+    lines.push('<p class="cmp-line">Suppose des plages contiguës entre deux points de même statut. Requêtes anonymes du collecteur.</p>');
+    lines.push('</div>');
+    return lines.join('');
+  }
+
+  function measurePanel(exp) {
+    const m = exp.cmp && exp.cmp.measurement;
+    const parts = ['<section class="cmp-panel" aria-label="Mesure API Discord">'];
+    parts.push('<h4>Mesure API Discord <span class="cmp-tag">k/n</span></h4>');
+    if (!m || m.status === 'not_observed') {
+      parts.push('<p class="cmp-big cmp-none">Non observée</p>');
+      parts.push('<p class="cmp-line">Aucune réponse API dans la fenêtre : pas de 0 % déduit.</p></section>');
+      return parts.join('');
+    }
+    if (m.status === 'invalid') {
+      parts.push('<p class="cmp-big cmp-none">Mesure invalide</p>');
+      parts.push('<p class="cmp-line">Données incohérentes : aucun pourcentage affiché.</p></section>');
+      return parts.join('');
+    }
+    if (m.pct != null && m.ci) {
+      parts.push(`<p class="cmp-big">${fmtPct2(m.pct)}&nbsp;%</p>`);
+      parts.push(`<p class="cmp-line">IC 95 % (Wilson) : [${fmtPct2(m.ci.lo)} ; ${fmtPct2(m.ci.hi)}] % · ${escapeHtml(m.k)}/${escapeHtml(m.n)} observations de traitement</p>`);
+    } else {
+      const o = m.observedAssignments;
+      parts.push('<p class="cmp-big cmp-none">Rôle inconnu</p>');
+      parts.push(`<p class="cmp-line">${o ? escapeHtml(o.k) + '/' + escapeHtml(o.n) + ' assignations observées (' + fmtPct2(o.pct) + ' %)' : 'Assignations observées'} — sans rôle gist, impossible de dire quelle part est un traitement.</p>`);
+    }
+    for (const v of (m.variants || []).length > 1 || m.pct == null ? m.variants : []) {
+      parts.push(`<p class="cmp-line">Variant ${escapeHtml(v.bucket)} · ${escapeHtml(v.role)} : ${escapeHtml(v.k)}/${escapeHtml(v.n)} · ${fmtPct2(v.pct)} %${v.ci ? ' [' + fmtPct2(v.ci.lo) + ' ; ' + fmtPct2(v.ci.hi) + ']' : ''}</p>`);
+    }
+    const age = ageLabel(m.observedAt, 6);
+    parts.push(`<p class="cmp-line">Mesuré : ${escapeHtml(fmtDate(m.observedAt))} (${age.text})${age.stale ? ' <span class="cmp-stale">historique</span>' : ''}</p>`);
+    parts.push('<p class="cmp-line">Échantillons anonymes du collecteur, pas tous les utilisateurs ; filtres de population inconnus.</p>');
+    parts.push(positionsBlock(exp));
+    parts.push('</section>');
+    return parts.join('');
+  }
+
+  function compareNote(exp) {
+    const cmp = exp.cmp;
+    if (!cmp || !cmp.comparison) return '';
+    const o = cmp.comparison.observation;
+    const pos = cmp.positions;
+    if (pos && pos.verdict === 'contradicts_gist') {
+      const a = pos.agreement;
+      return `<p class="cmp-verdict warn">${escapeHtml(a.contradictingPositions)} positions observées contredisent la couverture annoncée par le gist (${fmtPct2(a.gistPct)} %) ; les positions indiquent ${fmtPct2(pos.minPct)} – ${fmtPct2(pos.maxPct)} %. Gist périmé, révision ou filtres : la cause n'est pas établie.</p>`;
+    }
+    if (pos && pos.verdict === 'consistent_with_gist') {
+      const wilsonOff = o === 'outside_interval' ? ' La fenêtre k/n s\'en écarte (absences temporaires de l\'expérience, filtres de plateforme ou date possibles).' : '';
+      return `<p class="cmp-verdict ok">Les positions observées sont cohérentes avec la couverture du gist, bornes ${fmtPct2(pos.minPct)} – ${fmtPct2(pos.maxPct)} %. Cela ne prouve pas que les populations sont identiques.${wilsonOff}</p>`;
+    }
+    if (o === 'inside_interval') {
+      return '<p class="cmp-verdict ok">La couverture gist est dans l\'intervalle mesuré. Cela ne prouve pas que les populations sont identiques.</p>';
+    }
+    if (o === 'outside_interval') {
+      const d = cmp.comparison.deltaPoints;
+      return `<p class="cmp-verdict warn">Hors intervalle${d != null ? ' (écart ' + (d > 0 ? '+' : '') + fmtPct2(d) + ' pt)' : ''}. Filtres, plateformes, révision ou date peuvent l'expliquer : le gist n'est ni confirmé ni réfuté.</p>`;
+    }
+    return '';
+  }
+
+  function compareBlock(exp) {
+    return `<div class="cmp">${gistPanel(exp)}${measurePanel(exp)}</div>${compareNote(exp)}`;
+  }
+
   function fpDetails(exp) {
     if (exp.fpSamples == null && exp.source !== 'fingerprint_sampling') return '';
     const samples = exp.fpSamples ?? exp.samples ?? 0;
@@ -315,7 +483,7 @@ function escapeHtml(s) {
       if (currentFilter === 'with-pct' && e.percentage == null) return false;
       if (currentFilter === 'guild' && e.type !== 'guild') return false;
       if (currentFilter === 'user' && e.type !== 'user') return false;
-      if (currentFilter === 'fp' && e.fpSamples == null && e.source !== 'fingerprint_sampling') return false;
+      if (currentFilter === 'fp' && !(e.cmp && e.cmp.measurement && e.cmp.measurement.status === 'measured') && e.fpSamples == null && e.source !== 'fingerprint_sampling') return false;
 
       if (currentSearch) {
         const q = currentSearch.toLowerCase();
@@ -330,7 +498,8 @@ function escapeHtml(s) {
       return;
     }
 
-    grid.innerHTML = filtered.slice(0, 500).map((e) => {
+    const shown = filtered.slice(0, limit);
+    grid.innerHTML = shown.map((e) => {
       const rawId = e.id || `hash_${e.hash}`;
       const id = escapeHtml(rawId);
       const title = escapeHtml(e.title || rawId);
@@ -342,25 +511,35 @@ function escapeHtml(s) {
         note = 'Pas encore mesuré — Discord ne publie pas ce pourcentage. Apparaîtra automatiquement dès le début du rollout.';
       }
 
-      return `<div class="card ${type}" data-id="${id}">
+      const withCmp = type === 'user' && (e.gist || e.cmp);
+      return `<div class="card ${type}${withCmp ? ' has-cmp' : ''}" data-id="${id}">
         <div class="card-head">
           <span class="card-id">${id}</span>
           <span class="card-type type-${type}">${type}</span>
         </div>
         <div class="card-title">${title}</div>
-        ${pctBar(pct)}
+        ${withCmp ? '' : pctBar(pct)}
         <div class="card-foot">
           ${statusBadge(e.status)}
           ${sourceTag(source)}
         </div>
-        ${gistDetails(e) || exactDetails(e) || fpDetails(e)}
+        ${withCmp ? compareBlock(e) : (gistDetails(e) || exactDetails(e) || fpDetails(e))}
         ${note ? `<div class="card-note">${escapeHtml(note)}</div>` : ''}
       </div>`;
     }).join('');
+    if (filtered.length > shown.length) {
+      const rest = filtered.length - shown.length;
+      grid.insertAdjacentHTML('beforeend', `<div class="more-wrap"><button type="button" class="chip" id="more">Afficher plus (${shown.length} sur ${filtered.length}, ${rest} restantes)</button></div>`);
+      document.getElementById('more').addEventListener('click', () => {
+        limit += PAGE;
+        render();
+      });
+    }
   }
 
   search.addEventListener('input', (e) => {
     currentSearch = e.target.value;
+    limit = PAGE;
     render();
   });
 
@@ -369,6 +548,7 @@ function escapeHtml(s) {
       filterChips.forEach((c) => c.classList.remove('active'));
       chip.classList.add('active');
       currentFilter = chip.dataset.filter;
+      limit = PAGE;
       render();
     });
   });

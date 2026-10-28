@@ -8,6 +8,7 @@ Each automated writer should only touch its own files under `data/`.
 | Quests | `quests.json` | `quests.yml` |
 | Apex rollouts | `apex_rollouts.json`, `apex_experiments.json` | `apex-rollouts.yml` |
 | User rollouts | `user_rollouts.json` | `rollouts-watch.yml`, `user-rollouts.yml` |
+| Gist user rollouts | `gist_user_rollouts.json`, `gist_user_rollouts.md`, `gist_user_rollouts_docs.json`, `user_rollout_positions.json`, `user_rollout_comparison.json` | `gist-user-rollouts.yml` |
 | Shop | `shop_items.json` | `shop.yml` |
 | Blog | `blog_tracker.json` | `blog-tracker.yml` |
 | X news / watch | `seen_x_posts.json`, `x_seen_ids.json` | `x-news.yml`, `x-watch.yml` |

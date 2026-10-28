@@ -63,7 +63,7 @@ npm start          # scrape Canary
 | `quests.yml` | */5 min | `src/quests.js` |
 | `apex-rollouts.yml` | */20 min | `src/apex_rollouts.js` |
 | `rollouts-watch.yml` | */20 min | `src/rollouts_watch.js` + `src/user_rollouts.js` |
-| `gist-user-rollouts.yml` | */30 min + dispatch `trigger-gist-user-rollouts` | `src/gist_user_rollouts.js` |
+| `gist-user-rollouts.yml` | */30 min + dispatch `trigger-gist-user-rollouts` | `src/gist_user_rollouts.js` + `src/user_rollout_positions.js` (cumul de positions dedans/dehors → bornes) + `src/user_rollout_comparison.js` (affichage honnête gist / mesure k/n / bornes, lecture seule) |
 | `user-rollouts.yml` | dispatch manuel (diagnostic sampling) | `src/user_rollouts.js` |
 | `mobile-versions.yml`, `shop.yml`, `blog-tracker.yml`, `x-news.yml`, `x-watch.yml` | planifiés | scripts correspondants |
 | `pages.yml` | push sur `docs/` ou données | déploiement Pages |
