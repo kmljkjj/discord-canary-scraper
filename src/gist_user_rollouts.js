@@ -489,7 +489,11 @@ async function main(deps = {}) {
   // 2) Lecture du gist canonique (+ miroir).
   const fetched = await fetchGistsFn(process.env.GITHUB_TOKEN || null);
   if (!fetched || fetched.error || !fetched.source || !Array.isArray(fetched.data)) {
-    err('Lecture des gists impossible — dernier état valide conservé.');
+    const why =
+      (fetched && (fetched.error || (!fetched.source && 'réponse sans source'))) ||
+      (!Array.isArray(fetched && fetched.data) && 'data non tableau') ||
+      'réponse inattendue';
+    err('Lecture des gists impossible (' + String(why).slice(0, 120) + ') — dernier état valide conservé.');
     return { ok: false, reason: 'fetch_failed', error: fetched && fetched.error };
   }
   const { source, data, mirror } = fetched;
