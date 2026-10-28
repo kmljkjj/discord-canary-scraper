@@ -5222,6 +5222,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-camp-in-dm",
+    "defaultConfig": {
+      "disableIdleDisconnect": false
+    },
+    "variations": {
+      "1": {
+        "disableIdleDisconnect": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-clickable-hero-banner",
     "defaultConfig": {
       "enabled": false

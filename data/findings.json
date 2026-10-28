@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-28T00-44-23-548Z_653469_hj7061",
-  "buildNumber": "653469",
-  "scrapedAt": "2026-10-28T00:44:23.548Z",
+  "runId": "2026-10-28T00-47-37-612Z_653470_z470u1",
+  "buildNumber": "653470",
+  "scrapedAt": "2026-10-28T00:47:37.612Z",
   "totals": {
-    "all": 386
+    "all": 387
   },
   "experiments": [
     {
@@ -6579,6 +6579,23 @@
       "variations": {
         "1": {
           "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-camp-in-dm",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "disableIdleDisconnect": false
+      },
+      "variations": {
+        "1": {
+          "disableIdleDisconnect": true
         }
       },
       "variationCount": 1,

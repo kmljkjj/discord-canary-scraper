@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-28T00-44-23-548Z_653469_hj7061",
-  "buildNumber": "653469",
-  "updatedAt": "2026-10-28T00:44:23.548Z",
-  "count": 383,
+  "runId": "2026-10-28T00-47-37-612Z_653470_z470u1",
+  "buildNumber": "653470",
+  "updatedAt": "2026-10-28T00:47:37.612Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -6532,6 +6532,23 @@
       },
       "system": "apex",
       "fp": "025618bc7522bdd6f871d67c210d0675a3afe4e1e0d01a6f1950232c1f094333"
+    },
+    "2026-10-camp-in-dm": {
+      "id": "2026-10-camp-in-dm",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "disableIdleDisconnect": true
+        }
+      },
+      "defaultConfig": {
+        "disableIdleDisconnect": false
+      },
+      "system": "apex",
+      "fp": "96284496cb4b100aa895ba1b9e7d137647260bc13b357cf61e258b49ea603e24"
     },
     "2026-10-clickable-hero-banner": {
       "id": "2026-10-clickable-hero-banner",
