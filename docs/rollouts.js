@@ -6,7 +6,7 @@ function escapeHtml(s) {
     .replace(/>/g, amp + 'gt;')
     .replace(/"/g, amp + 'quot;');
 }
-/* Rollouts page — guild: experiment_rollouts.json · user: user_rollouts.json (v13, mesure propre) */
+/* Rollouts page — guild: experiment_rollouts.json · user: gist agnonotdev (référence, v2.6) ; l'ancienne mesure par sampling n'est plus qu'un diagnostic */
 (async () => {
   const grid = document.getElementById('grid');
   const meta = document.getElementById('meta');
@@ -17,13 +17,15 @@ function escapeHtml(s) {
   let currentFilter = 'all';
   let currentSearch = '';
 
-  // Load data — les deux sources en parallèle
+  // Load data — les sources en parallèle (gist = référence user depuis v2.6)
   let data = null;
   let userData = null;
+  let gistData = null;
   try {
-    [data, userData] = await Promise.all([
+    [data, userData, gistData] = await Promise.all([
       fetch('data/experiment_rollouts.json').then((r) => r.json()).catch(() => null),
       fetch('data/user_rollouts.json').then((r) => r.json()).catch(() => null),
+      fetch('data/gist_user_rollouts_docs.json').then((r) => r.json()).catch(() => null),
     ]);
     if (!data && !userData) {
       grid.innerHTML = '<div class="empty">Erreur de chargement</div>';
@@ -92,10 +94,34 @@ function escapeHtml(s) {
     }
   }
 
-  // ---- Merge : les user exps EXACTES remplacent celles de l'ancien fichier ----
+  // ---- User : couverture gist (RÉFÉRENCE depuis v2.6) ----
+  // Le gist communautaire agnonotdev décrit la couverture de buckets de ~350
+  // expériences user : c'est la source de référence. L'ancienne mesure par
+  // sampling (k/n + Wilson) n'apparaît plus que pour les expériences absentes
+  // du gist — étiquetée diagnostic (son cron est désactivé).
+  const gistUser = new Map();
+  let gistCount = 0;
+  if (gistData && Array.isArray(gistData.experiments)) {
+    for (const e of gistData.experiments) {
+      if (!e || !e.id || e.type !== 'user') continue;
+      gistCount++;
+      gistUser.set(String(e.id), {
+        id: e.id,
+        title: e.title || e.id,
+        type: 'user',
+        source: 'gist_coverage',
+        status: !e.hasData ? 'unknown' : e.ambiguous ? 'ambiguous' : 'gist',
+        percentage: e.totalsAvailable && e.treatmentPct != null ? e.treatmentPct : null,
+        gist: e,
+      });
+    }
+  }
+
+  // ---- Merge : gist (référence) > mesure propre > ancien fichier ----
   allExps = ((data && data.matchedExperiments) || [])
-    .filter((e) => !(e && e.type === 'user' && userExact.has(String(e.hash))))
-    .concat([...userExact.values()])
+    .filter((e) => !(e && e.type === 'user' && (userExact.has(String(e.hash)) || gistUser.has(String(e.id)))))
+    .concat([...userExact.values()].filter((e) => !gistUser.has(String(e.id))))
+    .concat([...gistUser.values()])
     .sort((a, b) => {
       const aPct = a.percentage != null ? a.percentage : -1;
       const bPct = b.percentage != null ? b.percentage : -1;
@@ -112,6 +138,9 @@ function escapeHtml(s) {
 
   const sources = (data && data.sources) || {};
   const sourceParts = [];
+  if (gistCount) {
+    sourceParts.push(`Gist (référence): ${gistCount}`);
+  }
   if (userMeasured) {
     sourceParts.push(`User (mesure propre): ${userMeasured}`);
   }
@@ -147,6 +176,8 @@ function escapeHtml(s) {
       ab_test: { text: 'A/B', cls: 'badge-partial' },
       estimated: { text: 'Mesuré', cls: 'badge-partial' },
       degraded: { text: 'n faible', cls: 'badge-na' },
+      gist: { text: 'Gist', cls: 'badge-partial' },
+      ambiguous: { text: 'Ambigu', cls: 'badge-na' },
       segmented: { text: 'Segmented', cls: 'badge-partial' },
       partial: { text: 'Partiel', cls: 'badge-partial' },
       not_started: { text: '0%', cls: 'badge-zero' },
@@ -172,7 +203,8 @@ function escapeHtml(s) {
       discord_api: 'Discord API',
       fingerprint_sampling: 'Fingerprint',
       client_bundle: 'Client',
-      own_sampling: 'Mesure propre',
+      own_sampling: 'Sampling (diagnostic)',
+      gist_coverage: 'Gist (couverture)',
     };
     const label = labels[source] || escapeHtml(source);
     return `<span class="source-tag small">${label}</span>`;
@@ -202,6 +234,29 @@ function escapeHtml(s) {
     }
     if (exp.platforms && exp.platforms.length) {
       parts.push(`<span class="fp-stat">${escapeHtml(exp.platforms.join(', '))}</span>`);
+    }
+    parts.push('</div>');
+    return parts.join('');
+  }
+
+  /* Couverture de buckets d'une expérience user (gist agnonotdev, v2.6). */
+  function gistDetails(exp) {
+    if (!exp.gist) return '';
+    const g = exp.gist;
+    const parts = ['<div class="fp-details">'];
+    parts.push(
+      '<span class="fp-stat">Couverture de buckets (gist) — pas une proportion d\'utilisateurs</span>',
+    );
+    for (const [k, v] of Object.entries(g.byVariant || {})) {
+      parts.push(
+        `<span class="fp-stat">Variant ${escapeHtml(k)} · ${escapeHtml(v.role || '?')} : ${v.pct != null ? v.pct : '—'}%</span>`,
+      );
+    }
+    if (g.totalsAvailable && g.unassignedPct != null) {
+      parts.push(`<span class="fp-stat">espace non décrit : ${g.unassignedPct}%</span>`);
+    }
+    if (g.ambiguous && g.flags && g.flags.length) {
+      parts.push(`<span class="fp-stat">⚠ ${escapeHtml(g.flags.join(', '))} — totaux indisponibles</span>`);
     }
     parts.push('</div>');
     return parts.join('');
@@ -265,7 +320,7 @@ function escapeHtml(s) {
           ${statusBadge(e.status)}
           ${sourceTag(source)}
         </div>
-        ${exactDetails(e) || fpDetails(e)}
+        ${gistDetails(e) || exactDetails(e) || fpDetails(e)}
         ${note ? `<div class="card-note">${escapeHtml(note)}</div>` : ''}
       </div>`;
     }).join('');

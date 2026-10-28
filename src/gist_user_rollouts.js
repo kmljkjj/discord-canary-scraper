@@ -507,6 +507,51 @@ function writeReport(state, reportFile) {
   }
 }
 
+/**
+ * Export display JSON pour la page docs/rollouts.html : entrées USER
+ * uniquement (guild = décodage wire apex, déjà affiché à part), format
+ * direct pour les cartes. Sémantique rappelée dans le fichier.
+ */
+function writeDocsExport(list, sourceMeta, stats, file) {
+  try {
+    const experiments = list
+      .filter((e) => e.type === 'user')
+      .map((e) => ({
+        id: e.id,
+        title: e.title || e.id,
+        type: 'user',
+        hasData: e.hasData,
+        totalsAvailable: e.totalsAvailable,
+        ambiguous: e.ambiguous,
+        flags: e.flags || [],
+        treatmentPct: e.hasData && e.treatment ? e.treatment.pct : null,
+        controlPct: e.hasData && e.control ? e.control.pct : null,
+        notEligiblePct: e.hasData && e.notEligible ? e.notEligible.pct : null,
+        unassignedPct: e.hasData && e.unassigned ? e.unassigned.pct : null,
+        byVariant: Object.fromEntries(
+          Object.entries(e.byVariant || {}).map(([k, v]) => [k, { pct: v.pct, role: v.role }]),
+        ),
+      }));
+    const out = {
+      generatedAt: new Date().toISOString(),
+      semantics:
+        "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel",
+      source: {
+        gistId: sourceMeta.gistId,
+        htmlUrl: sourceMeta.htmlUrl,
+        updatedAt: sourceMeta.updatedAt,
+        revision: sourceMeta.revision,
+      },
+      stats,
+      experiments,
+    };
+    fs.writeFileSync(file, JSON.stringify(out, null, 1) + '\n');
+  } catch (e) {
+    const warn = process.env.GIST_ROLLOUT_TEST_QUIET === '1' ? () => {} : console.warn;
+    warn('docs export skip:', String((e && e.message) || e).slice(0, 80));
+  }
+}
+
 // ─── Main ───────────────────────────────────────────────────────────────────
 
 async function main(deps = {}) {
@@ -678,6 +723,13 @@ async function main(deps = {}) {
   await writeJsonAtomic(stateFile, stateObj, 1);
   // Rapport depuis la liste complète (variantes + titres), pas l'état compact.
   writeReport({ ...stateObj, experiments: list }, reportFile);
+  // Export display pour la page docs/rollouts.html (source user de référence).
+  writeDocsExport(
+    list,
+    source,
+    stats,
+    /\.md$/.test(String(reportFile)) ? String(reportFile).replace(/\.md$/, '_docs.json') : reportFile + '_docs.json',
+  );
   log('État écrit:', stateFile, '· livrés:', delivered, '/', changes.length);
 
   return { ok: true, changes: changes.length, delivered };
@@ -718,4 +770,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { main, computeAll, buildEmbed, writeReport, loadLocalDefs, ackEntry };
+module.exports = { main, computeAll, buildEmbed, writeReport, writeDocsExport, loadLocalDefs, ackEntry };

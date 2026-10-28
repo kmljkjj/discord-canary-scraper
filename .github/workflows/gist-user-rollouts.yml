@@ -57,7 +57,7 @@ jobs:
       - name: Commit state
         if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md
+          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md data/gist_user_rollouts_docs.json
 
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'

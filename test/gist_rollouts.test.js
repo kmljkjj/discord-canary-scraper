@@ -714,6 +714,23 @@ test('main : reclassification user → guild → PAS de faux « retiré du gist 
   });
 });
 
+test('main : export docs JSON écrit (source user de référence pour rollouts.html)', async () => {
+  await withTempState(async (sf, rf) => {
+    await mainT({ stateFile: sf, reportFile: rf, fetchGists: fakeFetchGists, postWebhook: async () => false });
+    const docsFile = rf.replace(/\.md$/, '_docs.json');
+    const docs = await fs.readJson(docsFile);
+    // user uniquement (guild = apex wire à part), 1 entrée avec données.
+    assert.equal(docs.experiments.length, 1);
+    const e = docs.experiments[0];
+    assert.equal(e.id, '2026-10-test-exp');
+    assert.equal(e.treatmentPct, 25);
+    assert.equal(e.byVariant['1'].pct, 25);
+    assert.equal(e.unassignedPct, 50);
+    assert.ok(docs.semantics.includes('couverture'));
+    assert.ok(docs.source.gistId);
+  });
+});
+
 test('main : échec de lecture des gists → dernier état conservé, ok:false', async () => {
   await withTempState(async (sf) => {
     await mainT({ stateFile: sf, fetchGists: fakeFetchGists, postWebhook: async () => false });

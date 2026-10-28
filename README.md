@@ -215,7 +215,8 @@ python3 scripts/trigger_host.py
   user → guild sans faux « retiré du gist », miroirs, validation avant diff,
   livraison partielle, échec de lecture → dernier état conservé) —
   256 au total.
-- **Limite connue** : la page docs `rollouts.html` (user %) lit encore
-  `data/user_rollouts.json` produit par l'ancienne mesure par sampling,
-  désormais diagnostic manuel — ces chiffres deviendront figés ; la source
-  de référence pour le % user est `data/gist_user_rollouts.md`.
+- **Page docs raccordée** : `rollouts.html` affiche le % user depuis le
+  gist (export display `data/gist_user_rollouts_docs.json`, badge « Gist ») ;
+  l'ancienne mesure par sampling n'apparaît plus que pour les expériences
+  absentes du gist, étiquetée « Sampling (diagnostic) » — et le rapport
+  complet reste publié (`data/gist_user_rollouts.md`).
