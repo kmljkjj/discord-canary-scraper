@@ -1,15 +1,16 @@
 {
  "version": 1,
  "schemaVersion": 1,
- "runId": "20261028T012641_gist",
- "scrapedAt": "2026-10-28T01:26:41.840Z",
+ "semanticsVersion": 2,
+ "runId": "20261028T023425_gist",
+ "scrapedAt": "2026-10-28T02:34:25.226Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/f78019d6384dec34fcde5c7b782d8075dfb3f001/rollouts-tag.json",
-  "updatedAt": "2026-10-27T23:45:42Z",
-  "revision": "12a86606c0a6063f0b2e7461d6fa26ba66d0afee",
-  "fetchedAt": "2026-10-28T01:26:41.840Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/cb929846be62043f0a1675ed7c124bf5fb41e339/rollouts-tag.json",
+  "updatedAt": "2026-10-28T01:39:48Z",
+  "revision": "abe02a0c96b92528ded6ba750c458ead44d44863",
+  "fetchedAt": "2026-10-28T02:34:25.226Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -18,14 +19,16 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
+   "2026-10-android-media-viewer-full-resolution",
+   "2026-10-pinot-admin",
    "2026-09-new-orb-reward-visuals"
   ]
  },
  "stats": {
-  "total": 1005,
+  "total": 1006,
   "user": 356,
   "userData": 148,
-  "guild": 37,
+  "guild": 38,
   "unclassified": 612,
   "noData": 271
  },
@@ -5150,7 +5153,8 @@
  "lastRun": {
   "changes": 0,
   "delivered": 0,
-  "firstRun": false
+  "firstRun": false,
+  "semanticsMigrated": 0
  },
  "history": [
   {
@@ -5162,6 +5166,12 @@
   {
    "at": "2026-10-28T01:26:41.840Z",
    "revision": "12a86606c0a6063f0b2e7461d6fa26ba66d0afee",
+   "changes": 0,
+   "delivered": 0
+  },
+  {
+   "at": "2026-10-28T02:34:25.226Z",
+   "revision": "abe02a0c96b92528ded6ba750c458ead44d44863",
    "changes": 0,
    "delivered": 0
   }
