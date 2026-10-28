@@ -66,6 +66,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { sendEmbeds } = require('./lib/webhook');
 const { murmur3 } = require('./lib/murmur3');
+const { gistCoverageByHash } = require('./lib/wire_reconcile');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sleep, redactSecrets, loadTokens, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
@@ -1255,6 +1256,36 @@ async function main(deps = {}) {
     await writeState(seedAck, { announcedMap: seedAnnounced });
     console.log(isUpgrade ? 'Upgrade seed → v15 (acknowledged baseline)' : 'Seed', experiments.length, '· no notify');
     return;
+  }
+
+  // Un seul annonceur par expérience : si le gist couvre déjà ce hash avec un total
+  // exact, c'est LUI qui annonce le pourcentage (couverture à 0,01 pt, mesure API
+  // attachée à son embed). On acquitte ici en silence pour ne pas dupliquer ni
+  // contredire avec une estimation k/n. Les changements de révision et les
+  // expériences que le gist ne couvre pas restent annoncés par l'échantillonnage.
+  if (process.env.USER_ROLLOUT_WIRE_DEDUPE !== '0') {
+    let cover = deps.gistCoverage;
+    if (!cover) {
+      try {
+        cover = gistCoverageByHash(await fs.readJson(path.join(__dirname, '..', 'data', 'gist_user_rollouts_docs.json')));
+      } catch (_) {
+        cover = new Map();
+      }
+    }
+    const byHash = new Map(experiments.map((e) => [String(e.hash), e]));
+    let deduped = 0;
+    for (let i = changes.length - 1; i >= 0; i--) {
+      const c = changes[i];
+      if ((c.kind !== 'pct' && c.kind !== 'new') || c.hash == null || !cover.has(Number(c.hash))) continue;
+      const exp = byHash.get(String(c.hash));
+      if (exp) {
+        acknowledged[String(exp.hash)] = ackSnapshot(exp, byRev.get(exp.hash) ?? null, exp.windowN);
+        announced[String(exp.hash)] = exp.fingerprint;
+      }
+      changes.splice(i, 1);
+      deduped += 1;
+    }
+    if (deduped) console.log('Gist déjà annonceur : ' + deduped + ' changement(s) de % couvert(s) acquitté(s) sans notification');
   }
 
   await writeState(acknowledged);
