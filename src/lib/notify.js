@@ -373,9 +373,10 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
-async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
+async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey }) {
   let ok = true;
-  for (const sec of sections) {
+  for (let si = 0; si < sections.length; si++) {
+    const sec = sections[si];
     if (!sec.lines.length) continue;
     const chunks = chunkLines(sec.lines, FIELD_MAX);
     const embeds = [];
@@ -412,8 +413,13 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
     }
     // 1 embed par post : chaque message reste sous la limite Discord
     // (4000 caractères de texte par message Components V2)
+    // Clé de dedupe unique par (lot, section, partie). Avant : empreinte du
+    // contenu tronqué → deux messages « … suite » qui commençaient pareil
+    // (ou identiques à un message d'un build précédent < 24 h) étaient
+    // considérés comme déjà envoyés et JAMAIS postés.
     for (let i = 0; i < embeds.length; i++) {
-      const r = await post(webhookUrl, { embeds: [embeds[i]] });
+      const key = batchKey ? `${batchKey}:s${si}:p${i}:${embeds.length}` : null;
+      const r = await post(webhookUrl, { embeds: [embeds[i]] }, key);
       if (!r) ok = false;
     }
   }
@@ -515,6 +521,7 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     bn,
     ts,
     sections,
+    batchKey,
   });
   if (ok) {
     await markPosted(batchKey);
@@ -599,6 +606,7 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     bn,
     ts,
     sections,
+    batchKey,
   });
   if (ok) await markPosted(batchKey);
   else {
@@ -609,10 +617,10 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
-async function post(url, body) {
+async function post(url, body, dedupeKey) {
   body.username = BOT;
   body.avatar_url = AVATAR;
-  const fp = payloadFingerprint(body);
+  const fp = dedupeKey ? 'msg:' + dedupeKey : payloadFingerprint(body);
   if (!(await claimPosted(fp))) {
     console.log('webhook CLAIM skip', body.embeds?.[0]?.title || fp);
     return true;

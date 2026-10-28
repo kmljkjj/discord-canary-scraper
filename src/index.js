@@ -36,7 +36,7 @@ const MAX_NOTIFY_STR = 1000;
 const MAX_NOTIFY_RT = 1000;
 // Incrémenter quand la logique d'extraction strings/routes change :
 // le run suivant ré-amorce last_extract_* sans spammer de faux diffs.
-const STR_RT_EXTRACT_VERSION = 2;
+const STR_RT_EXTRACT_VERSION = 3; // v3 : balises $link/$b conservées, routes ${…} nettoyées
 const MIN_STRINGS_FOR_DIFF = 200;
 const MIN_ROUTES_FOR_DIFF = 50;
 const MIN_EXP_FOR_DIFF = 80;
@@ -320,6 +320,8 @@ async function main() {
 
   let findings;
   let urgentSent = false;
+  // ids réellement annoncés par le chemin CORE (web.* seul)
+  const coreSentIds = new Set();
   try {
     findings = await analyzeAssets(build, {
       forceRefresh: isNewBuild || needsExtractSeed,
@@ -378,7 +380,10 @@ async function main() {
         if (ok) {
           urgentSent = true;
           // In-memory only until publishDataGeneration — no early disk write
-          for (const e of urgentDiff.added) knownExp.add(String(e.id || e));
+          for (const e of urgentDiff.added) {
+            knownExp.add(String(e.id || e));
+            coreSentIds.add(String(e.id || e));
+          }
         } else {
           console.warn('URGENT webhook failed — NOT marking known exp');
         }
@@ -670,6 +675,7 @@ async function main() {
     (await wasBuildAnnounced(build.buildNumber));
 
   let okN = true;
+  let okExp = true;
   if (process.env.DISCORD_WEBHOOK_URL) {
     try {
       if (!urgentSent) {
@@ -684,23 +690,30 @@ async function main() {
         if (okU) {
           for (const e of expDiff.added) knownExp.add(String(e.id || e));
         } else {
+          okExp = false;
           console.warn('URGENT retry path failed — NOT marking known exp');
         }
       } else {
         // CORE already announced pure adds — still send full-extract residual
         // (modified / removed / category) without re-sending added.
+        // Avant : added: [] → les expériences trouvées UNIQUEMENT dans les
+        // chunks (pas dans web.*) n'étaient jamais envoyées.
         const residual = {
-          added: [],
+          added: (expDiff.added || []).filter(
+            (e) => !coreSentIds.has(String((e && e.id) || e)),
+          ),
           modified: expDiff.modified || [],
           removed: expDiff.removed || [],
           categoryChanged: expDiff.categoryChanged || [],
         };
         const nRes =
+          residual.added.length +
           residual.modified.length +
           residual.removed.length +
           residual.categoryChanged.length;
         if (nRes) {
           console.log('URGENT residual after CORE', {
+            added: residual.added.length,
             modified: residual.modified.length,
             removed: residual.removed.length,
             categoryChanged: residual.categoryChanged.length,
@@ -713,7 +726,10 @@ async function main() {
             catchUp: isCatchUp,
             prevBuild: prevBuildNum,
           });
-          if (!okR) {
+          if (okR) {
+            for (const e of residual.added) knownExp.add(String(e.id || e));
+          } else {
+            okExp = false;
             console.warn('URGENT residual webhook failed');
           }
         } else {
@@ -742,6 +758,8 @@ async function main() {
         console.warn('BUILD NOT marked — normal webhook failed (will retry)');
       }
     } catch (e) {
+      okN = false;
+      okExp = false;
       console.warn('notify failed', e.message);
     }
   } else {
@@ -785,9 +803,17 @@ async function main() {
       Object.keys(rtDiff.modified).length +
       Object.keys(rtDiff.removed).length >
     0;
+  const hadExpDiff =
+    (expDiff.added || []).length +
+      (expDiff.modified || []).length +
+      (expDiff.removed || []).length +
+      (expDiff.categoryChanged || []).length >
+    0;
+  // Avant : un échec d'envoi des EXPÉRIENCES n'empêchait pas d'avancer
+  // last_extract_experiments → elles étaient perdues définitivement.
   const notifyCriticalOk = !process.env.DISCORD_WEBHOOK_URL
     ? true
-    : strRtOk || !hadNormalDiff;
+    : (strRtOk || !hadNormalDiff) && (okExp || !hadExpDiff);
 
   if (!notifyCriticalOk) {
     console.warn(
@@ -800,7 +826,7 @@ async function main() {
         ts: Date.now(),
         status: 'notify_failed',
         ok: false,
-        reason: 'WEBHOOK_NORMAL_FAILED',
+        reason: okExp ? 'WEBHOOK_NORMAL_FAILED' : 'WEBHOOK_EXPERIMENTS_FAILED',
         durationMs: Date.now() - t0,
         experiments: (findings.experiments || []).length,
         strings: Object.keys(extractedStrings || {}).length,

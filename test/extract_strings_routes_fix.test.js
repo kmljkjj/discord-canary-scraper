@@ -72,3 +72,40 @@ test('Components V2 : ≤ 4000 caractères de texte par message', () => {
   const total = msgs.flat().reduce((s, c) => s + componentTextLen(c), 0);
   assert.equal(total, 12000);
 });
+
+test('locale : balises $link/$b/hooks gardent leur texte (plus de "{$link}")', () => {
+  const out = {};
+  extractLocaleStrings(
+    `JSON.parse('{"lG69e1":[[8,"$link",["Learn more"],[[1,"handleOnHelpUrlHook"]]]," about age groups"],"qqWWz1":["Hi ",[8,"$b",["bold"]],"!"],"qqWWz2":["$[",[1,"username"],"](usernameHook) is speaking"],"qqWWz3":[[8,"usernameHook",["Bob"]]," joined"]}')`,
+    out,
+  );
+  assert.equal(out.lG69e1, '[Learn more]({handleOnHelpUrlHook}) about age groups');
+  assert.equal(out.qqWWz1, 'Hi **bold**!');
+  assert.equal(out.qqWWz3, '$[Bob](usernameHook) joined');
+  for (const v of Object.values(out)) assert.ok(!/\{\$(link|b|p|i)\}/.test(v), v);
+});
+
+test('routes : templates conditionnels nettoyés + fonctions avec arguments par défaut', () => {
+  const out = {};
+  extractRoutes(
+    'SETTINGS:(e,t)=>`/settings/${e}${null!=t?`/${t}`:""}`,' +
+      'USER_RELATIONSHIPS:function(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:tk.ME;return`/users/${e}/relationships`},' +
+      'REGIONS:e=>null!=e?`/guilds/${e}/regions`:"/voice/regions"',
+    out,
+  );
+  assert.equal(out.SETTINGS, '/settings/:param');
+  assert.equal(out.USER_RELATIONSHIPS, '/users/:param/relationships');
+  assert.equal(out.REGIONS, '/guilds/:param/regions');
+});
+
+test('routes : résultat indépendant de l\'ordre des chunks', () => {
+  const a = 'LOGIN:"/login"';
+  const b = 'LOGIN:"/auth/login"';
+  const o1 = {};
+  const o2 = {};
+  extractRoutes(a, o1);
+  extractRoutes(b, o1);
+  extractRoutes(b, o2);
+  extractRoutes(a, o2);
+  assert.equal(o1.LOGIN, o2.LOGIN);
+});

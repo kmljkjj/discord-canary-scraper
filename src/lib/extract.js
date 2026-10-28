@@ -421,34 +421,63 @@ function extractLocaleStrings(content, out) {
 }
 
 /**
- * Aplatis le format de message compilé de Discord (intl-messageformat AST compact).
- *  "texte"                       → texte
- *  [1,"name"]                    → {name}
- *  [6,"count",{one:[...],...},…] → {count, plural, one {…} other {…}}
- *  [7]                           → #
+ * Aplatis le format de message compilé de Discord (AST FormatJS compact).
+ *  "texte"                                  → texte
+ *  [1,"name"]                               → {name}
+ *  [2,"n","style"] / [3,..] / [4,..]        → {n, number|date|time, style}
+ *  [5,"v",{a:[...],other:[...]}]            → {v, select, a {…} other {…}}
+ *  [6,"count",{one:[...],...},offset,"cardinal"|"ordinal"] → {count, plural|selectordinal, …}
+ *  [7]                                      → #
+ *  [8,"$b",[...]]                           → **…**   ($i → *…*, $del → ~~…~~, $p → …)
+ *  [8,"$link",[...],[[1,"url"]]]            → [… ](url)
+ *  [8,"usernameHook",[...]]                 → $[…](usernameHook)
+ * Avant : les balises (type 8) perdaient leur texte → "{$link} about age groups"
+ * au lieu de "[Learn more](…) about age groups".
  */
 function flattenIcu(v) {
   if (typeof v === 'string') return v;
   if (!Array.isArray(v)) return null;
   const node = (part) => {
     if (typeof part === 'string') return part;
-    if (!Array.isArray(part)) return '';
-    if (part.length === 1 && part[0] === 7) return '#';
-    if (part.length >= 2 && typeof part[0] === 'number' && typeof part[1] === 'string') {
-      const opts = part[2];
-      if (opts && typeof opts === 'object' && !Array.isArray(opts)) {
-        const kind = part[0] === 6 ? 'plural' : part[0] === 5 ? 'select' : 'choice';
-        const branches = Object.entries(opts)
-          .map(([k, b]) => `${k} {${seq(b)}}`)
-          .join(' ');
-        return `{${part[1]}, ${kind}, ${branches}}`;
-      }
-      return '{' + part[1] + '}';
+    if (typeof part === 'number') return String(part);
+    if (!Array.isArray(part) || !part.length) return '';
+    const t = part[0];
+    if (typeof t !== 'number') return seq(part);
+    if (t === 7) return '#';
+    if (t === 0) return typeof part[1] === 'string' ? part[1] : '';
+    const name = typeof part[1] === 'string' ? part[1] : '';
+    if (t === 1) return '{' + name + '}';
+    if (t === 2 || t === 3 || t === 4) {
+      const kind = t === 2 ? 'number' : t === 3 ? 'date' : 'time';
+      const style = typeof part[2] === 'string' && part[2] ? ', ' + part[2] : '';
+      return '{' + name + ', ' + kind + style + '}';
     }
-    // Séquence imbriquée (rich text / balises)
-    return seq(part);
+    if (t === 5 || t === 6) {
+      const opts = part[2] && typeof part[2] === 'object' && !Array.isArray(part[2]) ? part[2] : {};
+      const kind = t === 5 ? 'select' : part[4] === 'ordinal' ? 'selectordinal' : 'plural';
+      const offset = t === 6 && Number(part[3]) ? ` offset:${Number(part[3])}` : '';
+      const branches = Object.entries(opts)
+        .map(([k, b]) => `${k} {${seq(b)}}`)
+        .join(' ');
+      return `{${name}, ${kind},${offset} ${branches}}`;
+    }
+    if (t === 8) {
+      const inner = seq(part[2]);
+      const arg = Array.isArray(part[3]) && part[3].length ? seq(part[3]) : '';
+      switch (name) {
+        case '$b': return `**${inner}**`;
+        case '$i': return `*${inner}*`;
+        case '$del': return `~~${inner}~~`;
+        case '$code': return '`' + inner + '`';
+        case '$p': return inner;
+        case '$link': return arg ? `[${inner}](${arg})` : `[${inner}]`;
+        default: return `$[${inner}](${name.replace(/^\$/, '')})`;
+      }
+    }
+    // type inconnu : on garde au moins le nom de variable
+    return name ? '{' + name + '}' : '';
   };
-  const seq = (arr) => (Array.isArray(arr) ? arr.map(node).join('') : node(arr));
+  const seq = (arr) => (Array.isArray(arr) && (arr.length === 0 || typeof arr[0] !== 'number') ? arr.map(node).join('') : node(arr));
   const s = seq(v);
   return typeof s === 'string' ? s : null;
 }
@@ -527,11 +556,34 @@ function normalizePath(raw) {
   let p = raw.trim();
   if (!p.startsWith('/')) return null;
   if (p.length < 2 || p.length > 300) return null;
-  p = p.replace(/\$\{[^}]+\}/g, ':param');
+  p = p.replace(/\$\{[^{}]+\}/g, ':param');
+  // template conditionnel non fermé : `/settings/${e}${null!=t?`/${t}`:""}` → coupe
+  const open = p.indexOf('${');
+  if (open >= 0) p = p.slice(0, open);
+  p = p.replace(/[?&]+$/, '');
+  if (/[\s\\]/.test(p)) return null;
+  if (p.length < 2) return null;
   if (/\.(js|css|map|png|jpg|webp|svg|woff2?)$/i.test(p)) return null;
   if (p.startsWith('//')) return null; // URL protocol-relative, pas une route
   if (p.startsWith('/assets/')) return null;
   return p;
+}
+
+/**
+ * Même clé vue dans plusieurs chunks avec des chemins différents : le résultat
+ * ne doit PAS dépendre de l'ordre de scan (sinon « modified » fantômes d'un run à l'autre).
+ */
+function setRoute(out, key, p) {
+  if (!isValidRouteKey(key) || !p) return;
+  const cur = out[key];
+  if (cur === undefined || cur === p) {
+    out[key] = p;
+    return;
+  }
+  const score = (x) => (x.match(/:param/g) || []).length * 1000 + x.length;
+  const a = score(p);
+  const b = score(cur);
+  if (a > b || (a === b && p > cur)) out[key] = p;
 }
 
 function extractRoutes(content, out) {
@@ -540,40 +592,40 @@ function extractRoutes(content, out) {
   let m;
   while ((m = re.exec(content)) !== null) {
     const p = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
   const re2 =
     /["']([A-Z][A-Z0-9_]{2,100})["']\s*:\s*["'](\/[^"']{1,250})["']/g;
   while ((m = re2.exec(content)) !== null) {
     const p = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
   const re3 =
     /\.([A-Z][A-Z0-9_]{2,100})\s*=\s*["'](\/[a-zA-Z0-9_\-./{}@:$]+)["']/g;
   while ((m = re3.exec(content)) !== null) {
     const p = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
   const re4 =
     /(?:Endpoints|Routes|API_ENDPOINTS|APIRoutes)\s*(?:\.|\[)\s*["']?([A-Z][A-Z0-9_]{2,100})["']?\s*(?:\])?\s*=\s*["'`](\/[^"'`]{1,250})["'`]/g;
   while ((m = re4.exec(content)) !== null) {
     const p = normalizePath(m[2]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
   // Routes dynamiques (forme minifiée actuelle de Discord) :
   //   USER:e=>`/users/${e}`  ·  USER_BADGE:(e,t)=>`/users/${e}/badges/${t}`
   //   VOICE_PUBLIC_KEYS:()=>"/voice/public-keys"  ·  X:function(e){return`/x/${e}`}
   const re5 =
-    /\b([A-Z][A-Z0-9_]{2,100})\s*:\s*(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>\s*(?:\(\s*)?(["'`])(\/[^"'`\n]{0,250}?)\2/g;
+    /\b([A-Z][A-Z0-9_]{2,100})\s*:\s*(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>\s*(?:\(\s*)?(?:[\w$.!=<>\s]{1,60}\?\s*)?(["'`])(\/[^"'`\n]{0,250}?)\2/g;
   while ((m = re5.exec(content)) !== null) {
     const p = normalizePath(m[3]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
   const re6 =
-    /\b([A-Z][A-Z0-9_]{2,100})\s*(?::\s*function\s*\([^)]*\)|\([^)]*\))\s*\{\s*return\s*(["'`])(\/[^"'`\n]{0,250}?)\2/g;
+    /\b([A-Z][A-Z0-9_]{2,100})\s*(?::\s*function\s*\([^)]*\)|\([^)]*\))\s*\{(?:[^{}`]{0,300}?;)?\s*return\s*(["'`])(\/[^"'`\n]{0,250}?)\2/g;
   while ((m = re6.exec(content)) !== null) {
     const p = normalizePath(m[3]);
-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
+    setRoute(out, m[1], p);
   }
 }
 
