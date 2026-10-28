@@ -141,7 +141,13 @@ async function fetchGistMeta(id, token) {
     headers,
     timeout: 20000,
   });
-  if (!res.ok) throw new Error('gist ' + id + ' HTTP ' + res.status);
+  if (!res.ok) {
+    let detail = '';
+    try {
+      detail = String((await res.text()) || '').replace(/\s+/g, ' ').slice(0, 160);
+    } catch (_) {}
+    throw new Error('gist ' + id + ' HTTP ' + res.status + (detail ? ' — ' + detail : ''));
+  }
   const j = await res.json();
   const file = j.files && Object.values(j.files)[0];
   if (!file || !file.raw_url) throw new Error('gist ' + id + ' sans raw_url');
