@@ -32,6 +32,18 @@ jobs:
       # Inutile de refaire un npm ci complet ici : plus rapide à chaque run.
       - uses: ./.github/actions/setup
 
+      # Latence du % user (gist) : le cron de gist-user-rollouts.yml est best-effort
+      # (2 passes en 7 h le 28/10). Ce workflow tourne toutes les ~2 min : on y
+      # compare la révision du gist à celle du dernier état et on déclenche le
+      # suivi (repository_dispatch trigger-gist-user-rollouts) dès qu'elle change.
+      # Non bloquant : un échec ici n'empêche jamais l'échantillonnage.
+      - name: Wake gist tracker when the gist changed
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node src/gist_wake.js
+
       - name: Unit tests (rollout math)
         run: node --test test/rollout_math.test.js
 

@@ -211,10 +211,10 @@ function pruneWindow(raw, now) {
  * Un changement de revision remet le hash à zéro : un rollout reconfiguré
  * n'est pas mélangé avec ses anciennes mesures.
  */
-function windowAggregate(win) {
-  const state = new Map(); // hash → { counts: Map, n, rev }
+function windowAggregateCore(win, skip) {
+  const state = new Map(); // hash → { counts: Map, n, rev, absent: [indices de batch sans aucune réponse contenant le hash] }
   const batches = (win && Array.isArray(win.batches)) ? win.batches : [];
-  for (const b of batches) {
+  batches.forEach((b, idx) => {
     const c = b.c && typeof b.c === 'object' ? b.c : {};
     const rev = b.rev && typeof b.rev === 'object' ? b.rev : {};
     const ok = Math.max(0, Number(b.ok) || 0);
@@ -226,16 +226,20 @@ function windowAggregate(win) {
       const r = rev[hashS];
       const cur = state.get(hash);
       if (!cur || (r != null && cur.rev != null && cur.rev !== r)) {
-        state.set(hash, { counts: new Map(), n: 0, rev: r != null ? r : null });
+        state.set(hash, { counts: new Map(), n: 0, rev: r != null ? r : null, absent: [] });
       } else if (cur && r != null && cur.rev == null) {
         cur.rev = r;
       }
     }
 
-    // 2. Accumulation : chaque hash connu voit TOUT le batch.
-    for (const [hashS, cur] of state) {
-      cur.n += ok;
+    // 2. Accumulation : chaque hash connu voit TOUT le batch, sauf un batch jugé
+    //    « panne » pour ce hash (cf. detectOutages) qui n'est pas compté du tout.
+    for (const [hash, cur] of state) {
+      const hashS = String(hash);
       const buckets = c[hashS];
+      if (!buckets) cur.absent.push(idx);
+      if (skip && skip.has(hash) && skip.get(hash).has(idx)) continue;
+      cur.n += ok;
       if (!buckets) continue;
       for (const [bS, k] of Object.entries(buckets)) {
         const bucket = Number(bS);
@@ -244,15 +248,67 @@ function windowAggregate(win) {
         cur.counts.set(bucket, (cur.counts.get(bucket) || 0) + kk);
       }
     }
-  }
+  });
+  return { state, batches };
+}
 
+// Probabilité sous laquelle « 0 observation sur ok » est traité comme une panne d'exposition
+// (l'expérience n'est servie dans aucune réponse du lot) et non comme un 0 % mesuré.
+const outageP0 = () => { const v = Number(process.env.USER_ROLLOUT_OUTAGE_P0); return Number.isFinite(v) && process.env.USER_ROLLOUT_OUTAGE_P0 !== undefined && process.env.USER_ROLLOUT_OUTAGE_P0 !== '' ? v : 1e-3; };
+// Une absence qui dure jusqu'au dernier lot sur au moins ce nombre de lots est un retrait réel.
+const outageSustained = () => Number(process.env.USER_ROLLOUT_OUTAGE_SUSTAINED) || 4;
+
+/**
+ * Lots où un hash connu est absent de TOUTES les réponses alors que son taux estimé
+ * rendrait ce résultat quasi impossible ((1-p)^ok < P0). Observé en production :
+ * tida_webform disparaissait de lots entiers (150 réponses sur 150) alors que 100 % des
+ * réponses anonymes la contiennent par ailleurs ; compter ces lots comme « 0 sur 150 »
+ * faisait osciller l'estimation (93 → 98 %) et déclenchait des notifications en boucle.
+ * Une absence qui se prolonge jusqu'à la fin de la fenêtre (retrait réel) n'est pas exclue.
+ * @returns {Map<number, Set<number>>} hash → indices de lots à ne pas compter
+ */
+function detectOutages(win) {
+  const P0 = outageP0();
+  const SUSTAINED = outageSustained();
+  let skip = new Map();
+  for (let pass = 0; pass < 3; pass++) {
+    const { state, batches } = windowAggregateCore(win, skip);
+    const next = new Map();
+    for (const [hash, cur] of state) {
+      if (!cur.absent.length) continue;
+      let k = 0;
+      for (const v of cur.counts.values()) k += v;
+      if (!(cur.n > 0) || k <= 0) continue;
+      const p = Math.min(1, k / cur.n);
+      // Absence continue jusqu'au dernier lot : retrait réel, on ne l'exclut pas.
+      let tail = 0;
+      for (let i = cur.absent.length - 1, want = batches.length - 1; i >= 0 && cur.absent[i] === want; i--, want--) tail++;
+      const set = new Set();
+      cur.absent.forEach((idx, pos) => {
+        const inTail = pos >= cur.absent.length - tail;
+        if (inTail && tail >= SUSTAINED) return;
+        const ok = Math.max(0, Number((batches[idx] || {}).ok) || 0);
+        if (ok > 0 && Math.pow(1 - p, ok) < P0) set.add(idx);
+      });
+      if (set.size) next.set(hash, set);
+    }
+    const same = next.size === skip.size && [...next].every(([h, s]) => skip.has(h) && skip.get(h).size === s.size);
+    skip = next;
+    if (same) break;
+  }
+  return skip;
+}
+
+function windowAggregate(win) {
+  const skip = detectOutages(win);
+  const { state } = windowAggregateCore(win, skip);
   const winCounts = new Map();
   const winN = new Map();
   for (const [hash, cur] of state) {
     winCounts.set(hash, cur.counts);
     winN.set(hash, cur.n);
   }
-  return { winCounts, winN };
+  return { winCounts, winN, outages: skip };
 }
 
 /**
@@ -1110,6 +1166,7 @@ module.exports = {
   buildWindowTreatments,
   pruneWindow,
   windowAggregate,
+  detectOutages,
   buildNextWindow,
   fingerprintOf,
   classifyChange,
