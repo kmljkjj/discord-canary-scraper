@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-28T22-36-15-150Z_654757_0hb20z",
-  "buildNumber": "654757",
-  "updatedAt": "2026-10-28T22:36:15.150Z",
-  "count": 380,
+  "runId": "2026-10-28T22-51-26-770Z_654765_7mdenh",
+  "buildNumber": "654765",
+  "updatedAt": "2026-10-28T22:51:26.770Z",
+  "count": 381,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -15563,6 +15563,64 @@
         "value": null
       },
       "fingerprint": "0512cf01b46368bf7c4a7eea8e2ceba65c18b4ce0f4effe864cb3fac32ccf8c3"
+    },
+    {
+      "id": "2026-09-server-onboarding-setup-progress",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "showSetupProgressRow": false,
+        "boostBeforeAddApp": false
+      },
+      "variations": {
+        "1": {
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": false
+        },
+        "2": {
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-09-server-onboarding-setup-progress",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "showSetupProgressRow": false,
+          "boostBeforeAddApp": false
+        },
+        "variations": {
+          "1": {
+            "showSetupProgressRow": true,
+            "boostBeforeAddApp": false
+          },
+          "2": {
+            "showSetupProgressRow": true,
+            "boostBeforeAddApp": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9d0e7b9d0be65120ea132ee658c1d65c9544b6ab751ce2bdd9b1de88afe489e7"
     },
     {
       "id": "2026-09-server-tooltip-notification-context",

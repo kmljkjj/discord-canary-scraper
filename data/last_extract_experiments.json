@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-28T22-36-15-150Z_654757_0hb20z",
-  "buildNumber": "654757",
-  "updatedAt": "2026-10-28T22:36:15.150Z",
-  "count": 380,
+  "runId": "2026-10-28T22-51-26-770Z_654765_7mdenh",
+  "buildNumber": "654765",
+  "updatedAt": "2026-10-28T22:51:26.770Z",
+  "count": 381,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -5989,6 +5989,29 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "0512cf01b46368bf7c4a7eea8e2ceba65c18b4ce0f4effe864cb3fac32ccf8c3"
+    },
+    "2026-09-server-onboarding-setup-progress": {
+      "id": "2026-09-server-onboarding-setup-progress",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "1": {
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": false
+        },
+        "2": {
+          "showSetupProgressRow": true,
+          "boostBeforeAddApp": true
+        }
+      },
+      "defaultConfig": {
+        "showSetupProgressRow": false,
+        "boostBeforeAddApp": false
+      },
+      "system": "apex",
+      "fp": "9d0e7b9d0be65120ea132ee658c1d65c9544b6ab751ce2bdd9b1de88afe489e7"
     },
     "2026-09-server-tooltip-notification-context": {
       "id": "2026-09-server-tooltip-notification-context",
