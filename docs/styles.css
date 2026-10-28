@@ -819,3 +819,21 @@ input[type="search"]:focus, #search:focus, .input:focus {
   font-size: 0.68rem;
   color: var(--muted);
 }
+
+/* ── Comparaison gist / mesure API ── */
+.grid .more-wrap { grid-column: 1 / -1; display: flex; justify-content: center; padding-top: 0.5rem; }
+.card.has-cmp { grid-column: span 2; }
+.cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.6rem; }
+.cmp-panel { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 0.7rem 0.8rem; min-width: 0; }
+.cmp-panel h4 { margin: 0 0 0.35rem; font-size: 0.8125rem; font-weight: 700; color: var(--text); display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.cmp-tag { font-size: 0.75rem; font-weight: 600; color: #f5d489; background: var(--orange-soft); padding: 0.1rem 0.4rem; border-radius: 6px; }
+.cmp-big { margin: 0 0 0.3rem; font-size: 1.35rem; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.cmp-none { font-size: 1rem; color: var(--muted); }
+.cmp-sub { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+.cmp-line { margin: 0.2rem 0 0; font-size: 0.75rem; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.cmp-line a { color: #b4bcff; }
+.cmp-stale { font-size: 0.75rem; font-weight: 700; color: #f5a3a5; background: var(--red-soft); padding: 0.05rem 0.35rem; border-radius: 6px; }
+.cmp-verdict { margin: 0.6rem 0 0; font-size: 0.75rem; line-height: 1.4; padding: 0.45rem 0.6rem; border-radius: 8px; }
+.cmp-verdict.ok { background: var(--green-soft); color: #9be8b9; }
+.cmp-verdict.warn { background: var(--orange-soft); color: #f5d489; }
+@media (max-width: 900px) { .card.has-cmp { grid-column: auto; } .cmp { grid-template-columns: 1fr; } }

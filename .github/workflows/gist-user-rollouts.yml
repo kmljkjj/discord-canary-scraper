@@ -38,6 +38,8 @@ jobs:
         run: |
           node --check src/gist_user_rollouts.js
           node --check src/lib/gist_rollouts.js
+          node --check src/user_rollout_comparison.js
+          node --check src/lib/user_rollout_comparison.js
 
       - name: Compute gist user rollouts
         id: rollouts
@@ -54,10 +56,20 @@ jobs:
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
         run: node src/gist_user_rollouts.js
 
+      # Comparaison côte à côte gist (couverture non vérifiée) / mesure k/n
+      # avec IC de Wilson. Lecture seule, aucune notification ; un échec ne
+      # doit jamais bloquer le suivi du gist ci-dessus.
+      - name: Compare gist coverage and measured rollouts
+        id: comparison
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node src/user_rollout_comparison.js
+
       - name: Commit state
         if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md data/gist_user_rollouts_docs.json
+          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md data/gist_user_rollouts_docs.json data/user_rollout_comparison.json
 
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'
