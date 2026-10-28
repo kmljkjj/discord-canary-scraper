@@ -27,6 +27,22 @@ const CONTAINER_MAX_COMPONENTS = 10;
 const MESSAGE_MAX_COMPONENTS = 40;
 
 /**
+ * Discord : la somme des caractères de TOUS les TextDisplay d'un message
+ * Components V2 est limitée à 4000. Dépasser = HTTP 400 → message non envoyé.
+ * Marge de sécurité pour les caractères comptés différemment (emoji, etc.).
+ */
+const MESSAGE_MAX_TEXT_CHARS = 3900;
+
+function componentTextLen(comp) {
+  if (!comp || typeof comp !== 'object') return 0;
+  let n = 0;
+  if (comp.type === 10 && typeof comp.content === 'string') n += comp.content.length;
+  if (Array.isArray(comp.components)) for (const c of comp.components) n += componentTextLen(c);
+  if (comp.accessory) n += componentTextLen(comp.accessory);
+  return n;
+}
+
+/**
  * Build a single TextDisplay component.
  * @param {string} content - Markdown text (max 4000 chars)
  * @returns {{type:number,content:string}}
@@ -188,16 +204,37 @@ function chunkIntoMessages(components, accentColor, withDismiss = false) {
   const messages = [];
   let current = [];
   let containerCount = 0;
+  let textChars = 0;
 
+  // Un TextDisplay trop long est redécoupé pour tenir dans un message seul
+  const flat = [];
   for (const comp of components) {
+    if (comp && comp.type === 10 && String(comp.content || '').length > MESSAGE_MAX_TEXT_CHARS) {
+      for (const part of chunkText(comp.content, MESSAGE_MAX_TEXT_CHARS)) flat.push(textDisplay(part));
+    } else {
+      flat.push(comp);
+    }
+  }
+
+  for (const comp of flat) {
+    const len = componentTextLen(comp);
     // Each component counts toward the 40 limit (containers count too)
-    if (current.length >= CONTAINER_MAX_COMPONENTS || containerCount >= MESSAGE_MAX_COMPONENTS - 1) {
+    if (
+      current.length &&
+      (current.length >= CONTAINER_MAX_COMPONENTS ||
+        containerCount >= MESSAGE_MAX_COMPONENTS - 1 ||
+        textChars + len > MESSAGE_MAX_TEXT_CHARS)
+    ) {
+      // ne pas commencer un message par un séparateur
       messages.push([container(current, accentColor)]);
       current = [];
       containerCount = 0;
+      textChars = 0;
     }
+    if (!current.length && comp && comp.type === 14) continue;
     current.push(comp);
     containerCount++;
+    textChars += len;
   }
   if (current.length) {
     messages.push([container(current, accentColor)]);
@@ -386,6 +423,8 @@ module.exports = {
   TEXT_DISPLAY_MAX,
   CONTAINER_MAX_COMPONENTS,
   MESSAGE_MAX_COMPONENTS,
+  MESSAGE_MAX_TEXT_CHARS,
+  componentTextLen,
   textDisplay,
   separator,
   container,

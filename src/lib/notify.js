@@ -54,8 +54,10 @@ function label(emoji, text) {
 const FIELD_MAX = 1020;
 const LINE_VAL_MAX = 240;
 const LINE_VAL_ROUTES = 100;
-const MAX_STR_LINES = 80;
-const MAX_RT_LINES = 50;
+// Plus de troncature silencieuse : tout est envoyé (découpé en plusieurs messages)
+const MAX_STR_LINES = 1000;
+const MAX_RT_LINES = 1000;
+const MAX_EXP_LINES = 300;
 
 async function notifyAll(opts) {
   const [a, b] = await Promise.all([notifyUrgent(opts), notifyNormal(opts)]);
@@ -392,7 +394,8 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
       timestamp: ts,
     });
     let offset = 5;
-    while (offset < chunks.length && embeds.length < 8) {
+    // (avant : limité à 8 embeds → les chunks suivants n'étaient jamais envoyés)
+    while (offset < chunks.length) {
       const slice = chunks.slice(offset, offset + 5);
       embeds.push({
         title: `${title} · suite`,
@@ -407,8 +410,10 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
       });
       offset += 5;
     }
-    for (let i = 0; i < embeds.length; i += 5) {
-      const r = await post(webhookUrl, { embeds: embeds.slice(i, i + 5) });
+    // 1 embed par post : chaque message reste sous la limite Discord
+    // (4000 caractères de texte par message Components V2)
+    for (let i = 0; i < embeds.length; i++) {
+      const r = await post(webhookUrl, { embeds: [embeds[i]] });
       if (!r) ok = false;
     }
   }
@@ -457,8 +462,8 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
 
   const sections = [];
   if (exp.added.length) {
-    const lines = exp.added.slice(0, 40).map((e) => expLine(e, '+'));
-    if (exp.added.length > 40) lines.push(`… +${exp.added.length - 40} more`);
+    const lines = exp.added.slice(0, MAX_EXP_LINES).map((e) => expLine(e, '+'));
+    if (exp.added.length > MAX_EXP_LINES) lines.push(`… +${exp.added.length - MAX_EXP_LINES} more`);
     sections.push({
       label: label(E.added, `Added · ${exp.added.length}`),
       color: COLOR.added,
@@ -467,8 +472,8 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     });
   }
   if (exp.modified.length) {
-    const lines = exp.modified.slice(0, 40).map((e) => expLine(e, '~'));
-    if (exp.modified.length > 40) lines.push(`… +${exp.modified.length - 40} more`);
+    const lines = exp.modified.slice(0, MAX_EXP_LINES).map((e) => expLine(e, '~'));
+    if (exp.modified.length > MAX_EXP_LINES) lines.push(`… +${exp.modified.length - MAX_EXP_LINES} more`);
     sections.push({
       label: label(E.modified, `Modified · ${exp.modified.length}`),
       color: COLOR.modified,
@@ -477,13 +482,13 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     });
   }
   if ((exp.categoryChanged || []).length) {
-    const lines = exp.categoryChanged.slice(0, 40).map((e) => {
+    const lines = exp.categoryChanged.slice(0, MAX_EXP_LINES).map((e) => {
       const id = e.id || '?';
       const from = e.from || '?';
       const to = e.to || e.kind || '?';
       return `~ ${id} · ${from} → ${to}`;
     });
-    if (exp.categoryChanged.length > 40) lines.push(`… +${exp.categoryChanged.length - 40} more`);
+    if (exp.categoryChanged.length > MAX_EXP_LINES) lines.push(`… +${exp.categoryChanged.length - MAX_EXP_LINES} more`);
     sections.push({
       label: label(E.modified, `Category · ${exp.categoryChanged.length}`),
       color: COLOR.modified,
@@ -492,11 +497,11 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
     });
   }
   if (exp.removed.length) {
-    const lines = exp.removed.slice(0, 40).map((e) => {
+    const lines = exp.removed.slice(0, MAX_EXP_LINES).map((e) => {
       const id = typeof e === 'string' ? e : e.id;
       return `- ${id}`;
     });
-    if (exp.removed.length > 40) lines.push(`… +${exp.removed.length - 40} more`);
+    if (exp.removed.length > MAX_EXP_LINES) lines.push(`… +${exp.removed.length - MAX_EXP_LINES} more`);
     sections.push({
       label: label(E.removed, `Removed · ${exp.removed.length}`),
       color: COLOR.removed,

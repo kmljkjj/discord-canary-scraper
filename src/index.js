@@ -29,9 +29,14 @@ const LAST_EXTRACT_EXP = path.join(DATA, 'last_extract_experiments.json');
 const ANNOUNCED = path.join(DATA, 'announced_builds.json');
 const LAST_RUN_META = path.join(DATA, 'last_run_meta.json');
 
-const MAX_NOTIFY_EXP = 30;
-const MAX_NOTIFY_STR = 80;
-const MAX_NOTIFY_RT = 40;
+// Plafonds relevés : ce qui dépassait n'était JAMAIS notifié (déjà enregistré
+// dans last_extract → considéré comme vu au run suivant).
+const MAX_NOTIFY_EXP = 300;
+const MAX_NOTIFY_STR = 1000;
+const MAX_NOTIFY_RT = 1000;
+// Incrémenter quand la logique d'extraction strings/routes change :
+// le run suivant ré-amorce last_extract_* sans spammer de faux diffs.
+const STR_RT_EXTRACT_VERSION = 2;
 const MIN_STRINGS_FOR_DIFF = 200;
 const MIN_ROUTES_FOR_DIFF = 50;
 const MIN_EXP_FOR_DIFF = 80;
@@ -176,9 +181,9 @@ function computeExpDiff(findingsExps, lastExp, knownExp, opts) {
     {
       knownIds: knownExp,
       maxAdded: MAX_NOTIFY_EXP,
-      maxModified: 20,
-      maxRemoved: 15,
-      maxCategoryChanged: 20,
+      maxModified: 200,
+      maxRemoved: 200,
+      maxCategoryChanged: 200,
     },
   );
 
@@ -264,6 +269,20 @@ async function main() {
     !prev.build.buildNumber ||
     String(prev.build.buildNumber) !== String(build.buildNumber);
 
+  let strRtVersionOk = false;
+  try {
+    const [a, b] = await Promise.all([
+      fs.readJson(LAST_EXTRACT_STR).catch(() => ({})),
+      fs.readJson(LAST_EXTRACT_RT).catch(() => ({})),
+    ]);
+    strRtVersionOk =
+      Number(a.extractVersion) === STR_RT_EXTRACT_VERSION &&
+      Number(b.extractVersion) === STR_RT_EXTRACT_VERSION;
+  } catch {}
+  if (!strRtVersionOk) {
+    console.log('STR/RT extractor changed — reseed last_extract strings/routes (no notify this run)');
+  }
+
   const needsExtractSeed =
     Object.keys(lastStr).length < 50 ||
     Object.keys(lastRt).length < 20 ||
@@ -274,7 +293,7 @@ async function main() {
       const meta = await fs.readJson(LAST_RUN_META);
       const same = String(meta.buildNumber || '') === String(build.buildNumber);
       const age = Date.now() - Number(meta.ts || 0);
-      if (same && age >= 0 && age < 3 * 60 * 1000 && meta.ok && !needsExtractSeed) {
+      if (same && age >= 0 && age < 3 * 60 * 1000 && meta.ok && !needsExtractSeed && strRtVersionOk) {
         console.log('COOLDOWN SKIP', build.buildNumber, Math.round(age / 1000) + 's since last success');
         process.exit(0);
       }
@@ -287,6 +306,7 @@ async function main() {
     !isNewBuild &&
     prev.initialized &&
     !needsExtractSeed &&
+    strRtVersionOk &&
     Object.keys(lastExp).length > 40
   ) {
     console.log('FAST SKIP', build.buildNumber, Date.now() - t0 + 'ms');
@@ -567,7 +587,7 @@ async function main() {
       for (const [k, v] of Object.entries(lastStr)) {
         if (!(k in extractedStrings)) strDiff.removed[k] = v;
       }
-      if (Object.keys(strDiff.removed).length > 120) strDiff.removed = {};
+      if (Object.keys(strDiff.removed).length > 500) strDiff.removed = {};
     }
     const ak = Object.keys(strDiff.added);
     if (ak.length > MAX_NOTIFY_STR) {
@@ -590,7 +610,7 @@ async function main() {
       for (const [k, v] of Object.entries(lastRt)) {
         if (!(k in nextRt)) rtDiff.removed[k] = v;
       }
-      if (Object.keys(rtDiff.removed).length > 40) rtDiff.removed = {};
+      if (Object.keys(rtDiff.removed).length > 200) rtDiff.removed = {};
     }
     const rk = Object.keys(rtDiff.added);
     if (rk.length > MAX_NOTIFY_RT) {
@@ -598,6 +618,18 @@ async function main() {
       for (const k of rk.slice(0, MAX_NOTIFY_RT)) keep[k] = rtDiff.added[k];
       rtDiff.added = keep;
     }
+  }
+
+  if (!strRtVersionOk) {
+    strDiff.added = {};
+    strDiff.modified = {};
+    strDiff.removed = {};
+    rtDiff.added = {};
+    rtDiff.modified = {};
+    rtDiff.removed = {};
+    // marquer comme connus pour ne pas les annoncer au run suivant
+    for (const k of Object.keys(extractedStrings)) knownStr.add(k);
+    for (const k of Object.keys(nextRt)) knownRt.add(k);
   }
 
   if (!isNewBuild && needsExtractSeed) {
@@ -846,9 +878,12 @@ async function main() {
     const drop = new Set(expDiff.removed.map((e) => String(e.id || e)));
     mergedExps = mergedExps.filter((e) => !drop.has(String(e.id)));
   }
-  const mergedStrings = { ...(prev.strings || {}), ...extractedStrings };
+  // Reseed : on repart de l'extract propre (purge des faux strings/routes accumulés)
+  const mergedStrings = strRtVersionOk
+    ? { ...(prev.strings || {}), ...extractedStrings }
+    : { ...extractedStrings };
   for (const k of Object.keys(strDiff.removed)) delete mergedStrings[k];
-  const mergedRoutes = { ...(prev.routes || {}), ...nextRt };
+  const mergedRoutes = strRtVersionOk ? { ...(prev.routes || {}), ...nextRt } : { ...nextRt };
   for (const k of Object.keys(rtDiff.removed)) delete mergedRoutes[k];
 
   const stamp = { runId, buildNumber: bn };
@@ -879,12 +914,14 @@ async function main() {
     },
     'last_extract_strings.json': {
       ...stamp,
+      extractVersion: STR_RT_EXTRACT_VERSION,
       updatedAt: tsIso,
       count: Object.keys(extractedStrings || {}).length,
       data: extractedStrings || {},
     },
     'last_extract_routes.json': {
       ...stamp,
+      extractVersion: STR_RT_EXTRACT_VERSION,
       updatedAt: tsIso,
       count: Object.keys(nextRt || {}).length,
       data: nextRt || {},
