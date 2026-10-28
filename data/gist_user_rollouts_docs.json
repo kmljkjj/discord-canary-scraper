@@ -1,19 +1,19 @@
 {
- "generatedAt": "2026-10-28T02:34:25.237Z",
+ "generatedAt": "2026-10-28T14:23:04.345Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "updatedAt": "2026-10-28T01:39:48Z",
-  "revision": "abe02a0c96b92528ded6ba750c458ead44d44863"
+  "updatedAt": "2026-10-28T12:04:36Z",
+  "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb"
  },
  "stats": {
   "total": 1006,
   "user": 356,
-  "userData": 148,
+  "userData": 149,
   "guild": 38,
   "unclassified": 612,
-  "noData": 271
+  "noData": 270
  },
  "experiments": [
   {
@@ -1665,19 +1665,22 @@
    "id": "2026-09-invite-accept-age-group-errors",
    "title": "2026-09-invite-accept-age-group-errors",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 5,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 95,
+   "byVariant": {
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-09-halloween-wishlisting-animation",

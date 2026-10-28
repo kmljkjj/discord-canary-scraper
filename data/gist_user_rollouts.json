@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261028T071750_gist",
- "scrapedAt": "2026-10-28T07:17:50.116Z",
+ "runId": "20261028T142304_gist",
+ "scrapedAt": "2026-10-28T14:23:04.340Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/cb929846be62043f0a1675ed7c124bf5fb41e339/rollouts-tag.json",
-  "updatedAt": "2026-10-28T01:39:48Z",
-  "revision": "abe02a0c96b92528ded6ba750c458ead44d44863",
-  "fetchedAt": "2026-10-28T07:17:50.116Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/189e5f97f27e90f56f84a6d4589e41fc793cc661/rollouts-tag.json",
+  "updatedAt": "2026-10-28T12:04:36Z",
+  "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
+  "fetchedAt": "2026-10-28T14:23:04.340Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,18 +19,16 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
-   "2026-10-android-media-viewer-full-resolution",
-   "2026-10-pinot-admin",
-   "2026-09-new-orb-reward-visuals"
+   "2026-10-pinot-admin"
   ]
  },
  "stats": {
   "total": 1006,
   "user": 356,
-  "userData": 148,
+  "userData": 149,
   "guild": 38,
   "unclassified": 612,
-  "noData": 271
+  "noData": 270
  },
  "acknowledged": {
   "2026-10-web-streaming-optimizations": {
@@ -1389,12 +1387,27 @@
    }
   },
   "2026-09-invite-accept-age-group-errors": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "0420a2740c95a6f7",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 5
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-09-halloween-wishlisting-animation": {
    "key": "no_data",
@@ -5151,8 +5164,8 @@
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 1,
+  "delivered": 1,
   "firstRun": false,
   "semanticsMigrated": 0
  },
@@ -5180,6 +5193,12 @@
    "revision": "abe02a0c96b92528ded6ba750c458ead44d44863",
    "changes": 0,
    "delivered": 0
+  },
+  {
+   "at": "2026-10-28T14:23:04.340Z",
+   "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
+   "changes": 1,
+   "delivered": 1
   }
  ]
 }
