@@ -1,0 +1,417 @@
+diff --git a/src/index.js b/src/index.js
+index 7a26c1f..b729061 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -37,5 +37,5 @@ const MAX_NOTIFY_RT = 1000;
+ // Incrémenter quand la logique d'extraction strings/routes change :
+ // le run suivant ré-amorce last_extract_* sans spammer de faux diffs.
+-const STR_RT_EXTRACT_VERSION = 2;
++const STR_RT_EXTRACT_VERSION = 3; // v3 : balises $link/$b conservées, routes ${…} nettoyées
+ const MIN_STRINGS_FOR_DIFF = 200;
+ const MIN_ROUTES_FOR_DIFF = 50;
+@@ -321,4 +321,6 @@ async function main() {
+   let findings;
+   let urgentSent = false;
++  // ids réellement annoncés par le chemin CORE (web.* seul)
++  const coreSentIds = new Set();
+   try {
+     findings = await analyzeAssets(build, {
+@@ -379,5 +381,8 @@ async function main() {
+           urgentSent = true;
+           // In-memory only until publishDataGeneration — no early disk write
+-          for (const e of urgentDiff.added) knownExp.add(String(e.id || e));
++          for (const e of urgentDiff.added) {
++            knownExp.add(String(e.id || e));
++            coreSentIds.add(String(e.id || e));
++          }
+         } else {
+           console.warn('URGENT webhook failed — NOT marking known exp');
+@@ -671,4 +676,5 @@ async function main() {
+ 
+   let okN = true;
++  let okExp = true;
+   if (process.env.DISCORD_WEBHOOK_URL) {
+     try {
+@@ -685,4 +691,5 @@ async function main() {
+           for (const e of expDiff.added) knownExp.add(String(e.id || e));
+         } else {
++          okExp = false;
+           console.warn('URGENT retry path failed — NOT marking known exp');
+         }
+@@ -690,6 +697,10 @@ async function main() {
+         // CORE already announced pure adds — still send full-extract residual
+         // (modified / removed / category) without re-sending added.
++        // Avant : added: [] → les expériences trouvées UNIQUEMENT dans les
++        // chunks (pas dans web.*) n'étaient jamais envoyées.
+         const residual = {
+-          added: [],
++          added: (expDiff.added || []).filter(
++            (e) => !coreSentIds.has(String((e && e.id) || e)),
++          ),
+           modified: expDiff.modified || [],
+           removed: expDiff.removed || [],
+@@ -697,4 +708,5 @@ async function main() {
+         };
+         const nRes =
++          residual.added.length +
+           residual.modified.length +
+           residual.removed.length +
+@@ -702,4 +714,5 @@ async function main() {
+         if (nRes) {
+           console.log('URGENT residual after CORE', {
++            added: residual.added.length,
+             modified: residual.modified.length,
+             removed: residual.removed.length,
+@@ -714,5 +727,8 @@ async function main() {
+             prevBuild: prevBuildNum,
+           });
+-          if (!okR) {
++          if (okR) {
++            for (const e of residual.added) knownExp.add(String(e.id || e));
++          } else {
++            okExp = false;
+             console.warn('URGENT residual webhook failed');
+           }
+@@ -743,4 +759,6 @@ async function main() {
+       }
+     } catch (e) {
++      okN = false;
++      okExp = false;
+       console.warn('notify failed', e.message);
+     }
+@@ -786,7 +804,15 @@ async function main() {
+       Object.keys(rtDiff.removed).length >
+     0;
++  const hadExpDiff =
++    (expDiff.added || []).length +
++      (expDiff.modified || []).length +
++      (expDiff.removed || []).length +
++      (expDiff.categoryChanged || []).length >
++    0;
++  // Avant : un échec d'envoi des EXPÉRIENCES n'empêchait pas d'avancer
++  // last_extract_experiments → elles étaient perdues définitivement.
+   const notifyCriticalOk = !process.env.DISCORD_WEBHOOK_URL
+     ? true
+-    : strRtOk || !hadNormalDiff;
++    : (strRtOk || !hadNormalDiff) && (okExp || !hadExpDiff);
+ 
+   if (!notifyCriticalOk) {
+@@ -801,5 +827,5 @@ async function main() {
+         status: 'notify_failed',
+         ok: false,
+-        reason: 'WEBHOOK_NORMAL_FAILED',
++        reason: okExp ? 'WEBHOOK_NORMAL_FAILED' : 'WEBHOOK_EXPERIMENTS_FAILED',
+         durationMs: Date.now() - t0,
+         experiments: (findings.experiments || []).length,
+diff --git a/src/lib/extract.js b/src/lib/extract.js
+index ea64c53..948ac38 100644
+--- a/src/lib/extract.js
++++ b/src/lib/extract.js
+@@ -422,9 +422,16 @@ function extractLocaleStrings(content, out) {
+ 
+ /**
+- * Aplatis le format de message compilé de Discord (intl-messageformat AST compact).
+- *  "texte"                       → texte
+- *  [1,"name"]                    → {name}
+- *  [6,"count",{one:[...],...},…] → {count, plural, one {…} other {…}}
+- *  [7]                           → #
++ * Aplatis le format de message compilé de Discord (AST FormatJS compact).
++ *  "texte"                                  → texte
++ *  [1,"name"]                               → {name}
++ *  [2,"n","style"] / [3,..] / [4,..]        → {n, number|date|time, style}
++ *  [5,"v",{a:[...],other:[...]}]            → {v, select, a {…} other {…}}
++ *  [6,"count",{one:[...],...},offset,"cardinal"|"ordinal"] → {count, plural|selectordinal, …}
++ *  [7]                                      → #
++ *  [8,"$b",[...]]                           → **…**   ($i → *…*, $del → ~~…~~, $p → …)
++ *  [8,"$link",[...],[[1,"url"]]]            → [… ](url)
++ *  [8,"usernameHook",[...]]                 → $[…](usernameHook)
++ * Avant : les balises (type 8) perdaient leur texte → "{$link} about age groups"
++ * au lieu de "[Learn more](…) about age groups".
+  */
+ function flattenIcu(v) {
+@@ -433,21 +440,43 @@ function flattenIcu(v) {
+   const node = (part) => {
+     if (typeof part === 'string') return part;
+-    if (!Array.isArray(part)) return '';
+-    if (part.length === 1 && part[0] === 7) return '#';
+-    if (part.length >= 2 && typeof part[0] === 'number' && typeof part[1] === 'string') {
+-      const opts = part[2];
+-      if (opts && typeof opts === 'object' && !Array.isArray(opts)) {
+-        const kind = part[0] === 6 ? 'plural' : part[0] === 5 ? 'select' : 'choice';
+-        const branches = Object.entries(opts)
+-          .map(([k, b]) => `${k} {${seq(b)}}`)
+-          .join(' ');
+-        return `{${part[1]}, ${kind}, ${branches}}`;
++    if (typeof part === 'number') return String(part);
++    if (!Array.isArray(part) || !part.length) return '';
++    const t = part[0];
++    if (typeof t !== 'number') return seq(part);
++    if (t === 7) return '#';
++    if (t === 0) return typeof part[1] === 'string' ? part[1] : '';
++    const name = typeof part[1] === 'string' ? part[1] : '';
++    if (t === 1) return '{' + name + '}';
++    if (t === 2 || t === 3 || t === 4) {
++      const kind = t === 2 ? 'number' : t === 3 ? 'date' : 'time';
++      const style = typeof part[2] === 'string' && part[2] ? ', ' + part[2] : '';
++      return '{' + name + ', ' + kind + style + '}';
++    }
++    if (t === 5 || t === 6) {
++      const opts = part[2] && typeof part[2] === 'object' && !Array.isArray(part[2]) ? part[2] : {};
++      const kind = t === 5 ? 'select' : part[4] === 'ordinal' ? 'selectordinal' : 'plural';
++      const offset = t === 6 && Number(part[3]) ? ` offset:${Number(part[3])}` : '';
++      const branches = Object.entries(opts)
++        .map(([k, b]) => `${k} {${seq(b)}}`)
++        .join(' ');
++      return `{${name}, ${kind},${offset} ${branches}}`;
++    }
++    if (t === 8) {
++      const inner = seq(part[2]);
++      const arg = Array.isArray(part[3]) && part[3].length ? seq(part[3]) : '';
++      switch (name) {
++        case '$b': return `**${inner}**`;
++        case '$i': return `*${inner}*`;
++        case '$del': return `~~${inner}~~`;
++        case '$code': return '`' + inner + '`';
++        case '$p': return inner;
++        case '$link': return arg ? `[${inner}](${arg})` : `[${inner}]`;
++        default: return `$[${inner}](${name.replace(/^\$/, '')})`;
+       }
+-      return '{' + part[1] + '}';
+     }
+-    // Séquence imbriquée (rich text / balises)
+-    return seq(part);
++    // type inconnu : on garde au moins le nom de variable
++    return name ? '{' + name + '}' : '';
+   };
+-  const seq = (arr) => (Array.isArray(arr) ? arr.map(node).join('') : node(arr));
++  const seq = (arr) => (Array.isArray(arr) && (arr.length === 0 || typeof arr[0] !== 'number') ? arr.map(node).join('') : node(arr));
+   const s = seq(v);
+   return typeof s === 'string' ? s : null;
+@@ -528,5 +557,11 @@ function normalizePath(raw) {
+   if (!p.startsWith('/')) return null;
+   if (p.length < 2 || p.length > 300) return null;
+-  p = p.replace(/\$\{[^}]+\}/g, ':param');
++  p = p.replace(/\$\{[^{}]+\}/g, ':param');
++  // template conditionnel non fermé : `/settings/${e}${null!=t?`/${t}`:""}` → coupe
++  const open = p.indexOf('${');
++  if (open >= 0) p = p.slice(0, open);
++  p = p.replace(/[?&]+$/, '');
++  if (/[\s\\]/.test(p)) return null;
++  if (p.length < 2) return null;
+   if (/\.(js|css|map|png|jpg|webp|svg|woff2?)$/i.test(p)) return null;
+   if (p.startsWith('//')) return null; // URL protocol-relative, pas une route
+@@ -535,4 +570,21 @@ function normalizePath(raw) {
+ }
+ 
++/**
++ * Même clé vue dans plusieurs chunks avec des chemins différents : le résultat
++ * ne doit PAS dépendre de l'ordre de scan (sinon « modified » fantômes d'un run à l'autre).
++ */
++function setRoute(out, key, p) {
++  if (!isValidRouteKey(key) || !p) return;
++  const cur = out[key];
++  if (cur === undefined || cur === p) {
++    out[key] = p;
++    return;
++  }
++  const score = (x) => (x.match(/:param/g) || []).length * 1000 + x.length;
++  const a = score(p);
++  const b = score(cur);
++  if (a > b || (a === b && p > cur)) out[key] = p;
++}
++
+ function extractRoutes(content, out) {
+   const re =
+@@ -541,5 +593,5 @@ function extractRoutes(content, out) {
+   while ((m = re.exec(content)) !== null) {
+     const p = normalizePath(m[2]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+   const re2 =
+@@ -547,5 +599,5 @@ function extractRoutes(content, out) {
+   while ((m = re2.exec(content)) !== null) {
+     const p = normalizePath(m[2]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+   const re3 =
+@@ -553,5 +605,5 @@ function extractRoutes(content, out) {
+   while ((m = re3.exec(content)) !== null) {
+     const p = normalizePath(m[2]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+   const re4 =
+@@ -559,5 +611,5 @@ function extractRoutes(content, out) {
+   while ((m = re4.exec(content)) !== null) {
+     const p = normalizePath(m[2]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+   // Routes dynamiques (forme minifiée actuelle de Discord) :
+@@ -565,14 +617,14 @@ function extractRoutes(content, out) {
+   //   VOICE_PUBLIC_KEYS:()=>"/voice/public-keys"  ·  X:function(e){return`/x/${e}`}
+   const re5 =
+-    /\b([A-Z][A-Z0-9_]{2,100})\s*:\s*(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>\s*(?:\(\s*)?(["'`])(\/[^"'`\n]{0,250}?)\2/g;
++    /\b([A-Z][A-Z0-9_]{2,100})\s*:\s*(?:\([^)]*\)|[A-Za-z_$][\w$]*)\s*=>\s*(?:\(\s*)?(?:[\w$.!=<>\s]{1,60}\?\s*)?(["'`])(\/[^"'`\n]{0,250}?)\2/g;
+   while ((m = re5.exec(content)) !== null) {
+     const p = normalizePath(m[3]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+   const re6 =
+-    /\b([A-Z][A-Z0-9_]{2,100})\s*(?::\s*function\s*\([^)]*\)|\([^)]*\))\s*\{\s*return\s*(["'`])(\/[^"'`\n]{0,250}?)\2/g;
++    /\b([A-Z][A-Z0-9_]{2,100})\s*(?::\s*function\s*\([^)]*\)|\([^)]*\))\s*\{(?:[^{}`]{0,300}?;)?\s*return\s*(["'`])(\/[^"'`\n]{0,250}?)\2/g;
+   while ((m = re6.exec(content)) !== null) {
+     const p = normalizePath(m[3]);
+-    if (isValidRouteKey(m[1]) && p) out[m[1]] = p;
++    setRoute(out, m[1], p);
+   }
+ }
+diff --git a/src/lib/notify.js b/src/lib/notify.js
+index b034796..a0c77b4 100644
+--- a/src/lib/notify.js
++++ b/src/lib/notify.js
+@@ -374,7 +374,8 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
+ }
+ 
+-async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
++async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey }) {
+   let ok = true;
+-  for (const sec of sections) {
++  for (let si = 0; si < sections.length; si++) {
++    const sec = sections[si];
+     if (!sec.lines.length) continue;
+     const chunks = chunkLines(sec.lines, FIELD_MAX);
+@@ -413,6 +414,11 @@ async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections }) {
+     // 1 embed par post : chaque message reste sous la limite Discord
+     // (4000 caractères de texte par message Components V2)
++    // Clé de dedupe unique par (lot, section, partie). Avant : empreinte du
++    // contenu tronqué → deux messages « … suite » qui commençaient pareil
++    // (ou identiques à un message d'un build précédent < 24 h) étaient
++    // considérés comme déjà envoyés et JAMAIS postés.
+     for (let i = 0; i < embeds.length; i++) {
+-      const r = await post(webhookUrl, { embeds: [embeds[i]] });
++      const key = batchKey ? `${batchKey}:s${si}:p${i}:${embeds.length}` : null;
++      const r = await post(webhookUrl, { embeds: [embeds[i]] }, key);
+       if (!r) ok = false;
+     }
+@@ -516,4 +522,5 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
+     ts,
+     sections,
++    batchKey,
+   });
+   if (ok) {
+@@ -600,4 +607,5 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
+     ts,
+     sections,
++    batchKey,
+   });
+   if (ok) await markPosted(batchKey);
+@@ -610,8 +618,8 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
+ }
+ 
+-async function post(url, body) {
++async function post(url, body, dedupeKey) {
+   body.username = BOT;
+   body.avatar_url = AVATAR;
+-  const fp = payloadFingerprint(body);
++  const fp = dedupeKey ? 'msg:' + dedupeKey : payloadFingerprint(body);
+   if (!(await claimPosted(fp))) {
+     console.log('webhook CLAIM skip', body.embeds?.[0]?.title || fp);
+diff --git a/test/extract_strings_routes_fix.test.js b/test/extract_strings_routes_fix.test.js
+index 8fd1118..6a21a5b 100644
+--- a/test/extract_strings_routes_fix.test.js
++++ b/test/extract_strings_routes_fix.test.js
+@@ -73,2 +73,39 @@ test('Components V2 : ≤ 4000 caractères de texte par message', () => {
+   assert.equal(total, 12000);
+ });
++
++test('locale : balises $link/$b/hooks gardent leur texte (plus de "{$link}")', () => {
++  const out = {};
++  extractLocaleStrings(
++    `JSON.parse('{"lG69e1":[[8,"$link",["Learn more"],[[1,"handleOnHelpUrlHook"]]]," about age groups"],"qqWWz1":["Hi ",[8,"$b",["bold"]],"!"],"qqWWz2":["$[",[1,"username"],"](usernameHook) is speaking"],"qqWWz3":[[8,"usernameHook",["Bob"]]," joined"]}')`,
++    out,
++  );
++  assert.equal(out.lG69e1, '[Learn more]({handleOnHelpUrlHook}) about age groups');
++  assert.equal(out.qqWWz1, 'Hi **bold**!');
++  assert.equal(out.qqWWz3, '$[Bob](usernameHook) joined');
++  for (const v of Object.values(out)) assert.ok(!/\{\$(link|b|p|i)\}/.test(v), v);
++});
++
++test('routes : templates conditionnels nettoyés + fonctions avec arguments par défaut', () => {
++  const out = {};
++  extractRoutes(
++    'SETTINGS:(e,t)=>`/settings/${e}${null!=t?`/${t}`:""}`,' +
++      'USER_RELATIONSHIPS:function(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:tk.ME;return`/users/${e}/relationships`},' +
++      'REGIONS:e=>null!=e?`/guilds/${e}/regions`:"/voice/regions"',
++    out,
++  );
++  assert.equal(out.SETTINGS, '/settings/:param');
++  assert.equal(out.USER_RELATIONSHIPS, '/users/:param/relationships');
++  assert.equal(out.REGIONS, '/guilds/:param/regions');
++});
++
++test('routes : résultat indépendant de l\'ordre des chunks', () => {
++  const a = 'LOGIN:"/login"';
++  const b = 'LOGIN:"/auth/login"';
++  const o1 = {};
++  const o2 = {};
++  extractRoutes(a, o1);
++  extractRoutes(b, o1);
++  extractRoutes(b, o2);
++  extractRoutes(a, o2);
++  assert.equal(o1.LOGIN, o2.LOGIN);
++});
+diff --git a/test/notify_dedupe_parts.test.js b/test/notify_dedupe_parts.test.js
+new file mode 100644
+index 0000000..0719b20
+--- /dev/null
++++ b/test/notify_dedupe_parts.test.js
+@@ -0,0 +1,45 @@
++'use strict';
++const test = require('node:test');
++const assert = require('node:assert/strict');
++const os = require('os');
++const path = require('path');
++const fs = require('fs');
++
++test('notify : parties « suite » au contenu proche toutes envoyées (pas de faux CLAIM skip)', async () => {
++  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'nd-'));
++  process.env.NOTIFY_DEDUPE_FILE = path.join(tmp, 'dedupe.json');
++  const webhookPath = require.resolve('../src/lib/webhook');
++  const sent = [];
++  require.cache[webhookPath] = {
++    id: webhookPath,
++    filename: webhookPath,
++    loaded: true,
++    exports: {
++      sendEmbeds: async (url, base, embeds) => {
++        sent.push(embeds[0]);
++        return { ok: true, status: 204, text: '' };
++      },
++    },
++  };
++  delete require.cache[require.resolve('../src/lib/webhook_dedupe')];
++  delete require.cache[require.resolve('../src/lib/notify')];
++  const { notifyNormal } = require('../src/lib/notify');
++  // Build 1 puis build 2 (< 24 h) : mêmes routes + une nouvelle à la fin.
++  // Avant : les messages « suite » identiques au build 1 étaient sautés (CLAIM skip).
++  const added = {};
++  for (let i = 0; i < 400; i++) added['ROUTE_' + String(i).padStart(5, '0')] = '/x/' + 'y'.repeat(60);
++  const send = (bn, diff) =>
++    notifyNormal({
++      build: { buildNumber: bn },
++      strDiff: {},
++      rtDiff: { added: diff, modified: {}, removed: {} },
++      webhookUrl: 'https://discord.com/api/webhooks/1/x',
++    });
++  assert.equal(await send('1', added), true);
++  sent.length = 0;
++  const added2 = { ...added, ZZZ_NEW_ROUTE: '/new' };
++  assert.equal(await send('2', added2), true);
++  const text = sent.map((e) => (e.fields || []).map((f) => f.value).join('\n')).join('\n');
++  for (const k of Object.keys(added2)) assert.ok(text.includes(k), 'manquant ' + k);
++  delete require.cache[webhookPath];
++});
