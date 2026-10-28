@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T22:56:47.607Z",
+  "fetchedAt": "2026-10-28T23:03:41.739Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -384,30 +384,30 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 3,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 3
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 3,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 3
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 2,
@@ -3364,16 +3364,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-09-server-onboarding-setup-progress",
-      "hash": 2456955138,
-      "type": "user",
-      "title": "2026-09-server-onboarding-setup-progress",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-09-server-tooltip-notification-context",
       "hash": 2736938570,
       "type": "user",
@@ -4208,6 +4198,16 @@
       "hash": 2784449505,
       "type": "user",
       "title": "2026-09-application-test-mode-quick-access",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-09-server-onboarding-setup-progress",
+      "hash": 2456955138,
+      "type": "user",
+      "title": "2026-09-server-onboarding-setup-progress",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
