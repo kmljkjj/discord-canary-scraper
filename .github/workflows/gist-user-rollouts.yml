@@ -1,0 +1,64 @@
+name: Gist User Rollouts %
+
+# % user depuis le gist communautaire d'agnonotdev (copie réduite de
+# rollouts.json, tag Assyst) : couverture de l'espace de buckets à 0,01 point
+# près pour ~1000 expériences, avec classification user/guild depuis nos
+# propres scrapes, détection de changements contre l'état notifié et
+# notifications Discord par ramp-up / reconfiguration / retrait.
+# (Le sampling propre de user_rollouts.js v14 reste disponible à part.)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-gist-user-rollouts]
+
+permissions:
+  contents: write
+
+# Un seul run à la fois : les deux écrivent data/gist_user_rollouts.json.
+concurrency:
+  group: gist-user-rollouts
+  cancel-in-progress: false
+
+jobs:
+  gist-user-rollouts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      # Setup = Node 22 + cache npm + npm ci --omit=dev (les deps runtime)
+      - uses: ./.github/actions/setup
+
+      - name: Syntax check
+        run: |
+          node --check src/gist_user_rollouts.js
+          node --check src/lib/gist_rollouts.js
+
+      - name: Compute gist user rollouts
+        id: rollouts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
+          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
+          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
+          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # Seuil de notification : tout changement de plages (≥ 0,05 pt) part.
+          GIST_ROLLOUT_MIN_PCT_DELTA: "0.05"
+          ORBIT_BOT_NAME: Datamining
+          ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
+        run: node src/gist_user_rollouts.js
+
+      - name: Commit state
+        if: always() && steps.rollouts.outcome != 'cancelled'
+        run: |
+          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md
+
+      - name: Fail if rollouts failed
+        if: always() && steps.rollouts.outcome == 'failure'
+        run: exit 1

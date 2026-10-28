@@ -4,19 +4,28 @@ Datamining du client Discord Canary : builds, expériences, strings, routes, rol
 
 ## Sources
 
-Toutes les données publiées par ce dépôt sont mesurées ou extraites par
-nous-mêmes, directement depuis les serveurs de Discord :
-
-- **% user** : mesure propre (`src/user_rollouts.js` v14) — échantillonnage
-  anonyme de l'API `/experiments` avec fenêtre glissante (4 h), % binomial
-  k/n à 2 décimales + intervalle de confiance de Wilson, marge de bruit
-  exacte au niveau batch, et reconstruction INDICATIVE des bornes de
-  bucket depuis les positions (ordre-statistiques) ;
+- **% user** : couverture de l'espace de buckets depuis le gist communautaire
+  d'[agnonotdev](https://gist.github.com/agnonotdev) (`src/gist_user_rollouts.js`
+  v1, toutes les 30 min) — ~1000 expériences, pourcentages à 0,01 point près,
+  classification user/guild depuis nos propres scrapes, détection de
+  ramp-ups/reconfigurations/retraits contre le dernier état notifié, cas
+  ambigus (multi-populations, chevauchements) signalés jamais lissés. Le
+  sampling propre (`src/user_rollouts.js` v14, fenêtre glissante 4 h + IC de
+  Wilson) reste disponible à part comme diagnostic ;
 - **% guild** : exact, décodé du wire Discord (`src/apex_rollouts.js` v7) ;
 - **noms d'expériences** : extraits de nos propres scrapes du client Canary ;
 - **versions mobiles** : manifestes OTA de Discord + stores publics.
 
-Aucune source de données externe ou communautaire n'est lue.
+Les pourcentages du système % user sont la **couverture de l'espace de
+buckets** décrite par la source communautaire (bornes 0-10000) : ce ne sont
+ni des estimations statistiques, ni la proportion de vrais utilisateurs
+ayant accès à une fonctionnalité (l'assignation réelle dépend de filtres et
+d'conditions d'éligibilité absents de ce fichier réduit).
+
+Sources externes lues : le gist d'agnonotdev uniquement (attribué ci-dessus,
+ avec révision et date de mise à jour tracées dans chaque état). Tout le
+reste est mesuré ou extrait par nous-mêmes, directement depuis les
+serveurs de Discord.
 
 ## Structure
 
@@ -54,7 +63,8 @@ npm start          # scrape Canary
 | `quests.yml` | */5 min | `src/quests.js` |
 | `apex-rollouts.yml` | */20 min | `src/apex_rollouts.js` |
 | `rollouts-watch.yml` | */20 min | `src/rollouts_watch.js` + `src/user_rollouts.js` |
-| `user-rollouts.yml` | dispatch manuel (repli) | `src/user_rollouts.js` |
+| `gist-user-rollouts.yml` | */30 min + dispatch `trigger-gist-user-rollouts` | `src/gist_user_rollouts.js` |
+| `user-rollouts.yml` | dispatch manuel (diagnostic sampling) | `src/user_rollouts.js` |
 | `mobile-versions.yml`, `shop.yml`, `blog-tracker.yml`, `x-news.yml`, `x-watch.yml` | planifiés | scripts correspondants |
 | `pages.yml` | push sur `docs/` ou données | déploiement Pages |
 | `alerts.yml` | après chaque échec | alerte Discord (si `ALERT_WEBHOOK_URL`), une seule tant que ça reste rouge |
@@ -161,3 +171,51 @@ python3 scripts/trigger_host.py
 - **Watcher v2** (`rollouts-watch.yml`, */20 min) : passes de mesure régulières, plus aucun poll de source externe.
 - **Supprimés** : les modules et workflows dédiés aux sources tierces, ainsi que les caches liés.
 - **Footer honnête** sur chaque annonce : « Source: mesure propre · API Discord ».
+
+### v2.6 — % user par couverture de buckets (gist communautaire)
+
+- **Nouveau module** `src/gist_user_rollouts.js` + bibliothèque pure
+  `src/lib/gist_rollouts.js` : le système % user principal lit le gist
+  communautaire d'agnonotdev (copie réduite de rollouts.json, tag Assyst) —
+  1005 expériences au catalogue (734 avec données) au lieu des quelques-unes
+  visibles par sampling, avec les bornes de buckets exactes sur l'espace
+  0-10000. Instantané du 28/10/2026 : 356 user (148 avec données
+  exploitables), 37 guild, 612 type inconnu.
+- **Sémantique honnête** : % = couverture de l'espace de buckets selon la
+  source, à 0,01 point près (longueurs entières, arrondi à l'affichage
+  uniquement) — jamais présentée comme la proportion de vrais utilisateurs
+  éligibles. Mêmes données et même définition donnent les mêmes valeurs —
+  l'amélioration est l'interprétation, le détail et la fiabilité, pas des
+  pourcentages « différents ». Les cas ambigus (variantes répétées =
+  populations aplaties, chevauchements, somme > 100 %) sont signalés
+  (39 expériences à l'instantané du 28/10/2026), jamais lissés ; les
+  plages illisibles rendent l'expérience « dégradée » : couvertures par
+  entrée conservées, mais TOTAUX indisponibles (le complément « espace
+  non décrit » n'est pas connu) ; `variants: []` = « aucune donnée », pas
+  0 %.
+- **Mieux qu'un relais** : classification user/guild/type inconnu depuis nos
+  propres scrapes (les guild sont exclus, mesurés à part par le décodage
+  wire apex) ; détail par variante et par rôle ; rapport Markdown
+  (`data/gist_user_rollouts.md`) ; miroirs comparés (jamais fusionnés, les
+  divergences sont journalisées) ; révision et date de MAJ tracées. Les
+  expériences de type inconnu sont suivies dans le rapport (compteurs dans
+  l'état) mais ne sont PAS notifiées (leur type n'est pas établi).
+- **Notifications fiables** : diff contre le dernier état NOTIFIÉ
+  (`acknowledged`) — un échec de webhook ne perd plus un changement, il est
+  retenté au run suivant ; UN embed PAR envoi (la livraison partielle est
+  identifiable précisément) ; seuil cumulatif 0,05 point (total ou par
+  variante — une redistribution à total constant est notifiée) ; premier
+  run = baseline silencieuse. Workflow `gist-user-rollouts.yml` (*/30 min).
+  L'ancien watcher par sampling (`rollouts-watch.yml`) garde son cron
+  désactivé et devient un diagnostic manuel.
+- **Tests** : 43 nouveaux tests (plages disjointes/doublons/chevauchements,
+  variantes répétées, données vides, seuil cumulatif 25,00 → 25,01 → 25,05,
+  redistribution à total constant (titre neutre, pas de faux Δ treatment),
+  rejet strict des doublons/entrées/variantes invalides, reclassification
+  user → guild sans faux « retiré du gist », miroirs, validation avant diff,
+  livraison partielle, échec de lecture → dernier état conservé) —
+  256 au total.
+- **Limite connue** : la page docs `rollouts.html` (user %) lit encore
+  `data/user_rollouts.json` produit par l'ancienne mesure par sampling,
+  désormais diagnostic manuel — ces chiffres deviendront figés ; la source
+  de référence pour le % user est `data/gist_user_rollouts.md`.

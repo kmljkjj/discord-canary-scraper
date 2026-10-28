@@ -6,8 +6,13 @@ name: Rollouts Watch
 # aucune source externe (cf. src/user_rollouts.js v14).
 
 on:
-  schedule:
-    - cron: "*/20 * * * *"
+  # Cron désactivé (v2.6) : le système % user principal est désormais le gist
+  # communautaire (gist-user-rollouts.yml, */30). Ce job « mesure propre »
+  # reste disponible en DIAGNOSTIC MANUEL (workflow_dispatch) — il ne poste
+  # plus automatiquement pour ne pas mélanger deux sémantiques de % dans
+  # les mêmes webhooks.
+  # schedule:
+  #   - cron: "*/20 * * * *"
   workflow_dispatch:
 
 permissions:
