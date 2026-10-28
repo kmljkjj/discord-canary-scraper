@@ -1,6 +1,6 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-28 01:23 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-28 01:26 UTC
 
 **Sémantique** : couverture de l'espace de buckets (0-10000) selon la source communautaire, à 0,01 point près. Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles — ceci n'est pas non plus une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 

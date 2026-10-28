@@ -1,0 +1,6504 @@
+{
+ "generatedAt": "2026-10-28T01:26:41.845Z",
+ "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel",
+ "source": {
+  "gistId": "e3e99062983e6bd0feaef833f14fd931",
+  "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
+  "updatedAt": "2026-10-27T23:45:42Z",
+  "revision": "12a86606c0a6063f0b2e7461d6fa26ba66d0afee"
+ },
+ "stats": {
+  "total": 1005,
+  "user": 356,
+  "userData": 148,
+  "guild": 37,
+  "unclassified": 612,
+  "noData": 271
+ },
+ "experiments": [
+  {
+   "id": "2026-10-web-streaming-optimizations",
+   "title": "2026-10-web-streaming-optimizations",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 16,
+   "controlPct": 4,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 4,
+     "role": "control"
+    },
+    "1": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 4,
+     "role": "treatment"
+    },
+    "4": {
+     "pct": 4,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-stage-unified-call-user",
+   "title": "2026-10-stage-unified-call-user",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-soundboard-mute-indicator",
+   "title": "2026-10-soundboard-mute-indicator",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 1,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 98,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-shop-marketing-fatigue",
+   "title": "2026-10-shop-marketing-fatigue",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-server-tag-upsell-on-profile",
+   "title": "2026-10-server-tag-upsell-on-profile",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-remove-quests-from-discovery",
+   "title": "2026-10-remove-quests-from-discovery",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-purchase-history",
+   "title": "2026-10-purchase-history",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-profile-default-tab-with-content",
+   "title": "2026-10-profile-default-tab-with-content",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 30,
+   "controlPct": 30,
+   "notEligiblePct": 0,
+   "unassignedPct": 40,
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-pinot-member",
+   "title": "2026-10-pinot-member",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-nitro-tab-remove-account-age-restriction",
+   "title": "2026-10-nitro-tab-remove-account-age-restriction",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-macaron-non-sub-marketing",
+   "title": "2026-10-macaron-non-sub-marketing",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 90.5,
+   "controlPct": 9.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 9.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 90.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-macaron",
+   "title": "2026-10-macaron",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-guild-tooltip-lazy-content",
+   "title": "2026-10-guild-tooltip-lazy-content",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-gift-cards-in-app-marketing",
+   "title": "2026-10-gift-cards-in-app-marketing",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-gdm-duration-timer",
+   "title": "2026-10-gdm-duration-timer",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 8.5,
+   "controlPct": 3.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 88,
+   "byVariant": {
+    "0": {
+     "pct": 3.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 8.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-game-exit-promo-rust",
+   "title": "2026-10-game-exit-promo-rust",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-fix-soundboard-muting-iconography",
+   "title": "2026-10-fix-soundboard-muting-iconography",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 1,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 98,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-e2e-latency-measurement",
+   "title": "2026-10-e2e-latency-measurement",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-desktop-tti-perf",
+   "title": "2026-10-desktop-tti-perf",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 5,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-desktop-general-perf",
+   "title": "2026-10-desktop-general-perf",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 5,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-desktop-game-perf",
+   "title": "2026-10-desktop-game-perf",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 5,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-contextual-referrals-server-channel-member-list",
+   "title": "2026-10-contextual-referrals-server-channel-member-list",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-contextual-referrals-gdm-member-list",
+   "title": "2026-10-contextual-referrals-gdm-member-list",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-collectibles-marketing-client-cache",
+   "title": "2026-10-collectibles-marketing-client-cache",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-collectibles-interactive-jumble-bar",
+   "title": "2026-10-collectibles-interactive-jumble-bar",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 15,
+   "controlPct": 15,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-code-blurple-marketing-holdout",
+   "title": "2026-10-code-blurple-marketing-holdout",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 95,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 95,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-code-blurple",
+   "title": "2026-10-code-blurple",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-cod-relink",
+   "title": "2026-10-cod-relink",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-clickable-hero-banner",
+   "title": "2026-10-clickable-hero-banner",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 5,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-bounties-desktop-quest-bar",
+   "title": "2026-10-bounties-desktop-quest-bar",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-10-badge-directory-updates",
+   "title": "2026-10-badge-directory-updates",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 85,
+   "controlPct": 15,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 85,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-avx512-entropy-histogram",
+   "title": "2026-10-avx512-entropy-histogram",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 15,
+   "controlPct": 15,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 15,
+     "role": "control"
+    },
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-youtube-3p-nagbar",
+   "title": "2026-09-youtube-3p-nagbar",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-youtube-3p",
+   "title": "2026-09-youtube-3p",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-windows-native-premap",
+   "title": "2026-09-windows-native-premap",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-web-sticker-picker-upsell-restyle",
+   "title": "2026-09-web-sticker-picker-upsell-restyle",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-voice-connect-feedback",
+   "title": "2026-09-voice-connect-feedback",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-video-background-profile-fetch",
+   "title": "2026-09-video-background-profile-fetch",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-update-email-settings-copy-subtext",
+   "title": "2026-09-update-email-settings-copy-subtext",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-try-display-name-style",
+   "title": "2026-09-try-display-name-style",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 26.66,
+   "controlPct": 13.33,
+   "notEligiblePct": 0,
+   "unassignedPct": 60.01,
+   "byVariant": {
+    "0": {
+     "pct": 13.33,
+     "role": "control"
+    },
+    "1": {
+     "pct": 13.33,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 13.33,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-three-month-nitro-gifting",
+   "title": "2026-09-three-month-nitro-gifting",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 20,
+   "notEligiblePct": 0,
+   "unassignedPct": 60,
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-stream-zero-vad-leading",
+   "title": "2026-09-stream-zero-vad-leading",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-soundboard-quick-action",
+   "title": "2026-09-soundboard-quick-action",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 95,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 5,
+   "byVariant": {
+    "1": {
+     "pct": 95,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-single-cpu-copy",
+   "title": "2026-09-single-cpu-copy",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-silp-direct-to-discoverable",
+   "title": "2026-09-silp-direct-to-discoverable",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0,
+   "controlPct": 3,
+   "notEligiblePct": 0,
+   "unassignedPct": 97,
+   "byVariant": {
+    "0": {
+     "pct": 3,
+     "role": "control"
+    }
+   }
+  },
+  {
+   "id": "2026-09-silp-desktop-app-upsell",
+   "title": "download_discord_app",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-silp-cta-copy-tests",
+   "title": "2026-09-silp-cta-copy-tests",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0,
+   "controlPct": 4,
+   "notEligiblePct": 0,
+   "unassignedPct": 96,
+   "byVariant": {
+    "0": {
+     "pct": 4,
+     "role": "control"
+    }
+   }
+  },
+  {
+   "id": "2026-09-silp-app-opened-direct-to-discoverable",
+   "title": "2026-09-silp-app-opened-direct-to-discoverable",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-server-tooltip-notification-context",
+   "title": "2026-09-server-tooltip-notification-context",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-server-onboarding-setup-progress",
+   "title": "2026-09-server-onboarding-setup-progress",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-safety-flows-legacy-required-actions",
+   "title": "2026-09-safety-flows-legacy-required-actions",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-rust-3p",
+   "title": "2026-09-rust-3p",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-request-to-stream-new-entry-point",
+   "title": "2026-09-request-to-stream-new-entry-point",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-request-to-stream-go-live-modal",
+   "title": "2026-09-request-to-stream-go-live-modal",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-registration-email-opt-in-copy",
+   "title": "2026-09-registration-email-opt-in-copy",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-referral-trial-cta",
+   "title": "2026-09-referral-trial-cta",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-referral-profile-contextual-menu-upsell",
+   "title": "2026-09-referral-profile-contextual-menu-upsell",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-quest-mobile-bar-secondary-cta",
+   "title": "2026-09-quest-mobile-bar-secondary-cta",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-quest-home-bounties-feature-gate",
+   "title": "2026-09-quest-home-bounties-feature-gate",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-profile-widget-empty-state-suggestions",
+   "title": "2026-09-profile-widget-empty-state-suggestions",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 85,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-profile-link-fetch",
+   "title": "2026-09-profile-link-fetch",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-orbs-hero-carousel",
+   "title": "2026-09-orbs-hero-carousel",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-non-nitro-file-upload-marketing",
+   "title": "2026-09-non-nitro-file-upload-marketing",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 76.5,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 23.5,
+   "byVariant": {
+    "1": {
+     "pct": 76.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-nitro-file-upload-rollout",
+   "title": "2026-09-nitro-file-upload-rollout",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-new-orb-reward-visuals",
+   "title": "2026-09-new-orb-reward-visuals",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 49.5,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 50.5,
+   "byVariant": {
+    "1": {
+     "pct": 49.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-new-horizontal-scroll-shared",
+   "title": "2026-09-new-horizontal-scroll-shared",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-nameplate-video-preload-none",
+   "title": "2026-09-nameplate-video-preload-none",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-multi-sku-embed-rendering",
+   "title": "2026-09-multi-sku-embed-rendering",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-mobile-sticker-picker-upsell-restyle",
+   "title": "2026-09-mobile-sticker-picker-upsell-restyle",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-mobile-quest-reward-button-to-secondary-button",
+   "title": "2026-09-mobile-quest-reward-button-to-secondary-button",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-mobile-quest-home-sort-priority",
+   "title": "2026-09-mobile-quest-home-sort-priority",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-manual-review-inconclusive-copy",
+   "title": "2026-09-manual-review-inconclusive-copy",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-linux-gpu-decode",
+   "title": "2026-09-linux-gpu-decode",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-linked-game-org-invites-dev",
+   "title": "2026-09-linked-game-org-invites-dev",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-invite-silp-education",
+   "title": "2026-09-invite-silp-education",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0,
+   "controlPct": 2.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 97.5,
+   "byVariant": {
+    "0": {
+     "pct": 2.5,
+     "role": "control"
+    }
+   }
+  },
+  {
+   "id": "2026-09-invite-expiring-soon",
+   "title": "2026-09-invite-expiring-soon",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-invite-accept-age-group-errors",
+   "title": "2026-09-invite-accept-age-group-errors",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-halloween-wishlisting-animation",
+   "title": "2026-09-halloween-wishlisting-animation",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-halloween-holiday",
+   "title": "2026-09-halloween-holiday",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-gsimagic2",
+   "title": "2026-09-gsimagic2",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-gifting-badge-coachmark-audience",
+   "title": "2026-09-gifting-badge-coachmark-audience",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 25,
+   "controlPct": 25,
+   "notEligiblePct": 0,
+   "unassignedPct": 50,
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-game-search-row",
+   "title": "2026-09-game-search-row",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-game-profiles-v3-communities-tab",
+   "title": "2026-09-game-profiles-v3-communities-tab",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-game-profiles-v3-commerce-tab",
+   "title": "2026-09-game-profiles-v3-commerce-tab",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-friends-sidebar",
+   "title": "2026-09-friends-sidebar",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 85,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-edit-profile-collectibles-ordering",
+   "title": "2026-09-edit-profile-collectibles-ordering",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 2.5,
+   "controlPct": 2.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 95,
+   "byVariant": {
+    "0": {
+     "pct": 2.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 2.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-desktop-tti-update-check-deadline",
+   "title": "2026-09-desktop-tti-update-check-deadline",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-desktop-tti-shader-cache",
+   "title": "2026-09-desktop-tti-shader-cache",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-default-emojis",
+   "title": "2026-09-default-emojis",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-connected-thread-sidebar",
+   "title": "2026-09-connected-thread-sidebar",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-clips-editor-image-track",
+   "title": "2026-09-clips-editor-image-track",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-build-a-bear",
+   "title": "2026-09-build-a-bear",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-application-test-mode-quick-access",
+   "title": "2026-09-application-test-mode-quick-access",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-agc2-mobile",
+   "title": "2026-09-agc2-mobile",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-activity-go-live",
+   "title": "2026-09-activity-go-live",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-a11y-chassis-target-size",
+   "title": "2026-09-a11y-chassis-target-size",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-web-filter-tag-group-migration",
+   "title": "2026-08-web-filter-tag-group-migration",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-vq-remaining-time-truncation",
+   "title": "2026-08-vq-remaining-time-truncation",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-virtual-backgrounds-ios",
+   "title": "2026-08-virtual-backgrounds-ios",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-video-guard",
+   "title": "2026-08-video-guard",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-user-bio-max-length",
+   "title": "2026-08-user-bio-max-length",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-top-soundboard-sounds-mobile",
+   "title": "2026-08-top-soundboard-sounds-mobile",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-top-soundboard-sounds",
+   "title": "2026-08-top-soundboard-sounds",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-tiny-bronco",
+   "title": "2026-08-tiny-bronco",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-timestamp-autocomplete-mobile",
+   "title": "2026-08-timestamp-autocomplete-mobile",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-split-payments",
+   "title": "2026-08-split-payments",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-show-expressive-modal-subtitle-alt",
+   "title": "2026-08-show-expressive-modal-subtitle-alt",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-scheduled-messages",
+   "title": "2026-08-scheduled-messages",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-rocketleague-events",
+   "title": "2026-08-rocketleague-events",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-rive-web-perf",
+   "title": "2026-08-rive-web-perf",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-profile-read-state-v1",
+   "title": "2026-08-profile-read-state-v1",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-profile-embed-share-button",
+   "title": "2026-08-profile-embed-share-button",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-profile-embed-rendering",
+   "title": "2026-08-profile-embed-rendering",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-premium-gifting-gogo-promotion",
+   "title": "2026-08-premium-gifting-gogo-promotion",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-no-fill-logging",
+   "title": "2026-08-no-fill-logging",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 75,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-nitro-tenure-badge-withheld-state",
+   "title": "2026-08-nitro-tenure-badge-withheld-state",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-nitro-tenure-badge-total-progress",
+   "title": "2026-08-nitro-tenure-badge-total-progress",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-mute-aware-noise-cancellation",
+   "title": "2026-08-mute-aware-noise-cancellation",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-mobile-emoji-picker-upsell-restyle",
+   "title": "2026-08-mobile-emoji-picker-upsell-restyle",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-mark-channel-unread",
+   "title": "2026-08-mark-channel-unread",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-guilds-bar-media-state-store",
+   "title": "2026-08-guilds-bar-media-state-store",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-gsh-subs-activity-bar",
+   "title": "2026-08-gsh-subs-activity-bar",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-gift-recipient-display-name-search",
+   "title": "2026-08-gift-recipient-display-name-search",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 75,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 25,
+   "byVariant": {
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-game-profiles-vc",
+   "title": "2026-08-game-profiles-vc",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-game-mode",
+   "title": "2026-08-game-mode",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-game-community-add-server-entry",
+   "title": "2026-08-game-community-add-server-entry",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-forward-age-restricted-destinations",
+   "title": "2026-08-forward-age-restricted-destinations",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-favorites-server",
+   "title": "2026-08-favorites-server",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-dont-close-chat",
+   "title": "2026-08-dont-close-chat",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-dcf-new-user-cooldown",
+   "title": "2026-08-dcf-new-user-cooldown",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 75,
+   "controlPct": 25,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 25,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-compress-logs",
+   "title": "2026-08-compress-logs",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-bounties-mobile-quest-bar",
+   "title": "2026-08-bounties-mobile-quest-bar",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-badge-management",
+   "title": "2026-08-badge-management",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 92.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-08-automontage",
+   "title": "2026-08-automontage",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-audio-fidelity",
+   "title": "2026-08-audio-fidelity",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-08-ad-topic-opt-out-client",
+   "title": "2026-08-ad-topic-opt-out-client",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-you-bar-guild-tag",
+   "title": "2026-07-you-bar-guild-tag",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-wishlist-direct-to-gifting",
+   "title": "2026-07-wishlist-direct-to-gifting",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-unobtrusive-device-suggestions",
+   "title": "2026-07-unobtrusive-device-suggestions",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-typing-users-css-dots",
+   "title": "2026-07-typing-users-css-dots",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-smag-mobile-wishlist-suggestions",
+   "title": "2026-07-smag-mobile-wishlist-suggestions",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-smag-dm-sidebar-nitro-recommendation",
+   "title": "2026-07-smag-dm-sidebar-nitro-recommendation",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-shop-this-look-mobile",
+   "title": "2026-07-shop-this-look-mobile",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-renewable-end-date-sort",
+   "title": "2026-07-renewable-end-date-sort",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-reject-with-error-kill-switch",
+   "title": "2026-07-reject-with-error-kill-switch",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-reduce-leave-call-gpu",
+   "title": "2026-07-reduce-leave-call-gpu",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-quest-home-default-banner-removal",
+   "title": "2026-07-quest-home-default-banner-removal",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-premium-referral-incentives",
+   "title": "2026-07-premium-referral-incentives",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-premium-group-expansion-announcement",
+   "title": "2026-07-premium-group-expansion-announcement",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-personal-widget",
+   "title": "2026-07-personal-widget",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-parental-consent-warning-fetch",
+   "title": "2026-07-parental-consent-warning-fetch",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-orbchievements",
+   "title": "2026-07-orbchievements",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 30,
+   "controlPct": 30,
+   "notEligiblePct": 0,
+   "unassignedPct": 40,
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-onyx",
+   "title": "2026-07-onyx",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-nvenc-reconstructed-frames",
+   "title": "2026-07-nvenc-reconstructed-frames",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-mobile-emoji-suggestions",
+   "title": "2026-07-mobile-emoji-suggestions",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 3,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 96,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-mobile-boosting-optimizations",
+   "title": "2026-07-mobile-boosting-optimizations",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "4": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-manual-age-assurance-fallback",
+   "title": "2026-07-manual-age-assurance-fallback",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-krisp-cpu-disablement",
+   "title": "2026-07-krisp-cpu-disablement",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-ios-attribution",
+   "title": "2026-07-ios-attribution",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-gsimagic",
+   "title": "2026-07-gsimagic",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-expressive-modal-v2",
+   "title": "2026-07-expressive-modal-v2",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-desktop-channel-tabs",
+   "title": "2026-07-desktop-channel-tabs",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-custom-typing-indicator",
+   "title": "2026-07-custom-typing-indicator",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 90,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 10,
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 70,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-07-custom-app-store-overlay",
+   "title": "2026-07-custom-app-store-overlay",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-cobalt",
+   "title": "2026-07-cobalt",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-clips-on-profile-viewer",
+   "title": "2026-07-clips-on-profile-viewer",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-clips-on-profile-setter",
+   "title": "2026-07-clips-on-profile-setter",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-clips-game-events-on-player",
+   "title": "2026-07-clips-game-events-on-player",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-call-of-duty-3pp-expired",
+   "title": "2026-07-call-of-duty-3pp-expired",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-autoclipping-marketing",
+   "title": "2026-07-autoclipping-marketing",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-autoclipping-default-override",
+   "title": "2026-07-autoclipping-default-override",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-07-attachment-image-ladder",
+   "title": "2026-07-attachment-image-ladder",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-wmf-cpu-encode-intel",
+   "title": "2026-06-wmf-cpu-encode-intel",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-web-vitals-monitoring",
+   "title": "2026-06-web-vitals-monitoring",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-web-translate-dom-guard",
+   "title": "2026-06-web-translate-dom-guard",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 99,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    }
+   }
+  },
+  {
+   "id": "2026-06-user-profile-sidebar-redesign",
+   "title": "2026-06-user-profile-sidebar-redesign",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-use-new-badge-image-source",
+   "title": "2026-06-use-new-badge-image-source",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-upscale-small-captured-frames",
+   "title": "2026-06-upscale-small-captured-frames",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0.5,
+   "controlPct": 0.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 99,
+   "byVariant": {
+    "0": {
+     "pct": 0.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 0.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+   "title": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-server-ladder",
+   "title": "2026-06-server-ladder",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-quest-home-layout-visual-tweaks",
+   "title": "2026-06-quest-home-layout-visual-tweaks",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-quest-fetch-reconnect-jitter",
+   "title": "2026-06-quest-fetch-reconnect-jitter",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-post-call-survey-assets",
+   "title": "2026-06-post-call-survey-assets",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-otp-orders-phase-1",
+   "title": "2026-06-otp-orders-phase-1",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-orbs-holdout",
+   "title": "2026-06-orbs-holdout",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-nitro-gdm-cap-increase",
+   "title": "2026-06-nitro-gdm-cap-increase",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 1,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 99,
+   "byVariant": {
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-mobile-server-tag",
+   "title": "2026-06-mobile-server-tag",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-mobile-media-viewer-share",
+   "title": "2026-06-mobile-media-viewer-share",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-improved-shop-loading",
+   "title": "2026-06-improved-shop-loading",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-hero-shelf-ad-tile",
+   "title": "2026-06-hero-shelf-ad-tile",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-gummy-bears",
+   "title": "2026-06-gummy-bears",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-gifting-badge-desktop",
+   "title": "2026-06-gifting-badge-desktop",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-gift-acom-order",
+   "title": "2026-06-gift-acom-order",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 25,
+   "controlPct": 25,
+   "notEligiblePct": 0,
+   "unassignedPct": 50,
+   "byVariant": {
+    "0": {
+     "pct": 25,
+     "role": "control"
+    },
+    "1": {
+     "pct": 25,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-game-server-hosting-in-shop",
+   "title": "2026-06-game-server-hosting-in-shop",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-dont-badge-muted-vcs",
+   "title": "2026-06-dont-badge-muted-vcs",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-06-desktop-tti-http-cdt",
+   "title": "2026-06-desktop-tti-http-cdt",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-content-classification-embedded-activity-filter",
+   "title": "2026-06-content-classification-embedded-activity-filter",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-clips-secondary-entrypoints",
+   "title": "2026-06-clips-secondary-entrypoints",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-clips-league-events",
+   "title": "2026-06-clips-league-events",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-clickstream-analytics",
+   "title": "2026-06-clickstream-analytics",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-chat-bar-customization",
+   "title": "2026-06-chat-bar-customization",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-battlenet-social-sdk-migration",
+   "title": "2026-06-battlenet-social-sdk-migration",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-av1-encode-linux",
+   "title": "2026-06-av1-encode-linux",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-06-age-verification-incode",
+   "title": "2026-06-age-verification-incode",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-use-ad-analytics-interface",
+   "title": "2026-05-use-ad-analytics-interface",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "5": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-05-spatial-audio-for-voice",
+   "title": "2026-05-spatial-audio-for-voice",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-server-theme-user",
+   "title": "2026-05-server-theme-user",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-screenshare-picker-wgc",
+   "title": "2026-05-screenshare-picker-wgc",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-quest-home-tile-redesign",
+   "title": "2026-05-quest-home-tile-redesign",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-mana-type-consolidation",
+   "title": "2026-05-mana-type-consolidation",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-05-ios-video-stabilization",
+   "title": "2026-05-ios-video-stabilization",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-global-soundboard-wheel-popout",
+   "title": "2026-05-global-soundboard-wheel-popout",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-electron-multilang-spellcheck",
+   "title": "2026-05-electron-multilang-spellcheck",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-dvp-for-attachments",
+   "title": "2026-05-dvp-for-attachments",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-05-distributed-clips",
+   "title": "2026-05-distributed-clips",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-disable-camera-simulcast",
+   "title": "2026-05-disable-camera-simulcast",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-05-dice-roll-slash-command",
+   "title": "2026-05-dice-roll-slash-command",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-device-form-factor-indicators",
+   "title": "2026-05-device-form-factor-indicators",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-clips-media-comments",
+   "title": "2026-05-clips-media-comments",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-bounty-stale-refresh-quest-home",
+   "title": "2026-05-bounty-stale-refresh-quest-home",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-av1-bitrate-tuning",
+   "title": "2026-05-av1-bitrate-tuning",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-auto-clips-review",
+   "title": "2026-05-auto-clips-review",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-app-store-overlay-feature-gate",
+   "title": "2026-05-app-store-overlay-feature-gate",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-05-age-restricted-application-commands",
+   "title": "2026-05-age-restricted-application-commands",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-voice-gateway-protocol-version",
+   "title": "2026-04-voice-gateway-protocol-version",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-video-hook-dx12",
+   "title": "2026-04-video-hook-dx12",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-user-profile-performance-analytics",
+   "title": "2026-04-user-profile-performance-analytics",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-upcoming-server-event",
+   "title": "2026-04-upcoming-server-event",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-topical-navigation-staff-control",
+   "title": "2026-04-topical-navigation-staff-control",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-server-boost-copy-1440p",
+   "title": "2026-04-server-boost-copy-1440p",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-safety-flows",
+   "title": "2026-04-safety-flows",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-04-quests-premium-orb-multiplier-marketing",
+   "title": "2026-04-quests-premium-orb-multiplier-marketing",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-overlay-streamer-mode",
+   "title": "2026-04-overlay-streamer-mode",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-one-day-fractional-nitro",
+   "title": "2026-04-one-day-fractional-nitro",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-04-inappropriate-conversations-prescan",
+   "title": "2026-04-inappropriate-conversations-prescan",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-inappropriate-conversations-default-on",
+   "title": "2026-04-inappropriate-conversations-default-on",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-icymi-staff-only",
+   "title": "2026-04-icymi-staff-only",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-http-request-sample",
+   "title": "2026-04-http-request-sample",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-hide-view-full-profile-button",
+   "title": "2026-04-hide-view-full-profile-button",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-gifting-badge",
+   "title": "2026-04-gifting-badge",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-gift-promotion-reminder",
+   "title": "2026-04-gift-promotion-reminder",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-ensure-received-messages-added-in-order",
+   "title": "2026-04-ensure-received-messages-added-in-order",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-desktop-tti-v8-cache",
+   "title": "2026-04-desktop-tti-v8-cache",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-desktop-notification-center",
+   "title": "2026-04-desktop-notification-center",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-declarative-notif-settings",
+   "title": "2026-04-declarative-notif-settings",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-04-composed-quest-player",
+   "title": "2026-04-composed-quest-player",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-collectibles-profile-frames-purchase",
+   "title": "2026-04-collectibles-profile-frames-purchase",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 15,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 85,
+   "byVariant": {
+    "1": {
+     "pct": 15,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-04-clips-v3-runtime",
+   "title": "2026-04-clips-v3-runtime",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-04-browser-transceiver-padding-removal",
+   "title": "2026-04-browser-transceiver-padding-removal",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-wysiwyg-user-profile-editing",
+   "title": "2026-03-wysiwyg-user-profile-editing",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-video-capture-device-no-reuse",
+   "title": "2026-03-video-capture-device-no-reuse",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-steelseries-3p-recurring",
+   "title": "2026-03-steelseries-3p-recurring",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-soundmoji-sending",
+   "title": "2026-03-soundmoji-sending",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-soundmoji-rendering",
+   "title": "2026-03-soundmoji-rendering",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-overlay-default-keybind",
+   "title": "2026-03-overlay-default-keybind",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-nitro-acom-subscription",
+   "title": "2026-03-nitro-acom-subscription",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-new-server-boost-system-messages",
+   "title": "2026-03-new-server-boost-system-messages",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 85,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-muted-video-quest-new-defaults",
+   "title": "2026-03-muted-video-quest-new-defaults",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-mobile-quest-home-red-dot-notification",
+   "title": "2026-03-mobile-quest-home-red-dot-notification",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-message-bookmarks",
+   "title": "2026-03-message-bookmarks",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 85,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-media-play-metrics",
+   "title": "2026-03-media-play-metrics",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 90,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 90,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-l-3pp",
+   "title": "2026-03-l-3pp",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-krisp-stats-collection",
+   "title": "2026-03-krisp-stats-collection",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-ios-audio-interrupt-handling",
+   "title": "2026-03-ios-audio-interrupt-handling",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-image-load-metrics",
+   "title": "2026-03-image-load-metrics",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 90,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 90,
+     "role": "control"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-icymi-staff-debugging-utility",
+   "title": "2026-03-icymi-staff-debugging-utility",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-icymi-desktop",
+   "title": "2026-03-icymi-desktop",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-friend-request-message",
+   "title": "2026-03-friend-request-message",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-denormalized-perks-access-read",
+   "title": "2026-03-denormalized-perks-access-read",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-03-debug-experiment",
+   "title": "2026-03-debug-experiment",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-croissant",
+   "title": "2026-03-croissant",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-conversation-highlighting-utility",
+   "title": "2026-03-conversation-highlighting-utility",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-content-inventory-memberlist-and-ranker",
+   "title": "2026-03-content-inventory-memberlist-and-ranker",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-clips-experiment",
+   "title": "2026-03-clips-experiment",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-churro",
+   "title": "2026-03-churro",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-block-purchases",
+   "title": "2026-03-block-purchases",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-audio-effects-probe",
+   "title": "2026-03-audio-effects-probe",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-03-age-verification-google-wallet",
+   "title": "2026-03-age-verification-google-wallet",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-wgc-dirty-regions-all",
+   "title": "2026-02-wgc-dirty-regions-all",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-voice-channel-link-click",
+   "title": "2026-02-voice-channel-link-click",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 30,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-silence-warning-aggression",
+   "title": "2026-02-silence-warning-aggression",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-referral-reminder-dc",
+   "title": "2026-02-referral-reminder-dc",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0.4,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 99.6,
+   "byVariant": {
+    "1": {
+     "pct": 0.4,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-pubsub-bulk-ban-users",
+   "title": "2026-02-pubsub-bulk-ban-users",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-process-boost-on-voice",
+   "title": "2026-02-process-boost-on-voice",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-private-channel-hiding",
+   "title": "2026-02-private-channel-hiding",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 2,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 98,
+   "byVariant": {
+    "3": {
+     "pct": 2,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-premium-offer-reminder-xp",
+   "title": "2026-02-premium-offer-reminder-xp",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-non-dm-gifting-modal-redesign",
+   "title": "2026-02-non-dm-gifting-modal-redesign",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-mobile-volume-output-slider-removal",
+   "title": "2026-02-mobile-volume-output-slider-removal",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-mana-playground-access",
+   "title": "2026-02-mana-playground-access",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-longer-group-dm-invites",
+   "title": "2026-02-longer-group-dm-invites",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-lazy-load-all-images",
+   "title": "2026-02-lazy-load-all-images",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 30,
+   "controlPct": 30,
+   "notEligiblePct": 0,
+   "unassignedPct": 40,
+   "byVariant": {
+    "0": {
+     "pct": 30,
+     "role": "control"
+    },
+    "1": {
+     "pct": 30,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-join-game-community-cta",
+   "title": "2026-02-join-game-community-cta",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-gsh-game-detection-upsell",
+   "title": "2026-02-gsh-game-detection-upsell",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-go-live-video-preset-resolution",
+   "title": "2026-02-go-live-video-preset-resolution",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-go-live-hdr",
+   "title": "2026-02-go-live-hdr",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-gifting-modal-redesign",
+   "title": "2026-02-gifting-modal-redesign",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-gift-cards",
+   "title": "2026-02-gift-cards",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-game-server-tab-always-on",
+   "title": "2026-02-game-server-tab-always-on",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 20,
+   "notEligiblePct": 0,
+   "unassignedPct": 60,
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-friends-list",
+   "title": "2026-02-friends-list",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-expiring-powerup-coachmark",
+   "title": "2026-02-expiring-powerup-coachmark",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 20,
+   "notEligiblePct": 0,
+   "unassignedPct": 60,
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-desktop-new-user-onboarding",
+   "title": "2026-02-desktop-new-user-onboarding",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-content-classification-presence-filter",
+   "title": "2026-02-content-classification-presence-filter",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-capture-target-window",
+   "title": "2026-02-capture-target-window",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 20,
+   "notEligiblePct": 0,
+   "unassignedPct": 60,
+   "byVariant": {
+    "0": {
+     "pct": 20,
+     "role": "control"
+    },
+    "1": {
+     "pct": 20,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-02-announcement-composer",
+   "title": "2026-02-announcement-composer",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-02-activity-privacy-matching",
+   "title": "2026-02-activity-privacy-matching",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 0,
+   "controlPct": 21,
+   "notEligiblePct": 0,
+   "unassignedPct": 79,
+   "byVariant": {
+    "0": {
+     "pct": 21,
+     "role": "control"
+    }
+   }
+  },
+  {
+   "id": "2026-01-wmf-gpu-encode-intel",
+   "title": "2026-01-wmf-gpu-encode-intel",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-01-voice-dares-v0",
+   "title": "2026-01-voice-dares-v0",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-01-less-personalized-ads",
+   "title": "2026-01-less-personalized-ads",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-01-ios-push-notif-json-fix",
+   "title": "2026-01-ios-push-notif-json-fix",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-01-friends-in-server",
+   "title": "2026-01-friends-in-server",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-01-favorites-server",
+   "title": "2026-01-favorites-server",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-01-bug-reporter",
+   "title": "2026-01-bug-reporter",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-wmf-gpu-encode",
+   "title": "2025-12-wmf-gpu-encode",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-12-windows-audio-effects",
+   "title": "2025-12-windows-audio-effects",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-quest-cta-refactor-rollout",
+   "title": "2025-12-quest-cta-refactor-rollout",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-12-proportional-vad-indicator",
+   "title": "2025-12-proportional-vad-indicator",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-orb-redemption-thru-orders",
+   "title": "2025-12-orb-redemption-thru-orders",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-nitro-s-rewards",
+   "title": "2025-12-nitro-s-rewards",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-12-mana-multistep-community-enabled",
+   "title": "2025-12-mana-multistep-community-enabled",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 5,
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-12-katsudon",
+   "title": "2025-12-katsudon",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-hdr-accessibility-setting",
+   "title": "2025-12-hdr-accessibility-setting",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-12-09-ptt-education",
+   "title": "2025-12-09-ptt-education",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "2": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-11-video-end-card-v2",
+   "title": "2025-11-video-end-card-v2",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-11-shockbyte-degraded",
+   "title": "2025-11-shockbyte-degraded",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-11-overlay-chat",
+   "title": "2025-11-overlay-chat",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 66,
+   "controlPct": 33,
+   "notEligiblePct": 0,
+   "unassignedPct": 1,
+   "byVariant": {
+    "0": {
+     "pct": 33,
+     "role": "control"
+    },
+    "1": {
+     "pct": 33,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 33,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-11-mana-context-menu",
+   "title": "2025-11-mana-context-menu",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-11-hide-manual-link",
+   "title": "2025-11-hide-manual-link",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-11-global-frame-pool-lock",
+   "title": "2025-11-global-frame-pool-lock",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 10,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 80,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-11-age-verification-expressive-everywhere",
+   "title": "2025-11-age-verification-expressive-everywhere",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-11_tida_webform",
+   "title": "Tida Webform",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-10-mana-date-inputs",
+   "title": "Calendar",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-10-low-latency-rate-control",
+   "title": "2025-10-low-latency-rate-control",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-10-go-live-auto-quality",
+   "title": "2025-10-go-live-auto-quality",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-10-friend-request-alerts-v2",
+   "title": "2025-10-friend-request-alerts-v2",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-10-force-sdr-emojis-stickers",
+   "title": "2025-10-force-sdr-emojis-stickers",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-10-desktop-communication-notifications-emoji",
+   "title": "2025-10-desktop-communication-notifications-emoji",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-10-collectibles-custom-cursors",
+   "title": "2025-10-collectibles-custom-cursors",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-09-video-qoe-metrics-tracking",
+   "title": "2025-09-video-qoe-metrics-tracking",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 1,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 98,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2025-09-server-nsfw-level",
+   "title": "2025-09-server-nsfw-level",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-09-sensitive-content-self-harm",
+   "title": "2025-09-sensitive-content-self-harm",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-09-overlay-state-tracking",
+   "title": "2025-09-overlay-state-tracking",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-09-image-attachment-mezzanine-v2",
+   "title": "2025-09-image-attachment-mezzanine-v2",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-09_hotwheels_nvidia_boost",
+   "title": "Next iteration of the activity feed ranking model.",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-08-voice-user-affinity",
+   "title": "2025-08-voice-user-affinity",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-08-browser-hevc",
+   "title": "2025-08-browser-hevc",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-06_native_intents",
+   "title": "Native Intents",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-05-search-results-feedback",
+   "title": "2025-05-search-results-feedback",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-04-native-markdown",
+   "title": "2025-04-native-markdown",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-04-desktop-refresh-fast-follows",
+   "title": "2025-04-desktop-refresh-fast-follows",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2025-01-allow-nonstaff-to-preview-app-collections",
+   "title": "2025-01-allow-nonstaff-to-preview-app-collections",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2024-06_rtc_pacer__simulcast",
+   "title": "RTC Pacer & Golive Simulcast",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2023-09_iar_user_reporting",
+   "title": "Safety Experience IAR User Reporting",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2023-09_iar_dsa_webform",
+   "title": "Safety Experience Unauthenticated Report Form",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2021-12_inferno_spam_redaction",
+   "title": "Inferno Spam Redaction",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2021-10_runtime_accessibility_system",
+   "title": "Runtime Accessibility System",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2021-02_staff_qc_debugging",
+   "title": "Display QS scores in results. Not a real experiment",
+   "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  }
+ ]
+}
