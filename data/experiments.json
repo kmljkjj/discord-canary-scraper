@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-28T22-51-26-770Z_654765_7mdenh",
-  "buildNumber": "654765",
-  "scrapedAt": "2026-10-28T22:51:26.770Z",
+  "runId": "2026-10-28T22-56-45-823Z_654785_28sk8p",
+  "buildNumber": "654785",
+  "scrapedAt": "2026-10-28T22:56:45.824Z",
   "totals": {
     "all": 385,
     "legacy": 0,
-    "apex": 381
+    "apex": 380
   },
   "experiments": [
     {
@@ -6046,9 +6046,8 @@
     {
       "id": "2026-09-server-onboarding-setup-progress",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "showSetupProgressRow": false,
         "boostBeforeAddApp": false
@@ -6062,9 +6061,7 @@
           "showSetupProgressRow": true,
           "boostBeforeAddApp": true
         }
-      },
-      "variationCount": 2,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-09-server-tooltip-notification-context",
