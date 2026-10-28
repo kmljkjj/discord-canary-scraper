@@ -37,7 +37,12 @@
  *   GIST_ROLLOUT_STALE_H    défaut 72 (h ; avertissement si le gist n'a pas
  *                            changé depuis ce délai — un gist inchangé
  *                            n'est PAS forcément périmé, simple signal)
- *   GITHUB_TOKEN            optionnel (quota API GitHub plus grand)
+ *   GITHUB_TOKEN            optionnel — ATTENTION : le GITHUB_TOKEN des
+ *                           Actions est un jeton d'installation SANS accès
+ *                           aux gists (403 « Resource not accessible by
+ *                           integration ») ; un gist public se lit
+ *                           anonymement, le module retente sans jeton puis
+ *                           replie sur le CDN brut si besoin
  *   UR_WEBHOOK | USER_ROLLOUT_WEBHOOK_URL | APEX_WEBHOOK_URL | ROLLOUT_WEBHOOK_URL | DISCORD_WEBHOOK_URL
  *   ORBIT_BOT_NAME / ORBIT_AVATAR_URL (identité du webhook)
  */
@@ -62,6 +67,12 @@ const DEFAULT_GIST_IDS = [
   'e3e99062983e6bd0feaef833f14fd931', // canonique
   '192b2ce20539ce1021b5c8cb01b17ff0', // miroir (comparaison + repli explicite)
 ];
+// Propriétaires connus des gists par défaut — servent UNIQUEMENT au repli
+// CDN brut (dernier recours) : https://gist.githubusercontent.com/<owner>/<id>/raw
+const RAW_FALLBACK_OWNERS = {
+  e3e99062983e6bd0feaef833f14fd931: 'agnonotdev',
+  '192b2ce20539ce1021b5c8cb01b17ff0': 'agnonotdev',
+};
 const GIST_IDS = String(process.env.GIST_ROLLOUT_GIST_IDS || '')
   .split(',')
   .map((s) => s.trim())
@@ -137,10 +148,20 @@ async function fetchGistMeta(id, token) {
     'User-Agent': 'discord-canary-scraper',
   };
   if (token) headers.Authorization = 'Bearer ' + token;
-  const res = await fetch('https://api.github.com/gists/' + encodeURIComponent(id), {
+  let res = await fetch('https://api.github.com/gists/' + encodeURIComponent(id), {
     headers,
     timeout: 20000,
   });
+  // Le GITHUB_TOKEN des Actions est un jeton d'INSTALLATION sans accès aux
+  // gists (« Resource not accessible by integration », 403) : un gist PUBLIC
+  // se lit anonymement — on retente SANS Authorization avant d'abandonner.
+  if (res.status === 403 && token) {
+    delete headers.Authorization;
+    res = await fetch('https://api.github.com/gists/' + encodeURIComponent(id), {
+      headers,
+      timeout: 20000,
+    });
+  }
   if (!res.ok) {
     let detail = '';
     try {
@@ -176,14 +197,42 @@ async function fetchJsonUrl(url, timeoutMs = 20000) {
  * (l'appelant garde le dernier état valide).
  * Retourne { source, data, mirror } | null.
  */
+/**
+ * Lit UN gist : API (meta + raw_url officiel), et si l'API est injoignable,
+ * repli CDN brut pour les gists dont le propriétaire est connu — sans
+ * métadonnées de révision (updatedAt/revision null), repli ENREGISTRÉ
+ * (meta.rawFallback = true), jamais silencieux.
+ */
+async function fetchGistInto(id, token) {
+  try {
+    const meta = await fetchGistMeta(id, token);
+    const data = await fetchJsonUrl(meta.rawUrl);
+    return { meta, data };
+  } catch (e) {
+    const owner = RAW_FALLBACK_OWNERS[id];
+    if (!owner) throw e;
+    const rawUrl = 'https://gist.githubusercontent.com/' + owner + '/' + id + '/raw';
+    const data = await fetchJsonUrl(rawUrl);
+    return {
+      meta: {
+        gistId: id,
+        rawUrl,
+        htmlUrl: 'https://gist.github.com/' + owner + '/' + id,
+        updatedAt: null,
+        revision: null,
+        rawFallback: true,
+      },
+      data,
+    };
+  }
+}
+
 async function fetchGists(token) {
   const canonicalId = GISTS[0];
   let canonical = null;
   let canonicalErr = null;
   try {
-    const meta = await fetchGistMeta(canonicalId, token);
-    const data = await fetchJsonUrl(meta.rawUrl);
-    canonical = { meta, data };
+    canonical = await fetchGistInto(canonicalId, token);
   } catch (e) {
     canonicalErr = e;
   }
@@ -191,9 +240,7 @@ async function fetchGists(token) {
   let mirrorFetched = null;
   if (GISTS[1] && GISTS[1] !== canonicalId) {
     try {
-      const meta = await fetchGistMeta(GISTS[1], token);
-      const data = await fetchJsonUrl(meta.rawUrl);
-      mirrorFetched = { meta, data };
+      mirrorFetched = await fetchGistInto(GISTS[1], token);
     } catch (_) {} // le miroir est optionnel
   }
 
@@ -605,6 +652,7 @@ async function main(deps = {}) {
       revision: source.revision,
       fetchedAt: new Date().toISOString(),
       fallback: Boolean(source.fallback),
+      rawFallback: Boolean(source.rawFallback),
       canonicalId: source.canonicalId || null,
     },
     mirror: mirror
