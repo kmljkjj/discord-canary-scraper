@@ -5930,6 +5930,38 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-shop-sku-nitro-upsell-refresh",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-10-slayer-storefront-single-sku-wide-header",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-soundboard-mute-indicator",
     "defaultConfig": {
       "enabled": false

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-28T23-54-11-269Z_654845_b25jkk",
-  "buildNumber": "654845",
-  "updatedAt": "2026-10-28T23:54:11.269Z",
-  "count": 380,
+  "runId": "2026-10-28T23-58-35-424Z_654842_ad7ppl",
+  "buildNumber": "654842",
+  "updatedAt": "2026-10-28T23:58:35.424Z",
+  "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7416,6 +7416,46 @@
       },
       "system": "apex",
       "fp": "57f1b60a18ae3e49408d5d47e92df175c7224fa0a5a390c12d8410c3dffc5263"
+    },
+    "2026-10-shop-sku-nitro-upsell-refresh": {
+      "id": "2026-10-shop-sku-nitro-upsell-refresh",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "c6803619a968ba196c5dcd36cd4802032c4fc2f70f0c871c2449c8911f10d2b2"
+    },
+    "2026-10-slayer-storefront-single-sku-wide-header": {
+      "id": "2026-10-slayer-storefront-single-sku-wide-header",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "5cd1bf5bd63e21f2b82c3a5cf4fcd10bf13872170ac76ee54710cac610393e33"
     },
     "2026-10-soundboard-mute-indicator": {
       "id": "2026-10-soundboard-mute-indicator",
