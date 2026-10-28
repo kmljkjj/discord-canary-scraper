@@ -215,8 +215,45 @@ python3 scripts/trigger_host.py
   user → guild sans faux « retiré du gist », miroirs, validation avant diff,
   livraison partielle, échec de lecture → dernier état conservé) —
   256 au total.
+
 - **Page docs raccordée** : `rollouts.html` affiche le % user depuis le
   gist (export display `data/gist_user_rollouts_docs.json`, badge « Gist ») ;
   l'ancienne mesure par sampling n'apparaît plus que pour les expériences
   absentes du gist, étiquetée « Sampling (diagnostic) » — et le rapport
   complet reste publié (`data/gist_user_rollouts.md`).
+
+### v2.7 — précision maximale : union des plages, oracles, migration prouvée
+
+- **Formule** : totaux par rôle = UNION des plages (fusion des intervalles)
+  au lieu de la somme des entrées. Couvertures calculées exactement à partir
+  des plages fournies par le gist, affichées à 0,01 point près. Le gist
+  aplatit les populations : quand la structure révèle plusieurs populations
+  (somme brute > 10000) ou des rôles conflictuels/inconnus, l'agrégation
+  est INDÉTERMINÉE (poids des populations absents) → totaux principaux
+  indisponibles, et l'union est conservée en métrique SECONDAIRE
+  étiquetée « projetée » (`projectedCoverage`, jamais un pourcentage exact).
+  Limite documentée (test dédié) : l'absence du drapeau ne PROUVE pas une
+  population unique — des multi-populations aux plages complémentaires sont
+  indétectables dans un gist aplati.
+- **Mesuré sur le même instantané** (28/10/2026) : 735 expériences avec
+  données → 699 couvertures de plages disponibles + 36 projections
+  secondaires (multi-populations détectées, étiquetées) ; compteur de
+  comparaison ancienne formule : 696. Sur le flux notifié (user),
+  148/148 expériences avec données ont leurs totaux. Cohérence vérifiée
+  avec notre décodage wire apex : mêmes plages → mêmes nombres.
+- **Tests oracles indépendants** : `unionIntervals` validé contre un
+  tableau booléen de 10 000 positions (10 cas limites : adjacentes,
+  imbriquées, doublons, fragments, désordre + 3 000 cas pseudo-aléatoires
+  déterministes). Bug trouvé et corrigé au passage : les changements de
+  plages des expériences indéterminées étaient invisibles au diff (pct
+  null lu comme 0) — désormais tout changement de plages est notifié.
+- **Affichage** : 2 décimales systématiques (« 2,50 % ») — la résolution
+  de la source est exactement 0,01 point (positions entières / 10000).
+- **Migration prouvée non destructive** : au passage v2
+  (`semanticsVersion`), une expérience n'est ré-acquittée en silence QUE si
+  le changement est prouvé être un pur recalcul (données présentes + clé
+  structurelle identique). Sinon l'acquittement est conservé : apparition
+  de données, changement de structure et vrais changements pendant le run
+  de migration sont NOTIFIÉS (testé). Les acquittements valides sont
+  conservés — l'ancienne formule (somme) et la nouvelle (union)
+  coïncident exactement sur les expériences déjà calculables.

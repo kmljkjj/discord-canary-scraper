@@ -60,6 +60,13 @@ const {
 } = require('./lib/gist_rollouts');
 
 const DATA = path.join(__dirname, '..', 'data');
+// v2 : totaux par UNION des plages par rôle à travers les populations.
+// Pour une population, un bucket appartient à un rôle s'il tombe dans
+// l'union des plages de ce rôle (exact, à 0,01 pt). Le gist aplatit les
+// populations : les expériences multi-populations (drapeau
+// multi_population) ont un total PROJETÉ non pondéré (marqué projected),
+// pas un pourcentage exact.
+const SEMANTICS_VERSION = 2;
 const STATE = path.join(DATA, 'gist_user_rollouts.json');
 const REPORT = path.join(DATA, 'gist_user_rollouts.md');
 
@@ -315,6 +322,11 @@ function ackEntry(e) {
     treatment: { pct: e.treatment.pct },
     control: { pct: e.control.pct },
     notEligible: { pct: e.notEligible.pct },
+    // multi-populations : union non pondérée conservée (métrique secondaire)
+    projectedCoverage: e.projectedCoverage
+      ? { treatment: { pct: e.projectedCoverage.treatment.pct } }
+      : null,
+    projected: e.projected || false,
     variantsCount: (e.variants || []).length,
   };
 }
@@ -322,12 +334,15 @@ function ackEntry(e) {
 // ─── Embeds de notification ─────────────────────────────────────────────────
 
 function fmtPct(p) {
-  return String(round2(p)).replace('.', ',') + ' %';
+  // Toujours 2 décimales : la précision est exacte à 0,01 point (positions
+  // entières / 10000) — l'afficher systématiquement, c'est l'assurance de
+  // ne jamais dégrader ce que la source sait dire.
+  return Number(p).toFixed(2).replace('.', ',') + ' %';
 }
 
 function fmtDelta(d) {
   const v = round2(d);
-  return (v > 0 ? '+' : '') + String(v).replace('.', ',') + ' pts';
+  return (v > 0 ? '+' : '') + v.toFixed(2).replace('.', ',') + ' pts';
 }
 
 const EMBED_COLORS = {
@@ -387,6 +402,14 @@ function buildEmbed(change, sourceMeta) {
           `non éligible ${fmtPct(after.notEligible.pct)} · espace non décrit ${fmtPct(after.unassigned.pct)}`,
         inline: false,
       });
+    } else if (after.projected && after.projectedCoverage) {
+      fields.push({
+        name: 'Totaux',
+        value:
+          `treatment **${fmtPct(after.projectedCoverage.treatment.pct)}** (projeté — union non pondérée) : ` +
+          'populations multiples aplaties, pourcentage exact impossible (poids absents du gist)',
+        inline: false,
+      });
     } else {
       fields.push({
         name: 'Totaux',
@@ -411,12 +434,16 @@ function buildEmbed(change, sourceMeta) {
       inline: true,
     });
   }
-  if (after && after.ambiguous) {
+  if (after && (after.flags || []).length) {
     fields.push({
-      name: '⚠ Données ambiguës',
+      name: after.ambiguous ? '⚠ Données dégradées' : 'ℹ Données particulières',
       value:
         (after.flags || []).join(', ') +
-        ' — couverture par population, totaux globaux indisponibles.',
+        (after.ambiguous
+          ? ' — couvertures par entrée conservées, totaux globaux indisponibles.'
+          : after.projected
+            ? ' — populations multiples aplaties : totaux principaux indisponibles, union montrée comme couverture projetée (non pondérée).'
+            : ''),
       inline: false,
     });
   }
@@ -450,9 +477,14 @@ function writeReport(state, reportFile) {
       '',
     );
     out.push(
-      '**Sémantique** : couverture de l\'espace de buckets (0-10000) selon la source communautaire, à 0,01 point près. ' +
-        'Ce n\'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles — ceci n\'est pas non plus ' +
-        'une mesure d\'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).',
+      '**Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. ' +
+        'Totaux par rôle = UNION des plages (un bucket appartient à un rôle s\'il tombe dans l\'union de ses plages). ' +
+        'Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, ' +
+        'l\'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l\'union est ' +
+        'montrée en métrique secondaire étiquetée « projetée » (non pondérée). L\'absence du drapeau ne prouve PAS une population ' +
+        'unique — le gist n\'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). ' +
+        'Ce n\'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d\'accès réel. ' +
+        'Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).',
       '',
     );
     const s = state.stats || {};
@@ -472,22 +504,52 @@ function writeReport(state, reportFile) {
 
     const users = (state.experiments || []).filter((e) => e.type === 'user' && e.hasData);
     out.push(`## Expériences user avec données (${users.length})`, '');
-    out.push('| Expérience | Treatment | Control | Non éligible | Espace non décrit | Ambigu |');
+    out.push('| Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |');
     out.push('|---|---:|---:|---:|---:|---|');
     for (const e of users) {
       const cell = (t) => (t && t.pct != null ? fmtPct(t.pct) : '—');
+      const part = [
+        e.projected
+          ? e.projectedCoverage
+            ? 'multi-populations : union non pondérée en métrique secondaire (projetée)'
+            : 'multi-populations (agrégation indéterminée, pas de projection)'
+          : '',
+        ...e.flags.filter((f) => f !== 'multi_population'),
+      ].filter(Boolean).join(', ');
+      // total principal indisponible si multi-populations → le nombre projeté
+      // reste VISIBLE mais étiqueté (métrique secondaire, jamais un % exact).
+      const treatCell = e.totalsAvailable
+        ? '**' + fmtPct(e.treatment.pct) + '**'
+        : e.projected && e.projectedCoverage
+          ? fmtPct(e.projectedCoverage.treatment.pct) + ' (projeté)'
+          : '—';
       out.push(
-        `| ${e.title} | ${e.totalsAvailable ? '**' + fmtPct(e.treatment.pct) + '**' : '—'} | ${cell(e.control)} | ${cell(e.notEligible)} | ${cell(e.unassigned)} | ${e.ambiguous ? '⚠ ' + e.flags.join(',') : '—'} |`,
+        `| ${e.title} | ${treatCell} | ${cell(e.control)} | ${cell(e.notEligible)} | ${cell(e.unassigned)} | ${part ? (e.ambiguous ? '⚠ ' : 'ℹ ') + part : '—'} |`,
       );
     }
 
     const untyped = (state.experiments || []).filter((e) => e.type === 'unclassified' && e.hasData);
     out.push('', `## Type inconnu — suivi séparé, non notifié (${untyped.length})`, '');
     out.push('> Absents de nos métadonnées locales au moment du calcul : à reclassifier au prochain scrape.');
-    out.push('| Expérience | Treatment | Espace non décrit |');
-    out.push('|---|---:|---:|');
-    for (const e of untyped.slice(0, 200)) {
-      out.push(`| ${e.id} | ${e.totalsAvailable ? fmtPct(e.treatment.pct) : '—'} | ${e.unassigned && e.unassigned.pct != null ? fmtPct(e.unassigned.pct) : '—'} |`);
+    out.push('| Expérience | Treatment | Espace non décrit | Particularités |');
+    out.push('|---|---:|---:|---|');
+    for (const e of untyped.filter((x, i) => i < 200 || x.projected)) {
+      const part = [
+        e.projected
+          ? e.projectedCoverage
+            ? 'projeté (multi-populations)'
+            : 'multi-populations, pas de projection'
+          : '',
+        ...e.flags.filter((f) => f !== 'multi_population'),
+      ].filter(Boolean).join(', ');
+      const treatCell = e.totalsAvailable
+        ? fmtPct(e.treatment.pct)
+        : e.projected && e.projectedCoverage
+          ? fmtPct(e.projectedCoverage.treatment.pct) + ' (projeté)'
+          : '—';
+      out.push(
+        `| ${e.id} | ${treatCell} | ${e.unassigned && e.unassigned.pct != null ? fmtPct(e.unassigned.pct) : '—'} | ${part ? (e.ambiguous ? '⚠ ' : 'ℹ ') + part : '—'} |`,
+      );
     }
 
     out.push('', '## Détail par variante (user)');
@@ -523,8 +585,11 @@ function writeDocsExport(list, sourceMeta, stats, file) {
         hasData: e.hasData,
         totalsAvailable: e.totalsAvailable,
         ambiguous: e.ambiguous,
+        projected: e.projected || false, // multi-populations : couverture projetée (non pondérée)
         flags: e.flags || [],
         treatmentPct: e.hasData && e.treatment ? e.treatment.pct : null,
+        projectedTreatmentPct:
+          e.hasData && e.projectedCoverage ? e.projectedCoverage.treatment.pct : null,
         controlPct: e.hasData && e.control ? e.control.pct : null,
         notEligiblePct: e.hasData && e.notEligible ? e.notEligible.pct : null,
         unassignedPct: e.hasData && e.unassigned ? e.unassigned.pct : null,
@@ -535,7 +600,7 @@ function writeDocsExport(list, sourceMeta, stats, file) {
     const out = {
       generatedAt: new Date().toISOString(),
       semantics:
-        "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel",
+        "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
       source: {
         gistId: sourceMeta.gistId,
         htmlUrl: sourceMeta.htmlUrl,
@@ -582,6 +647,10 @@ async function main(deps = {}) {
   // acknowledged : { id: ackEntry } — dernier état NOTIFIÉ avec succès.
   const acknowledged =
     prev && prev.acknowledged && typeof prev.acknowledged === 'object' ? prev.acknowledged : null;
+  // v2 (union des populations) : changement de FORMULE de calcul — les
+  // deltas seraient des artefacts de recalcul, pas des changements réels.
+  // Re-baseline silencieuse, enregistrée dans l'état.
+  const semanticsChanged = prev && prev.semanticsVersion !== SEMANTICS_VERSION;
   const isFirst = !acknowledged || !Object.keys(acknowledged).length;
 
   // 2) Lecture du gist canonique (+ miroir).
@@ -646,6 +715,34 @@ async function main(deps = {}) {
   }
   // curAllIds = catalogue complet : une expérience toujours au gist mais
   // reclassée hors user n'est PAS un retrait du gist.
+  // Migration ciblée v2 : la nouvelle formule (union) ne change les totaux
+  // que des expériences AVANT non calculables. On ne ré-acquitte en silence
+  // que si le changement est PROUVÉ être un pur recalcul :
+  //   - entrée avec données (une entrée sans données n'a rien à acquitter : si
+  //     des données apparaissent pendant le run de migration, c'est un VRAI
+  //     changement → notifié normalement) ;
+  //   - plages et rôles IDENTIQUES (même clé structurelle ack.key === clé
+  //     courante) → seul le recalcul v2 change les totaux.
+  // Sinon l'acquittement est conservé et le diff notifie le vrai changement.
+  // Les expériences déjà calculables gardent leur acquittement : l'ancienne
+  // formule (somme) et la nouvelle (union) y coïncident exactement.
+  let migrated = 0;
+  if (semanticsChanged && acknowledged) {
+    for (const id of Object.keys(notifiable)) {
+      const ack = acknowledged[id];
+      if (!ack || !ack.hasData) continue; // nouvelle ou sans données → flux normal
+      const wasComputable = ack.treatment && ack.treatment.pct != null;
+      const sameStructure = ack.key && notifiable[id] && ack.key === notifiable[id].key;
+      if (!wasComputable && sameStructure) {
+        acknowledged[id] = ackEntry(notifiable[id]);
+        migrated += 1;
+      }
+    }
+    log(
+      'Formule v' + SEMANTICS_VERSION + ' (union) : ' + migrated +
+        ' expérience(s) prouvées inchangées ré-acquittée(s) en silence ; acquittements valides conservés, vrais changements notifiés.',
+    );
+  }
   const changes = isFirst
     ? []
     : diffExperiments(acknowledged || {}, notifiable, MIN_DELTA_PCT, allCurIds);
@@ -687,6 +784,7 @@ async function main(deps = {}) {
   const stateObj = {
     version: 1,
     schemaVersion: 1,
+    semanticsVersion: SEMANTICS_VERSION,
     runId: new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15) + '_gist',
     scrapedAt: new Date().toISOString(),
     source: {
@@ -709,6 +807,7 @@ async function main(deps = {}) {
       changes: changes.length,
       delivered,
       firstRun: isFirst,
+      semanticsMigrated: migrated,
     },
     history: capHistory([
       ...(prev && Array.isArray(prev.history) ? prev.history : []),
@@ -732,7 +831,7 @@ async function main(deps = {}) {
   );
   log('État écrit:', stateFile, '· livrés:', delivered, '/', changes.length);
 
-  return { ok: true, changes: changes.length, delivered };
+  return { ok: true, changes: changes.length, delivered, migrated };
 }
 
 function capHistory(arr, cap = 50) {

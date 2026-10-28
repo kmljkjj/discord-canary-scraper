@@ -171,7 +171,7 @@ function computeExperiment(exp) {
     };
   }
 
-  // Variantes répétées (même numéro) → populations multiples aplaties.
+  // Variantes répétées (même numéro) → populations aplaties : INFO.
   const byNumber = new Map();
   for (const v of variants) {
     const key = v.variant == null ? 'null' : String(v.variant);
@@ -179,10 +179,15 @@ function computeExperiment(exp) {
     byNumber.get(key).push(v);
   }
   if ([...byNumber.values()].some((list) => list.length > 1)) flags.push('repeated_variant');
+  if ([...byNumber.values()].some((list) => new Set(list.map((v) => v.role)).size > 1)) {
+    flags.push('role_conflict');
+  }
 
+  // byVariant : UNION des plages du numéro (populations aplaties → dédoublonnées).
   const byVariant = {};
   for (const [key, list] of byNumber) {
-    const positions = list.reduce((s, v) => s + v.positions, 0);
+    const iv = list.flatMap((v) => v.ranges.map(([a, b]) => ({ lo: a, hi: b })));
+    const positions = unionIntervals(iv).length;
     byVariant[key] = {
       positions,
       pct: positionsToPct(positions),
@@ -191,36 +196,56 @@ function computeExperiment(exp) {
     };
   }
 
-  // Chevauchement ENTRE variantes : union globale < somme des unions locales.
+  // Chevauchements : INFO (populations chevauchantes, légitimes chez Discord).
   const allIntervals = variants.flatMap((v) => v.ranges.map(([a, b]) => ({ lo: a, hi: b })));
   const globalUnion = unionIntervals(allIntervals);
   const sumOfUnions = variants.reduce((s, v) => s + v.positions, 0);
   if (globalUnion.length < sumOfUnions) flags.push('overlapping_variants');
   if (variants.some((v) => v.hasOverlap)) flags.push('overlapping_ranges');
 
-  const sum = (role) =>
-    variants
+  // Totaux par rôle : UNION des plages du rôle à travers les entrées.
+  // Pour une population, un bucket appartient à un rôle s'il tombe dans
+  // l'union de ses plages. Le gist aplatit les populations : quand la structure
+  // révèle plusieurs populations (somme brute > 10000) ou des rôles
+  // contradictoires/inconnus, l'agrégation est INDÉTERMINÉE (les poids des
+  // populations sont absents) → totaux principaux indisponibles ; l'union
+  // reste visible en métrique SECONDAIRE explicitement projetée
+  // (projectedCoverage) — jamais présentée comme un pourcentage exact.
+  const rolePositions = (role) => {
+    const iv = variants
       .filter((v) => v.role === role)
-      .reduce((s, v) => s + v.positions, 0);
-  const treatment = sum('treatment');
-  const control = sum('control');
-  const notEligible = sum('not_eligible');
-  const unknownRole = variants
-    .filter((v) => v.role !== 'treatment' && v.role !== 'control' && v.role !== 'not_eligible')
-    .reduce((s, v) => s + v.positions, 0);
-  if (unknownRole > 0) flags.push('unknown_role');
+      .flatMap((v) => v.ranges.map(([a, b]) => ({ lo: a, hi: b })));
+    return unionIntervals(iv).length;
+  };
+  const treatment = rolePositions('treatment');
+  const control = rolePositions('control');
+  const notEligible = rolePositions('not_eligible');
+  const knownRoles = new Set(['treatment', 'control', 'not_eligible']);
+  const otherRoles = [...new Set(variants.map((v) => v.role).filter((r) => !knownRoles.has(r)))];
+  if (otherRoles.length) flags.push('unknown_role');
 
-  const assigned = treatment + control + notEligible + unknownRole;
-  if (assigned > SCALE) flags.push('multi_population');
+  // NOTE : l'absence du drapeau multi_population ne PROUVE PAS une
+  // population unique — le gist aplatit sans garder les frontières
+  // (ex. indétectable : pop A treatment [0,5000) + pop B treatment
+  // [5000,10000)). Les totaux restent des couvertures calculées à partir
+  // des plages fournies, pas des populations démontrées.
+  if (sumOfUnions > SCALE) flags.push('multi_population');
+
+  // « espace non décrit » = espace qu'AUCUNE population ne décrit.
+  const assigned = globalUnion.length;
 
   // Plages illisibles : données DÉGRADÉES — les couvertures par entrée
   // restent, mais les totaux globaux sont indisponibles : le complément
   // (« espace non décrit ») ne serait pas connu.
   if (invalidRanges > 0) flags.push('invalid_ranges');
 
-  // Totaux INDISPONIBLES si ambigu OU dégradé : garder uniquement les
-  // couvertures par entrée, jamais un agrégat trompeur.
-  const ambiguous = flags.length > 0;
+  // Totaux INDISPONIBLES si dégradé (plages illisibles) OU agrégation
+  // indéterminée (multi-populations, rôles conflictuels/inconnus) :
+  // jamais un agrégat trompeur en valeur principale.
+  const ambiguous = invalidRanges > 0;
+  const multi = flags.includes('multi_population');
+  const totalsBlocked =
+    ambiguous || multi || flags.includes('role_conflict') || flags.includes('unknown_role');
 
   // Fingerprint structurel : plages + rôles, indépendant de l'ordre.
   // key = hash court (état persistant léger) ; structuralKey reste lisible.
@@ -238,31 +263,64 @@ function computeExperiment(exp) {
     .join('|');
 
   const mkTotal = (positions) =>
-    ambiguous
+    totalsBlocked
       ? { positions, pct: null }
       : { positions, pct: positionsToPct(positions) };
+
+  // Métrique SECONDAIRE (multi-populations uniquement) : union non pondérée
+  // des plages — couverture projetée, jamais un pourcentage exact.
+  // Projection fournie SEULEMENT si l'unique obstacle est l'agrégation
+  // multi-populations : des plages invalides ou un conflit de rôles rendent
+  // toute couverture agrégée incalculable — aucune projection alors.
+  const projectionBlocked =
+    invalidRanges > 0 || flags.includes('role_conflict') || flags.includes('unknown_role');
+  const projectedCoverage =
+    multi && !projectionBlocked
+      ? {
+          treatment: { positions: treatment, pct: positionsToPct(treatment) },
+          control: { positions: control, pct: positionsToPct(control) },
+          notEligible: { positions: notEligible, pct: positionsToPct(notEligible) },
+          unassigned: {
+            positions: Math.max(0, SCALE - assigned),
+            pct: positionsToPct(Math.max(0, SCALE - assigned)),
+          },
+          byVariant,
+        }
+      : null;
+  // byVariant principal : agrégation inter-entrées → null dès que les
+  // totaux sont bloqués (multi-populations, conflit de rôles, rôles inconnus,
+  // plages invalides). Les couvertures PAR ENTRÉE (variants[]) restent.
+  const byVariantOut = {};
+  for (const [k, v] of Object.entries(byVariant)) {
+    byVariantOut[k] = totalsBlocked ? { ...v, pct: null } : v;
+  }
 
   return {
     id,
     hasData: true,
     ambiguous,
+    // multi-populations aplaties par le gist : agrégation indéterminée →
+    // totaux principaux indisponibles, union visible en métrique secondaire
+    // (projectedCoverage, couverture projetée non pondérée).
+    projected: multi,
+    projectedCoverage,
     flags,
     variants,
-    byVariant,
+    byVariant: byVariantOut,
     sig,
     key,
     structuralKey,
     treatment: mkTotal(treatment),
     control: mkTotal(control),
     notEligible: mkTotal(notEligible),
-    assigned: ambiguous ? { positions: assigned, pct: null } : { positions: assigned, pct: positionsToPct(assigned) },
-    unassigned: ambiguous
+    assigned: totalsBlocked ? { positions: assigned, pct: null } : { positions: assigned, pct: positionsToPct(assigned) },
+    unassigned: totalsBlocked
       ? { positions: Math.max(0, SCALE - assigned), pct: null }
       : {
           positions: Math.max(0, SCALE - assigned),
           pct: positionsToPct(Math.max(0, SCALE - assigned)),
         },
-    totalsAvailable: !ambiguous,
+    totalsAvailable: !totalsBlocked,
     invalidRanges,
   };
 }
@@ -372,8 +430,12 @@ function maxVariantDelta(before, after) {
   for (const k of keys) {
     const a = before && before.byVariant && before.byVariant[k];
     const b = after && after.byVariant && after.byVariant[k];
-    const pa = a && a.pct != null ? a.pct : 0;
-    const pb = b && b.pct != null ? b.pct : 0;
+    // Absente d'un côté = 0 %. Mais pct NULL = variante indéterminée
+    // (multi-populations) : le delta par variante est NON MESURABLE →
+    // null (le diff notifie alors tout changement de plages).
+    const pa = a == null ? 0 : a.pct != null ? a.pct : null;
+    const pb = b == null ? 0 : b.pct != null ? b.pct : null;
+    if (pa == null || pb == null) return null;
     const d = Math.abs(round2(pb - pa));
     if (worst == null || d > worst) worst = d;
   }

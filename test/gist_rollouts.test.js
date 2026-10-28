@@ -65,6 +65,75 @@ test('unionIntervals : vide', () => {
   assert.deepEqual(unionIntervals([]), { length: 0, hasOverlap: false, merged: [] });
 });
 
+// Oracle indépendant : tableau booléen de 10 000 positions. Toute plage
+// [lo,hi) marque true les positions lo..hi-1. La couverture "vraie" =
+// nombre de true. unionIntervals doit retourner exactement ce compte,
+// et hasOverlap doit refléter tout chevauchement réel entre plages.
+function oracleCoverage(intervals) {
+  const marked = new Array(10000).fill(false);
+  let rawSum = 0;
+  for (const { lo, hi } of intervals) {
+    for (let i = lo; i < hi; i++) marked[i] = true;
+    rawSum += hi - lo;
+  }
+  let covered = 0;
+  for (const m of marked) if (m) covered++;
+  return { covered, overlap: covered < rawSum };
+}
+
+// Générateur déterministe (LCG) — mêmes cas à chaque exécution.
+function lcg(seed) {
+  let s = seed;
+  return () => {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+}
+
+test('unionIntervals : oracle tableau booléen — cas limites', () => {
+  const cases = [
+    [[]], // vide
+    [[{ lo: 0, hi: 10000 }]], // plein
+    [[{ lo: 0, hi: 1 }]], // une position
+    [[{ lo: 9999, hi: 10000 }]], // dernière position
+    [[{ lo: 0, hi: 500 }, { lo: 500, hi: 1000 }]], // adjacentes (pas de chevauchement)
+    [[{ lo: 0, hi: 1000 }, { lo: 0, hi: 1000 }]], // doublon exact
+    [[{ lo: 100, hi: 900 }, { lo: 200, hi: 300 }]], // imbriquée
+    [[{ lo: 200, hi: 300 }, { lo: 100, hi: 900 }]], // imbriquée, ordre inversé
+    [[{ lo: 0, hi: 100 }, { lo: 500, hi: 600 }, { lo: 200, hi: 300 }, { lo: 50, hi: 550 }]], // fragments + chevauchements
+    [[{ lo: 3000, hi: 4000 }, { lo: 0, hi: 2000 }, { lo: 6000, hi: 7000 }, { lo: 1500, hi: 3500 }]], // désordonné
+  ];
+  for (const [intervals] of cases) {
+    const want = oracleCoverage(intervals);
+    const got = unionIntervals(intervals);
+    assert.equal(got.length, want.covered, `couverture ${JSON.stringify(intervals)}`);
+    assert.equal(got.hasOverlap, want.overlap, `chevauchement ${JSON.stringify(intervals)}`);
+  }
+});
+
+test('unionIntervals : oracle tableau booléen — 3000 cas pseudo-aléatoires', () => {
+  const rnd = lcg(20261028);
+  for (let n = 0; n < 3000; n++) {
+    const count = 1 + Math.floor(rnd() * 6); // 1 à 6 plages
+    const intervals = [];
+    for (let k = 0; k < count; k++) {
+      const lo = Math.floor(rnd() * 10000);
+      const len = 1 + Math.floor(rnd() * 3000);
+      const hi = Math.min(10000, lo + len);
+      if (hi > lo) intervals.push({ lo, hi });
+    }
+    if (!intervals.length) continue;
+    const want = oracleCoverage(intervals);
+    const got = unionIntervals(intervals);
+    assert.equal(got.length, want.covered, `cas #${n} ${JSON.stringify(intervals)}`);
+    assert.equal(got.hasOverlap, want.overlap, `overlap #${n}`);
+    // Les plages fusionnées doivent rester triées et disjointes.
+    for (let i = 1; i < got.merged.length; i++) {
+      assert.ok(got.merged[i - 1].hi <= got.merged[i].lo, `trié #${n}`);
+    }
+  }
+});
+
 // ─── positionsToPct ─────────────────────────────────────────────────────────
 
 test('positionsToPct : résolution 0,01 point', () => {
@@ -119,7 +188,7 @@ test('computeExperiment : variants vide = aucune donnée (PAS 0 %)', () => {
   assert.equal(c.unassigned.pct, null);
 });
 
-test('computeExperiment : variantes répétées → ambiguous, populations gardées', () => {
+test('computeExperiment : variantes répétées → UNION des populations (formule Discord)', () => {
   const c = computeExperiment({
     id: 'x',
     variants: [
@@ -128,16 +197,105 @@ test('computeExperiment : variantes répétées → ambiguous, populations gard�
     ],
   });
   assert.equal(c.hasData, true);
-  assert.equal(c.ambiguous, true);
+  // Deux populations aplaties → agrégation INDÉTERMINÉE : totaux principaux
+  // indisponibles, union visible en métrique SECONDAIRE (projectedCoverage,
+  // couverture projetée non pondérée — jamais un % exact).
+  assert.equal(c.ambiguous, false);
   assert.ok(c.flags.includes('repeated_variant'));
   assert.ok(c.flags.includes('multi_population'));
-  assert.equal(c.variants.length, 2); // deux populations distinctes affichées
+  assert.equal(c.projected, true);
+  assert.equal(c.variants.length, 2); // deux entrées affichées séparément
   assert.equal(c.totalsAvailable, false);
-  assert.equal(c.treatment.pct, null); // total INDISPONIBLE, pas 100 %
+  assert.equal(c.treatment.pct, null); // pas d'agrégat trompeur en valeur principale
+  assert.equal(c.projectedCoverage.treatment.pct, 100); // union en secondaire
+  assert.equal(c.byVariant['1'].pct, null); // byVariant principal indisponible
+  assert.equal(c.projectedCoverage.byVariant['1'].pct, 100); // en secondaire
   assert.equal(c.variants[0].pct, 100); // par entrée : lisible
 });
 
-test('computeExperiment : chevauchement ENTRE variantes → ambiguous, total null', () => {
+test('computeExperiment : populations chevauchantes → union en métrique secondaire', () => {
+  const c = computeExperiment({
+    id: 'x',
+    variants: [
+      { variant: 1, role: 'treatment', ranges: ['0 - 6000'] },
+      { variant: 1, role: 'treatment', ranges: ['4000 - 10000'] },
+    ],
+  });
+  // agrégation indéterminée → totaux indisponibles, union projetée en secondaire
+  assert.equal(c.treatment.pct, null);
+  assert.equal(c.totalsAvailable, false);
+  assert.equal(c.projectedCoverage.treatment.pct, 100); // union [0,10000) — pas 160 % en somme
+  assert.ok(c.flags.includes('repeated_variant'));
+  assert.ok(c.flags.includes('overlapping_variants'));
+  assert.equal(c.ambiguous, false);
+});
+
+test('computeExperiment : multi-populations INDÉTECTABLES — limite documentée', () => {
+  // Contre-exemple type : pop A treatment [0,5000) + pop B treatment
+  // [5000,10000). Somme = 10000 → AUCUN drapeau multi_population, totaux
+  // disponibles à 100 %. Mais ce peut aussi être 2 populations à 50 %
+  // chacune — le gist aplatit sans frontières, c'est INDISTINGUABLE d'un
+  // single-population légitime. Ce test DOCUMENTE la limite : l'absence du
+  // drapeau ne prouve pas une population unique ; les totaux restent des
+  // couvertures calculées à partir des plages fournies.
+  const c = computeExperiment({
+    id: 'x',
+    variants: [
+      { variant: 1, role: 'treatment', ranges: ['0 - 5000'] },
+      { variant: 2, role: 'treatment', ranges: ['5000 - 10000'] },
+    ],
+  });
+  assert.equal(c.totalsAvailable, true);
+  assert.equal(c.treatment.pct, 100);
+  assert.equal(c.projected, false);
+});
+
+test('computeExperiment : conflit de rôles → totaux ET agrégats par variante bloqués', () => {
+  // Même variante 1 avec deux rôles : les totaux par rôle sont bloqués et
+  // l'agrégat byVariant['1'] ne doit RIEN publier (15 % avec le rôle du
+  // premier élément serait trompeur). Les couvertures par entrée restent.
+  const c = computeExperiment({
+    id: 'x',
+    variants: [
+      { variant: 1, role: 'control', ranges: ['0 - 1000'] },
+      { variant: 1, role: 'treatment', ranges: ['500 - 1500'] },
+    ],
+  });
+  assert.ok(c.flags.includes('role_conflict'));
+  assert.equal(c.totalsAvailable, false);
+  assert.equal(c.treatment.pct, null);
+  assert.equal(c.control.pct, null);
+  assert.equal(c.byVariant['1'].pct, null); // agrégat bloqué aussi
+  assert.equal(c.projectedCoverage, null); // pas de projection
+  assert.equal(c.projected, false);
+  // couvertures par entrée conservées :
+  assert.equal(c.variants[0].pct, 10);
+  assert.equal(c.variants[1].pct, 10);
+});
+
+test('computeExperiment : multi-populations + plage invalide → AUCUNE valeur agrégée complète', () => {
+  // Deux entrées pleines + une plage invalide : la projection ne doit pas
+  // sortir — toute couverture agrégée est incalculable (données dégradées).
+  const c = computeExperiment({
+    id: 'x',
+    variants: [
+      { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+      { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+      { variant: 1, role: 'treatment', ranges: ['nul'] },
+    ],
+  });
+  assert.ok(c.flags.includes('multi_population'));
+  assert.equal(c.ambiguous, true); // plages invalides → dégradé
+  assert.equal(c.totalsAvailable, false);
+  assert.equal(c.treatment.pct, null);
+  assert.equal(c.projected, true); // multi-populations détectées
+  assert.equal(c.projectedCoverage, null); // MAIS aucune projection (données dégradées)
+  assert.equal(c.byVariant['1'].pct, null);
+  // couverture par entrée : les entrées valides restent lisibles
+  assert.equal(c.variants[0].pct, 100);
+});
+
+test('computeExperiment : chevauchement ENTRE variantes → INFO, unions par rôle', () => {
   const c = computeExperiment({
     id: 'x',
     variants: [
@@ -145,11 +303,14 @@ test('computeExperiment : chevauchement ENTRE variantes → ambiguous, total nul
       { variant: 1, role: 'treatment', ranges: ['500 - 1500'] },
     ],
   });
-  assert.equal(c.ambiguous, true);
+  // Populations légitimes chez Discord : chaque rôle est calculé en union
+  // (couvertures par entrée conservées, total projeté si multi-populations).
+  assert.equal(c.ambiguous, false);
   assert.ok(c.flags.includes('overlapping_variants'));
-  assert.equal(c.totalsAvailable, false);
-  assert.equal(c.treatment.pct, null);
-  assert.equal(c.control.pct, null);
+  assert.equal(c.totalsAvailable, true);
+  assert.equal(c.treatment.pct, 10);
+  assert.equal(c.control.pct, 10);
+  assert.equal(c.unassigned.pct, 85); // union globale [0,1500)
   // couvertures par entrée conservées :
   assert.equal(c.variants[0].pct, 10);
   assert.equal(c.variants[1].pct, 10);
@@ -302,25 +463,25 @@ test('buildEmbed : redistribution à total constant → titre neutre, pas de fau
   assert.ok(!/\+[0-9]/.test(delta.value)); // pas de faux « +10 pts »
 });
 
-test('buildEmbed : totaux indisponibles (ambigu) → pas de Δ treatment, titre neutre', () => {
-  const mkAmb = (ov) => {
-    // plages qui se chevauchent ENTRE variantes → totaux indisponibles
+test('buildEmbed : totaux indisponibles (dégradé) → pas de Δ treatment, titre neutre', () => {
+  const mkAmb = (hi) => {
+    // une plage illisible → données dégradées → totaux indisponibles
     const c = computeExperiment({
       id: 'e1',
       variants: [
-        { variant: 0, role: 'control', ranges: ['0 - ' + (ov ? 2000 : 1000)] },
-        { variant: 1, role: 'treatment', ranges: ['0 - 3000'] },
+        { variant: 0, role: 'control', ranges: ['0 - 5000'] },
+        { variant: 1, role: 'treatment', ranges: ['5000 - ' + hi, 'plage illisible'] },
       ],
     });
     return { ...c, id: 'e1', type: 'user', title: 'E1' };
   };
-  const changes = diffExperiments({ e1: mkAmb(false) }, { e1: mkAmb(true) }, 0.05);
+  const changes = diffExperiments({ e1: mkAmb(6000) }, { e1: mkAmb(8000) }, 0.05);
   assert.equal(changes.length, 1);
   assert.equal(changes[0].deltaPct, null); // pas de delta treatment affichable
   const embed = buildEmbed(changes[0], { revision: 'r', updatedAt: null });
   assert.match(embed.title, /Changement de couverture/);
   assert.ok(!embed.fields.some((f) => f.name === 'Δ treatment'));
-  assert.ok(embed.fields.some((f) => f.name === '⚠ Données ambiguës'));
+  assert.ok(embed.fields.some((f) => f.name === '⚠ Données dégradées'));
 });
 
 test('diffExperiments : restructuration (nouvelle variante) toujours notifiée', () => {
@@ -550,6 +711,147 @@ test('main : changement user notifié, acknowledged avance sur livraison, silenc
   const ack = state.acknowledged['2026-10-test-exp'];
   assert.ok(ack && ack.hasData);
   assert.equal(ack.treatment.pct, 50); // état NOTIFIÉ = nouvelle valeur
+});
+
+test('main : migration formule v2 ciblée — recalcul pur silencieux, vrais changements conservés', async () => {
+  const MIG_GIST = [
+    {
+      id: '2026-10-mig-clean',
+      variants: [
+        { variant: 0, role: 'control', ranges: ['0 - 2500'] },
+        { variant: 1, role: 'treatment', ranges: ['2500 - 5000'] },
+      ],
+    },
+    {
+      // multi-population (2× treatment plein) : AMBIGUË en v1, indéterminée en v2
+      id: '2026-10-mig-multi',
+      variants: [
+        { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+        { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+      ],
+    },
+    { id: '2026-10-mig-nodata', variants: [] }, // sans données en v1
+  ];
+  const MIG_DEFS = new Map([
+    ['2026-10-mig-clean', { type: 'user', title: 'Mig Clean' }],
+    ['2026-10-mig-multi', { type: 'user', title: 'Mig Multi' }],
+    ['2026-10-mig-nodata', { type: 'user', title: 'Mig Nodata' }],
+  ]);
+  const fetchMig = async () => ({
+    source: { gistId: 'test', htmlUrl: 'x', rawUrl: 'x', updatedAt: new Date().toISOString(), revision: 'abc123' },
+    data: MIG_GIST,
+    mirror: null,
+  });
+  let calls = 0;
+  const postOk = async () => {
+    calls++;
+    return true;
+  };
+  const { stateFile } = await withTempState(async (sf) => {
+    // 1) baseline v2
+    await mainT({ stateFile: sf, defs: MIG_DEFS, fetchGists: fetchMig, postWebhook: async () => false });
+    // 2) simulation d'un état v1 : mig-multi avait des totaux NULL
+    //    (ambiguë, ancienne formule). mig-clean était calculable.
+    const st = await fs.readJson(sf);
+    st.semanticsVersion = 1;
+    st.acknowledged['2026-10-mig-multi'].treatment.pct = null;
+    st.acknowledged['2026-10-mig-multi'].control.pct = null;
+    st.acknowledged['2026-10-mig-multi'].notEligible.pct = null;
+    await fs.writeJson(sf, st);
+    // 3) run de migration : DONNÉES IDENTIQUES → 0 notification (recalcul pur)
+    const r = await mainT({ stateFile: sf, defs: MIG_DEFS, fetchGists: fetchMig, postWebhook: postOk });
+    assert.equal(r.changes, 0);
+    assert.equal(calls, 0);
+    assert.equal(r.delivered, 0);
+    assert.equal(r.migrated, 1); // mig-multi : structure prouvée inchangée → silence
+  });
+  const state = await fs.readJson(stateFile);
+  assert.equal(state.semanticsVersion, 2);
+  assert.equal(state.lastRun.semanticsMigrated, 1);
+  // mig-multi ré-acquittée : totaux principaux null, union en secondaire (100 %)
+  assert.equal(state.acknowledged['2026-10-mig-multi'].treatment.pct, null);
+  assert.equal(state.acknowledged['2026-10-mig-multi'].projectedCoverage.treatment.pct, 100);
+  // mig-clean : acquittement v1 conservé (formules coïncident)
+  assert.equal(state.acknowledged['2026-10-mig-clean'].treatment.pct, 25);
+
+  // 4) un VRAI changement après migration est bien notifié (rien n'est perdu)
+  const changed = JSON.parse(JSON.stringify(MIG_GIST));
+  changed[0].variants[1].ranges = ['2500 - 7500'];
+  const fetchChanged = async () => ({
+    source: { gistId: 'test', htmlUrl: 'x', rawUrl: 'x', updatedAt: new Date().toISOString(), revision: 'def456' },
+    data: changed,
+    mirror: null,
+  });
+  const r2 = await mainT({ stateFile, defs: MIG_DEFS, fetchGists: fetchChanged, postWebhook: postOk });
+  assert.equal(r2.changes, 1);
+  assert.equal(calls, 1);
+  const state2 = await fs.readJson(stateFile);
+  assert.equal(state2.acknowledged['2026-10-mig-clean'].treatment.pct, 50);
+});
+
+test('main : migration v2 non destructive — apparition de données et changement de structure NOTIFIÉS', async () => {
+  // La migration ne doit JAMAIS ré-acquitter : (a) une entrée sans données
+  // qui reçoit des données pendant le run (apparition = vrai changement),
+  // (b) une entrée ambiguë dont la structure change pendant le run.
+  const MIG_GIST = [
+    {
+      id: '2026-10-mig-nodata',
+      variants: [], // sans données en v1
+    },
+    {
+      // ambiguë en v1 et v2 (multi-pop), structure qui CHANGE au run de migration
+      id: '2026-10-mig-amb',
+      variants: [
+        { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+        { variant: 1, role: 'treatment', ranges: ['0 - 10000'] },
+      ],
+    },
+  ];
+  const MIG_GIST2 = JSON.parse(JSON.stringify(MIG_GIST));
+  MIG_GIST2[0].variants = [{ variant: 1, role: 'treatment', ranges: ['0 - 3000'] }]; // données APPARAISSENT
+  MIG_GIST2[1].variants = [
+    // structure CHANGE (plages différentes → clé différente)
+    { variant: 1, role: 'treatment', ranges: ['0 - 8000'] },
+    { variant: 1, role: 'treatment', ranges: ['0 - 8000'] },
+  ];
+  const MIG_DEFS = new Map([
+    ['2026-10-mig-nodata', { type: 'user', title: 'Mig Nodata' }],
+    ['2026-10-mig-amb', { type: 'user', title: 'Mig Amb' }],
+  ]);
+  const fetch1 = async () => ({
+    source: { gistId: 'test', htmlUrl: 'x', rawUrl: 'x', updatedAt: new Date().toISOString(), revision: 'r1' },
+    data: MIG_GIST,
+    mirror: null,
+  });
+  const fetch2 = async () => ({
+    source: { gistId: 'test', htmlUrl: 'x', rawUrl: 'x', updatedAt: new Date().toISOString(), revision: 'r2' },
+    data: MIG_GIST2,
+    mirror: null,
+  });
+  let calls = 0;
+  const postOk = async () => {
+    calls++;
+    return true;
+  };
+  const { stateFile } = await withTempState(async (sf) => {
+    // baseline v2 puis passage en état v1 simulé
+    await mainT({ stateFile: sf, defs: MIG_DEFS, fetchGists: fetch1, postWebhook: async () => false });
+    const st = await fs.readJson(sf);
+    st.semanticsVersion = 1;
+    st.acknowledged['2026-10-mig-amb'].treatment.pct = null; // ambiguë en v1
+    await fs.writeJson(sf, st);
+    // run de migration AVEC changements réels : les deux doivent être notifiés
+    const r = await mainT({ stateFile: sf, defs: MIG_DEFS, fetchGists: fetch2, postWebhook: postOk });
+    assert.equal(r.migrated, 0); // aucune ré-acquisition silencieuse : structure ≠
+    assert.ok(r.changes >= 2, 'apparition de données + changement de structure → notifiés');
+    assert.equal(calls, 2);
+  });
+  const state = await fs.readJson(stateFile);
+  // mig-amb : totaux null, union projetée 80 % en secondaire
+  assert.equal(state.acknowledged['2026-10-mig-amb'].treatment.pct, null);
+  assert.equal(state.acknowledged['2026-10-mig-amb'].projectedCoverage.treatment.pct, 80);
+  // mig-nodata : données apparues → notifiées, état = nouvelle valeur
+  assert.equal(state.acknowledged['2026-10-mig-nodata'].treatment.pct, 30);
 });
 
 test('main : type inconnu NON notifié (suivi seulement)', async () => {

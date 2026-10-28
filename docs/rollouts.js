@@ -110,8 +110,22 @@ function escapeHtml(s) {
         title: e.title || e.id,
         type: 'user',
         source: 'gist_coverage',
-        status: !e.hasData ? 'unknown' : e.ambiguous ? 'ambiguous' : 'gist',
-        percentage: e.totalsAvailable && e.treatmentPct != null ? e.treatmentPct : null,
+        status: !e.hasData
+          ? 'unknown'
+          : e.ambiguous
+            ? 'ambiguous'
+            : e.projected
+              ? 'projected'
+              : 'gist',
+        // multi-populations : pourcentage exact impossible (poids absents) →
+        // union non pondérée affichée comme couverture PROJETÉE (métrique
+        // secondaire, étiquetée — jamais un % ordinaire).
+        percentage:
+          e.totalsAvailable && e.treatmentPct != null
+            ? e.treatmentPct
+            : e.projected && e.projectedTreatmentPct != null
+              ? e.projectedTreatmentPct
+              : null,
         gist: e,
       });
     }
@@ -178,6 +192,7 @@ function escapeHtml(s) {
       degraded: { text: 'n faible', cls: 'badge-na' },
       gist: { text: 'Gist', cls: 'badge-partial' },
       ambiguous: { text: 'Ambigu', cls: 'badge-na' },
+      projected: { text: 'Projeté', cls: 'badge-na' },
       segmented: { text: 'Segmented', cls: 'badge-partial' },
       partial: { text: 'Partiel', cls: 'badge-partial' },
       not_started: { text: '0%', cls: 'badge-zero' },
@@ -194,7 +209,13 @@ function escapeHtml(s) {
     if (pct == null) return '';
     const w = Math.max(0, Math.min(100, pct));
     const color = pct >= 100 ? '#57f287' : pct > 0 ? '#fee75c' : '#ed4245';
-    return `<div class="pct-bar"><div class="pct-fill" style="width:${w}%;background:${color}"></div><span class="pct-text">${pct}%</span></div>`;
+    // Affichage français à 2 décimales, comme le rapport et les embeds :
+    // « 2,50 % », « 0,01 % » — la résolution de la source est 0,01 point.
+    const label = pct.toLocaleString('fr-FR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return `<div class="pct-bar"><div class="pct-fill" style="width:${w}%;background:${color}"></div><span class="pct-text">${label}&nbsp;%</span></div>`;
   }
 
   function sourceTag(source) {
@@ -240,6 +261,10 @@ function escapeHtml(s) {
   }
 
   /* Couverture de buckets d'une expérience user (gist agnonotdev, v2.6). */
+  // Format français à 2 décimales — cohérent avec le rapport et les embeds.
+  const fmtPct2 = (p) =>
+    p.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
   function gistDetails(exp) {
     if (!exp.gist) return '';
     const g = exp.gist;
@@ -247,13 +272,21 @@ function escapeHtml(s) {
     parts.push(
       '<span class="fp-stat">Couverture de buckets (gist) — pas une proportion d\'utilisateurs</span>',
     );
+    if (g.projected) {
+      // multi-populations : aucun pourcentage exact — union non pondérée en métrique secondaire
+      parts.push(
+        '<span class="fp-stat">ℹ multi-populations : pourcentage exact impossible — union non pondérée (projetée)</span>',
+      );
+    }
     for (const [k, v] of Object.entries(g.byVariant || {})) {
       parts.push(
-        `<span class="fp-stat">Variant ${escapeHtml(k)} · ${escapeHtml(v.role || '?')} : ${v.pct != null ? v.pct : '—'}%</span>`,
+        `<span class="fp-stat">Variant ${escapeHtml(k)} · ${escapeHtml(v.role || '?')} : ${
+          v.pct != null ? fmtPct2(v.pct) + ' %' : 'indéterminé'
+        }</span>`,
       );
     }
     if (g.totalsAvailable && g.unassignedPct != null) {
-      parts.push(`<span class="fp-stat">espace non décrit : ${g.unassignedPct}%</span>`);
+      parts.push(`<span class="fp-stat">espace non décrit : ${fmtPct2(g.unassignedPct)} %</span>`);
     }
     if (g.ambiguous && g.flags && g.flags.length) {
       parts.push(`<span class="fp-stat">⚠ ${escapeHtml(g.flags.join(', '))} — totaux indisponibles</span>`);
