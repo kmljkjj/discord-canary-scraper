@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-28T18-05-27-083Z_654358_du0tzf",
-  "buildNumber": "654358",
-  "updatedAt": "2026-10-28T18:05:27.084Z",
-  "count": 382,
+  "runId": "2026-10-28T18-09-35-632Z_654387_h8hfhg",
+  "buildNumber": "654387",
+  "updatedAt": "2026-10-28T18:09:35.632Z",
+  "count": 381,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -18959,52 +18959,6 @@
         "value": null
       },
       "fingerprint": "a5dc7c12d7d4bca42b02afb773e33e4652a9ace5e19e47a7181ec9a4799db478"
-    },
-    {
-      "id": "2026-10-purchase-history",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-10-purchase-history",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e3f5b2891467c81af1b2ee3316213a9d39f306ac6c612d3e47d2af8cddd73256"
     },
     {
       "id": "2026-10-referral-refresh-notification",

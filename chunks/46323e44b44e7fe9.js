@@ -1,1 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["369938"],{679897(a,t,p){a.exports={XM:"paymentTag__1d3ca",EN:"paymentTagPositive__1d3ca",aB:"paymentTagCritical__1d3ca"}},178881(a,t,p){a.exports={A:"listItem_f1a366"}}}]);
