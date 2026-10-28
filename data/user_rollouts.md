@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:09 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:10 UTC
 
 **Fenêtre glissante 4 h — n = 6807 échantillons — 7 tokens actifs**
 
@@ -12,8 +12,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,1 %** | [4,59 – 5,66] | 347/6807 | élevée | Mesuré |
-| hash:1144304849 | **5,08 %** | [4,58 – 5,64] | 346/6807 | élevée | Mesuré |
+| hash:704914099 | **5,07 %** | [4,56 – 5,63] | 345/6807 | élevée | Mesuré |
+| hash:1144304849 | **5,02 %** | [4,52 – 5,58] | 342/6807 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6807/6807 | élevée | Mesuré |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6807/6807 | élevée | Mesuré |
 | Tida Webform | **100 %** | [99,94 – 100] | 6807/6807 | élevée | Mesuré |
@@ -21,24 +21,24 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,1 % (IC 95 % [4,59 ; 5,66], 347/6807, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.18, 10000] → 5,03 %
+- Variant 1 : 5,07 % (IC 95 % [4,56 ; 5,63], 345/6807, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.24, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 5,08 % (IC 95 % [4,58 ; 5,64], 346/6807, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [5.3, 500.7] → 4,95 %
+- Variant 1 : 5,02 % (IC 95 % [4,52 ; 5,58], 342/6807, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [5.25, 500.75] → 4,95 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6807/6807, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [30.64, 10000] → 99,69 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 5918.1] + [6221.41, 10000] → 96,97 %
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6807/6807, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [45.78, 5334.22] + [5613.83, 10000] → 96,75 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6807/6807, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [22.01, 10000] → 99,78 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [60.98, 8317.02] + [8799.06, 10000] → 94,57 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
