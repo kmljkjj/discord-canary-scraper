@@ -385,6 +385,24 @@ function escapeHtml(s) {
     return parts.join('');
   }
 
+  // Bornes issues des positions observées (cumul entre runs) : plus précis que l'IC de Wilson.
+  function positionsBlock(exp) {
+    const p = exp.cmp && exp.cmp.positions;
+    if (!p) return '';
+    const lines = ['<div class="cmp-pos">'];
+    lines.push(`<p class="cmp-pos-title">Positions observées <span class="cmp-tag">bornes</span></p>`);
+    if (p.estPct != null) {
+      lines.push(`<p class="cmp-pos-big">${fmtPct2(p.minPct)} – ${fmtPct2(p.maxPct)}&nbsp;%</p>`);
+      lines.push(`<p class="cmp-line">Estimation ${fmtPct2(p.estPct)} % · incertitude ${fmtPct2(p.widthPoints)} pt</p>`);
+    } else {
+      lines.push(`<p class="cmp-line">Aucune position « dedans » connue : aucune borne haute.</p>`);
+    }
+    lines.push(`<p class="cmp-line">${escapeHtml(p.knownPositions)} positions distinctes connues sur 10 000 (${escapeHtml(p.inPositions)} dedans, ${escapeHtml(p.outPositions)} dehors)${p.conflicts ? ' · ' + escapeHtml(p.conflicts) + ' conflit(s) ignoré(s)' : ''}</p>`);
+    lines.push('<p class="cmp-line">Suppose des plages contiguës entre deux points de même statut. Requêtes anonymes du collecteur.</p>');
+    lines.push('</div>');
+    return lines.join('');
+  }
+
   function measurePanel(exp) {
     const m = exp.cmp && exp.cmp.measurement;
     const parts = ['<section class="cmp-panel" aria-label="Mesure API Discord">'];
@@ -413,6 +431,7 @@ function escapeHtml(s) {
     const age = ageLabel(m.observedAt, 6);
     parts.push(`<p class="cmp-line">Mesuré : ${escapeHtml(fmtDate(m.observedAt))} (${age.text})${age.stale ? ' <span class="cmp-stale">historique</span>' : ''}</p>`);
     parts.push('<p class="cmp-line">Échantillons anonymes du collecteur, pas tous les utilisateurs ; filtres de population inconnus.</p>');
+    parts.push(positionsBlock(exp));
     parts.push('</section>');
     return parts.join('');
   }
@@ -421,6 +440,15 @@ function escapeHtml(s) {
     const cmp = exp.cmp;
     if (!cmp || !cmp.comparison) return '';
     const o = cmp.comparison.observation;
+    const pos = cmp.positions;
+    if (pos && pos.verdict === 'contradicts_gist') {
+      const a = pos.agreement;
+      return `<p class="cmp-verdict warn">${escapeHtml(a.contradictingPositions)} positions observées contredisent la couverture annoncée par le gist (${fmtPct2(a.gistPct)} %) ; les positions indiquent ${fmtPct2(pos.minPct)} – ${fmtPct2(pos.maxPct)} %. Gist périmé, révision ou filtres : la cause n'est pas établie.</p>`;
+    }
+    if (pos && pos.verdict === 'consistent_with_gist') {
+      const wilsonOff = o === 'outside_interval' ? ' La fenêtre k/n s\'en écarte (absences temporaires de l\'expérience, filtres de plateforme ou date possibles).' : '';
+      return `<p class="cmp-verdict ok">Les positions observées sont cohérentes avec la couverture du gist, bornes ${fmtPct2(pos.minPct)} – ${fmtPct2(pos.maxPct)} %. Cela ne prouve pas que les populations sont identiques.${wilsonOff}</p>`;
+    }
     if (o === 'inside_interval') {
       return '<p class="cmp-verdict ok">La couverture gist est dans l\'intervalle mesuré. Cela ne prouve pas que les populations sont identiques.</p>';
     }

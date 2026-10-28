@@ -5,6 +5,7 @@
 'use strict';
 const { murmur3 } = require('./murmur3');
 const { computeExperiment } = require('./gist_rollouts');
+const P = require('./position_bounds');
 
 const HOUR = 3600000;
 const PCT = (k, n) => Math.round(10000 * k / n) / 100;
@@ -87,11 +88,35 @@ function docsEntry(c) {
   };
 }
 
-function buildComparison({ gist = {}, rawGist = [], sampling = {}, definitions = [], now = Date.now(), onlyObserved = false } = {}) {
+/**
+ * Bornes issues des positions observées (position_bounds) face à la couverture gist.
+ * Un état dont le hash ne correspond pas au nom, ou illisible, est ignoré.
+ */
+function positionsEntry(state, hash, gistPct, sourceRanges, updatedAt) {
+  if (!state || typeof state !== 'object' || state.hash !== hash) return null;
+  const s = P.normalize(state);
+  const b = P.bounds(s);
+  if (!b) return null;
+  const treat = Array.isArray(sourceRanges)
+    ? sourceRanges.filter((v) => v && v.role === 'treatment').flatMap((v) => v.ranges || [])
+    : null;
+  const ag = treat ? P.agreement(s, treat) : null;
+  const eps = 0.011; // arrondi au centième de point
+  const gistInBounds = Number.isFinite(gistPct) && b.estPct != null
+    ? gistPct >= b.minPct - eps && gistPct <= b.maxPct + eps : null;
+  return { ...b, revision: s.revision, updatedAt: updatedAt || null, assumption: 'contiguous_ranges',
+    agreement: ag, gistInBounds,
+    verdict: ag && ag.contradictingPositions > 0 ? 'contradicts_gist'
+      : gistInBounds === true ? 'consistent_with_gist'
+        : gistInBounds === false ? 'differs_from_gist' : 'no_gist_comparison' };
+}
+
+function buildComparison({ gist = {}, rawGist = [], sampling = {}, definitions = [], positions = {}, now = Date.now(), onlyObserved = false } = {}) {
   if (!Number.isFinite(now)) throw new TypeError('now doit être un timestamp fini');
   // null explicite (fichier absent/illisible) traité comme absent, pas seulement undefined.
   gist = gist && typeof gist === 'object' ? gist : {};
   sampling = sampling && typeof sampling === 'object' ? sampling : {};
+  positions = positions && typeof positions === 'object' ? positions : {};
   definitions = Array.isArray(definitions) ? definitions : [];
   const records = new Map();
   const byHash = new Map();
@@ -169,14 +194,16 @@ function buildComparison({ gist = {}, rawGist = [], sampling = {}, definitions =
     const comparable = type === 'user' && g?.totalsAvailable && !g?.projected && m.status === 'measured' && m.ci && Number.isFinite(g.treatmentPct);
     const observation = !comparable ? 'not_comparable' : (g.treatmentPct < m.ci.lo || g.treatmentPct > m.ci.hi) ? 'outside_interval' : 'inside_interval';
     if (onlyObserved && m.status === 'not_observed') continue;
-    experiments.push({ id: r.id, title: r.title, hash: r.hash, type, coverage, measurement: m,
+    const pe = positionsEntry(positions.experiments && positions.experiments[r.id], r.hash, g ? g.treatmentPct : null,
+      coverage && coverage.sourceRanges, positions.updatedAt);
+    experiments.push({ id: r.id, title: r.title, hash: r.hash, type, coverage, measurement: m, positions: pe,
       comparison: { observation, verdict: 'not_verified', samePopulationEstablished: false,
         deltaPoints: comparable ? Math.round((m.pct - g.treatmentPct) * 100) / 100 : null } });
   }
   experiments.sort((a, b) => a.id.localeCompare(b.id));
   return { schemaVersion: 1, generatedAt: new Date(now).toISOString(),
     semantics: 'Couverture gist non vérifiée et observations API : deux métriques séparées, jamais une proportion réelle d’utilisateurs.',
-    sources: { gist: gist.source || null, sampling: { observedAt: sampling.scrapedAt || null,
+    sources: { positions: { updatedAt: positions.updatedAt || null, scheduled: true }, gist: gist.source || null, sampling: { observedAt: sampling.scrapedAt || null,
       url: 'https://canary.discord.com/api/v10/experiments', scheduled: false } },
     stats: { published: experiments.length, user: experiments.length,
       unclassified: unclassifiedCount,
@@ -185,4 +212,4 @@ function buildComparison({ gist = {}, rawGist = [], sampling = {}, definitions =
     diagnostics, experiments };
 }
 
-module.exports = { experimentHash, wilson95, freshness, measured, buildComparison };
+module.exports = { experimentHash, wilson95, freshness, measured, positionsEntry, buildComparison };

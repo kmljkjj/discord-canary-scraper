@@ -39,6 +39,8 @@ jobs:
           node --check src/gist_user_rollouts.js
           node --check src/lib/gist_rollouts.js
           node --check src/user_rollout_comparison.js
+          node --check src/user_rollout_positions.js
+          node --check src/lib/position_bounds.js
           node --check src/lib/user_rollout_comparison.js
 
       - name: Compute gist user rollouts
@@ -56,6 +58,14 @@ jobs:
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
         run: node src/gist_user_rollouts.js
 
+      # Cumule des positions dedans/dehors observées sur /experiments anonyme
+      # (carte de 10 000 positions par expérience nommée) : les bornes du rollout
+      # se resserrent à chaque run. Lecture seule, aucune notification, non bloquant.
+      - name: Accumulate observed rollout positions
+        id: positions
+        continue-on-error: true
+        run: node src/user_rollout_positions.js
+
       # Comparaison côte à côte gist (couverture non vérifiée) / mesure k/n
       # avec IC de Wilson. Lecture seule, aucune notification ; un échec ne
       # doit jamais bloquer le suivi du gist ci-dessus.
@@ -69,7 +79,7 @@ jobs:
       - name: Commit state
         if: always() && steps.rollouts.outcome != 'cancelled'
         run: |
-          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md data/gist_user_rollouts_docs.json data/user_rollout_comparison.json
+          scripts/commit-state.sh "data: gist user rollouts" data/gist_user_rollouts.json data/gist_user_rollouts.md data/gist_user_rollouts_docs.json data/user_rollout_positions.json data/user_rollout_comparison.json
 
       - name: Fail if rollouts failed
         if: always() && steps.rollouts.outcome == 'failure'

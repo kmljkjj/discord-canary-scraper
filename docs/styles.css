@@ -837,3 +837,8 @@ input[type="search"]:focus, #search:focus, .input:focus {
 .cmp-verdict.ok { background: var(--green-soft); color: #9be8b9; }
 .cmp-verdict.warn { background: var(--orange-soft); color: #f5d489; }
 @media (max-width: 900px) { .card.has-cmp { grid-column: auto; } .cmp { grid-template-columns: 1fr; } }
+
+/* Positions observées : bornes cumulées (plus précises que l'IC k/n) */
+.cmp-pos { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border-strong); }
+.cmp-pos-title { margin: 0 0 0.2rem; font-size: 0.8125rem; font-weight: 700; color: var(--text); display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.cmp-pos-big { margin: 0 0 0.2rem; font-size: 1.1rem; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; color: var(--text); }

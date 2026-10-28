@@ -1,8 +1,12 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-28T04:36:37.613Z",
+ "generatedAt": "2026-10-28T05:38:05.405Z",
  "semantics": "Couverture gist non vérifiée et observations API : deux métriques séparées, jamais une proportion réelle d’utilisateurs.",
  "sources": {
+  "positions": {
+   "updatedAt": "2026-10-28T05:38:05.243Z",
+   "scheduled": true
+  },
   "gist": {
    "gistId": "e3e99062983e6bd0feaef833f14fd931",
    "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
@@ -68,7 +72,7 @@
     ],
     "freshness": {
      "state": "recent",
-     "ageHours": 2.947114722222222
+     "ageHours": 3.971501388888889
     }
    },
    "measurement": {
@@ -76,7 +80,7 @@
     "observedAt": "2026-10-28T04:03:56.152Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.5448502777777777
+     "ageHours": 1.5692369444444445
     },
     "n": 7447,
     "k": 7447,
@@ -116,6 +120,30 @@
       "hi": 100
      }
     }
+   },
+   "positions": {
+    "minPct": 99.93,
+    "maxPct": 100,
+    "estPct": 100,
+    "widthPoints": 0.07,
+    "knownInPct": 20.4,
+    "knownPositions": 2040,
+    "inPositions": 2040,
+    "outPositions": 0,
+    "runs": 1,
+    "points": 2267,
+    "conflicts": 0,
+    "revision": 0,
+    "updatedAt": "2026-10-28T05:38:05.243Z",
+    "assumption": "contiguous_ranges",
+    "agreement": {
+     "consistentPositions": 2040,
+     "contradictingPositions": 0,
+     "gistPct": 100,
+     "examples": []
+    },
+    "gistInBounds": true,
+    "verdict": "consistent_with_gist"
    },
    "comparison": {
     "observation": "inside_interval",
@@ -168,7 +196,7 @@
     ],
     "freshness": {
      "state": "recent",
-     "ageHours": 2.947114722222222
+     "ageHours": 3.971501388888889
     }
    },
    "measurement": {
@@ -176,7 +204,7 @@
     "observedAt": "2026-10-28T04:03:56.152Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.5448502777777777
+     "ageHours": 1.5692369444444445
     },
     "n": 7447,
     "k": 380,
@@ -216,6 +244,43 @@
       "hi": 5.6260683523507975
      }
     }
+   },
+   "positions": {
+    "minPct": 4.99,
+    "maxPct": 5.04,
+    "estPct": 5.02,
+    "widthPoints": 0.05,
+    "knownInPct": 1.15,
+    "knownPositions": 2036,
+    "inPositions": 115,
+    "outPositions": 1921,
+    "runs": 2,
+    "points": 2267,
+    "conflicts": 0,
+    "revision": 3,
+    "updatedAt": "2026-10-28T05:38:05.243Z",
+    "assumption": "contiguous_ranges",
+    "agreement": {
+     "consistentPositions": 115,
+     "contradictingPositions": 1921,
+     "gistPct": 100,
+     "examples": [
+      [
+       0,
+       false
+      ],
+      [
+       2,
+       false
+      ],
+      [
+       5,
+       false
+      ]
+     ]
+    },
+    "gistInBounds": false,
+    "verdict": "contradicts_gist"
    },
    "comparison": {
     "observation": "outside_interval",
@@ -268,7 +333,7 @@
     ],
     "freshness": {
      "state": "recent",
-     "ageHours": 2.947114722222222
+     "ageHours": 3.971501388888889
     }
    },
    "measurement": {
@@ -276,7 +341,7 @@
     "observedAt": "2026-10-28T04:03:56.152Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.5448502777777777
+     "ageHours": 1.5692369444444445
     },
     "n": 7447,
     "k": 369,
@@ -316,6 +381,30 @@
       "hi": 5.471543137055854
      }
     }
+   },
+   "positions": {
+    "minPct": 4.95,
+    "maxPct": 5.02,
+    "estPct": 5.01,
+    "widthPoints": 0.07,
+    "knownInPct": 0.93,
+    "knownPositions": 2023,
+    "inPositions": 93,
+    "outPositions": 1930,
+    "runs": 2,
+    "points": 2267,
+    "conflicts": 0,
+    "revision": 0,
+    "updatedAt": "2026-10-28T05:38:05.243Z",
+    "assumption": "contiguous_ranges",
+    "agreement": {
+     "consistentPositions": 2023,
+     "contradictingPositions": 0,
+     "gistPct": 5,
+     "examples": []
+    },
+    "gistInBounds": true,
+    "verdict": "consistent_with_gist"
    },
    "comparison": {
     "observation": "inside_interval",
@@ -368,7 +457,7 @@
     ],
     "freshness": {
      "state": "recent",
-     "ageHours": 2.947114722222222
+     "ageHours": 3.971501388888889
     }
    },
    "measurement": {
@@ -376,7 +465,7 @@
     "observedAt": "2026-10-28T04:03:56.152Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.5448502777777777
+     "ageHours": 1.5692369444444445
     },
     "n": 7447,
     "k": 7007,
@@ -417,6 +506,30 @@
      }
     }
    },
+   "positions": {
+    "minPct": 99.68,
+    "maxPct": 100,
+    "estPct": 100,
+    "widthPoints": 0.32,
+    "knownInPct": 20.23,
+    "knownPositions": 2023,
+    "inPositions": 2023,
+    "outPositions": 0,
+    "runs": 1,
+    "points": 2267,
+    "conflicts": 0,
+    "revision": 0,
+    "updatedAt": "2026-10-28T05:38:05.243Z",
+    "assumption": "contiguous_ranges",
+    "agreement": {
+     "consistentPositions": 2023,
+     "contradictingPositions": 0,
+     "gistPct": 100,
+     "examples": []
+    },
+    "gistInBounds": true,
+    "verdict": "consistent_with_gist"
+   },
    "comparison": {
     "observation": "outside_interval",
     "verdict": "not_verified",
@@ -435,7 +548,7 @@
     "observedAt": "2026-10-28T04:03:56.152Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.5448502777777777
+     "ageHours": 1.5692369444444445
     },
     "n": 7447,
     "k": null,
@@ -473,6 +586,7 @@
      }
     }
    },
+   "positions": null,
    "comparison": {
     "observation": "not_comparable",
     "verdict": "not_verified",

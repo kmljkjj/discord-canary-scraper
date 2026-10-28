@@ -11,6 +11,7 @@
     "mobile": "node src/mobile_versions.js",
     "apex": "node src/apex_rollouts.js",
     "user-rollouts": "node src/user_rollouts.js",
+    "rollout-positions": "node src/user_rollout_positions.js",
     "rollout-comparison": "node src/user_rollout_comparison.js",
     "shop": "node src/shop.js",
     "blog": "node src/blog_tracker.js",

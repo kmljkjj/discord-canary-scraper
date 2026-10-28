@@ -38,6 +38,7 @@ async function main(deps = {}) {
   const now = deps.now ?? Date.now();
   const gistDocs = (await readJson('gist_user_rollouts_docs.json', {})) || {};
   const sampling = (await readJson('user_rollouts.json', {})) || {};
+  const positions = deps.positions !== undefined ? deps.positions : ((await readJson('user_rollout_positions.json', {})) || {});
   const defs = [];
   for (const [file, pick] of [['experiments.json', (j) => j.experiments], ['mobile_experiments.json', (j) => j.experiments], ['apex_experiments.json', (j) => (Array.isArray(j) ? j : [])]]) {
     const j = await readJson(file, null);
@@ -54,7 +55,7 @@ async function main(deps = {}) {
   } catch (e) {
     console.warn('gist brut indisponible, comparaison partielle :', String(e.message || e).slice(0, 100));
   }
-  const out = buildComparison({ gist, rawGist, sampling, definitions: defs, now, onlyObserved: true });
+  const out = buildComparison({ gist, rawGist, sampling, definitions: defs, positions, now, onlyObserved: true });
   const file = deps.out || path.join(DATA, 'user_rollout_comparison.json');
   await writeJsonAtomic(file, out, 1);
   console.log('Comparaison:', JSON.stringify(out.stats));
