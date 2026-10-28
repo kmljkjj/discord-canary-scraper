@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 11:41 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 11:43 UTC
 
-**Fenêtre glissante 4 h — n = 7511 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 7500 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,87 %** | [4,4 – 5,39] | 366/7511 | élevée | Mesuré |
-| hash:1144304849 | **4,93 %** | [4,45 – 5,45] | 370/7511 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,95 – 100] | 7511/7511 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,95 – 100] | 7511/7511 | élevée | Mesuré |
-| Tida Webform | **98 %** | [97,65 – 98,3] | 7361/7511 | élevée | Mesuré |
+| hash:704914099 | **4,85 %** | [4,38 – 5,37] | 364/7500 | élevée | Mesuré |
+| hash:1144304849 | **4,89 %** | [4,42 – 5,42] | 367/7500 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,95 – 100] | 7500/7500 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,95 – 100] | 7500/7500 | élevée | Mesuré |
+| Tida Webform | **98 %** | [97,65 – 98,3] | 7350/7500 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,87 % (IC 95 % [4,4 ; 5,39], 366/7511, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.15, 9997.85] → 5,01 %
+- Variant 1 : 4,85 % (IC 95 % [4,38 ; 5,37], 364/7500, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.17, 9990.83] → 4,94 %
 
 ### hash:1144304849
-- Variant 1 : 4,93 % (IC 95 % [4,45 ; 5,45], 370/7511, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 196.69] + [222.36, 502.64] → 4,77 %
+- Variant 1 : 4,89 % (IC 95 % [4,42 ; 5,42], 367/7500, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.92] → 5,03 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,95 ; 100], 7511/7511, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [99,95 ; 100], 7500/7500, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,95 ; 100], 7511/7511, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [42.81, 10000] → 99,57 %
+- Variant 11 : 100 % (IC 95 % [99,95 ; 100], 7500/7500, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [61.93, 10000] → 99,38 %
 
 ### Tida Webform
-- Variant 1 : 98 % (IC 95 % [97,65 ; 98,3], 7361/7511, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9855.32] → 98,55 %
+- Variant 1 : 98 % (IC 95 % [97,65 ; 98,3], 7350/7500, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 6198.22] + [6474.54, 10000] → 97,24 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
