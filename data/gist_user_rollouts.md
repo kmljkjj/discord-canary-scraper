@@ -1,12 +1,12 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-28 20:27 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-28 20:53 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
 **Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 565a58e9 · MAJ 2026-10-28T12:04:36Z · 1006 expériences au catalogue (356 user dont 149 avec données, 38 guild, 612 type inconnu, 270 sans données)
 
-⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-pinot-admin, 2026-10-clickable-hero-banner, 2026-10-collectibles-interactive-jumble-bar, 2026-10-fix-soundboard-muting-iconography, 2026-10-soundboard-mute-indicator, 2026-09-new-orb-reward-visuals, 2026-09-non-nitro-file-upload-marketing, 2026-06-improved-shop-loading, 2026-10-summary-reminder-notif-re-revival
+⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-pinot-admin, 2026-10-clickable-hero-banner, 2026-10-collectibles-interactive-jumble-bar, 2026-10-fix-soundboard-muting-iconography, 2026-10-soundboard-mute-indicator, 2026-09-new-orb-reward-visuals, 2026-09-non-nitro-file-upload-marketing, 2026-09-mobile-nitro-preview-direct-checkout, 2026-09-mobile-sticker-picker-upsell-restyle, 2026-09-game-search-row…
 
 ## Expériences user avec données (149)
 
