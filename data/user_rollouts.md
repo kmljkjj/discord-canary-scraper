@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v14)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:14 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-28 01:16 UTC
 
-**Fenêtre glissante 4 h — n = 6747 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6810 échantillons — 7 tokens actifs**
 
 **Méthode** : k/n (binomial, non biaisé) + intervalle de confiance de Wilson. Population mesurée : échantillons anonymes multi-contextes (web, desktop, Android, iOS) — pas un recensement des utilisateurs Discord.
 
@@ -12,33 +12,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,1 %** | [4,59 – 5,66] | 344/6747 | élevée | Mesuré |
-| hash:1144304849 | **5,02 %** | [4,52 – 5,58] | 339/6747 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6747/6747 | élevée | Mesuré |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6747/6747 | élevée | Mesuré |
-| Tida Webform | **98,67 %** | [98,36 – 98,92] | 6657/6747 | élevée | Mesuré |
+| hash:704914099 | **5,01 %** | [4,5 – 5,56] | 341/6810 | élevée | Mesuré |
+| hash:1144304849 | **5,02 %** | [4,52 – 5,58] | 342/6810 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [99,94 – 100] | 6810/6810 | élevée | Mesuré |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6810/6810 | élevée | Mesuré |
+| Tida Webform | **97,8 %** | [97,41 – 98,13] | 6660/6810 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,1 % (IC 95 % [4,59 ; 5,66], 344/6747, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.27, 10000] → 5,03 %
+- Variant 1 : 5,01 % (IC 95 % [4,5 ; 5,56], 341/6810, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.24, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 5,02 % (IC 95 % [4,52 ; 5,58], 339/6747, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [5.22, 500.78] → 4,96 %
+- Variant 1 : 5,02 % (IC 95 % [4,52 ; 5,58], 342/6810, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [5.26, 502.74] → 4,97 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6747/6747, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [204.4, 10000] → 97,96 %
+- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6810/6810, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6747/6747, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 1602.58] + [1892.04, 10000] → 97,11 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6810/6810, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [76, 2561] + [2860.13, 9974.87] → 96 %
 
 ### Tida Webform
-- Variant 1 : 98,67 % (IC 95 % [98,36 ; 98,92], 6657/6747, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [60.98, 8317.02] + [8799.06, 10000] → 94,57 %
+- Variant 1 : 97,8 % (IC 95 % [97,41 ; 98,13], 6660/6810, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 8317.3] + [8599.11, 9936.89] → 96,55 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
@@ -50,7 +50,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 349 expériences user
+## En attente de rollout — 348 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -199,7 +199,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-06-gummy-bears
 - 2026-06-hero-shelf-ad-tile
 - 2026-06-improved-shop-loading
-- 2026-06-mobile-server-tag
 - 2026-06-nitro-gdm-cap-increase
 - 2026-06-orbs-holdout
 - 2026-06-otp-orders-phase-1
