@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-28T23-58-35-424Z_654842_ad7ppl",
-  "buildNumber": "654842",
-  "scrapedAt": "2026-10-28T23:58:35.424Z",
+  "runId": "2026-10-29T00-09-20-631Z_654835_kvm4f4",
+  "buildNumber": "654835",
+  "scrapedAt": "2026-10-29T00:09:20.631Z",
   "totals": {
-    "all": 387,
+    "all": 386,
     "legacy": 0,
-    "apex": 382
+    "apex": 381
   },
   "experiments": [
     {
@@ -7502,26 +7502,6 @@
         }
       },
       "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-10-shop-sku-nitro-upsell-refresh",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "0": {
-          "enabled": false
-        },
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 2,
       "source": "discord"
     },
     {
