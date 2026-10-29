@@ -1,0 +1,40 @@
+name: News · Actus
+
+# Actus générales (monde · réseaux sociaux · foot · iPhone & Android · Spotify)
+# via flux RSS publics — 1 actu = 1 message, plafonds anti-spam dans src/news.js.
+# Actif seulement si le secret NEWS_WEBHOOK_URL existe.
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: ./.github/actions/setup
+
+      - name: Actus — monde / réseaux sociaux / foot / iPhone & Android / Spotify
+        env:
+          NEWS_WEBHOOK_URL: ${{ secrets.NEWS_WEBHOOK_URL }}
+        run: node src/news.js
+
+      - name: Save seen ids
+        if: always()
+        env:
+          COMMIT_SOFT_FAIL: '1'
+        run: |
+          scripts/commit-state.sh "news: seen" data/seen_news.json

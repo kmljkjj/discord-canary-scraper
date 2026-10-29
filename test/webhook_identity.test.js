@@ -23,3 +23,13 @@ test('les messages Components V2 conservent leur identité', async () => {
   assert.match(sent.avatar_url, /1f4f1\.png$/);
   assert.equal(sent.flags, 32768);
 });
+
+test('identités actus : toutes définies et résolues', () => {
+  const { webhookIdentity } = require('../src/lib/webhook_identity');
+  for (const t of ['newsMonde', 'newsSocial', 'newsFoot', 'newsTech', 'newsSpotify']) {
+    const id = webhookIdentity(t);
+    assert.ok(id.username.startsWith('Datamining · Actus · '), t);
+    assert.match(id.avatar_url, /noto-emoji@99701e07d3d1fe1bdbcdb14964547f0fd592966f/);
+    assert.ok(id.username.length <= 80);
+  }
+});
