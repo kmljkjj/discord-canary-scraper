@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T16-13-19-173Z_656054_9f7p1h",
-  "buildNumber": "656054",
-  "updatedAt": "2026-10-29T16:13:19.173Z",
-  "count": 385,
+  "runId": "2026-10-29T16-16-30-544Z_656073_5ul9ls",
+  "buildNumber": "656073",
+  "updatedAt": "2026-10-29T16:16:30.544Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -2277,52 +2277,6 @@
         "value": null
       },
       "fingerprint": "0902507f85f45ef6e8fbd0e1371aa24d838c1a0c54eabc5c1aa9f9734d03ea3a"
-    },
-    {
-      "id": "2025-12-mana-multistep-community-enabled",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2025-12-mana-multistep-community-enabled",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e2e615f7671bd79febac193c1bf0f525cff65c46039b4a8cc4b0212d983a6643"
     },
     {
       "id": "2025-12-orb-redemption-thru-orders",

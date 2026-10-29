@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T16-13-19-173Z_656054_9f7p1h",
-  "buildNumber": "656054",
-  "scrapedAt": "2026-10-29T16:13:19.173Z",
+  "runId": "2026-10-29T16-16-30-544Z_656073_5ul9ls",
+  "buildNumber": "656073",
+  "scrapedAt": "2026-10-29T16:16:30.544Z",
   "totals": {
-    "all": 391
+    "all": 390
   },
   "experiments": [
     {
@@ -895,23 +895,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2025-12-mana-multistep-community-enabled",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
