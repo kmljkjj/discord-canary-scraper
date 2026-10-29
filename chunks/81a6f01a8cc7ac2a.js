@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["9205"],{312852(s,a,n){n.d(a,{K:()=>h});var t=n(17928),u=n(4227),d=n(623373);function h(s){let a=(0,t.bG)([u.A],()=>u.A.purchases);return null!=s&&(0,d.B1)(s)?Math.max(0,s.variants.findIndex(s=>!a.has(s.skuId))):0}}}]);
+//# sourceMappingURL=81a6f01a8cc7ac2a.js.map
