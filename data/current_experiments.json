@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T02-57-14-196Z_655230_ufrybx",
-  "buildNumber": "655230",
-  "updatedAt": "2026-10-29T02:57:14.196Z",
-  "count": 383,
+  "runId": "2026-10-29T02-59-33-107Z_655243_rhg7xs",
+  "buildNumber": "655243",
+  "updatedAt": "2026-10-29T02:59:33.107Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -9225,52 +9225,6 @@
         "value": null
       },
       "fingerprint": "5e593eb8f4dcae46568f26e78f831c92019d80f0f2d92931ebd61c8ee14a77a0"
-    },
-    {
-      "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "echoReferenceMode": "mix"
-      },
-      "variations": {
-        "1": {
-          "echoReferenceMode": "auto"
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "echoReferenceMode": "mix"
-        },
-        "variations": {
-          "1": {
-            "echoReferenceMode": "auto"
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "d9803c2ea812ec964015d1afa32ce08b211c5bce1d899f8c93607f01a27ff8a9"
     },
     {
       "id": "2026-06-topical-navigation-guild",

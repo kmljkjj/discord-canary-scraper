@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T02-57-14-196Z_655230_ufrybx",
-  "buildNumber": "655230",
-  "scrapedAt": "2026-10-29T02:57:14.196Z",
+  "runId": "2026-10-29T02-59-33-107Z_655243_rhg7xs",
+  "buildNumber": "655243",
+  "scrapedAt": "2026-10-29T02:59:33.107Z",
   "totals": {
-    "all": 389
+    "all": 388
   },
   "experiments": [
     {
@@ -3576,23 +3576,6 @@
         }
       },
       "variationCount": 5,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-systemwide-echo-cancellation-for-people-who-refuse-to-wear-headphones",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "echoReferenceMode": "mix"
-      },
-      "variations": {
-        "1": {
-          "echoReferenceMode": "auto"
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
