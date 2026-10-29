@@ -183,6 +183,31 @@ function escapeMdTitle(t) {
     .replace(/\[/g, '\\[')
     .replace(/\]/g, '\\]');
 }
+/** Neutralise les runs de backticks pour insérer du texte dans un bloc de code. */
+function sanitizeCodeBlock(s) {
+  return String(s || '').replace(/`+/g, (m) => '`\u200b'.repeat(m.length));
+}
+
+/** Bloc de code Discord (les backticks du texte sont neutralisés). */
+function codeBlock(s) {
+  return '```\n' + sanitizeCodeBlock(s) + '\n```';
+}
+
+/**
+ * Première divergence entre deux aperçus + fenêtre centrée dessus
+ * (± radius caractères) pour montrer directement ce qui a changé.
+ */
+function firstDivergence(before, after, radius = 120) {
+  const b = String(before || '');
+  const a = String(after || '');
+  let i = 0;
+  while (i < Math.min(b.length, a.length) && b[i] === a[i]) i++;
+  const start = Math.max(0, i - radius);
+  const end = start + 2 * radius;
+  const win = (s) =>
+    (start > 0 ? '…' : '') + s.slice(start, end) + (end < s.length ? '…' : '');
+  return { pos: i, before: win(b), after: win(a) };
+}
 
 // ── HTTP ──────────────────────────────────────────────
 
@@ -553,8 +578,12 @@ function changeText(entry) {
     } else if (c.kind === 'body') {
       lines.push('**Body** · modified');
       if (c.before && c.after && c.before !== c.after) {
-        lines.push(`> Before · ${truncate(c.before, 140)}`);
-        lines.push(`> After · ${truncate(c.after, 140)}`);
+        const w = firstDivergence(c.before, c.after);
+        lines.push(`-# First change around character ${w.pos + 1}`);
+        lines.push('**Before**');
+        lines.push(codeBlock(w.before));
+        lines.push('**After**');
+        lines.push(codeBlock(w.after));
       } else {
         lines.push('> Modified beyond the captured excerpt');
       }
@@ -920,4 +949,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { main };
+module.exports = { main, changeText };
