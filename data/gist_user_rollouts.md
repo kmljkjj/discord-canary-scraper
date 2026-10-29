@@ -1,14 +1,14 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-29 15:59 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-10-29 16:25 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 565a58e9 · MAJ 2026-10-28T12:04:36Z · 1006 expériences au catalogue (356 user dont 149 avec données, 38 guild, 612 type inconnu, 270 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 565a58e9 · MAJ 2026-10-28T12:04:36Z · 1006 expériences au catalogue (355 user dont 148 avec données, 38 guild, 613 type inconnu, 270 sans données)
 
 ⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-pinot-admin, 2026-10-clickable-hero-banner, 2026-10-collectibles-interactive-jumble-bar, 2026-10-fix-soundboard-muting-iconography, 2026-10-soundboard-mute-indicator, 2026-09-new-orb-reward-visuals, 2026-09-non-nitro-file-upload-marketing, 2026-09-edit-profile-collectibles-ordering, 2026-09-mobile-nitro-preview-direct-checkout, 2026-09-referral-trial-cta…
 
-## Expériences user avec données (149)
+## Expériences user avec données (148)
 
 | Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |
 |---|---:|---:|---:|---:|---|
@@ -150,7 +150,6 @@
 | 2025-12-wmf-gpu-encode | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2025-12-quest-cta-refactor-rollout | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-12-nitro-s-rewards | **20,00 %** | 10,00 % | 0,00 % | 70,00 % | — |
-| 2025-12-mana-multistep-community-enabled | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
 | 2025-12-09-ptt-education | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-11-overlay-chat | **66,00 %** | 33,00 % | 0,00 % | 1,00 % | — |
 | 2025-11-hide-manual-link | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -162,7 +161,7 @@
 | Safety Experience Unauthenticated Report Form | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Inferno Spam Redaction | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 
-## Type inconnu — suivi séparé, non notifié (556)
+## Type inconnu — suivi séparé, non notifié (557)
 
 > Absents de nos métadonnées locales au moment du calcul : à reclassifier au prochain scrape.
 | Expérience | Treatment | Espace non décrit | Particularités |
@@ -309,6 +308,7 @@
 | 2025-12-on-platform-account-linking-new-event | 100,00 % | 0,00 % | — |
 | 2025-12-new-year-marketing-note | 100,00 % | 0,00 % | — |
 | 2025-12-mobile-golive-tile-resolution | 10,00 % | 80,00 % | — |
+| 2025-12-mana-multistep-community-enabled | 5,00 % | 90,00 % | — |
 | 2025-12-hide-guild-boost-status-tab | 100,00 % | 0,00 % | — |
 | 2025-12-game-profiles-v2 | 50,00 % | 0,00 % | — |
 | 2025-12-game-invite-account-linking-entry-point | 0,00 % | 0,00 % | — |
@@ -366,7 +366,6 @@
 | 2025-10_halloween_holiday | 100,00 % | 0,00 % | — |
 | 2025-10_friend_is_online_notification | 5,00 % | 95,00 % | — |
 | 2025-10_client_meaningfully_online_timer_rollout | 100,00 % | 0,00 % | — |
-| 2025-09-wishlist-in-dm-gifting-flow | 100,00 % | 0,00 % | — |
 | 2025-01_guild_settings_foundation | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-11_member_verification_rollout | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-09_league_of_legends_leaderboard | 100,00 % (projeté) | — | ℹ projeté (multi-populations), repeated_variant, overlapping_variants |
@@ -898,10 +897,6 @@
 - Variant 0 (control) : 10,00 % · plages 0 – 33 , 99 – 132 , 198 – 232 , 300 – 500 , 900 – 1095 , 1485 – 1690 , 2100 – 2400
 - Variant 1 (treatment) : 10,00 % · plages 33 – 66 , 132 – 165 , 232 – 266 , 500 – 700 , 1095 – 1290 , 1690 – 1895 , 2400 – 2700
 - Variant 2 (treatment) : 10,00 % · plages 66 – 99 , 165 – 198 , 266 – 300 , 700 – 900 , 1290 – 1485 , 1895 – 2100 , 2700 – 3000
-
-### 2025-12-mana-multistep-community-enabled
-- Variant 0 (control) : 5,00 % · plages 0 – 500
-- Variant 1 (treatment) : 5,00 % · plages 500 – 1000
 
 ### 2025-12-09-ptt-education
 - Variant 2 (treatment) : 100,00 % · plages 0 – 10000

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-28T23:10:23.949Z",
+ "generatedAt": "2026-10-29T16:25:12.220Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
@@ -9,10 +9,10 @@
  },
  "stats": {
   "total": 1006,
-  "user": 356,
-  "userData": 149,
+  "user": 355,
+  "userData": 148,
   "guild": 38,
-  "unclassified": 612,
+  "unclassified": 613,
   "noData": 270
  },
  "experiments": [
@@ -6474,31 +6474,6 @@
     },
     "2": {
      "pct": 10,
-     "role": "treatment"
-    }
-   }
-  },
-  {
-   "id": "2025-12-mana-multistep-community-enabled",
-   "title": "2025-12-mana-multistep-community-enabled",
-   "type": "user",
-   "hasData": true,
-   "totalsAvailable": true,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [],
-   "treatmentPct": 5,
-   "projectedTreatmentPct": null,
-   "controlPct": 5,
-   "notEligiblePct": 0,
-   "unassignedPct": 90,
-   "byVariant": {
-    "0": {
-     "pct": 5,
-     "role": "control"
-    },
-    "1": {
-     "pct": 5,
      "role": "treatment"
     }
    }
