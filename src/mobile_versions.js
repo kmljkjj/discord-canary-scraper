@@ -28,11 +28,11 @@
 const fetch = require('node-fetch');
 const fs = require('fs-extra');
 const path = require('path');
-const { sendEmbeds, sendWebhook, withComponentsUrl } = require('./lib/webhook');
+const { sendWebhook, withComponentsUrl } = require('./lib/webhook');
 const {
   IS_COMPONENTS_V2_FLAG,
   textDisplay,
-  mediaGalleryFromUrls,
+  separator,
   linkButton,
   chunkIntoMessages,
 } = require('./lib/components_v2');
@@ -109,28 +109,6 @@ async function fetchText(url, opts = {}) {
 
 async function fetchJson(url, opts = {}) {
   return JSON.parse(await fetchText(url, opts));
-}
-
-// ── Webhook ───────────────────────────────────────────
-
-async function postWebhook(payload) {
-  if (!WEBHOOK_URL) return false;
-  const body = {
-    username: BOT_NAME,
-    avatar_url: BOT_AVATAR,
-    ...payload,
-  };
-  const embeds = body.embeds || [];
-  const base = { username: body.username || BOT_NAME, avatar_url: body.avatar_url || BOT_AVATAR };
-  const r = await sendEmbeds(WEBHOOK_URL, base, embeds, { identity: 'mobile', label: 'mobile', timeoutMs: 30000, minGapMs: 200, withDismiss: true });
-  if (r.ok) {
-    console.log('Webhook OK');
-    return true;
-  }
-  if (r.status >= 400 && r.status < 500 && r.status !== 429) {
-    throw new Error('Webhook HTTP ' + r.status);
-  }
-  throw new Error('Webhook failed after retries');
 }
 
 // ── iOS stable (App Store) ────────────────────────────
@@ -877,12 +855,19 @@ function decodeAndroidBuild(build) {
 function colorFor(channel) {
   if (channel === 'alpha') return 0xfee75c;
   if (channel === 'beta') return 0xe67e22;
-  return 0x5865f2;
+  return 0x57f287;
+}
+
+const CHANNEL_EMOJI = { stable: '🟢', beta: '🟠', alpha: '🟡' };
+const PLATFORM_EMOJI = { ios: '🍎', android: '🤖' };
+
+function platformLabel(c) {
+  return c.platform === 'ios' ? 'iOS' : 'Android';
 }
 
 function releaseTitle(c) {
   if (c.platform === 'ios') return c.channel === 'beta' ? 'New TestFlight Release' : 'New App Store Release';
-  return 'New Android Release';
+  return `New Android ${trackName(c)} Release`;
 }
 
 function trackName(c) {
@@ -891,70 +876,157 @@ function trackName(c) {
   return 'Stable';
 }
 
-function formatDateTimeEn(iso) {
-  try {
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return String(iso || '').slice(0, 19);
-    const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
-    return `${date} at ${time}`;
-  } catch {
-    return String(iso || '').slice(0, 19);
-  }
+/** Nature du bump : « major » (346 → 347), « minor » (346.1 → 346.2) ou null. */
+function bumpKind(from, to) {
+  if (!from || !to) return null;
+  const a = parseVersion(from);
+  const b = parseVersion(to);
+  if (b[0] !== a[0]) return 'major';
+  return cmpVersion(to, from) > 0 ? 'minor' : null;
 }
 
-/**
- * Construit les composants Components V2 d'un message de release :
- * « New App Store Release » / « New TestFlight Release » / « New Android Release »
- * avec icône de l'app, version détectée, champs (Size, Requires, Build,
- * Commit, Released), What's New et boutons de liens.
- */
-function buildReleaseComponents(ch) {
-  const c = ch.channel;
-  const isNew = ch.type === 'new' || !ch.previous || !ch.previous.version;
-  const detected = formatDateTimeEn(c.checkedAt || new Date().toISOString());
-  const track = c.platform === 'android' && c.channel !== 'stable' ? trackName(c) : null;
+/** Timestamp Discord (<t:…:f> · <t:…:R>) — s'affiche dans le fuseau du lecteur. */
+function discordTime(iso, withRelative = true) {
+  const t = Date.parse(iso || '');
+  if (!Number.isFinite(t)) return null;
+  const s = Math.floor(t / 1000);
+  return withRelative ? `<t:${s}:f> · <t:${s}:R>` : `<t:${s}:f>`;
+}
 
-  const versionParts = [isNew ? `**${c.version}**` : `${ch.previous.version} → **${c.version}**`];
-  if (track) versionParts.push(`**${track}**`);
-  if (c.platform === 'ios' && c.channel === 'beta' && c.build) versionParts.push(`Build ${c.build}`);
-  versionParts.push(`Detected ${detected}`);
+/** Coupe un texte à `max` caractères sur une fin de ligne / de mot. */
+function trimText(text, max) {
+  const s = String(text || '').replace(/\r/g, '').trim();
+  if (s.length <= max) return s;
+  let cut = s.slice(0, max);
+  const nl = cut.lastIndexOf('\n');
+  const sp = cut.lastIndexOf(' ');
+  if (nl > max * 0.6) cut = cut.slice(0, nl);
+  else if (sp > max * 0.6) cut = cut.slice(0, sp);
+  return cut.trimEnd() + '…';
+}
 
-  const comps = [];
-  comps.push(textDisplay(`## ${releaseTitle(c)}`));
-  const gallery = mediaGalleryFromUrls(c.artwork ? [c.artwork] : []);
-  if (gallery) comps.push(gallery);
-  comps.push(textDisplay(versionParts.join(' · ')));
+const SOURCE_LABELS = {
+  itunes_lookup: 'App Store',
+  discord_ota_manifest: 'Discord OTA',
+  aptoide: 'Aptoide',
+  apkmirror: 'APKMirror',
+  apkcombo: 'APKCombo',
+  apkpure: 'APKPure',
+  play_html: 'Google Play',
+  store: 'Store',
+};
 
-  const lines = [];
-  if (c.size) lines.push(`**Size** · ${c.size}`);
-  if (c.requires) lines.push(`**Requires** · ${c.requires}`);
-  if (c.build) {
-    const decoded = c.platform === 'android' ? decodeAndroidBuild(c.build) : null;
-    lines.push(`**Build** · \`${c.build}\`${decoded ? ` · track ${decoded.track} (${decoded.trackName})` : ''}`);
-  }
-  if (c.commit) lines.push(`**Commit** · \`${String(c.commit).slice(0, 12)}\``);
-  if (c.releaseDate) lines.push(`**Released** · ${formatDateTimeEn(c.releaseDate)}`);
-  if (lines.length) comps.push(textDisplay(lines.join('\n')));
-
-  if (c.releaseNotes) {
-    comps.push(textDisplay(`**What's New**\n> ${String(c.releaseNotes).slice(0, 500).replace(/\n+/g, '\n> ')}`));
-  }
-
+/** Boutons de liens d'une release (max 5 par ActionRow). */
+function releaseButtons(c) {
   const buttons = [];
   if (c.platform === 'ios') {
-    buttons.push(linkButton('App Store', c.storeUrl || `https://apps.apple.com/app/id${IOS_APP_ID}`));
-    if (c.channel === 'beta') buttons.push(linkButton('How to Join', TESTFLIGHT_URL));
+    buttons.push(linkButton('App Store', c.channel === 'stable' && c.storeUrl ? c.storeUrl : `https://apps.apple.com/app/id${IOS_APP_ID}`));
+    if (c.channel === 'beta') buttons.push(linkButton('Join TestFlight', TESTFLIGHT_URL));
   } else {
-    buttons.push(linkButton('Google Play Store', PLAY_STORE_URL));
+    buttons.push(linkButton('Google Play', PLAY_STORE_URL));
     if (c.channel === 'beta' || c.channel === 'alpha') {
       buttons.push(linkButton('APKMirror', APKMIRROR_UPLOADS_URL));
       buttons.push(linkButton('Aptoide', APTOIDE_VERSIONS_URL));
     }
   }
-  if (buttons.length) comps.push({ type: 1, components: buttons.slice(0, 4) });
+  return buttons.slice(0, 5);
+}
 
-  comps.push(textDisplay(`-# Datamining · Mobile · ${c.platform === 'ios' ? 'iOS' : 'Android'} · ${trackName(c)}`));
+/**
+ * Construit les composants Components V2 d'un message de release :
+ *
+ *   ┌ ## 🍎 New App Store Release                     [icône]
+ *   │ 🟢 **Discord iOS** · Stable · Minor update
+ *   │ ### 346.0 → 347.0
+ *   ├──────────
+ *   │ **Build** · **Commit** · **Size** · **Requires** · **Released** · **Detected**
+ *   ├──────────
+ *   │ **What's New** (citation)
+ *   │ [App Store] [Join TestFlight]
+ *   └ -# Datamining · Mobile · source
+ */
+function buildReleaseComponents(ch) {
+  const c = ch.channel;
+  const prevVersion = ch.previous && ch.previous.version ? ch.previous.version : null;
+  const isNew = ch.type === 'new' || !prevVersion;
+  const kind = isNew ? 'First seen' : bumpKind(prevVersion, c.version) === 'major' ? 'Major update' : 'Minor update';
+
+  const header = [
+    `## ${PLATFORM_EMOJI[c.platform] || '📱'} ${releaseTitle(c)}`,
+    `${CHANNEL_EMOJI[c.channel] || '⚪'} **Discord ${platformLabel(c)}** · ${trackName(c)} · ${kind}`,
+    isNew ? `### ${c.version}` : `### ${prevVersion} → ${c.version}`,
+  ].join('\n');
+
+  const comps = [];
+  if (c.artwork && /^https?:\/\//i.test(c.artwork)) {
+    comps.push({
+      type: 9, // Section
+      components: [textDisplay(header)],
+      accessory: { type: 11, media: { url: String(c.artwork).slice(0, 2048) } }, // Thumbnail
+    });
+  } else {
+    comps.push(textDisplay(header));
+  }
+
+  const lines = [];
+  if (c.build) {
+    const decoded = c.platform === 'android' ? decodeAndroidBuild(c.build) : null;
+    lines.push(`**Build** · \`${c.build}\`${decoded ? ` · track ${decoded.track} (${decoded.trackName})` : ''}`);
+  }
+  if (c.releaseName) lines.push(`**Release** · \`${String(c.releaseName).slice(0, 60)}\``);
+  if (c.commit) lines.push(`**Commit** · \`${String(c.commit).slice(0, 12)}\``);
+  if (c.size) lines.push(`**Size** · ${c.size}`);
+  if (c.requires) lines.push(`**Requires** · ${c.requires}`);
+  const released = c.releaseDate ? discordTime(c.releaseDate) : null;
+  if (released) lines.push(`**Released** · ${released}`);
+  const detected = discordTime(c.checkedAt || new Date().toISOString());
+  if (detected) lines.push(`**Detected** · ${detected}`);
+  if (lines.length) {
+    comps.push(separator(true, 1));
+    comps.push(textDisplay(lines.join('\n')));
+  }
+
+  if (c.releaseNotes) {
+    const notes = trimText(c.releaseNotes, 700)
+      .split('\n')
+      .map((l) => `> ${l}`)
+      .join('\n');
+    comps.push(separator(true, 1));
+    comps.push(textDisplay(`**What's New**\n${notes}`));
+  }
+
+  const buttons = releaseButtons(c);
+  if (buttons.length) comps.push({ type: 1, components: buttons });
+
+  const src = SOURCE_LABELS[c.source] || c.source || null;
+  const footer = ['Datamining', 'Mobile', `${platformLabel(c)} ${trackName(c)}`];
+  if (src) footer.push(`source: ${src}`);
+  if (c.note) footer.push(String(c.note).slice(0, 80));
+  comps.push(textDisplay(`-# ${footer.join(' · ')}`));
+  return comps;
+}
+
+/**
+ * Résumé Components V2 quand plusieurs canaux bougent dans le même run :
+ * une ligne par canal, groupées par plateforme.
+ */
+function buildSummaryComponents(changes) {
+  const byPlatform = { ios: [], android: [] };
+  for (const ch of changes) {
+    const c = ch.channel;
+    const prev = ch.previous && ch.previous.version ? ch.previous.version : null;
+    const arrow = prev ? `${prev} → **${c.version}**` : `**${c.version}** (new)`;
+    const line = `${CHANNEL_EMOJI[c.channel] || '⚪'} **${trackName(c)}** · ${arrow}${c.build ? ` · \`${c.build}\`` : ''}`;
+    (byPlatform[c.platform] || (byPlatform[c.platform] = [])).push(line);
+  }
+  const comps = [textDisplay(`## 📱 Discord Mobile · ${changes.length} new version${changes.length > 1 ? 's' : ''}`)];
+  for (const plat of Object.keys(byPlatform)) {
+    const lines = byPlatform[plat];
+    if (!lines.length) continue;
+    comps.push(separator(true, 1));
+    comps.push(textDisplay(`**${PLATFORM_EMOJI[plat] || '📱'} ${plat === 'ios' ? 'iOS' : 'Android'}**\n${lines.join('\n')}`));
+  }
+  comps.push(textDisplay('-# Datamining · Mobile · versions'));
   return comps;
 }
 
@@ -980,36 +1052,27 @@ async function postComponents(components, accentColor) {
   return true;
 }
 
+/** Ordre d'affichage : iOS puis Android, stable → beta → alpha. */
+function sortChanges(changes) {
+  const pOrder = { ios: 0, android: 1 };
+  const cOrder = { stable: 0, beta: 1, alpha: 2 };
+  return [...changes].sort((a, b) =>
+    (pOrder[a.channel.platform] ?? 9) - (pOrder[b.channel.platform] ?? 9) ||
+    (cOrder[a.channel.channel] ?? 9) - (cOrder[b.channel.channel] ?? 9));
+}
+
 /**
- * Envoie les notifs : 1 résumé sobre (embeds) puis 1 message
- * Components V2 par release, style tracker de releases.
+ * Envoie les notifs : un résumé uniquement s'il y a plusieurs releases,
+ * puis 1 message Components V2 par release (icône, détails, boutons).
  */
 async function notify(changes) {
   if (!WEBHOOK_URL || !changes.length) return;
+  const ordered = sortChanges(changes);
 
-  // 1) Résumé — tous les bumps dans un seul message
-  const summaryLines = changes.map((ch) => {
-    const c = ch.channel;
-    const plat = c.platform === 'ios' ? 'iOS' : 'Android';
-    const arrow = ch.type === 'updated' && ch.previous
-      ? `${ch.previous.version} → **${c.version}**`
-      : `**${c.version}**`;
-    return `**${plat} ${trackName(c)}** · ${arrow}${c.build ? ` · \`${c.build}\`` : ''}`;
-  });
-
-  await postWebhook({
-    embeds: [
-      {
-        title: `Discord Mobile · ${changes.length} new version${changes.length > 1 ? 's' : ''}`,
-        description: summaryLines.join('\n').slice(0, 4000),
-        color: 0x5865f2,
-        footer: { text: 'Datamining · Mobile · versions' },
-      },
-    ],
-  });
-
-  // 2) Un message Components V2 par release (boutons + icône)
-  for (const ch of changes) {
+  if (ordered.length > 1) {
+    await postComponents(buildSummaryComponents(ordered), 0x5865f2);
+  }
+  for (const ch of ordered) {
     await postComponents(buildReleaseComponents(ch), colorFor(ch.channel.channel));
   }
 }
@@ -1120,7 +1183,23 @@ async function main() {
   console.log('=== Mobile versions done ===');
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  parseVersion,
+  cmpVersion,
+  bumpKind,
+  decodeAndroidBuild,
+  detectChanges,
+  buildReleaseComponents,
+  buildSummaryComponents,
+  sortChanges,
+  trimText,
+  discordTime,
+  colorFor,
+};
