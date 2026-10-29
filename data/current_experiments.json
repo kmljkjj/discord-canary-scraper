@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T20-41-54-784Z_656718_kxdqz2",
-  "buildNumber": "656718",
-  "updatedAt": "2026-10-29T20:41:54.784Z",
-  "count": 384,
+  "runId": "2026-10-29T21-02-29-207Z_656768_h88z1i",
+  "buildNumber": "656768",
+  "updatedAt": "2026-10-29T21:02:29.207Z",
+  "count": 385,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -18933,6 +18933,58 @@
         "value": null
       },
       "fingerprint": "e7e9854c3a6d70a46fb8610b7d19d67af3672215d0b4c8192723c8519577d4b8"
+    },
+    {
+      "id": "2026-10-profile-nitro-upsell-refresh",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-profile-nitro-upsell-refresh",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "3580e29485a35d9e3918db45c73b9413da4e4764b064ec002acc79117b79fc56"
     },
     {
       "id": "2026-10-profile-read-state",

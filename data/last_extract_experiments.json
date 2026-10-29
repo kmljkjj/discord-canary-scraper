@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T20-41-54-784Z_656718_kxdqz2",
-  "buildNumber": "656718",
-  "updatedAt": "2026-10-29T20:41:54.784Z",
-  "count": 384,
+  "runId": "2026-10-29T21-02-29-207Z_656768_h88z1i",
+  "buildNumber": "656768",
+  "updatedAt": "2026-10-29T21:02:29.207Z",
+  "count": 385,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7284,6 +7284,26 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "e7e9854c3a6d70a46fb8610b7d19d67af3672215d0b4c8192723c8519577d4b8"
+    },
+    "2026-10-profile-nitro-upsell-refresh": {
+      "id": "2026-10-profile-nitro-upsell-refresh",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "3580e29485a35d9e3918db45c73b9413da4e4764b064ec002acc79117b79fc56"
     },
     "2026-10-profile-read-state": {
       "id": "2026-10-profile-read-state",
