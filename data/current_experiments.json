@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T02-59-33-107Z_655243_rhg7xs",
-  "buildNumber": "655243",
-  "updatedAt": "2026-10-29T02:59:33.107Z",
-  "count": 382,
+  "runId": "2026-10-29T03-03-49-502Z_655240_qxgkn4",
+  "buildNumber": "655240",
+  "updatedAt": "2026-10-29T03:03:49.502Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -18003,6 +18003,60 @@
         "value": null
       },
       "fingerprint": "8f2d29378b7b20eee73d81e8323627cdaafc6684b82baf6d7d9eac970c95db50"
+    },
+    {
+      "id": "2026-10-fractional-nitro-pricing",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 3,
+      "raw": {
+        "id": "2026-10-fractional-nitro-pricing",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": null,
+        "variations": {
+          "0": {
+            "id": 0
+          },
+          "1": {
+            "id": 1
+          },
+          "2": {
+            "id": 2
+          }
+        },
+        "variationCount": 3,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a6fd062e217eea883b76188a5e6387b613ea1648abb2f17ec448277dbb4b59bb"
     },
     {
       "id": "2026-10-game-exit-promo-rust",

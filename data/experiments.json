@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-29T02-59-33-107Z_655243_rhg7xs",
-  "buildNumber": "655243",
-  "scrapedAt": "2026-10-29T02:59:33.107Z",
+  "runId": "2026-10-29T03-03-49-502Z_655240_qxgkn4",
+  "buildNumber": "655240",
+  "scrapedAt": "2026-10-29T03:03:49.502Z",
   "totals": {
-    "all": 388,
+    "all": 389,
     "legacy": 0,
-    "apex": 382
+    "apex": 383
   },
   "experiments": [
     {
@@ -7016,6 +7016,27 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-fractional-nitro-pricing",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {
