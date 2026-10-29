@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T02-02-09-188Z_655087_kfyvcp",
-  "buildNumber": "655087",
-  "updatedAt": "2026-10-29T02:02:09.188Z",
-  "count": 383,
+  "runId": "2026-10-29T02-04-15-262Z_655088_e6w330",
+  "buildNumber": "655088",
+  "updatedAt": "2026-10-29T02:04:15.262Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -3364,6 +3364,26 @@
       },
       "system": "apex",
       "fp": "550bf6b58051cf7cdae3e0ba7c0f8c94adfb02dd2b3048b55d72e8899effe3ad"
+    },
+    "2026-06-improved-shop-loading": {
+      "id": "2026-06-improved-shop-loading",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "167d779da4286259f060705d683a86c7d225e3194933544f65887dc517dbfe8b"
     },
     "2026-06-nitro-gdm-cap-increase": {
       "id": "2026-06-nitro-gdm-cap-increase",

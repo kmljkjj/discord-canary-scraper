@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T02-02-09-188Z_655087_kfyvcp",
-  "buildNumber": "655087",
-  "updatedAt": "2026-10-29T02:02:09.188Z",
-  "count": 383,
+  "runId": "2026-10-29T02-04-15-262Z_655088_e6w330",
+  "buildNumber": "655088",
+  "updatedAt": "2026-10-29T02:04:15.262Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8741,6 +8741,58 @@
         "value": null
       },
       "fingerprint": "550bf6b58051cf7cdae3e0ba7c0f8c94adfb02dd2b3048b55d72e8899effe3ad"
+    },
+    {
+      "id": "2026-06-improved-shop-loading",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-06-improved-shop-loading",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "167d779da4286259f060705d683a86c7d225e3194933544f65887dc517dbfe8b"
     },
     {
       "id": "2026-06-nitro-gdm-cap-increase",
