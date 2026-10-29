@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 07:57 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 07:59 UTC
 
 **Fenêtre glissante 4 h — n = 6014 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **4,67 %** | [4,16 – 5,25] | 281/6014 | élevée | Mesuré |
-| hash:1144304849 | **4,72 %** | [4,2 – 5,3] | 284/6014 | élevée | Mesuré |
+| hash:1144304849 | **4,67 %** | [4,16 – 5,25] | 281/6014 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6014/6014 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,93 – 100] | 6014/6014 | élevée | Mesuré |
 | Tida Webform | **100 %** | [99,93 – 100] | 5865/5865 | élevée | Mesuré |
@@ -27,8 +27,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
   - plages reconstruites (indicatif, ordre de grandeur) : [9500.29, 10000] → 5 %
 
 ### hash:1144304849
-- Variant 1 : 4,72 % (IC 95 % [4,2 ; 5,3], 284/6014, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0.13, 499.87] → 5 %
+- Variant 1 : 4,67 % (IC 95 % [4,16 ; 5,25], 281/6014, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0.16, 499.84] → 5 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6014/6014, confiance élevée)
@@ -36,11 +36,11 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,93 ; 100], 6014/6014, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [98.08, 9985.92] → 98,88 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9892.68] → 98,93 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [99,93 ; 100], 5865/5865, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [50.97, 10000] → 99,49 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
