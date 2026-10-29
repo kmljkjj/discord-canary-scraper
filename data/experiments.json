@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-29T03-22-05-044Z_655283_djlof7",
-  "buildNumber": "655283",
-  "scrapedAt": "2026-10-29T03:22:05.044Z",
+  "runId": "2026-10-29T03-24-26-894Z_655291_69r8b8",
+  "buildNumber": "655291",
+  "scrapedAt": "2026-10-29T03:24:26.894Z",
   "totals": {
-    "all": 389,
+    "all": 390,
     "legacy": 0,
-    "apex": 383
+    "apex": 384
   },
   "experiments": [
     {
@@ -6730,6 +6730,26 @@
         }
       },
       "variationCount": 5,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-collectibles-upgraded-search",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {

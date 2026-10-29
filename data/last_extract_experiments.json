@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T03-22-05-044Z_655283_djlof7",
-  "buildNumber": "655283",
-  "updatedAt": "2026-10-29T03:22:05.044Z",
-  "count": 383,
+  "runId": "2026-10-29T03-24-26-894Z_655291_69r8b8",
+  "buildNumber": "655291",
+  "updatedAt": "2026-10-29T03:24:26.894Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -6641,6 +6641,26 @@
       },
       "system": "apex",
       "fp": "16a5732e60ae8db8b6b053477af69482e57d62d4324d6982ebcfb381ad4e79f9"
+    },
+    "2026-10-collectibles-upgraded-search": {
+      "id": "2026-10-collectibles-upgraded-search",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "af6e7501f932ab60b17540ef037048da88d0633eccaaa39a36e053f57abd1e7d"
     },
     "2026-10-conjure-mcp-ui": {
       "id": "2026-10-conjure-mcp-ui",

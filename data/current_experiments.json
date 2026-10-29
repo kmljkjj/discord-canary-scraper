@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T03-22-05-044Z_655283_djlof7",
-  "buildNumber": "655283",
-  "updatedAt": "2026-10-29T03:22:05.044Z",
-  "count": 383,
+  "runId": "2026-10-29T03-24-26-894Z_655291_69r8b8",
+  "buildNumber": "655291",
+  "updatedAt": "2026-10-29T03:24:26.894Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -17263,6 +17263,58 @@
         "value": null
       },
       "fingerprint": "16a5732e60ae8db8b6b053477af69482e57d62d4324d6982ebcfb381ad4e79f9"
+    },
+    {
+      "id": "2026-10-collectibles-upgraded-search",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-collectibles-upgraded-search",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "af6e7501f932ab60b17540ef037048da88d0633eccaaa39a36e053f57abd1e7d"
     },
     {
       "id": "2026-10-conjure-mcp-ui",
