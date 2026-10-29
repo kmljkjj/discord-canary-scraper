@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 10:07 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 10:09 UTC
 
 **Fenêtre glissante 4 h — n = 6360 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **4,92 %** | [4,41 – 5,49] | 313/6360 | élevée | Mesuré |
-| hash:1144304849 | **4,53 %** | [4,03 – 5,08] | 288/6360 | élevée | Mesuré |
+| hash:1144304849 | **4,47 %** | [3,98 – 5,01] | 284/6360 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6360/6360 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6360/6360 | élevée | Mesuré |
 | Tida Webform | **100 %** | [99,94 – 100] | 6299/6299 | élevée | Mesuré |
@@ -24,10 +24,10 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:704914099
 - Variant 1 : 4,92 % (IC 95 % [4,41 ; 5,49], 313/6360, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.26, 10000] → 5,04 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.29, 10000] → 5,04 %
 
 ### hash:1144304849
-- Variant 1 : 4,53 % (IC 95 % [4,03 ; 5,08], 288/6360, confiance élevée)
+- Variant 1 : 4,47 % (IC 95 % [3,98 ; 5,01], 284/6360, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [12.4, 501.6] → 4,89 %
 
 ### Safety Experience IAR User Reporting
@@ -40,7 +40,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6299/6299, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9959.8] → 99,6 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [72.68, 9935.32] → 98,63 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
