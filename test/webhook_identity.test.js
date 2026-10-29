@@ -11,7 +11,7 @@ test('chaque type de notification fournit son nom et son avatar aux messages', a
   const opts = { identity: 'quests', minGapMs: 0, fetchImpl: async (_url, req) => { sent.push(JSON.parse(req.body)); return reply; } };
   await sendWebhook('https://example.com/webhook', { content: 'hello', username: 'ancien' }, opts);
   assert.equal(sent[0].username, 'Datamining · Quêtes');
-  assert.match(sent[0].avatar_url, /^https:\/\/.*\/1f3c6\.png$/);
+  assert.match(sent[0].avatar_url, /noto-emoji.*3D\/png\/512\/emoji_u1f3c6\.png$/); // trophée Noto 3D 512 px
   assert.equal(sent[0].content, 'hello');
 });
 

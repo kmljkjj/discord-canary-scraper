@@ -3,6 +3,9 @@
 // Les avatars du dépôt sont des illustrations vectorielles simples, pas des portraits IA.
 const MEDIA = 'https://cdn.jsdelivr.net/gh/kmljkjj/discord-canary-scraper@2600f26572392c44397e72766660521332ce56ee/media/';
 const EMOJI = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/';
+// Trophée des quêtes : Noto Emoji 3D (512 px) — le Twemoji 72 px était flou
+// dès qu'il servait de photo de profil Discord.
+const NOTO_3D = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-emoji@99701e07d3d1fe1bdbcdb14964547f0fd592966f/3D/png/512/';
 
 const IDENTITIES = Object.freeze({
   experiments: ['Expériences', MEDIA + 'avatar-experiments.png'],
@@ -15,7 +18,7 @@ const IDENTITIES = Object.freeze({
   blog: ['Blog & aide', MEDIA + 'avatar-blog.png'],
   alerts: ['Alertes', MEDIA + 'avatar-alerts.png'],
   mobile: ['Mobile', EMOJI + '1f4f1.png'],
-  quests: ['Quêtes', EMOJI + '1f3c6.png'],
+  quests: ['Quêtes', NOTO_3D + 'emoji_u1f3c6.png'],
   shop: ['Boutique', EMOJI + '1f6cd.png'],
   x: ['Actualités X', EMOJI + '1f4f0.png'],
 });
