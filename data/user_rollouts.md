@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 21:16 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 21:18 UTC
 
-**Fenêtre glissante 4 h — n = 7021 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 7152 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,8 %** | [4,31 – 5,34] | 337/7021 | élevée | Mesuré |
-| hash:1144304849 | **4,43 %** | [3,96 – 4,95] | 311/7021 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 7021/7021 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 7021/7021 | élevée | Mesuré |
-| Tida Webform | **100 %** | [100 – 100] | 7021/7021 | élevée | Exact (plages) |
+| hash:704914099 | **4,96 %** | [4,47 – 5,5] | 355/7152 | élevée | Mesuré |
+| hash:1144304849 | **4,42 %** | [3,96 – 4,93] | 316/7152 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 7152/7152 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 7152/7152 | élevée | Mesuré |
+| Tida Webform | **100 %** | [100 – 100] | 7152/7152 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,8 % (IC 95 % [4,31 ; 5,34], 337/7021, confiance élevée)
+- Variant 1 : 4,96 % (IC 95 % [4,47 ; 5,5], 355/7152, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [9496.19, 9998.81] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 4,43 % (IC 95 % [3,96 ; 4,95], 311/7021, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0.25, 498.75] → 4,99 %
+- Variant 1 : 4,42 % (IC 95 % [3,96 ; 4,93], 316/7152, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 501.91] → 5,02 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 7021/7021, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 7152/7152, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 7021/7021, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [156.61, 10000] → 98,43 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 7152/7152, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9995.03] → 99,95 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 7021/7021, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 7152/7152, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -52,7 +52,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 352 expériences user
+## En attente de rollout — 353 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -384,6 +384,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-overlay-native-window-rendering
 - 2026-10-pinot-member
 - 2026-10-profile-default-tab-with-content
+- 2026-10-profile-nitro-upsell-refresh
 - 2026-10-profile-read-state
 - 2026-10-referral-refresh-notification
 - 2026-10-remove-quests-from-discovery
