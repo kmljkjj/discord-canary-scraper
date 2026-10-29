@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["919522"],{29561(a){a.exports=JSON.parse('{"yfwZuy":["Prika\u017Ei moj badge"],"UnPGii":["Badge je dodan na tvoj profil."],"nvaTQq":["Prikupio/la si Orbs badge za profil!"]}')}}]);
+//# sourceMappingURL=b9be2988c9e29353.js.map

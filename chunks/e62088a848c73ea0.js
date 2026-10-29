@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["65392"],{242675(e){e.exports=JSON.parse('{"jBvMiO":["Overstyring av delversjon er aktiv"],"d11XdP":["Overstyring av delversjon:"],"VBPcR9":["Utviklerverkt\xf8y"]}')}}]);
+//# sourceMappingURL=e62088a848c73ea0.js.map

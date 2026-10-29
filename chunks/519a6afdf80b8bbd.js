@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["993010"],{225673(a,e,r){r.r(e),r.d(e,{default:()=>s});let s=JSON.parse('{"cRB332":["Gift for ",[8,"avatar",["avatar"]]," ",[8,"$b",[[1,"nickname"]]]," @",[1,"username"]]}')}}]);
+//# sourceMappingURL=519a6afdf80b8bbd.js.map

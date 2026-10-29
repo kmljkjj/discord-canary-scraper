@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["86366"],{184749(e){e.exports=JSON.parse('{"klSpfs":["Edit Settings"],"NzUuLD":["+",[1,"count"]," ",[6,"count",{"one":["message"],"other":["messages"]},0,"cardinal"]],"O+racd":["Threre are no notifications."],"5H2Jd6":["Show All"],"Ko8NGn":["Show Bookmarks"],"dcpdhC":["Select a message to jump there."],"VAK+h9":["Welcome to your Notification Centre!"]}')}}]);
-//# sourceMappingURL=2fd4111c5f854b55.js.map

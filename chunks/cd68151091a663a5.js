@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["352380"],{877751(e){e.exports=JSON.parse('{"F3llsQ":["Teilen, wenn ich mein Profil aktualisiere"],"6goWcz":["Erlaubt es, dass Freunde eine Push-Benachrichtigung erhalten, wenn du dein Profil aktualisierst."]}')}}]);
+//# sourceMappingURL=cd68151091a663a5.js.map

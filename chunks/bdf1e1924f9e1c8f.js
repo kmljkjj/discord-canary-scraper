@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["519943"],{401850(e){e.exports=JSON.parse('{"F3llsQ":["Delen wanneer ik mijn profiel update"],"6goWcz":["Sta vrienden toe om een pushmelding te ontvangen wanneer je je profiel updatet."]}')}}]);
+//# sourceMappingURL=bdf1e1924f9e1c8f.js.map

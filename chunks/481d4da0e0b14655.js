@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["409814"],{968885(i){i.exports=JSON.parse('{"yfwZuy":["Rozetimi G\xf6r\xfcnt\xfcle"],"UnPGii":["Rozet profiline eklendi."],"nvaTQq":["Orbs Profil Rozeti\'ni Toplad\u0131n!"]}')}}]);
+//# sourceMappingURL=481d4da0e0b14655.js.map
