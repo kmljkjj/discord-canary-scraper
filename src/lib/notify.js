@@ -2,6 +2,8 @@
  * Datamining — notify (classic embeds only — reliable on all webhooks)
  * - No backticks around keys
  * - Strings: phrase only (no hash key) · Routes: key + path
+ * - Mise en avant : le contenu le plus important de chaque section en
+ *   bloc de code (« ✨ À la une »), la liste complète derrière
  * - Batch dedupe marked ONLY after successful webhook post
  *
  * NOTE: full rich experiment lines (variants / diffs / tags) pending re-apply
@@ -58,6 +60,11 @@ const LINE_VAL_ROUTES = 100;
 const MAX_STR_LINES = 1000;
 const MAX_RT_LINES = 1000;
 const MAX_EXP_LINES = 300;
+
+// Mise en avant : nombre d'entrées affichées dans « ✨ À la une » (et seuil
+// en dessous duquel une section part entièrement en bloc de code).
+const HIGHLIGHT_COUNT = 5;
+const HIGHLIGHT_LINE_MAX = 100;
 
 async function notifyAll(opts) {
   const [a, b] = await Promise.all([notifyUrgent(opts), notifyNormal(opts)]);
@@ -373,50 +380,114 @@ function chunkLines(lines, maxLen = FIELD_MAX) {
   return chunks;
 }
 
-async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey, identity }) {
-  let ok = true;
-  for (let si = 0; si < sections.length; si++) {
-    const sec = sections[si];
-    if (!sec.lines.length) continue;
-    const chunks = chunkLines(sec.lines, FIELD_MAX);
-    const embeds = [];
-    const firstFields = chunks.slice(0, 5).map((c, i) => ({
-      name: i === 0 ? sec.label : `… (${i + 1})`,
-      value: String(c).slice(0, FIELD_MAX),
-      inline: false,
-    }));
-    embeds.push({
-      author: { name: BOT, icon_url: AVATAR },
-      title,
-      description: `Build ${bn} · **${sec.count}**`,
-      fields: firstFields,
-      color: sec.color,
-      footer: { text: `Build ${bn} · Datamining` },
-      timestamp: ts,
-    });
-    let offset = 5;
-    // (avant : limité à 8 embeds → les chunks suivants n'étaient jamais envoyés)
-    while (offset < chunks.length) {
-      const slice = chunks.slice(offset, offset + 5);
+// Une ligne peut contenir des backticks triples (textes du client) :
+// neutralisés pour ne pas casser la clôture du bloc de code.
+function sanitizeCodeLine(s) {
+  return String(s || '').replace(/```/g, "'''");
+}
+
+function codeBlock(lines) {
+  return '```\n' + lines.join('\n') + '\n```';
+}
+
+// Mise en avant « ✨ À la une » : la première ligne de chaque entrée — l'ID
+// d'une expérience, `+ clé → valeur` pour une route, la phrase pour un
+// texte. C'est le contenu le plus important : il part en bloc de code,
+// la liste complète reste derrière, inchangée.
+function highlightHeads(lines) {
+  const picked = [];
+  let len = 8; // ```\n + \n```
+  for (const raw of lines) {
+    if (picked.length >= HIGHLIGHT_COUNT) break;
+    const head = sanitizeCodeLine(String(raw).split('\n')[0]).trim();
+    if (!head) continue;
+    const l =
+      head.length > HIGHLIGHT_LINE_MAX ? head.slice(0, HIGHLIGHT_LINE_MAX - 1) + '…' : head;
+    if (len + l.length + 1 > FIELD_MAX) break;
+    picked.push(l);
+    len += l.length + 1;
+  }
+  return picked;
+}
+
+/** Construit les embeds d'une section (pur : ni envoi, ni dedupe). */
+function sectionEmbeds(sec, { title, bn, ts }) {
+  if (!sec || !sec.lines || !sec.lines.length) return [];
+  const embeds = [];
+
+  // Petite section (≤ HIGHLIGHT_COUNT entrées qui tiennent en un bloc) :
+  // TOUT le contenu part en bloc de code sous le libellé de section —
+  // l'essentiel est mis en avant, sans doublon avec la liste.
+  if (sec.lines.length <= HIGHLIGHT_COUNT) {
+    const joined = sec.lines.map(sanitizeCodeLine).join('\n');
+    if (joined.length && joined.length + 8 <= FIELD_MAX) {
       embeds.push({
-        title: `${title} · suite`,
-        fields: slice.map((c, i) => ({
-          name: `… (${offset + i + 1})`,
-          value: String(c).slice(0, FIELD_MAX),
-          inline: false,
-        })),
+        author: { name: BOT, icon_url: AVATAR },
+        title,
+        description: `Build ${bn} · **${sec.count}**`,
+        fields: [{ name: sec.label, value: codeBlock([joined]), inline: false }],
         color: sec.color,
         footer: { text: `Build ${bn} · Datamining` },
         timestamp: ts,
       });
-      offset += 5;
+      return embeds;
     }
+  }
+
+  // Grande section : « ✨ À la une » en tête de message (le contenu le plus
+  // important, en bloc de code), puis la liste complète derrière.
+  const chunks = chunkLines(sec.lines, FIELD_MAX);
+  const heads = highlightHeads(sec.lines);
+  const hlField = heads.length
+    ? { name: '✨ À la une', value: codeBlock(heads), inline: false }
+    : null;
+  // à la une (≤ 1020) + 4 champs de liste : le premier embed reste sous
+  // les mêmes limites qu'avant (5 × 1020).
+  const firstCount = hlField ? 4 : 5;
+  const firstFields = chunks.slice(0, firstCount).map((c, i) => ({
+    name: i === 0 ? sec.label : `… (${i + 1})`,
+    value: String(c).slice(0, FIELD_MAX),
+    inline: false,
+  }));
+  embeds.push({
+    author: { name: BOT, icon_url: AVATAR },
+    title,
+    description: `Build ${bn} · **${sec.count}**`,
+    fields: hlField ? [hlField, ...firstFields] : firstFields,
+    color: sec.color,
+    footer: { text: `Build ${bn} · Datamining` },
+    timestamp: ts,
+  });
+  let offset = firstCount;
+  // (avant : limité à 8 embeds → les chunks suivants n'étaient jamais envoyés)
+  while (offset < chunks.length) {
+    const slice = chunks.slice(offset, offset + 5);
+    embeds.push({
+      title: `${title} · suite`,
+      fields: slice.map((c, i) => ({
+        name: `… (${offset + i + 1})`,
+        value: String(c).slice(0, FIELD_MAX),
+        inline: false,
+      })),
+      color: sec.color,
+      footer: { text: `Build ${bn} · Datamining` },
+      timestamp: ts,
+    });
+    offset += 5;
+  }
+  return embeds;
+}
+
+async function sendSectionEmbeds({ webhookUrl, title, bn, ts, sections, batchKey, identity }) {
+  let ok = true;
+  for (let si = 0; si < sections.length; si++) {
     // 1 embed par post : chaque message reste sous la limite Discord
     // (4000 caractères de texte par message Components V2)
     // Clé de dedupe unique par (lot, section, partie). Avant : empreinte du
     // contenu tronqué → deux messages « … suite » qui commençaient pareil
     // (ou identiques à un message d'un build précédent < 24 h) étaient
     // considérés comme déjà envoyés et JAMAIS postés.
+    const embeds = sectionEmbeds(sections[si], { title, bn, ts });
     for (let i = 0; i < embeds.length; i++) {
       const key = batchKey ? `${batchKey}:s${si}:p${i}:${embeds.length}` : null;
       const r = await post(webhookUrl, { embeds: [embeds[i]] }, key, identity);
@@ -640,4 +711,4 @@ async function post(url, body, dedupeKey, identity) {
   return false;
 }
 
-module.exports = { notifyAll, notifyUrgent, notifyNormal, post };
+module.exports = { notifyAll, notifyUrgent, notifyNormal, post, sectionEmbeds };
