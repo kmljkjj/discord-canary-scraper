@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T22-37-48-430Z_656958_jitli7",
-  "buildNumber": "656958",
+  "runId": "2026-10-29T22-42-07-516Z_656976_2jjgco",
+  "buildNumber": "656976",
   "extractVersion": 3,
-  "updatedAt": "2026-10-29T22:37:48.430Z",
-  "count": 1107,
+  "updatedAt": "2026-10-29T22:42:07.516Z",
+  "count": 1106,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -1090,7 +1090,6 @@
     "GUILD_PRODUCT": "/channels/:param/shop/:param",
     "COLLECTIBLES_SHOP_WITH_TAB": "/shop?tab=:param",
     "COLLECTIBLES_SHOP_COLLECTION_DETAIL": "/shop/collection/:param",
-    "COLLECTIBLES_SHOP_PRODUCT_DETAIL": "/shop/product/:param",
     "CHANNEL_SUMMARIES": "/channels/:param/summaries",
     "CHANNEL_SUMMARY": "/channels/:param/summaries/:param",
     "GAME_PROFILE": "/games/:param",
