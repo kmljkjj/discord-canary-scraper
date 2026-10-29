@@ -2967,13 +2967,13 @@
   },
   {
     "kind": "user",
-    "name": "2026-07-autoclipping-marketing",
+    "name": "2026-07-autoclipping-default-override",
     "defaultConfig": {
-      "enableMarketing": false
+      "enabled": false
     },
     "variations": {
       "1": {
-        "enableMarketing": true
+        "enabled": true
       }
     },
     "label": null
