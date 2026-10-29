@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-29T16:25:01.240Z",
+  "fetchedAt": "2026-10-29T16:32:02.284Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -390,17 +390,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
+        "0": 2
       }
     },
     {
@@ -410,17 +410,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 3,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 3
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 3,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 3
+        "0": 5
       }
     },
     {
@@ -2214,10 +2214,10 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-07-autoclipping-marketing",
-      "hash": 857282464,
+      "id": "2026-07-autoclipping-default-override",
+      "hash": 2367578050,
       "type": "user",
-      "title": "2026-07-autoclipping-marketing",
+      "title": "2026-07-autoclipping-default-override",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
