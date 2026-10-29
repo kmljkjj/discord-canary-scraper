@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T22-33-30-717Z_656943_l1ts81",
-  "buildNumber": "656943",
-  "scrapedAt": "2026-10-29T22:33:30.717Z",
+  "runId": "2026-10-29T22-35-36-960Z_656954_ripyw4",
+  "buildNumber": "656954",
+  "scrapedAt": "2026-10-29T22:35:36.960Z",
   "totals": {
-    "all": 390
+    "all": 389
   },
   "experiments": [
     {
@@ -3301,23 +3301,6 @@
     },
     {
       "id": "2026-06-gifting-badge-desktop",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-gummy-bears",
       "type": "user",
       "kind": "user",
       "label": null,

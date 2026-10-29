@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T22-33-30-717Z_656943_l1ts81",
-  "buildNumber": "656943",
-  "updatedAt": "2026-10-29T22:33:30.717Z",
-  "count": 384,
+  "runId": "2026-10-29T22-35-36-960Z_656954_ripyw4",
+  "buildNumber": "656954",
+  "updatedAt": "2026-10-29T22:35:36.960Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -8603,52 +8603,6 @@
         "value": null
       },
       "fingerprint": "e8db162571223da157b51ead0d00c255b5e2fd6a6ec5a6fa316637e4224f3229"
-    },
-    {
-      "id": "2026-06-gummy-bears",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-06-gummy-bears",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "d1d3298190d009e2658b7b2e7a79a24962a2bc53fca7760f372806a0682740c5"
     },
     {
       "id": "2026-06-hero-shelf-ad-tile",
