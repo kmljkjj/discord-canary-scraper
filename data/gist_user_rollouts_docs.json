@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-29T17:52:55.739Z",
+ "generatedAt": "2026-10-29T21:37:02.943Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
@@ -9,10 +9,10 @@
  },
  "stats": {
   "total": 1006,
-  "user": 354,
-  "userData": 148,
+  "user": 353,
+  "userData": 147,
   "guild": 38,
-  "unclassified": 614,
+  "unclassified": 615,
   "noData": 270
  },
  "experiments": [
@@ -1205,31 +1205,6 @@
    "notEligiblePct": null,
    "unassignedPct": null,
    "byVariant": {}
-  },
-  {
-   "id": "2026-09-referral-trial-cta",
-   "title": "2026-09-referral-trial-cta",
-   "type": "user",
-   "hasData": true,
-   "totalsAvailable": true,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [],
-   "treatmentPct": 50,
-   "projectedTreatmentPct": null,
-   "controlPct": 50,
-   "notEligiblePct": 0,
-   "unassignedPct": 0,
-   "byVariant": {
-    "0": {
-     "pct": 50,
-     "role": "control"
-    },
-    "1": {
-     "pct": 50,
-     "role": "treatment"
-    }
-   }
   },
   {
    "id": "2026-09-referral-profile-contextual-menu-upsell",
