@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T04-24-09-199Z_655500_kzrb31",
-  "buildNumber": "655500",
+  "runId": "2026-10-29T04-26-11-731Z_655527_xwrrl8",
+  "buildNumber": "655527",
   "extractVersion": 3,
-  "updatedAt": "2026-10-29T04:24:09.199Z",
-  "count": 1106,
+  "updatedAt": "2026-10-29T04:26:11.731Z",
+  "count": 1107,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -1029,6 +1029,7 @@
     "GAME_ORGANIZATION_INVITES": "/game-organizations/:param/:param/invites",
     "GAME_ORGANIZATION_INVITE": "/game-organization-invites/:param",
     "GAME_ORGANIZATION_INVITE_JOIN": "/game-organization-invites/:param/join",
+    "GAME_ORGANIZATION_INVITE_CHARACTERS": "/game-organization-invites/:param/characters",
     "GUILD_ROOM": "/guilds/:param/rooms/:param",
     "GUILD_ROOM_CONNECT": "/guilds/:param/rooms/:param/connect",
     "GUILD_ROOM_UPDATE": "/guilds/:param/rooms/:param/update",

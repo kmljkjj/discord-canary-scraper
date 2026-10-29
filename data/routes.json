@@ -1104,5 +1104,6 @@
   "HOME": "/home/web_user",
   "JSNLOG_URL": "/openvidu/elk/openvidu-browser-logs",
   "DISCOVERABLE_CONTENT": "/guilds/:param/discoverable-content",
-  "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param"
+  "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param",
+  "GAME_ORGANIZATION_INVITE_CHARACTERS": "/game-organization-invites/:param/characters"
 }
