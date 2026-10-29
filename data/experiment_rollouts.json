@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-29T22:31:25.659Z",
+  "fetchedAt": "2026-10-29T22:38:21.827Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -384,10 +384,10 @@
       }
     },
     {
-      "hash": 1144304849,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_1144304849",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 3,
@@ -404,23 +404,23 @@
       }
     },
     {
-      "hash": 704914099,
+      "hash": 1144304849,
       "id": null,
       "type": "user",
-      "title": "hash_704914099",
+      "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 2,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 2
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 2,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 2
       }
     },
     {
@@ -2018,16 +2018,6 @@
       "hash": 1695261926,
       "type": "user",
       "title": "2026-06-gifting-badge-desktop",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-06-gummy-bears",
-      "hash": 761051204,
-      "type": "user",
-      "title": "2026-06-gummy-bears",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4275,11 +4265,11 @@
     }
   ],
   "summary": {
-    "total": 395,
+    "total": 394,
     "guild": 38,
-    "user": 357,
+    "user": 356,
     "withPercentage": 10,
-    "withoutPercentage": 385,
+    "withoutPercentage": 384,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 4,
