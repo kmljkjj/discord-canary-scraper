@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T02-04-15-262Z_655088_e6w330",
-  "buildNumber": "655088",
+  "runId": "2026-10-29T02-06-23-513Z_655092_fodnld",
+  "buildNumber": "655092",
   "extractVersion": 3,
-  "updatedAt": "2026-10-29T02:04:15.262Z",
+  "updatedAt": "2026-10-29T02:06:23.514Z",
   "count": 1106,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
@@ -1109,7 +1109,7 @@
     "UPDATE_VOICE_STATE": "/guilds/:param/voice-states/:param",
     "HOME": "/home/web_user",
     "JSNLOG_URL": "/openvidu/elk/openvidu-browser-logs",
-    "DISCOVERABLE_CONTENT": "/guilds/:param/discoverable-content",
-    "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param"
+    "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param",
+    "DISCOVERABLE_CONTENT": "/guilds/:param/discoverable-content"
   }
 }

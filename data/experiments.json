@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-29T02-04-15-262Z_655088_e6w330",
-  "buildNumber": "655088",
-  "scrapedAt": "2026-10-29T02:04:15.262Z",
+  "runId": "2026-10-29T02-06-23-513Z_655092_fodnld",
+  "buildNumber": "655092",
+  "scrapedAt": "2026-10-29T02:06:23.514Z",
   "totals": {
     "all": 389,
     "legacy": 0,
-    "apex": 384
+    "apex": 383
   },
   "experiments": [
     {
@@ -3372,9 +3372,8 @@
     {
       "id": "2026-06-improved-shop-loading",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "enabled": false
       },
@@ -3385,9 +3384,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-06-nitro-gdm-cap-increase",
