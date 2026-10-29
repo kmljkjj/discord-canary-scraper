@@ -2690,6 +2690,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-06-improved-shop-loading",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-06-nitro-gdm-cap-increase",
     "defaultConfig": {
       "enabled": false
