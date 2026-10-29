@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 10:35 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-29 10:37 UTC
 
-**Fenêtre glissante 4 h — n = 6519 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6595 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,89 %** | [4,39 – 5,46] | 319/6519 | élevée | Mesuré |
-| hash:1144304849 | **4,54 %** | [4,05 – 5,08] | 296/6519 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6519/6519 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6519/6519 | élevée | Mesuré |
-| Tida Webform | **100 %** | [100 – 100] | 6458/6458 | élevée | Exact (plages) |
+| hash:704914099 | **4,93 %** | [4,42 – 5,49] | 325/6595 | élevée | Mesuré |
+| hash:1144304849 | **4,46 %** | [3,98 – 4,99] | 294/6595 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6595/6595 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6595/6595 | élevée | Mesuré |
+| Tida Webform | **100 %** | [100 – 100] | 6534/6534 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,89 % (IC 95 % [4,39 ; 5,46], 319/6519, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.1, 10000] → 5,04 %
+- Variant 1 : 4,93 % (IC 95 % [4,42 ; 5,49], 325/6595, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.13, 10000] → 5,04 %
 
 ### hash:1144304849
-- Variant 1 : 4,54 % (IC 95 % [4,05 ; 5,08], 296/6519, confiance élevée)
+- Variant 1 : 4,46 % (IC 95 % [3,98 ; 4,99], 294/6595, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.84] → 5 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6519/6519, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6595/6595, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6519/6519, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 367.5] + [827.38, 9970.63] → 95,11 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6595/6595, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 3610.48] + [3886.22, 10000] → 97,24 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6458/6458, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6534/6534, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -52,7 +52,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 353 expériences user
+## En attente de rollout — 352 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -80,7 +80,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-10-go-live-auto-quality
 - 2025-10-low-latency-rate-control
 - Calendar
-- Tida Webform
 - 2025-11-age-verification-expressive-everywhere
 - 2025-11-global-frame-pool-lock
 - 2025-11-mana-context-menu
