@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-29T00-24-37-447Z_654887_xspguv",
-  "buildNumber": "654887",
-  "updatedAt": "2026-10-29T00:24:37.447Z",
-  "count": 383,
+  "runId": "2026-10-29T00-28-54-893Z_654881_ta63d1",
+  "buildNumber": "654881",
+  "updatedAt": "2026-10-29T00:28:54.893Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -6394,6 +6394,26 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "1c74d8717e44607c5b8c998bc9802edd5d1240ff1dad4cb063b42ac5834cc5e4"
+    },
+    "2026-10-animated-shop-bundle-previews": {
+      "id": "2026-10-animated-shop-bundle-previews",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "452e553b9bf8ef8d7ffa7fa0b6b1a3f04e5618487bce524c7bd2a48fc6dd4ec8"
     },
     "2026-10-avx512-entropy-histogram": {
       "id": "2026-10-avx512-entropy-histogram",
