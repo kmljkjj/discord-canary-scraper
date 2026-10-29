@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-29T00-37-28-758Z_654880_phulfk",
-  "buildNumber": "654880",
-  "scrapedAt": "2026-10-29T00:37:28.758Z",
+  "runId": "2026-10-29T00-45-12-012Z_654906_d0bg86",
+  "buildNumber": "654906",
+  "scrapedAt": "2026-10-29T00:45:12.012Z",
   "totals": {
-    "all": 388
+    "all": 389
   },
   "experiments": [
     {
@@ -6464,6 +6464,26 @@
       "defaultConfig": null,
       "variations": null,
       "variationCount": 0,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-animated-shop-bundle-previews",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
