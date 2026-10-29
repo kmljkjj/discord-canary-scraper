@@ -20,8 +20,6 @@ const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL || null;
 
 const SOURCE_REPO = process.env.MOBILE_DATAMINE_REPO || '';
 
-const MAX_NOTIFY_EXP = Number(process.env.MAX_WEBHOOKS_PER_RUN || 8);
-
 function isExpId(id) {
   if (!/^20[2-3]\d-[0-1]\d[_-][a-z0-9_\-]{3,80}$/i.test(id)) return false;
   if (/^20\d{2}-\d{2}$/.test(id)) return false;
@@ -236,21 +234,39 @@ async function postWebhook(payload) {
   throw new Error('Webhook failed after retries');
 }
 
-function experimentEmbed(exp, meta) {
-  const type = exp.type || 'user';
-  const desc = [
-    `+ \`${exp.id}\` (**${type}**)`,
-    `Type: **${type}**`,
-    meta.message ? `Rev: ${meta.message.slice(0, 80)}` : null,
-    `Source: **mobile files** (\`${meta.commit}\`)`,
-  ]
-    .filter(Boolean)
-    .join('\n');
+const TYPE_EMOJI = { user: '👤', guild: '🏠' };
+
+/** Embed groupé des nouvelles expériences mobiles (triées user → guild). */
+function experimentsEmbed(newExps, meta) {
+  const sorted = [...newExps].sort((a, b) =>
+    String(a.type || 'user').localeCompare(String(b.type || 'user')) || a.id.localeCompare(b.id));
+  const shown = sorted.slice(0, 25);
+  const lines = shown.map((e) => `${TYPE_EMOJI[e.type] || '🧪'} \`${e.id}\` · ${e.type || 'user'}`);
+  if (sorted.length > shown.length) lines.push(`_…and ${sorted.length - shown.length} more_`);
+  const counts = sorted.reduce((acc, e) => { const k = e.type || 'user'; acc[k] = (acc[k] || 0) + 1; return acc; }, {});
+  const fields = Object.entries(counts).map(([k, n]) => ({ name: `${TYPE_EMOJI[k] || '🧪'} ${k}`, value: String(n), inline: true }));
+  if (meta.message) fields.push({ name: 'Source revision', value: meta.message.slice(0, 100), inline: false });
   return {
-    title: 'New Experiment (Mobile)',
-    description: desc,
+    title: `🧪 Mobile Experiments · ${sorted.length} new`,
+    description: lines.join('\n').slice(0, 4000),
     color: 0xeb459e,
-    footer: { text: `Mobile files · ${meta.commit}` },
+    fields,
+    footer: { text: `Datamining · Mobile files · ${meta.commit}` },
+    timestamp: new Date().toISOString(),
+  };
+}
+
+/** Embed des nouvelles strings mobiles (bloc diff). */
+function stringsEmbed(added, meta) {
+  const entries = Object.entries(added || {});
+  const shown = entries.slice(0, 35);
+  const body = shown.map(([k, v]) => `+ ${k}: ${String(v).replace(/\s+/g, ' ').slice(0, 90)}`).join('\n');
+  const more = entries.length > shown.length ? `\n_…and ${entries.length - shown.length} more_` : '';
+  return {
+    title: `📝 Mobile Strings · ${entries.length} added`,
+    description: ('```diff\n' + body.slice(0, 3700) + '\n```' + more),
+    color: 0x57f287,
+    footer: { text: `Datamining · Mobile files · ${meta.commit}` },
     timestamp: new Date().toISOString(),
   };
 }
@@ -260,46 +276,14 @@ async function notify(newExps, stringDiff, meta) {
     console.log('No DISCORD_WEBHOOK_URL — skip notify');
     return;
   }
-  if (!newExps.length && !Object.keys(stringDiff.added || {}).length) return;
+  const hasStrings = Object.keys(stringDiff.added || {}).length > 0;
+  if (!newExps.length && !hasStrings) return;
 
-  if (newExps.length) {
-    await postWebhook({
-      embeds: [
-        {
-          title: 'Mobile Experiments',
-          description: newExps
-            .slice(0, 20)
-            .map((e) => `+ \`${e.id}\` (${e.type || 'user'})`)
-            .join('\n'),
-          color: 0xeb459e,
-          footer: { text: `Mobile · ${meta.commit} · +${newExps.length}` },
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
-  }
-
-  for (const exp of newExps.slice(0, MAX_NOTIFY_EXP)) {
-    await postWebhook({ embeds: [experimentEmbed(exp, meta)] });
-  }
-
-  const strLines = Object.entries(stringDiff.added || {})
-    .slice(0, 35)
-    .map(([k, v]) => `+ ${k}: ${String(v).slice(0, 80)}`);
-  if (strLines.length) {
-    await postWebhook({
-      embeds: [
-        {
-          title: 'Strings (Mobile)',
-          description:
-            '_Added_\n```\n' + strLines.join('\n').slice(0, 3500) + '\n```',
-          color: 0x57f287,
-          footer: { text: `Mobile files · ${meta.commit}` },
-          timestamp: new Date().toISOString(),
-        },
-      ],
-    });
-  }
+  // Un seul message : expériences + strings regroupées (au lieu d'1 message par expérience)
+  const embeds = [];
+  if (newExps.length) embeds.push(experimentsEmbed(newExps, meta));
+  if (hasStrings) embeds.push(stringsEmbed(stringDiff.added, meta));
+  await postWebhook({ embeds });
 }
 
 async function main() {
@@ -392,7 +376,11 @@ async function main() {
   console.log('=== Mobile files done ===');
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { experimentsEmbed, stringsEmbed, isExpId, extractFromContent };
