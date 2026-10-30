@@ -36,6 +36,25 @@ jobs:
           tar -xzf /tmp/x.tar.gz -C /tmp/xcli
           BIN=$(find /tmp/xcli -maxdepth 2 -type f -name x | head -n1)
           install -m 755 "$BIN" bin/x
+      - name: Debug surfaces X (diagnostic)
+        if: github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        env:
+          X_CLI_BIN: ${{ github.workspace }}/bin/x
+        run: |
+          echo '--- matrice UA x handle (qui recoit les tweets ?) ---'
+          for UA in 'x-cli/dev (+https://github.com/tamnd/x-cli)' 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'; do
+            for H in DiscordNEW8r jack; do
+              OUT=/tmp/syn_$H.html
+              curl -sS -o "$OUT" -w "UA ${UA%% *} · $H: HTTP %{http_code} · %{size_download}B " \
+                -A "$UA" "https://syndication.twitter.com/srv/timeline-profile/screen-name/$H" || true
+              grep -c '"id_str"' "$OUT" 2>/dev/null || echo 'no tweets'
+              rm -f "$OUT"
+            done
+          done
+          echo '--- x doctor (sonde des 8 surfaces) ---'
+          "${X_CLI_BIN}" doctor || true
+
       - name: Watch @DiscordNEW8r
         env:
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL || secrets.X_NEWS_WEBHOOK_URL }}
@@ -47,24 +66,6 @@ jobs:
         continue-on-error: true
         run: node src/x_watch.js
 
-      - name: Debug surfaces X (diagnostic)
-        if: github.event_name == 'workflow_dispatch'
-        continue-on-error: true
-        env:
-          X_CLI_BIN: ${{ github.workspace }}/bin/x
-        run: |
-          echo '--- matrice UA x handle (qui recoit les tweets ?) ---'
-          for UA in 'x-cli/dev (+https://github.com/tamnd/x-cli)' 'curl/8.5.0' 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'; do
-            for H in DiscordNEW8r jack; do
-              OUT=/tmp/syn_$H.html
-              curl -sS -o "$OUT" -w "UA ${UA%% *} · $H: HTTP %{http_code} · %{size_download}B " \
-                -A "$UA" "https://syndication.twitter.com/srv/timeline-profile/screen-name/$H" || true
-              grep -c '"id_str"' "$OUT" 2>/dev/null || echo 'no tweets'
-              rm -f "$OUT"
-            done
-          done
-          echo '--- x doctor (sonde des 8 surfaces) ---'
-          "${X_CLI_BIN}" doctor || true
 
       - name: Save seen ids
         if: always()

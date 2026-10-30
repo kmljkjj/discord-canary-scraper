@@ -232,7 +232,7 @@ function logSyndicationShell(html) {
 async function fetchViaSyndication() {
   const target = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + SCREEN_NAME;
   const routes = [
-    { name: 'direct', url: target, tries: 3 },
+    { name: 'direct', url: target, tries: 1 },
     { name: 'allorigins', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target), tries: 1 },
     { name: 'codetabs', url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target), tries: 1 },
   ];
