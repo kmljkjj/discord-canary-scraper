@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-30T18-21-53-411Z_658432_8vk5aw",
-  "buildNumber": "658432",
-  "scrapedAt": "2026-10-30T18:21:53.411Z",
+  "runId": "2026-10-30T18-27-20-772Z_658447_u7xzq1",
+  "buildNumber": "658447",
+  "scrapedAt": "2026-10-30T18:27:20.772Z",
   "totals": {
-    "all": 385
+    "all": 386
   },
   "experiments": [
     {
@@ -7465,6 +7465,24 @@
       "variations": {
         "0": {
           "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-shop-twelve-days-promo",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
         },
         "1": {
           "enabled": true
