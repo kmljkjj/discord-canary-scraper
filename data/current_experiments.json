@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T20-42-47-476Z_658804_xtbpe1",
-  "buildNumber": "658804",
-  "updatedAt": "2026-10-30T20:42:47.476Z",
-  "count": 383,
+  "runId": "2026-10-30T20-44-52-511Z_658809_by1al3",
+  "buildNumber": "658809",
+  "updatedAt": "2026-10-30T20:44:52.511Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -16485,6 +16485,52 @@
         "value": null
       },
       "fingerprint": "f7b1c7083795e7c58dd1b28a69ad77bb20e3b0c0450aeb1487ec6bfac03f1d1d"
+    },
+    {
+      "id": "2026-10-clips-default-on-geo",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "allowDefaultOn": false
+      },
+      "variations": {
+        "1": {
+          "allowDefaultOn": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 1,
+      "raw": {
+        "id": "2026-10-clips-default-on-geo",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "allowDefaultOn": false
+        },
+        "variations": {
+          "1": {
+            "allowDefaultOn": true
+          }
+        },
+        "variationCount": 1,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "9da6d1e309cfb14c2a70cc34248db3729c910da2dd7ca9057a08271a1586c574"
     },
     {
       "id": "2026-10-cod-relink",

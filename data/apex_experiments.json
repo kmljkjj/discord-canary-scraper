@@ -5072,6 +5072,19 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-clips-default-on-geo",
+    "defaultConfig": {
+      "allowDefaultOn": false
+    },
+    "variations": {
+      "1": {
+        "allowDefaultOn": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-cod-relink",
     "defaultConfig": {
       "enabled": false
