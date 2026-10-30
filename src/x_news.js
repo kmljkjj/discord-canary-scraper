@@ -215,28 +215,43 @@ async function fetchSyndicationHtml(url) {
   }
 }
 
+function logSyndicationShell(html) {
+  const m = String(html).match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+  if (!m) {
+    console.log('syndication shell · html head:', String(html).slice(0, 400));
+    return;
+  }
+  try {
+    const d = JSON.parse(m[1]);
+    const pp = d && d.props && d.props.pageProps;
+    console.log('syndication shell · pageProps keys:', pp ? Object.keys(pp).join(',') : 'none');
+  } catch {}
+  console.log('syndication shell · blob head:', m[1].slice(0, 500));
+}
+
 async function fetchViaSyndication() {
   const target = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + SCREEN_NAME;
   const routes = [
-    { name: 'direct', url: target },
-    {
-      name: 'allorigins',
-      url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target),
-    },
-    {
-      name: 'codetabs',
-      url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target),
-    },
+    { name: 'direct', url: target, tries: 3 },
+    { name: 'allorigins', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target), tries: 1 },
+    { name: 'codetabs', url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target), tries: 1 },
   ];
   for (const route of routes) {
-    const html = await fetchSyndicationHtml(route.url);
-    if (html == null) continue;
-    const posts = parseSyndicationProfile(html, SCREEN_NAME);
-    console.log(
-      'syndication', route.name + ':', posts.length, 'posts · html',
-      html.length, 'B · NEXT_DATA:', html.includes('__NEXT_DATA__'),
-    );
-    if (posts.length) return posts;
+    for (let i = 1; i <= route.tries; i++) {
+      const html = await fetchSyndicationHtml(route.url);
+      if (html == null) break;
+      const posts = parseSyndicationProfile(html, SCREEN_NAME);
+      console.log(
+        'syndication', route.name + ':', posts.length, 'posts · html',
+        html.length, 'B · NEXT_DATA:', html.includes('__NEXT_DATA__'),
+      );
+      if (posts.length) return posts;
+      logSyndicationShell(html);
+      if (i < route.tries) {
+        console.warn('syndication shell, nouvelle tentative dans 75s');
+        await new Promise((r) => setTimeout(r, 75000));
+      }
+    }
   }
   return [];
 }
