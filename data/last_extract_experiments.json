@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-30T18-00-08-183Z_658387_t5b00x",
-  "buildNumber": "658387",
-  "updatedAt": "2026-10-30T18:00:08.183Z",
+  "runId": "2026-10-30T18-02-26-049Z_658392_jwpwze",
+  "buildNumber": "658392",
+  "updatedAt": "2026-10-30T18:02:26.050Z",
   "count": 377,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -6223,27 +6223,20 @@
       "type": "user",
       "kind": "user",
       "label": null,
-      "variationCount": 3,
+      "variationCount": 2,
       "variations": {
         "0": {
-          "enabled": false,
-          "swipeBetweenBadges": false
+          "enabled": false
         },
         "1": {
-          "enabled": true,
-          "swipeBetweenBadges": false
-        },
-        "2": {
-          "enabled": true,
-          "swipeBetweenBadges": true
+          "enabled": true
         }
       },
       "defaultConfig": {
-        "enabled": false,
-        "swipeBetweenBadges": false
+        "enabled": false
       },
       "system": "apex",
-      "fp": "1a0c1e9bbc5f02049748ce9e19d782d1a5f0b5b85df0b1da2544a6b664ca2747"
+      "fp": "5dfeea91f4ad9284d054d9fe3317cea9f089ec9f07bd00b2e1f5a0702533dcff"
     },
     "2026-10-bounties-desktop-quest-bar": {
       "id": "2026-10-bounties-desktop-quest-bar",

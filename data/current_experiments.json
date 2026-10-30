@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-30T18-00-08-183Z_658387_t5b00x",
-  "buildNumber": "658387",
-  "updatedAt": "2026-10-30T18:00:08.183Z",
+  "runId": "2026-10-30T18-02-26-049Z_658392_jwpwze",
+  "buildNumber": "658392",
+  "updatedAt": "2026-10-30T18:02:26.050Z",
   "count": 377,
   "experiments": [
     {
@@ -16161,26 +16161,19 @@
       "title": null,
       "description": null,
       "defaultConfig": {
-        "enabled": false,
-        "swipeBetweenBadges": false
+        "enabled": false
       },
       "variations": {
         "0": {
-          "enabled": false,
-          "swipeBetweenBadges": false
+          "enabled": false
         },
         "1": {
-          "enabled": true,
-          "swipeBetweenBadges": false
-        },
-        "2": {
-          "enabled": true,
-          "swipeBetweenBadges": true
+          "enabled": true
         }
       },
       "treatments": null,
       "variationSource": "variations",
-      "variationCount": 3,
+      "variationCount": 2,
       "raw": {
         "id": "2026-10-badge-directory-updates",
         "type": "user",
@@ -16188,24 +16181,17 @@
         "label": null,
         "system": "apex",
         "defaultConfig": {
-          "enabled": false,
-          "swipeBetweenBadges": false
+          "enabled": false
         },
         "variations": {
           "0": {
-            "enabled": false,
-            "swipeBetweenBadges": false
+            "enabled": false
           },
           "1": {
-            "enabled": true,
-            "swipeBetweenBadges": false
-          },
-          "2": {
-            "enabled": true,
-            "swipeBetweenBadges": true
+            "enabled": true
           }
         },
-        "variationCount": 3,
+        "variationCount": 2,
         "source": "discord"
       },
       "guildPercentage": {
@@ -16216,7 +16202,7 @@
         "status": "unknown",
         "value": null
       },
-      "fingerprint": "1a0c1e9bbc5f02049748ce9e19d782d1a5f0b5b85df0b1da2544a6b664ca2747"
+      "fingerprint": "5dfeea91f4ad9284d054d9fe3317cea9f089ec9f07bd00b2e1f5a0702533dcff"
     },
     {
       "id": "2026-10-bounties-desktop-quest-bar",
