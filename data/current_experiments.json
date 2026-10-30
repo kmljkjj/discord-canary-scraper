@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T20-38-27-559Z_658795_3vlu9e",
-  "buildNumber": "658795",
-  "updatedAt": "2026-10-30T20:38:27.559Z",
-  "count": 382,
+  "runId": "2026-10-30T20-42-47-476Z_658804_xtbpe1",
+  "buildNumber": "658804",
+  "updatedAt": "2026-10-30T20:42:47.476Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -13889,6 +13889,52 @@
         "value": null
       },
       "fingerprint": "604e6b216cc8293653e78567d8c8fdaed7ea07b3bd0a505b4948c25fa407fafc"
+    },
+    {
+      "id": "2026-09-linked-guilds",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 1,
+      "raw": {
+        "id": "2026-09-linked-guilds",
+        "type": "guild",
+        "kind": "guild",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 1,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "4e9f6db60b8480a394ce3390aadb09d9e27913c01e8f7c731aee912ce28a1a78"
     },
     {
       "id": "2026-09-linux-gpu-decode",
