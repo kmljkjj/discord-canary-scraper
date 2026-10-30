@@ -5111,6 +5111,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-10-build-a-bear-qa",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-10-bulk-nitro-gifting-discounts",
     "defaultConfig": {
       "enabled": false

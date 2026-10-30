@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T16-57-26-497Z_658225_8o27bz",
-  "buildNumber": "658225",
-  "updatedAt": "2026-10-30T16:57:26.497Z",
-  "count": 383,
+  "runId": "2026-10-30T17-00-46-600Z_658227_bepkwa",
+  "buildNumber": "658227",
+  "updatedAt": "2026-10-30T17:00:46.600Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -16603,6 +16603,58 @@
         "value": null
       },
       "fingerprint": "b9722cb7336bee7040ee15936ed2a13a6faf77b52aeca76e1fc6f29e5e48f299"
+    },
+    {
+      "id": "2026-10-build-a-bear-qa",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-build-a-bear-qa",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fd859b298bcfe84d0d02e8d6f17342569c7883381ab3f5050feb891bddecd9cb"
     },
     {
       "id": "2026-10-bulk-nitro-gifting-discounts",
