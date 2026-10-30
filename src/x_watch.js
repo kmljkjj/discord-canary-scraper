@@ -50,6 +50,63 @@ const RSS_SOURCES = [
   `https://xcancel.com/${USERNAME}/rss`,
 ];
 
+// Lit la page publique « timeline-profile » de la syndication X (tier 0 :
+// aucune auth, aucun binaire). Le HTML embarque un blob __NEXT_DATA__ dont
+// les entrées sont les tweets récents du compte.
+function parseSyndicationProfile(html, screenName) {
+  const m = String(html || '').match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+  if (!m) return [];
+  let data;
+  try { data = JSON.parse(m[1]); } catch { return []; }
+  const entries =
+    (data && data.props && data.props.pageProps && data.props.pageProps.timeline && data.props.pageProps.timeline.entries) ||
+    [];
+  const out = [];
+  const seenIds = new Set();
+  for (const e of entries) {
+    const t = e && e.content && e.content.tweet;
+    if (!t || !t.id_str) continue;
+    const id = String(t.id_str);
+    if (seenIds.has(id)) continue;
+    seenIds.add(id);
+    let image = null;
+    const media =
+      (t.extended_entities && t.extended_entities.media) ||
+      (t.entities && t.entities.media) ||
+      [];
+    if (media[0]) image = media[0].media_url_https || null;
+    out.push({
+      id,
+      text: String(t.full_text || t.text || ''),
+      url: 'https://x.com/' + screenName + '/status/' + id,
+      date: t.created_at ? new Date(t.created_at).toISOString() : null,
+      image,
+    });
+  }
+  return out;
+}
+
+async function fetchViaSyndication() {
+  const url = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + USERNAME;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': DEFAULT_UA,
+        Accept: 'text/html,application/xhtml+xml,*/*',
+      },
+      timeout: 20000,
+    });
+    if (!res.ok) {
+      console.warn('syndication', res.status, url);
+      return [];
+    }
+    const html = await res.text();
+    return parseSyndicationProfile(html, USERNAME);
+  } catch (e) {
+    console.warn('syndication fail:', e.message || e);
+    return [];
+  }
+}
 // Convertit la sortie JSONL de « x timeline <handle> --guest -o jsonl » en posts
 // internes { id, text, url, date, image }. Ignore lignes vides/invalides,
 // ids non numériques ou trop courts, et doublons.
@@ -114,6 +171,11 @@ async function main() {
     }
   } else {
     console.log('No X_BEARER_TOKEN — public sources often fail');
+  }
+
+  if (posts.length < 1) {
+    posts = await fetchViaSyndication();
+    console.log('syndication posts:', posts.length);
   }
 
   if (posts.length < 1) {
@@ -392,4 +454,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { parseXcliJsonl };
+module.exports = { parseXcliJsonl, parseSyndicationProfile };

@@ -36,6 +36,19 @@ jobs:
           tar -xzf /tmp/x.tar.gz -C /tmp/xcli
           BIN=$(find /tmp/xcli -maxdepth 2 -type f -name x | head -n1)
           install -m 755 "$BIN" bin/x
+      - name: Debug surfaces X (diagnostic)
+        continue-on-error: true
+        env:
+          X_CLI_BIN: ${{ github.workspace }}/bin/x
+        run: |
+          echo '--- syndication profile (tier 0, sans auth) ---'
+          curl -sS -o /tmp/syn.html -w "HTTP %{http_code} · %{size_download} bytes\n" \
+            -A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \
+            'https://syndication.twitter.com/srv/timeline-profile/screen-name/DiscordNEW8r' || true
+          grep -c '__NEXT_DATA__' /tmp/syn.html || echo 'pas de NEXT_DATA'
+          grep -o '"id_str":"[0-9]*"' /tmp/syn.html | head -n 5 || true
+          echo '--- x doctor (sonde des 8 surfaces) ---'
+          "${X_CLI_BIN}" doctor || true
       - name: Watch @DiscordNEW8r
         env:
           X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
