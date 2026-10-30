@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T21-18-28-956Z_658911_81hmbn",
-  "buildNumber": "658911",
-  "updatedAt": "2026-10-30T21:18:28.956Z",
-  "count": 384,
+  "runId": "2026-10-30T21-22-48-833Z_658913_7uev7q",
+  "buildNumber": "658913",
+  "updatedAt": "2026-10-30T21:22:48.833Z",
+  "count": 385,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -17811,6 +17811,58 @@
         "value": null
       },
       "fingerprint": "a6fd062e217eea883b76188a5e6387b613ea1648abb2f17ec448277dbb4b59bb"
+    },
+    {
+      "id": "2026-10-game-discovery",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-game-discovery",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "fd1932e1da47bfc7623992fdf906f4ec593146a9eb31e69d9af1008e7e0305db"
     },
     {
       "id": "2026-10-game-exit-promo-rust",

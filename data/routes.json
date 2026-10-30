@@ -1105,5 +1105,6 @@
   "DISCOVERABLE_CONTENT": "/guilds/:param/discoverable-content",
   "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param",
   "GAME_ORGANIZATION_INVITE_CHARACTERS": "/game-organization-invites/:param/characters",
-  "APP_STORE_CONSENT_REINSTATE": "/users/@me/app-store-consent/reinstate"
+  "APP_STORE_CONSENT_REINSTATE": "/users/@me/app-store-consent/reinstate",
+  "GLOBAL_DISCOVERY_GAMES": "/discovery/games"
 }
