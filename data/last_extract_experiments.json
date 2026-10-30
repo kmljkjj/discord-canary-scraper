@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T19-09-32-389Z_658552_vic5vj",
-  "buildNumber": "658552",
-  "updatedAt": "2026-10-30T19:09:32.389Z",
-  "count": 380,
+  "runId": "2026-10-30T19-12-46-888Z_658554_t12fvo",
+  "buildNumber": "658554",
+  "updatedAt": "2026-10-30T19:12:46.888Z",
+  "count": 381,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7120,6 +7120,26 @@
       },
       "system": "apex",
       "fp": "cf4d43e2e92c8c2881cbdd9bacda8ed2064710080b018756f9b7895304e0107d"
+    },
+    "2026-10-pinot-channel-discoverable": {
+      "id": "2026-10-pinot-channel-discoverable",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "50deb3a1e682a984c444ddb9444ce19f1888bcd374b7bd66dbe037cbb7883ea4"
     },
     "2026-10-pinot-member": {
       "id": "2026-10-pinot-member",
