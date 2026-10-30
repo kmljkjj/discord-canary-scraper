@@ -53,12 +53,16 @@ jobs:
         env:
           X_CLI_BIN: ${{ github.workspace }}/bin/x
         run: |
-          echo '--- syndication profile (tier 0, sans auth) ---'
-          curl -sS -o /tmp/syn.html -w "HTTP %{http_code} · %{size_download} bytes\n" \
-            -A 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36' \
-            'https://syndication.twitter.com/srv/timeline-profile/screen-name/DiscordNEW8r' || true
-          grep -c '__NEXT_DATA__' /tmp/syn.html || echo 'pas de NEXT_DATA'
-          grep -o '"id_str":"[0-9]*"' /tmp/syn.html | head -n 5 || true
+          echo '--- matrice UA x handle (qui recoit les tweets ?) ---'
+          for UA in 'x-cli/dev (+https://github.com/tamnd/x-cli)' 'curl/8.5.0' 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'; do
+            for H in DiscordNEW8r jack; do
+              OUT=/tmp/syn_$H.html
+              curl -sS -o "$OUT" -w "UA ${UA%% *} · $H: HTTP %{http_code} · %{size_download}B " \
+                -A "$UA" "https://syndication.twitter.com/srv/timeline-profile/screen-name/$H" || true
+              grep -c '"id_str"' "$OUT" 2>/dev/null || echo 'no tweets'
+              rm -f "$OUT"
+            done
+          done
           echo '--- x doctor (sonde des 8 surfaces) ---'
           "${X_CLI_BIN}" doctor || true
 
