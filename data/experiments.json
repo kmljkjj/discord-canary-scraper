@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-30T20-16-44-503Z_658737_h9ymvb",
-  "buildNumber": "658737",
-  "scrapedAt": "2026-10-30T20:16:44.504Z",
+  "runId": "2026-10-30T20-22-06-802Z_658748_43q7tu",
+  "buildNumber": "658748",
+  "scrapedAt": "2026-10-30T20:22:06.802Z",
   "totals": {
-    "all": 388,
+    "all": 389,
     "legacy": 0,
-    "apex": 381
+    "apex": 382
   },
   "experiments": [
     {
@@ -7130,6 +7130,26 @@
     },
     {
       "id": "2026-10-nitro-home-badge-directory",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-nitro-settings-marketing-page-refresh",
       "type": "user",
       "kind": "user",
       "label": null,
