@@ -41,6 +41,7 @@ jobs:
         continue-on-error: true
         env:
           X_CLI_BIN: ${{ github.workspace }}/bin/x
+          X_SYNDICATION_RELAY_URL: ${{ secrets.X_SYNDICATION_RELAY_URL || '' }}
         run: |
           echo '--- matrice UA x handle (qui recoit les tweets ?) ---'
           for UA in 'x-cli/dev (+https://github.com/tamnd/x-cli)' 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36'; do
@@ -52,6 +53,14 @@ jobs:
               rm -f "$OUT"
             done
           done
+          echo '--- relais worker (si configure) ---'
+          if [ -n "$X_SYNDICATION_RELAY_URL" ]; then
+            curl -sS -o /tmp/relay.html -w "relay: HTTP %{http_code} · %{size_download}B " "$X_SYNDICATION_RELAY_URL" || true
+            grep -c '"id_str"' /tmp/relay.html 2>/dev/null || echo 'no tweets'
+            rm -f /tmp/relay.html
+          else
+            echo 'X_SYNDICATION_RELAY_URL non defini'
+          fi
           echo '--- x doctor (sonde des 8 surfaces) ---'
           "${X_CLI_BIN}" doctor || true
 
@@ -63,6 +72,7 @@ jobs:
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_USERNAME: DiscordNEW8r
           X_USER_ID: '2073982489836584960'
+          X_SYNDICATION_RELAY_URL: ${{ secrets.X_SYNDICATION_RELAY_URL || '' }}
         continue-on-error: true
         run: node src/x_watch.js
 

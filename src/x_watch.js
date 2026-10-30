@@ -88,9 +88,10 @@ function parseSyndicationProfile(html, screenName) {
 
 // La page « timeline-profile » est publique (aucune auth), mais les IP des
 // runners GitHub sont partagées : le budget X (30 req/fenêtre/IP) y est
-// épuisé en permanence par d'autres utilisateurs. On tente donc dans
-// l'ordre : direct, puis deux relais publics (chacun a sa propre IP),
-// avant de renoncer — le cron réessaiera 10 min plus tard.
+// épuisé en permanence par d'autres utilisateurs, fenêtre fraîche < 1 min.
+// On tente donc : relais Worker perso (X_SYNDICATION_RELAY_URL, IP dédiée)
+// s'il est configuré, puis direct, avant de renoncer — le cron réessaiera
+// 10 min plus tard.
 async function fetchSyndicationHtml(url) {
   try {
     const res = await fetch(url, {
@@ -127,11 +128,11 @@ function logSyndicationShell(html) {
 
 async function fetchViaSyndication() {
   const target = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + USERNAME;
-  const routes = [
-    { name: 'direct', url: target, tries: 1 },
-    { name: 'allorigins', url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target), tries: 1 },
-    { name: 'codetabs', url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target), tries: 1 },
-  ];
+  const routes = [];
+  if (process.env.X_SYNDICATION_RELAY_URL) {
+    routes.push({ name: 'relay', url: process.env.X_SYNDICATION_RELAY_URL, tries: 1 });
+  }
+  routes.push({ name: 'direct', url: target, tries: 1 });
   for (const route of routes) {
     for (let i = 1; i <= route.tries; i++) {
       const html = await fetchSyndicationHtml(route.url);

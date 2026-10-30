@@ -10,6 +10,8 @@ module.exports = [
       'data/**',
       'chunks/**',
       'css/**',
+      // Worker Cloudflare (module ESM, hors périmètre lint Node CommonJS)
+      'relay/**',
       // Fragment injecté dans quests.js (pas un module autonome)
       'scripts/build_quest_v2_snippet.js',
     ],
