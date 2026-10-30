@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-30T21:17:40.331Z",
+  "fetchedAt": "2026-10-30T21:24:35.288Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -390,17 +390,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -3774,6 +3774,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-10-game-discovery",
+      "hash": 53709442,
+      "type": "user",
+      "title": "2026-10-game-discovery",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-10-game-exit-promo-rust",
       "hash": 2659676127,
       "type": "user",
@@ -4265,11 +4275,11 @@
     }
   ],
   "summary": {
-    "total": 395,
+    "total": 396,
     "guild": 40,
-    "user": 355,
+    "user": 356,
     "withPercentage": 9,
-    "withoutPercentage": 386,
+    "withoutPercentage": 387,
     "fullRollout": 6,
     "partial": 0,
     "notStarted": 3,
