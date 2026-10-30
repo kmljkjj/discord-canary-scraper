@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-30 17:07 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-30 17:09 UTC
 
-**Fenêtre glissante 4 h — n = 6492 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6518 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,56 %** | [4,07 – 5,11] | 296/6492 | élevée | Mesuré |
-| hash:1144304849 | **4,93 %** | [4,42 – 5,49] | 320/6492 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6492/6492 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6492/6492 | élevée | Mesuré |
-| Tida Webform | **100 %** | [100 – 100] | 6492/6492 | élevée | Exact (plages) |
+| hash:704914099 | **4,56 %** | [4,07 – 5,1] | 297/6518 | élevée | Mesuré |
+| hash:1144304849 | **4,99 %** | [4,47 – 5,55] | 325/6518 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6518/6518 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6518/6518 | élevée | Mesuré |
+| Tida Webform | **100 %** | [100 – 100] | 6518/6518 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,56 % (IC 95 % [4,07 ; 5,11], 296/6492, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.85, 9705.15] + [9725.25, 10000] → 4,82 %
+- Variant 1 : 4,56 % (IC 95 % [4,07 ; 5,1], 297/6518, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.56, 9617.44] + [9635, 9704] + [9725.25, 10000] → 4,64 %
 
 ### hash:1144304849
-- Variant 1 : 4,93 % (IC 95 % [4,42 ; 5,49], 320/6492, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 159.05] + [181.32, 497.68] → 4,75 %
+- Variant 1 : 4,99 % (IC 95 % [4,47 ; 5,55], 325/6518, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 159.28] + [181.45, 497.55] → 4,75 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6492/6492, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6518/6518, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6492/6492, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [80.58, 10000] → 99,19 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6518/6518, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9959.21] → 99,59 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6492/6492, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6518/6518, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -52,7 +52,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 351 expériences user
+## En attente de rollout — 352 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -341,6 +341,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-avx512-entropy-histogram
 - 2026-10-badge-directory-updates
 - 2026-10-bounties-desktop-quest-bar
+- 2026-10-build-a-bear-qa
 - 2026-10-bulk-nitro-gifting-discounts
 - 2026-10-camp-in-dm
 - 2026-10-clickable-hero-banner
