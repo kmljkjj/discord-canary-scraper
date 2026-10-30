@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["409989"],{991908(e){e.exports=JSON.parse('{"yfwZuy":["Se mit emblem"],"UnPGii":["Emblemet er blevet f\xf8jet til din profil."],"nvaTQq":["Du har indsamlet Orb-profil-emblemet!"]}')}}]);
-//# sourceMappingURL=7968eb35604f3b98.js.map

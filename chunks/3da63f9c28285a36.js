@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["952733"],{426988(e){e.exports=JSON.parse('{"yfwZuy":["Vis merket mitt"],"UnPGii":["Merket er lagt til i profilen din."],"nvaTQq":["Du har samlet Orbs-profilmerket!"]}')}}]);
-//# sourceMappingURL=3da63f9c28285a36.js.map
