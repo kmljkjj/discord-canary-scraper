@@ -86,26 +86,40 @@ function parseSyndicationProfile(html, screenName) {
   return out;
 }
 
+// Les IP partagées des runners GitHub tombent souvent sur un 429 : la
+// fenêtre se réinitialise en ~2 min, on attend Retry-After (borné) et on
+// retente, jusqu'à 3 tentatives.
 async function fetchViaSyndication() {
   const url = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + USERNAME;
-  try {
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': DEFAULT_UA,
-        Accept: 'text/html,application/xhtml+xml,*/*',
-      },
-      timeout: 20000,
-    });
-    if (!res.ok) {
-      console.warn('syndication', res.status, url);
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': DEFAULT_UA,
+          Accept: 'text/html,application/xhtml+xml,*/*',
+        },
+        timeout: 20000,
+      });
+      if (res.status === 429 && attempt < 3) {
+        const ra = parseInt(res.headers.get('retry-after') || '', 10);
+        const waitMs = Math.min(Math.max((ra > 0 ? ra : 0) * 1000, 75000), 150000);
+        console.warn('syndication 429, retry dans', Math.round(waitMs / 1000) + 's');
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+      if (!res.ok) {
+        console.warn('syndication', res.status, 'tentative', attempt);
+        return [];
+      }
+      const html = await res.text();
+      return parseSyndicationProfile(html, USERNAME);
+    } catch (e) {
+      console.warn('syndication fail:', e.message || e);
       return [];
     }
-    const html = await res.text();
-    return parseSyndicationProfile(html, USERNAME);
-  } catch (e) {
-    console.warn('syndication fail:', e.message || e);
-    return [];
   }
+  console.warn('syndication: toujours limité après 3 tentatives');
+  return [];
 }
 // Convertit la sortie JSONL de « x timeline <handle> --guest -o jsonl » en posts
 // internes { id, text, url, date, image }. Ignore lignes vides/invalides,

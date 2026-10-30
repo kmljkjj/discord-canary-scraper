@@ -2,7 +2,7 @@ name: X Watch DiscordNEW8r
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '4-54/10 * * * *'
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-x-watch]
@@ -37,6 +37,7 @@ jobs:
           BIN=$(find /tmp/xcli -maxdepth 2 -type f -name x | head -n1)
           install -m 755 "$BIN" bin/x
       - name: Debug surfaces X (diagnostic)
+        if: github.event_name == 'workflow_dispatch'
         continue-on-error: true
         env:
           X_CLI_BIN: ${{ github.workspace }}/bin/x
