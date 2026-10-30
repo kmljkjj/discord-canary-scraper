@@ -36,6 +36,20 @@ jobs:
           tar -xzf /tmp/x.tar.gz -C /tmp/xcli
           BIN=$(find /tmp/xcli -maxdepth 2 -type f -name x | head -n1)
           install -m 755 "$BIN" bin/x
+      - name: Watch @DiscordNEW8r
+        env:
+          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
+          X_CLI_BIN: ${{ github.workspace }}/bin/x
+          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
+          X_CT0: ${{ secrets.X_CT0 }}
+          # Preferred free auth: full browser Cookie header
+          X_COOKIE: ${{ secrets.X_COOKIE }}
+          X_SCREEN_NAME: DiscordNEW8r
+          X_USER_ID: '2073982489836584960'
+        run: node src/x_news.js
+
       - name: Debug surfaces X (diagnostic)
         if: github.event_name == 'workflow_dispatch'
         continue-on-error: true
@@ -50,19 +64,6 @@ jobs:
           grep -o '"id_str":"[0-9]*"' /tmp/syn.html | head -n 5 || true
           echo '--- x doctor (sonde des 8 surfaces) ---'
           "${X_CLI_BIN}" doctor || true
-      - name: Watch @DiscordNEW8r
-        env:
-          X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL }}
-          X_CLI_BIN: ${{ github.workspace }}/bin/x
-          X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL }}
-          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
-          X_AUTH_TOKEN: ${{ secrets.X_AUTH_TOKEN }}
-          X_CT0: ${{ secrets.X_CT0 }}
-          # Preferred free auth: full browser Cookie header
-          X_COOKIE: ${{ secrets.X_COOKIE }}
-          X_SCREEN_NAME: DiscordNEW8r
-          X_USER_ID: '2073982489836584960'
-        run: node src/x_news.js
 
       - name: Save seen ids
         if: always()
