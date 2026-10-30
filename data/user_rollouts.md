@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-30 20:29 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-30 20:30 UTC
 
-**Fenêtre glissante 4 h — n = 6825 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6868 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,86 %** | [4,37 – 5,41] | 332/6825 | élevée | Mesuré |
-| hash:1144304849 | **4,85 %** | [4,36 – 5,4] | 331/6825 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6825/6825 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6825/6825 | élevée | Mesuré |
-| Tida Webform | **100 %** | [100 – 100] | 6825/6825 | élevée | Exact (plages) |
+| hash:704914099 | **4,78 %** | [4,29 – 5,32] | 328/6868 | élevée | Mesuré |
+| hash:1144304849 | **4,83 %** | [4,34 – 5,38] | 332/6868 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6868/6868 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6868/6868 | élevée | Mesuré |
+| Tida Webform | **100 %** | [100 – 100] | 6868/6868 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,86 % (IC 95 % [4,37 ; 5,41], 332/6825, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.06, 9999.94] → 5,04 %
+- Variant 1 : 4,78 % (IC 95 % [4,29 ; 5,32], 328/6868, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.16, 9999.84] → 5,04 %
 
 ### hash:1144304849
-- Variant 1 : 4,85 % (IC 95 % [4,36 ; 5,4], 331/6825, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 217.96] + [237.29, 500.71] → 4,81 %
+- Variant 1 : 4,83 % (IC 95 % [4,34 ; 5,38], 332/6868, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 500.91] → 5,01 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6825/6825, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6868/6868, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6825/6825, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2026.54] + [2366.61, 10000] → 96,6 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6868/6868, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9988.84] → 99,89 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6825/6825, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6868/6868, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
@@ -52,7 +52,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 349 expériences user
+## En attente de rollout — 350 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -373,6 +373,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-mana-badge-refresh
 - 2026-10-native-markdown-setting
 - 2026-10-nitro-home-badge-directory
+- 2026-10-nitro-settings-marketing-page-refresh
 - 2026-10-nitro-tab-remove-account-age-restriction
 - 2026-10-orbchievements-mobile
 - 2026-10-overlay-native-window-rendering
