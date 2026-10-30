@@ -190,48 +190,54 @@ function parseSyndicationProfile(html, screenName) {
   return out;
 }
 
-// Les IP partagées des runners GitHub tombent souvent sur un 429 : la
-// fenêtre se réinitialise en ~2 min, on attend Retry-After (borné) et on
-// retente, jusqu'à 3 tentatives.
-async function fetchViaSyndication() {
-  const url = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + SCREEN_NAME;
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': DEFAULT_UA,
-          Accept: 'text/html,application/xhtml+xml,*/*',
-        },
-        timeout: 20000,
-      });
-      if (res.status === 429 && attempt < 3) {
-        const ra = parseInt(res.headers.get('retry-after') || '', 10);
-        const waitMs = Math.min(Math.max((ra > 0 ? ra : 0) * 1000, 75000), 150000);
-        console.warn('syndication 429, retry dans', Math.round(waitMs / 1000) + 's');
-        await new Promise((r) => setTimeout(r, waitMs));
-        continue;
-      }
-      if (!res.ok) {
-        console.warn('syndication', res.status, 'tentative', attempt);
-        return [];
-      }
-      const html = await res.text();
-      const posts = parseSyndicationProfile(html, SCREEN_NAME);
-      console.log(
-        'syndication:',
-        posts.length,
-        'posts · html',
-        html.length,
-        'B · NEXT_DATA:',
-        html.includes('__NEXT_DATA__'),
-      );
-      return posts;
-    } catch (e) {
-      console.warn('syndication fail:', e.message || e);
-      return [];
+// La page « timeline-profile » est publique (aucune auth), mais les IP des
+// runners GitHub sont partagées : le budget X (30 req/fenêtre/IP) y est
+// épuisé en permanence par d'autres utilisateurs. On tente donc dans
+// l'ordre : direct, puis deux relais publics (chacun a sa propre IP),
+// avant de renoncer — le cron réessaiera 10 min plus tard.
+async function fetchSyndicationHtml(url) {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': DEFAULT_UA,
+        Accept: 'text/html,application/xhtml+xml,*/*',
+      },
+      timeout: 25000,
+    });
+    if (!res.ok) {
+      console.warn('syndication', res.status, '·', String(url).slice(0, 80));
+      return null;
     }
+    return await res.text();
+  } catch (e) {
+    console.warn('syndication fail:', e.message || e);
+    return null;
   }
-  console.warn('syndication: toujours limité après 3 tentatives');
+}
+
+async function fetchViaSyndication() {
+  const target = 'https://syndication.twitter.com/srv/timeline-profile/screen-name/' + SCREEN_NAME;
+  const routes = [
+    { name: 'direct', url: target },
+    {
+      name: 'allorigins',
+      url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(target),
+    },
+    {
+      name: 'codetabs',
+      url: 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target),
+    },
+  ];
+  for (const route of routes) {
+    const html = await fetchSyndicationHtml(route.url);
+    if (html == null) continue;
+    const posts = parseSyndicationProfile(html, SCREEN_NAME);
+    console.log(
+      'syndication', route.name + ':', posts.length, 'posts · html',
+      html.length, 'B · NEXT_DATA:', html.includes('__NEXT_DATA__'),
+    );
+    if (posts.length) return posts;
+  }
   return [];
 }
 // Convertit la sortie JSONL de « x timeline <handle> --guest -o jsonl » en posts
