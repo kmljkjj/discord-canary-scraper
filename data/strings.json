@@ -25727,10 +25727,10 @@
   "Y8pS+n": "Conjuring",
   "KE1KI+": "Behind the curtain: {step}",
   "664n2O": "{name}’s Preview",
-  "avt0ax": "Something went wrong.",
-  "d8lNBq": "A service we rely on is busy right now.",
-  "yreXyD": "A service we rely on failed.",
-  "t1R7Rt": "A service we rely on took too long to answer.",
+  "avt0ax": "Something unexpected went wrong. Your work so far is saved.",
+  "d8lNBq": "A service we depend on hit its limit. Your work so far is saved.",
+  "yreXyD": "A service we depend on is down. Your work so far is saved.",
+  "t1R7Rt": "A service we depend on stopped responding. Your work so far is saved.",
   "iwOTgo": "Hmm, something didn’t work right.",
   "okkgSB": "It’s ready to try.",
   "t8skVB": "Working on it…",
@@ -28410,5 +28410,7 @@
   "SY6j5V": "In use by {appName} and {count, plural, one {# other app} other {# other apps}}",
   "mUYiYm": "Create an editable copy of this app to use as-is or customize.",
   "Im1k9X": "Show more…",
-  "YHDMK6": "Shared projects"
+  "YHDMK6": "Shared projects",
+  "ZnbiGS": "Something broke on our end. Your work so far is saved.",
+  "9zBM8L": "A service we depend on hit its limit. Your work so far is saved."
 }
