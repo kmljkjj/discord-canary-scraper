@@ -1,8 +1,8 @@
 {
-  "runId": "2026-10-30T18-07-45-305Z_658401_eywc3i",
-  "buildNumber": "658401",
-  "updatedAt": "2026-10-30T18:07:45.305Z",
-  "count": 377,
+  "runId": "2026-10-30T18-09-59-596Z_658406_nt3dkq",
+  "buildNumber": "658406",
+  "updatedAt": "2026-10-30T18:09:59.596Z",
+  "count": 378,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -16821,6 +16821,58 @@
         "value": null
       },
       "fingerprint": "16a5732e60ae8db8b6b053477af69482e57d62d4324d6982ebcfb381ad4e79f9"
+    },
+    {
+      "id": "2026-10-collectibles-storefront-pricing-integration",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-collectibles-storefront-pricing-integration",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "a132e671ec769bff1c0098dc735f2baeb0913da871b7e467cc1f00da2edebd70"
     },
     {
       "id": "2026-10-collectibles-upgraded-search",

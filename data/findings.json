@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-30T18-07-45-305Z_658401_eywc3i",
-  "buildNumber": "658401",
-  "scrapedAt": "2026-10-30T18:07:45.305Z",
+  "runId": "2026-10-30T18-09-59-596Z_658406_nt3dkq",
+  "buildNumber": "658406",
+  "scrapedAt": "2026-10-30T18:09:59.596Z",
   "totals": {
-    "all": 384
+    "all": 385
   },
   "experiments": [
     {
@@ -6578,6 +6578,26 @@
         }
       },
       "variationCount": 5,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-collectibles-storefront-pricing-integration",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
