@@ -112,7 +112,16 @@ async function fetchViaSyndication() {
         return [];
       }
       const html = await res.text();
-      return parseSyndicationProfile(html, USERNAME);
+      const posts = parseSyndicationProfile(html, USERNAME);
+      console.log(
+        'syndication:',
+        posts.length,
+        'posts · html',
+        html.length,
+        'B · NEXT_DATA:',
+        html.includes('__NEXT_DATA__'),
+      );
+      return posts;
     } catch (e) {
       console.warn('syndication fail:', e.message || e);
       return [];
