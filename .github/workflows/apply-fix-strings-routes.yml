@@ -63,7 +63,7 @@ jobs:
           - expériences trouvées seulement dans les chunks désormais envoyées après le CORE
           - échec d'envoi des expériences = état non avancé (retry au run suivant)
           - STR_RT_EXTRACT_VERSION=3 : reseed one-shot sans spam"
-          for i in 1 2 3 4 5; do
+          for _ in 1 2 3 4 5; do
             git pull --rebase -q origin main && git push origin HEAD:main && exit 0
             sleep 5
           done
