@@ -25,9 +25,21 @@ jobs:
 
       - uses: ./.github/actions/setup
 
+      - name: Setup x-cli (timeline guest — aucun compte X requis)
+        env:
+          X_CLI_VERSION: 'v0.5.0'
+        run: |
+          set -e
+          curl -fsSL -o /tmp/x.tar.gz \
+            "https://github.com/tamnd/x-cli/releases/download/${X_CLI_VERSION}/x_${X_CLI_VERSION#v}_linux_amd64.tar.gz"
+          mkdir -p bin /tmp/xcli
+          tar -xzf /tmp/x.tar.gz -C /tmp/xcli
+          BIN=$(find /tmp/xcli -maxdepth 2 -type f -name x | head -n1)
+          install -m 755 "$BIN" bin/x
       - name: Watch @DiscordNEW8r
         env:
           X_WEBHOOK_URL: ${{ secrets.X_WEBHOOK_URL || secrets.X_NEWS_WEBHOOK_URL }}
+          X_CLI_BIN: ${{ github.workspace }}/bin/x
           X_NEWS_WEBHOOK_URL: ${{ secrets.X_NEWS_WEBHOOK_URL || secrets.X_WEBHOOK_URL }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_USERNAME: DiscordNEW8r

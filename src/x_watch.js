@@ -6,6 +6,10 @@
  *   X_BEARER_TOKEN  ← strongly recommended (public RSS is mostly dead)
  *
  * Soft-exit 0 if no posts (never red the workflow).
+ *
+ * Tier x-cli « guest » (github.com/tamnd/x-cli, binaire installé par le
+ * workflow via X_CLI_BIN) : lecture de la timeline sans compte X ni secret
+ * en dehors du webhook.
  */
 const fs = require('fs-extra');
 const path = require('path');
@@ -25,6 +29,14 @@ const WEBHOOK =
 const BEARER =
   process.env.X_BEARER_TOKEN || process.env.TWITTER_BEARER_TOKEN || '';
 
+// Tier x-cli (github.com/tamnd/x-cli) : timeline en mode « guest » — aucun compte X
+// requis, aucun secret. Le binaire est installé par le workflow (env X_CLI_BIN).
+// Sortie JSONL : 1 tweet par ligne, id/text/created_at/media au premier niveau.
+const { execFile } = require('child_process');
+const util = require('util');
+const execFileP = util.promisify(execFile);
+const X_CLI_BIN = process.env.X_CLI_BIN || 'x';
+
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'x_seen_ids.json');
 const MAX_SEEN = 300;
@@ -37,6 +49,47 @@ const RSS_SOURCES = [
   `https://nitter.poast.org/${USERNAME}/rss`,
   `https://xcancel.com/${USERNAME}/rss`,
 ];
+
+// Convertit la sortie JSONL de « x timeline <handle> --guest -o jsonl » en posts
+// internes { id, text, url, date, image }. Ignore lignes vides/invalides,
+// ids non numériques ou trop courts, et doublons.
+function parseXcliJsonl(stdout, screenName) {
+  const out = [];
+  const seenIds = new Set();
+  for (const raw of String(stdout || '').split('\n')) {
+    const line = raw.trim();
+    if (!line) continue;
+    let t;
+    try { t = JSON.parse(line); } catch { continue; }
+    const id = String(t.id || '').trim();
+    if (!/^\d{10,}$/.test(id) || seenIds.has(id)) continue;
+    seenIds.add(id);
+    let image = null;
+    const media = Array.isArray(t.media) ? t.media : [];
+    if (media[0]) image = media[0].preview_image || media[0].url || null;
+    out.push({
+      id,
+      text: String(t.text || ''),
+      url: 'https://x.com/' + screenName + '/status/' + id,
+      date: t.created_at || null,
+      image,
+    });
+  }
+  return out;
+}
+
+// Lecture de la timeline via x-cli en mode guest (aucun secret requis).
+async function fetchViaXcli() {
+  try {
+    const { stdout } = await execFileP(X_CLI_BIN, [
+      'timeline', USERNAME, '--guest', '-n', '20', '-o', 'jsonl',
+    ], { timeout: 60000, maxBuffer: 4 * 1024 * 1024 });
+    return parseXcliJsonl(stdout, USERNAME);
+  } catch (e) {
+    console.warn('x-cli fail:', String(e.message || e).slice(0, 300));
+    return [];
+  }
+}
 
 async function main() {
   console.log('=== X Watch @' + USERNAME + ' ===');
@@ -61,6 +114,11 @@ async function main() {
     }
   } else {
     console.log('No X_BEARER_TOKEN — public sources often fail');
+  }
+
+  if (posts.length < 1) {
+    posts = await fetchViaXcli();
+    console.log('x-cli guest posts:', posts.length);
   }
 
   if (posts.length < 1) {
@@ -327,7 +385,11 @@ function dedupe(posts) {
 }
 
 
-main().catch((e) => {
-  console.error('X watch error:', e.message || e);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((e) => {
+    console.error('X watch error:', e.message || e);
+    process.exit(1);
+  });
+}
+
+module.exports = { parseXcliJsonl };
