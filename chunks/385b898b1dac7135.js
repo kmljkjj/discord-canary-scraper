@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["532831"],{496482(s){s.exports=JSON.parse('{"F3llsQ":["Megoszt\xe1s, amikor friss\xedtem a profilomat"],"6goWcz":["Annak enged\xe9lyez\xe9se, hogy a bar\xe1tok lek\xfcld\xe9ses \xe9rtes\xedt\xe9st kapjanak, amikor friss\xedted a profilodat."]}')}}]);
+//# sourceMappingURL=385b898b1dac7135.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["815193"],{240768(e){e.exports=JSON.parse('{"jBvMiO":["Permiss\xe3o especial de vers\xe3o ativa"],"d11XdP":["Permiss\xe3o especial de vers\xe3o:"],"VBPcR9":["Ferramentas de desenvolvimento"]}')}}]);
+//# sourceMappingURL=9df7e792a3e9e0e1.js.map

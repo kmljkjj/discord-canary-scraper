@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["691807"],{98274(s,p,e){e.r(p),e.d(p,{default:()=>t});let t=JSON.parse('{"yPlyEn":["Mute DMs"]}')}}]);
-//# sourceMappingURL=36030f222ec66ff0.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["714730"],{352817(s){s.exports=JSON.parse('{"F3llsQ":["Partager quand je mets mon profil \xe0 jour"],"6goWcz":["Autorise tes ami(e)s \xe0 recevoir une notification push lorsque tu mets ton profil \xe0 jour."]}')}}]);
+//# sourceMappingURL=757a21a6fb393dcd.js.map

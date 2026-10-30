@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["932789"],{771732(e,s,r){r.r(s),r.d(s,{default:()=>t});let t=JSON.parse('{"0y44+Q":["These are accounts from other platforms. Connecting them here can unlock new features on Discord."]}')}}]);
-//# sourceMappingURL=51fd1b016d2ef099.js.map

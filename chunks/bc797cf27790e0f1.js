@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["94607"],{217362(e){e.exports=JSON.parse('{"WMK6Pg":["Unlock Offer"],"7TxNKE":["Days"],"7pATiR":["Hours"],"dXR9qI":["Minutes"],"uytDvV":["One-time code reward. Expires on ",[3,"expirationDate","short"],". ",[8,"$link",["Terms apply."],[[1,"termsUrl"]]]],"v5a81e":["Claim Reward"],"TaUsG9":["In ",[6,"days",{"one":[[7]," day"],"other":[[7]," days"]},0,"cardinal"]],"vlafDc":["Unlock Reward"],"OejyCi":["Upcoming"]}')}}]);
+//# sourceMappingURL=bc797cf27790e0f1.js.map

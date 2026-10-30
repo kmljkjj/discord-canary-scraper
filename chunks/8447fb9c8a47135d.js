@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["537703"],{122842(e){e.exports=JSON.parse('{"F3llsQ":["Del, n\xe5r jeg opdaterer min profil"],"6goWcz":["Tillad venner at modtage en push-meddelelse, n\xe5r du opdaterer din profil."]}')}}]);
+//# sourceMappingURL=8447fb9c8a47135d.js.map

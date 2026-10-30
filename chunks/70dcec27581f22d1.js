@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["605644"],{732103(e){e.exports=JSON.parse('{"jBvMiO":["Nadpisanie wersji aktywne"],"d11XdP":["Nadpisanie wersji:"],"VBPcR9":["Narz\u0119dzia deweloperskie"]}')}}]);
+//# sourceMappingURL=70dcec27581f22d1.js.map

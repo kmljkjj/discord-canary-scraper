@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["779760"],{341491(p,a,s){s.r(a),s.d(a,{default:()=>e});let e=JSON.parse('{"nRS0N2":[[1,"plan"],": ",[1,"price"]],"PR7GrT":[[1,"plan"],", ",[1,"option"]]}')}}]);
-//# sourceMappingURL=2bd6f95b4c890097.js.map
