@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T16:18:19.465Z",
+ "generatedAt": "2026-10-30T17:33:06.899Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
@@ -9,10 +9,10 @@
  },
  "stats": {
   "total": 1006,
-  "user": 353,
+  "user": 347,
   "userData": 147,
   "guild": 38,
-  "unclassified": 615,
+  "unclassified": 621,
   "noData": 270
  },
  "experiments": [
@@ -1697,24 +1697,6 @@
    }
   },
   {
-   "id": "2026-09-gsimagic2",
-   "title": "2026-09-gsimagic2",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
-  },
-  {
    "id": "2026-09-gifting-badge-coachmark-audience",
    "title": "2026-09-gifting-badge-coachmark-audience",
    "type": "user",
@@ -2294,24 +2276,6 @@
      "role": "treatment"
     }
    }
-  },
-  {
-   "id": "2026-08-rocketleague-events",
-   "title": "2026-08-rocketleague-events",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
   },
   {
    "id": "2026-08-rive-web-perf",
@@ -3341,24 +3305,6 @@
    "byVariant": {}
   },
   {
-   "id": "2026-07-gsimagic",
-   "title": "2026-07-gsimagic",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
-  },
-  {
    "id": "2026-07-expressive-modal-v2",
    "title": "2026-07-expressive-modal-v2",
    "type": "user",
@@ -4085,24 +4031,6 @@
    "byVariant": {}
   },
   {
-   "id": "2026-06-clips-league-events",
-   "title": "2026-06-clips-league-events",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
-  },
-  {
    "id": "2026-06-clickstream-analytics",
    "title": "2026-06-clickstream-analytics",
    "type": "user",
@@ -4495,24 +4423,6 @@
   {
    "id": "2026-05-av1-bitrate-tuning",
    "title": "2026-05-av1-bitrate-tuning",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
-  },
-  {
-   "id": "2026-05-auto-clips-review",
-   "title": "2026-05-auto-clips-review",
    "type": "user",
    "hasData": false,
    "totalsAvailable": false,
@@ -4993,24 +4903,6 @@
      "role": "treatment"
     }
    }
-  },
-  {
-   "id": "2026-04-clips-v3-runtime",
-   "title": "2026-04-clips-v3-runtime",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
   },
   {
    "id": "2026-04-browser-transceiver-padding-removal",
