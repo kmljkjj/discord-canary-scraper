@@ -6152,5 +6152,21 @@
       }
     },
     "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-11-nitro-upload-badge",
+    "defaultConfig": {
+      "showNitroUploadBadge": false
+    },
+    "variations": {
+      "0": {
+        "showNitroUploadBadge": false
+      },
+      "1": {
+        "showNitroUploadBadge": true
+      }
+    },
+    "label": null
   }
 ]
