@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-30T22:19:08.916Z",
+  "fetchedAt": "2026-10-30T22:25:59.663Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -7,7 +7,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -381,6 +381,26 @@
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 50
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 3,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 3
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 3,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 3
       }
     },
     {
@@ -4204,6 +4224,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-11-nitro-upload-badge",
+      "hash": 2216648750,
+      "type": "user",
+      "title": "2026-11-nitro-upload-badge",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-06-improved-shop-loading",
       "hash": 3119548606,
       "type": "user",
@@ -4275,14 +4305,14 @@
     }
   ],
   "summary": {
-    "total": 396,
+    "total": 398,
     "guild": 40,
-    "user": 356,
-    "withPercentage": 9,
-    "withoutPercentage": 387,
+    "user": 358,
+    "withPercentage": 10,
+    "withoutPercentage": 388,
     "fullRollout": 6,
     "partial": 0,
-    "notStarted": 3,
-    "fpSampled": 4
+    "notStarted": 4,
+    "fpSampled": 5
   }
 }
