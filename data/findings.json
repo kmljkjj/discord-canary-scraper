@@ -1,7 +1,7 @@
 {
-  "runId": "2026-10-30T17-48-27-445Z_658348_vcqo82",
-  "buildNumber": "658348",
-  "scrapedAt": "2026-10-30T17:48:27.445Z",
+  "runId": "2026-10-30T17-55-06-148Z_658370_5v2s7d",
+  "buildNumber": "658370",
+  "scrapedAt": "2026-10-30T17:55:06.148Z",
   "totals": {
     "all": 384
   },
@@ -5553,9 +5553,8 @@
     {
       "id": "2026-09-new-horizontal-scroll-shared",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "useNewHScroll": false
       },
@@ -5566,9 +5565,7 @@
         "1": {
           "useNewHScroll": true
         }
-      },
-      "variationCount": 2,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-09-new-orb-reward-visuals",
