@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["113308"],{340567(i,e,d){d.r(e),d.d(e,{default:()=>t});let t=JSON.parse('{"SwOlOR":["Linked Guild"],"gR14cL":["Link an in-game guild to your server. You must be an admin of the guild to link it."],"FzPkj2":["Select game"],"81y3Y1":["Link guild"]}')}}]);
+//# sourceMappingURL=0ce05aa6e812994b.js.map
