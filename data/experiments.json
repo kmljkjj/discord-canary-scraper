@@ -1,11 +1,11 @@
 {
-  "runId": "2026-10-30T17-02-48-228Z_658235_nn6lm5",
-  "buildNumber": "658235",
-  "scrapedAt": "2026-10-30T17:02:48.228Z",
+  "runId": "2026-10-30T17-13-42-679Z_658261_6lvh9n",
+  "buildNumber": "658261",
+  "scrapedAt": "2026-10-30T17:13:42.680Z",
   "totals": {
-    "all": 390,
+    "all": 384,
     "legacy": 0,
-    "apex": 384
+    "apex": 378
   },
   "experiments": [
     {
@@ -1695,29 +1695,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03-clips-experiment",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableClips": false,
-        "ignorePlatformRestriction": false
-      },
-      "variations": {
-        "1": {
-          "enableClips": true,
-          "ignorePlatformRestriction": false
-        },
-        "2": {
-          "enableClips": true,
-          "ignorePlatformRestriction": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-03-content-inventory-memberlist-and-ranker",
       "type": "user",
       "kind": "user",
@@ -2249,26 +2226,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-04-clips-v3-runtime",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableClipsV3ML": false
-      },
-      "variations": {
-        "1": {
-          "enableClipsV3ML": false
-        },
-        "2": {
-          "enableClipsV3ML": true
-        }
-      },
-      "variationCount": 2,
-      "source": "discord"
-    },
-    {
       "id": "2026-04-composed-quest-player",
       "type": "user",
       "kind": "user",
@@ -2722,23 +2679,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-05-auto-clips-review",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableAutoClipsReview": false
-      },
-      "variations": {
-        "1": {
-          "enableAutoClipsReview": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-05-av1-bitrate-tuning",
       "type": "user",
       "kind": "user",
@@ -3183,23 +3123,6 @@
       "variations": {
         "1": {
           "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-clips-league-events",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableLeagueEvents": false
-      },
-      "variations": {
-        "1": {
-          "enableLeagueEvents": true
         }
       },
       "variationCount": 1,
@@ -3876,23 +3799,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-07-gsimagic",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableCs2Gsi": false
-      },
-      "variations": {
-        "1": {
-          "enableCs2Gsi": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -4758,23 +4664,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-08-rocketleague-events",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableRocketLeagueEvents": false
-      },
-      "variations": {
-        "1": {
-          "enableRocketLeagueEvents": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-08-scheduled-messages",
       "type": "user",
       "kind": "user",
@@ -5025,6 +4914,26 @@
           "enabled": true
         }
       }
+    },
+    {
+      "id": "2026-09-autoclips",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        },
+        "2": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
     },
     {
       "id": "2026-09-automod-application-rules",
@@ -5312,23 +5221,6 @@
       "variations": {
         "1": {
           "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-09-gsimagic2",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enableDotaGsi": false
-      },
-      "variations": {
-        "1": {
-          "enableDotaGsi": true
         }
       },
       "variationCount": 1,
