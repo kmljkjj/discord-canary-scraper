@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-31 03:36 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-10-31 03:37 UTC
 
 **Fenêtre glissante 4 h — n = 6636 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **4,45 %** | [3,97 – 4,98] | 295/6636 | élevée | Mesuré |
-| hash:1144304849 | **4,67 %** | [4,17 – 5,22] | 303/6486 | élevée | Mesuré |
+| hash:1144304849 | **4,75 %** | [4,25 – 5,31] | 308/6486 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6636/6636 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6636/6636 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 6470/6470 | élevée | Exact (plages) |
@@ -27,8 +27,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
   - plages reconstruites (indicatif, ordre de grandeur) : [9497.09, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 4,67 % (IC 95 % [4,17 ; 5,22], 303/6486, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.64] → 5 %
+- Variant 1 : 4,75 % (IC 95 % [4,25 ; 5,31], 308/6486, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.69] → 5,03 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6636/6636, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6636/6636, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [169.48, 10000] → 98,31 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6470/6470, confiance élevée)
