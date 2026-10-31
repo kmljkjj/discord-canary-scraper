@@ -1,9 +1,9 @@
 {
-  "runId": "2026-10-31T00-43-05-969Z_659460_21721e",
-  "buildNumber": "659460",
-  "scrapedAt": "2026-10-31T00:43:05.970Z",
+  "runId": "2026-10-31T00-59-26-578Z_659471_o5753b",
+  "buildNumber": "659471",
+  "scrapedAt": "2026-10-31T00:59:26.578Z",
   "totals": {
-    "all": 393
+    "all": 394
   },
   "experiments": [
     {
@@ -5873,6 +5873,26 @@
         }
       },
       "variationCount": 9,
+      "source": "discord"
+    },
+    {
+      "id": "2026-09-safety-warning-age-text",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
