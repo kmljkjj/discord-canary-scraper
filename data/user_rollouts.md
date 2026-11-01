@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-01 12:29 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-01 12:31 UTC
 
 **Fenêtre glissante 4 h — n = 6267 échantillons — 7 tokens actifs**
 
@@ -14,7 +14,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,66 %** | [4,16 – 5,22] | 292/6267 | élevée | Mesuré |
+| hash:704914099 | **4,68 %** | [4,17 – 5,24] | 293/6267 | élevée | Mesuré |
 | hash:1144304849 | **5,04 %** | [4,52 – 5,62] | 316/6267 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6267/6267 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6267/6267 | élevée | Mesuré |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,66 % (IC 95 % [4,16 ; 5,22], 292/6267, confiance élevée)
+- Variant 1 : 4,68 % (IC 95 % [4,17 ; 5,24], 293/6267, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [9500.26, 10000] → 5 %
 
 ### hash:1144304849
 - Variant 1 : 5,04 % (IC 95 % [4,52 ; 5,62], 316/6267, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0.27, 496.73] → 4,96 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0.24, 496.76] → 4,97 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6267/6267, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6267/6267, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2642.45] + [2950.06, 10000] → 96,92 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2217.13] + [2501.04, 9799.96] → 95,16 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6267/6267, confiance élevée)
