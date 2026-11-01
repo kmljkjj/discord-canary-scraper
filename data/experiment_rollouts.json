@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-01T08:00:22.131Z",
+  "fetchedAt": "2026-11-01T08:07:09.579Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -7,7 +7,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 2
     }
   },
@@ -364,6 +364,26 @@
       }
     },
     {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 2,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 2
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 2,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 2
+      }
+    },
+    {
       "hash": 4055210228,
       "id": "2025-11_tida_webform",
       "type": "user",
@@ -390,17 +410,17 @@
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 5
       }
     },
     {
@@ -4295,14 +4315,14 @@
     }
   ],
   "summary": {
-    "total": 398,
+    "total": 399,
     "guild": 40,
-    "user": 358,
-    "withPercentage": 9,
+    "user": 359,
+    "withPercentage": 10,
     "withoutPercentage": 389,
     "fullRollout": 6,
     "partial": 0,
-    "notStarted": 3,
-    "fpSampled": 4
+    "notStarted": 4,
+    "fpSampled": 5
   }
 }
