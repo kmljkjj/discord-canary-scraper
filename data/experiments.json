@@ -1,11 +1,11 @@
 {
-  "runId": "2026-11-02T23-22-55-830Z_660858_tadzqp",
-  "buildNumber": "660858",
-  "scrapedAt": "2026-11-02T23:22:55.830Z",
+  "runId": "2026-11-02T23-25-08-787Z_660886_odpked",
+  "buildNumber": "660886",
+  "scrapedAt": "2026-11-02T23:25:08.787Z",
   "totals": {
-    "all": 392,
+    "all": 393,
     "legacy": 0,
-    "apex": 385
+    "apex": 386
   },
   "experiments": [
     {
@@ -7814,6 +7814,26 @@
         },
         "1": {
           "showNitroUploadBadge": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-11-waterwheels-discover",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
         }
       },
       "variationCount": 2,
