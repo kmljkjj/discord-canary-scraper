@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 18:05 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 18:06 UTC
 
-**Fenêtre glissante 4 h — n = 6822 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6945 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,33 +14,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,51 %** | [4,04 – 5,04] | 308/6822 | élevée | Mesuré |
-| hash:1144304849 | **5,26 %** | [4,75 – 5,83] | 359/6822 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6822/6822 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6822/6822 | élevée | Mesuré |
-| Tida Webform | **100 %** | [99,94 – 100] | 6672/6672 | élevée | Mesuré |
+| hash:704914099 | **4,51 %** | [4,03 – 5,03] | 313/6945 | élevée | Mesuré |
+| hash:1144304849 | **5,17 %** | [4,66 – 5,73] | 359/6945 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6945/6945 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6945/6945 | élevée | Mesuré |
+| Tida Webform | **100 %** | [99,94 – 100] | 6795/6795 | élevée | Mesuré |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,51 % (IC 95 % [4,04 ; 5,04], 308/6822, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.17, 10000] → 5,04 %
+- Variant 1 : 4,51 % (IC 95 % [4,03 ; 5,03], 313/6945, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.28, 10000] → 5,04 %
 
 ### hash:1144304849
-- Variant 1 : 5,26 % (IC 95 % [4,75 ; 5,83], 359/6822, confiance élevée)
+- Variant 1 : 5,17 % (IC 95 % [4,66 ; 5,73], 359/6945, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 501.98] → 5,02 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6822/6822, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6945/6945, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6822/6822, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [98.24, 9895.76] → 97,98 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6945/6945, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### Tida Webform
-- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6672/6672, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [28.67, 1255.33] + [1644.33, 10000] → 95,82 %
+- Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6795/6795, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [84.8, 10000] → 99,15 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
 
@@ -51,7 +51,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 354 expériences user
+## En attente de rollout — 352 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -248,8 +248,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-08-ios-objc-composed-image-cache
 - 2026-08-mark-channel-unread
 - 2026-08-mute-aware-noise-cancellation
-- 2026-08-nitro-tenure-badge-total-progress
-- 2026-08-nitro-tenure-badge-withheld-state
 - 2026-08-no-fill-logging
 - 2026-08-profile-embed-rendering
 - 2026-08-profile-embed-share-button
