@@ -1,10 +1,10 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-11-02T23:26:52.061Z",
+ "generatedAt": "2026-11-02T23:28:37.598Z",
  "semantics": "Couverture gist non vérifiée et observations API : deux métriques séparées, jamais une proportion réelle d’utilisateurs.",
  "sources": {
   "positions": {
-   "updatedAt": "2026-11-02T23:26:51.970Z",
+   "updatedAt": "2026-11-02T23:28:37.476Z",
    "scheduled": true
   },
   "gist": {
@@ -14,7 +14,7 @@
    "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb"
   },
   "sampling": {
-   "observedAt": "2026-11-02T23:24:58.931Z",
+   "observedAt": "2026-11-02T23:26:39.355Z",
    "url": "https://canary.discord.com/api/v10/experiments",
    "scheduled": false
   }
@@ -55,37 +55,37 @@
     },
     "verified": false,
     "updatedAt": "2026-10-28T12:04:36Z",
-    "fetchedAt": "2026-11-02T23:25:42.082Z",
+    "fetchedAt": "2026-11-02T23:27:29.392Z",
     "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
     "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
     "sourceRanges": null,
     "freshness": {
      "state": "stale",
-     "ageHours": 131.37112805555554
+     "ageHours": 131.4004438888889
     }
    },
    "measurement": {
     "source": "own_sampling",
-    "observedAt": "2026-11-02T23:24:58.931Z",
+    "observedAt": "2026-11-02T23:26:39.355Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.031425
+     "ageHours": 0.03284527777777778
     },
-    "n": 6360,
-    "k": 6360,
+    "n": 6388,
+    "k": 6388,
     "pct": 100,
     "ci": {
-     "lo": 99.9396361640127,
+     "lo": 99.9399005928817,
      "hi": 100
     },
     "variants": [
      {
       "bucket": 1,
-      "k": 6360,
-      "n": 6360,
+      "k": 6388,
+      "n": 6388,
       "pct": 100,
       "ci": {
-       "lo": 99.9396361640127,
+       "lo": 99.9399005928817,
        "hi": 100
       },
       "role": "treatment"
@@ -101,11 +101,11 @@
     "roleBasis": "gist_roles",
     "status": "measured",
     "observedAssignments": {
-     "k": 6360,
-     "n": 6360,
+     "k": 6388,
+     "n": 6388,
      "pct": 100,
      "ci": {
-      "lo": 99.9396361640127,
+      "lo": 99.9399005928817,
       "hi": 100
      }
     }
@@ -120,10 +120,10 @@
     "inPositions": 9990,
     "outPositions": 0,
     "runs": 1,
-    "points": 64051,
+    "points": 64201,
     "conflicts": 0,
     "revision": 0,
-    "updatedAt": "2026-11-02T23:26:51.970Z",
+    "updatedAt": "2026-11-02T23:28:37.476Z",
     "assumption": "contiguous_ranges",
     "agreement": null,
     "gistInBounds": true,
@@ -163,37 +163,37 @@
     },
     "verified": false,
     "updatedAt": "2026-10-28T12:04:36Z",
-    "fetchedAt": "2026-11-02T23:25:42.082Z",
+    "fetchedAt": "2026-11-02T23:27:29.392Z",
     "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
     "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
     "sourceRanges": null,
     "freshness": {
      "state": "stale",
-     "ageHours": 131.37112805555554
+     "ageHours": 131.4004438888889
     }
    },
    "measurement": {
     "source": "own_sampling",
-    "observedAt": "2026-11-02T23:24:58.931Z",
+    "observedAt": "2026-11-02T23:26:39.355Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.031425
+     "ageHours": 0.03284527777777778
     },
-    "n": 6360,
-    "k": 6360,
+    "n": 6388,
+    "k": 6388,
     "pct": 100,
     "ci": {
-     "lo": 99.9396361640127,
+     "lo": 99.9399005928817,
      "hi": 100
     },
     "variants": [
      {
       "bucket": 1,
-      "k": 6360,
-      "n": 6360,
+      "k": 6388,
+      "n": 6388,
       "pct": 100,
       "ci": {
-       "lo": 99.9396361640127,
+       "lo": 99.9399005928817,
        "hi": 100
       },
       "role": "treatment"
@@ -209,11 +209,11 @@
     "roleBasis": "gist_roles",
     "status": "measured",
     "observedAssignments": {
-     "k": 6360,
-     "n": 6360,
+     "k": 6388,
+     "n": 6388,
      "pct": 100,
      "ci": {
-      "lo": 99.9396361640127,
+      "lo": 99.9399005928817,
       "hi": 100
      }
     }
@@ -228,10 +228,10 @@
     "inPositions": 9982,
     "outPositions": 0,
     "runs": 1,
-    "points": 62851,
+    "points": 63001,
     "conflicts": 0,
     "revision": 0,
-    "updatedAt": "2026-11-02T23:26:51.970Z",
+    "updatedAt": "2026-11-02T23:28:37.476Z",
     "assumption": "contiguous_ranges",
     "agreement": null,
     "gistInBounds": true,
@@ -252,24 +252,24 @@
    "coverage": null,
    "measurement": {
     "source": "own_sampling",
-    "observedAt": "2026-11-02T23:24:58.931Z",
+    "observedAt": "2026-11-02T23:26:39.355Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.031425
+     "ageHours": 0.03284527777777778
     },
-    "n": 6360,
+    "n": 6388,
     "k": null,
     "pct": null,
     "ci": null,
     "variants": [
      {
       "bucket": 1,
-      "k": 331,
-      "n": 6360,
-      "pct": 5.2,
+      "k": 334,
+      "n": 6388,
+      "pct": 5.23,
       "ci": {
-       "lo": 4.685055769867968,
-       "hi": 5.77782994356845
+       "lo": 4.709084543744531,
+       "hi": 5.8018372797865885
       },
       "role": "unknown"
      }
@@ -284,12 +284,12 @@
     "roleBasis": "unknown",
     "status": "measured",
     "observedAssignments": {
-     "k": 331,
-     "n": 6360,
-     "pct": 5.2,
+     "k": 334,
+     "n": 6388,
+     "pct": 5.23,
      "ci": {
-      "lo": 4.685055769867968,
-      "hi": 5.77782994356845
+      "lo": 4.709084543744531,
+      "hi": 5.8018372797865885
      }
     }
    },
@@ -309,23 +309,23 @@
    "coverage": null,
    "measurement": {
     "source": "own_sampling",
-    "observedAt": "2026-11-02T23:24:58.931Z",
+    "observedAt": "2026-11-02T23:26:39.355Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.031425
+     "ageHours": 0.03284527777777778
     },
-    "n": 6360,
+    "n": 6388,
     "k": null,
     "pct": null,
     "ci": null,
     "variants": [
      {
       "bucket": 11,
-      "k": 6360,
-      "n": 6360,
+      "k": 6388,
+      "n": 6388,
       "pct": 100,
       "ci": {
-       "lo": 99.9396361640127,
+       "lo": 99.9399005928817,
        "hi": 100
       },
       "role": "unknown"
@@ -341,11 +341,11 @@
     "roleBasis": "unknown",
     "status": "measured",
     "observedAssignments": {
-     "k": 6360,
-     "n": 6360,
+     "k": 6388,
+     "n": 6388,
      "pct": 100,
      "ci": {
-      "lo": 99.9396361640127,
+      "lo": 99.9399005928817,
       "hi": 100
      }
     }
@@ -366,24 +366,24 @@
    "coverage": null,
    "measurement": {
     "source": "own_sampling",
-    "observedAt": "2026-11-02T23:24:58.931Z",
+    "observedAt": "2026-11-02T23:26:39.355Z",
     "freshness": {
      "state": "recent",
-     "ageHours": 0.031425
+     "ageHours": 0.03284527777777778
     },
-    "n": 6360,
+    "n": 6388,
     "k": null,
     "pct": null,
     "ci": null,
     "variants": [
      {
       "bucket": 1,
-      "k": 324,
-      "n": 6360,
-      "pct": 5.09,
+      "k": 327,
+      "n": 6388,
+      "pct": 5.12,
       "ci": {
-       "lo": 4.580537114218225,
-       "hi": 5.662355689423196
+       "lo": 4.60499674945582,
+       "hi": 5.68689586175527
       },
       "role": "unknown"
      }
@@ -398,12 +398,12 @@
     "roleBasis": "unknown",
     "status": "measured",
     "observedAssignments": {
-     "k": 324,
-     "n": 6360,
-     "pct": 5.09,
+     "k": 327,
+     "n": 6388,
+     "pct": 5.12,
      "ci": {
-      "lo": 4.580537114218225,
-      "hi": 5.662355689423196
+      "lo": 4.60499674945582,
+      "hi": 5.68689586175527
      }
     }
    },
