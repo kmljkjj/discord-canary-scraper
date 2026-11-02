@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-02T17-19-58-864Z_660326_xwi0tw",
-  "buildNumber": "660326",
-  "updatedAt": "2026-11-02T17:19:58.864Z",
-  "count": 387,
+  "runId": "2026-11-02T17-51-30-180Z_660387_fd5wqe",
+  "buildNumber": "660387",
+  "updatedAt": "2026-11-02T17:51:30.180Z",
+  "count": 385,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4498,46 +4498,6 @@
       },
       "system": "apex",
       "fp": "a009d46c682b2dc48f46f33d9aa28517ad03e3bb42f252a2a8289e19bfdd082e"
-    },
-    "2026-08-nitro-tenure-badge-total-progress": {
-      "id": "2026-08-nitro-tenure-badge-total-progress",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 2,
-      "variations": {
-        "0": {
-          "measureFromStreakStart": false
-        },
-        "1": {
-          "measureFromStreakStart": true
-        }
-      },
-      "defaultConfig": {
-        "measureFromStreakStart": false
-      },
-      "system": "apex",
-      "fp": "8777675c65d231255d1c9c62e2de58661ba4de7338267f1169a6474f3276db92"
-    },
-    "2026-08-nitro-tenure-badge-withheld-state": {
-      "id": "2026-08-nitro-tenure-badge-withheld-state",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 2,
-      "variations": {
-        "0": {
-          "showWithheldBadge": false
-        },
-        "1": {
-          "showWithheldBadge": true
-        }
-      },
-      "defaultConfig": {
-        "showWithheldBadge": false
-      },
-      "system": "apex",
-      "fp": "e03c89d0fa731d4172ab3e84d2fd48989d4614f8b06f22f64eafa133fe4cac92"
     },
     "2026-08-no-fill-logging": {
       "id": "2026-08-no-fill-logging",
