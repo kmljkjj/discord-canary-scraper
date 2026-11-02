@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 02:09 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 02:10 UTC
 
 **Fenêtre glissante 4 h — n = 7503 échantillons — 7 tokens actifs**
 
@@ -24,7 +24,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:704914099
 - Variant 1 : 4,93 % (IC 95 % [4,45 ; 5,46], 370/7503, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.04, 10000] → 5,04 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.1, 10000] → 5,04 %
 
 ### hash:1144304849
 - Variant 1 : 5,58 % (IC 95 % [5,08 ; 6,14], 419/7503, confiance élevée)
@@ -36,11 +36,11 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,95 ; 100], 7503/7503, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 3133.38] + [3486.22, 10000] → 96,47 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 7259/7259, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [107.45, 10000] → 98,93 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [17.34, 10000] → 99,83 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 5
 
