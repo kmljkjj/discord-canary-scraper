@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 00:07 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 00:08 UTC
 
 **Fenêtre glissante 4 h — n = 7282 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **5,04 %** | [4,55 – 5,58] | 367/7282 | élevée | Mesuré |
-| hash:1144304849 | **5,37 %** | [4,87 – 5,92] | 391/7282 | élevée | Mesuré |
+| hash:1144304849 | **5,31 %** | [4,81 – 5,87] | 387/7282 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 7282/7282 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,95 – 100] | 7282/7282 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 7282/7282 | élevée | Exact (plages) |
@@ -27,8 +27,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
   - plages reconstruites (indicatif, ordre de grandeur) : [9500.16, 9999.84] → 5 %
 
 ### hash:1144304849
-- Variant 1 : 5,37 % (IC 95 % [4,87 ; 5,92], 391/7282, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 494.75] → 4,95 %
+- Variant 1 : 5,31 % (IC 95 % [4,81 ; 5,87], 387/7282, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 494.7] → 4,95 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 7282/7282, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,95 ; 100], 7282/7282, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [72.33, 2887.67] + [3188.31, 10000] → 96,27 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [37.42, 9939.58] → 99,02 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 7282/7282, confiance élevée)
