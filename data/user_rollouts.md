@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 21:12 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-02 21:14 UTC
 
 **Fenêtre glissante 4 h — n = 7137 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,76 %** | [4,28 – 5,29] | 340/7137 | élevée | Mesuré |
-| hash:1144304849 | **5,02 %** | [4,52 – 5,56] | 358/7137 | élevée | Mesuré |
+| hash:704914099 | **4,75 %** | [4,27 – 5,28] | 339/7137 | élevée | Mesuré |
+| hash:1144304849 | **4,99 %** | [4,5 – 5,53] | 356/7137 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 7137/7137 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 7137/7137 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 7050/7050 | élevée | Exact (plages) |
@@ -23,11 +23,11 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,76 % (IC 95 % [4,28 ; 5,29], 340/7137, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.09, 9999.91] → 5,04 %
+- Variant 1 : 4,75 % (IC 95 % [4,27 ; 5,28], 339/7137, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.13, 9999.88] → 5,04 %
 
 ### hash:1144304849
-- Variant 1 : 5,02 % (IC 95 % [4,52 ; 5,56], 358/7137, confiance élevée)
+- Variant 1 : 4,99 % (IC 95 % [4,5 ; 5,53], 356/7137, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [2.2, 499.8] → 4,98 %
 
 ### Safety Experience IAR User Reporting
