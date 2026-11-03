@@ -1,7 +1,7 @@
 {
-  "runId": "2026-11-03T00-47-28-076Z_661082_xcfx2k",
-  "buildNumber": "661082",
-  "updatedAt": "2026-11-03T00:47:28.077Z",
+  "runId": "2026-11-03T00-53-57-392Z_661097_n20mdv",
+  "buildNumber": "661097",
+  "updatedAt": "2026-11-03T00:53:57.392Z",
   "count": 386,
   "experiments": [
     {
@@ -10887,6 +10887,40 @@
       "fingerprint": "95be977092a6e020f6a53c39333c7619181f93e1bb0bee36668acac7ed39ce42"
     },
     {
+      "id": "2026-08-android-rn-reparenting-flag",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": null,
+      "treatments": null,
+      "variationSource": null,
+      "variationCount": 0,
+      "raw": {
+        "id": "2026-08-android-rn-reparenting-flag",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": null,
+        "variations": null,
+        "variationCount": 0,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "09504c642c2411a625f73c4e5f4f7409b0b1d7b193278b78906d353b096c1915"
+    },
+    {
       "id": "2026-08-audio-fidelity",
       "kind": "user",
       "type": "user",
@@ -19775,40 +19809,6 @@
         "value": null
       },
       "fingerprint": "e41f7f44fefa63d3af45d16e087c5aca14d24d2e2b8c81180949ef998a1fe004"
-    },
-    {
-      "id": "2026-10-wasm-precompressed-brotli",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": null,
-      "treatments": null,
-      "variationSource": null,
-      "variationCount": 0,
-      "raw": {
-        "id": "2026-10-wasm-precompressed-brotli",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": null,
-        "variations": null,
-        "variationCount": 0,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "47c47dba77cab369fd565877c6da5a66d5f92c844cbabc5898a443ef1ab2b4c0"
     },
     {
       "id": "2026-10-web-screen-share-audio",
