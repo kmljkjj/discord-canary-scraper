@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "runId": "2026-11-03T17-49-55-753Z_662303_28j6bd",
+  "runId": "2026-11-03T17-51-04-856Z_662303_xy8c7r",
   "buildNumber": "662303",
-  "ts": 1793728195783,
+  "ts": 1793728264905,
   "status": "success",
   "ok": true,
   "versionHash": "bced754ce8ba0dc497cdaa7945b35e8be359e1e3",
-  "durationMs": 19465,
+  "durationMs": 21350,
   "experiments": 384,
   "strings": 28628,
   "routes": 1109,
@@ -15,8 +15,8 @@
     "downloaded": 6391,
     "skipped": 0,
     "failed": 3,
-    "retried": 0,
+    "retried": 1,
     "http429": 0,
-    "http5xx": 0
+    "http5xx": 1
   }
 }
