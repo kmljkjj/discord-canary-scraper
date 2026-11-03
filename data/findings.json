@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-03T02-48-39-420Z_661520_4iak2m",
-  "buildNumber": "661520",
-  "scrapedAt": "2026-11-03T02:48:39.420Z",
+  "runId": "2026-11-03T02-50-59-103Z_661525_885fv8",
+  "buildNumber": "661525",
+  "scrapedAt": "2026-11-03T02:50:59.103Z",
   "totals": {
-    "all": 393
+    "all": 392
   },
   "experiments": [
     {
@@ -2217,23 +2217,6 @@
         "1": {
           "id": 1,
           "label": "Allow guild members to see each others duration in the channel list",
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-04-composed-quest-player",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
           "enabled": true
         }
       },
