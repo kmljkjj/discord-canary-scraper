@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-03T23-54-14-243Z_663187_8o2gaq",
-  "buildNumber": "663187",
-  "updatedAt": "2026-11-03T23:54:14.243Z",
-  "count": 383,
+  "runId": "2026-11-03T23-56-23-102Z_663188_ib5mhl",
+  "buildNumber": "663188",
+  "updatedAt": "2026-11-03T23:56:23.102Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7560,6 +7560,23 @@
       },
       "system": "apex",
       "fp": "e41f7f44fefa63d3af45d16e087c5aca14d24d2e2b8c81180949ef998a1fe004"
+    },
+    "2026-10-voice-quality-scoring": {
+      "id": "2026-10-voice-quality-scoring",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "8e8dba4cf6926eb8929c6ebb6d68a4ee3d751a6e7d4c82735bc7aeb94788ef48"
     },
     "2026-10-web-screen-share-audio": {
       "id": "2026-10-web-screen-share-audio",
