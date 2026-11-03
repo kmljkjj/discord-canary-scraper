@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-03 18:49 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-03 18:50 UTC
 
 **Fenêtre glissante 4 h — n = 6784 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,48 %** | [4,96 – 6,06] | 372/6784 | élevée | Mesuré |
-| hash:1144304849 | **4,89 %** | [4,4 – 5,44] | 332/6784 | élevée | Mesuré |
+| hash:704914099 | **5,45 %** | [4,93 – 6,03] | 370/6784 | élevée | Mesuré |
+| hash:1144304849 | **4,94 %** | [4,44 – 5,49] | 335/6784 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6784/6784 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6784/6784 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 6784/6784 | élevée | Exact (plages) |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,48 % (IC 95 % [4,96 ; 6,06], 372/6784, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9498, 10000] → 5,02 %
+- Variant 1 : 5,45 % (IC 95 % [4,93 ; 6,03], 370/6784, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9498.06, 10000] → 5,02 %
 
 ### hash:1144304849
-- Variant 1 : 4,89 % (IC 95 % [4,4 ; 5,44], 332/6784, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 245.83] + [267.25, 499.75] → 4,78 %
+- Variant 1 : 4,94 % (IC 95 % [4,44 ; 5,49], 335/6784, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 245.83] + [267.31, 499.69] → 4,78 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6784/6784, confiance élevée)
