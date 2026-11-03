@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-03 00:03 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-03 00:05 UTC
 
 **Fenêtre glissante 4 h — n = 6135 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,26 %** | [4,72 – 5,86] | 323/6135 | élevée | Mesuré |
-| hash:1144304849 | **5,36 %** | [4,82 – 5,97] | 329/6135 | élevée | Mesuré |
+| hash:704914099 | **5,4 %** | [4,85 – 6] | 331/6135 | élevée | Mesuré |
+| hash:1144304849 | **5,35 %** | [4,8 – 5,95] | 328/6135 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6135/6135 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,93 – 100] | 6135/6135 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 6135/6135 | élevée | Exact (plages) |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,26 % (IC 95 % [4,72 ; 5,86], 323/6135, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.97, 10000] → 5,02 %
+- Variant 1 : 5,4 % (IC 95 % [4,85 ; 6], 331/6135, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9498.09, 10000] → 5,02 %
 
 ### hash:1144304849
-- Variant 1 : 5,36 % (IC 95 % [4,82 ; 5,97], 329/6135, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.89] → 5,03 %
+- Variant 1 : 5,35 % (IC 95 % [4,8 ; 5,95], 328/6135, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.92] → 5,03 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6135/6135, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,93 ; 100], 6135/6135, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [14.59, 10000] → 99,85 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6135/6135, confiance élevée)
