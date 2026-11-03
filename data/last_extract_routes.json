@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-03T19-08-41-414Z_662450_ab4xvp",
-  "buildNumber": "662450",
+  "runId": "2026-11-03T19-17-16-317Z_662473_cxm4nn",
+  "buildNumber": "662473",
   "extractVersion": 3,
-  "updatedAt": "2026-11-03T19:08:41.414Z",
-  "count": 1109,
+  "updatedAt": "2026-11-03T19:17:16.317Z",
+  "count": 1110,
   "data": {
     "USER_BULK_RELATIONSHIPS": "/users/@me/relationships/bulk",
     "USER_BADGE_SETTINGS": "/users/@me/badges/settings",
@@ -545,6 +545,7 @@
     "USER_PROFILE": "/users/:param/profile",
     "USER_BADGES": "/users/:param/badges",
     "USER_BADGE": "/users/:param/badges/:param",
+    "USER_BADGE_ACK": "/users/@me/badges/:param/ack",
     "APPLICATION_WIDGET_CONFIGS": "/applications/:param/widget-configs",
     "APPLICATION_WIDGET_REFRESH": "/applications/:param/widget/refresh",
     "USER_GUILD_PROFILE": "/guilds/:param/profile/:param",
