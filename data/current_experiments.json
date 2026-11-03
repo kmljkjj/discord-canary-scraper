@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-03T06-23-14-414Z_661828_ojfgl2",
-  "buildNumber": "661828",
-  "updatedAt": "2026-11-03T06:23:14.414Z",
-  "count": 385,
+  "runId": "2026-11-03T07-07-40-872Z_661839_2gppjk",
+  "buildNumber": "661839",
+  "updatedAt": "2026-11-03T07:07:40.872Z",
+  "count": 384,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -7453,52 +7453,6 @@
         "value": null
       },
       "fingerprint": "dc2f0e8afc1a71d31d371aa8cf44bdba09c14bff2f00e2ac0844210c032956f3"
-    },
-    {
-      "id": "2026-05-mana-type-consolidation",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-05-mana-type-consolidation",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "a77dbc4846cc9be478cfa16b10b92f9071df1f7c0feed88565cdcad9806a797c"
     },
     {
       "id": "2026-05-quest-home-tile-redesign",

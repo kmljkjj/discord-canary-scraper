@@ -1,11 +1,11 @@
 {
-  "runId": "2026-11-03T06-23-14-414Z_661828_ojfgl2",
-  "buildNumber": "661828",
-  "scrapedAt": "2026-11-03T06:23:14.414Z",
+  "runId": "2026-11-03T07-07-40-872Z_661839_2gppjk",
+  "buildNumber": "661839",
+  "scrapedAt": "2026-11-03T07:07:40.872Z",
   "totals": {
-    "all": 392,
+    "all": 391,
     "legacy": 0,
-    "apex": 385
+    "apex": 384
   },
   "experiments": [
     {
@@ -2867,23 +2867,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-05-mana-type-consolidation",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
