@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-04T01-15-28-939Z_663463_agd65j",
-  "buildNumber": "663463",
-  "updatedAt": "2026-11-04T01:15:28.940Z",
-  "count": 386,
+  "runId": "2026-11-04T01-18-35-200Z_663475_j95u5u",
+  "buildNumber": "663475",
+  "updatedAt": "2026-11-04T01:18:35.200Z",
+  "count": 385,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -15367,52 +15367,6 @@
         "value": null
       },
       "fingerprint": "162c9b85715aaaa88da5b777e6e55ec61b209e149ab93434a1c9ac0589bf0951"
-    },
-    {
-      "id": "2026-09-stream-zero-vad-leading",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-09-stream-zero-vad-leading",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e15589316479308450838578c34e3c667cb93fbd872150565ca07ee3940afdbe"
     },
     {
       "id": "2026-09-three-month-nitro-gifting",
