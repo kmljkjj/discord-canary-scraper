@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-04 07:02 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-04 07:03 UTC
 
 **Fenêtre glissante 4 h — n = 6718 échantillons — 7 tokens actifs**
 
@@ -14,7 +14,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,06 %** | [4,55 – 5,62] | 340/6718 | élevée | Mesuré |
+| hash:704914099 | **5,02 %** | [4,51 – 5,58] | 337/6718 | élevée | Mesuré |
 | hash:1144304849 | **5,42 %** | [4,89 – 6] | 364/6718 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6718/6718 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6718/6718 | élevée | Mesuré |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,06 % (IC 95 % [4,55 ; 5,62], 340/6718, confiance élevée)
+- Variant 1 : 5,02 % (IC 95 % [4,51 ; 5,58], 337/6718, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [9498.43, 9998.57] → 5 %
 
 ### hash:1144304849
 - Variant 1 : 5,42 % (IC 95 % [4,89 ; 6], 364/6718, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 498.87] → 4,99 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 498.9] → 4,99 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6718/6718, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6718/6718, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [33.32, 9968.68] → 99,35 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6613/6613, confiance élevée)
