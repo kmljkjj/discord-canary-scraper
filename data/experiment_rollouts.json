@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-04T01:54:26.881Z",
+  "fetchedAt": "2026-11-04T02:01:25.709Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -292,6 +292,26 @@
       }
     },
     {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
+      }
+    },
+    {
       "hash": 4055210228,
       "id": "2025-11_tida_webform",
       "type": "user",
@@ -312,43 +332,23 @@
       }
     },
     {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "hash": 1144304849,
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 1,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 1
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 1,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 1
+        "0": 5
       }
     },
     {
@@ -1182,26 +1182,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-03-icymi-desktop",
-      "hash": 1098726563,
-      "type": "user",
-      "title": "2026-03-icymi-desktop",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-icymi-staff-debugging-utility",
-      "hash": 1474591403,
-      "type": "user",
-      "title": "2026-03-icymi-staff-debugging-utility",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-03-image-load-metrics",
       "hash": 3355255429,
       "type": "user",
@@ -1466,16 +1446,6 @@
       "hash": 1061329232,
       "type": "user",
       "title": "2026-04-http-request-sample",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-04-icymi-staff-only",
-      "hash": 1565153409,
-      "type": "user",
-      "title": "2026-04-icymi-staff-only",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4223,11 +4193,11 @@
     }
   ],
   "summary": {
-    "total": 396,
+    "total": 393,
     "guild": 38,
-    "user": 358,
+    "user": 355,
     "withPercentage": 9,
-    "withoutPercentage": 387,
+    "withoutPercentage": 384,
     "fullRollout": 5,
     "partial": 0,
     "notStarted": 4,
