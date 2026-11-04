@@ -4,6 +4,14 @@ Datamining du client Discord Canary : builds, expériences, strings, routes, rol
 
 ## Sources
 
+- **Source du gist (28/10/2026)** : le suivi lit le gist complet `rollouts.json`
+  (`fb2b6a7…`, celui des autres bots) ; la copie réduite `192b2ce…` en est le miroir
+  (comparaison + repli explicite). L'ancienne copie `e3e9906…` avait jusqu'à ~6 h de
+  retard et donnait des pourcentages périmés ; elle n'est plus lue. Le champ `kind` du gist
+  complète la classification user/guild. Un seul annonceur par expérience : quand le gist
+  couvre un hash avec un total exact, c'est lui qui annonce (la mesure API est jointe à l'embed,
+  « cohérent » ou « ÉCART ») ; l'échantillonnage n'annonce que ce que le gist ne couvre pas
+  (`USER_ROLLOUT_WIRE_DEDUPE=0` pour désactiver).
 - **% user** : couverture de l'espace de buckets depuis le gist communautaire
   d'[agnonotdev](https://gist.github.com/agnonotdev) (`src/gist_user_rollouts.js`
   v1, toutes les 30 min) — ~1000 expériences, pourcentages à 0,01 point près,

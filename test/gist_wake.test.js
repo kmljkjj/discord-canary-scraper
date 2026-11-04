@@ -42,7 +42,7 @@ function stateFile(rev, fetchedAt) {
 
 test('main: changement → un seul dispatch trigger-gist-user-rollouts, lecture du gist sans jeton', async () => {
   const calls = [];
-  const r = await main({ fetch: fakeFetch('bbbbbbb2', calls), token: 'tok', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') });
+  const r = await main({ gistId: 'g1', fetch: fakeFetch('bbbbbbb2', calls), token: 'tok', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') });
   assert.equal(r.dispatched, true);
   const d = calls.filter((c) => c.url.includes('/dispatches'));
   assert.equal(d.length, 1);
@@ -54,17 +54,26 @@ test('main: changement → un seul dispatch trigger-gist-user-rollouts, lecture 
 });
 test('main: aucun changement → aucun dispatch', async () => {
   const calls = [];
-  const r = await main({ fetch: fakeFetch('aaaaaaa1', calls), token: 'tok', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') });
+  const r = await main({ gistId: 'g1', fetch: fakeFetch('aaaaaaa1', calls), token: 'tok', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') });
   assert.equal(r.dispatched, false);
   assert.equal(calls.filter((c) => c.url.includes('/dispatches')).length, 0);
 });
 test('main: dry-run et absence de jeton → pas de dispatch', async () => {
   const calls = [];
   const sf = stateFile('aaaaaaa1', '2026-10-28T12:25:00Z');
-  assert.equal((await main({ fetch: fakeFetch('bbbbbbb2', calls), token: 't', repo: 'o/r', now: NOW, stateFile: sf, dryRun: true })).dispatched, false);
-  assert.equal((await main({ fetch: fakeFetch('bbbbbbb2', calls), token: '', repo: 'o/r', now: NOW, stateFile: sf, dryRun: false })).dispatched, false);
+  assert.equal((await main({ gistId: 'g1', fetch: fakeFetch('bbbbbbb2', calls), token: 't', repo: 'o/r', now: NOW, stateFile: sf, dryRun: true })).dispatched, false);
+  assert.equal((await main({ gistId: 'g1', fetch: fakeFetch('bbbbbbb2', calls), token: '', repo: 'o/r', now: NOW, stateFile: sf, dryRun: false })).dispatched, false);
   assert.equal(calls.filter((c) => c.url.includes('/dispatches')).length, 0);
 });
 test('main: échec du dispatch → rejet (l’étape CLI l’absorbe, exit 0)', async () => {
-  await assert.rejects(main({ fetch: fakeFetch('bbbbbbb2', [], 403), token: 't', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') }));
+  await assert.rejects(main({ gistId: 'g1', fetch: fakeFetch('bbbbbbb2', [], 403), token: 't', repo: 'o/r', now: NOW, stateFile: stateFile('aaaaaaa1', '2026-10-28T12:25:00Z') }));
+});
+
+test('main: état issu d’un autre gist (migration de source) → réveil immédiat', async () => {
+  const calls = [];
+  const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'gw-')), 's.json');
+  fs.writeFileSync(f, JSON.stringify({ source: { gistId: 'ancien', revision: 'aaaaaaa1', fetchedAt: '2026-10-28T12:29:00Z' } }));
+  const r = await main({ gistId: 'g1', fetch: fakeFetch('aaaaaaa1', calls), token: 't', repo: 'o/r', now: NOW, stateFile: f });
+  assert.equal(r.reason, 'no_local_revision');
+  assert.equal(r.dispatched, true);
 });

@@ -13,7 +13,8 @@ const { writeJsonAtomic } = require('./lib/atomic');
 const { buildComparison } = require('./lib/user_rollout_comparison');
 
 const DATA = path.join(__dirname, '..', 'data');
-const GIST_ID = process.env.GIST_ROLLOUT_GIST_IDS?.split(',')[0]?.trim() || 'e3e99062983e6bd0feaef833f14fd931';
+const { canonicalId } = require('./lib/gist_sources');
+const GIST_ID = canonicalId();
 
 async function readJson(file, fallback) {
   try { return await fs.readJson(path.join(DATA, file)); } catch { return fallback; }

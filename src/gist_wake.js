@@ -20,7 +20,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 
 const STATE = path.join(__dirname, '..', 'data', 'gist_user_rollouts.json');
-const DEFAULT_GIST = 'e3e99062983e6bd0feaef833f14fd931';
+const { canonicalId } = require('./lib/gist_sources');
 const EVENT = 'trigger-gist-user-rollouts';
 
 /**
@@ -75,11 +75,11 @@ async function main(deps = {}) {
   let state = {};
   try { state = await fs.readJson(deps.stateFile || STATE); } catch { state = {}; }
   const src = (state && state.source) || {};
-  const gistId = src.gistId || DEFAULT_GIST;
+  const gistId = deps.gistId || canonicalId();
   const remoteRevision = await remoteRevisionOf(gistId, token, fetchImpl);
-  const d = decide({ localRevision: src.revision || null, localFetchedAt: src.fetchedAt || state.scrapedAt || null,
+  const d = decide({ localRevision: src.gistId === gistId ? src.revision || null : null, localFetchedAt: src.fetchedAt || state.scrapedAt || null,
     remoteRevision, now: deps.now ?? Date.now(), maxAgeMin });
-  const out = { ...d, gistId, localRevision: src.revision || null, remoteRevision, dispatched: false };
+  const out = { ...d, gistId, localRevision: src.gistId === gistId ? src.revision || null : null, remoteRevision, dispatched: false };
   if (d.wake && !dry) {
     if (!token || !repo) { out.reason += '+no_token_or_repo'; }
     else { await dispatch(repo, token, fetchImpl); out.dispatched = true; }
