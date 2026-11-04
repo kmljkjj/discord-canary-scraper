@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-04T15-13-49-469Z_663952_afkekq",
-  "buildNumber": "663952",
-  "updatedAt": "2026-11-04T15:13:49.469Z",
-  "count": 382,
+  "runId": "2026-11-04T15-18-10-460Z_663961_f27e6f",
+  "buildNumber": "663961",
+  "updatedAt": "2026-11-04T15:18:10.461Z",
+  "count": 383,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4864,6 +4864,26 @@
       },
       "system": "apex",
       "fp": "b9edfe3e7151d9835a92361504669cdd870df6dd25747e28d4eb6cff8eb34d2b"
+    },
+    "2026-09-declarative-notification-settings-redesign": {
+      "id": "2026-09-declarative-notification-settings-redesign",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "b84b1d1460bbe59ef15e6a24215005169dde66c22238b6589e253e25fae0dd16"
     },
     "2026-09-default-emojis": {
       "id": "2026-09-default-emojis",
