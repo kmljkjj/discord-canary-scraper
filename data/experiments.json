@@ -1,11 +1,11 @@
 {
-  "runId": "2026-11-03T23-56-23-102Z_663188_ib5mhl",
-  "buildNumber": "663188",
-  "scrapedAt": "2026-11-03T23:56:23.102Z",
+  "runId": "2026-11-04T00-00-41-846Z_663198_kc6fgi",
+  "buildNumber": "663198",
+  "scrapedAt": "2026-11-04T00:00:41.846Z",
   "totals": {
-    "all": 391,
+    "all": 393,
     "legacy": 0,
-    "apex": 384
+    "apex": 386
   },
   "experiments": [
     {
@@ -4636,6 +4636,26 @@
       "source": "discord"
     },
     {
+      "id": "2026-08-social-layer-storefront-mobile-embed",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-08-split-payments",
       "type": "user",
       "kind": "user",
@@ -7543,6 +7563,26 @@
     },
     {
       "id": "2026-10-slayer-storefront-single-sku-wide-header",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-social-layer-storefront-mobile-multi-sku-embed",
       "type": "user",
       "kind": "user",
       "label": null,

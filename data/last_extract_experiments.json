@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-03T23-56-23-102Z_663188_ib5mhl",
-  "buildNumber": "663188",
-  "updatedAt": "2026-11-03T23:56:23.102Z",
-  "count": 384,
+  "runId": "2026-11-04T00-00-41-846Z_663198_kc6fgi",
+  "buildNumber": "663198",
+  "updatedAt": "2026-11-04T00:00:41.846Z",
+  "count": 386,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -4582,6 +4582,26 @@
       "system": "apex",
       "fp": "bf2731bf4c07836ad612491cb6281ac1169de51172b352714cc8ade6ac8a806f"
     },
+    "2026-08-social-layer-storefront-mobile-embed": {
+      "id": "2026-08-social-layer-storefront-mobile-embed",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "736c790ea0a4c85bc41e307dac2193704b802b369d3b7e9081fb9b7f9f96be94"
+    },
     "2026-08-split-payments": {
       "id": "2026-08-split-payments",
       "type": "user",
@@ -7439,6 +7459,26 @@
       },
       "system": "apex",
       "fp": "5cd1bf5bd63e21f2b82c3a5cf4fcd10bf13872170ac76ee54710cac610393e33"
+    },
+    "2026-10-social-layer-storefront-mobile-multi-sku-embed": {
+      "id": "2026-10-social-layer-storefront-mobile-multi-sku-embed",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "fd0d8870261a420d774b4d56076f17204cf73a2ead5b15d36433303365f0c75d"
     },
     "2026-10-soundboard-mute-indicator": {
       "id": "2026-10-soundboard-mute-indicator",
