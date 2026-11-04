@@ -1,19 +1,19 @@
 {
- "generatedAt": "2026-11-04T01:31:28.713Z",
+ "generatedAt": "2026-11-04T02:01:04.337Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "updatedAt": "2026-10-28T12:04:36Z",
-  "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb"
+  "updatedAt": "2026-11-04T02:00:14Z",
+  "revision": "785a6f6d445041f112349a803c9e239a57c81e19"
  },
  "stats": {
-  "total": 1006,
-  "user": 346,
-  "userData": 146,
-  "guild": 37,
-  "unclassified": 623,
-  "noData": 270
+  "total": 1020,
+  "user": 353,
+  "userData": 157,
+  "guild": 38,
+  "unclassified": 629,
+  "noData": 267
  },
  "experiments": [
   {
@@ -54,6 +54,35 @@
    }
   },
   {
+   "id": "2026-10-user-profile-widget-suggestions",
+   "title": "2026-10-user-profile-widget-suggestions",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 2,
+   "projectedTreatmentPct": null,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 97,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
+  },
+  {
    "id": "2026-10-stage-unified-call-user",
    "title": "2026-10-stage-unified-call-user",
    "type": "user",
@@ -80,18 +109,39 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 1,
+   "treatmentPct": 10,
    "projectedTreatmentPct": null,
-   "controlPct": 1,
+   "controlPct": 10,
    "notEligiblePct": 0,
-   "unassignedPct": 98,
+   "unassignedPct": 80,
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-slayer-storefront-single-sku-wide-header",
+   "title": "2026-10-slayer-storefront-single-sku-wide-header",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 100,
+   "projectedTreatmentPct": null,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -135,6 +185,31 @@
   {
    "id": "2026-10-remove-quests-from-discovery",
    "title": "2026-10-remove-quests-from-discovery",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "projectedTreatmentPct": null,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-referral-refresh-notification",
+   "title": "2026-10-referral-refresh-notification",
    "type": "user",
    "hasData": true,
    "totalsAvailable": true,
@@ -389,6 +464,35 @@
    }
   },
   {
+   "id": "2026-10-fractional-nitro-pricing",
+   "title": "2026-10-fractional-nitro-pricing",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 20,
+   "projectedTreatmentPct": null,
+   "controlPct": 10,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   }
+  },
+  {
    "id": "2026-10-fix-soundboard-muting-iconography",
    "title": "2026-10-fix-soundboard-muting-iconography",
    "type": "user",
@@ -397,18 +501,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 1,
+   "treatmentPct": 10,
    "projectedTreatmentPct": null,
-   "controlPct": 1,
+   "controlPct": 10,
    "notEligiblePct": 0,
-   "unassignedPct": 98,
+   "unassignedPct": 80,
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    }
@@ -569,18 +673,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 15,
+   "treatmentPct": 50,
    "projectedTreatmentPct": null,
-   "controlPct": 15,
+   "controlPct": 50,
    "notEligiblePct": 0,
-   "unassignedPct": 70,
+   "unassignedPct": 0,
    "byVariant": {
     "0": {
-     "pct": 15,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 15,
+     "pct": 50,
      "role": "treatment"
     }
    }
@@ -661,18 +765,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 10,
    "projectedTreatmentPct": null,
-   "controlPct": 5,
+   "controlPct": 10,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 80,
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 10,
      "role": "treatment"
     }
    }
@@ -746,6 +850,31 @@
    }
   },
   {
+   "id": "2026-10-animated-shop-bundle-previews",
+   "title": "2026-10-animated-shop-bundle-previews",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "projectedTreatmentPct": null,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
    "id": "2026-09-youtube-3p-nagbar",
    "title": "2026-09-youtube-3p-nagbar",
    "type": "user",
@@ -809,19 +938,26 @@
    "id": "2026-09-web-sticker-picker-upsell-restyle",
    "title": "2026-09-web-sticker-picker-upsell-restyle",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 50,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-09-voice-connect-feedback",
@@ -981,19 +1117,22 @@
    "id": "2026-09-single-cpu-copy",
    "title": "2026-09-single-cpu-copy",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-09-silp-direct-to-discoverable",
@@ -1020,6 +1159,39 @@
    "id": "2026-09-silp-desktop-app-upsell",
    "title": "download_discord_app",
    "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 22.5,
+   "projectedTreatmentPct": null,
+   "controlPct": 7.5,
+   "notEligiblePct": 0,
+   "unassignedPct": 70,
+   "byVariant": {
+    "0": {
+     "pct": 7.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 7.5,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-silp-cta-copy-tests",
+   "title": "2026-09-silp-cta-copy-tests",
+   "type": "user",
    "hasData": false,
    "totalsAvailable": false,
    "ambiguous": false,
@@ -1033,27 +1205,6 @@
    "notEligiblePct": null,
    "unassignedPct": null,
    "byVariant": {}
-  },
-  {
-   "id": "2026-09-silp-cta-copy-tests",
-   "title": "2026-09-silp-cta-copy-tests",
-   "type": "user",
-   "hasData": true,
-   "totalsAvailable": true,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [],
-   "treatmentPct": 0,
-   "projectedTreatmentPct": null,
-   "controlPct": 4,
-   "notEligiblePct": 0,
-   "unassignedPct": 96,
-   "byVariant": {
-    "0": {
-     "pct": 4,
-     "role": "control"
-    }
-   }
   },
   {
    "id": "2026-09-silp-app-opened-direct-to-discoverable",
@@ -1351,14 +1502,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 76.5,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 23.5,
+   "unassignedPct": 0,
    "byVariant": {
     "1": {
-     "pct": 76.5,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -1393,14 +1544,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 49.5,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 50.5,
+   "unassignedPct": 0,
    "byVariant": {
     "1": {
-     "pct": 49.5,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -1481,18 +1632,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 50,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
-   "controlPct": 50,
+   "controlPct": 0,
    "notEligiblePct": 0,
    "unassignedPct": 0,
    "byVariant": {
-    "0": {
-     "pct": 50,
-     "role": "control"
-    },
     "1": {
-     "pct": 50,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -1700,6 +1847,24 @@
    "id": "2026-09-gifting-badge-coachmark-audience",
    "title": "2026-09-gifting-badge-coachmark-audience",
    "type": "user",
+   "hasData": false,
+   "totalsAvailable": false,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
+   "projectedTreatmentPct": null,
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
+  },
+  {
+   "id": "2026-09-game-search-row",
+   "title": "2026-09-game-search-row",
+   "type": "user",
    "hasData": true,
    "totalsAvailable": true,
    "ambiguous": false,
@@ -1720,24 +1885,6 @@
      "role": "treatment"
     }
    }
-  },
-  {
-   "id": "2026-09-game-search-row",
-   "title": "2026-09-game-search-row",
-   "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
-   "ambiguous": false,
-   "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
-   "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
   },
   {
    "id": "2026-09-game-profiles-v3-communities-tab",
@@ -1827,18 +1974,39 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 2.5,
+   "treatmentPct": 50,
    "projectedTreatmentPct": null,
-   "controlPct": 2.5,
+   "controlPct": 50,
    "notEligiblePct": 0,
-   "unassignedPct": 95,
+   "unassignedPct": 0,
    "byVariant": {
     "0": {
-     "pct": 2.5,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 2.5,
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-09-desktop-voice-message-recording",
+   "title": "2026-09-desktop-voice-message-recording",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "projectedTreatmentPct": null,
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 50,
+   "byVariant": {
+    "1": {
+     "pct": 50,
      "role": "treatment"
     }
    }
@@ -2257,22 +2425,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 20,
+   "treatmentPct": 50,
    "projectedTreatmentPct": null,
-   "controlPct": 10,
+   "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 70,
+   "unassignedPct": 50,
    "byVariant": {
-    "0": {
-     "pct": 10,
-     "role": "control"
-    },
-    "1": {
-     "pct": 10,
-     "role": "treatment"
-    },
     "2": {
-     "pct": 10,
+     "pct": 50,
      "role": "treatment"
     }
    }
@@ -2281,19 +2441,26 @@
    "id": "2026-08-rive-web-perf",
    "title": "2026-08-rive-web-perf",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 5,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 5,
+   "notEligiblePct": 0,
+   "unassignedPct": 90,
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-08-profile-read-state-v1",
@@ -2388,12 +2555,8 @@
    "notEligiblePct": 0,
    "unassignedPct": 0,
    "byVariant": {
-    "1": {
-     "pct": 25,
-     "role": "treatment"
-    },
     "2": {
-     "pct": 75,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -2402,19 +2565,22 @@
    "id": "2026-08-nitro-tenure-badge-withheld-state",
    "title": "2026-08-nitro-tenure-badge-withheld-state",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-08-mute-aware-noise-cancellation",
@@ -2433,6 +2599,31 @@
    "notEligiblePct": null,
    "unassignedPct": null,
    "byVariant": {}
+  },
+  {
+   "id": "2026-08-mobile-soundboard-sound-preview-menu",
+   "title": "2026-08-mobile-soundboard-sound-preview-menu",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "projectedTreatmentPct": null,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-08-mobile-emoji-picker-upsell-restyle",
@@ -3181,26 +3372,26 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 3,
+   "treatmentPct": 30,
    "projectedTreatmentPct": null,
-   "controlPct": 1,
+   "controlPct": 10,
    "notEligiblePct": 0,
-   "unassignedPct": 96,
+   "unassignedPct": 60,
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     },
     "2": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     },
     "3": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    }
@@ -3333,12 +3524,16 @@
    "flags": [],
    "treatmentPct": 90,
    "projectedTreatmentPct": null,
-   "controlPct": 0,
+   "controlPct": 10,
    "notEligiblePct": 0,
-   "unassignedPct": 10,
+   "unassignedPct": 0,
    "byVariant": {
-    "1": {
+    "0": {
      "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
      "role": "treatment"
     },
     "2": {
@@ -3346,7 +3541,7 @@
      "role": "treatment"
     },
     "3": {
-     "pct": 70,
+     "pct": 30,
      "role": "treatment"
     }
    }
@@ -3815,18 +4010,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 10,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
-   "controlPct": 10,
+   "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 80,
+   "unassignedPct": 0,
    "byVariant": {
-    "0": {
-     "pct": 10,
-     "role": "control"
-    },
     "1": {
-     "pct": 10,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -4276,14 +4467,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 10,
+   "treatmentPct": 17.5,
    "projectedTreatmentPct": null,
-   "controlPct": 0,
+   "controlPct": 17.5,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 65,
    "byVariant": {
+    "0": {
+     "pct": 17.5,
+     "role": "control"
+    },
     "1": {
-     "pct": 10,
+     "pct": 17.5,
      "role": "treatment"
     }
    }
@@ -5505,14 +5700,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 30,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 70,
+   "unassignedPct": 0,
    "byVariant": {
     "1": {
-     "pct": 30,
+     "pct": 100,
      "role": "treatment"
     }
    }

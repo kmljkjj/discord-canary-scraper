@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261104T015914_gist",
- "scrapedAt": "2026-11-04T01:59:14.141Z",
+ "runId": "20261104T020104_gist",
+ "scrapedAt": "2026-11-04T02:01:04.329Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/189e5f97f27e90f56f84a6d4589e41fc793cc661/rollouts-tag.json",
-  "updatedAt": "2026-10-28T12:04:36Z",
-  "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
-  "fetchedAt": "2026-11-04T01:59:14.141Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/3e4e8e5e55311849b8c5e9befb409d46ce9675dc/rollouts-tag.json",
+  "updatedAt": "2026-11-04T02:00:14Z",
+  "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
+  "fetchedAt": "2026-11-04T02:01:04.329Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,55 +19,16 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
-   "2026-10-pinot-admin",
-   "2026-10-clickable-hero-banner",
-   "2026-10-collectibles-interactive-jumble-bar",
-   "2026-10-fix-soundboard-muting-iconography",
-   "2026-10-soundboard-mute-indicator",
-   "2026-09-new-orb-reward-visuals",
-   "2026-09-non-nitro-file-upload-marketing",
-   "2026-09-edit-profile-collectibles-ordering",
-   "2026-09-mobile-nitro-preview-direct-checkout",
-   "2026-09-referral-trial-cta",
-   "2026-09-mobile-sticker-picker-upsell-restyle",
-   "2026-09-gifting-badge-coachmark-audience",
-   "2026-09-silp-cta-copy-tests",
-   "2026-09-single-cpu-copy",
-   "2026-09-game-search-row",
-   "2026-09-silp-desktop-app-upsell",
-   "2026-09-web-sticker-picker-upsell-restyle",
-   "2026-08-no-fill-logging",
-   "2026-08-scheduled-messages",
-   "2026-08-nitro-tenure-badge-withheld-state",
-   "2026-08-rive-web-perf",
-   "2026-07-mobile-emoji-suggestions",
-   "2026-07-custom-typing-indicator",
-   "2026-06-improved-shop-loading",
-   "2026-05-dvp-for-attachments",
-   "2026-02-voice-channel-link-click",
-   "2026-10-android-mobile-onboarding-friction-negative-test",
-   "2026-10-request-to-stream-non-games",
-   "2026-10-referral-refresh-notification",
-   "2026-10-fractional-nitro-pricing",
-   "2026-10-user-profile-widget-suggestions",
-   "2026-10-android-seamless-pip",
-   "2026-10-animated-shop-bundle-previews",
-   "2026-10-slayer-storefront-single-sku-wide-header",
-   "2026-10-summary-reminder-notif-re-revival",
-   "2026-09-mobile-roadblock-offer-cta",
-   "2026-09-desktop-voice-message-recording",
-   "2026-09-improved-mobile-shop-loading",
-   "2026-09-user-profile-premium-try-it-out-mobile-refresh",
-   "2026-08-mobile-soundboard-sound-preview-menu"
+   "2026-08-scheduled-messages"
   ]
  },
  "stats": {
-  "total": 1006,
-  "user": 346,
-  "userData": 146,
-  "guild": 37,
-  "unclassified": 623,
-  "noData": 270
+  "total": 1020,
+  "user": 353,
+  "userData": 157,
+  "guild": 38,
+  "unclassified": 629,
+  "noData": 267
  },
  "acknowledged": {
   "2026-10-web-streaming-optimizations": {
@@ -116,28 +77,30 @@
    }
   },
   "2026-10-soundboard-mute-indicator": {
-   "key": "19a2e309986d6b83",
+   "key": "0fb7b5376255f51e",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 1
+    "pct": 10
    },
    "control": {
-    "pct": 1
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-shop-marketing-fatigue": {
@@ -403,28 +366,30 @@
    "variantsCount": 2
   },
   "2026-10-fix-soundboard-muting-iconography": {
-   "key": "19a2e309986d6b83",
+   "key": "0fb7b5376255f51e",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 1
+    "pct": 10
    },
    "control": {
-    "pct": 1
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-e2e-latency-measurement": {
@@ -535,28 +500,30 @@
    }
   },
   "2026-10-collectibles-interactive-jumble-bar": {
-   "key": "eb8dce761bc0b516",
+   "key": "15b6a0377bfaeed7",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 15,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 15,
+     "pct": 50,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 15
+    "pct": 50
    },
    "control": {
-    "pct": 15
+    "pct": 50
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-code-blurple-marketing-holdout": {
@@ -627,28 +594,30 @@
    "variantsCount": 1
   },
   "2026-10-clickable-hero-banner": {
-   "key": "04f9ee8c20115439",
+   "key": "705ae5913859378c",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 10,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 10
    },
    "control": {
-    "pct": 5
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-bounties-desktop-quest-bar": {
@@ -760,12 +729,31 @@
    }
   },
   "2026-09-web-sticker-picker-upsell-restyle": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "55e7c1437ea3c30a",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   },
   "2026-09-voice-connect-feedback": {
    "key": "no_data",
@@ -892,12 +880,27 @@
    "variantsCount": 1
   },
   "2026-09-single-cpu-copy": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-09-silp-direct-to-discoverable": {
    "key": "0bd8478bd6ebfb5c",
@@ -921,33 +924,47 @@
    "variantsCount": 1
   },
   "2026-09-silp-desktop-app-upsell": {
+   "key": "a84defbec8f0e836",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment|3:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 7.5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 7.5,
+     "role": "treatment"
+    },
+    "3": {
+     "pct": 7.5,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 22.5
+   },
+   "control": {
+    "pct": 7.5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 4
+  },
+  "2026-09-silp-cta-copy-tests": {
    "key": "no_data",
    "hasData": false,
    "sig": "",
    "treatment": {
     "pct": null
    }
-  },
-  "2026-09-silp-cta-copy-tests": {
-   "key": "e04bc04a10232282",
-   "hasData": true,
-   "sig": "0:control",
-   "byVariant": {
-    "0": {
-     "pct": 4,
-     "role": "control"
-    }
-   },
-   "treatment": {
-    "pct": 0
-   },
-   "control": {
-    "pct": 4
-   },
-   "notEligible": {
-    "pct": 0
-   },
-   "variantsCount": 1
   },
   "2026-09-silp-app-opened-direct-to-discoverable": {
    "key": "no_data",
@@ -1139,17 +1156,17 @@
    "variantsCount": 2
   },
   "2026-09-non-nitro-file-upload-marketing": {
-   "key": "f3b7a8e468d5bba4",
+   "key": "95f46bfc73a52751",
    "hasData": true,
    "sig": "1:treatment",
    "byVariant": {
     "1": {
-     "pct": 76.5,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 76.5
+    "pct": 100
    },
    "control": {
     "pct": 0
@@ -1157,6 +1174,8 @@
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 1
   },
   "2026-09-nitro-file-upload-rollout": {
@@ -1181,17 +1200,17 @@
    "variantsCount": 1
   },
   "2026-09-new-orb-reward-visuals": {
-   "key": "3f39928c7a29cfde",
+   "key": "95f46bfc73a52751",
    "hasData": true,
    "sig": "1:treatment",
    "byVariant": {
     "1": {
-     "pct": 49.5,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 49.5
+    "pct": 100
    },
    "control": {
     "pct": 0
@@ -1199,6 +1218,8 @@
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 1
   },
   "2026-09-new-horizontal-scroll-shared": {
@@ -1269,29 +1290,27 @@
    "variantsCount": 1
   },
   "2026-09-mobile-sticker-picker-upsell-restyle": {
-   "key": "94459194139dcd9f",
+   "key": "95f46bfc73a52751",
    "hasData": true,
-   "sig": "0:control|1:treatment",
+   "sig": "1:treatment",
    "byVariant": {
-    "0": {
-     "pct": 50,
-     "role": "control"
-    },
     "1": {
-     "pct": 50,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 50
+    "pct": 100
    },
    "control": {
-    "pct": 50
+    "pct": 0
    },
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 2
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-09-mobile-quest-reward-button-to-secondary-button": {
    "key": "no_data",
@@ -1445,7 +1464,15 @@
    "variantsCount": 1
   },
   "2026-09-gifting-badge-coachmark-audience": {
-   "key": "c0d835d6edda6165",
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
+   "treatment": {
+    "pct": null
+   }
+  },
+  "2026-09-game-search-row": {
+   "key": "30c50361e1bfb04a",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
@@ -1467,15 +1494,9 @@
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
-  },
-  "2026-09-game-search-row": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
-   "treatment": {
-    "pct": null
-   }
   },
   "2026-09-game-profiles-v3-communities-tab": {
    "key": "e8f737ca78fc1eb7",
@@ -1557,28 +1578,30 @@
    "variantsCount": 3
   },
   "2026-09-edit-profile-collectibles-ordering": {
-   "key": "e2ab4be1fb953170",
+   "key": "930b20736eff5b69",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 2.5,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 2.5,
+     "pct": 50,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 2.5
+    "pct": 50
    },
    "control": {
-    "pct": 2.5
+    "pct": 50
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-09-desktop-tti-update-check-deadline": {
@@ -1867,41 +1890,54 @@
    "variantsCount": 1
   },
   "2026-08-scheduled-messages": {
-   "key": "2b0c41f07983869e",
+   "key": "6d57cb4fc305b6e2",
    "hasData": true,
-   "sig": "0:control|1:treatment|2:treatment",
+   "sig": "2:treatment",
    "byVariant": {
-    "0": {
-     "pct": 10,
-     "role": "control"
-    },
-    "1": {
-     "pct": 10,
-     "role": "treatment"
-    },
     "2": {
-     "pct": 10,
+     "pct": 50,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 20
+    "pct": 50
    },
    "control": {
-    "pct": 10
+    "pct": 0
    },
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 3
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-08-rive-web-perf": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "b3b9adcf2eca826f",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 5,
+     "role": "control"
+    },
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 5
+   },
+   "control": {
+    "pct": 5
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   },
   "2026-08-profile-read-state-v1": {
    "key": "no_data",
@@ -1962,16 +1998,12 @@
    }
   },
   "2026-08-no-fill-logging": {
-   "key": "6bc3491353a4a792",
+   "key": "16e432fd014af240",
    "hasData": true,
-   "sig": "1:treatment|2:treatment",
+   "sig": "2:treatment",
    "byVariant": {
-    "1": {
-     "pct": 25,
-     "role": "treatment"
-    },
     "2": {
-     "pct": 75,
+     "pct": 100,
      "role": "treatment"
     }
    },
@@ -1984,15 +2016,32 @@
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 2
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-08-nitro-tenure-badge-withheld-state": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-08-mute-aware-noise-cancellation": {
    "key": "no_data",
@@ -2561,36 +2610,38 @@
    "variantsCount": 1
   },
   "2026-07-mobile-emoji-suggestions": {
-   "key": "d85e4077484089c1",
+   "key": "a20039e6d6fa1f60",
    "hasData": true,
    "sig": "0:control|1:treatment|2:treatment|3:treatment",
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     },
     "2": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     },
     "3": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 3
+    "pct": 30
    },
    "control": {
-    "pct": 1
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 4
   },
   "2026-07-mobile-boosting-optimizations": {
@@ -2681,12 +2732,16 @@
    }
   },
   "2026-07-custom-typing-indicator": {
-   "key": "ad2aea87de76d3b0",
+   "key": "bbfe36e8b98a7c17",
    "hasData": true,
-   "sig": "1:treatment|2:treatment|3:treatment",
+   "sig": "0:control|1:treatment|2:treatment|3:treatment",
    "byVariant": {
-    "1": {
+    "0": {
      "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
      "role": "treatment"
     },
     "2": {
@@ -2694,7 +2749,7 @@
      "role": "treatment"
     },
     "3": {
-     "pct": 70,
+     "pct": 30,
      "role": "treatment"
     }
    },
@@ -2702,12 +2757,14 @@
     "pct": 90
    },
    "control": {
-    "pct": 0
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 3
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 4
   },
   "2026-07-custom-app-store-overlay": {
    "key": "no_data",
@@ -2975,29 +3032,27 @@
    "variantsCount": 2
   },
   "2026-06-improved-shop-loading": {
-   "key": "8835997b714debd9",
+   "key": "95f46bfc73a52751",
    "hasData": true,
-   "sig": "0:control|1:treatment",
+   "sig": "1:treatment",
    "byVariant": {
-    "0": {
-     "pct": 10,
-     "role": "control"
-    },
     "1": {
-     "pct": 10,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 10
+    "pct": 100
    },
    "control": {
-    "pct": 10
+    "pct": 0
    },
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 2
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-06-hero-shelf-ad-tile": {
    "key": "no_data",
@@ -3266,25 +3321,31 @@
    }
   },
   "2026-05-dvp-for-attachments": {
-   "key": "3a2ecc07c350ff5c",
+   "key": "8cbf8b241c85ac18",
    "hasData": true,
-   "sig": "1:treatment",
+   "sig": "0:control|1:treatment",
    "byVariant": {
+    "0": {
+     "pct": 17.5,
+     "role": "control"
+    },
     "1": {
-     "pct": 10,
+     "pct": 17.5,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 10
+    "pct": 17.5
    },
    "control": {
-    "pct": 0
+    "pct": 17.5
    },
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 1
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   },
   "2026-05-distributed-clips": {
    "key": "no_data",
@@ -4005,17 +4066,17 @@
    }
   },
   "2026-02-voice-channel-link-click": {
-   "key": "c52c1a195a61c67e",
+   "key": "95f46bfc73a52751",
    "hasData": true,
    "sig": "1:treatment",
    "byVariant": {
     "1": {
-     "pct": 30,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 30
+    "pct": 100
    },
    "control": {
     "pct": 0
@@ -4023,6 +4084,8 @@
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 1
   },
   "2026-02-silence-warning-aggression": {
@@ -5065,11 +5128,200 @@
    "treatment": {
     "pct": null
    }
+  },
+  "2026-10-user-profile-widget-suggestions": {
+   "key": "200db31cf5a7fa54",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 2
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 3
+  },
+  "2026-10-slayer-storefront-single-sku-wide-header": {
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
+  },
+  "2026-10-referral-refresh-notification": {
+   "key": "55e7c1437ea3c30a",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
+  },
+  "2026-10-fractional-nitro-pricing": {
+   "key": "446d24b0e9f0f7ab",
+   "hasData": true,
+   "sig": "0:control|1:treatment|2:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 10,
+     "role": "control"
+    },
+    "1": {
+     "pct": 10,
+     "role": "treatment"
+    },
+    "2": {
+     "pct": 10,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 20
+   },
+   "control": {
+    "pct": 10
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 3
+  },
+  "2026-10-animated-shop-bundle-previews": {
+   "key": "a4a56f033996ad22",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
+  },
+  "2026-09-desktop-voice-message-recording": {
+   "key": "6dc35c17c61f3cb7",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
+  },
+  "2026-08-mobile-soundboard-sound-preview-menu": {
+   "key": "a624203af7186263",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 30,
+  "delivered": 30,
   "firstRun": false,
   "semanticsMigrated": 0
  },
@@ -5369,10 +5621,10 @@
    "delivered": 0
   },
   {
-   "at": "2026-11-04T01:59:14.141Z",
-   "revision": "565a58e948b470ec8ad6b6cc94c7d3bada013deb",
-   "changes": 0,
-   "delivered": 0
+   "at": "2026-11-04T02:01:04.329Z",
+   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
+   "changes": 30,
+   "delivered": 30
   }
  ]
 }
