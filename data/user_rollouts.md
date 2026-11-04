@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-04 01:32 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-04 01:34 UTC
 
 **Fenêtre glissante 4 h — n = 7105 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,71 %** | [4,24 – 5,24] | 335/7105 | élevée | Mesuré |
-| hash:1144304849 | **5,02 %** | [4,53 – 5,57] | 357/7105 | élevée | Mesuré |
+| hash:704914099 | **4,79 %** | [4,3 – 5,32] | 340/7105 | élevée | Mesuré |
+| hash:1144304849 | **4,98 %** | [4,49 – 5,52] | 354/7105 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 7105/7105 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 7105/7105 | élevée | Mesuré |
 | Tida Webform | **100 %** | [99,94 – 100] | 7007/7007 | élevée | Mesuré |
@@ -23,11 +23,11 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,71 % (IC 95 % [4,24 ; 5,24], 335/7105, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9498.04, 10000] → 5,02 %
+- Variant 1 : 4,79 % (IC 95 % [4,3 ; 5,32], 340/7105, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9498.13, 10000] → 5,02 %
 
 ### hash:1144304849
-- Variant 1 : 5,02 % (IC 95 % [4,53 ; 5,57], 357/7105, confiance élevée)
+- Variant 1 : 4,98 % (IC 95 % [4,49 ; 5,52], 354/7105, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.9] → 5,03 %
 
 ### Safety Experience IAR User Reporting
@@ -40,7 +40,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### Tida Webform
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 7007/7007, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 1478.43] + [1768.48, 10000] → 97,1 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
 
