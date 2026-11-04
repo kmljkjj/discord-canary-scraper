@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-04T01-43-24-262Z_663537_hxrejc",
-  "buildNumber": "663537",
-  "scrapedAt": "2026-11-04T01:43:24.262Z",
+  "runId": "2026-11-04T01-57-35-729Z_663563_9qri9i",
+  "buildNumber": "663563",
+  "scrapedAt": "2026-11-04T01:57:35.730Z",
   "totals": {
-    "all": 392
+    "all": 389
   },
   "experiments": [
     {
@@ -1791,40 +1791,6 @@
       "source": "discord"
     },
     {
-      "id": "2026-03-icymi-desktop",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "icymiDesktopEnabled": false
-      },
-      "variations": {
-        "1": {
-          "icymiDesktopEnabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-icymi-staff-debugging-utility",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2026-03-image-load-metrics",
       "type": "user",
       "kind": "user",
@@ -2351,23 +2317,6 @@
       "variations": {
         "1": {
           "sampleRate": 1
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
-      "id": "2026-04-icymi-staff-only",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
         }
       },
       "variationCount": 1,
