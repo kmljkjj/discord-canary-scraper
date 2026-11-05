@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 16:13 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 16:15 UTC
 
 **Fenêtre glissante 4 h — n = 6579 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **5,06 %** | [4,55 – 5,63] | 333/6579 | élevée | Mesuré |
-| hash:1144304849 | **4,73 %** | [4,23 – 5,28] | 311/6579 | élevée | Mesuré |
+| hash:1144304849 | **4,64 %** | [4,14 – 5,18] | 305/6579 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6579/6579 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6579/6579 | élevée | Mesuré |
 | 2025-11_tida_webform | **100 %** | [100 – 100] | 6579/6579 | élevée | Exact (plages) |
@@ -24,10 +24,10 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:704914099
 - Variant 1 : 5,06 % (IC 95 % [4,55 ; 5,63], 333/6579, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9497.99, 9999.01] → 5,01 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [9499.57, 9521.43] + [9539.14, 9998.86] → 4,82 %
 
 ### hash:1144304849
-- Variant 1 : 4,73 % (IC 95 % [4,23 ; 5,28], 311/6579, confiance élevée)
+- Variant 1 : 4,64 % (IC 95 % [4,14 ; 5,18], 305/6579, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 502.65] → 5,03 %
 
 ### Safety Experience IAR User Reporting
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6579/6579, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [60.46, 9957.54] → 98,97 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [64.65, 10000] → 99,35 %
 
 ### 2025-11_tida_webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6579/6579, confiance élevée)
