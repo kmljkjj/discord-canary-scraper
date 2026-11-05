@@ -5,9 +5,8 @@
  * - Mise en avant : le contenu le plus important de chaque section en
  *   bloc de code (« ✨ À la une »), la liste complète derrière
  * - Batch dedupe marked ONLY after successful webhook post
- *
- * NOTE: full rich experiment lines (variants / diffs / tags) pending re-apply
- * from local patch if this emergency restore landed first.
+ * - Présentation : titre « Routes · Build N », listes en blocs ```diff
+ *   (+ vert / - rouge), libellés en français, pied de page horodaté
  */
 const { sendEmbeds } = require('./webhook');
 const { DEFAULT_BOT_NAME, DEFAULT_AVATAR_URL } = require('./utils');
@@ -39,14 +38,15 @@ function envEmoji(key) {
   return '';
 }
 
+// Emoji personnalisés via env, sinon emoji Unicode par défaut (lisibles partout)
 const E = {
-  added: envEmoji('EMOJI_ADDED'),
-  modified: envEmoji('EMOJI_MODIFIED'),
-  removed: envEmoji('EMOJI_REMOVED'),
-  build: envEmoji('EMOJI_BUILD'),
-  exp: envEmoji('EMOJI_EXP'),
-  str: envEmoji('EMOJI_STR'),
-  route: envEmoji('EMOJI_ROUTE'),
+  added: envEmoji('EMOJI_ADDED') || '🟢',
+  modified: envEmoji('EMOJI_MODIFIED') || '🟠',
+  removed: envEmoji('EMOJI_REMOVED') || '🔴',
+  build: envEmoji('EMOJI_BUILD') || '🛠️',
+  exp: envEmoji('EMOJI_EXP') || '🧪',
+  str: envEmoji('EMOJI_STR') || '💬',
+  route: envEmoji('EMOJI_ROUTE') || '🧭',
 };
 
 function label(emoji, text) {
@@ -144,20 +144,19 @@ function normalizeMapDiff(diff) {
 }
 
 function cleanText(s, max = LINE_VAL_MAX) {
-  return String(s || '')
+  const t = String(s || '')
     .replace(/\r\n/g, '\n')
     .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, max);
+    .trim();
+  // troncature visible (avant : coupée net, sans indication)
+  return t.length > max ? t.slice(0, Math.max(1, max - 1)).trimEnd() + '…' : t;
 }
 
+// Strings : la phrase seule (pas de clé hash), préfixée +/~/- pour la
+// coloration « diff » du bloc de code.
 function stringLine(prefix, key, value, maxVal) {
-  const v = cleanText(value, maxVal);
-  if (!v) {
-    const k = String(key || '').replace(/`/g, "'");
-    return k;
-  }
-  return v;
+  const v = cleanText(value, maxVal) || String(key || '').replace(/`/g, "'");
+  return `${prefix} ${v}`;
 }
 
 function routeLine(prefix, key, value) {
@@ -324,7 +323,7 @@ function expLine(e, prefix) {
   else if (e && e.variationCount) nVar = e.variationCount;
   let line = `${prefix} ${id}`;
   const meta = [];
-  if (kind) meta.push(`Type ${kind}`);
+  if (kind) meta.push(kind);
   if (system) meta.push(system);
   if (nVar != null) meta.push(`${nVar} variation${nVar === 1 ? '' : 's'}`);
   let pct = null;
@@ -336,13 +335,13 @@ function expLine(e, prefix) {
   else if (e && e.userPercentage && e.userPercentage.status !== 'unknown') pct = e.userPercentage;
   if (pct && pct.value != null) meta.push(`${pct.value}% (${pct.status})`);
   const tags = experimentTags(id);
-  if (tags.length) meta.push(`tags ${tags.join(', ')}`);
-  if (meta.length) line += `\n${meta.join(' · ')}`;
-  if (labelTxt) line += `\n${labelTxt}`;
+  if (tags.length) meta.push(tags.map((t) => `#${t}`).join(' '));
+  if (labelTxt) line += `\n  « ${labelTxt} »`;
+  if (meta.length) line += `\n  ${meta.join(' · ')}`;
   if (prefix === '~' && e && e._before) {
     const diffs = computeExpConfigDiff(e._before, e);
     if (diffs.length) {
-      line += '\n' + diffs.join('\n');
+      line += '\n' + diffs.map((d) => `  ${d}`).join('\n');
       return line;
     }
   }
@@ -351,12 +350,12 @@ function expLine(e, prefix) {
       const dcLines = [];
       flatConfig('', e.defaultConfig, dcLines, 8);
       if (dcLines.length) {
-        line += '\ndefaultConfig';
-        for (const l of dcLines) line += `\n  ${l}`;
+        line += '\n  defaultConfig';
+        for (const l of dcLines) line += `\n    ${l}`;
       }
     }
     const vLines = formatVariantsBlock(e, 6);
-    if (vLines.length) line += '\n' + vLines.join('\n');
+    if (vLines.length) line += '\n' + vLines.map((v) => `  ${v}`).join('\n');
   }
   return line;
 }
@@ -386,8 +385,23 @@ function sanitizeCodeLine(s) {
   return String(s || '').replace(/```/g, "'''");
 }
 
+// Bloc « diff » : Discord colore les lignes + (vert) et - (rouge).
+const FENCE_OPEN = '```diff\n';
+const FENCE_CLOSE = '\n```';
+const FENCE_LEN = FENCE_OPEN.length + FENCE_CLOSE.length;
+
 function codeBlock(lines) {
-  return '```\n' + lines.join('\n') + '\n```';
+  return FENCE_OPEN + lines.join('\n') + FENCE_CLOSE;
+}
+
+function discordTime(ts) {
+  const t = Date.parse(ts);
+  return Number.isFinite(t) ? `<t:${Math.floor(t / 1000)}:f>` : '';
+}
+
+function footerText(bn, ts) {
+  const when = discordTime(ts);
+  return when ? `Canary ${bn} · ${when}` : `Canary ${bn}`;
 }
 
 // Mise en avant « ✨ À la une » : la première ligne de chaque entrée — l'ID
@@ -396,7 +410,7 @@ function codeBlock(lines) {
 // la liste complète reste derrière, inchangée.
 function highlightHeads(lines) {
   const picked = [];
-  let len = 8; // ```\n + \n```
+  let len = FENCE_LEN;
   for (const raw of lines) {
     if (picked.length >= HIGHLIGHT_COUNT) break;
     const head = sanitizeCodeLine(String(raw).split('\n')[0]).trim();
@@ -414,66 +428,66 @@ function highlightHeads(lines) {
 function sectionEmbeds(sec, { title, bn, ts }) {
   if (!sec || !sec.lines || !sec.lines.length) return [];
   const embeds = [];
+  // Titre unique « ## Routes · Build 123 » : plus d'auteur, de description
+  // ni de pied de page qui répétaient le build (espace perdu).
+  const head = `${title} · Build ${bn}`;
+  const footer = { text: footerText(bn, ts) };
+  const safe = sec.lines.map(sanitizeCodeLine);
 
   // Petite section (≤ HIGHLIGHT_COUNT entrées qui tiennent en un bloc) :
-  // TOUT le contenu part en bloc de code sous le libellé de section —
-  // l'essentiel est mis en avant, sans doublon avec la liste.
-  if (sec.lines.length <= HIGHLIGHT_COUNT) {
-    const joined = sec.lines.map(sanitizeCodeLine).join('\n');
-    if (joined.length && joined.length + 8 <= FIELD_MAX) {
+  // TOUT le contenu part en bloc de code sous le libellé de section.
+  if (safe.length <= HIGHLIGHT_COUNT) {
+    const joined = safe.join('\n');
+    if (joined.length && joined.length + FENCE_LEN <= FIELD_MAX) {
       embeds.push({
-        author: { name: BOT, icon_url: AVATAR },
-        title,
-        description: `Build ${bn} · **${sec.count}**`,
+        title: head,
         fields: [{ name: sec.label, value: codeBlock([joined]), inline: false }],
         color: sec.color,
-        footer: { text: `Build ${bn} · Datamining` },
+        footer,
         timestamp: ts,
       });
       return embeds;
     }
   }
 
-  // Grande section : « ✨ À la une » en tête de message (le contenu le plus
-  // important, en bloc de code), puis la liste complète derrière.
-  const chunks = chunkLines(sec.lines, FIELD_MAX);
-  const heads = highlightHeads(sec.lines);
+  // Grande section : « ✨ À la une » (le plus important, en bloc de code),
+  // puis la liste complète, elle aussi en blocs « diff » colorés.
+  const chunks = chunkLines(safe, FIELD_MAX - FENCE_LEN).map((c) => codeBlock([c]));
+  // « À la une » seulement si la liste ne tient pas en un bloc : sinon
+  // elle répéterait exactement les mêmes lignes (espace perdu).
+  const heads = chunks.length > 1 ? highlightHeads(sec.lines) : [];
   const hlField = heads.length
     ? { name: '✨ À la une', value: codeBlock(heads), inline: false }
     : null;
-  // à la une (≤ 1020) + 4 champs de liste : le premier embed reste sous
-  // les mêmes limites qu'avant (5 × 1020).
   const firstCount = hlField ? 4 : 5;
+  // Champs de suite sans nom : pas de ligne « … (2) » inutile entre les blocs
   const firstFields = chunks.slice(0, firstCount).map((c, i) => ({
-    name: i === 0 ? sec.label : `… (${i + 1})`,
-    value: String(c).slice(0, FIELD_MAX),
+    name: i === 0 ? sec.label : '',
+    value: c,
     inline: false,
   }));
+  const lastIdx = Math.ceil((chunks.length - firstCount) / 5);
   embeds.push({
-    author: { name: BOT, icon_url: AVATAR },
-    title,
-    description: `Build ${bn} · **${sec.count}**`,
+    title: head,
     fields: hlField ? [hlField, ...firstFields] : firstFields,
     color: sec.color,
-    footer: { text: `Build ${bn} · Datamining` },
+    ...(lastIdx > 0 ? {} : { footer }),
     timestamp: ts,
   });
   let offset = firstCount;
-  // (avant : limité à 8 embeds → les chunks suivants n'étaient jamais envoyés)
+  let part = 2;
   while (offset < chunks.length) {
     const slice = chunks.slice(offset, offset + 5);
+    const isLast = offset + 5 >= chunks.length;
     embeds.push({
-      title: `${title} · suite`,
-      fields: slice.map((c, i) => ({
-        name: `… (${offset + i + 1})`,
-        value: String(c).slice(0, FIELD_MAX),
-        inline: false,
-      })),
+      title: `${title} · Build ${bn} · suite ${part}`,
+      fields: slice.map((c) => ({ name: '', value: c, inline: false })),
       color: sec.color,
-      footer: { text: `Build ${bn} · Datamining` },
+      ...(isLast ? { footer } : {}),
       timestamp: ts,
     });
     offset += 5;
+    part += 1;
   }
   return embeds;
 }
@@ -540,9 +554,9 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   const sections = [];
   if (exp.added.length) {
     const lines = exp.added.slice(0, MAX_EXP_LINES).map((e) => expLine(e, '+'));
-    if (exp.added.length > MAX_EXP_LINES) lines.push(`… +${exp.added.length - MAX_EXP_LINES} more`);
+    if (exp.added.length > MAX_EXP_LINES) lines.push(`… +${exp.added.length - MAX_EXP_LINES} de plus`);
     sections.push({
-      label: label(E.added, `Added · ${exp.added.length}`),
+      label: label(E.added, `Ajoutées · ${exp.added.length}`),
       color: COLOR.added,
       count: exp.added.length,
       lines,
@@ -550,9 +564,9 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
   }
   if (exp.modified.length) {
     const lines = exp.modified.slice(0, MAX_EXP_LINES).map((e) => expLine(e, '~'));
-    if (exp.modified.length > MAX_EXP_LINES) lines.push(`… +${exp.modified.length - MAX_EXP_LINES} more`);
+    if (exp.modified.length > MAX_EXP_LINES) lines.push(`… +${exp.modified.length - MAX_EXP_LINES} de plus`);
     sections.push({
-      label: label(E.modified, `Modified · ${exp.modified.length}`),
+      label: label(E.modified, `Modifiées · ${exp.modified.length}`),
       color: COLOR.modified,
       count: exp.modified.length,
       lines,
@@ -563,11 +577,11 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
       const id = e.id || '?';
       const from = e.from || '?';
       const to = e.to || e.kind || '?';
-      return `~ ${id} · ${from} → ${to}`;
+      return `~ ${id}  ${from} → ${to}`;
     });
-    if (exp.categoryChanged.length > MAX_EXP_LINES) lines.push(`… +${exp.categoryChanged.length - MAX_EXP_LINES} more`);
+    if (exp.categoryChanged.length > MAX_EXP_LINES) lines.push(`… +${exp.categoryChanged.length - MAX_EXP_LINES} de plus`);
     sections.push({
-      label: label(E.modified, `Category · ${exp.categoryChanged.length}`),
+      label: label(E.modified, `Catégorie changée · ${exp.categoryChanged.length}`),
       color: COLOR.modified,
       count: exp.categoryChanged.length,
       lines,
@@ -578,9 +592,9 @@ async function sendExperiments(webhookUrl, bn, exp, ts) {
       const id = typeof e === 'string' ? e : e.id;
       return `- ${id}`;
     });
-    if (exp.removed.length > MAX_EXP_LINES) lines.push(`… +${exp.removed.length - MAX_EXP_LINES} more`);
+    if (exp.removed.length > MAX_EXP_LINES) lines.push(`… +${exp.removed.length - MAX_EXP_LINES} de plus`);
     sections.push({
-      label: label(E.removed, `Removed · ${exp.removed.length}`),
+      label: label(E.removed, `Supprimées · ${exp.removed.length}`),
       color: COLOR.removed,
       count: exp.removed.length,
       lines,
@@ -640,9 +654,9 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     const lines = a.slice(0, maxLines).map((k) =>
       isRoutes ? routeLine('+', k, diff.added[k]) : stringLine('+', k, diff.added[k], maxVal),
     );
-    if (a.length > maxLines) lines.push(`… +${a.length - maxLines} more`);
+    if (a.length > maxLines) lines.push(`… +${a.length - maxLines} de plus`);
     sections.push({
-      label: label(E.added, isRoutes ? `Added · ${a.length}` : `Ajouté · ${a.length}`),
+      label: label(E.added, isRoutes ? `Ajoutées · ${a.length}` : `Ajoutés · ${a.length}`),
       color: COLOR.added,
       count: a.length,
       lines,
@@ -652,9 +666,9 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     const lines = m.slice(0, maxLines).map((k) =>
       isRoutes ? routeLine('~', k, diff.modified[k]) : stringLine('~', k, diff.modified[k], maxVal),
     );
-    if (m.length > maxLines) lines.push(`… +${m.length - maxLines} more`);
+    if (m.length > maxLines) lines.push(`… +${m.length - maxLines} de plus`);
     sections.push({
-      label: label(E.modified, isRoutes ? `Modified · ${m.length}` : `Modifié · ${m.length}`),
+      label: label(E.modified, isRoutes ? `Modifiées · ${m.length}` : `Modifiés · ${m.length}`),
       color: COLOR.modified,
       count: m.length,
       lines,
@@ -664,9 +678,9 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
     const lines = r.slice(0, maxLines).map((k) =>
       isRoutes ? routeLine('-', k, diff.removed[k]) : stringLine('-', k, diff.removed[k], maxVal),
     );
-    if (r.length > maxLines) lines.push(`… +${r.length - maxLines} more`);
+    if (r.length > maxLines) lines.push(`… +${r.length - maxLines} de plus`);
     sections.push({
-      label: label(E.removed, isRoutes ? `Removed · ${r.length}` : `Supprimé · ${r.length}`),
+      label: label(E.removed, isRoutes ? `Supprimées · ${r.length}` : `Supprimés · ${r.length}`),
       color: COLOR.removed,
       count: r.length,
       lines,
