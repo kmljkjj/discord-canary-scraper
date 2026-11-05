@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 23:43 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 23:45 UTC
 
 **Fenêtre glissante 4 h — n = 6564 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,89 %** | [4,38 – 5,45] | 321/6564 | élevée | Mesuré |
-| hash:1144304849 | **5,2 %** | [4,67 – 5,77] | 341/6564 | élevée | Mesuré |
+| hash:704914099 | **4,94 %** | [4,43 – 5,5] | 324/6564 | élevée | Mesuré |
+| hash:1144304849 | **5,21 %** | [4,69 – 5,79] | 342/6564 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6564/6564 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6564/6564 | élevée | Mesuré |
 | 2025-11_tida_webform | **100 %** | [100 – 100] | 6564/6564 | élevée | Exact (plages) |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,89 % (IC 95 % [4,38 ; 5,45], 321/6564, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9499.03, 10000] → 5,01 %
+- Variant 1 : 4,94 % (IC 95 % [4,43 ; 5,5], 324/6564, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9499.06, 10000] → 5,01 %
 
 ### hash:1144304849
-- Variant 1 : 5,2 % (IC 95 % [4,67 ; 5,77], 341/6564, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [3.17, 332.83] + [351.59, 498.41] → 4,76 %
+- Variant 1 : 5,21 % (IC 95 % [4,69 ; 5,79], 342/6564, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [3.26, 332.74] + [351.5, 498.5] → 4,76 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6564/6564, confiance élevée)
