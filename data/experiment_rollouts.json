@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-05T13:56:50.960Z",
+  "fetchedAt": "2026-11-05T14:03:51.148Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -8,7 +8,7 @@
     "fingerprintSampling": {
       "samples": 50,
       "uniqueHashes": 5,
-      "matched": 2
+      "matched": 1
     }
   },
   "guildExperiments": [
@@ -293,9 +293,9 @@
     },
     {
       "hash": 4055210228,
-      "id": "2025-11_tida_webform",
+      "id": null,
       "type": "user",
-      "title": "Tida Webform",
+      "title": "hash_4055210228",
       "percentage": 0,
       "status": "not_started",
       "samples": 50,
@@ -304,31 +304,11 @@
         "0": 50
       },
       "source": "fingerprint_sampling",
-      "note": null,
+      "note": "No local experiment ID match for this hash",
       "fpSamples": 50,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
         "0": 50
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
       }
     },
     {
@@ -338,17 +318,37 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 3
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
       }
     },
     {
@@ -706,16 +706,6 @@
       "hash": 928529144,
       "type": "user",
       "title": "2025-12-katsudon",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2025-12-orb-redemption-thru-orders",
-      "hash": 613766043,
-      "type": "user",
-      "title": "2025-12-orb-redemption-thru-orders",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -1846,16 +1836,6 @@
       "hash": 3974310247,
       "type": "user",
       "title": "2026-06-game-server-hosting-in-shop",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-06-gifting-badge-desktop",
-      "hash": 1695261926,
-      "type": "user",
-      "title": "2026-06-gifting-badge-desktop",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -3872,6 +3852,16 @@
       "note": "No rollout data found in the Discord API."
     },
     {
+      "id": "2026-10-pinot-summary-management",
+      "hash": 897175337,
+      "type": "guild",
+      "title": "2026-10-pinot-summary-management",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "No rollout data found in the Discord API."
+    },
+    {
       "id": "2026-10-profile-default-tab-with-content",
       "hash": 1908672925,
       "type": "user",
@@ -4112,10 +4102,30 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-11-game-exit-promo-bloons",
+      "hash": 1382843298,
+      "type": "user",
+      "title": "2026-11-game-exit-promo-bloons",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-11-nitro-upload-badge",
       "hash": 2216648750,
       "type": "user",
       "title": "2026-11-nitro-upload-badge",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
+      "id": "2026-11-soundboard-upsells-brand-refresh",
+      "hash": 3579903793,
+      "type": "user",
+      "title": "2026-11-soundboard-upsells-brand-refresh",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4203,11 +4213,11 @@
     }
   ],
   "summary": {
-    "total": 394,
-    "guild": 38,
+    "total": 395,
+    "guild": 39,
     "user": 356,
     "withPercentage": 9,
-    "withoutPercentage": 385,
+    "withoutPercentage": 386,
     "fullRollout": 5,
     "partial": 0,
     "notStarted": 4,
