@@ -317,9 +317,9 @@ function resolveEnUsLocaleUrls(webContent) {
   let m;
   while ((m = reMap.exec(webContent)) !== null) chunkMap[m[1]] = m[2];
   const chunkIds = new Set();
-  const reEn = /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["'](\d+)["']\)/g;
+  const reEn = /["']en-US["']\s*:\s*\(\)\s*=>\s*n\.e\(["']?(\d+)["']?\)/g;
   while ((m = reEn.exec(webContent)) !== null) chunkIds.add(m[1]);
-  const reJson = /\.\/en-US\.json["']\s*:\s*["'](\d+)["']/g;
+  const reJson = /\.\/en-US\.json["']\s*:\s*["']?(\d+)["']?/g;
   while ((m = reJson.exec(webContent)) !== null) chunkIds.add(m[1]);
   const urls = [];
   const seen = new Set();
@@ -528,19 +528,6 @@ function isGoodStringVal(s) {
   if (s === '[object Object]' || s.includes('[object Object]')) return false;
   if (!/[\p{L}\p{N}]/u.test(s)) return false;
   return true;
-}
-
-function extractStrings(content, out) {
-  const re =
-    /["']([A-Za-z0-9+/_-]{6})["']\s*:\s*["']([^"'\\]*(?:\\.[^"'\\]*)*)["']/g;
-  let m;
-  while ((m = re.exec(content)) !== null) {
-    let val = m[2];
-    try {
-      val = JSON.parse('"' + val + '"');
-    } catch {}
-    if (isGoodStringKey(m[1]) && isGoodStringVal(val)) out[m[1]] = val;
-  }
 }
 
 function isValidRouteKey(key) {

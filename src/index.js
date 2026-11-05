@@ -3,7 +3,6 @@
  */
 const fs = require('fs-extra');
 const path = require('path');
-const crypto = require('crypto');
 const { fetchBuild } = require('./lib/canary');
 const { analyzeAssets } = require('./lib/extract');
 const { loadState, makeRunId } = require('./lib/state');
@@ -74,19 +73,6 @@ async function loadLastMap(file) {
     console.warn('loadLastMap fail', file, e.message);
     return {};
   }
-}
-
-function stableObject(value) {
-  if (Array.isArray(value)) return value.map(stableObject);
-  if (value && typeof value === 'object') {
-    return Object.keys(value)
-      .sort()
-      .reduce((out, key) => {
-        out[key] = stableObject(value[key]);
-        return out;
-      }, {});
-  }
-  return value;
 }
 
 function expFingerprint(e) {
