@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-05T20-35-43-861Z_666550_cux4gg",
-  "buildNumber": "666550",
-  "scrapedAt": "2026-11-05T20:35:43.861Z",
+  "runId": "2026-11-05T20-44-23-442Z_666572_zn638k",
+  "buildNumber": "666572",
+  "scrapedAt": "2026-11-05T20:44:23.442Z",
   "totals": {
-    "all": 390
+    "all": 391
   },
   "experiments": [
     {
@@ -7744,6 +7744,26 @@
         },
         "1": {
           "enabled": false
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-11-mac-steam-sku-detection",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
         }
       },
       "variationCount": 2,

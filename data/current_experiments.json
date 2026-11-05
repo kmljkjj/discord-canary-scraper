@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T20-35-43-861Z_666550_cux4gg",
-  "buildNumber": "666550",
-  "updatedAt": "2026-11-05T20:35:43.861Z",
-  "count": 382,
+  "runId": "2026-11-05T20-44-23-442Z_666572_zn638k",
+  "buildNumber": "666572",
+  "updatedAt": "2026-11-05T20:44:23.442Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -19767,6 +19767,58 @@
         "value": null
       },
       "fingerprint": "d34b6d71f4534c5ff5fd4765796b9f9b063519db9163b3aff4ace15cee79ebf7"
+    },
+    {
+      "id": "2026-11-mac-steam-sku-detection",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-11-mac-steam-sku-detection",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "11257e3c9b566b112178a493b5533892ee5e267f385215b55f355a3191134422"
     },
     {
       "id": "2026-11-nitro-upload-badge",
