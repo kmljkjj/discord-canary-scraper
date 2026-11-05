@@ -1,1 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[787139],{598414(s){s.exports="/assets/61b811529d456f5f.svg"}}]);
