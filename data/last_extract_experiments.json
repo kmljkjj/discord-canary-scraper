@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T19-31-51-357Z_666406_xqeaq0",
-  "buildNumber": "666406",
-  "updatedAt": "2026-11-05T19:31:51.357Z",
-  "count": 383,
+  "runId": "2026-11-05T19-33-53-337Z_666418_saqjky",
+  "buildNumber": "666418",
+  "updatedAt": "2026-11-05T19:33:53.337Z",
+  "count": 384,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7582,6 +7582,32 @@
       },
       "system": "apex",
       "fp": "ca770474a1f47b681dc61a2070b171de128aa9b4b8a8cbcaa3732c387e796011"
+    },
+    "2026-10-windows-playout-buffer-duration": {
+      "id": "2026-10-windows-playout-buffer-duration",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 4,
+      "variations": {
+        "1": {
+          "windowsOutputBufferDurationMs": 30
+        },
+        "2": {
+          "windowsOutputBufferDurationMs": 40
+        },
+        "3": {
+          "windowsOutputBufferDurationMs": 50
+        },
+        "4": {
+          "windowsOutputBufferDurationMs": 60
+        }
+      },
+      "defaultConfig": {
+        "windowsOutputBufferDurationMs": null
+      },
+      "system": "apex",
+      "fp": "95282bb7c3c3e9d3411e8d7256eb8479e6babfad2e5af1a1e3a1688a965b6641"
     },
     "2026-11-autoclips-ea-upsell": {
       "id": "2026-11-autoclips-ea-upsell",

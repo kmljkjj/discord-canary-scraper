@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-05T19-31-51-357Z_666406_xqeaq0",
-  "buildNumber": "666406",
-  "scrapedAt": "2026-11-05T19:31:51.357Z",
+  "runId": "2026-11-05T19-33-53-337Z_666418_saqjky",
+  "buildNumber": "666418",
+  "scrapedAt": "2026-11-05T19:33:53.337Z",
   "totals": {
-    "all": 391
+    "all": 392
   },
   "experiments": [
     {
@@ -7718,6 +7718,32 @@
         }
       },
       "variationCount": 6,
+      "source": "discord"
+    },
+    {
+      "id": "2026-10-windows-playout-buffer-duration",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "windowsOutputBufferDurationMs": null
+      },
+      "variations": {
+        "1": {
+          "windowsOutputBufferDurationMs": 30
+        },
+        "2": {
+          "windowsOutputBufferDurationMs": 40
+        },
+        "3": {
+          "windowsOutputBufferDurationMs": 50
+        },
+        "4": {
+          "windowsOutputBufferDurationMs": 60
+        }
+      },
+      "variationCount": 4,
       "source": "discord"
     },
     {
