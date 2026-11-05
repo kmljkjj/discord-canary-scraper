@@ -335,7 +335,8 @@ function embedToComponents(embed, withDismiss = false) {
   // Fields
   if (embed.fields && embed.fields.length) {
     for (const field of embed.fields) {
-      const fieldText = `**${field.name || ''}**\n${field.value || ''}`;
+      // champ sans nom : pas de ligne de titre vide
+      const fieldText = field.name ? `**${field.name}**\n${field.value || ''}` : String(field.value || '');
       for (const chunk of chunkText(fieldText)) {
         components.push(textDisplay(chunk));
       }
@@ -397,7 +398,8 @@ function embedsToComponents(embeds, withDismiss = false) {
 
     if (embed.fields && embed.fields.length) {
       for (const field of embed.fields) {
-        const fieldText = `**${field.name || ''}**\n${field.value || ''}`;
+        // champ sans nom : pas de ligne de titre vide
+        const fieldText = field.name ? `**${field.name}**\n${field.value || ''}` : String(field.value || '');
         for (const chunk of chunkText(fieldText)) {
           allComponents.push(textDisplay(chunk));
         }
