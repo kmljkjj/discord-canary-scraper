@@ -834,6 +834,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-01-less-personalized-ads",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-01-voice-dares-v0",
     "defaultConfig": {
       "enabled": false

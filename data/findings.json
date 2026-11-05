@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-05T21-25-35-618Z_666660_44bpay",
-  "buildNumber": "666660",
-  "scrapedAt": "2026-11-05T21:25:35.618Z",
+  "runId": "2026-11-05T21-28-55-737Z_666654_slqjna",
+  "buildNumber": "666654",
+  "scrapedAt": "2026-11-05T21:28:55.738Z",
   "totals": {
-    "all": 390
+    "all": 391
   },
   "experiments": [
     {
@@ -1025,6 +1025,26 @@
         }
       },
       "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-01-less-personalized-ads",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
       "source": "discord"
     },
     {
