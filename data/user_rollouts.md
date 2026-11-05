@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 19:30 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 19:32 UTC
 
 **Fenêtre glissante 4 h — n = 6523 échantillons — 7 tokens actifs**
 
@@ -15,7 +15,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
 | hash:704914099 | **4,57 %** | [4,08 – 5,11] | 298/6523 | élevée | Mesuré |
-| hash:1144304849 | **5,53 %** | [4,99 – 6,13] | 361/6523 | élevée | Mesuré |
+| hash:1144304849 | **5,61 %** | [5,07 – 6,21] | 366/6523 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6523/6523 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6523/6523 | élevée | Mesuré |
 | 2025-11_tida_webform | **100 %** | [100 – 100] | 6373/6373 | élevée | Exact (plages) |
@@ -24,10 +24,10 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:704914099
 - Variant 1 : 4,57 % (IC 95 % [4,08 ; 5,11], 298/6523, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9499.13, 10000] → 5,01 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.11, 10000] → 5,03 %
 
 ### hash:1144304849
-- Variant 1 : 5,53 % (IC 95 % [4,99 ; 6,13], 361/6523, confiance élevée)
+- Variant 1 : 5,61 % (IC 95 % [5,07 ; 6,21], 366/6523, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [4, 500] → 4,96 %
 
 ### Safety Experience IAR User Reporting
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6523/6523, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [161.57, 9910.43] → 97,49 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 2150.19] + [2429.24, 9952.76] → 96,74 %
 
 ### 2025-11_tida_webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6373/6373, confiance élevée)
@@ -51,7 +51,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 351 expériences user
+## En attente de rollout — 352 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -394,6 +394,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-voice-quality-scoring
 - 2026-10-web-screen-share-audio
 - 2026-10-web-streaming-optimizations
+- 2026-11-autoclips-ea-upsell
 - 2026-11-game-exit-promo-bloons
 - 2026-11-nitro-upload-badge
 - 2026-11-soundboard-upsells-brand-refresh
