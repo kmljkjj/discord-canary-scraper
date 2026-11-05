@@ -1,0 +1,40 @@
+name: Apply fix locale en-US
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/patches/fix_locale_enus.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Apply fix
+        run: python3 .github/patches/fix_locale_enus.py && git diff --stat
+      - name: Tests
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund
+          npm run check
+          npx eslint .
+          npm test
+      - name: Commit + push
+        run: |
+          set -euo pipefail
+          git config user.name "kmljkjj"
+          git config user.email "jbouzeau7@icloud.com"
+          git rm -q .github/patches/fix_locale_enus.py .github/workflows/apply-fix-locale-enus.yml
+          git add src/index.js src/lib/extract.js
+          git commit -m "fix(extract): locales en-US (n.e(123) non quote) -> strings a 0, scrape bloque" -m "Discord emet n.e(283896) sans guillemets : 0 chunk locale, 0 string, EXTRACTION_ERROR a chaque run Scrape. + suppression code mort (warnings lint)."
+          for i in 1 2 3 4 5; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep 5; done
+          exit 1
