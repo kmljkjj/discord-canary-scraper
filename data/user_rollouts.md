@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 08:48 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 08:50 UTC
 
 **Fenêtre glissante 4 h — n = 6260 échantillons — 7 tokens actifs**
 
@@ -14,8 +14,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **5,16 %** | [4,63 – 5,75] | 323/6260 | élevée | Mesuré |
-| hash:1144304849 | **5,48 %** | [4,93 – 6,08] | 343/6260 | élevée | Mesuré |
+| hash:704914099 | **5,06 %** | [4,54 – 5,65] | 317/6260 | élevée | Mesuré |
+| hash:1144304849 | **5,46 %** | [4,92 – 6,07] | 342/6260 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6260/6260 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6260/6260 | élevée | Mesuré |
 | Tida Webform | **100 %** | [100 – 100] | 6260/6260 | élevée | Exact (plages) |
@@ -23,12 +23,12 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 5,16 % (IC 95 % [4,63 ; 5,75], 323/6260, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.88, 9604.13] + [9621.22, 10000] → 4,86 %
+- Variant 1 : 5,06 % (IC 95 % [4,54 ; 5,65], 317/6260, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.04, 9603.96] + [9621.22, 10000] → 4,86 %
 
 ### hash:1144304849
-- Variant 1 : 5,48 % (IC 95 % [4,93 ; 6,08], 343/6260, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 503.09] → 5,03 %
+- Variant 1 : 5,46 % (IC 95 % [4,92 ; 6,07], 342/6260, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 503.06] → 5,03 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6260/6260, confiance élevée)
