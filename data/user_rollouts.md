@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 21:35 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 21:36 UTC
 
-**Fenêtre glissante 4 h — n = 6733 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6701 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,75 %** | [4,26 – 5,3] | 320/6733 | élevée | Mesuré |
-| hash:1144304849 | **5,02 %** | [4,51 – 5,58] | 338/6733 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6733/6733 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6733/6733 | élevée | Mesuré |
-| 2025-11_tida_webform | **100 %** | [100 – 100] | 6733/6733 | élevée | Exact (plages) |
+| hash:704914099 | **4,79 %** | [4,29 – 5,34] | 321/6701 | élevée | Mesuré |
+| hash:1144304849 | **5,01 %** | [4,51 – 5,57] | 336/6701 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6701/6701 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6701/6701 | élevée | Mesuré |
+| 2025-11_tida_webform | **100 %** | [100 – 100] | 6701/6701 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,75 % (IC 95 % [4,26 ; 5,3], 320/6733, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.17, 9989.83] → 4,94 %
+- Variant 1 : 4,79 % (IC 95 % [4,29 ; 5,34], 321/6701, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.14, 9989.86] → 4,94 %
 
 ### hash:1144304849
-- Variant 1 : 5,02 % (IC 95 % [4,51 ; 5,58], 338/6733, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 500.82] → 5,01 %
+- Variant 1 : 5,01 % (IC 95 % [4,51 ; 5,57], 336/6701, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 496.81] → 4,97 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6733/6733, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6701/6701, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6733/6733, confiance élevée)
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6701/6701, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### 2025-11_tida_webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6733/6733, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6701/6701, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
@@ -51,7 +51,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 352 expériences user
+## En attente de rollout — 351 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -94,7 +94,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-01-bug-reporter
 - 2026-01-friends-in-server
 - 2026-01-ios-push-notif-json-fix
-- 2026-01-less-personalized-ads
 - 2026-01-voice-dares-v0
 - 2026-01-wmf-gpu-encode-intel
 - 2026-02-announcement-composer
