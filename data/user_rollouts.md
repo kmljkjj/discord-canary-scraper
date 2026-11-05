@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 14:09 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 14:12 UTC
 
-**Fenêtre glissante 4 h — n = 5810 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 5794 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,33 +14,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:1144304849 | **5,09 %** | [4,55 – 5,7] | 296/5810 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 5810/5810 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,93 – 100] | 5810/5810 | élevée | Mesuré |
-| 2025-11_tida_webform | **100 %** | [100 – 100] | 5810/5810 | élevée | Exact (plages) |
-| hash:704914099 | **5,04 %** | [4,49 – 5,65] | 285/5660 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 5794/5794 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,93 – 100] | 5794/5794 | élevée | Mesuré |
+| 2025-11_tida_webform | **100 %** | [100 – 100] | 5794/5794 | élevée | Exact (plages) |
+| hash:704914099 | **5,09 %** | [4,54 – 5,7] | 291/5720 | élevée | Mesuré |
+| hash:1144304849 | **5,21 %** | [4,65 – 5,83] | 298/5720 | élevée | Mesuré |
 
 ## Détail par variante
 
-### hash:1144304849
-- Variant 1 : 5,09 % (IC 95 % [4,55 ; 5,7], 296/5810, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.87] → 5 %
-
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 5810/5810, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 5794/5794, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5810/5810, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [14.92, 9993.08] → 99,78 %
+- Variant 11 : 100 % (IC 95 % [99,93 ; 100], 5794/5794, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [14.74, 10000] → 99,85 %
 
 ### 2025-11_tida_webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 5810/5810, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 5794/5794, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:704914099
-- Variant 1 : 5,04 % (IC 95 % [4,49 ; 5,65], 285/5660, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9499.25, 9997.75] → 4,99 %
+- Variant 1 : 5,09 % (IC 95 % [4,54 ; 5,7], 291/5720, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9499.22, 9997.78] → 4,99 %
+
+### hash:1144304849
+- Variant 1 : 5,21 % (IC 95 % [4,65 ; 5,83], 298/5720, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 499.84] → 5 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
 
@@ -87,7 +87,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2025-11-video-end-card-v2
 - 2025-12-hdr-accessibility-setting
 - 2025-12-katsudon
-- 2025-12-orb-redemption-thru-orders
 - 2025-12-proportional-vad-indicator
 - 2025-12-quest-cta-refactor-rollout
 - 2025-12-windows-audio-effects
@@ -185,7 +184,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-06-content-classification-embedded-activity-filter
 - 2026-06-desktop-tti-http-cdt
 - 2026-06-game-server-hosting-in-shop
-- 2026-06-gifting-badge-desktop
 - 2026-06-hero-shelf-ad-tile
 - 2026-06-nitro-gdm-cap-increase
 - 2026-06-orbs-holdout
@@ -397,7 +395,9 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-voice-quality-scoring
 - 2026-10-web-screen-share-audio
 - 2026-10-web-streaming-optimizations
+- 2026-11-game-exit-promo-bloons
 - 2026-11-nitro-upload-badge
+- 2026-11-soundboard-upsells-brand-refresh
 - 2026-11-waterwheels-discover
 - 2026-06-improved-shop-loading
 - 2026-08-gift-recipient-display-name-search
