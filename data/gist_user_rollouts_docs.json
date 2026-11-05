@@ -1,18 +1,18 @@
 {
- "generatedAt": "2026-11-05T19:50:57.701Z",
+ "generatedAt": "2026-11-05T23:08:37.520Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "updatedAt": "2026-11-04T02:00:14Z",
-  "revision": "785a6f6d445041f112349a803c9e239a57c81e19"
+  "updatedAt": "2026-11-05T23:07:25Z",
+  "revision": "5b63b1a790e947a85a0a5bc2740385570c3b227e"
  },
  "stats": {
-  "total": 1020,
-  "user": 352,
-  "userData": 156,
+  "total": 1028,
+  "user": 354,
+  "userData": 159,
   "guild": 38,
-  "unclassified": 630,
+  "unclassified": 636,
   "noData": 267
  },
  "experiments": [
@@ -62,22 +62,22 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 2,
+   "treatmentPct": 10,
    "projectedTreatmentPct": null,
-   "controlPct": 1,
+   "controlPct": 5,
    "notEligiblePct": 0,
-   "unassignedPct": 97,
+   "unassignedPct": 85,
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 5,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 5,
      "role": "treatment"
     },
     "2": {
-     "pct": 1,
+     "pct": 5,
      "role": "treatment"
     }
    }
@@ -99,6 +99,31 @@
    "notEligiblePct": null,
    "unassignedPct": null,
    "byVariant": {}
+  },
+  {
+   "id": "2026-10-soundboard-new-sounds-badge",
+   "title": "2026-10-soundboard-new-sounds-badge",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 1,
+   "projectedTreatmentPct": null,
+   "controlPct": 1,
+   "notEligiblePct": 0,
+   "unassignedPct": 98,
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2026-10-soundboard-mute-indicator",
@@ -302,6 +327,31 @@
   {
    "id": "2026-10-nitro-tab-remove-account-age-restriction",
    "title": "2026-10-nitro-tab-remove-account-age-restriction",
+   "type": "user",
+   "hasData": true,
+   "totalsAvailable": true,
+   "ambiguous": false,
+   "projected": false,
+   "flags": [],
+   "treatmentPct": 50,
+   "projectedTreatmentPct": null,
+   "controlPct": 50,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   }
+  },
+  {
+   "id": "2026-10-nitro-home-badge-directory",
+   "title": "2026-10-nitro-home-badge-directory",
    "type": "user",
    "hasData": true,
    "totalsAvailable": true,
@@ -544,18 +594,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 25,
    "projectedTreatmentPct": null,
-   "controlPct": 5,
+   "controlPct": 25,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 50,
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    }
@@ -569,18 +619,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 25,
    "projectedTreatmentPct": null,
-   "controlPct": 5,
+   "controlPct": 25,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 50,
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    }
@@ -594,18 +644,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 25,
    "projectedTreatmentPct": null,
-   "controlPct": 5,
+   "controlPct": 25,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 50,
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    }
@@ -1792,14 +1842,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 15,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 95,
+   "unassignedPct": 85,
    "byVariant": {
     "1": {
-     "pct": 5,
+     "pct": 15,
      "role": "treatment"
     }
    }
@@ -2425,14 +2475,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 50,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 50,
+   "unassignedPct": 0,
    "byVariant": {
     "2": {
-     "pct": 50,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -2446,18 +2496,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 5,
+   "treatmentPct": 50,
    "projectedTreatmentPct": null,
-   "controlPct": 5,
+   "controlPct": 50,
    "notEligiblePct": 0,
-   "unassignedPct": 90,
+   "unassignedPct": 0,
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 50,
      "role": "treatment"
     }
    }
@@ -4467,18 +4517,18 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 17.5,
+   "treatmentPct": 1,
    "projectedTreatmentPct": null,
-   "controlPct": 17.5,
+   "controlPct": 1,
    "notEligiblePct": 0,
-   "unassignedPct": 65,
+   "unassignedPct": 98,
    "byVariant": {
     "0": {
-     "pct": 17.5,
+     "pct": 1,
      "role": "control"
     },
     "1": {
-     "pct": 17.5,
+     "pct": 1,
      "role": "treatment"
     }
    }
@@ -6859,19 +6909,22 @@
    "id": "2025-09-server-nsfw-level",
    "title": "2025-09-server-nsfw-level",
    "type": "user",
-   "hasData": false,
-   "totalsAvailable": false,
+   "hasData": true,
+   "totalsAvailable": true,
    "ambiguous": false,
    "projected": false,
-   "flags": [
-    "no_data"
-   ],
-   "treatmentPct": null,
+   "flags": [],
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
-   "controlPct": null,
-   "notEligiblePct": null,
-   "unassignedPct": null,
-   "byVariant": {}
+   "controlPct": 0,
+   "notEligiblePct": 0,
+   "unassignedPct": 0,
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   }
   },
   {
    "id": "2025-09-sensitive-content-self-harm",

@@ -1,19 +1,20 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 23:06 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 23:08 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 785a6f6d · MAJ 2026-11-04T02:00:14Z · 1020 expériences au catalogue (352 user dont 156 avec données, 38 guild, 630 type inconnu, 267 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 5b63b1a7 · MAJ 2026-11-05T23:07:25Z · 1028 expériences au catalogue (354 user dont 159 avec données, 38 guild, 636 type inconnu, 267 sans données)
 
-⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-user-profile-widget-suggestions, 2026-10-desktop-tti-perf, 2026-10-desktop-general-perf, 2026-10-desktop-game-perf, 2026-09-improved-mobile-shop-loading, 2026-09-invite-accept-age-group-errors, 2026-08-scheduled-messages, 2026-08-rive-web-perf, 2026-05-dvp-for-attachments, 2025-09-server-nsfw-level…
+⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-recurring-referral-reminder, 2026-10-game-profiles-v3-communities-tab-mobile, 2026-09-improved-mobile-shop-loading, 2025-09-server-nsfw-level
 
-## Expériences user avec données (156)
+## Expériences user avec données (159)
 
 | Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |
 |---|---:|---:|---:|---:|---|
 | 2026-10-web-streaming-optimizations | **16,00 %** | 4,00 % | 0,00 % | 80,00 % | — |
-| 2026-10-user-profile-widget-suggestions | **2,00 %** | 1,00 % | 0,00 % | 97,00 % | — |
+| 2026-10-user-profile-widget-suggestions | **10,00 %** | 5,00 % | 0,00 % | 85,00 % | — |
+| 2026-10-soundboard-new-sounds-badge | **1,00 %** | 1,00 % | 0,00 % | 98,00 % | — |
 | 2026-10-soundboard-mute-indicator | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-10-slayer-storefront-single-sku-wide-header | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-remove-quests-from-discovery | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
@@ -22,6 +23,7 @@
 | 2026-10-profile-default-tab-with-content | **30,00 %** | 30,00 % | 0,00 % | 40,00 % | — |
 | 2026-10-pinot-member | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-nitro-tab-remove-account-age-restriction | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
+| 2026-10-nitro-home-badge-directory | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-macaron-non-sub-marketing | **90,50 %** | 9,50 % | 0,00 % | 0,00 % | — |
 | 2026-10-macaron | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-guild-tooltip-lazy-content | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
@@ -29,9 +31,9 @@
 | 2026-10-game-exit-promo-rust | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-fractional-nitro-pricing | **20,00 %** | 10,00 % | 0,00 % | 70,00 % | — |
 | 2026-10-fix-soundboard-muting-iconography | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
-| 2026-10-desktop-tti-perf | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
-| 2026-10-desktop-general-perf | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
-| 2026-10-desktop-game-perf | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
+| 2026-10-desktop-tti-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
+| 2026-10-desktop-general-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
+| 2026-10-desktop-game-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
 | 2026-10-collectibles-interactive-jumble-bar | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-code-blurple-marketing-holdout | **95,00 %** | 5,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-code-blurple | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -65,7 +67,7 @@
 | 2026-09-mobile-quest-home-sort-priority | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-09-manual-review-inconclusive-copy | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-invite-silp-education | **0,00 %** | 2,50 % | 0,00 % | 97,50 % | — |
-| 2026-09-invite-accept-age-group-errors | **5,00 %** | 0,00 % | 0,00 % | 95,00 % | — |
+| 2026-09-invite-accept-age-group-errors | **15,00 %** | 0,00 % | 0,00 % | 85,00 % | — |
 | 2026-09-halloween-holiday | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-game-search-row | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
 | 2026-09-game-profiles-v3-communities-tab | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
@@ -82,8 +84,8 @@
 | 2026-08-tiny-bronco | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-timestamp-autocomplete-mobile | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-show-expressive-modal-subtitle-alt | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
-| 2026-08-scheduled-messages | **50,00 %** | 0,00 % | 0,00 % | 50,00 % | — |
-| 2026-08-rive-web-perf | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
+| 2026-08-scheduled-messages | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
+| 2026-08-rive-web-perf | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-profile-embed-share-button | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-profile-embed-rendering | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-no-fill-logging | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -124,7 +126,7 @@
 | 2026-06-dont-badge-muted-vcs | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-05-use-ad-analytics-interface | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-05-mana-type-consolidation | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
-| 2026-05-dvp-for-attachments | **17,50 %** | 17,50 % | 0,00 % | 65,00 % | — |
+| 2026-05-dvp-for-attachments | **1,00 %** | 1,00 % | 0,00 % | 98,00 % | — |
 | 2026-05-disable-camera-simulcast | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-04-safety-flows | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-04-one-day-fractional-nitro | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
@@ -165,19 +167,26 @@
 | 2025-11_tida_webform | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-10-friend-request-alerts-v2 | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-09-video-qoe-metrics-tracking | **1,00 %** | 1,00 % | 0,00 % | 98,00 % | — |
+| 2025-09-server-nsfw-level | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Safety Experience IAR User Reporting | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Safety Experience Unauthenticated Report Form | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Inferno Spam Redaction | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 
-## Type inconnu — suivi séparé, non notifié (566)
+## Type inconnu — suivi séparé, non notifié (571)
 
 > Absents de nos métadonnées locales au moment du calcul : à reclassifier au prochain scrape.
 | Expérience | Treatment | Espace non décrit | Particularités |
 |---|---:|---:|---|
 | hash:1765194502 | 100,00 % | 0,00 % | — |
 | hash:1443876045 | 100,00 % | 0,00 % | — |
+| 2026-10-user-profile-mobile-save-prompt | 20,00 % | 60,00 % | — |
 | 2026-10-summary-reminder-notif-re-revival | 1,00 % | 98,00 % | — |
+| 2026-10-recurring-referral-reminder | 33,34 % | 49,99 % | — |
 | 2026-10-media-viewer-improvements | 0,00 % | 50,00 % | — |
+| 2026-10-maple-syrup-3 | 50,00 % | 0,00 % | — |
+| 2026-10-maple-syrup-2 | 67,25 % | 0,00 % | — |
+| 2026-10-maple-syrup-1 | 50,00 % | 0,00 % | — |
+| 2026-10-game-profiles-v3-communities-tab-mobile | 15,00 % | 70,00 % | — |
 | 2026-10-game-profile-mobile-reviews | 100,00 % | 0,00 % | — |
 | 2026-10-android-stop-and-pause-video | 50,00 % | 0,00 % | — |
 | 2026-10-android-seamless-pip | 50,00 % | 0,00 % | — |
@@ -201,7 +210,6 @@
 | 2026-09-mobile-nitro-orbs-delivered-modal | 100,00 % | 0,00 % | — |
 | 2026-09-markdown-file-preview | 100,00 % | 0,00 % | — |
 | 2026-09-jxr-upload-conversion | 100,00 % | 0,00 % | — |
-| 2026-09-improved-mobile-shop-loading | 2,50 % | 95,00 % | — |
 | 2026-09-guild-sidebar-stream-preview | 25,00 % | 50,00 % | — |
 | 2026-09-guild-members-in-mobile-vc-invites | 0,00 % | 0,00 % | — |
 | 2026-09-gifting-badge-complex-art | 100,00 % | 0,00 % | — |
@@ -369,11 +377,6 @@
 | 2025-10-full-obscure-media | 100,00 % | 0,00 % | — |
 | 2025-10-friendship-anniversary-gifting | 90,00 % | 0,00 % | — |
 | 2025-10-fetch-promotions-endpoint | 100,00 % | 0,00 % | — |
-| 2025-10-emoji-search-ranking-tweaks | 5,00 % | 90,00 % | — |
-| 2025-10-desktop-video-quest-cta-relocation | 2,50 % | 96,50 % | — |
-| 2025-10-collectibles-bundle-gifting | 100,00 % | 0,00 % | — |
-| 2025-10-call-tile-popout | 50,00 % | 50,00 % | — |
-| 2025-10-async-camera-init | 100,00 % | 0,00 % | — |
 | 2025-01_guild_settings_foundation | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-11_member_verification_rollout | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-09_league_of_legends_leaderboard | 100,00 % (projeté) | — | ℹ projeté (multi-populations), repeated_variant, overlapping_variants |
@@ -419,9 +422,13 @@
 - Variant 4 (treatment) : 4,00 % · plages 1600 – 2000
 
 ### 2026-10-user-profile-widget-suggestions
+- Variant 0 (control) : 5,00 % · plages 0 – 100 , 300 – 700
+- Variant 1 (treatment) : 5,00 % · plages 100 – 200 , 700 – 1100
+- Variant 2 (treatment) : 5,00 % · plages 200 – 300 , 1100 – 1500
+
+### 2026-10-soundboard-new-sounds-badge
 - Variant 0 (control) : 1,00 % · plages 0 – 100
 - Variant 1 (treatment) : 1,00 % · plages 100 – 200
-- Variant 2 (treatment) : 1,00 % · plages 200 – 300
 
 ### 2026-10-soundboard-mute-indicator
 - Variant 0 (control) : 10,00 % · plages 0 – 100 , 200 – 1100
@@ -452,6 +459,10 @@
 - Variant 0 (control) : 50,00 % · plages 0 – 1250 , 2500 – 3750 , 5000 – 6500 , 8000 – 9000
 - Variant 1 (treatment) : 50,00 % · plages 1250 – 2500 , 3750 – 5000 , 6500 – 8000 , 9000 – 10000
 
+### 2026-10-nitro-home-badge-directory
+- Variant 0 (control) : 50,00 % · plages 0 – 1500 , 3000 – 4000 , 5000 – 7500
+- Variant 1 (treatment) : 50,00 % · plages 1500 – 3000 , 4000 – 5000 , 7500 – 10000
+
 ### 2026-10-macaron-non-sub-marketing
 - Variant 0 (control) : 9,50 % · plages 0 – 50 , 500 – 600 , 1500 – 1650 , 3000 – 3200 , 5000 – 5250 , 7500 – 7700
 - Variant 1 (treatment) : 90,50 % · plages 50 – 500 , 600 – 1500 , 1650 – 3000 , 3200 – 5000 , 5250 – 7500 , 7700 – 10000
@@ -481,16 +492,16 @@
 - Variant 1 (treatment) : 10,00 % · plages 100 – 200 , 1100 – 2000
 
 ### 2026-10-desktop-tti-perf
-- Variant 0 (control) : 5,00 % · plages 0 – 500
-- Variant 1 (treatment) : 5,00 % · plages 500 – 1000
+- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
+- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
 
 ### 2026-10-desktop-general-perf
-- Variant 0 (control) : 5,00 % · plages 0 – 500
-- Variant 1 (treatment) : 5,00 % · plages 500 – 1000
+- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
+- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
 
 ### 2026-10-desktop-game-perf
-- Variant 0 (control) : 5,00 % · plages 0 – 500
-- Variant 1 (treatment) : 5,00 % · plages 500 – 1000
+- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
+- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
 
 ### 2026-10-collectibles-interactive-jumble-bar
 - Variant 0 (control) : 50,00 % · plages 0 – 1500 , 3000 – 4000 , 5000 – 7500
@@ -613,7 +624,7 @@
 - Variant 0 (control) : 2,50 % · plages 0 – 250
 
 ### 2026-09-invite-accept-age-group-errors
-- Variant 1 (treatment) : 5,00 % · plages 0 – 500
+- Variant 1 (treatment) : 15,00 % · plages 0 – 1500
 
 ### 2026-09-halloween-holiday
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
@@ -670,11 +681,11 @@
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-08-scheduled-messages
-- Variant 2 (treatment) : 50,00 % · plages 0 – 5000
+- Variant 2 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-08-rive-web-perf
-- Variant 0 (control) : 5,00 % · plages 0 – 500
-- Variant 1 (treatment) : 5,00 % · plages 500 – 1000
+- Variant 0 (control) : 50,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000 , 5000 – 7500
+- Variant 1 (treatment) : 50,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000 , 7500 – 10000
 
 ### 2026-08-profile-embed-share-button
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
@@ -816,8 +827,8 @@
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-05-dvp-for-attachments
-- Variant 0 (control) : 17,50 % · plages 0 – 100 , 200 – 350 , 500 – 750 , 1000 – 1500 , 2000 – 2750
-- Variant 1 (treatment) : 17,50 % · plages 100 – 200 , 350 – 500 , 750 – 1000 , 1500 – 2000 , 2750 – 3500
+- Variant 0 (control) : 1,00 % · plages 0 – 100
+- Variant 1 (treatment) : 1,00 % · plages 100 – 200
 
 ### 2026-05-disable-camera-simulcast
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
@@ -961,6 +972,9 @@
 ### 2025-09-video-qoe-metrics-tracking
 - Variant 0 (control) : 1,00 % · plages 0 – 50 , 100 – 150
 - Variant 1 (treatment) : 1,00 % · plages 50 – 100 , 150 – 200
+
+### 2025-09-server-nsfw-level
+- Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### Safety Experience IAR User Reporting
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000

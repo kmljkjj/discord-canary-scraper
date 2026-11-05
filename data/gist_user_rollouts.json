@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261105T230655_gist",
- "scrapedAt": "2026-11-05T23:06:55.351Z",
+ "runId": "20261105T230837_gist",
+ "scrapedAt": "2026-11-05T23:08:37.514Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/3e4e8e5e55311849b8c5e9befb409d46ce9675dc/rollouts-tag.json",
-  "updatedAt": "2026-11-04T02:00:14Z",
-  "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-  "fetchedAt": "2026-11-05T23:06:55.351Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/1219643021e43e9b599a8e29f04e1c13a7ffc750/rollouts-tag.json",
+  "updatedAt": "2026-11-05T23:07:25Z",
+  "revision": "5b63b1a790e947a85a0a5bc2740385570c3b227e",
+  "fetchedAt": "2026-11-05T23:08:37.514Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,31 +19,18 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
-   "2026-10-user-profile-widget-suggestions",
-   "2026-10-desktop-tti-perf",
-   "2026-10-desktop-general-perf",
-   "2026-10-desktop-game-perf",
-   "2026-09-improved-mobile-shop-loading",
-   "2026-09-invite-accept-age-group-errors",
-   "2026-08-scheduled-messages",
-   "2026-08-rive-web-perf",
-   "2026-05-dvp-for-attachments",
-   "2025-09-server-nsfw-level",
-   "2026-10-soundboard-new-sounds-badge",
-   "2026-10-user-profile-mobile-save-prompt",
-   "2026-10-maple-syrup-2",
-   "2026-10-maple-syrup-1",
-   "2026-10-maple-syrup-3",
+   "2026-10-recurring-referral-reminder",
    "2026-10-game-profiles-v3-communities-tab-mobile",
-   "2026-10-nitro-home-badge-directory"
+   "2026-09-improved-mobile-shop-loading",
+   "2025-09-server-nsfw-level"
   ]
  },
  "stats": {
-  "total": 1020,
-  "user": 352,
-  "userData": 156,
+  "total": 1028,
+  "user": 354,
+  "userData": 159,
   "guild": 38,
-  "unclassified": 630,
+  "unclassified": 636,
   "noData": 267
  },
  "acknowledged": {
@@ -417,78 +404,84 @@
    }
   },
   "2026-10-desktop-tti-perf": {
-   "key": "b3b9adcf2eca826f",
+   "key": "40b1ce82ad18db58",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 25
    },
    "control": {
-    "pct": 5
+    "pct": 25
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-desktop-general-perf": {
-   "key": "b3b9adcf2eca826f",
+   "key": "40b1ce82ad18db58",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 25
    },
    "control": {
-    "pct": 5
+    "pct": 25
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-desktop-game-perf": {
-   "key": "b3b9adcf2eca826f",
+   "key": "40b1ce82ad18db58",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 25,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 25,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 25
    },
    "control": {
-    "pct": 5
+    "pct": 25
    },
    "notEligible": {
     "pct": 0
    },
+   "projectedCoverage": null,
+   "projected": false,
    "variantsCount": 2
   },
   "2026-10-contextual-referrals-server-channel-member-list": {
@@ -1428,17 +1421,17 @@
    }
   },
   "2026-09-invite-accept-age-group-errors": {
-   "key": "0420a2740c95a6f7",
+   "key": "78f71112c3934827",
    "hasData": true,
    "sig": "1:treatment",
    "byVariant": {
     "1": {
-     "pct": 5,
+     "pct": 15,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 15
    },
    "control": {
     "pct": 0
@@ -1906,17 +1899,17 @@
    "variantsCount": 1
   },
   "2026-08-scheduled-messages": {
-   "key": "6d57cb4fc305b6e2",
+   "key": "16e432fd014af240",
    "hasData": true,
    "sig": "2:treatment",
    "byVariant": {
     "2": {
-     "pct": 50,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 50
+    "pct": 100
    },
    "control": {
     "pct": 0
@@ -1929,24 +1922,24 @@
    "variantsCount": 1
   },
   "2026-08-rive-web-perf": {
-   "key": "b3b9adcf2eca826f",
+   "key": "d464cdc0d66d46de",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 5,
+     "pct": 50,
      "role": "control"
     },
     "1": {
-     "pct": 5,
+     "pct": 50,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 5
+    "pct": 50
    },
    "control": {
-    "pct": 5
+    "pct": 50
    },
    "notEligible": {
     "pct": 0
@@ -3337,24 +3330,24 @@
    }
   },
   "2026-05-dvp-for-attachments": {
-   "key": "8cbf8b241c85ac18",
+   "key": "19a2e309986d6b83",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 17.5,
+     "pct": 1,
      "role": "control"
     },
     "1": {
-     "pct": 17.5,
+     "pct": 1,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 17.5
+    "pct": 1
    },
    "control": {
-    "pct": 17.5
+    "pct": 1
    },
    "notEligible": {
     "pct": 0
@@ -4938,12 +4931,27 @@
    "variantsCount": 2
   },
   "2025-09-server-nsfw-level": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "95f46bfc73a52751",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 100,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 100
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2025-09-sensitive-content-self-harm": {
    "key": "no_data",
@@ -5121,28 +5129,28 @@
    }
   },
   "2026-10-user-profile-widget-suggestions": {
-   "key": "200db31cf5a7fa54",
+   "key": "023d3ee81cd45d39",
    "hasData": true,
    "sig": "0:control|1:treatment|2:treatment",
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 5,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 5,
      "role": "treatment"
     },
     "2": {
-     "pct": 1,
+     "pct": 5,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 2
+    "pct": 10
    },
    "control": {
-    "pct": 1
+    "pct": 5
    },
    "notEligible": {
     "pct": 0
@@ -5308,21 +5316,69 @@
    "projectedCoverage": null,
    "projected": false,
    "variantsCount": 2
+  },
+  "2026-10-soundboard-new-sounds-badge": {
+   "key": "19a2e309986d6b83",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 1,
+     "role": "control"
+    },
+    "1": {
+     "pct": 1,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 1
+   },
+   "control": {
+    "pct": 1
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
+  },
+  "2026-10-nitro-home-badge-directory": {
+   "key": "15b6a0377bfaeed7",
+   "hasData": true,
+   "sig": "0:control|1:treatment",
+   "byVariant": {
+    "0": {
+     "pct": 50,
+     "role": "control"
+    },
+    "1": {
+     "pct": 50,
+     "role": "treatment"
+    }
+   },
+   "treatment": {
+    "pct": 50
+   },
+   "control": {
+    "pct": 50
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 11,
+  "delivered": 11,
   "firstRun": false,
   "semanticsMigrated": 0
  },
  "history": [
-  {
-   "at": "2026-11-05T08:51:30.135Z",
-   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-   "changes": 0,
-   "delivered": 0
-  },
   {
    "at": "2026-11-05T08:53:11.027Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
@@ -5612,10 +5668,16 @@
    "delivered": 0
   },
   {
-   "at": "2026-11-05T23:06:55.351Z",
+   "at": "2026-11-05T23:05:32.853Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
    "changes": 0,
    "delivered": 0
+  },
+  {
+   "at": "2026-11-05T23:08:37.514Z",
+   "revision": "5b63b1a790e947a85a0a5bc2740385570c3b227e",
+   "changes": 11,
+   "delivered": 11
   }
  ]
 }
