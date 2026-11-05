@@ -29,11 +29,19 @@ test('grande section : « ✨ À la une » en bloc de code, puis la liste compl�
   assert.match(fields[0].value, /^```/);
   assert.match(fields[0].value, /```$/);
   assert.equal((fields[0].value.match(/\n/g) || []).length, 6, '5 entrées mises en avant');
-  assert.equal(fields.length, 4, 'à la une + 3 morceaux de liste');
+  assert.equal(fields.length, 5, 'à la une + 4 morceaux de liste (blocs diff)');
   assert.equal(fields[1].name, 'Added · 30');
   assert.ok(fields[1].value.includes('01'), 'la liste complète commence à la 1re entrée');
-  assert.equal(embeds[0].description, 'Build 123 · **30**');
+  assert.equal(embeds[0].title, 'Experiments · Build 123');
   for (const f of fields) assert.ok(f.value.length <= 1024, 'champ sous la limite Discord');
+});
+
+test('section moyenne en un seul bloc : pas de « À la une » en doublon', () => {
+  const lines = Array.from({ length: 8 }, (_, i) => `+ exp_${i}`);
+  const embeds = sectionEmbeds({ label: 'Added · 8', color: 0x57f287, count: 8, lines }, BASE);
+  assert.equal(embeds[0].fields.length, 1);
+  assert.equal(embeds[0].fields[0].name, 'Added · 8');
+  assert.match(embeds[0].fields[0].value, /^```diff\n/);
 });
 
 test('petite section : tout le contenu en bloc de code sous le libellé', () => {
@@ -48,7 +56,7 @@ test('petite section : tout le contenu en bloc de code sous le libellé', () => 
   assert.equal(embeds[0].fields.length, 1);
   const f = embeds[0].fields[0];
   assert.equal(f.name, 'Ajouté · 2');
-  assert.ok(f.value.startsWith('```\n'));
+  assert.ok(f.value.startsWith('```diff\n'));
   assert.ok(f.value.endsWith('\n```'));
   assert.ok(f.value.includes('Nouvelle phrase ajoutée au client'));
   assert.ok(f.value.includes('Une autre phrase'));
@@ -66,22 +74,22 @@ test('les backticks triples du contenu ne cassent pas le bloc de code', () => {
 test('mise en avant : une ligne par entrée, les détails restent dans la liste', () => {
   const lines = [
     '+ exp_multi\nType user · apex\nUn libellé long',
-    ...Array.from({ length: 7 }, (_, i) => `+ exp_${i}`),
+    ...Array.from({ length: 40 }, (_, i) => `+ exp_${i}_${'x'.repeat(40)}`),
   ];
-  const embeds = sectionEmbeds({ label: 'Added · 8', color: 0x57f287, count: 8, lines }, BASE);
+  const embeds = sectionEmbeds({ label: 'Added · 41', color: 0x57f287, count: 41, lines }, BASE);
   assert.equal(embeds.length, 1);
   const fields = embeds[0].fields;
   assert.equal(fields[0].name, '✨ À la une');
   assert.ok(fields[0].value.includes('+ exp_multi'));
   assert.ok(!fields[0].value.includes('Un libellé long'), 'une seule ligne par entrée');
-  assert.equal(fields[1].name, 'Added · 8');
+  assert.equal(fields[1].name, 'Added · 41');
   assert.ok(fields[1].value.includes('Un libellé long'), 'la liste garde les détails');
 });
 
 test('les longues entrées sont tronquées dans la mise en avant, jamais dans la liste', () => {
   const long = 'phrase très longue '.repeat(12); // ~204 caractères
-  const lines = [long, ...Array.from({ length: 6 }, (_, i) => `ligne ${i}`)];
-  const embeds = sectionEmbeds({ label: 'Modifié · 7', color: 0xe67e22, count: 7, lines }, BASE);
+  const lines = [long, ...Array.from({ length: 30 }, (_, i) => `ligne ${i} ${'x'.repeat(40)}`)];
+  const embeds = sectionEmbeds({ label: 'Modifié · 31', color: 0xe67e22, count: 31, lines }, BASE);
   const hl = embeds[0].fields[0];
   const first = hl.value.split('\n')[1];
   assert.equal(first.length, 100, '99 caractères + ellipse');
