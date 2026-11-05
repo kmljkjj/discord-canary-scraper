@@ -1,11 +1,11 @@
 {
-  "runId": "2026-11-05T21-29-52-975Z_666653_892zb6",
-  "buildNumber": "666653",
-  "scrapedAt": "2026-11-05T21:29:52.975Z",
+  "runId": "2026-11-05T21-34-11-418Z_666672_pjyiui",
+  "buildNumber": "666672",
+  "scrapedAt": "2026-11-05T21:34:11.419Z",
   "totals": {
     "all": 391,
     "legacy": 0,
-    "apex": 383
+    "apex": 382
   },
   "experiments": [
     {
@@ -1032,9 +1032,8 @@
     {
       "id": "2026-01-less-personalized-ads",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": {
         "enabled": false
       },
@@ -1045,9 +1044,7 @@
         "1": {
           "enabled": true
         }
-      },
-      "variationCount": 2,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-01-voice-dares-v0",
