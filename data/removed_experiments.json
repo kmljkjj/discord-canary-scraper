@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T19-43-36-337Z_666447_j9ztc4",
-  "buildNumber": "666447",
-  "updatedAt": "2026-11-05T19:43:36.337Z",
-  "count": 141,
+  "runId": "2026-11-05T19-46-58-992Z_666468_nucbnl",
+  "buildNumber": "666468",
+  "updatedAt": "2026-11-05T19:46:58.992Z",
+  "count": 142,
   "experiments": [
     {
       "id": "2026-02-mute-tutorial",
@@ -990,6 +990,13 @@
       "label": null,
       "removedAt": "2026-11-05T17:46:33.786Z",
       "lastBuild": "666062"
+    },
+    {
+      "id": "2026-02-gsh-game-detection-upsell",
+      "kind": "user",
+      "label": null,
+      "removedAt": "2026-11-05T19:46:59.008Z",
+      "lastBuild": "666468"
     }
   ]
 }

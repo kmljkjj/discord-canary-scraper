@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T19-43-36-337Z_666447_j9ztc4",
-  "buildNumber": "666447",
-  "updatedAt": "2026-11-05T19:43:36.337Z",
-  "count": 384,
+  "runId": "2026-11-05T19-46-58-992Z_666468_nucbnl",
+  "buildNumber": "666468",
+  "updatedAt": "2026-11-05T19:46:58.992Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -3329,52 +3329,6 @@
         "value": null
       },
       "fingerprint": "421edc877f888ca3974ec4294cf95ded0b45d66e2cfc18f9c925a29a126ff602"
-    },
-    {
-      "id": "2026-02-gsh-game-detection-upsell",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-02-gsh-game-detection-upsell",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "9d06a3ad8d24cf9d58ee9a8c799107ede60498d5a3cda91689ef1459997844a4"
     },
     {
       "id": "2026-02-join-game-community-cta",
