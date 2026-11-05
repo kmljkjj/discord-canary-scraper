@@ -1110,5 +1110,6 @@
   "USER_BADGE_ACK": "/users/@me/badges/:param/ack",
   "LINKABLE_GAME_ORGANIZATIONS": "/game-organizations/linkable/@me/:param",
   "SUMMARIES": "/guilds/:param/discoverable-content/summaries",
-  "REMOVE_SUMMARY": "/guilds/:param/discoverable-content/summaries/:param/remove"
+  "REMOVE_SUMMARY": "/guilds/:param/discoverable-content/summaries/:param/remove",
+  "GAMES_TRENDING": "/games/trending"
 }
