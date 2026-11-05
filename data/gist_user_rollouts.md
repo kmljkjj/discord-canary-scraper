@@ -1,14 +1,14 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 19:24 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 19:50 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 785a6f6d · MAJ 2026-11-04T02:00:14Z · 1020 expériences au catalogue (353 user dont 157 avec données, 38 guild, 629 type inconnu, 267 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 785a6f6d · MAJ 2026-11-04T02:00:14Z · 1020 expériences au catalogue (352 user dont 156 avec données, 38 guild, 630 type inconnu, 267 sans données)
 
 ⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-user-profile-widget-suggestions, 2026-10-desktop-tti-perf, 2026-10-desktop-general-perf, 2026-10-desktop-game-perf, 2026-09-improved-mobile-shop-loading, 2026-09-invite-accept-age-group-errors, 2026-08-scheduled-messages, 2026-08-rive-web-perf, 2026-05-dvp-for-attachments, 2025-09-server-nsfw-level…
 
-## Expériences user avec données (157)
+## Expériences user avec données (156)
 
 | Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |
 |---|---:|---:|---:|---:|---|
@@ -146,7 +146,6 @@
 | 2026-02-private-channel-hiding | **2,00 %** | 0,00 % | 0,00 % | 98,00 % | — |
 | 2026-02-lazy-load-all-images | **30,00 %** | 30,00 % | 0,00 % | 40,00 % | — |
 | 2026-02-join-game-community-cta | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
-| 2026-02-gsh-game-detection-upsell | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-02-go-live-video-preset-resolution | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-02-gifting-modal-redesign | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-02-gift-cards | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -170,7 +169,7 @@
 | Safety Experience Unauthenticated Report Form | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Inferno Spam Redaction | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 
-## Type inconnu — suivi séparé, non notifié (565)
+## Type inconnu — suivi séparé, non notifié (566)
 
 > Absents de nos métadonnées locales au moment du calcul : à reclassifier au prochain scrape.
 | Expérience | Treatment | Espace non décrit | Particularités |
@@ -272,6 +271,7 @@
 | 2026-02-new-video-quest-progress-bar-styling | 2,50 % | 95,00 % | — |
 | 2026-02-mute-tutorial | 100,00 % | 0,00 % | — |
 | 2026-02-mobile-referral-program-xp-2 | 50,00 % | 0,00 % | — |
+| 2026-02-gsh-game-detection-upsell | 10,00 % | 80,00 % | — |
 | 2026-02-gdm-all-reaction-notifications | 1,00 % | 98,00 % | — |
 | 2026-02-game-account-linking-entry-point-recurring | 50,00 % | 0,00 % | — |
 | 2026-02-first-booster-upsell | 25,00 % | 75,00 % | — |
@@ -374,7 +374,6 @@
 | 2025-10-collectibles-bundle-gifting | 100,00 % | 0,00 % | — |
 | 2025-10-call-tile-popout | 50,00 % | 50,00 % | — |
 | 2025-10-async-camera-init | 100,00 % | 0,00 % | — |
-| 2025-10_word_frequency_store_rollout | 30,00 % | 40,00 % | — |
 | 2025-01_guild_settings_foundation | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-11_member_verification_rollout | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-09_league_of_legends_leaderboard | 100,00 % (projeté) | — | ℹ projeté (multi-populations), repeated_variant, overlapping_variants |
@@ -893,10 +892,6 @@
 ### 2026-02-join-game-community-cta
 - Variant 0 (control) : 10,00 % · plages 0 – 1000
 - Variant 1 (treatment) : 10,00 % · plages 1000 – 2000
-
-### 2026-02-gsh-game-detection-upsell
-- Variant 0 (control) : 10,00 % · plages 0 – 250 , 500 – 750 , 1000 – 1500
-- Variant 1 (treatment) : 10,00 % · plages 250 – 500 , 750 – 1000 , 1500 – 2000
 
 ### 2026-02-go-live-video-preset-resolution
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
