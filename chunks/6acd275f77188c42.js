@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[56347],{555414(p){p.exports={sq:"forwardPreview_vpXHXg",kx:"linkContainer_vpXHXg",SZ:"artworkContainer_vpXHXg"}}}]);
+//# sourceMappingURL=6acd275f77188c42.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[956814],{611677(c,e,i){var r=i(477900),t=i(582128),s=i(331322),n=i(64584);i.d(e,{},{l:function(c){let{children:e,...i}=c,{spacing:d}=t.useContext(n.c);return(0,r.jsx)("form",{...i,children:(0,r.jsx)(s.B,{direction:"vertical",gap:d,children:e})})}})}}]);
+//# sourceMappingURL=c6eba81e978ec5a2.js.map

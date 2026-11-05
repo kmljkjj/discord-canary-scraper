@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[394692],{50780(t){t.exports={xP:"giftButton_MoTl1p",Nq:"innerGiftButton_MoTl1p",_d:"buttonText_MoTl1p",ez:"giftIcon_MoTl1p"}}}]);
+//# sourceMappingURL=62bbbf98353632f5.js.map

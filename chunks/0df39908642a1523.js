@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[490028],{148839(r,e,t){var n=t(582128);t.d(e,{},{A:function(r){let e=n.useRef(r);return n.useInsertionEffect(()=>{e.current=r}),n.useCallback(function(){for(var r=arguments.length,t=Array(r),n=0;n<r;n++)t[n]=arguments[n];return e.current(...t)},[])}})}}]);
+//# sourceMappingURL=0df39908642a1523.js.map

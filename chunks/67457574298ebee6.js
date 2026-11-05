@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[241697],{242232(r){r.exports={sq:"forwardPreview_RY09g2",kx:"linkContainer_RY09g2",wP:"cardImage_RY09g2"}}}]);
+//# sourceMappingURL=67457574298ebee6.js.map

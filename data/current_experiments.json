@@ -1,7 +1,7 @@
 {
-  "runId": "2026-11-04T16-17-52-899Z_664027_hpi1st",
-  "buildNumber": "664027",
-  "updatedAt": "2026-11-04T16:17:52.900Z",
+  "runId": "2026-11-05T14-01-28-416Z_665837_83pknb",
+  "buildNumber": "665837",
+  "updatedAt": "2026-11-05T14:01:28.416Z",
   "count": 383,
   "experiments": [
     {
@@ -1761,56 +1761,6 @@
       "fingerprint": "4cd6e36cf01d92d497323b38018e31a3098d0d9fa78b206dfcecdf2a62a976f7"
     },
     {
-      "id": "2025-11_tida_webform",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": "Tida Webform",
-      "title": "Tida Webform",
-      "description": null,
-      "defaultConfig": {
-        "tidaWebformEnabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1,
-          "label": "Enabled",
-          "tidaWebformEnabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2025-11_tida_webform",
-        "type": "user",
-        "kind": "user",
-        "label": "Tida Webform",
-        "system": "apex",
-        "defaultConfig": {
-          "tidaWebformEnabled": false
-        },
-        "variations": {
-          "1": {
-            "id": 1,
-            "label": "Enabled",
-            "tidaWebformEnabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "ec7c2e27742364ef9ed2dbec26876bc68b05083c62387c36988dd38e0c281f55"
-    },
-    {
       "id": "2025-11-age-verification-expressive-everywhere",
       "kind": "user",
       "type": "user",
@@ -2277,52 +2227,6 @@
         "value": null
       },
       "fingerprint": "0902507f85f45ef6e8fbd0e1371aa24d838c1a0c54eabc5c1aa9f9734d03ea3a"
-    },
-    {
-      "id": "2025-12-orb-redemption-thru-orders",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2025-12-orb-redemption-thru-orders",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "53359ea0c2be456a501b74623f3204f8671b7ecade232cc57b9ddcd1597531ab"
     },
     {
       "id": "2025-12-proportional-vad-indicator",
@@ -6320,7 +6224,9 @@
       "label": null,
       "title": null,
       "description": null,
-      "defaultConfig": null,
+      "defaultConfig": {
+        "streamQualityMarketingResolution": "1080p"
+      },
       "variations": {
         "1": {
           "streamQualityMarketingResolution": "1440p"
@@ -6335,7 +6241,9 @@
         "kind": "user",
         "label": null,
         "system": "apex",
-        "defaultConfig": null,
+        "defaultConfig": {
+          "streamQualityMarketingResolution": "1080p"
+        },
         "variations": {
           "1": {
             "streamQualityMarketingResolution": "1440p"
@@ -8125,52 +8033,6 @@
         "value": null
       },
       "fingerprint": "e3ab52983fe157054b3dd30ef373d3411f536879aef3be3d443af280bb02be3c"
-    },
-    {
-      "id": "2026-06-gifting-badge-desktop",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 1,
-      "raw": {
-        "id": "2026-06-gifting-badge-desktop",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": {
-          "enabled": false
-        },
-        "variations": {
-          "1": {
-            "enabled": true
-          }
-        },
-        "variationCount": 1,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "e8db162571223da157b51ead0d00c255b5e2fd6a6ec5a6fa316637e4224f3229"
     },
     {
       "id": "2026-06-hero-shelf-ad-tile",
@@ -11904,13 +11766,15 @@
       "label": null,
       "title": null,
       "description": null,
-      "defaultConfig": null,
+      "defaultConfig": {
+        "maxLength": 190
+      },
       "variations": {
         "0": {
-          "id": 0
+          "maxLength": 190
         },
         "1": {
-          "id": 1
+          "maxLength": 300
         }
       },
       "treatments": null,
@@ -11922,13 +11786,15 @@
         "kind": "user",
         "label": null,
         "system": "apex",
-        "defaultConfig": null,
+        "defaultConfig": {
+          "maxLength": 190
+        },
         "variations": {
           "0": {
-            "id": 0
+            "maxLength": 190
           },
           "1": {
-            "id": 1
+            "maxLength": 300
           }
         },
         "variationCount": 2,
@@ -18609,6 +18475,58 @@
       "fingerprint": "fb843e36bbaff8bcde096e4779f41a079e8e26d9f5b6734ad4e677dc3943dc21"
     },
     {
+      "id": "2026-10-pinot-summary-management",
+      "kind": "guild",
+      "type": "guild",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-10-pinot-summary-management",
+        "type": "guild",
+        "kind": "guild",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": false
+        },
+        "variations": {
+          "0": {
+            "enabled": false
+          },
+          "1": {
+            "enabled": true
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "02210c5522f8d222ec8ddcc859f53efadb1059f144953a8c4912784468abcd3c"
+    },
+    {
       "id": "2026-10-profile-default-tab-with-content",
       "kind": "user",
       "type": "user",
@@ -19835,6 +19753,58 @@
       "fingerprint": "ca770474a1f47b681dc61a2070b171de128aa9b4b8a8cbcaa3732c387e796011"
     },
     {
+      "id": "2026-11-game-exit-promo-bloons",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": {
+        "enabled": true
+      },
+      "variations": {
+        "0": {
+          "enabled": true
+        },
+        "1": {
+          "enabled": false
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 2,
+      "raw": {
+        "id": "2026-11-game-exit-promo-bloons",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": {
+          "enabled": true
+        },
+        "variations": {
+          "0": {
+            "enabled": true
+          },
+          "1": {
+            "enabled": false
+          }
+        },
+        "variationCount": 2,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "d34b6d71f4534c5ff5fd4765796b9f9b063519db9163b3aff4ace15cee79ebf7"
+    },
+    {
       "id": "2026-11-nitro-upload-badge",
       "kind": "user",
       "type": "user",
@@ -19885,6 +19855,48 @@
         "value": null
       },
       "fingerprint": "4044f1c914f6acbf4075b2042253fd889b021374a9e00685ec48d6769c4bcd10"
+    },
+    {
+      "id": "2026-11-soundboard-upsells-brand-refresh",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 1,
+      "raw": {
+        "id": "2026-11-soundboard-upsells-brand-refresh",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": null,
+        "variations": {
+          "1": {
+            "id": 1
+          }
+        },
+        "variationCount": 1,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "12dea01107aa0c5287c847ccbe6d08eb93f8228cdd5600412a833a243e9e26fb"
     },
     {
       "id": "2026-11-waterwheels-discover",

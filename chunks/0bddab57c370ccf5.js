@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[770940],{192311(s,e,t){var a=t(855986),r=t(596344);t.d(e,{},{W:function(s){return(0,a.bG)([r.A],()=>r.A.getLastNonCurrentUserMessage(s)??r.A.getLastMessage(s))}})}}]);
+//# sourceMappingURL=0bddab57c370ccf5.js.map

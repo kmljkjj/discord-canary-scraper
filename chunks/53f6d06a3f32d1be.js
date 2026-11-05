@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["553683"],{201438(e,a,n){n.d(a,{A:()=>r});var t=n(454908),l=n(105292);function r(e,a,n){let{data:r,isLoading:c}=(0,t.I)(e);return{coverImageUrl:r?.getCoverURL(n)??null,iconImageUrl:r?.getIconURL(n??256)??null,gameName:r?.name??a??l.intl.string(l.t.GIWFlF),hasGameData:null!=r,isLoading:c}}}}]);
-//# sourceMappingURL=53f6d06a3f32d1be.js.map

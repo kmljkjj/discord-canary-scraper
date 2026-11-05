@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[192910],{972829(u,e,t){var s=t(512750),d=t(855986),r=t(71393),a=t(645619),i=t(652215);t.d(e,{},{A:function(u){return(0,d.bG)([r.A,a.A],()=>null!=u&&(r.A.getGuild(u)?.features.has(i.GuildFeatures.GUILD_THEME)===!0||a.A.getStateForGuild(u)?.unlockedPowerups?.[s.d0]!=null),[u])}})}}]);
+//# sourceMappingURL=8e2142f0cec71246.js.map

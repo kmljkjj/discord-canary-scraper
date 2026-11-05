@@ -1,7 +1,7 @@
 {
-  "runId": "2026-11-04T16-17-52-899Z_664027_hpi1st",
-  "buildNumber": "664027",
-  "scrapedAt": "2026-11-04T16:17:52.900Z",
+  "runId": "2026-11-05T14-01-28-416Z_665837_83pknb",
+  "buildNumber": "665837",
+  "scrapedAt": "2026-11-05T14:01:28.416Z",
   "totals": {
     "all": 390,
     "legacy": 0,
@@ -701,25 +701,6 @@
       "source": "discord"
     },
     {
-      "id": "2025-11_tida_webform",
-      "type": "user",
-      "kind": "user",
-      "label": "Tida Webform",
-      "system": "apex",
-      "defaultConfig": {
-        "tidaWebformEnabled": false
-      },
-      "variations": {
-        "1": {
-          "id": 1,
-          "label": "Enabled",
-          "tidaWebformEnabled": true
-        }
-      },
-      "variationCount": 1,
-      "source": "discord"
-    },
-    {
       "id": "2025-11-age-verification-expressive-everywhere",
       "type": "user",
       "kind": "user",
@@ -897,23 +878,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2025-12-orb-redemption-thru-orders",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -2442,7 +2406,9 @@
       "kind": "user",
       "label": null,
       "system": "apex",
-      "defaultConfig": null,
+      "defaultConfig": {
+        "streamQualityMarketingResolution": "1080p"
+      },
       "variations": {
         "1": {
           "streamQualityMarketingResolution": "1440p"
@@ -3137,23 +3103,6 @@
         }
       },
       "variationCount": 3,
-      "source": "discord"
-    },
-    {
-      "id": "2026-06-gifting-badge-desktop",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": {
-        "enabled": false
-      },
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "variationCount": 1,
       "source": "discord"
     },
     {
@@ -4647,13 +4596,15 @@
       "kind": "user",
       "label": null,
       "system": "apex",
-      "defaultConfig": null,
+      "defaultConfig": {
+        "maxLength": 190
+      },
       "variations": {
         "0": {
-          "id": 0
+          "maxLength": 190
         },
         "1": {
-          "id": 1
+          "maxLength": 300
         }
       },
       "variationCount": 2,
@@ -7272,6 +7223,26 @@
       "source": "discord"
     },
     {
+      "id": "2026-10-pinot-summary-management",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-10-profile-default-tab-with-content",
       "type": "user",
       "kind": "user",
@@ -7755,6 +7726,26 @@
       "source": "discord"
     },
     {
+      "id": "2026-11-game-exit-promo-bloons",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": true
+      },
+      "variations": {
+        "0": {
+          "enabled": true
+        },
+        "1": {
+          "enabled": false
+        }
+      },
+      "variationCount": 2,
+      "source": "discord"
+    },
+    {
       "id": "2026-11-nitro-upload-badge",
       "type": "user",
       "kind": "user",
@@ -7772,6 +7763,21 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-11-soundboard-upsells-brand-refresh",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": null,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "variationCount": 1,
       "source": "discord"
     },
     {

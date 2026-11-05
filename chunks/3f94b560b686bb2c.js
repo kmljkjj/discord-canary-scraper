@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[223599],{923257(e,n,t){let i=(0,t(945810).mj)({name:"2026-02-voice-channel-link-click",kind:"user",defaultConfig:{navigateOnly:!1},variations:{1:{navigateOnly:!0}}});t.d(n,{},{h:i})},516287(e,n,t){var i=t(582128);let a=i.createContext(!1),c=a.Provider;t.d(n,{},{n:function(){return i.useContext(a)},x:c})}}]);
+//# sourceMappingURL=3f94b560b686bb2c.js.map

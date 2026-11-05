@@ -569,21 +569,6 @@
   },
   {
     "kind": "user",
-    "name": "2025-11_tida_webform",
-    "defaultConfig": {
-      "tidaWebformEnabled": false
-    },
-    "variations": {
-      "1": {
-        "id": 1,
-        "label": "Enabled",
-        "tidaWebformEnabled": true
-      }
-    },
-    "label": "Tida Webform"
-  },
-  {
-    "kind": "user",
     "name": "2025-11-age-verification-expressive-everywhere",
     "defaultConfig": {
       "enabled": false
@@ -720,19 +705,6 @@
       "0": {
         "enabled": false
       },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2025-12-orb-redemption-thru-orders",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
       "1": {
         "enabled": true
       }
@@ -1946,7 +1918,9 @@
   {
     "kind": "user",
     "name": "2026-04-server-boost-copy-1440p",
-    "defaultConfig": null,
+    "defaultConfig": {
+      "streamQualityMarketingResolution": "1080p"
+    },
     "variations": {
       "1": {
         "streamQualityMarketingResolution": "1440p"
@@ -2505,19 +2479,6 @@
         "enabled": true
       },
       "2": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-06-gifting-badge-desktop",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
         "enabled": true
       }
     },
@@ -3678,13 +3639,15 @@
   {
     "kind": "user",
     "name": "2026-08-user-bio-max-length",
-    "defaultConfig": null,
+    "defaultConfig": {
+      "maxLength": 190
+    },
     "variations": {
       "0": {
-        "id": 0
+        "maxLength": 190
       },
       "1": {
-        "id": 1
+        "maxLength": 300
       }
     },
     "label": null
@@ -5732,6 +5695,22 @@
     "label": null
   },
   {
+    "kind": "guild",
+    "name": "2026-10-pinot-summary-management",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
     "kind": "user",
     "name": "2026-10-profile-default-tab-with-content",
     "defaultConfig": null,
@@ -6106,6 +6085,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-11-game-exit-promo-bloons",
+    "defaultConfig": {
+      "enabled": true
+    },
+    "variations": {
+      "0": {
+        "enabled": true
+      },
+      "1": {
+        "enabled": false
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-11-nitro-upload-badge",
     "defaultConfig": {
       "showNitroUploadBadge": false
@@ -6116,6 +6111,17 @@
       },
       "1": {
         "showNitroUploadBadge": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
+    "name": "2026-11-soundboard-upsells-brand-refresh",
+    "defaultConfig": null,
+    "variations": {
+      "1": {
+        "id": 1
       }
     },
     "label": null

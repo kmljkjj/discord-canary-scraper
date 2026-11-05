@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[155994],{587041(i){i.exports={Pq:"fileMention_CTNGhK",Td:"fileMentionClickable_CTNGhK",xn:"thumbnail_CTNGhK"}}}]);
+//# sourceMappingURL=b3c37f7f5f301ef8.js.map

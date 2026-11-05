@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[892937],{747760(e,r,a){e.exports={kL:"container_6BQISv",Yi:"placeholderDetailsCard_6BQISv "+a(442248).H,RC:"placeholderText_6BQISv",h$:"placeholderBar_6BQISv",Nu:"placeholderCoverGrid_6BQISv "+a(442248).H,LH:"placeholderCover_6BQISv"}}}]);
+//# sourceMappingURL=e801eb469df16e92.js.map

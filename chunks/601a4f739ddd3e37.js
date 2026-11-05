@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[999987],{539134(e,p,i){i.r(p);let a=JSON.parse('{"F3llsQ":["Share when I update my profile"],"6goWcz":["Allow friends to receive a push notification when you update your profile."]}');i.d(p,{},{default:a})}}]);
+//# sourceMappingURL=601a4f739ddd3e37.js.map

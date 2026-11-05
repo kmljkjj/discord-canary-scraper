@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[577084],{966327(e,a,i){var r=i(477900),s=i(582128),t=i(778712),d=i(97808),n=i(386467);let u=s.memo(function(e){var a,i;let{user:u,guildId:c,size:h=t._3.SIZE_32,animate:p=!1,"aria-hidden":o=!1,...k}=e,l=s.useContext(n.A);return(0,r.jsx)(d.eu,{src:(a=(0,t.FT)(h),i=c??l,u.getAvatarURL(i,a,p)),size:h,"aria-label":o?void 0:u.username,"aria-hidden":o,...k})});i.d(a,{},{A:u})}}]);
+//# sourceMappingURL=797f9aadf57c112a.js.map

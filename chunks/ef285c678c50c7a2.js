@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[153035],{652934(p,s,c){var h=c(73153);c.d(s,{},{G:function(){h.h.dispatch({type:"EMBEDDED_ACTIVITY_POP_IN"})}})}}]);
+//# sourceMappingURL=ef285c678c50c7a2.js.map

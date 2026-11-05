@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[934629],{701572(r){r.exports=JSON.parse('{"jBvMiO":["Suprascriere build activ\u0103"],"d11XdP":["Suprascriere build:"],"VBPcR9":["Instrumente pentru dezvoltatori"]}')}}]);

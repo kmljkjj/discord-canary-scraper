@@ -1,0 +1,2 @@
+self.addEventListener("message",async e=>{let{data:t}=e;self.postMessage(await (async function(e){let t=await createImageBitmap(e),a=new OffscreenCanvas(t.width,t.height),n=a.getContext("2d");if(null==n)return null;n.drawImage(t,0,0),t.close();let l=await a.convertToBlob({type:"image/webp",quality:.9});return"image/webp"===l.type?l:null})(t).catch(()=>null))});
+//# sourceMappingURL=d696ff505dca1368.js.map

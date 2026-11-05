@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[947665],{470779(i){i.exports={M0:"bar_O2ifdm",ho:"open_O2ifdm",ET:"closing_O2ifdm",tY:"plus_O2ifdm",WW:"plusIcon_O2ifdm",hF:"input_O2ifdm",Fg:"fileInput_O2ifdm",ZO:"attachments_O2ifdm"}}}]);
+//# sourceMappingURL=c5662f004c044188.js.map

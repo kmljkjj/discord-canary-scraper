@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[303807],{317634(t,s,_){var a=_(73153),i=_(473953),p=_(593673);_.d(s,{},{B:function(t,s){a.h.dispatch({type:"GUILD_SETTINGS_GUILD_SPACE_SETTINGS_UPDATE",guildId:t,settings:s})},s:async function(t,s){let _={...s};s.enabled||(_.publish_status=p.B.DRAFT);let S=await (0,i.W)(t,_);a.h.dispatch({type:"GUILD_SETTINGS_SET_GUILD_SPACE_SETTINGS",guildId:t,settings:S})}})}}]);
+//# sourceMappingURL=f7c678260f9b9bc0.js.map

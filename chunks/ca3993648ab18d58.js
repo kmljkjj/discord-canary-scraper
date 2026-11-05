@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[796057],{448320(a){a.exports={yl:"modal_PaxA8v",wx:"header_PaxA8v",O_:"headerIconContainer_PaxA8v",q9:"acronym_PaxA8v",TK:"headerText_PaxA8v",tp:"table_PaxA8v",CZ:"tableContainer_PaxA8v",qd:"tableHeader_PaxA8v",lM:"permissionsTable_PaxA8v",ce:"permissionRow_PaxA8v",xE:"bullet_PaxA8v",dT:"bulletWarning_PaxA8v bullet_PaxA8v",qr:"footer_PaxA8v"}}}]);
+//# sourceMappingURL=ca3993648ab18d58.js.map

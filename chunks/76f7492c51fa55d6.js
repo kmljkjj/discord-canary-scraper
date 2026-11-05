@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[527462],{821701(t,r,e){var c=e(164636),u=e(590180),s=e(4227);e.d(r,{},{A:function(t){let[r,e]=(0,c.yK)([u.A],()=>[u.A.getCategoryForProduct(t),u.A.getProduct(t)]);return{category:r,product:e,purchase:(0,c.bG)([s.A],()=>s.A.getPurchase(t))}}})}}]);
+//# sourceMappingURL=76f7492c51fa55d6.js.map

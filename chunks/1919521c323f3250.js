@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[225560],{628363(i){i.exports={qq:"emojiContainer_v5GRiK",nI:"emojiRow_v5GRiK",H1:"emojiLabel_v5GRiK",mp:"emojiImage_v5GRiK",JN:"emojiAlias_v5GRiK"}}}]);
+//# sourceMappingURL=1919521c323f3250.js.map

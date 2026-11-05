@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[423648],{783779(e){e.exports=JSON.parse('{"jBvMiO":["Nadpisanie wersji aktywne"],"d11XdP":["Nadpisanie wersji:"],"VBPcR9":["Narz\u0119dzia deweloperskie"]}')}}]);

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[691671],{226698(r,e,o){var p=o(620632),s=o(652215);o.d(e,{},{A:{resolveFlag:r=>p.Bo.post({url:s.Rsh.MODERATOR_REPORT_CLOSE(r),body:{},rejectWithError:!0}),reopenModReport:r=>p.Bo.put({url:s.Rsh.REPORT_TO_MOD_REOPEN(r),rejectWithError:!0})}})}}]);
+//# sourceMappingURL=266442fe58fe8eb9.js.map

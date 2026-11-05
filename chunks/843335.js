@@ -1,1 +1,2 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["843335"],{681978(e,a,d){e.exports={fC:"badgeContainer__635ed",KT:"badgeLabel__635ed",cV:"badgesContainer__635ed",u3:"badgesContainerCard__635ed",DY:"badgesContainerGameProfile__635ed",BQ:"badgesContainerPopout__635ed"}}}]);
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[843335],{681978(a){a.exports={fC:"badgeContainer_CTWncy",KT:"badgeLabel_CTWncy",cV:"badgesContainer_CTWncy",u3:"badgesContainerCard_CTWncy",DY:"badgesContainerGameProfile_CTWncy",BQ:"badgesContainerPopout_CTWncy"}}}]);
+//# sourceMappingURL=843335.151d661c2c4fc146.js.map

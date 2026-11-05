@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[551701],{491380(e,a,d){let n=(0,d(945810).mj)({name:"2026-02-desktop-new-user-onboarding",kind:"user",defaultConfig:{enabled:!1},variations:{1:{enabled:!0}}});d.d(a,{},{default:n})}}]);
+//# sourceMappingURL=ea3fe581393756c8.js.map

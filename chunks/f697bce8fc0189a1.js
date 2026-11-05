@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[518421],{626484(i){i.exports=JSON.parse('{"F3llsQ":["Condividi quando aggiorno il mio profilo"],"6goWcz":["Permetti agli amici di ricevere una notifica push quando aggiorni il tuo profilo."]}')}}]);

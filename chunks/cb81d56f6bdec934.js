@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[398254],{598653(p,_,s){var a=s(73153);s.d(_,{},{o:function(p){a.h.dispatch({type:"PURCHASED_ITEMS_FESTIVITY_SET_CAN_PLAY_WOW_MOMENT",value:p})}})}}]);
+//# sourceMappingURL=cb81d56f6bdec934.js.map

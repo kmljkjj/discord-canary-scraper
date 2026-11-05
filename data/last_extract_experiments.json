@@ -1,7 +1,7 @@
 {
-  "runId": "2026-11-04T16-17-52-899Z_664027_hpi1st",
-  "buildNumber": "664027",
-  "updatedAt": "2026-11-04T16:17:52.900Z",
+  "runId": "2026-11-05T14-01-28-416Z_665837_83pknb",
+  "buildNumber": "665837",
+  "updatedAt": "2026-11-05T14:01:28.416Z",
   "count": 383,
   "data": {
     "2021-02_staff_qc_debugging": {
@@ -696,25 +696,6 @@
       "system": "apex",
       "fp": "4cd6e36cf01d92d497323b38018e31a3098d0d9fa78b206dfcecdf2a62a976f7"
     },
-    "2025-11_tida_webform": {
-      "id": "2025-11_tida_webform",
-      "type": "user",
-      "kind": "user",
-      "label": "Tida Webform",
-      "variationCount": 1,
-      "variations": {
-        "1": {
-          "id": 1,
-          "label": "Enabled",
-          "tidaWebformEnabled": true
-        }
-      },
-      "defaultConfig": {
-        "tidaWebformEnabled": false
-      },
-      "system": "apex",
-      "fp": "ec7c2e27742364ef9ed2dbec26876bc68b05083c62387c36988dd38e0c281f55"
-    },
     "2025-11-age-verification-expressive-everywhere": {
       "id": "2025-11-age-verification-expressive-everywhere",
       "type": "user",
@@ -894,23 +875,6 @@
       },
       "system": "apex",
       "fp": "0902507f85f45ef6e8fbd0e1371aa24d838c1a0c54eabc5c1aa9f9734d03ea3a"
-    },
-    "2025-12-orb-redemption-thru-orders": {
-      "id": "2025-12-orb-redemption-thru-orders",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 1,
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "defaultConfig": {
-        "enabled": false
-      },
-      "system": "apex",
-      "fp": "53359ea0c2be456a501b74623f3204f8671b7ecade232cc57b9ddcd1597531ab"
     },
     "2025-12-proportional-vad-indicator": {
       "id": "2025-12-proportional-vad-indicator",
@@ -2443,7 +2407,9 @@
           "streamQualityMarketingResolution": "1440p"
         }
       },
-      "defaultConfig": null,
+      "defaultConfig": {
+        "streamQualityMarketingResolution": "1080p"
+      },
       "system": "apex",
       "fp": "58871fbca704d642edc3ae3d3375e66f65519000e6ec3f74ab65fea4d7868639"
     },
@@ -3134,23 +3100,6 @@
       },
       "system": "apex",
       "fp": "e3ab52983fe157054b3dd30ef373d3411f536879aef3be3d443af280bb02be3c"
-    },
-    "2026-06-gifting-badge-desktop": {
-      "id": "2026-06-gifting-badge-desktop",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "variationCount": 1,
-      "variations": {
-        "1": {
-          "enabled": true
-        }
-      },
-      "defaultConfig": {
-        "enabled": false
-      },
-      "system": "apex",
-      "fp": "e8db162571223da157b51ead0d00c255b5e2fd6a6ec5a6fa316637e4224f3229"
     },
     "2026-06-hero-shelf-ad-tile": {
       "id": "2026-06-hero-shelf-ad-tile",
@@ -4596,13 +4545,15 @@
       "variationCount": 2,
       "variations": {
         "0": {
-          "id": 0
+          "maxLength": 190
         },
         "1": {
-          "id": 1
+          "maxLength": 300
         }
       },
-      "defaultConfig": null,
+      "defaultConfig": {
+        "maxLength": 190
+      },
       "system": "apex",
       "fp": "dd345991ef2c8b027fae2373941786234b2477eb71a3289344fa3f8c2db2fb21"
     },
@@ -7164,6 +7115,26 @@
       "system": "apex",
       "fp": "fb843e36bbaff8bcde096e4779f41a079e8e26d9f5b6734ad4e677dc3943dc21"
     },
+    "2026-10-pinot-summary-management": {
+      "id": "2026-10-pinot-summary-management",
+      "type": "guild",
+      "kind": "guild",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": false
+        },
+        "1": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "02210c5522f8d222ec8ddcc859f53efadb1059f144953a8c4912784468abcd3c"
+    },
     "2026-10-profile-default-tab-with-content": {
       "id": "2026-10-profile-default-tab-with-content",
       "type": "user",
@@ -7633,6 +7604,26 @@
       "system": "apex",
       "fp": "ca770474a1f47b681dc61a2070b171de128aa9b4b8a8cbcaa3732c387e796011"
     },
+    "2026-11-game-exit-promo-bloons": {
+      "id": "2026-11-game-exit-promo-bloons",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 2,
+      "variations": {
+        "0": {
+          "enabled": true
+        },
+        "1": {
+          "enabled": false
+        }
+      },
+      "defaultConfig": {
+        "enabled": true
+      },
+      "system": "apex",
+      "fp": "d34b6d71f4534c5ff5fd4765796b9f9b063519db9163b3aff4ace15cee79ebf7"
+    },
     "2026-11-nitro-upload-badge": {
       "id": "2026-11-nitro-upload-badge",
       "type": "user",
@@ -7652,6 +7643,21 @@
       },
       "system": "apex",
       "fp": "4044f1c914f6acbf4075b2042253fd889b021374a9e00685ec48d6769c4bcd10"
+    },
+    "2026-11-soundboard-upsells-brand-refresh": {
+      "id": "2026-11-soundboard-upsells-brand-refresh",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 1,
+      "variations": {
+        "1": {
+          "id": 1
+        }
+      },
+      "defaultConfig": null,
+      "system": "apex",
+      "fp": "12dea01107aa0c5287c847ccbe6d08eb93f8228cdd5600412a833a243e9e26fb"
     },
     "2026-11-waterwheels-discover": {
       "id": "2026-11-waterwheels-discover",

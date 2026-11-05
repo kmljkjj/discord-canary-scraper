@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[436499],{178985(o){o.exports={A:"outer_spl_hF",v:"inner_spl_hF"}},589478(o){o.exports={zr:"root_sKUDgo",In:"applicationIcon_sKUDgo",Hc:"modalHeader_sKUDgo",cG:"closeButtonContainer_sKUDgo",b:"closeButton_sKUDgo",ut:"closeIcon_sKUDgo",pU:"iframe_sKUDgo",AO:"botTag_sKUDgo",Wh:"flexRow_sKUDgo"}}}]);
+//# sourceMappingURL=5433c04db5d77a26.js.map

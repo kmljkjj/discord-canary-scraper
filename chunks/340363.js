@@ -1,1 +1,2 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["340363"],{162118(o,s,t){o.exports={P:"lottieIconColors__5eb9b",f:"lottieIcon__5eb9b"}}}]);
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[340363],{162118(o){o.exports={P:"lottieIconColors_69Onuk",f:"lottieIcon_69Onuk"}}}]);
+//# sourceMappingURL=340363.6bd511cca156f7f5.js.map

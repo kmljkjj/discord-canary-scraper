@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[450963],{489438(t){t.exports={Qs:"content_RCbKta",ZK:"hero_RCbKta",iL:"backgroundImage_RCbKta",b:"closeButton_RCbKta",wm:"logo_RCbKta",DD:"title_RCbKta",VA:"subtitle_RCbKta",qT:"features_RCbKta",N4:"feature_RCbKta",kh:"featureCopy_RCbKta",Lw:"featureAsset_RCbKta",pl:"featureAssetLabel_RCbKta",UD:"buttonContainer_RCbKta"}}}]);
+//# sourceMappingURL=553339b2e4f0af7f.js.map

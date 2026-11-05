@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[555901],{935756(s){s.exports=JSON.parse('{"jBvMiO":["Versions\xfcberschreibung aktiv"],"d11XdP":["Versions\xfcberschreibung:"],"VBPcR9":["Entwicklertools"]}')}}]);

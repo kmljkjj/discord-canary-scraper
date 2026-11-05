@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[896496],{842291(a){a.exports={GI:"bannerFrame_91pKqa",k5:"roundedBanner_91pKqa",oz:"avatarOverlay_91pKqa"}}}]);
+//# sourceMappingURL=81c46f8bfa2d3e97.js.map

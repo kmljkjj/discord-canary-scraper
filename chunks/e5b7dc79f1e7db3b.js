@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["501619"],{756734(a){a.exports=JSON.parse('{"Y/4agX":["Visk\u0105 su\u017Einosite MW4 ",[3,"date","::MMMd"]],"UvhjEc":["Jau visai netrukus"],"D3CWUF":["I\u0161samus pristatymas, kai Call of Duty: Modern Warfare 4 bus i\u0161leistas ",[3,"date","::MMMd"]],"ugfqKp":["Slaptai: kodas Blurple"],"YEsjvt":["Gauk Call of Duty: MW4 br\u0117\u017Ein\u012F ",[3,"date","::MMMd"],". Tik su Nitro."]}')}}]);
-//# sourceMappingURL=e5b7dc79f1e7db3b.js.map

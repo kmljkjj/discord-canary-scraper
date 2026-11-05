@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[24914],{829097(e,n,t){let a=(0,t(945810).mj)({name:"2025-09-video-qoe-metrics-tracking",kind:"user",defaultConfig:{externalAnalyticsEnabled:!1},variations:{0:{externalAnalyticsEnabled:!1},1:{externalAnalyticsEnabled:!0}}});t.d(n,{},{_:function(e){let{location:n}=e;return a.getConfig({location:n})}})}}]);
+//# sourceMappingURL=f628457091293480.js.map

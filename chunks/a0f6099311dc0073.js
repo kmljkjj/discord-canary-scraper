@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[556436],{58367(t){t.exports={TP:"emptyWidgetContainer_5nd-KJ",ys:"absolute_5nd-KJ",dx:"emptyWidgetIcon_5nd-KJ"}}}]);
+//# sourceMappingURL=a0f6099311dc0073.js.map

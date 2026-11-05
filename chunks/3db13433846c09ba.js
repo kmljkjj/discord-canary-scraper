@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[558114],{576633(e,a,l){l.r(a);let t=JSON.parse('{"Y/4agX":["Full reveal in MW4 on ",[3,"date","::MMMd"]],"UvhjEc":["It\'s almost here"],"D3CWUF":["Full reveal when Call of Duty: Modern Warfare 4 launches on ",[3,"date","::MMMd"]],"ugfqKp":["Classified: Code Blurple"],"YEsjvt":["Get a Call of Duty: MW4 blueprint on ",[3,"date","::MMMd"],". Exclusive to Nitro."]}');l.d(a,{},{default:t})}}]);
+//# sourceMappingURL=3db13433846c09ba.js.map

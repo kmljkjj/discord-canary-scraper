@@ -1,2 +1,0 @@
-"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([["987478"],{289397(s,p,c){c.d(p,{n:()=>t});function t(s){return`https://cdn.discordapp.com/assets/${s}`}}}]);
-//# sourceMappingURL=d95087b47a4e977f.js.map

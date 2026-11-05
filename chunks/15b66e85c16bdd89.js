@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[759086],{393213(s){s.exports={XG:"scroller_lRPE7Q",D$:"friendsLoadingItem_lRPE7Q",Y7:"guildsLoadingItem_lRPE7Q"}}}]);
+//# sourceMappingURL=15b66e85c16bdd89.js.map

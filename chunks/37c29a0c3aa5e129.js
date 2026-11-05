@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[195468],{643056(e,d,a){let n=(0,a(945810).mj)({name:"2026-08-badge-management",kind:"user",defaultConfig:{enabled:!1,tenureBadgeHideable:!1},variations:{1:{enabled:!0,tenureBadgeHideable:!0},2:{enabled:!0,tenureBadgeHideable:!1}}});a.d(d,{},{A:n,d:function(e){let{location:d}=e;return n.useConfig({location:d}).enabled}})},248284(e,d,a){let n=(0,a(196765).v)(()=>({isOpen:!1,hiddenOrder:[]}));a.d(d,{},{A:n})}}]);
+//# sourceMappingURL=37c29a0c3aa5e129.js.map

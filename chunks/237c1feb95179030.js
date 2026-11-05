@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[870272],{55619(e,t,p){var s=p(73153);p.d(t,{},{A:{setEnabled(e){this.update({enabled:e})},update(e){for(let t of Object.keys(e))s.h.dispatch({type:"STREAMER_MODE_UPDATE",key:t,value:e[t]})}}})}}]);
+//# sourceMappingURL=237c1feb95179030.js.map

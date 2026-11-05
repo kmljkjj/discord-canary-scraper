@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[964602],{418241(t,p,s){var c=s(73153),e=s(91242),i=s(457827),a=s(843002);s.d(p,{},{N:function(t){for(let p of e.A.getFramesForSurface((0,a.e)(t)))(0,i.r)(p.id);c.h.dispatch({type:"VOICE_CHANNEL_APP_CLOSE",channelId:t})},s:function(t){c.h.dispatch({type:"VOICE_CHANNEL_APP_SURFACE_TOGGLE",channelId:t})}})}}]);
+//# sourceMappingURL=3f6e5106e29247d2.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[151907],{96494(e,s,d){d.r(s);let{createLoader:a}=d(95498),p=a({"en-US":()=>d.e(361028).then(d.bind(d,93871))},"en-US"),{makeMessagesProxy:t}=d(95498),h=t(p);d.d(s,{},{default:h,messagesLoader:p})}}]);
+//# sourceMappingURL=30ae095056e2901d.js.map

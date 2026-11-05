@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[760745],{831120(t,n,i){var a=i(477900);i(582128);var e=i(732159),r=i(792996);i.d(n,{},{default:function(t){let{onConfirmUninstall:n,game:i,...l}=t;return(0,a.jsx)(e.u,{title:r.intl.formatToPlainString(r.t["f/BAbC"],{gameName:i.name}),subtitle:r.intl.format(r.t["FP+NKV"],{gameName:i.name}),confirmText:r.intl.string(r.t.RVy6Vl),cancelText:r.intl.string(r.t["96dwMR"]),onConfirm:n,...l})}})}}]);
+//# sourceMappingURL=d3c278e8b6aef934.js.map

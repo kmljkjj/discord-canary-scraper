@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[893767],{194362(e,t,a){var n=a(104798),c=a(652215);a.d(t,{},{a:async function(e){let t=n.A.generateNonce();try{let a=await n.A.createHandoffToken(t);return c.X7G.DEVELOPER_PORTAL_LOGIN_HANDOFF(t,a,e)}catch{return`//${window.GLOBAL_ENV.DEVELOPERS_ENDPOINT}/${e}`}}})}}]);
+//# sourceMappingURL=c274f68204647b19.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[466322],{692969(e,o,t){var a=t(60465),p=t(611656);t.d(o,{},{A:function(e){let{onOpened:o}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},t=(0,p.Ay)(e),{gameId:i}=t;return t.shouldOpenGameProfile&&null!=i?p=>{p?.stopPropagation(),p?.preventDefault(),a.default.openGameProfileModal({...e,gameId:i,gameProfileModalChecks:t}),o?.()}:void 0}})}}]);
+//# sourceMappingURL=bbff5eaf8eb39f3d.js.map

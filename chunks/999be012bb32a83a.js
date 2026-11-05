@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[439089],{42376(e,n,a){let i=(0,a(945810).mj)({name:"2026-09-invite-accept-age-group-errors",kind:"user",defaultConfig:{enabled:!1},variations:{0:{enabled:!1},1:{enabled:!0}}});a.d(n,{},{e:function(e){return i.getConfig({location:e}).enabled}})}}]);
+//# sourceMappingURL=999be012bb32a83a.js.map

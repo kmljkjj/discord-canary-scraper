@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[106980],{51407(t){t.exports={pQ:"connectedAccountVanityMetadata_VlBwYX",RB:"connectedAccountVanityMetadataTag_VlBwYX",uR:"connectedAccountVanityMetadataItem_VlBwYX",pv:"connectedAccountVanityMetadataItemIcon_VlBwYX",wI:"paypalVerifiedTag_VlBwYX"}}}]);
+//# sourceMappingURL=a11779a1f813ebcc.js.map

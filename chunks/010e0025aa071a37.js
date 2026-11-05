@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[574246],{200389(p,o,r){var e=r(28883),n=r(516288),i=r(373540);r.d(o,{},{promptPublishApproval:function(p){let o=p.includes("/enroll/")?"enroll":"publish";(0,e.d)(p,o)&&(0,i.A)(n.k.PUBLISH_APPROVAL_REQUIRED,void 0,()=>{window.open(p,"_blank","noopener,noreferrer")},"conjure-publish-approval")}})}}]);
+//# sourceMappingURL=010e0025aa071a37.js.map

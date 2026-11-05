@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[553464],{960683(t,i,m){t.exports={zr:"root_RmOtW7",aV:"infoText_RmOtW7",OQ:"ctaContainer_RmOtW7",ij:"wishlistButton_RmOtW7",lI:"ctaButton_RmOtW7",vb:"premiumShine_RmOtW7",PC:"premiumIcon_RmOtW7",U_:"ctaButtonText_RmOtW7 "+m(736541)["body-xs/semibold"]}}}]);
+//# sourceMappingURL=825c87be371da780.js.map

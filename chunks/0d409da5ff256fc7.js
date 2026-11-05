@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[329477],{566989(r){r.exports={Yi:"splash_Jr2nWU",Gt:"gameIcon_Jr2nWU",mO:"gameName_Jr2nWU",hc:"installSize_Jr2nWU",yF:"divider_Jr2nWU",gD:"selector_Jr2nWU",a_:"terms_Jr2nWU"}},725064(r){r.exports={z:"error_Pef0Rk"}}}]);
+//# sourceMappingURL=0d409da5ff256fc7.js.map

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[412408],{365611(e){e.exports={Wp:"gameCover_R0hw0B",PY:"coverContainer_R0hw0B gameCover_R0hw0B",Ru:"profileWidgetCover_R0hw0B",vu:"widgetArtwork_R0hw0B",$_:"gameCoverImage_R0hw0B",vk:"clickable_R0hw0B",mD:"loadingCover_R0hw0B gameCover_R0hw0B",iL:"hoverActiveEffect_R0hw0B"}}}]);
+//# sourceMappingURL=4e792a0e4e151a2f.js.map
