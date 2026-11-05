@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T19-58-50-664Z_666469_px1l4n",
-  "buildNumber": "666469",
-  "updatedAt": "2026-11-05T19:58:50.664Z",
-  "count": 383,
+  "runId": "2026-11-05T20-07-33-910Z_666486_0osqfo",
+  "buildNumber": "666486",
+  "updatedAt": "2026-11-05T20:07:33.910Z",
+  "count": 382,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -11413,54 +11413,6 @@
         "value": null
       },
       "fingerprint": "6130c8ec191fd600d3b84c0627ae004e9a1939a68dcd6f40b78764fa18bf5745"
-    },
-    {
-      "id": "2026-08-scheduled-messages",
-      "kind": "user",
-      "type": "user",
-      "system": "apex",
-      "label": null,
-      "title": null,
-      "description": null,
-      "defaultConfig": null,
-      "variations": {
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "treatments": null,
-      "variationSource": "variations",
-      "variationCount": 2,
-      "raw": {
-        "id": "2026-08-scheduled-messages",
-        "type": "user",
-        "kind": "user",
-        "label": null,
-        "system": "apex",
-        "defaultConfig": null,
-        "variations": {
-          "1": {
-            "id": 1
-          },
-          "2": {
-            "id": 2
-          }
-        },
-        "variationCount": 2,
-        "source": "discord"
-      },
-      "guildPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "userPercentage": {
-        "status": "unknown",
-        "value": null
-      },
-      "fingerprint": "f51f2d4f61a24d75e1ca4d315cc627a283a94687483065bafb1a71a8b6bff8b8"
     },
     {
       "id": "2026-08-show-expressive-modal-subtitle-alt",
