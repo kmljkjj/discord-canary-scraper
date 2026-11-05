@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-05T17-46-33-776Z_666062_dms4h0",
-  "buildNumber": "666062",
-  "updatedAt": "2026-11-05T17:46:33.776Z",
-  "count": 382,
+  "runId": "2026-11-05T17-49-54-586Z_666052_28kkpm",
+  "buildNumber": "666052",
+  "updatedAt": "2026-11-05T17:49:54.586Z",
+  "count": 383,
   "experiments": [
     {
       "id": "2021-02_staff_qc_debugging",
@@ -4477,6 +4477,60 @@
         "value": null
       },
       "fingerprint": "a7245e2569acbbc4c5ed8297febaef7042f86867b3be1e1c6627ebb70cd29016"
+    },
+    {
+      "id": "2026-03-denormalized-perks-access-read",
+      "kind": "user",
+      "type": "user",
+      "system": "apex",
+      "label": null,
+      "title": null,
+      "description": null,
+      "defaultConfig": null,
+      "variations": {
+        "0": {
+          "id": 0
+        },
+        "1": {
+          "id": 1
+        },
+        "2": {
+          "id": 2
+        }
+      },
+      "treatments": null,
+      "variationSource": "variations",
+      "variationCount": 3,
+      "raw": {
+        "id": "2026-03-denormalized-perks-access-read",
+        "type": "user",
+        "kind": "user",
+        "label": null,
+        "system": "apex",
+        "defaultConfig": null,
+        "variations": {
+          "0": {
+            "id": 0
+          },
+          "1": {
+            "id": 1
+          },
+          "2": {
+            "id": 2
+          }
+        },
+        "variationCount": 3,
+        "source": "discord"
+      },
+      "guildPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "userPercentage": {
+        "status": "unknown",
+        "value": null
+      },
+      "fingerprint": "93c067ab707f51f46b69501af4949a40d70d5e051edd94992934f9b6fca64111"
     },
     {
       "id": "2026-03-image-load-metrics",
