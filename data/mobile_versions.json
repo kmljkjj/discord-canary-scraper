@@ -1,30 +1,34 @@
 {
-  "scrapedAt": "2026-11-05T14:52:09.915Z",
+  "scrapedAt": "2026-11-05T14:59:01.931Z",
   "channels": [
     {
       "platform": "ios",
       "channel": "stable",
-      "version": "352.1",
+      "version": "352.0",
       "build": null,
-      "size": "246.5 MB",
+      "size": "246.7 MB",
       "requires": "iOS 16.0+",
-      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/c8/64/3dc8644e-a92b-e0c4-80e8-8ae8b48252eb/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
-      "releaseDate": "2026-11-04T16:52:28Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/65/9c/e0/659ce065-5dd8-eb35-378f-217d9658f6d9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+      "releaseDate": "2026-11-02T18:10:45Z",
       "releaseNotes": "We’ve been hard at work making Discord better for you. This includes bug fixes and performance enhancements. For more detailed information, go to your profile in the app and scroll down to “What’s New”.",
       "source": "itunes_lookup",
       "storeUrl": "https://apps.apple.com/app/id985746746",
       "available": true,
-      "checkedAt": "2026-11-05T14:52:09.915Z"
+      "checkedAt": "2026-11-05T14:59:01.931Z"
     },
     {
       "platform": "ios",
       "channel": "beta",
-      "version": null,
-      "available": false,
-      "note": "OTA not ahead of App Store",
+      "version": "352.1",
+      "build": "121487",
+      "commit": "e1defc665341f7167a5c6f60ab8404927b1b45c0",
+      "releaseName": null,
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/65/9c/e0/659ce065-5dd8-eb35-378f-217d9658f6d9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+      "source": "discord_ota_manifest",
       "storeUrl": "https://testflight.apple.com/join/gdE4pRzI",
-      "checkedAt": "2026-11-05T14:52:09.915Z",
-      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/c8/64/3dc8644e-a92b-e0c4-80e8-8ae8b48252eb/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
+      "available": true,
+      "note": "OTA ahead of App Store (TestFlight)",
+      "checkedAt": "2026-11-05T14:59:01.931Z"
     },
     {
       "platform": "android",
@@ -36,8 +40,8 @@
       "source": "discord_ota_manifest",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
       "available": true,
-      "checkedAt": "2026-11-05T14:52:09.915Z",
-      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/c8/64/3dc8644e-a92b-e0c4-80e8-8ae8b48252eb/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
+      "checkedAt": "2026-11-05T14:59:01.931Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/65/9c/e0/659ce065-5dd8-eb35-378f-217d9658f6d9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
@@ -46,8 +50,8 @@
       "available": false,
       "note": "No OTA version ahead of stable",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-11-05T14:52:09.915Z",
-      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/c8/64/3dc8644e-a92b-e0c4-80e8-8ae8b48252eb/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
+      "checkedAt": "2026-11-05T14:59:01.931Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/65/9c/e0/659ce065-5dd8-eb35-378f-217d9658f6d9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
     },
     {
       "platform": "android",
@@ -56,8 +60,8 @@
       "available": false,
       "note": "No alpha version found (OTA + mirrors)",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.discord",
-      "checkedAt": "2026-11-05T14:52:09.915Z",
-      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/3d/c8/64/3dc8644e-a92b-e0c4-80e8-8ae8b48252eb/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
+      "checkedAt": "2026-11-05T14:59:01.931Z",
+      "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/65/9c/e0/659ce065-5dd8-eb35-378f-217d9658f6d9/AppIcon-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg"
     }
   ],
   "otaIndex": {
@@ -435,7 +439,7 @@
       "build": null
     }
   ],
-  "previousScrapedAt": "2026-11-05T14:45:27.106Z",
+  "previousScrapedAt": "2026-11-05T14:52:09.915Z",
   "notifiedFingerprints": [
     "android|alpha|352.6",
     "android|alpha|352.7",
