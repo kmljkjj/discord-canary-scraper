@@ -16,11 +16,15 @@ const STATE_FILE = path.join(DATA_DIR, 'apex_rollouts.json');
 const LOCAL_EXP = path.join(DATA_DIR, 'experiments.json');
 const KNOWN_EXP = path.join(DATA_DIR, 'known_experiment_ids.json');
 
-const WEBHOOK =
-  process.env.APEX_WEBHOOK_URL ||
-  process.env.ROLLOUT_WEBHOOK_URL ||
-  process.env.DISCORD_WEBHOOK_URL ||
-  null;
+// Webhooks candidats : une webhook supprimée (404 Unknown Webhook) bascule sur la suivante.
+const WEBHOOKS = [
+  ...new Set(
+    [process.env.APEX_WEBHOOK_URL, process.env.ROLLOUT_WEBHOOK_URL, process.env.DISCORD_WEBHOOK_URL]
+      .map((u) => String(u || '').trim())
+      .filter(Boolean),
+  ),
+];
+let WEBHOOK = WEBHOOKS[0] || null;
 const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '1');
 const YEAR_MIN = Number(process.env.APEX_RECENT_YEAR || '2024');
 const SCALE = 10000;
@@ -328,12 +332,22 @@ function buildEmbeds(diff) {
 
 async function postWebhook(embeds) {
   if (!WEBHOOK || !embeds.length) return { ok: false, status: 0, text: 'skip' };
-  return sendEmbeds(
-    WEBHOOK,
-    { username: BOT.slice(0, 80), avatar_url: AVATAR },
-    embeds,
-    { identity: 'apex', label: 'apex', withDismiss: true },
-  );
+  for (;;) {
+    const r = await sendEmbeds(
+      WEBHOOK,
+      { username: BOT.slice(0, 80), avatar_url: AVATAR },
+      embeds,
+      { identity: 'apex', label: 'apex', withDismiss: true },
+    );
+    const idx = WEBHOOKS.indexOf(WEBHOOK);
+    // 404 au 1er message seulement (rien de posté) → on rejoue tout sur la webhook suivante
+    if (!r.ok && r.status === 404 && !r.sent && idx >= 0 && idx + 1 < WEBHOOKS.length) {
+      console.warn('apex webhook 404 (supprimée) → bascule sur la webhook de secours');
+      WEBHOOK = WEBHOOKS[idx + 1];
+      continue;
+    }
+    return r;
+  }
 }
 
 async function main() {
