@@ -1,7 +1,7 @@
 {
-  "runId": "2026-11-05T17-49-54-586Z_666052_28kkpm",
-  "buildNumber": "666052",
-  "scrapedAt": "2026-11-05T17:49:54.586Z",
+  "runId": "2026-11-05T17-52-07-918Z_666103_n04hoq",
+  "buildNumber": "666103",
+  "scrapedAt": "2026-11-05T17:52:07.918Z",
   "totals": {
     "all": 390
   },
@@ -1736,9 +1736,8 @@
     {
       "id": "2026-03-denormalized-perks-access-read",
       "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
+      "title": null,
+      "description": null,
       "defaultConfig": null,
       "variations": {
         "0": {
@@ -1750,9 +1749,7 @@
         "2": {
           "id": 2
         }
-      },
-      "variationCount": 3,
-      "source": "discord"
+      }
     },
     {
       "id": "2026-03-image-load-metrics",
