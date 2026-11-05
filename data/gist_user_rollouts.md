@@ -1,6 +1,6 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 13:51 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 14:17 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
@@ -163,7 +163,7 @@
 | 2025-11-overlay-chat | **66,00 %** | 33,00 % | 0,00 % | 1,00 % | — |
 | 2025-11-hide-manual-link | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-11-global-frame-pool-lock | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
-| Tida Webform | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
+| 2025-11_tida_webform | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-10-friend-request-alerts-v2 | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2025-09-video-qoe-metrics-tracking | **1,00 %** | 1,00 % | 0,00 % | 98,00 % | — |
 | Safety Experience IAR User Reporting | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -957,7 +957,7 @@
 - Variant 0 (control) : 10,00 % · plages 0 – 1000
 - Variant 1 (treatment) : 10,00 % · plages 1000 – 2000
 
-### Tida Webform
+### 2025-11_tida_webform
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2025-10-friend-request-alerts-v2
