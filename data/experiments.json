@@ -1,11 +1,11 @@
 {
-  "runId": "2026-11-05T17-43-26-409Z_666056_l5kd7m",
-  "buildNumber": "666056",
-  "scrapedAt": "2026-11-05T17:43:26.410Z",
+  "runId": "2026-11-05T17-46-33-776Z_666062_dms4h0",
+  "buildNumber": "666062",
+  "scrapedAt": "2026-11-05T17:46:33.776Z",
   "totals": {
-    "all": 390,
+    "all": 389,
     "legacy": 0,
-    "apex": 383
+    "apex": 382
   },
   "experiments": [
     {
@@ -1733,27 +1733,6 @@
         }
       },
       "variationCount": 2,
-      "source": "discord"
-    },
-    {
-      "id": "2026-03-denormalized-perks-access-read",
-      "type": "user",
-      "kind": "user",
-      "label": null,
-      "system": "apex",
-      "defaultConfig": null,
-      "variations": {
-        "0": {
-          "id": 0
-        },
-        "1": {
-          "id": 1
-        },
-        "2": {
-          "id": 2
-        }
-      },
-      "variationCount": 3,
       "source": "discord"
     },
     {
