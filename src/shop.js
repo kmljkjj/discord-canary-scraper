@@ -25,15 +25,14 @@ const {
   chunkIntoMessages,
 } = require('./lib/components_v2');
 const { writeJsonAtomic } = require('./lib/atomic');
-const { sleep, firstToken, redactSecrets, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
+const { sleep, loadTokens, redactSecrets, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEFAULT_AVATAR_URL: AVATAR } = require('./lib/utils');
 
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'shop_items.json');
 
-const WEBHOOK =
-  process.env.SHOP_WEBHOOK_URL ||
-  process.env.DISCORD_WEBHOOK_URL ||
-  null;
+// Webhooks candidats : si le premier a été supprimé (404 Unknown Webhook), on bascule sur le suivant.
+const WEBHOOKS = [...new Set([process.env.SHOP_WEBHOOK_URL, process.env.DISCORD_WEBHOOK_URL].map((u) => String(u || '').trim()).filter(Boolean))];
+let WEBHOOK = WEBHOOKS[0] || null;
 
 const SHOP_COLOR = 0x5865f2;
 const SHOP_URL = 'https://discord.com/shop';
@@ -73,7 +72,10 @@ function tokenShape(t) {
   ].join(' ');
 }
 
-const TOKEN = normalizeToken(firstToken());
+// Tous les tokens candidats (DISCORD_USER_TOKENS, _1.._10, DISCORD_USER_TOKEN, DISCORD_TOKEN) :
+// le premier accepté par Discord est utilisé → un token expiré ne bloque plus le tracker.
+const TOKENS = [...new Set(loadTokens().map(normalizeToken).filter(Boolean))];
+let TOKEN = TOKENS[0] || null;
 
 const HOSTS = [
   'https://canary.discord.com/api/v9',
@@ -116,6 +118,20 @@ function authHeaders() {
 }
 
 async function validateUserToken() {
+  if (!TOKENS.length) return { ok: false, reason: 'missing' };
+  for (let i = 0; i < TOKENS.length; i++) {
+    TOKEN = TOKENS[i];
+    const r = await probeToken();
+    if (r.ok) {
+      if (i > 0) console.log('Token #' + (i + 1) + '/' + TOKENS.length + ' utilisé (les précédents sont refusés)');
+      return r;
+    }
+    if (r.reason !== 'http_401') return r;
+  }
+  return { ok: false, reason: 'http_401 (' + TOKENS.length + ' token(s) testé(s))' };
+}
+
+async function probeToken() {
   if (!TOKEN) return { ok: false, reason: 'missing' };
   if (TOKEN.length < 20) return { ok: false, reason: 'too_short' };
   console.log('Token shape:', tokenShape(TOKEN));
@@ -374,17 +390,25 @@ async function postComponents(comps) {
   if (!WEBHOOK) return false;
   const messages = chunkIntoMessages(comps, SHOP_COLOR, true);
   for (const componentsMsg of messages) {
-    const r = await sendWebhook(
-      withComponentsUrl(WEBHOOK),
-      {
-        username: BOT.slice(0, 80),
-        avatar_url: AVATAR,
-        flags: IS_COMPONENTS_V2_FLAG,
-        components: componentsMsg,
-      },
-      { identity: 'shop', label: 'shop' },
-    );
-    if (!r.ok) {
+    for (;;) {
+      const r = await sendWebhook(
+        withComponentsUrl(WEBHOOK),
+        {
+          username: BOT.slice(0, 80),
+          avatar_url: AVATAR,
+          flags: IS_COMPONENTS_V2_FLAG,
+          components: componentsMsg,
+        },
+        { identity: 'shop', label: 'shop' },
+      );
+      if (r.ok) break;
+      // Webhook supprimée → webhook suivante (sans perdre le message)
+      const idx = WEBHOOKS.indexOf(WEBHOOK);
+      if (r.status === 404 && idx >= 0 && idx + 1 < WEBHOOKS.length) {
+        console.warn('shop webhook 404 (supprimée) → bascule sur la webhook de secours');
+        WEBHOOK = WEBHOOKS[idx + 1];
+        continue;
+      }
       console.warn('shop webhook fail', r.status, (r.text || '').slice(0, 160));
       return false;
     }
@@ -419,7 +443,7 @@ async function main() {
     console.error(
       'AUTH invalid (',
       probe.reason,
-      '). Discord rejected DISCORD_USER_TOKEN on /users/@me.',
+      '). Discord a refusé tous les tokens utilisateur sur /users/@me.',
     );
     console.error(
       'Fix: Settings → Secrets → update DISCORD_USER_TOKEN with a fresh USER token (no quotes, no Bot prefix).',
