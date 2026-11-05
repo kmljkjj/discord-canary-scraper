@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 20:52 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-05 20:54 UTC
 
-**Fenêtre glissante 4 h — n = 6489 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 6437 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,32 +14,32 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,93 %** | [4,42 – 5,5] | 320/6489 | élevée | Mesuré |
-| hash:1144304849 | **5,35 %** | [4,82 – 5,93] | 347/6489 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6489/6489 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6489/6489 | élevée | Mesuré |
-| 2025-11_tida_webform | **100 %** | [100 – 100] | 6489/6489 | élevée | Exact (plages) |
+| hash:704914099 | **4,92 %** | [4,41 – 5,49] | 317/6437 | élevée | Mesuré |
+| hash:1144304849 | **5,25 %** | [4,72 – 5,84] | 338/6437 | élevée | Mesuré |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6437/6437 | élevée | Exact (plages) |
+| hash:3013881204 | **100 %** | [99,94 – 100] | 6437/6437 | élevée | Mesuré |
+| 2025-11_tida_webform | **100 %** | [100 – 100] | 6437/6437 | élevée | Exact (plages) |
 
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,93 % (IC 95 % [4,42 ; 5,5], 320/6489, confiance élevée)
+- Variant 1 : 4,92 % (IC 95 % [4,41 ; 5,49], 317/6437, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [9498.31, 9996.69] → 4,98 %
 
 ### hash:1144304849
-- Variant 1 : 5,35 % (IC 95 % [4,82 ; 5,93], 347/6489, confiance élevée)
+- Variant 1 : 5,25 % (IC 95 % [4,72 ; 5,84], 338/6437, confiance élevée)
   - plages reconstruites (indicatif, ordre de grandeur) : [0, 501.77] → 5,02 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6489/6489, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6437/6437, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6489/6489, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
+- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6437/6437, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [34.55, 4457.45] + [4785.17, 10000] → 96,38 %
 
 ### 2025-11_tida_webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6489/6489, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 6437/6437, confiance élevée)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
@@ -51,7 +51,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 351 expériences user
+## En attente de rollout — 352 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -395,6 +395,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-10-windows-playout-buffer-duration
 - 2026-11-autoclips-ea-upsell
 - 2026-11-game-exit-promo-bloons
+- 2026-11-mac-steam-sku-detection
 - 2026-11-nitro-upload-badge
 - 2026-11-soundboard-upsells-brand-refresh
 - 2026-11-waterwheels-discover
