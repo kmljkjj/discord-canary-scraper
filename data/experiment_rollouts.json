@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-05T20:04:33.039Z",
+  "fetchedAt": "2026-11-05T20:11:28.982Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -338,17 +338,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
       }
     },
     {
@@ -2482,16 +2482,6 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
-      "id": "2026-08-scheduled-messages",
-      "hash": 1950700659,
-      "type": "user",
-      "title": "2026-08-scheduled-messages",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
       "id": "2026-08-show-expressive-modal-subtitle-alt",
       "hash": 4043893458,
       "type": "user",
@@ -4223,11 +4213,11 @@
     }
   ],
   "summary": {
-    "total": 396,
+    "total": 395,
     "guild": 39,
-    "user": 357,
+    "user": 356,
     "withPercentage": 9,
-    "withoutPercentage": 387,
+    "withoutPercentage": 386,
     "fullRollout": 5,
     "partial": 0,
     "notStarted": 4,
