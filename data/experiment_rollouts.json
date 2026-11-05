@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-05T17:40:02.038Z",
+  "fetchedAt": "2026-11-05T17:46:45.687Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -312,43 +312,43 @@
       }
     },
     {
-      "hash": 1144304849,
-      "id": null,
-      "type": "user",
-      "title": "hash_1144304849",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 2,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 2
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 2
-      }
-    },
-    {
       "hash": 704914099,
       "id": null,
       "type": "user",
       "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 2,
+      "samples": 1,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 2
+        "0": 1
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 2,
+      "fpSamples": 1,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 2
+        "0": 1
+      }
+    },
+    {
+      "hash": 1144304849,
+      "id": null,
+      "type": "user",
+      "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 4,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 4
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 4,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 4
       }
     },
     {
@@ -1156,16 +1156,6 @@
       "hash": 1153589514,
       "type": "user",
       "title": "2026-03-debug-experiment",
-      "percentage": null,
-      "status": "no_rollout_data",
-      "source": "client_bundle",
-      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
-    },
-    {
-      "id": "2026-03-denormalized-perks-access-read",
-      "hash": 1191872187,
-      "type": "user",
-      "title": "2026-03-denormalized-perks-access-read",
       "percentage": null,
       "status": "no_rollout_data",
       "source": "client_bundle",
@@ -4213,11 +4203,11 @@
     }
   ],
   "summary": {
-    "total": 395,
+    "total": 394,
     "guild": 39,
-    "user": 356,
+    "user": 355,
     "withPercentage": 9,
-    "withoutPercentage": 386,
+    "withoutPercentage": 385,
     "fullRollout": 5,
     "partial": 0,
     "notStarted": 4,
