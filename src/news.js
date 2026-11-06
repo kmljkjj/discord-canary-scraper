@@ -27,13 +27,13 @@ const { createHash } = require('crypto');
 const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { fetchTextWithRetry } = require('./lib/http');
-const { DEFAULT_UA } = require('./lib/utils');
+const { DEFAULT_UA, trimRecent } = require('./lib/utils');
 
 const WEBHOOK = process.env.NEWS_WEBHOOK_URL || '';
 
 const DATA = path.join(__dirname, '..', 'data');
 const SEEN_FILE = path.join(DATA, 'seen_news.json');
-const MAX_SEEN = 800;
+const MAX_SEEN = 4000;
 
 // Anti-spam — plafonds par run (le workflow tourne toutes les 10 minutes)
 const MAX_PER_RUN = Number(process.env.NEWS_MAX_PER_RUN || 6);
@@ -247,7 +247,7 @@ async function loadSeen() {
 }
 
 async function saveSeen(set) {
-  const ids = [...set].sort().slice(-MAX_SEEN);
+  const ids = trimRecent(set, MAX_SEEN);
   await writeJsonAtomic(SEEN_FILE, { updatedAt: new Date().toISOString(), count: ids.length, ids }, 2);
 }
 
@@ -350,6 +350,16 @@ async function main() {
   const cleanSet = new Set(clean);
   for (const it of fresh) {
     if (!cleanSet.has(it)) for (const k of it.keys) seen.add(k);
+  }
+  // Rafraîchit la récence des clés encore présentes dans les flux : elles ne
+  // doivent jamais être évincées tant qu'elles peuvent réapparaître.
+  for (const it of all) {
+    for (const k of it.keys) {
+      if (seen.has(k)) {
+        seen.delete(k);
+        seen.add(k);
+      }
+    }
   }
   await saveSeen(seen);
   console.log('Done. Fresh', fresh.length, '· envoyés', sentOk, '· échecs', sentFail);
