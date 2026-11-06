@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261106T184653_gist",
- "scrapedAt": "2026-11-06T18:46:53.233Z",
+ "runId": "20261106T191258_gist",
+ "scrapedAt": "2026-11-06T19:12:58.961Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/f90b76482737c04746191a5d21e7cfcfb6a5361e/rollouts-tag.json",
-  "updatedAt": "2026-11-06T11:33:54Z",
-  "revision": "c174c73f2d7914d1431637d639ad43c393ba64cb",
-  "fetchedAt": "2026-11-06T18:46:53.233Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/8e66365a454018f32dc2b1113790345f395d53ef/rollouts-tag.json",
+  "updatedAt": "2026-11-06T19:12:26Z",
+  "revision": "057b7eef8396877fb16b2ede7c8f31c947b13d06",
+  "fetchedAt": "2026-11-06T19:12:58.961Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -20,16 +20,17 @@
   "diverged": true,
   "divergingIds": [
    "2026-09-friends-sidebar",
+   "2026-08-split-payments",
    "2026-02-game-server-tab-always-on"
   ]
  },
  "stats": {
   "total": 1028,
   "user": 352,
-  "userData": 156,
+  "userData": 157,
   "guild": 38,
   "unclassified": 638,
-  "noData": 268
+  "noData": 267
  },
  "acknowledged": {
   "2026-10-web-streaming-optimizations": {
@@ -1820,12 +1821,27 @@
    "variantsCount": 1
   },
   "2026-08-split-payments": {
-   "key": "no_data",
-   "hasData": false,
-   "sig": "",
+   "key": "0420a2740c95a6f7",
+   "hasData": true,
+   "sig": "1:treatment",
+   "byVariant": {
+    "1": {
+     "pct": 5,
+     "role": "treatment"
+    }
+   },
    "treatment": {
-    "pct": null
-   }
+    "pct": 5
+   },
+   "control": {
+    "pct": 0
+   },
+   "notEligible": {
+    "pct": 0
+   },
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 1
   },
   "2026-08-show-expressive-modal-subtitle-alt": {
    "key": "95f46bfc73a52751",
@@ -5308,18 +5324,12 @@
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 1,
+  "delivered": 1,
   "firstRun": false,
   "semanticsMigrated": 0
  },
  "history": [
-  {
-   "at": "2026-11-05T13:51:57.539Z",
-   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-   "changes": 0,
-   "delivered": 0
-  },
   {
    "at": "2026-11-05T14:17:46.231Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
@@ -5613,6 +5623,12 @@
    "revision": "c174c73f2d7914d1431637d639ad43c393ba64cb",
    "changes": 0,
    "delivered": 0
+  },
+  {
+   "at": "2026-11-06T19:12:58.961Z",
+   "revision": "057b7eef8396877fb16b2ede7c8f31c947b13d06",
+   "changes": 1,
+   "delivered": 1
   }
  ]
 }
