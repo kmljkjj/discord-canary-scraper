@@ -1,8 +1,8 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-06 00:01 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-06 15:59 UTC
 
-**Fenêtre glissante 4 h — n = 6560 échantillons — 7 tokens actifs**
+**Fenêtre glissante 4 h — n = 85 échantillons — 7 tokens actifs**
 
 **Méthode V15 (expériences nommées)** : la position de chaque échantillon est recalculée (murmur3(`id:fingerprint`) % 10000) — y compris pour les échantillons HORS rollout — et vérifiée contre le `hash_result` renvoyé par Discord. Les points positifs et négatifs encadrent chaque borne → plages et % **exacts** (précision ≈ 10000/n). Repli automatique sur k/n si la vérification échoue ou si le rollout est filtré (plateforme, etc.).
 
@@ -14,33 +14,33 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:1144304849 | **5,35 %** | [4,82 – 5,93] | 351/6560 | élevée | Mesuré |
-| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6560/6560 | élevée | Exact (plages) |
-| hash:3013881204 | **100 %** | [99,94 – 100] | 6560/6560 | élevée | Mesuré |
-| 2025-11_tida_webform | **100 %** | [100 – 100] | 6560/6560 | élevée | Exact (plages) |
-| hash:704914099 | **4,85 %** | [4,34 – 5,41] | 315/6499 | élevée | Mesuré |
+| hash:704914099 | **5,88 %** | [2,5 – 13,23] | 5/85 | faible | Mesuré (n faible) |
+| hash:1144304849 | **8,24 %** | [3,99 – 16,24] | 7/85 | faible | Mesuré (n faible) |
+| Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 85/85 | moyenne | Exact (plages) |
+| hash:3013881204 | **100 %** | [95,51 – 100] | 85/85 | élevée | Mesuré |
+| 2025-11_tida_webform | **100 %** | [100 – 100] | 85/85 | moyenne | Exact (plages) |
 
 ## Détail par variante
 
+### hash:704914099
+- Variant 1 : 5,88 % (IC 95 % [2,5 ; 13,23], 5/85, confiance faible)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9497.99, 9847.01] + [9864.88, 10000] → 4,84 %
+
 ### hash:1144304849
-- Variant 1 : 5,35 % (IC 95 % [4,82 ; 5,93], 351/6560, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [3.46, 332.54] + [349.73, 499.27] → 4,79 %
+- Variant 1 : 8,24 % (IC 95 % [3,99 ; 16,24], 7/85, confiance faible)
+  - plages reconstruites (indicatif, ordre de grandeur) : [3.5, 332.5] + [349.59, 499.41] → 4,79 %
 
 ### Safety Experience IAR User Reporting
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6560/6560, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 85/85, confiance moyenne)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
 
 ### hash:3013881204
-- Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6560/6560, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9947.55] → 99,48 %
+- Variant 11 : 100 % (IC 95 % [95,51 ; 100], 85/85, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 9564.09] + [9945.5, 9971.5] → 95,9 %
 
 ### 2025-11_tida_webform
-- Variant 1 : 100 % (IC 95 % [100 ; 100], 6560/6560, confiance élevée)
+- Variant 1 : 100 % (IC 95 % [100 ; 100], 85/85, confiance moyenne)
   - plages exactes : [0, 10000) → 100 % (k/n : 100 %)
-
-### hash:704914099
-- Variant 1 : 4,85 % (IC 95 % [4,34 ; 5,41], 315/6499, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9501, 9504] + [9524.11, 9846.89] + [9864.8, 10000] → 4,61 %
 
 ## Guild — % exacts (API Discord, toutes les 20 min) — 4
 
@@ -51,7 +51,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 | Guest Voice Invites | 0 % | Pas commencé |
 | hash_3633668656 | 100 % | Rollout complet |
 
-## En attente de rollout — 352 expériences user
+## En attente de rollout — 351 expériences user
 
 Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'expérience monte dans la section mesurées avec son % réel (2 décimales).
 
@@ -139,6 +139,7 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-03-surface-direct-renderer
 - 2026-03-video-capture-device-no-reuse
 - 2026-03-wysiwyg-user-profile-editing
+- 2026-04-browser-transceiver-padding-removal
 - 2026-04-desktop-notification-center
 - 2026-04-desktop-tti-v8-cache
 - 2026-04-ensure-received-messages-added-in-order
@@ -267,7 +268,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-desktop-voice-message-recording
 - 2026-09-edit-profile-collectibles-ordering
 - 2026-09-friends-sidebar
-- 2026-09-game-profiles-v3-commerce-tab
 - 2026-09-game-profiles-v3-communities-tab
 - 2026-09-game-search-row
 - 2026-09-gifting-badge-coachmark-audience
@@ -280,7 +280,6 @@ Discord ne publie pas encore leur pourcentage. Dès qu'un rollout démarre, l'ex
 - 2026-09-ios-callkit-connected-on-rtc
 - 2026-09-linked-game-org-invites-dev
 - 2026-09-linux-gpu-decode
-- 2026-09-manual-review-inconclusive-copy
 - 2026-09-mobile-quest-home-sort-priority
 - 2026-09-mobile-quest-reward-button-to-secondary-button
 - 2026-09-multi-sku-embed-rendering
