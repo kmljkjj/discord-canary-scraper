@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-06T21-02-28-421Z_668172_jly3br",
-  "buildNumber": "668172",
+  "runId": "2026-11-06T21-07-17-958Z_668177_42ikum",
+  "buildNumber": "668177",
   "extractVersion": 3,
-  "updatedAt": "2026-11-06T21:02:28.421Z",
+  "updatedAt": "2026-11-06T21:07:17.958Z",
   "count": 1114,
   "data": {
     "DEV_LANDING": "/build",
@@ -548,7 +548,7 @@
     "USER_PROFILE": "/users/:param/profile",
     "USER_BADGES": "/users/:param/badges",
     "USER_BADGE": "/users/:param/badges/:param",
-    "USER_BADGE_ACK": "/users/@me/badges/:param/ack",
+    "USER_BADGE_ACK": "/users/@me/badges/:param/acknowledge",
     "APPLICATION_WIDGET_CONFIGS": "/applications/:param/widget-configs",
     "APPLICATION_WIDGET_REFRESH": "/applications/:param/widget/refresh",
     "USER_GUILD_PROFILE": "/guilds/:param/profile/:param",
