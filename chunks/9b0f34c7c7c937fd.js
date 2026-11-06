@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[532478],{801805(s){s.exports=JSON.parse('{"MPtef8":["Atidaryti skambut\u012F"],"g9x8/M":["Transliuoja ",[1,"username"]]}')}}]);

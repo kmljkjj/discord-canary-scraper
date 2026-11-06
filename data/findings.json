@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-06T01-20-47-335Z_667200_egwahk",
-  "buildNumber": "667200",
-  "scrapedAt": "2026-11-06T01:20:47.335Z",
+  "runId": "2026-11-06T02-17-07-907Z_667317_tmphzb",
+  "buildNumber": "667317",
+  "scrapedAt": "2026-11-06T02:17:07.907Z",
   "totals": {
-    "all": 389
+    "all": 390
   },
   "experiments": [
     {
@@ -2124,6 +2124,23 @@
         "1": {
           "id": 1,
           "label": "Allow guild members to see each others duration in the channel list",
+          "enabled": true
+        }
+      },
+      "variationCount": 1,
+      "source": "discord"
+    },
+    {
+      "id": "2026-04-browser-transceiver-padding-removal",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
           "enabled": true
         }
       },

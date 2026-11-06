@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[910047],{887458(e){e.exports=JSON.parse('{"MPtef8":["Anruf \xf6ffnen"],"g9x8/M":["Stream von ",[1,"username"]]}')}}]);

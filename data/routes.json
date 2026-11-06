@@ -1111,5 +1111,6 @@
   "LINKABLE_GAME_ORGANIZATIONS": "/game-organizations/linkable/@me/:param",
   "SUMMARIES": "/guilds/:param/discoverable-content/summaries",
   "REMOVE_SUMMARY": "/guilds/:param/discoverable-content/summaries/:param/remove",
-  "GAMES_TRENDING": "/games/trending"
+  "GAMES_TRENDING": "/games/trending",
+  "SUMMARY": "/guilds/:param/discoverable-content/summaries/:param"
 }

@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-06T01-20-47-335Z_667200_egwahk",
-  "buildNumber": "667200",
+  "runId": "2026-11-06T02-17-07-907Z_667317_tmphzb",
+  "buildNumber": "667317",
   "extractVersion": 3,
-  "updatedAt": "2026-11-06T01:20:47.335Z",
-  "count": 1113,
+  "updatedAt": "2026-11-06T02:17:07.907Z",
+  "count": 1114,
   "data": {
     "DEV_LANDING": "/build",
     "DEV_PORTAL": "/developers",
@@ -1113,10 +1113,11 @@
     "GUILD_MEMBER_BANNER": "/guilds/:param/users/:param/banners/:param.:param",
     "UPDATE_VOICE_STATE": "/guilds/:param/voice-states/:param",
     "SUMMARIES": "/guilds/:param/discoverable-content/summaries",
+    "SUMMARY": "/guilds/:param/discoverable-content/summaries/:param",
     "REMOVE_SUMMARY": "/guilds/:param/discoverable-content/summaries/:param/remove",
     "DISCOVERABLE_CONTENT": "/guilds/:param/discoverable-content",
+    "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param",
     "HOME": "/home/web_user",
-    "JSNLOG_URL": "/openvidu/elk/openvidu-browser-logs",
-    "PROFILE_READ_STATE": "/users/@me/profile-read-states/:param"
+    "JSNLOG_URL": "/openvidu/elk/openvidu-browser-logs"
   }
 }
