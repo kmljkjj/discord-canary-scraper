@@ -1112,5 +1112,6 @@
   "SUMMARIES": "/guilds/:param/discoverable-content/summaries",
   "REMOVE_SUMMARY": "/guilds/:param/discoverable-content/summaries/:param/remove",
   "GAMES_TRENDING": "/games/trending",
-  "SUMMARY": "/guilds/:param/discoverable-content/summaries/:param"
+  "SUMMARY": "/guilds/:param/discoverable-content/summaries/:param",
+  "GAMES_SEARCH": "/games/search"
 }
