@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-06T21:47:03.612Z",
+  "fetchedAt": "2026-11-06T21:53:53.935Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -7,7 +7,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 5,
+      "uniqueHashes": 4,
       "matched": 1
     }
   },
@@ -292,23 +292,23 @@
       }
     },
     {
-      "hash": 4055210228,
+      "hash": 704914099,
       "id": null,
       "type": "user",
-      "title": "hash_4055210228",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
-      "samples": 50,
+      "samples": 3,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 50
+        "0": 3
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 50,
+      "fpSamples": 3,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 50
+        "0": 3
       }
     },
     {
@@ -318,37 +318,17 @@
       "title": "hash_1144304849",
       "percentage": 0,
       "status": "not_started",
-      "samples": 4,
+      "samples": 5,
       "enrolled": 0,
       "treatmentDistribution": {
-        "0": 4
+        "0": 5
       },
       "source": "fingerprint_sampling",
       "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
+      "fpSamples": 5,
       "fpEnrolled": 0,
       "fpTreatmentDist": {
-        "0": 4
-      }
-    },
-    {
-      "hash": 704914099,
-      "id": null,
-      "type": "user",
-      "title": "hash_704914099",
-      "percentage": 0,
-      "status": "not_started",
-      "samples": 4,
-      "enrolled": 0,
-      "treatmentDistribution": {
-        "0": 4
-      },
-      "source": "fingerprint_sampling",
-      "note": "No local experiment ID match for this hash",
-      "fpSamples": 4,
-      "fpEnrolled": 0,
-      "fpTreatmentDist": {
-        "0": 4
+        "0": 5
       }
     },
     {
@@ -4122,6 +4102,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-11-subscription-management-settings-brand-refresh",
+      "hash": 2399019735,
+      "type": "user",
+      "title": "2026-11-subscription-management-settings-brand-refresh",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-11-waterwheels-discover",
       "hash": 2563831382,
       "type": "user",
@@ -4226,11 +4216,11 @@
     "total": 396,
     "guild": 39,
     "user": 357,
-    "withPercentage": 9,
-    "withoutPercentage": 387,
+    "withPercentage": 8,
+    "withoutPercentage": 388,
     "fullRollout": 5,
     "partial": 0,
-    "notStarted": 4,
-    "fpSampled": 5
+    "notStarted": 3,
+    "fpSampled": 4
   }
 }
