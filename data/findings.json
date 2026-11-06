@@ -1,9 +1,9 @@
 {
-  "runId": "2026-11-06T20-37-27-903Z_668138_2fvx0r",
-  "buildNumber": "668138",
-  "scrapedAt": "2026-11-06T20:37:27.903Z",
+  "runId": "2026-11-06T20-47-20-389Z_668140_fat2pj",
+  "buildNumber": "668140",
+  "scrapedAt": "2026-11-06T20:47:20.389Z",
   "totals": {
-    "all": 390
+    "all": 391
   },
   "experiments": [
     {
@@ -7706,6 +7706,29 @@
         }
       },
       "variationCount": 2,
+      "source": "discord"
+    },
+    {
+      "id": "2026-11-console-connection-coachmark",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "system": "apex",
+      "defaultConfig": {
+        "enabled": false
+      },
+      "variations": {
+        "1": {
+          "enabled": true
+        },
+        "2": {
+          "enabled": true
+        },
+        "3": {
+          "enabled": true
+        }
+      },
+      "variationCount": 3,
       "source": "discord"
     },
     {

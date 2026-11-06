@@ -6047,6 +6047,25 @@
   },
   {
     "kind": "user",
+    "name": "2026-11-console-connection-coachmark",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "1": {
+        "enabled": true
+      },
+      "2": {
+        "enabled": true
+      },
+      "3": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-11-game-exit-promo-bloons",
     "defaultConfig": {
       "enabled": true

@@ -1,8 +1,8 @@
 {
-  "runId": "2026-11-06T20-37-27-903Z_668138_2fvx0r",
-  "buildNumber": "668138",
-  "updatedAt": "2026-11-06T20:37:27.903Z",
-  "count": 381,
+  "runId": "2026-11-06T20-47-20-389Z_668140_fat2pj",
+  "buildNumber": "668140",
+  "updatedAt": "2026-11-06T20:47:20.389Z",
+  "count": 382,
   "data": {
     "2021-02_staff_qc_debugging": {
       "id": "2021-02_staff_qc_debugging",
@@ -7553,6 +7553,29 @@
       "defaultConfig": null,
       "system": "apex",
       "fp": "f2434d49cfb709e90b38efd9364e98a781845ef4aad8dcfb1e2d845a930a8def"
+    },
+    "2026-11-console-connection-coachmark": {
+      "id": "2026-11-console-connection-coachmark",
+      "type": "user",
+      "kind": "user",
+      "label": null,
+      "variationCount": 3,
+      "variations": {
+        "1": {
+          "enabled": true
+        },
+        "2": {
+          "enabled": true
+        },
+        "3": {
+          "enabled": true
+        }
+      },
+      "defaultConfig": {
+        "enabled": false
+      },
+      "system": "apex",
+      "fp": "021329d10d698b95cf46aa6ab23b19c78eac00418b5dda7454af7df6b3bd0a27"
     },
     "2026-11-game-exit-promo-bloons": {
       "id": "2026-11-game-exit-promo-bloons",

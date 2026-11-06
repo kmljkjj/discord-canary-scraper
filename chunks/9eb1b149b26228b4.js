@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkdiscord_app=this.webpackChunkdiscord_app||[]).push([[249858],{13202(e,t,r){var i,a=((i={}).MOBILE="mobile",i.DESKTOP="desktop",i.WEB="web",i.DEVICE_CODE="device_code",i);r.d(t,{},{I:a})},277657(e,t,r){var i=r(284009),a=r.n(i),s=r(13202),n=r(370480),u=r(738104);r.d(t,{},{V:async function(e){let t=await (0,u.d)(e,{twoWayLinkType:s.I.DESKTOP});if(null==t)throw Error("missing authorizeURL");let{state:r}=(0,n.vA)(t);return a()(null!=r,"Authorize URL state query parameter must be present"),r}})}}]);
+//# sourceMappingURL=9eb1b149b26228b4.js.map
