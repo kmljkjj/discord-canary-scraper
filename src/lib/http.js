@@ -78,6 +78,7 @@ async function fetchWithRetry(url, options = {}) {
   const opts = { ...DEFAULTS, ...options };
   const { headers, timeout: timeoutMs, maxAttempts, label } = opts;
   let lastError = null;
+  let lastStatus = 0;
 
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
@@ -91,6 +92,8 @@ async function fetchWithRetry(url, options = {}) {
       }
 
       // Retryable: 429 ou 5xx
+      lastStatus = res.status;
+      lastError = null;
       let bodyJson = null;
       try {
         bodyJson = await res.json();
@@ -108,6 +111,7 @@ async function fetchWithRetry(url, options = {}) {
     } catch (e) {
       // Erreur réseau (timeout, DNS, connexion refusée)
       lastError = e;
+      lastStatus = 0;
       if (attempt < maxAttempts - 1) {
         const delay = backoffMs(attempt, opts);
         const tag = label ? `[${label}] ` : '';
@@ -123,7 +127,7 @@ async function fetchWithRetry(url, options = {}) {
   const tag = label ? `[${label}] ` : '';
   const msg = lastError
     ? `${tag}échec après ${maxAttempts} tentatives: ${redactSecrets(String(lastError.message || lastError)).slice(0, 150)}`
-    : `${tag}échec après ${maxAttempts} tentatives`;
+    : `${tag}échec après ${maxAttempts} tentatives${lastStatus ? ` (dernier HTTP ${lastStatus})` : ''}`;
   throw new Error(msg);
 }
 
@@ -145,7 +149,7 @@ async function fetchJsonWithRetry(url, options = {}) {
 
   // Valide le content-type avant de parser
   const ct = res.headers.get('content-type') || '';
-  if (ct && !ct.includes('application/json') && !ct.includes('text/plain')) {
+  if (ct && !/[/+]json\b/i.test(ct) && !ct.includes('text/plain')) {
     // Content-type inattendu (HTML, etc.) — probablement une erreur
     const text = await res.text().catch(() => '');
     const tag = options.label ? `[${options.label}] ` : '';
@@ -155,11 +159,13 @@ async function fetchJsonWithRetry(url, options = {}) {
     return null;
   }
 
+  // Lecture unique du body : après un res.json() raté, le flux est consommé
+  // et res.text() renverrait toujours '' (diagnostic perdu).
+  const text = await res.text().catch(() => '');
   try {
-    return await res.json();
+    return JSON.parse(text);
   } catch {
     // Le body n'est pas du JSON valide (HTML de Cloudflare, page d'erreur, etc.)
-    const text = await res.text().catch(() => '');
     const tag = options.label ? `[${options.label}] ` : '';
     console.warn(
       `${tag}JSON invalide — body: ${String(text).slice(0, 100)}`,
@@ -193,10 +199,10 @@ async function fetchTextWithRetry(url, options = {}) {
  * @returns {Promise<object|null>} JSON parsé, ou null si invalide
  */
 async function safeJson(res) {
+  const text = await res.text().catch(() => '');
   try {
-    return await res.json();
+    return JSON.parse(text);
   } catch {
-    const text = await res.text().catch(() => '');
     const ct = res.headers && res.headers.get('content-type') || '';
     console.warn(
       `JSON invalide (content-type: "${ct}") — body: ${String(text).slice(0, 100)}`,

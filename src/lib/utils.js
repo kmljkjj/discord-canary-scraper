@@ -80,7 +80,21 @@ function firstToken() {
   return tokens.length > 0 ? tokens[0] : null;
 }
 
+/**
+ * Keep the `max` most recently inserted ids of a Set / array (insertion order).
+ * Replaces the former `[...set].sort().slice(-max)` pattern, which evicted ids
+ * by lexicographic order (hashes → random eviction) and caused re-notifications.
+ * @param {Iterable<string>} ids
+ * @param {number} max
+ * @returns {string[]}
+ */
+function trimRecent(ids, max) {
+  const arr = [...new Set(Array.from(ids || [], String))];
+  return max > 0 && arr.length > max ? arr.slice(arr.length - max) : arr;
+}
+
 module.exports = {
+  trimRecent,
   sleep,
   redactSecrets,
   loadTokens,
