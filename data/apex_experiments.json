@@ -3917,20 +3917,6 @@
   },
   {
     "kind": "user",
-    "name": "2026-09-game-profiles-v3-commerce-tab",
-    "defaultConfig": null,
-    "variations": {
-      "0": {
-        "id": 0
-      },
-      "1": {
-        "enabled": true
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
     "name": "2026-09-game-profiles-v3-communities-tab",
     "defaultConfig": null,
     "variations": {
@@ -4139,19 +4125,6 @@
       },
       "2": {
         "mode": "disable_all"
-      }
-    },
-    "label": null
-  },
-  {
-    "kind": "user",
-    "name": "2026-09-manual-review-inconclusive-copy",
-    "defaultConfig": {
-      "enabled": false
-    },
-    "variations": {
-      "1": {
-        "enabled": true
       }
     },
     "label": null
