@@ -1,14 +1,14 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-06 11:24 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-06 15:58 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 8682dc9c · MAJ 2026-11-06T00:44:54Z · 1028 expériences au catalogue (352 user dont 157 avec données, 38 guild, 638 type inconnu, 267 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision c174c73f · MAJ 2026-11-06T11:33:54Z · 1028 expériences au catalogue (352 user dont 156 avec données, 38 guild, 638 type inconnu, 268 sans données)
 
-⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-08-game-profiles-vc
+⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-09-friends-sidebar, 2026-02-game-server-tab-always-on
 
-## Expériences user avec données (157)
+## Expériences user avec données (156)
 
 | Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |
 |---|---:|---:|---:|---:|---|
@@ -70,7 +70,7 @@
 | 2026-09-halloween-holiday | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-game-search-row | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
 | 2026-09-game-profiles-v3-communities-tab | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
-| 2026-09-friends-sidebar | **10,00 %** | 5,00 % | 0,00 % | 85,00 % | — |
+| 2026-09-friends-sidebar | **5,00 %** | 5,00 % | 0,00 % | 90,00 % | — |
 | 2026-09-edit-profile-collectibles-ordering | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-desktop-voice-message-recording | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-clips-editor-image-track | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -92,7 +92,7 @@
 | 2026-08-mobile-emoji-picker-upsell-restyle | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-guilds-bar-media-state-store | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-08-gift-recipient-display-name-search | **75,00 %** | 0,00 % | 0,00 % | 25,00 % | — |
-| 2026-08-game-profiles-vc | **99,00 %** | 0,00 % | 0,00 % | 1,00 % | — |
+| 2026-08-game-profiles-vc | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-game-community-add-server-entry | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-dont-close-chat | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-dcf-new-user-cooldown | **75,00 %** | 25,00 % | 0,00 % | 0,00 % | — |
@@ -149,7 +149,6 @@
 | 2026-02-go-live-video-preset-resolution | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-02-gifting-modal-redesign | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-02-gift-cards | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
-| 2026-02-game-server-tab-always-on | **20,00 %** | 20,00 % | 0,00 % | 60,00 % | — |
 | 2026-02-expiring-powerup-coachmark | **20,00 %** | 20,00 % | 0,00 % | 60,00 % | — |
 | 2026-02-capture-target-window | **20,00 %** | 20,00 % | 0,00 % | 60,00 % | — |
 | 2026-02-activity-privacy-matching | **0,00 %** | 21,00 % | 0,00 % | 79,00 % | — |
@@ -633,9 +632,8 @@
 - Variant 1 (treatment) : 50,00 % · plages 100 – 200 , 1100 – 2000 , 3500 – 5000 , 7500 – 10000
 
 ### 2026-09-friends-sidebar
-- Variant 0 (control) : 5,00 % · plages 0 – 33 , 99 – 566
-- Variant 1 (treatment) : 5,00 % · plages 33 – 66 , 566 – 1033
-- Variant 2 (treatment) : 5,00 % · plages 66 – 99 , 1033 – 1500
+- Variant 0 (control) : 5,00 % · plages 100 – 600
+- Variant 2 (treatment) : 5,00 % · plages 1000 – 1500
 
 ### 2026-09-edit-profile-collectibles-ordering
 - Variant 0 (control) : 50,00 % · plages 0 – 250 , 500 – 1750 , 3000 – 4000 , 5000 – 7500
@@ -707,7 +705,7 @@
 - Variant 3 (treatment) : 25,00 % · plages 750 – 1000 , 7750 – 10000
 
 ### 2026-08-game-profiles-vc
-- Variant 1 (treatment) : 99,00 % · plages 100 – 10000
+- Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-08-game-community-add-server-entry
 - Variant 2 (treatment) : 100,00 % · plages 0 – 10000
@@ -904,10 +902,6 @@
 
 ### 2026-02-gift-cards
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
-
-### 2026-02-game-server-tab-always-on
-- Variant 0 (control) : 20,00 % · plages 0 – 100 , 200 – 300 , 400 – 600 , 800 – 1400 , 2000 – 3000
-- Variant 1 (treatment) : 20,00 % · plages 100 – 200 , 300 – 400 , 600 – 800 , 1400 – 2000 , 3000 – 4000
 
 ### 2026-02-expiring-powerup-coachmark
 - Variant 0 (control) : 20,00 % · plages 0 – 100 , 200 – 300 , 400 – 600 , 800 – 1200 , 1600 – 2800

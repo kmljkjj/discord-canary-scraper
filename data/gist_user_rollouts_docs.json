@@ -1,19 +1,19 @@
 {
- "generatedAt": "2026-11-06T03:21:43.819Z",
+ "generatedAt": "2026-11-06T15:58:20.107Z",
  "semantics": "couverture de l'espace de buckets (gist agnonotdev) — ni une proportion d'utilisateurs, ni une mesure d'accès réel ; multi-populations = couverture projetée non pondérée",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "updatedAt": "2026-11-06T00:44:54Z",
-  "revision": "8682dc9c496ca8dc7dd78373680de29032785890"
+  "updatedAt": "2026-11-06T11:33:54Z",
+  "revision": "c174c73f2d7914d1431637d639ad43c393ba64cb"
  },
  "stats": {
   "total": 1028,
   "user": 352,
-  "userData": 157,
+  "userData": 156,
   "guild": 38,
   "unclassified": 638,
-  "noData": 267
+  "noData": 268
  },
  "experiments": [
   {
@@ -1949,19 +1949,15 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 10,
+   "treatmentPct": 5,
    "projectedTreatmentPct": null,
    "controlPct": 5,
    "notEligiblePct": 0,
-   "unassignedPct": 85,
+   "unassignedPct": 90,
    "byVariant": {
     "0": {
      "pct": 5,
      "role": "control"
-    },
-    "1": {
-     "pct": 5,
-     "role": "treatment"
     },
     "2": {
      "pct": 5,
@@ -2749,14 +2745,14 @@
    "ambiguous": false,
    "projected": false,
    "flags": [],
-   "treatmentPct": 99,
+   "treatmentPct": 100,
    "projectedTreatmentPct": null,
    "controlPct": 0,
    "notEligiblePct": 0,
-   "unassignedPct": 1,
+   "unassignedPct": 0,
    "byVariant": {
     "1": {
-     "pct": 99,
+     "pct": 100,
      "role": "treatment"
     }
    }
@@ -6051,26 +6047,19 @@
    "id": "2026-02-game-server-tab-always-on",
    "title": "2026-02-game-server-tab-always-on",
    "type": "user",
-   "hasData": true,
-   "totalsAvailable": true,
+   "hasData": false,
+   "totalsAvailable": false,
    "ambiguous": false,
    "projected": false,
-   "flags": [],
-   "treatmentPct": 20,
+   "flags": [
+    "no_data"
+   ],
+   "treatmentPct": null,
    "projectedTreatmentPct": null,
-   "controlPct": 20,
-   "notEligiblePct": 0,
-   "unassignedPct": 60,
-   "byVariant": {
-    "0": {
-     "pct": 20,
-     "role": "control"
-    },
-    "1": {
-     "pct": 20,
-     "role": "treatment"
-    }
-   }
+   "controlPct": null,
+   "notEligiblePct": null,
+   "unassignedPct": null,
+   "byVariant": {}
   },
   {
    "id": "2026-02-friends-list",

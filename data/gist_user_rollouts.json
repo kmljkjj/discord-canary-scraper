@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261106T112453_gist",
- "scrapedAt": "2026-11-06T11:24:53.042Z",
+ "runId": "20261106T155820_gist",
+ "scrapedAt": "2026-11-06T15:58:20.102Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/867b6298e4626eabd3d646de22c3a9d87224dab9/rollouts-tag.json",
-  "updatedAt": "2026-11-06T00:44:54Z",
-  "revision": "8682dc9c496ca8dc7dd78373680de29032785890",
-  "fetchedAt": "2026-11-06T11:24:53.042Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/f90b76482737c04746191a5d21e7cfcfb6a5361e/rollouts-tag.json",
+  "updatedAt": "2026-11-06T11:33:54Z",
+  "revision": "c174c73f2d7914d1431637d639ad43c393ba64cb",
+  "fetchedAt": "2026-11-06T15:58:20.102Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,16 +19,17 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
-   "2026-08-game-profiles-vc"
+   "2026-09-friends-sidebar",
+   "2026-02-game-server-tab-always-on"
   ]
  },
  "stats": {
   "total": 1028,
   "user": 352,
-  "userData": 157,
+  "userData": 156,
   "guild": 38,
   "unclassified": 638,
-  "noData": 267
+  "noData": 268
  },
  "acknowledged": {
   "2026-10-web-streaming-optimizations": {
@@ -1509,17 +1510,13 @@
    "variantsCount": 2
   },
   "2026-09-friends-sidebar": {
-   "key": "cc7d2a9d205151e5",
+   "key": "d6a69ff8f7ba1300",
    "hasData": true,
-   "sig": "0:control|1:treatment|2:treatment",
+   "sig": "0:control|2:treatment",
    "byVariant": {
     "0": {
      "pct": 5,
      "role": "control"
-    },
-    "1": {
-     "pct": 5,
-     "role": "treatment"
     },
     "2": {
      "pct": 5,
@@ -1527,7 +1524,7 @@
     }
    },
    "treatment": {
-    "pct": 10
+    "pct": 5
    },
    "control": {
     "pct": 5
@@ -1535,7 +1532,9 @@
    "notEligible": {
     "pct": 0
    },
-   "variantsCount": 3
+   "projectedCoverage": null,
+   "projected": false,
+   "variantsCount": 2
   },
   "2026-09-edit-profile-collectibles-ordering": {
    "key": "930b20736eff5b69",
@@ -2103,17 +2102,17 @@
    "variantsCount": 3
   },
   "2026-08-game-profiles-vc": {
-   "key": "d043cf0dcb3c0821",
+   "key": "95f46bfc73a52751",
    "hasData": true,
    "sig": "1:treatment",
    "byVariant": {
     "1": {
-     "pct": 99,
+     "pct": 100,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 99
+    "pct": 100
    },
    "control": {
     "pct": 0
@@ -4312,29 +4311,12 @@
    "variantsCount": 1
   },
   "2026-02-game-server-tab-always-on": {
-   "key": "a117639a20a76426",
-   "hasData": true,
-   "sig": "0:control|1:treatment",
-   "byVariant": {
-    "0": {
-     "pct": 20,
-     "role": "control"
-    },
-    "1": {
-     "pct": 20,
-     "role": "treatment"
-    }
-   },
+   "key": "no_data",
+   "hasData": false,
+   "sig": "",
    "treatment": {
-    "pct": 20
-   },
-   "control": {
-    "pct": 20
-   },
-   "notEligible": {
-    "pct": 0
-   },
-   "variantsCount": 2
+    "pct": null
+   }
   },
   "2026-02-friends-list": {
    "key": "no_data",
@@ -5326,18 +5308,12 @@
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 3,
+  "delivered": 3,
   "firstRun": false,
   "semanticsMigrated": 0
  },
  "history": [
-  {
-   "at": "2026-11-05T10:14:39.838Z",
-   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-   "changes": 0,
-   "delivered": 0
-  },
   {
    "at": "2026-11-05T10:40:42.762Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
@@ -5631,6 +5607,12 @@
    "revision": "8682dc9c496ca8dc7dd78373680de29032785890",
    "changes": 0,
    "delivered": 0
+  },
+  {
+   "at": "2026-11-06T15:58:20.102Z",
+   "revision": "c174c73f2d7914d1431637d639ad43c393ba64cb",
+   "changes": 3,
+   "delivered": 3
   }
  ]
 }
