@@ -1,14 +1,14 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-05 23:38 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-06 03:21 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 5b63b1a7 · MAJ 2026-11-05T23:07:25Z · 1028 expériences au catalogue (354 user dont 159 avec données, 38 guild, 636 type inconnu, 267 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 8682dc9c · MAJ 2026-11-06T00:44:54Z · 1028 expériences au catalogue (352 user dont 157 avec données, 38 guild, 638 type inconnu, 267 sans données)
 
-⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-recurring-referral-reminder, 2026-10-game-profiles-v3-communities-tab-mobile, 2026-09-improved-mobile-shop-loading, 2025-09-server-nsfw-level
+⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-08-game-profiles-vc
 
-## Expériences user avec données (159)
+## Expériences user avec données (157)
 
 | Expérience | Treatment | Control | Non éligible | Espace non décrit | Particularités |
 |---|---:|---:|---:|---:|---|
@@ -31,9 +31,9 @@
 | 2026-10-game-exit-promo-rust | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-fractional-nitro-pricing | **20,00 %** | 10,00 % | 0,00 % | 70,00 % | — |
 | 2026-10-fix-soundboard-muting-iconography | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
-| 2026-10-desktop-tti-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
-| 2026-10-desktop-general-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
-| 2026-10-desktop-game-perf | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
+| 2026-10-desktop-tti-perf | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
+| 2026-10-desktop-general-perf | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
+| 2026-10-desktop-game-perf | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-collectibles-interactive-jumble-bar | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-code-blurple-marketing-holdout | **95,00 %** | 5,00 % | 0,00 % | 0,00 % | — |
 | 2026-10-code-blurple | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -65,16 +65,14 @@
 | 2026-09-multi-sku-embed-rendering | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-mobile-sticker-picker-upsell-restyle | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-mobile-quest-home-sort-priority | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
-| 2026-09-manual-review-inconclusive-copy | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-invite-silp-education | **0,00 %** | 2,50 % | 0,00 % | 97,50 % | — |
 | 2026-09-invite-accept-age-group-errors | **15,00 %** | 0,00 % | 0,00 % | 85,00 % | — |
 | 2026-09-halloween-holiday | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-game-search-row | **25,00 %** | 25,00 % | 0,00 % | 50,00 % | — |
 | 2026-09-game-profiles-v3-communities-tab | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
-| 2026-09-game-profiles-v3-commerce-tab | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-friends-sidebar | **10,00 %** | 5,00 % | 0,00 % | 85,00 % | — |
 | 2026-09-edit-profile-collectibles-ordering | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
-| 2026-09-desktop-voice-message-recording | **50,00 %** | 0,00 % | 0,00 % | 50,00 % | — |
+| 2026-09-desktop-voice-message-recording | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-clips-editor-image-track | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-09-application-test-mode-quick-access | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-vq-remaining-time-truncation | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
@@ -94,7 +92,7 @@
 | 2026-08-mobile-emoji-picker-upsell-restyle | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-guilds-bar-media-state-store | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-08-gift-recipient-display-name-search | **75,00 %** | 0,00 % | 0,00 % | 25,00 % | — |
-| 2026-08-game-profiles-vc | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
+| 2026-08-game-profiles-vc | **99,00 %** | 0,00 % | 0,00 % | 1,00 % | — |
 | 2026-08-game-community-add-server-entry | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-dont-close-chat | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-08-dcf-new-user-cooldown | **75,00 %** | 25,00 % | 0,00 % | 0,00 % | — |
@@ -172,7 +170,7 @@
 | Safety Experience Unauthenticated Report Form | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | Inferno Spam Redaction | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 
-## Type inconnu — suivi séparé, non notifié (571)
+## Type inconnu — suivi séparé, non notifié (573)
 
 > Absents de nos métadonnées locales au moment du calcul : à reclassifier au prochain scrape.
 | Expérience | Treatment | Espace non décrit | Particularités |
@@ -186,7 +184,7 @@
 | 2026-10-maple-syrup-3 | 50,00 % | 0,00 % | — |
 | 2026-10-maple-syrup-2 | 67,25 % | 0,00 % | — |
 | 2026-10-maple-syrup-1 | 50,00 % | 0,00 % | — |
-| 2026-10-game-profiles-v3-communities-tab-mobile | 15,00 % | 70,00 % | — |
+| 2026-10-game-profiles-v3-communities-tab-mobile | 25,00 % | 50,00 % | — |
 | 2026-10-game-profile-mobile-reviews | 100,00 % | 0,00 % | — |
 | 2026-10-android-stop-and-pause-video | 50,00 % | 0,00 % | — |
 | 2026-10-android-seamless-pip | 50,00 % | 0,00 % | — |
@@ -209,10 +207,12 @@
 | 2026-09-mobile-nlp-search-guild-experiment | 0,00 % | 0,00 % | — |
 | 2026-09-mobile-nitro-orbs-delivered-modal | 100,00 % | 0,00 % | — |
 | 2026-09-markdown-file-preview | 100,00 % | 0,00 % | — |
+| 2026-09-manual-review-inconclusive-copy | 100,00 % | 0,00 % | — |
 | 2026-09-jxr-upload-conversion | 100,00 % | 0,00 % | — |
 | 2026-09-guild-sidebar-stream-preview | 25,00 % | 50,00 % | — |
 | 2026-09-guild-members-in-mobile-vc-invites | 0,00 % | 0,00 % | — |
 | 2026-09-gifting-badge-complex-art | 100,00 % | 0,00 % | — |
+| 2026-09-game-profiles-v3-commerce-tab | 100,00 % | 0,00 % | — |
 | 2026-09-dismissible-content-server-arbitration | 100,00 % | 0,00 % | — |
 | 2026-09-design-systems-notification-components | 25,00 % | 75,00 % | — |
 | 2026-09-conversation-topic-header | 100,00 % | 0,00 % | — |
@@ -375,8 +375,6 @@
 | 2025-10-go-live-zoom-pan | 100,00 % | 0,00 % | — |
 | 2025-10-gif-providers-multi-treatment | 30,00 % | 55,00 % | — |
 | 2025-10-full-obscure-media | 100,00 % | 0,00 % | — |
-| 2025-10-friendship-anniversary-gifting | 90,00 % | 0,00 % | — |
-| 2025-10-fetch-promotions-endpoint | 100,00 % | 0,00 % | — |
 | 2025-01_guild_settings_foundation | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-11_member_verification_rollout | 100,00 % (projeté) | — | ℹ projeté (multi-populations), overlapping_variants |
 | 2024-09_league_of_legends_leaderboard | 100,00 % (projeté) | — | ℹ projeté (multi-populations), repeated_variant, overlapping_variants |
@@ -492,16 +490,16 @@
 - Variant 1 (treatment) : 10,00 % · plages 100 – 200 , 1100 – 2000
 
 ### 2026-10-desktop-tti-perf
-- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
-- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
+- Variant 0 (control) : 50,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000 , 5000 – 7500
+- Variant 1 (treatment) : 50,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000 , 7500 – 10000
 
 ### 2026-10-desktop-general-perf
-- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
-- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
+- Variant 0 (control) : 50,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000 , 5000 – 7500
+- Variant 1 (treatment) : 50,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000 , 7500 – 10000
 
 ### 2026-10-desktop-game-perf
-- Variant 0 (control) : 25,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000
-- Variant 1 (treatment) : 25,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000
+- Variant 0 (control) : 50,00 % · plages 0 – 500 , 1000 – 2000 , 3000 – 4000 , 5000 – 7500
+- Variant 1 (treatment) : 50,00 % · plages 500 – 1000 , 2000 – 3000 , 4000 – 5000 , 7500 – 10000
 
 ### 2026-10-collectibles-interactive-jumble-bar
 - Variant 0 (control) : 50,00 % · plages 0 – 1500 , 3000 – 4000 , 5000 – 7500
@@ -617,9 +615,6 @@
 - Variant 0 (control) : 10,00 % · plages 0 – 250 , 500 – 1250
 - Variant 1 (treatment) : 10,00 % · plages 250 – 500 , 1250 – 2000
 
-### 2026-09-manual-review-inconclusive-copy
-- Variant 1 (treatment) : 100,00 % · plages 0 – 10000
-
 ### 2026-09-invite-silp-education
 - Variant 0 (control) : 2,50 % · plages 0 – 250
 
@@ -637,10 +632,6 @@
 - Variant 0 (control) : 50,00 % · plages 0 – 100 , 200 – 1100 , 2000 – 3500 , 5000 – 7500
 - Variant 1 (treatment) : 50,00 % · plages 100 – 200 , 1100 – 2000 , 3500 – 5000 , 7500 – 10000
 
-### 2026-09-game-profiles-v3-commerce-tab
-- Variant 0 (control) : 50,00 % · plages 0 – 100 , 200 – 1600 , 3000 – 4000 , 5000 – 6250 , 7500 – 8750
-- Variant 1 (treatment) : 50,00 % · plages 100 – 200 , 1600 – 3000 , 4000 – 5000 , 6250 – 7500 , 8750 – 10000
-
 ### 2026-09-friends-sidebar
 - Variant 0 (control) : 5,00 % · plages 0 – 33 , 99 – 566
 - Variant 1 (treatment) : 5,00 % · plages 33 – 66 , 566 – 1033
@@ -651,7 +642,7 @@
 - Variant 1 (treatment) : 50,00 % · plages 250 – 500 , 1750 – 3000 , 4000 – 5000 , 7500 – 10000
 
 ### 2026-09-desktop-voice-message-recording
-- Variant 1 (treatment) : 50,00 % · plages 0 – 5000
+- Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-09-clips-editor-image-track
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
@@ -716,7 +707,7 @@
 - Variant 3 (treatment) : 25,00 % · plages 750 – 1000 , 7750 – 10000
 
 ### 2026-08-game-profiles-vc
-- Variant 1 (treatment) : 100,00 % · plages 0 – 10000
+- Variant 1 (treatment) : 99,00 % · plages 100 – 10000
 
 ### 2026-08-game-community-add-server-entry
 - Variant 2 (treatment) : 100,00 % · plages 0 – 10000
