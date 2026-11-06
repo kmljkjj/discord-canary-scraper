@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261106T203548_gist",
- "scrapedAt": "2026-11-06T20:35:48.937Z",
+ "runId": "20261106T204158_gist",
+ "scrapedAt": "2026-11-06T20:41:58.741Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/8e66365a454018f32dc2b1113790345f395d53ef/rollouts-tag.json",
-  "updatedAt": "2026-11-06T19:12:26Z",
-  "revision": "057b7eef8396877fb16b2ede7c8f31c947b13d06",
-  "fetchedAt": "2026-11-06T20:35:48.937Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/9448316f47faca6cf246fc2d86c12148f2b9aa05/rollouts-tag.json",
+  "updatedAt": "2026-11-06T20:41:24Z",
+  "revision": "98da98059c0c64779a79f0bbd7c86c722607ff9e",
+  "fetchedAt": "2026-11-06T20:41:58.741Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,6 +19,7 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
+   "2026-09-voice-server-update-immediate-mobile",
    "2026-09-friends-sidebar",
    "2026-08-split-payments",
    "2026-02-game-server-tab-always-on"
@@ -5331,12 +5332,6 @@
  },
  "history": [
   {
-   "at": "2026-11-05T15:40:25.596Z",
-   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-   "changes": 0,
-   "delivered": 0
-  },
-  {
    "at": "2026-11-05T15:42:05.249Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
    "changes": 0,
@@ -5627,6 +5622,12 @@
   {
    "at": "2026-11-06T20:35:48.937Z",
    "revision": "057b7eef8396877fb16b2ede7c8f31c947b13d06",
+   "changes": 0,
+   "delivered": 0
+  },
+  {
+   "at": "2026-11-06T20:41:58.741Z",
+   "revision": "98da98059c0c64779a79f0bbd7c86c722607ff9e",
    "changes": 0,
    "delivered": 0
   }
