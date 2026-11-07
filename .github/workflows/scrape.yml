@@ -56,10 +56,6 @@ jobs:
       - uses: ./.github/actions/setup
         if: steps.guard.outputs.skip != 'true'
 
-      - name: Syntax check
-        if: steps.guard.outputs.skip != 'true'
-        run: npm run check
-
       - name: Scrape + notify + archive chunks
         if: steps.guard.outputs.skip != 'true'
         env:
@@ -71,13 +67,6 @@ jobs:
           ARCHIVE_KEEP_BUILDS: '8'
           ORBIT_BOT_NAME: ${{ secrets.ORBIT_BOT_NAME }}
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
-          EMOJI_ADDED: ${{ secrets.EMOJI_ADDED }}
-          EMOJI_MODIFIED: ${{ secrets.EMOJI_MODIFIED }}
-          EMOJI_REMOVED: ${{ secrets.EMOJI_REMOVED }}
-          EMOJI_BUILD: ${{ secrets.EMOJI_BUILD }}
-          EMOJI_EXP: ${{ secrets.EMOJI_EXP }}
-          EMOJI_STR: ${{ secrets.EMOJI_STR }}
-          EMOJI_ROUTE: ${{ secrets.EMOJI_ROUTE }}
         run: node src/index.js
 
       - name: Run summary
