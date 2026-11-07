@@ -1,8 +1,10 @@
 name: Apex Rollouts %
 
 on:
-  schedule:
-    - cron: "*/20 * * * *"
+  # Cron désactivé : rollouts-fast.yml sonde toutes les 60 s et lance ce
+  # tracker dès qu'un changement est détecté (dispatch manuel conservé).
+  # schedule:
+  #   - cron: "*/20 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-apex-rollouts]

@@ -1,0 +1,67 @@
+name: Rollouts FAST (% user + guild)
+
+# Surveillant unique des % : sonde toutes les 60 s pendant ~28 min (cron */30
+# → couverture continue). % guild = empreinte du wire Discord canary
+# /experiments (même source que Wumpus Central, qui ne passe qu'une fois par
+# heure) ; % user = révision du gist en requête conditionnelle (304, hors
+# quota). Un changement déclenche IMMÉDIATEMENT le tracker concerné
+# (apex_rollouts.js / gist_user_rollouts.js) + notification + commit.
+# Les crons apex-rollouts.yml / gist-user-rollouts.yml sont désactivés pour
+# éviter les doublons (dispatch manuel toujours possible).
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger-rollouts-fast]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rollouts-fast
+  cancel-in-progress: false
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - uses: ./.github/actions/setup
+
+      - name: Syntax check
+        run: |
+          node --check src/rollouts_fast.js
+          node --check src/apex_rollouts.js
+          node --check src/gist_user_rollouts.js
+
+      - name: Watch rollouts (60 s)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_USER_TOKENS: ${{ secrets.DISCORD_USER_TOKENS }}
+          DISCORD_USER_TOKEN: ${{ secrets.DISCORD_USER_TOKEN }}
+          DISCORD_USER_TOKEN_1: ${{ secrets.DISCORD_USER_TOKEN_1 }}
+          DISCORD_USER_TOKEN_2: ${{ secrets.DISCORD_USER_TOKEN_2 }}
+          DISCORD_USER_TOKEN_3: ${{ secrets.DISCORD_USER_TOKEN_3 }}
+          DISCORD_USER_TOKEN_4: ${{ secrets.DISCORD_USER_TOKEN_4 }}
+          DISCORD_USER_TOKEN_5: ${{ secrets.DISCORD_USER_TOKEN_5 }}
+          UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
+          USER_ROLLOUT_WEBHOOK_URL: ${{ secrets.USER_ROLLOUT_WEBHOOK_URL }}
+          APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
+          ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          APEX_MIN_PCT_DELTA: "2"
+          APEX_RECENT_YEAR: "2025"
+          GIST_ROLLOUT_MIN_PCT_DELTA: "0.05"
+          ROLLOUTS_FAST_WATCH_MS: "1680000"
+          ROLLOUTS_FAST_TICK_MS: "60000"
+          ORBIT_BOT_NAME: Datamining
+          ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
+        run: node src/rollouts_fast.js
