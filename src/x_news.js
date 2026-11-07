@@ -30,7 +30,7 @@ const fetch = require('node-fetch');
 const { writeJsonAtomic } = require('./lib/atomic');
 const { sendEmbeds } = require('./lib/webhook');
 const { webhookIdentity } = require('./lib/webhook_identity');
-const { sleep, DEFAULT_UA } = require('./lib/utils');
+const { sleep, DEFAULT_UA, safeIso } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
 
 const DATA = path.join(__dirname, '..', 'data');
@@ -183,7 +183,7 @@ function parseSyndicationProfile(html, screenName) {
       id,
       text: String(t.full_text || t.text || ''),
       url: 'https://x.com/' + screenName + '/status/' + id,
-      createdAt: t.created_at ? new Date(t.created_at).toISOString() : null,
+      createdAt: safeIso(t.created_at),
       image,
     });
   }
@@ -383,7 +383,7 @@ async function main() {
   const known = new Set(seen.ids.map(String));
   const fresh = posts
     .filter((p) => p.id && !known.has(String(p.id)))
-    .sort((a, b) => String(b.id).localeCompare(String(a.id)));
+    .sort((a, b) => cmpIdDesc(a.id, b.id));
 
   console.log('New posts:', fresh.length);
   if (!fresh.length) {
@@ -579,9 +579,7 @@ function parseTimelineJson(data) {
           id,
           text: legacy.full_text || legacy.text || '',
           url: `https://x.com/${SCREEN_NAME}/status/${id}`,
-          createdAt: legacy.created_at
-            ? new Date(legacy.created_at).toISOString()
-            : null,
+          createdAt: safeIso(legacy.created_at),
           image,
         });
       }
@@ -749,7 +747,7 @@ function parseRss(xml) {
       id: String(id),
       text: title || '',
       url: `https://x.com/${SCREEN_NAME}/status/${id}`,
-      createdAt: strip(pick(block, 'pubDate')) || null,
+      createdAt: safeIso(strip(pick(block, 'pubDate'))),
       image: null,
     });
   }
@@ -774,11 +772,11 @@ function pick(block, tag) {
 function strip(s) {
   return String(s || '')
     .replace(/<[^>]+>/g, '')
-    .replace(/&/g, '&')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/"/g, '"')
-    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#0*39;|&apos;/g, "'")
+    .replace(/&amp;/g, '&') // last, so "&amp;lt;" decodes to "&lt;" not "<"
     .trim();
 }
 
@@ -796,9 +794,7 @@ async function postWebhook(p) {
     description: text ? text + '\n\n' + p.url : p.url,
     color: 0x1da1f2,
     footer: { text: 'X · @' + SCREEN_NAME },
-    timestamp: p.createdAt
-      ? new Date(p.createdAt).toISOString()
-      : new Date().toISOString(),
+    timestamp: safeIso(p.createdAt, new Date().toISOString()),
   };
   if (p.image) embed.image = { url: p.image };
 
@@ -827,6 +823,13 @@ async function loadSeen() {
   return { ids: [], creditsWarnedAt: null };
 }
 
+// Snowflake ids: numeric order (length, then lexicographic); newest first.
+function cmpIdDesc(a, b) {
+  const x = String(a);
+  const y = String(b);
+  return y.length - x.length || (y < x ? -1 : y > x ? 1 : 0);
+}
+
 async function saveSeen(seen) {
   await writeJsonAtomic(SEEN_FILE, {
     updatedAt: new Date().toISOString(),
@@ -846,4 +849,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { parseXcliJsonl, parseSyndicationProfile };
+module.exports = { parseXcliJsonl, parseSyndicationProfile, parseRss, cmpIdDesc };
