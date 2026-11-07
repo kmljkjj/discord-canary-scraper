@@ -1,27 +1,54 @@
 'use strict';
 const fs = require('fs-extra');
 const path = require('path');
-const { sendEmbeds } = require('./webhook');
-const { DEFAULT_BOT_NAME, DEFAULT_AVATAR_URL } = require('./utils');
-const { claimPosted, markPosted, markFailed, payloadFingerprint } = require('./webhook_dedupe');
-
-const BOT = process.env.WEBHOOK_BOT_NAME || DEFAULT_BOT_NAME;
-const AVATAR = process.env.WEBHOOK_AVATAR_URL || DEFAULT_AVATAR_URL;
 const STATE = 'dismissible_content.json';
 
+// Discord compile l'enum TypeScript DismissibleContent en :
+//   ((i={})[i.DISMISSIBLE_CONTENT_UNSPECIFIED=0]="DISMISSIBLE_CONTENT_UNSPECIFIED",
+//    i[i.HUB_EVENT_HEADER_UPSELL=2]="HUB_EVENT_HEADER_UPSELL", ...)
+// On s'ancre sur le premier membre (unique dans le bundle) puis on lit les
+// membres contigus avec une regex « sticky » : O(taille de l'enum), aucun
+// faux positif venant d'autres enums.
+const DC_ANCHOR = 'DISMISSIBLE_CONTENT_UNSPECIFIED=0]';
+
+function escapeRe(x) {
+  return x.replace(/[$]/g, '\\$');
+}
+
 function extractDismissibleContent(content, out) {
-  if (!content || !out) return;
-  const re = /DismissibleContent(?:Types?|Type)?/gi;
-  let m;
-  while ((m = re.exec(content)) !== null) {
-    const win = content.slice(Math.max(0, m.index - 2000), Math.min(content.length, m.index + 120000));
-    const pairRe = /(?:^|[,{[\s])([A-Z][A-Z0-9_]{3,80})\s*:\s*(\d{1,4})\b/g;
-    let p;
-    while ((p = pairRe.exec(win)) !== null) {
-      const n = Number(p[2]);
-      if (n >= 0 && n <= 5000) out[p[1]] = n;
+  if (!content || !out) return 0;
+  let from = 0;
+  let total = 0;
+  for (;;) {
+    const at = content.indexOf(DC_ANCHOR, from);
+    if (at < 0) break;
+    from = at + DC_ANCHOR.length;
+    // 1er membre : « (i={})[i.X=0] » ou « i[i.X=0] » → variable « i »
+    const head = content.slice(Math.max(0, at - 80), at);
+    const vm = /(?:\(([A-Za-z_$][\w$]*)=\{\}\)|([A-Za-z_$][\w$]*))\[([A-Za-z_$][\w$]*)\.$/.exec(head);
+    if (!vm || (vm[1] || vm[2]) !== vm[3]) continue;
+    const v = escapeRe(vm[3]);
+    const re = new RegExp(
+      '(?:\\(' + v + '=\\{\\}\\)|' + v + ')\\[' + v + '\\.([A-Za-z_$][\\w$]*)=(-?\\d+)\\]="[^"]*"',
+      'y',
+    );
+    re.lastIndex = at - vm[0].length;
+    const found = {};
+    let n = 0;
+    let m;
+    while ((m = re.exec(content)) !== null) {
+      found[m[1]] = Number(m[2]);
+      n++;
+      if (content.charCodeAt(re.lastIndex) !== 44) break; // ','
+      re.lastIndex++;
+    }
+    if (n >= 10) {
+      delete found.DISMISSIBLE_CONTENT_UNSPECIFIED;
+      Object.assign(out, found);
+      total += n;
     }
   }
+  return total;
 }
 
 function diffDismissible(cur, prev) {
@@ -62,70 +89,9 @@ async function saveState(dataDir, data, buildNumber) {
 }
 
 async function notifyDismissible({ webhookUrl, buildNumber, diff }) {
-  if (!webhookUrl) return true;
-  const added = Object.entries(diff.added || {});
-  const removed = Object.entries(diff.removed || {});
-  const modified = Object.entries(diff.modified || {});
-  if (!added.length && !removed.length && !modified.length) return true;
-
-  const bn = String(buildNumber || '?');
-  const ts = new Date().toISOString();
-  const embeds = [];
-  if (added.length) {
-    const lines = added.slice(0, 40).map(([k, v]) => `+ \`${k}\` = **${v}**`);
-    if (added.length > 40) lines.push(`… +${added.length - 40} more`);
-    embeds.push({
-      author: { name: BOT, icon_url: AVATAR },
-      title: 'Dismissible Content',
-      description: `Build ${bn} · **Ajouté · ${added.length}**\n\n` + lines.join('\n'),
-      color: 0x57f287,
-      footer: { text: `Build ${bn} · Datamining` },
-      timestamp: ts,
-    });
-  }
-  if (removed.length) {
-    const lines = removed.slice(0, 40).map(([k, v]) => `- \`${k}\` = **${v}**`);
-    if (removed.length > 40) lines.push(`… +${removed.length - 40} more`);
-    embeds.push({
-      author: { name: BOT, icon_url: AVATAR },
-      title: 'Dismissible Content',
-      description: `Build ${bn} · **Supprimé · ${removed.length}**\n\n` + lines.join('\n'),
-      color: 0xed4245,
-      footer: { text: `Build ${bn} · Datamining` },
-      timestamp: ts,
-    });
-  }
-  if (modified.length) {
-    const lines = modified.slice(0, 40).map(([k, v]) => `~ \`${k}\` · ${v.from} → **${v.to}**`);
-    embeds.push({
-      author: { name: BOT, icon_url: AVATAR },
-      title: 'Dismissible Content',
-      description: `Build ${bn} · **Modifié · ${modified.length}**\n\n` + lines.join('\n'),
-      color: 0x5865f2,
-      footer: { text: `Build ${bn} · Datamining` },
-      timestamp: ts,
-    });
-  }
-
-  const batchKey = 'dismissible:' + bn + ':' + added.map(x => x[0]).sort().join(',').slice(0, 180);
-  if (!(await claimPosted(batchKey))) {
-    console.log('Dismissible CLAIM skip');
-    return true;
-  }
-  const base = { username: BOT, avatar_url: AVATAR };
-  let ok = true;
-  for (let i = 0; i < embeds.length; i += 5) {
-    const slice = embeds.slice(i, i + 5);
-    const fp = payloadFingerprint({ embeds: slice });
-    if (!(await claimPosted(fp))) continue;
-    const r = await sendEmbeds(webhookUrl, base, slice, { identity: 'dismissible', label: 'Dismissible Content', minGapMs: 50, withDismiss: true });
-    console.log('webhook dismissible', r.status);
-    if (r.ok) await markPosted(fp);
-    else { ok = false; await markFailed(fp, 'HTTP ' + r.status); }
-  }
-  if (ok) await markPosted(batchKey);
-  else await markFailed(batchKey, 'failed');
-  return ok;
+  // require tardif : évite tout cycle de chargement notify ↔ extract
+  const { sendDismissible } = require('./notify');
+  return sendDismissible(webhookUrl, buildNumber, diff);
 }
 
 async function processDismissibleContent({ dataDir, current, buildNumber, webhookUrl, isSeed }) {
@@ -149,10 +115,21 @@ async function processDismissibleContent({ dataDir, current, buildNumber, webhoo
   }
   let notified = false;
   if (!isSeed && prevCount >= 10 && (nAdd || nRem || nMod)) {
+    if (!webhookUrl) {
+      console.log('Dismissible Content: no webhook — baseline updated');
+      await saveState(dataDir, cur, buildNumber);
+      return { notified: false, diff, count };
+    }
     console.log('Dismissible Content diff', { added: nAdd, removed: nRem, modified: nMod });
     notified = await notifyDismissible({ webhookUrl, buildNumber, diff });
   } else {
     console.log('Dismissible Content: seeding baseline', count);
+  }
+  // Échec d'envoi → on NE met PAS à jour la baseline : le run suivant réessaie
+  // (la dedupe empêche tout doublon des parties déjà postées).
+  if (!isSeed && prevCount >= 10 && (nAdd || nRem || nMod) && !notified) {
+    console.warn('Dismissible Content: webhook failed — baseline kept for retry');
+    return { notified, diff, count };
   }
   await saveState(dataDir, cur, buildNumber);
   return { notified, diff, count };

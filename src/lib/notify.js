@@ -3,7 +3,7 @@
  * - No backticks around keys
  * - Strings: phrase only (no hash key) · Routes: key + path
  * - Mise en avant : le contenu le plus important de chaque section en
- *   bloc de code (« ✨ À la une »), la liste complète derrière
+ *   bloc de code, la liste complète derrière
  * - Batch dedupe marked ONLY after successful webhook post
  * - Présentation : titre « Routes · Build N », listes en blocs ```diff
  *   (+ vert / - rouge), libellés en français, pied de page horodaté
@@ -32,26 +32,11 @@ const COLOR = {
   removed: 0xed4245,
 };
 
-function envEmoji(key) {
-  const v = (process.env[key] || '').trim();
-  if (/^<a?:[\w~]+:\d+>$/.test(v)) return v;
-  return '';
+// Aucun emoji dans les messages (titres et libellés en texte brut).
+function label(_emoji, text) {
+  return text;
 }
-
-// Emoji personnalisés via env, sinon emoji Unicode par défaut (lisibles partout)
-const E = {
-  added: envEmoji('EMOJI_ADDED') || '🟢',
-  modified: envEmoji('EMOJI_MODIFIED') || '🟠',
-  removed: envEmoji('EMOJI_REMOVED') || '🔴',
-  build: envEmoji('EMOJI_BUILD') || '🛠️',
-  exp: envEmoji('EMOJI_EXP') || '🧪',
-  str: envEmoji('EMOJI_STR') || '💬',
-  route: envEmoji('EMOJI_ROUTE') || '🧭',
-};
-
-function label(emoji, text) {
-  return emoji ? `${emoji} ${text}` : text;
-}
+const E = {};
 
 const FIELD_MAX = 1020;
 const LINE_VAL_MAX = 240;
@@ -61,10 +46,8 @@ const MAX_STR_LINES = 1000;
 const MAX_RT_LINES = 1000;
 const MAX_EXP_LINES = 300;
 
-// Mise en avant : nombre d'entrées affichées dans « ✨ À la une » (et seuil
-// en dessous duquel une section part entièrement en bloc de code).
+// Seuil en dessous duquel une section part entièrement en un seul bloc.
 const HIGHLIGHT_COUNT = 5;
-const HIGHLIGHT_LINE_MAX = 100;
 
 async function notifyAll(opts) {
   const [a, b] = await Promise.all([notifyUrgent(opts), notifyNormal(opts)]);
@@ -404,26 +387,6 @@ function footerText(bn, ts) {
   return when ? `Canary ${bn} · ${when}` : `Canary ${bn}`;
 }
 
-// Mise en avant « ✨ À la une » : la première ligne de chaque entrée — l'ID
-// d'une expérience, `+ clé → valeur` pour une route, la phrase pour un
-// texte. C'est le contenu le plus important : il part en bloc de code,
-// la liste complète reste derrière, inchangée.
-function highlightHeads(lines) {
-  const picked = [];
-  let len = FENCE_LEN;
-  for (const raw of lines) {
-    if (picked.length >= HIGHLIGHT_COUNT) break;
-    const head = sanitizeCodeLine(String(raw).split('\n')[0]).trim();
-    if (!head) continue;
-    const l =
-      head.length > HIGHLIGHT_LINE_MAX ? head.slice(0, HIGHLIGHT_LINE_MAX - 1) + '…' : head;
-    if (len + l.length + 1 > FIELD_MAX) break;
-    picked.push(l);
-    len += l.length + 1;
-  }
-  return picked;
-}
-
 /** Construit les embeds d'une section (pur : ni envoi, ni dedupe). */
 function sectionEmbeds(sec, { title, bn, ts }) {
   if (!sec || !sec.lines || !sec.lines.length) return [];
@@ -450,16 +413,9 @@ function sectionEmbeds(sec, { title, bn, ts }) {
     }
   }
 
-  // Grande section : « ✨ À la une » (le plus important, en bloc de code),
-  // puis la liste complète, elle aussi en blocs « diff » colorés.
+  // Grande section : la liste complète en blocs « diff » colorés.
   const chunks = chunkLines(safe, FIELD_MAX - FENCE_LEN).map((c) => codeBlock([c]));
-  // « À la une » seulement si la liste ne tient pas en un bloc : sinon
-  // elle répéterait exactement les mêmes lignes (espace perdu).
-  const heads = chunks.length > 1 ? highlightHeads(sec.lines) : [];
-  const hlField = heads.length
-    ? { name: '✨ À la une', value: codeBlock(heads), inline: false }
-    : null;
-  const firstCount = hlField ? 4 : 5;
+  const firstCount = 5;
   // Champs de suite sans nom : pas de ligne « … (2) » inutile entre les blocs
   const firstFields = chunks.slice(0, firstCount).map((c, i) => ({
     name: i === 0 ? sec.label : '',
@@ -469,7 +425,7 @@ function sectionEmbeds(sec, { title, bn, ts }) {
   const lastIdx = Math.ceil((chunks.length - firstCount) / 5);
   embeds.push({
     title: head,
-    fields: hlField ? [hlField, ...firstFields] : firstFields,
+    fields: firstFields,
     color: sec.color,
     ...(lastIdx > 0 ? {} : { footer }),
     timestamp: ts,
@@ -704,6 +660,63 @@ async function sendMapDiff(webhookUrl, bn, diff, ts, kind) {
   return ok;
 }
 
+/**
+ * Dismissible Content : même rendu que Experiments / Routes (blocs « diff »),
+ * même webhook / même salon. diff = { added:{K:n}, modified:{K:{from,to}}, removed:{K:n} }.
+ */
+async function sendDismissible(webhookUrl, bn, diff, ts = new Date().toISOString()) {
+  if (!webhookUrl) return true;
+  const d = normalizeMapDiff(diff);
+  const a = Object.keys(d.added).sort((x, y) => Number(d.added[x]) - Number(d.added[y]));
+  const m = Object.keys(d.modified).sort();
+  const r = Object.keys(d.removed).sort((x, y) => Number(d.removed[x]) - Number(d.removed[y]));
+  if (!a.length && !m.length && !r.length) return true;
+  bn = String(bn || '?');
+  const batchKey = 'dcbatch:' + stableMapKey(bn, 'Dismissible', d);
+  if (!(await claimPosted(batchKey))) {
+    console.log('Dismissible batch CLAIM skip', batchKey);
+    return true;
+  }
+  const sections = [];
+  if (a.length)
+    sections.push({
+      label: `Ajoutés · ${a.length}`,
+      color: COLOR.added,
+      count: a.length,
+      lines: a.map((k) => `+ ${k} = ${d.added[k]}`),
+    });
+  if (m.length)
+    sections.push({
+      label: `Modifiés · ${m.length}`,
+      color: COLOR.modified,
+      count: m.length,
+      lines: m.map((k) => `~ ${k} = ${d.modified[k].from} → ${d.modified[k].to}`),
+    });
+  if (r.length)
+    sections.push({
+      label: `Supprimés · ${r.length}`,
+      color: COLOR.removed,
+      count: r.length,
+      lines: r.map((k) => `- ${k} = ${d.removed[k]}`),
+    });
+  const ok = await sendSectionEmbeds({
+    webhookUrl,
+    title: 'Dismissible Content',
+    identity: 'dismissible',
+    bn,
+    ts,
+    sections,
+    batchKey,
+  });
+  if (ok) await markPosted(batchKey);
+  else {
+    console.warn('Dismissible webhook failed — batch NOT locked');
+    await markFailed(batchKey, 'dismissible batch send failed');
+  }
+  console.log('Sent Dismissible', { ok, added: a.length, modified: m.length, removed: r.length });
+  return ok;
+}
+
 async function post(url, body, dedupeKey, identity) {
   body.username = BOT;
   body.avatar_url = AVATAR;
@@ -715,7 +728,7 @@ async function post(url, body, dedupeKey, identity) {
   const title = body.embeds?.[0]?.title || '';
   const embeds = body.embeds || [];
   const base = { username: body.username, avatar_url: body.avatar_url };
-  const r = await sendEmbeds(url, base, embeds, { identity, label: title, minGapMs: 50, withDismiss: true });
+  const r = await sendEmbeds(url, base, embeds, { identity, label: title, withDismiss: true });
   console.log('webhook', r.status, title);
   if (r.ok) {
     await markPosted(fp);
@@ -725,4 +738,4 @@ async function post(url, body, dedupeKey, identity) {
   return false;
 }
 
-module.exports = { notifyAll, notifyUrgent, notifyNormal, post, sectionEmbeds };
+module.exports = { notifyAll, notifyUrgent, notifyNormal, post, sectionEmbeds, sendDismissible };

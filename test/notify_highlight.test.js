@@ -1,9 +1,8 @@
 'use strict';
 
 /**
- * Mise en avant : le contenu le plus important de chaque section
- * (Strings, Routes, Experiments) apparaît en bloc de code — « ✨ À la une »
- * pour les grandes sections, tout le contenu pour les petites.
+ * Rendu des sections (Strings, Routes, Experiments, Dismissible Content) :
+ * tout le contenu en blocs de code « diff », sans section « À la une ».
  */
 
 const test = require('node:test');
@@ -20,18 +19,15 @@ const { sectionEmbeds } = require('../src/lib/notify');
 
 const BASE = { title: 'Experiments', bn: '123', ts: '2026-10-29T00:00:00.000Z' };
 
-test('grande section : « ✨ À la une » en bloc de code, puis la liste complète', () => {
+test('grande section : plus de « À la une », la liste complète en blocs diff', () => {
   const lines = Array.from({ length: 30 }, (_, i) => '+ ' + 'x'.repeat(96) + String(i + 1).padStart(2, '0'));
   const embeds = sectionEmbeds({ label: 'Added · 30', color: 0x57f287, count: 30, lines }, BASE);
   assert.equal(embeds.length, 1);
   const fields = embeds[0].fields;
-  assert.equal(fields[0].name, '✨ À la une');
-  assert.match(fields[0].value, /^```/);
-  assert.match(fields[0].value, /```$/);
-  assert.equal((fields[0].value.match(/\n/g) || []).length, 6, '5 entrées mises en avant');
-  assert.equal(fields.length, 5, 'à la une + 4 morceaux de liste (blocs diff)');
-  assert.equal(fields[1].name, 'Added · 30');
-  assert.ok(fields[1].value.includes('01'), 'la liste complète commence à la 1re entrée');
+  assert.ok(!fields.some((f) => /la une/i.test(f.name)), 'aucun champ « À la une »');
+  assert.equal(fields[0].name, 'Added · 30');
+  assert.ok(fields[0].value.includes('01'), 'la liste complète commence à la 1re entrée');
+  assert.ok(fields.every((f) => /^```diff\n/.test(f.value)));
   assert.equal(embeds[0].title, 'Experiments · Build 123');
   for (const f of fields) assert.ok(f.value.length <= 1024, 'champ sous la limite Discord');
 });
@@ -71,28 +67,16 @@ test('les backticks triples du contenu ne cassent pas le bloc de code', () => {
   assert.equal((v.match(/```/g) || []).length, 2, 'seules les clôtures du bloc restent');
 });
 
-test('mise en avant : une ligne par entrée, les détails restent dans la liste', () => {
+test('grande section : la liste garde toutes les lignes, détails compris', () => {
+  const long = 'phrase très longue '.repeat(12);
   const lines = [
     '+ exp_multi\nType user · apex\nUn libellé long',
+    long,
     ...Array.from({ length: 40 }, (_, i) => `+ exp_${i}_${'x'.repeat(40)}`),
   ];
-  const embeds = sectionEmbeds({ label: 'Added · 41', color: 0x57f287, count: 41, lines }, BASE);
-  assert.equal(embeds.length, 1);
+  const embeds = sectionEmbeds({ label: 'Added · 42', color: 0x57f287, count: 42, lines }, BASE);
   const fields = embeds[0].fields;
-  assert.equal(fields[0].name, '✨ À la une');
-  assert.ok(fields[0].value.includes('+ exp_multi'));
-  assert.ok(!fields[0].value.includes('Un libellé long'), 'une seule ligne par entrée');
-  assert.equal(fields[1].name, 'Added · 41');
-  assert.ok(fields[1].value.includes('Un libellé long'), 'la liste garde les détails');
-});
-
-test('les longues entrées sont tronquées dans la mise en avant, jamais dans la liste', () => {
-  const long = 'phrase très longue '.repeat(12); // ~204 caractères
-  const lines = [long, ...Array.from({ length: 30 }, (_, i) => `ligne ${i} ${'x'.repeat(40)}`)];
-  const embeds = sectionEmbeds({ label: 'Modifié · 31', color: 0xe67e22, count: 31, lines }, BASE);
-  const hl = embeds[0].fields[0];
-  const first = hl.value.split('\n')[1];
-  assert.equal(first.length, 100, '99 caractères + ellipse');
-  assert.ok(first.endsWith('…'));
-  assert.ok(embeds[0].fields[1].value.includes(long), 'liste complète non tronquée');
+  assert.equal(fields[0].name, 'Added · 42');
+  assert.ok(fields[0].value.includes('Un libellé long'), 'la liste garde les détails');
+  assert.ok(fields[0].value.includes(long), 'liste complète non tronquée');
 });
