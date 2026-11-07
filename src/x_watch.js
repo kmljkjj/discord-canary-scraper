@@ -16,7 +16,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { sendEmbeds } = require('./lib/webhook');
 const { writeJsonAtomic } = require('./lib/atomic');
-const { DEFAULT_UA } = require('./lib/utils');
+const { DEFAULT_UA, safeIso } = require('./lib/utils');
 const { safeJson } = require('./lib/http');
 
 const USERNAME = process.env.X_USERNAME || 'DiscordNEW8r';
@@ -79,7 +79,7 @@ function parseSyndicationProfile(html, screenName) {
       id,
       text: String(t.full_text || t.text || ''),
       url: 'https://x.com/' + screenName + '/status/' + id,
-      date: t.created_at ? new Date(t.created_at).toISOString() : null,
+      date: safeIso(t.created_at),
       image,
     });
   }
@@ -384,7 +384,7 @@ async function fetchViaRss() {
           id,
           url: `https://x.com/${USERNAME}/status/${id}`,
           text: stripHtml(title).slice(0, 400),
-          date: date ? new Date(date).toISOString() : null,
+          date: safeIso(date),
         });
       }
       if (posts.length) {
@@ -418,7 +418,7 @@ async function postWebhook(p) {
         url,
         color: 0x1da1f2,
         footer: { text: 'X · @' + USERNAME },
-        timestamp: p.date || new Date().toISOString(),
+        timestamp: safeIso(p.date, new Date().toISOString()),
       },
     ],
   };
