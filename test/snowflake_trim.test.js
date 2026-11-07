@@ -13,3 +13,10 @@ test('trimRecent keeps re-touched fingerprints', () => {
   s.delete('a'); s.add('a');
   assert.deepStrictEqual(trimRecent(s, 2), ['c', 'a']);
 });
+
+test('safeIso never throws on malformed dates', () => {
+  const { safeIso } = require('../src/lib/utils');
+  assert.strictEqual(safeIso('not a date'), null);
+  assert.strictEqual(safeIso(undefined, 'x'), 'x');
+  assert.strictEqual(safeIso('2026-01-02T03:04:05Z'), '2026-01-02T03:04:05.000Z');
+});

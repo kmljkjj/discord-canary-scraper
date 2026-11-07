@@ -93,7 +93,19 @@ function trimRecent(ids, max) {
   return max > 0 && arr.length > max ? arr.slice(arr.length - max) : arr;
 }
 
+/**
+ * ISO string for a date-ish value, or `fallback` when missing/unparseable.
+ * `new Date(bad).toISOString()` throws RangeError and used to abort whole runs
+ * on a single malformed feed date.
+ */
+function safeIso(v, fallback = null) {
+  if (v == null || v === '') return fallback;
+  const d = new Date(v);
+  return Number.isFinite(d.getTime()) ? d.toISOString() : fallback;
+}
+
 module.exports = {
+  safeIso,
   trimRecent,
   sleep,
   redactSecrets,
