@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: Envoyer un message de test
         env:
           UR_WEBHOOK: ${{ secrets.UR_WEBHOOK }}
