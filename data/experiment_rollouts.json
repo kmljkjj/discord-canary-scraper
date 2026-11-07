@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-07T00:11:24.248Z",
+  "fetchedAt": "2026-11-07T00:18:12.822Z",
   "sources": {
     "discordApi": {
       "url": "https://discord.com/api/v9/experiments",
@@ -7,7 +7,7 @@
     },
     "fingerprintSampling": {
       "samples": 50,
-      "uniqueHashes": 4,
+      "uniqueHashes": 5,
       "matched": 1
     }
   },
@@ -316,6 +316,26 @@
       "id": null,
       "type": "user",
       "title": "hash_1144304849",
+      "percentage": 0,
+      "status": "not_started",
+      "samples": 1,
+      "enrolled": 0,
+      "treatmentDistribution": {
+        "0": 1
+      },
+      "source": "fingerprint_sampling",
+      "note": "No local experiment ID match for this hash",
+      "fpSamples": 1,
+      "fpEnrolled": 0,
+      "fpTreatmentDist": {
+        "0": 1
+      }
+    },
+    {
+      "hash": 704914099,
+      "id": null,
+      "type": "user",
+      "title": "hash_704914099",
       "percentage": 0,
       "status": "not_started",
       "samples": 1,
@@ -4092,6 +4112,16 @@
       "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
     },
     {
+      "id": "2026-11-return-full-quest-status-in-decision",
+      "hash": 681027080,
+      "type": "user",
+      "title": "2026-11-return-full-quest-status-in-decision",
+      "percentage": null,
+      "status": "no_rollout_data",
+      "source": "client_bundle",
+      "note": "User experiment — rollout percentage not publicly available. Use user_rollouts.js with tokens for estimation."
+    },
+    {
       "id": "2026-11-soundboard-upsells-brand-refresh",
       "hash": 3579903793,
       "type": "user",
@@ -4213,14 +4243,14 @@
     }
   ],
   "summary": {
-    "total": 396,
+    "total": 398,
     "guild": 39,
-    "user": 357,
-    "withPercentage": 8,
-    "withoutPercentage": 388,
+    "user": 359,
+    "withPercentage": 9,
+    "withoutPercentage": 389,
     "fullRollout": 5,
     "partial": 0,
-    "notStarted": 3,
-    "fpSampled": 4
+    "notStarted": 4,
+    "fpSampled": 5
   }
 }
