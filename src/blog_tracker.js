@@ -769,6 +769,10 @@ async function notifyAll(diffs) {
     items.push({ ...item, sent: ok });
     await sleep(300);
   }
+  // Les éléments hors lot doivent figurer dans items (sent:false) pour que
+  // applyNotifyResult les annule ; sinon ils seraient enregistrés comme vus
+  // et jamais notifiés.
+  for (const item of queue.slice(batch.length)) items.push({ ...item, sent: false });
   return {
     sent,
     failed,
@@ -949,4 +953,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { main, changeText };
+module.exports = { main, changeText, applyNotifyResult };
