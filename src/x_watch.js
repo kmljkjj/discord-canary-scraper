@@ -240,7 +240,7 @@ async function main() {
     process.exit(0);
   }
 
-  posts.sort((a, b) => String(b.id).localeCompare(String(a.id)));
+  posts.sort((a, b) => cmpSnowflake(String(b.id), String(a.id)));
 
   const isFirstRun = seen.size === 0;
   const fresh = posts.filter((p) => p.id && !seen.has(String(p.id)));
@@ -450,12 +450,18 @@ async function loadSeen() {
 }
 
 async function saveSeen(set) {
-  const ids = [...set].sort().slice(-MAX_SEEN);
+  // Snowflake ids: numeric order so the oldest posts are evicted first.
+  const ids = [...set].sort(cmpSnowflake).slice(-MAX_SEEN);
   await writeJsonAtomic(
     SEEN_FILE,
     { updatedAt: new Date().toISOString(), count: ids.length, ids },
     2,
   );
+}
+
+// Compare numeric id strings without precision loss (length first, then lexicographic).
+function cmpSnowflake(a, b) {
+  return a.length - b.length || (a < b ? -1 : a > b ? 1 : 0);
 }
 
 function extractStatusId(s) {
@@ -499,4 +505,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { parseXcliJsonl, parseSyndicationProfile };
+module.exports = { parseXcliJsonl, parseSyndicationProfile, cmpSnowflake };
