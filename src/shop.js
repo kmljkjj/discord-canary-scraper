@@ -30,6 +30,15 @@ const { sleep, loadTokens, redactSecrets, DEFAULT_UA, DEFAULT_BOT_NAME: BOT, DEF
 const DATA = path.join(__dirname, '..', 'data');
 const STATE = path.join(DATA, 'shop_items.json');
 
+// Mode dégradé (tous les tokens refusés) : trackeur public itemshop.gg.
+// Son robots.txt n'interdit que /api/ et /embed/ — la page publique est libre.
+// Données moins riches (nom + type, pas d'id Discord ni d'image), mais la
+// veille continue pendant que les tokens sont morts.
+const FALLBACK_URL = 'https://itemshop.gg/discord';
+const FALLBACK_STATE = path.join(DATA, 'shop_fallback.json');
+const FALLBACK_MIN_ITEMS = 10;
+const FALLBACK_TYPES = ['Bundle', 'Avatar Decoration', 'Profile Effect', 'Nameplate', 'Profile Frame', 'Avatar Frame', 'Clan Tag'];
+
 // Webhooks candidats : si le premier a été supprimé (404 Unknown Webhook), on bascule sur le suivant.
 const WEBHOOKS = [...new Set([process.env.SHOP_WEBHOOK_URL, process.env.DISCORD_WEBHOOK_URL].map((u) => String(u || '').trim()).filter(Boolean))];
 let WEBHOOK = WEBHOOKS[0] || null;
@@ -416,6 +425,164 @@ async function postComponents(comps) {
   return true;
 }
 
+// ── Mode dégradé : source publique itemshop.gg ────────
+
+/**
+ * Sans token utilisateur valide, l'API boutique officielle est inaccessible
+ * (auth-only). itemshop.gg publie la boutique du jour ; son robots.txt
+ * n'interdit que /api/ et /embed/, la page publique est donc libre d'accès.
+ * Données moins riches (nom + type, pas d'id Discord ni d'image) mais la
+ * veille continue — messages marqués « source publique ».
+ */
+function htmlToLines(html) {
+  return String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, '\n')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&#x27;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Parse la page itemshop.gg : motif « nom / type / prix » par item.
+ * La clé (nom|type) distingue les homonymes multi-types (ex: « Deadpool »
+ * déco ET nameplate).
+ * @param {string} html - HTML brut de la page publique
+ * @returns {Array<{key:string,name:string,type:string,source:string}>}
+ */
+function parseFallbackShop(html) {
+  const lines = htmlToLines(html);
+  const junk = /^(advertisement|add the bot|discord alerts|today'?s shop|past rotations|discord shop today)$/i;
+  const priceLike = /^\d[\d.,]*\s*(usd|eur)?$/i;
+  const out = new Map();
+  for (let i = 1; i < lines.length; i++) {
+    const type = lines[i];
+    if (!FALLBACK_TYPES.includes(type)) continue;
+    const name = lines[i - 1];
+    if (!name || FALLBACK_TYPES.includes(name) || junk.test(name)) continue;
+    if (name.length < 2 || name.length > 120) continue;
+    if (/^https?:\/\//i.test(name) || priceLike.test(name)) continue;
+    const key = name + '|' + type;
+    if (!out.has(key)) out.set(key, { key, name, type, source: 'itemshop' });
+  }
+  return [...out.values()];
+}
+
+/** Récupère la boutique du jour depuis itemshop.gg (avec garde-fou de parse). */
+async function fetchFallbackShop() {
+  const res = await fetch(FALLBACK_URL, {
+    headers: { 'User-Agent': DEFAULT_UA, Accept: 'text/html,*/*' },
+    timeout: 25000,
+  });
+  if (!res.ok) throw new Error('itemshop.gg HTTP ' + res.status);
+  const items = parseFallbackShop(await res.text());
+  if (items.length < FALLBACK_MIN_ITEMS) {
+    throw new Error('itemshop.gg parse suspect (' + items.length + ' items) — page peut-être changée');
+  }
+  return items;
+}
+
+/** Message sobre (nom + type + lien boutique), sans image : la source n'en fournit pas. */
+function buildFallbackComponents(item) {
+  return [
+    textDisplay('Boutique Discord • NEW item (source publique)'),
+    textDisplay('### [' + escapeMdTitle(item.name) + '](' + SHOP_URL + ')'),
+    textDisplay('_' + item.type + ' — itemshop.gg_'),
+  ];
+}
+
+/** Purge les entrées announced de plus de keepDays jours. */
+function pruneAnnounced(announced, keepDays) {
+  const cutoff = Date.now() - keepDays * 86400000;
+  for (const [id, ts] of Object.entries(announced)) {
+    if (Date.parse(ts || '') < cutoff) delete announced[id];
+  }
+}
+
+/**
+ * Veille de secours : catalogage itemshop.gg par clé nom|type, état dédié
+ * (data/shop_fallback.json), seed silencieux puis notifications des nouveautés.
+ */
+async function runFallbackMode() {
+  let items;
+  try {
+    items = await fetchFallbackShop();
+  } catch (e) {
+    console.error('Fallback source failed:', redactSecrets(e.message));
+    process.exit(1);
+  }
+  console.log('Fallback items (itemshop.gg):', items.length);
+
+  let prev = { announced: {} };
+  if (await fs.pathExists(FALLBACK_STATE)) {
+    try {
+      prev = await fs.readJson(FALLBACK_STATE);
+    } catch (_) {}
+  }
+  const announced = Object.assign({}, prev.announced || {});
+  const now = new Date().toISOString();
+  const isFirst = Object.keys(announced).length === 0;
+  if (isFirst) {
+    for (const it of items) announced[it.key] = now;
+    await writeJsonAtomic(FALLBACK_STATE, { count: items.length, announced }, 2);
+    console.log('Fallback seed', items.length, 'items — no notify on first run');
+    return;
+  }
+
+  const newItems = items.filter((it) => !announced[it.key]);
+  console.log('Fallback new items:', newItems.length);
+  if (!newItems.length) {
+    pruneAnnounced(announced, ANNOUNCED_KEEP_DAYS);
+    await writeJsonAtomic(FALLBACK_STATE, { count: items.length, announced }, 2);
+    console.log('No new shop items (fallback)');
+    return;
+  }
+
+  // Même granularité d'échec que le mode officiel : un item non envoyé sera
+  // re-notifié au prochain run (clé absente de announced).
+  const batch = newItems.slice(0, MAX_NOTIFY_PER_RUN);
+  const notified = [];
+  const pending = [];
+  let failed = 0;
+  for (const it of batch) {
+    let ok = false;
+    try {
+      ok = await postComponents(buildFallbackComponents(it));
+    } catch (e) {
+      console.warn('notify error', redactSecrets(e.message || e));
+    }
+    if (ok) {
+      announced[it.key] = now;
+      notified.push(it.key);
+      console.log('sent', it.name);
+    } else {
+      failed++;
+      pending.push(it.key);
+      console.warn('NOTIFY_FAIL shop fallback', it.key);
+    }
+    await sleep(300);
+  }
+  for (const it of newItems.slice(MAX_NOTIFY_PER_RUN)) pending.push(it.key);
+  if (newItems.length > MAX_NOTIFY_PER_RUN) {
+    console.log('Pending (next run):', newItems.length - MAX_NOTIFY_PER_RUN);
+  }
+  if (failed > 0) process.exitCode = 2;
+  pruneAnnounced(announced, ANNOUNCED_KEEP_DAYS);
+  await writeJsonAtomic(
+    FALLBACK_STATE,
+    { count: items.length, announced, lastNew: notified, pendingNew: pending },
+    2,
+  );
+  console.log('Shop done (fallback) — announced', notified.length, 'failed', failed, 'pending', pending.length);
+}
+
 // ── Main ──────────────────────────────────────────────
 
 async function main() {
@@ -448,7 +615,9 @@ async function main() {
     console.error(
       'Fix: Settings → Secrets → update DISCORD_USER_TOKEN with a fresh USER token (no quotes, no Bot prefix).',
     );
-    process.exit(1);
+    console.warn('Mode dégradé : veille continue via la source publique itemshop.gg.');
+    await runFallbackMode();
+    return;
   }
 
   let items = [];
@@ -593,4 +762,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { main, fetchShopCatalog, normalizeItem };
+module.exports = { main, fetchShopCatalog, normalizeItem, parseFallbackShop };

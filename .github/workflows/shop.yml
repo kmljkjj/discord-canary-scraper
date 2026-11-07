@@ -47,7 +47,7 @@ jobs:
         env:
           COMMIT_SOFT_FAIL: '1'
         run: |
-          scripts/commit-state.sh "shop: state" data/shop_items.json
+          scripts/commit-state.sh "shop: state" data/shop_items.json data/shop_fallback.json
 
       - name: Fail if shop step failed
         if: always() && steps.shop.outcome == 'failure'
