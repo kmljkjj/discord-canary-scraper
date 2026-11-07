@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-07 08:42 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-07 08:44 UTC
 
 **Fenêtre glissante 4 h — n = 6097 échantillons — 8 tokens actifs**
 
@@ -24,11 +24,11 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:704914099
 - Variant 1 : 4,97 % (IC 95 % [4,44 ; 5,56], 303/6097, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9500.16, 9998.84] → 4,99 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [9500.22, 9998.78] → 4,99 %
 
 ### hash:1144304849
 - Variant 1 : 5,04 % (IC 95 % [4,5 ; 5,63], 307/6097, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [4.67, 221.33] + [240.67, 500.33] → 4,76 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [4.92, 221.08] + [240.63, 500.37] → 4,76 %
 
 ### Safety Experience IAR User Reporting
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6097/6097, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,93 ; 100], 6097/6097, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [0, 1308.64] + [1601.4, 10000] → 97,07 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [0, 10000] → 100 %
 
 ### 2025-11_tida_webform
 - Variant 1 : 100 % (IC 95 % [100 ; 100], 6097/6097, confiance élevée)
