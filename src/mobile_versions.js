@@ -37,7 +37,7 @@ const {
   chunkIntoMessages,
 } = require('./lib/components_v2');
 const { writeJsonAtomic } = require('./lib/atomic');
-const { DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: BOT_AVATAR, DEFAULT_UA } = require('./lib/utils');
+const { DEFAULT_BOT_NAME: BOT_NAME, DEFAULT_MOBILE_AVATAR: BOT_AVATAR, DEFAULT_UA, trimRecent } = require('./lib/utils');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const STATE_FILE = path.join(DATA_DIR, 'mobile_versions.json');
@@ -1126,7 +1126,7 @@ async function main() {
     console.log('Seed run - no webhook; recording fingerprints');
     for (const c of snapshot.channels) {
       const fp = versionFingerprint(c);
-      if (fp) notified.add(fp);
+      if (fp) { notified.delete(fp); notified.add(fp); }
     }
   } else if (willNotify) {
     try {
@@ -1134,7 +1134,7 @@ async function main() {
     } catch (e) {
       snapshot.history = history.slice(0, 100);
       snapshot.previousScrapedAt = previous?.scrapedAt || null;
-      snapshot.notifiedFingerprints = [...notified].sort().slice(-2000);
+      snapshot.notifiedFingerprints = trimRecent(notified, 2000);
       snapshot.changes = [];
       snapshot.paused = false;
       snapshot.notifyOk = false;
@@ -1154,19 +1154,19 @@ async function main() {
     }
     for (const c of snapshot.channels) {
       const fp = versionFingerprint(c);
-      if (fp) notified.add(fp);
+      if (fp) { notified.delete(fp); notified.add(fp); }
     }
   } else {
     console.log('No version bumps - no webhook');
     for (const c of snapshot.channels) {
       const fp = versionFingerprint(c);
-      if (fp) notified.add(fp);
+      if (fp) { notified.delete(fp); notified.add(fp); }
     }
   }
 
   snapshot.history = history.slice(0, 100);
   snapshot.previousScrapedAt = previous?.scrapedAt || null;
-  snapshot.notifiedFingerprints = [...notified].sort().slice(-2000);
+  snapshot.notifiedFingerprints = trimRecent(notified, 2000);
   snapshot.changes = willNotify
     ? changes.map((c) => ({
         type: c.type,
