@@ -104,7 +104,22 @@ function safeIso(v, fallback = null) {
   return Number.isFinite(d.getTime()) ? d.toISOString() : fallback;
 }
 
+/** Trim sorted ids in place to `max`, keeping keys present in `current` first. */
+function capKnownIds(ids, max, current) {
+  if (ids.length <= max) return ids;
+  const cur = current || {};
+  const live = ids.filter((k) => Object.prototype.hasOwnProperty.call(cur, k));
+  const liveSet = new Set(live);
+  const rest = ids.filter((k) => !liveSet.has(k));
+  const keep = new Set([...live, ...rest.slice(rest.length - Math.max(0, max - live.length))]);
+  const out = ids.filter((k) => keep.has(k));
+  ids.length = 0;
+  ids.push(...out);
+  return ids;
+}
+
 module.exports = {
+  capKnownIds,
   safeIso,
   trimRecent,
   sleep,

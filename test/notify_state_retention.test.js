@@ -17,3 +17,16 @@ test('blog applyNotifyResult drops unsent added items so they are re-notified', 
     ['1'],
   );
 });
+
+const { capKnownIds } = require('../src/lib/utils');
+test('capKnownIds keeps currently-extracted keys over the cap', () => {
+  const ids = ['a', 'b', 'c', 'd', 'e'];
+  capKnownIds(ids, 3, { a: 1, b: 1 });
+  assert.deepStrictEqual(ids, ['a', 'b', 'e']);
+  const small = ['x'];
+  capKnownIds(small, 3, {});
+  assert.deepStrictEqual(small, ['x']);
+  const allLive = ['a', 'b', 'c'];
+  capKnownIds(allLive, 2, { a: 1, b: 1, c: 1 });
+  assert.deepStrictEqual(allLive, ['a', 'b', 'c']);
+});
