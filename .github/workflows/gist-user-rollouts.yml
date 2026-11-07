@@ -8,8 +8,10 @@ name: Gist User Rollouts %
 # (Le sampling propre de user_rollouts.js v14 reste disponible à part.)
 
 on:
-  schedule:
-    - cron: "*/30 * * * *"
+  # Cron désactivé : rollouts-fast.yml sonde toutes les 60 s et lance ce
+  # tracker dès qu'un changement est détecté (dispatch manuel conservé).
+  # schedule:
+  #   - cron: "*/30 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-gist-user-rollouts]
