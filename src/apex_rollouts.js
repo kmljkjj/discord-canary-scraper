@@ -25,9 +25,11 @@ const WEBHOOKS = [
   ),
 ];
 let WEBHOOK = WEBHOOKS[0] || null;
-const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '1');
+const MIN_DELTA = Number(process.env.APEX_MIN_PCT_DELTA || '0.01');
 const YEAR_MIN = Number(process.env.APEX_RECENT_YEAR || '2024');
 const SCALE = 10000;
+// Précision des % stockés/notifiés (décimales). 2 = 0,01 pt (1 position /10000).
+const PCT_PRECISION = 2;
 const USER_TOKENS = loadTokens();
 
 function tLabel(bucket) {
@@ -74,7 +76,7 @@ function rangesToPct(ranges) {
   merged.push([cs, ce]);
   let c = 0;
   for (const [a, b] of merged) c += b - a;
-  return Math.min(100, Math.round((c / SCALE) * 1000) / 10);
+  return Math.min(100, Math.round((c / SCALE) * 10000) / 100);
 }
 
 function decodeGuildWire(tuple, hashMap) {
@@ -123,7 +125,7 @@ function decodeGuildWire(tuple, hashMap) {
       else if (Array.isArray(o)) ovCount += (o[1] || []).length || 0;
     }
   }
-  const fingerprint = treatments.map((t) => t.bucket + ':' + Number(t.pct).toFixed(1)).join('|');
+  const fingerprint = treatments.map((t) => t.bucket + ':' + Number(t.pct).toFixed(2)).join('|');
   return {
     id: String(id),
     type: 'guild',
@@ -232,7 +234,7 @@ async function fetchDiscordGuild(hashMap) {
 function pctKey(e) {
   return (e.treatments || [])
     .filter((t) => t && t.pct != null)
-    .map((t) => t.bucket + ':' + Number(t.pct).toFixed(1))
+    .map((t) => t.bucket + ':' + Number(t.pct).toFixed(2))
     .sort()
     .join('|');
 }
@@ -260,7 +262,7 @@ function diffExperiments(prev, next) {
       const old = pt.get(k);
       const from = old && old.pct != null ? Number(old.pct) : 0;
       const to = Number(t.pct);
-      const d = Math.round((to - from) * 10) / 10;
+      const d = Math.round((to - from) * 100) / 100;
       if (Math.abs(d) >= MIN_DELTA) {
         deltas.push({ label: t.label, bucket: t.bucket, from, to, delta: d });
         maxAbs = Math.max(maxAbs, Math.abs(d));
@@ -393,7 +395,7 @@ async function main() {
     fingerprint: pctKey(e),
     treatments: (e.treatments || [])
       .filter((t) => t && t.pct != null)
-      .map((t) => ({ bucket: t.bucket, label: t.label, pct: Math.round(Number(t.pct) * 10) / 10 })),
+      .map((t) => ({ bucket: t.bucket, label: t.label, pct: Math.round(Number(t.pct) * 100) / 100 })),
     revision: e.revision,
     recent: !!e.recent,
     hash: e.hash,
@@ -420,9 +422,28 @@ async function main() {
         experiments: compact,
         announced: announcedMap,
         ackExperiments: ackExperiments != null ? ackExperiments : undefined,
+        pctPrecision: PCT_PRECISION,
       },
       2,
     );
+  }
+
+  // Migration 0,1 → 0,01 pt : une expérience dont l'ancien % (arrondi au
+  // dixième) correspond au nouveau % arrondi au dixième n'a PAS bougé → on
+  // remplace silencieusement son ack par la valeur précise (aucune fausse
+  // notif). Les vrais changements gardent l'ancien ack et sont notifiés.
+  if (ackList && previous.pctPrecision !== PCT_PRECISION) {
+    const r1 = (e) => pctKey({ treatments: (e.treatments || []).map((t) => ({ ...t, pct: t.pct == null ? null : Math.round(Number(t.pct) * 10) / 10 })) });
+    const ann = announced;
+    ackList = ackList.map((old) => {
+      const cur = compactById.get(old.id);
+      if (cur && r1(cur) === r1(old)) {
+        if (ann[old.id] && ann[old.id] !== 'REMOVED') ann[old.id] = cur.fingerprint;
+        return cur;
+      }
+      return old;
+    });
+    console.log('Migration précision % → 0,01 pt (silencieuse)');
   }
 
   // Premier run OU migration (< ackExperiments) : seed silencieux.
