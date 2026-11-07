@@ -1,6 +1,6 @@
 # Rollouts user — mesure propre (v15)
 
-> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-07 13:34 UTC
+> Mis à jour automatiquement toutes les 20 min · Source : API Discord uniquement · Généré le 2026-11-07 13:35 UTC
 
 **Fenêtre glissante 4 h — n = 6398 échantillons — 8 tokens actifs**
 
@@ -14,7 +14,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 | Expérience | % mesuré | IC 95 % | k/n | Confiance | Statut |
 |---|---:|---|---:|---|---|
-| hash:704914099 | **4,61 %** | [4,11 – 5,16] | 295/6398 | élevée | Mesuré |
+| hash:704914099 | **4,58 %** | [4,08 – 5,13] | 293/6398 | élevée | Mesuré |
 | hash:1144304849 | **4,99 %** | [4,47 – 5,56] | 319/6398 | élevée | Mesuré |
 | Safety Experience IAR User Reporting | **100 %** | [100 – 100] | 6398/6398 | élevée | Exact (plages) |
 | hash:3013881204 | **100 %** | [99,94 – 100] | 6398/6398 | élevée | Mesuré |
@@ -23,8 +23,8 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 ## Détail par variante
 
 ### hash:704914099
-- Variant 1 : 4,61 % (IC 95 % [4,11 ; 5,16], 295/6398, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [9496.07, 9845.93] + [9863.68, 9993.32] → 4,8 %
+- Variant 1 : 4,58 % (IC 95 % [4,08 ; 5,13], 293/6398, confiance élevée)
+  - plages reconstruites (indicatif, ordre de grandeur) : [9496.07, 9845.93] + [9863.58, 9993.42] → 4,8 %
 
 ### hash:1144304849
 - Variant 1 : 4,99 % (IC 95 % [4,47 ; 5,56], 319/6398, confiance élevée)
@@ -36,7 +36,7 @@ Les plages « reconstruites » sont une seconde mesure INDICATIVE (ordre-statist
 
 ### hash:3013881204
 - Variant 11 : 100 % (IC 95 % [99,94 ; 100], 6398/6398, confiance élevée)
-  - plages reconstruites (indicatif, ordre de grandeur) : [159.11, 872.89] + [1375.65, 9917.35] → 92,55 %
+  - plages reconstruites (indicatif, ordre de grandeur) : [73.56, 9954.44] → 98,81 %
 
 ### 2025-11_tida_webform
 - Variant 1 : 100 % (IC 95 % [99,94 ; 100], 6294/6294, confiance élevée)
