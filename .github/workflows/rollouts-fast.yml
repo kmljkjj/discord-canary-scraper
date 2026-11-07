@@ -1,7 +1,7 @@
 name: Rollouts FAST (% user + guild)
 
-# Surveillant unique des % : sonde toutes les 60 s pendant ~28 min (cron */30
-# → couverture continue). % guild = empreinte du wire Discord canary
+# Surveillant unique des % : sonde toutes les 30 s pendant ~29 min (cron */10
+# + concurrency → relais continu). % guild = empreinte du wire Discord canary
 # /experiments (même source que Wumpus Central, qui ne passe qu'une fois par
 # heure) ; % user = révision du gist en requête conditionnelle (304, hors
 # quota). Un changement déclenche IMMÉDIATEMENT le tracker concerné
@@ -11,7 +11,9 @@ name: Rollouts FAST (% user + guild)
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    # */10 : un run reste toujours en attente (concurrency) → relais immédiat
+    # à la fin du précédent, même si le cron GitHub prend du retard.
+    - cron: "*/10 * * * *"
   workflow_dispatch:
   repository_dispatch:
     types: [trigger-rollouts-fast]
@@ -40,7 +42,7 @@ jobs:
           node --check src/apex_rollouts.js
           node --check src/gist_user_rollouts.js
 
-      - name: Watch rollouts (60 s)
+      - name: Watch rollouts (30 s)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
@@ -57,11 +59,11 @@ jobs:
           APEX_WEBHOOK_URL: ${{ secrets.APEX_WEBHOOK_URL }}
           ROLLOUT_WEBHOOK_URL: ${{ secrets.ROLLOUT_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          APEX_MIN_PCT_DELTA: "2"
+          APEX_MIN_PCT_DELTA: "0.01"
           APEX_RECENT_YEAR: "2025"
           GIST_ROLLOUT_MIN_PCT_DELTA: "0.05"
-          ROLLOUTS_FAST_WATCH_MS: "1680000"
-          ROLLOUTS_FAST_TICK_MS: "60000"
+          ROLLOUTS_FAST_WATCH_MS: "1740000"
+          ROLLOUTS_FAST_TICK_MS: "30000"
           ORBIT_BOT_NAME: Datamining
           ORBIT_AVATAR_URL: ${{ vars.ORBIT_AVATAR_URL || format('https://cdn.jsdelivr.net/gh/{0}@main/media/datamining-avatar.png', github.repository) }}
         run: node src/rollouts_fast.js
