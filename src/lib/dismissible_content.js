@@ -17,6 +17,9 @@ function escapeRe(x) {
 
 function extractDismissibleContent(content, out) {
   if (!content || !out) return 0;
+  // L'enum est unique : s'il a déjà été trouvé (bundle web.*), inutile de
+  // rescanner les chunks secondaires.
+  for (const k in out) if (Object.prototype.hasOwnProperty.call(out, k)) return 0;
   let from = 0;
   let total = 0;
   for (;;) {
