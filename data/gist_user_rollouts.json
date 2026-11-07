@@ -2,15 +2,15 @@
  "version": 1,
  "schemaVersion": 1,
  "semanticsVersion": 2,
- "runId": "20261107T004917_gist",
- "scrapedAt": "2026-11-07T00:49:17.536Z",
+ "runId": "20261107T010457_gist",
+ "scrapedAt": "2026-11-07T01:04:57.847Z",
  "source": {
   "gistId": "e3e99062983e6bd0feaef833f14fd931",
   "htmlUrl": "https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931",
-  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/9448316f47faca6cf246fc2d86c12148f2b9aa05/rollouts-tag.json",
-  "updatedAt": "2026-11-06T20:41:24Z",
-  "revision": "98da98059c0c64779a79f0bbd7c86c722607ff9e",
-  "fetchedAt": "2026-11-07T00:49:17.536Z",
+  "rawUrl": "https://gist.githubusercontent.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931/raw/e94660a22a6b599cb3cd3bd086ec266cfcefe7e9/rollouts-tag.json",
+  "updatedAt": "2026-11-07T01:04:23Z",
+  "revision": "f03e1862f67b8dcc3da9d296d85c0ebe687f3335",
+  "fetchedAt": "2026-11-07T01:04:57.847Z",
   "fallback": false,
   "rawFallback": false,
   "canonicalId": null
@@ -19,9 +19,13 @@
   "gistId": "192b2ce20539ce1021b5c8cb01b17ff0",
   "diverged": true,
   "divergingIds": [
+   "2026-10-android-stop-and-pause-video",
+   "2026-10-android-fastimage-apng",
+   "2026-10-summary-reminder-notif-re-revival",
    "2026-09-voice-server-update-immediate-mobile",
    "2026-09-friends-sidebar",
    "2026-08-split-payments",
+   "2026-05-dvp-for-attachments",
    "2026-02-game-server-tab-always-on"
   ]
  },
@@ -3299,24 +3303,24 @@
    }
   },
   "2026-05-dvp-for-attachments": {
-   "key": "19a2e309986d6b83",
+   "key": "cf422e120dc8e586",
    "hasData": true,
    "sig": "0:control|1:treatment",
    "byVariant": {
     "0": {
-     "pct": 1,
+     "pct": 10,
      "role": "control"
     },
     "1": {
-     "pct": 1,
+     "pct": 10,
      "role": "treatment"
     }
    },
    "treatment": {
-    "pct": 1
+    "pct": 10
    },
    "control": {
-    "pct": 1
+    "pct": 10
    },
    "notEligible": {
     "pct": 0
@@ -5325,18 +5329,12 @@
   }
  },
  "lastRun": {
-  "changes": 0,
-  "delivered": 0,
+  "changes": 1,
+  "delivered": 1,
   "firstRun": false,
   "semanticsMigrated": 0
  },
  "history": [
-  {
-   "at": "2026-11-05T21:11:55.641Z",
-   "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
-   "changes": 0,
-   "delivered": 0
-  },
   {
    "at": "2026-11-05T21:13:44.109Z",
    "revision": "785a6f6d445041f112349a803c9e239a57c81e19",
@@ -5630,6 +5628,12 @@
    "revision": "98da98059c0c64779a79f0bbd7c86c722607ff9e",
    "changes": 0,
    "delivered": 0
+  },
+  {
+   "at": "2026-11-07T01:04:57.847Z",
+   "revision": "f03e1862f67b8dcc3da9d296d85c0ebe687f3335",
+   "changes": 1,
+   "delivered": 1
   }
  ]
 }

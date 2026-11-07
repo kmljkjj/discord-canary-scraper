@@ -1,12 +1,12 @@
 # Rollouts user — couverture gist (v1)
 
-> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-07 00:49 UTC
+> Source : gist communautaire agnonotdev (copie réduite de rollouts.json, tag Assyst) · Généré le 2026-11-07 01:04 UTC
 
 **Sémantique** : couvertures calculées exactement à partir des plages fournies par la source (0-10000), à 0,01 point près. Totaux par rôle = UNION des plages (un bucket appartient à un rôle s'il tombe dans l'union de ses plages). Quand la structure révèle plusieurs populations aplaties (drapeau `multi_population`) ou des rôles conflictuels/inconnus, l'agrégation est indéterminée (poids des populations absents du gist) : totaux principaux indisponibles, l'union est montrée en métrique secondaire étiquetée « projetée » (non pondérée). L'absence du drapeau ne prouve PAS une population unique — le gist n'en garde pas les frontières. Cohérent avec notre décodage wire apex (mêmes plages → mêmes nombres). Ce n'est ni une estimation statistique, ni la proportion de vrais utilisateurs éligibles, ni une mesure d'accès réel. Les expériences `guild` sont exclues (mesurées à part par le décodage wire apex).
 
-**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision 98da9805 · MAJ 2026-11-06T20:41:24Z · 1028 expériences au catalogue (352 user dont 157 avec données, 38 guild, 638 type inconnu, 267 sans données)
+**Gist** : [e3e99062983e6bd0feaef833f14fd931](https://gist.github.com/agnonotdev/e3e99062983e6bd0feaef833f14fd931) · révision f03e1862 · MAJ 2026-11-07T01:04:23Z · 1028 expériences au catalogue (352 user dont 157 avec données, 38 guild, 638 type inconnu, 267 sans données)
 
-⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-09-voice-server-update-immediate-mobile, 2026-09-friends-sidebar, 2026-08-split-payments, 2026-02-game-server-tab-always-on
+⚠️ Miroir divergent (192b2ce20539ce1021b5c8cb01b17ff0) sur : 2026-10-android-stop-and-pause-video, 2026-10-android-fastimage-apng, 2026-10-summary-reminder-notif-re-revival, 2026-09-voice-server-update-immediate-mobile, 2026-09-friends-sidebar, 2026-08-split-payments, 2026-05-dvp-for-attachments, 2026-02-game-server-tab-always-on
 
 ## Expériences user avec données (157)
 
@@ -125,7 +125,7 @@
 | 2026-06-dont-badge-muted-vcs | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-05-use-ad-analytics-interface | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-05-mana-type-consolidation | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
-| 2026-05-dvp-for-attachments | **1,00 %** | 1,00 % | 0,00 % | 98,00 % | — |
+| 2026-05-dvp-for-attachments | **10,00 %** | 10,00 % | 0,00 % | 80,00 % | — |
 | 2026-05-disable-camera-simulcast | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-04-safety-flows | **100,00 %** | 0,00 % | 0,00 % | 0,00 % | — |
 | 2026-04-one-day-fractional-nitro | **50,00 %** | 50,00 % | 0,00 % | 0,00 % | — |
@@ -178,7 +178,7 @@
 | hash:1765194502 | 100,00 % | 0,00 % | — |
 | hash:1443876045 | 100,00 % | 0,00 % | — |
 | 2026-10-user-profile-mobile-save-prompt | 20,00 % | 60,00 % | — |
-| 2026-10-summary-reminder-notif-re-revival | 1,00 % | 98,00 % | — |
+| 2026-10-summary-reminder-notif-re-revival | 5,00 % | 90,00 % | — |
 | 2026-10-recurring-referral-reminder | 33,34 % | 49,99 % | — |
 | 2026-10-media-viewer-improvements | 0,00 % | 50,00 % | — |
 | 2026-10-maple-syrup-3 | 50,00 % | 0,00 % | — |
@@ -186,12 +186,12 @@
 | 2026-10-maple-syrup-1 | 50,00 % | 0,00 % | — |
 | 2026-10-game-profiles-v3-communities-tab-mobile | 25,00 % | 50,00 % | — |
 | 2026-10-game-profile-mobile-reviews | 100,00 % | 0,00 % | — |
-| 2026-10-android-stop-and-pause-video | 50,00 % | 0,00 % | — |
+| 2026-10-android-stop-and-pause-video | 100,00 % | 0,00 % | — |
 | 2026-10-android-seamless-pip | 50,00 % | 0,00 % | — |
 | 2026-10-android-photo-picker | 50,00 % | 0,00 % | — |
 | 2026-10-android-mobile-onboarding-friction-negative-test | 0,00 % | 98,00 % | — |
 | 2026-10-android-media-viewer-full-resolution | 100,00 % | 0,00 % | — |
-| 2026-10-android-fastimage-apng | 25,00 % | 50,00 % | — |
+| 2026-10-android-fastimage-apng | 100,00 % | 0,00 % | — |
 | 2026-09-wysiwyg-user-profile-edit-polish | 100,00 % | 0,00 % | — |
 | 2026-09-voice-server-update-immediate-mobile | 50,00 % | 0,00 % | — |
 | 2026-09-user-profile-premium-try-it-out-mobile-refresh | 40,00 % | 40,00 % | — |
@@ -820,8 +820,8 @@
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
 
 ### 2026-05-dvp-for-attachments
-- Variant 0 (control) : 1,00 % · plages 0 – 100
-- Variant 1 (treatment) : 1,00 % · plages 100 – 200
+- Variant 0 (control) : 10,00 % · plages 0 – 100 , 200 – 350 , 500 – 750 , 1000 – 1500
+- Variant 1 (treatment) : 10,00 % · plages 100 – 200 , 350 – 500 , 750 – 1000 , 1500 – 2000
 
 ### 2026-05-disable-camera-simulcast
 - Variant 1 (treatment) : 100,00 % · plages 0 – 10000
