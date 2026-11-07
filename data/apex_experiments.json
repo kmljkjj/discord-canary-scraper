@@ -6154,6 +6154,22 @@
   },
   {
     "kind": "user",
+    "name": "2026-11-screen-share-dtx",
+    "defaultConfig": {
+      "enabled": false
+    },
+    "variations": {
+      "0": {
+        "enabled": false
+      },
+      "1": {
+        "enabled": true
+      }
+    },
+    "label": null
+  },
+  {
+    "kind": "user",
     "name": "2026-11-soundboard-upsells-brand-refresh",
     "defaultConfig": null,
     "variations": {
