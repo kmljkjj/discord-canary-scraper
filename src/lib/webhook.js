@@ -18,7 +18,9 @@ const DEFAULTS = {
   timeoutMs: Number(process.env.WEBHOOK_TIMEOUT_MS || 20000),
   baseDelayMs: 300,
   maxDelayMs: 30000,
-  minGapMs: 200,
+  // 0 par défaut : le bucket Discord (X-RateLimit-Remaining/Reset-After) et les 429
+  // sont déjà respectés → pas de pause fixe inutile entre deux messages.
+  minGapMs: Number(process.env.WEBHOOK_MIN_GAP_MS || 0),
 };
 
 // Limites officielles Discord
@@ -171,7 +173,10 @@ async function _sendWebhook(url, body, options = {}) {
     }
 
     if (res.ok) {
-      if (opts.minGapMs) await sleep(opts.minGapMs);
+      // Pause seulement si Discord ne nous dit pas qu'il reste du quota
+      // (remaining > 0 → envoi suivant immédiat, remaining = 0 → bucketResetAt).
+      const hasQuota = remaining != null && remaining !== '' && Number(remaining) > 0;
+      if (opts.minGapMs && !hasQuota && remaining !== '0') await sleep(opts.minGapMs);
       return last;
     }
 
